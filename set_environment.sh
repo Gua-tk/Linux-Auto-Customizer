@@ -68,9 +68,9 @@ if [ "$(whoami)" != "root" ]; then
 
 	# Force "gitk" as alias for gitk --all --date-order &
 	if [ -z "$(more $BASHRC_PATH | grep -Fo "alias gitk=" )" ]; then 
-		echo "alias gitk=\"gitk --all --date-order &\"" >> $BASHRC_PATH
+		echo "alias gitk=\"gitk --all --date-order \"" >> $BASHRC_PATH
 	else
-		sed -Ei 's/^alias gitk=.*/alias gitk=\"gitk --all --date-order \&\"/' $BASHRC_PATH
+		sed -Ei 's/^alias gitk=.*/alias gitk=\"gitk --all --date-order \"/' $BASHRC_PATH
 	fi
 
 	# Desktop global variable pointer
