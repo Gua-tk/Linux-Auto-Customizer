@@ -167,6 +167,10 @@ else
 	# GNU C compiler, git suite, python3, python2
 	apt install -y gcc git-all python3 python
 
+	# git credentials
+	git config --global user.email "aleixaretra@gmail.com"
+	git config --global user.name "AleixMT"
+
 	# pypy dependencies
 	apt-get install -y pkg-config
 	apt-get install -y libfreetype6-dev
