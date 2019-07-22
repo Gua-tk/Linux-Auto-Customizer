@@ -88,6 +88,8 @@ if [ "$(whoami)" != "root" ]; then
 		fi
 		cd GIT
 		echo "export GIT=$(pwd)" >> $BASHRC_PATH
+		git clone https://github.com/AleixMT/TrigenicInteractionPredictor
+		git clone https://github.com/AleixMT/Linux-Auto-Customizer
 	fi
 
 
@@ -140,10 +142,11 @@ if [ "$(whoami)" != "root" ]; then
 	if [ ! -d "pypy3.5-v7.0.0-linux64" ]; then
 		wget https://bitbucket.org/pypy/pypy/downloads/pypy3.5-v7.0.0-linux64.tar.bz2
 		tar xjf pypy3.5-v7.0.0-linux64.tar.bz2
-		rm pypy3.5-v7.0.0-linux64.tar.bz2
+		rm pypy3.5-v7.0.0-linux64.tar.bz2*
 		cd pypy3.5-v7.0.0-linux64/bin
 		./pypy3 -m ensurepip
-		./pip3 install cython numpy matplotlib
+		./pip3 --no-cache-dir install --upgrade pip
+		./pip3 --no-cache-dir install cython numpy matplotlib
 	fi
 
 	# pycharm
@@ -151,7 +154,7 @@ if [ "$(whoami)" != "root" ]; then
 	if [ ! -d "pycharm-community-2019.1.1" ]; then
 		wget https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz
 		tar xzf pycharm-community-2019.1.1.tar.gz
-		rm pycharm-community-2019.1.1.tar.gz
+		rm pycharm-community-2019.1.1.tar.gz*
 
 	fi
 else
@@ -162,16 +165,19 @@ else
 	apt -y upgrade
 
 	# GNU C compiler, git suite, python3, python2
-	apt install gcc git-all python3 python
+	apt install -y gcc git-all python3 python
+
+	# pypy dependencies
+	apt-get install -y pkg-config
+	apt-get install -y libfreetype6-dev
+	apt-get install -y libpng-dev
 
 	# sublime text
 	cd $DESK
 	wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -
 	apt-get -y install apt-transport-https
-	if [ -f "/etc/apt/sources.list.d/sublime-text.list" ]; then
-		if [ -z "$(more "/etc/apt/sources.list.d/sublime-text.list" | grep -Fo "https://download.sublimetext.com/" )" ]; then 
-			echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list
-		fi
+	if [ ! -e "/etc/apt/sources.list.d/sublime-text.list" ]; then
+		echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list
 	fi
 	apt-get -y update
 	apt-get -y install sublime-text
