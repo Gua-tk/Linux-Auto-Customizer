@@ -3,10 +3,15 @@
 # Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
 # Created on 28/5/19
 
+pycharm_version=pycharm-community-2019.1.1
+LAUNCHERS_PATH=/usr/share/applications
+DESK=$(more ~/.config/user-dirs.dirs | grep "XDG_DESKTOP_DIR" | cut -d '"' -f2)  # obtain desktop path (not affected by sys language)
+eval DESK=$DESK  # Expand variables recursively
 
 if [ "$(whoami)" != "root" ]; then
 	# Locate bash customizing files
 	BASHRC_PATH=~/.bashrc
+
 	#BASHRC_PATH=tmp_bashrc
 	#rm ~/tmp_bashrc
 
@@ -74,7 +79,6 @@ if [ "$(whoami)" != "root" ]; then
 	fi
 
 	# Desktop global variable pointer
-	DESK=$(more ~/.config/user-dirs.dirs | grep "XDG_DESKTOP_DIR" | cut -d '"' -f2)  # obtain desktop path (not affected by sys language)
 	eval DESK=$DESK  # Expand recursively all variables in $DESK (usually $HOME)
 	if [ -z "$(more $BASHRC_PATH | grep -Fo "export DESK=" )" ]; then 
 		echo "export DESK=$DESK" >> $BASHRC_PATH
@@ -151,11 +155,10 @@ if [ "$(whoami)" != "root" ]; then
 
 	# pycharm
 	cd $DESK
-	if [ ! -d "pycharm-community-2019.1.1" ]; then
+	if [ ! -d $pycharm_version ]; then
 		wget https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz
 		tar xzf pycharm-community-2019.1.1.tar.gz
 		rm pycharm-community-2019.1.1.tar.gz*
-
 	fi
 else
 	##### Software #####
@@ -186,9 +189,20 @@ else
 	apt-get -y update
 	apt-get -y install sublime-text
 
-	# GIT suite
-	apt-get -y install git-all
-
+	# Create desktop entry for pycharm launcher
+	if [ -d $pycharm_version ]; then
+		pycharm_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PyCharm Community Edition
+Icon=$DESK/$pycharm_version/bin/pycharm.svg
+Exec=\"$DESK/$pycharm_version/bin/pycharm.sh\" %f
+Comment=Python IDE for Professional Developers
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=jetbrains-pycharm-ce"
+		echo -e "$pycharm_launcher" > $LAUNCHERS_PATH/pycharm.desktop
+	fi
 	# Clean
 	apt -y autoremove
 	apt -y autoclean
