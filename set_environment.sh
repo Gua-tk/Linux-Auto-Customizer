@@ -159,8 +159,8 @@ if [ "$(whoami)" != "root" ]; then
 		wget https://download.jetbrains.com/python/pycharm-community-2019.1.1.tar.gz
 		tar xzf pycharm-community-2019.1.1.tar.gz
 		rm pycharm-community-2019.1.1.tar.gz*
-		# Add to PATH in order to be able to call pycharm from anywher
-e	fi
+		# Add to PATH in order to be able to call pycharm from anywhere
+	fi
 	if [ -z "$(more $BASHRC_PATH | grep -Eo "export PATH=$PATH:$DESK/$pycharm_version/bin" )" ]; then 
 		echo "enrtem"
 		echo "export PATH=$PATH:$DESK/$pycharm_version/bin" >> $BASHRC_PATH
@@ -210,5 +210,5 @@ StartupWMClass=jetbrains-pycharm-ce"
 	fi
 	# Clean
 	apt -y autoremove
-	apt -y autoclean
+	apt -y autoclean 
 fi
