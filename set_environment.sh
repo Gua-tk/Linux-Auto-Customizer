@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# A simple portable shell script to initialize and customize a Linux working environment. Needs root permission.
+# A simple portable shell script to initialize and customize a Linux working environment. Needs root permission for some features.
 # Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
 # Created on 28/5/19
 
@@ -11,9 +11,6 @@ eval DESK=$DESK  # Expand variables recursively
 if [ "$(whoami)" != "root" ]; then
 	# Locate bash customizing files
 	BASHRC_PATH=~/.bashrc
-
-	#BASHRC_PATH=tmp_bashrc
-	#rm ~/tmp_bashrc
 
 	##### Console Features #####
 	# Increase history size
@@ -208,6 +205,15 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm-ce"
 		echo -e "$pycharm_launcher" > $LAUNCHERS_PATH/pycharm.desktop
 	fi
+
+	# Google Chrome
+	apt-get install -y libxss1 libappindicator1 libindicator7ç
+	if [ -z "$(which google-chrome)" ]; then
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        apt install -y ./google-chrome*.deb
+        rm google-chrome*.deb
+    fi
+
 	# Clean
 	apt -y autoremove
 	apt -y autoclean 
