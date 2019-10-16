@@ -192,6 +192,7 @@ Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
 		echo -e "$pycharm_launcher" > ~/.local/share/applications/pycharm.desktop
+		chmod 775 ~/.local/share/applications/pycharm.desktop
 	fi
 
     # sublime_text
@@ -211,7 +212,7 @@ Version=1.0
 Type=Application
 Name=Sublime Text
 GenericName=Text Editor
-Icon=~/.bin/$sublime_text_version/sublime_text_3/Icon/256x256/sublime-text.png
+Icon=~/.bin/sublime_text_3/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Categories=TextEditor;IDE;Development
 Terminal=false
@@ -222,6 +223,7 @@ Exec=sublime"
 #Exec=sublime -n
 #TargetEnvironment=Unity
 		echo -e "$sublime_launcher" > ~/.local/share/applications/sublime.desktop
+		chmod 775 ~/.local/share/applications/sublime.desktop
 	fi
 else
 	##### Software #####
