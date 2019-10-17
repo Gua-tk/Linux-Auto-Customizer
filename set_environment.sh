@@ -5,24 +5,25 @@
 
 if [ "$(whoami)" != "root" ]; then
 	pycharm_version=pycharm-community-2019.1.1
-sublime_text_version=sublime_text_3_build_3211_x64
-DESK=$(more ~/.config/user-dirs.dirs | grep "XDG_DESKTOP_DIR" | cut -d '"' -f2)  # obtain desktop path (not affected by sys language)
-eval DESK=$DESK  # Expand variables recursively
-    # Create folder for user software
-    cd ~
-    mkdir .bin
-    chmod 755 .bin
-    userBinariesFolder=$(pwd)/.bin
-    cd ~
-
-    # git credentials
-    if [ "$*" == 1 ]; then
-	    git config --global user.email "aleixaretra@gmail.com"
-	    git config --global user.name "AleixMT"
-	fi
+	sublime_text_version=sublime_text_3_build_3211_x64
+	DESK=$(more ~/.config/user-dirs.dirs | grep "XDG_DESKTOP_DIR" | cut -d '"' -f2)  # obtain desktop path (not affected by sys language)
+	eval DESK=$DESK  # Expand variables recursively
 
 	# Locate bash customizing files
 	BASHRC_PATH=~/.bashrc
+
+	# Create folder for user software
+	cd ~
+	mkdir -p ~/.bin
+	chmod 755 .bin
+	userBinariesFolder=$(pwd)/.bin
+	cd ~
+
+    	# git credentials
+    	if [ "$*" == 1 ]; then
+	    git config --global user.email "aleixaretra@gmail.com"
+	    git config --global user.name "AleixMT"
+	fi
 
 	##### Console Features #####
 	# Increase history size
@@ -148,6 +149,10 @@ eval DESK=$DESK  # Expand variables recursively
 		cd ..
 	fi
 
+	if [ -z "$(more $BASHRC_PATH | grep -Eo "export PATH=$PATH:~/.local/bin" )" ]; then 
+		echo "export PATH=$PATH:~/.local/bin" >> $BASHRC_PATH
+	fi
+
 	# pypy3
 	# Create and add dependencies of pypy3 virtual environment
 	# Downloads pypy3 and adds dependencies with cython, numpy and matplotlib
@@ -185,7 +190,7 @@ eval DESK=$DESK  # Expand variables recursively
 Version=1.0
 Type=Application
 Name=PyCharm
-Icon=~/.bin/$pycharm_version/bin/pycharm.svg
+Icon=~/.bin/$pycharm_version/bin/pycharm.png
 Exec=pycharm
 Comment=Python IDE for Professional Developers
 Categories=Development;IDE;
@@ -212,7 +217,7 @@ Version=1.0
 Type=Application
 Name=Sublime Text
 GenericName=Text Editor
-Icon=~/.bin/sublime_text_3/sublime_text_3/Icon/256x256/sublime-text.png
+Icon=~/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Categories=TextEditor;IDE;Development
 Terminal=false
