@@ -18,6 +18,9 @@ if [ "$(whoami)" != "root" ]; then
 	chmod 755 .bin
 	userBinariesFolder=$(pwd)/.bin
 	cd ~
+	
+	# Create folder for user launchers
+	mkdir -p ~/.local/share/applications
 
     	# git credentials
     	if [ "$*" == 1 ]; then
@@ -149,7 +152,7 @@ if [ "$(whoami)" != "root" ]; then
 		cd ..
 	fi
 
-	if [ -z "$(more $BASHRC_PATH | grep -Eo "export PATH=$PATH:~/.local/bin" )" ]; then 
+	if [ -z "$(echo $PATH | grep -Eo "~/.local/bin" )" ]; then 
 		echo "export PATH=$PATH:~/.local/bin" >> $BASHRC_PATH
 	fi
 
@@ -168,8 +171,8 @@ if [ "$(whoami)" != "root" ]; then
 		./pip3 -q --no-cache-dir install cython numpy matplotlib
 		rm -f ~/.local/bin/pypy3
 		ln -s $(pwd)/pypy3 ~/.local/bin/pypy3
-		rm -f ~/.local/bin/pypy
-		ln -s $(pwd)/pip ~/.local/bin/pip-pypy
+		rm -f ~/.local/bin/pip-pypy3
+		ln -s $(pwd)/pip ~/.local/bin/pip-pypy3
 		rm -f ~/.local/bin/pip3-pypy
 		ln -s $(pwd)/pip3 ~/.local/bin/pip3-pypy
 	fi
@@ -233,26 +236,26 @@ Exec=sublime"
 else
 	##### Software #####
 	# Update repositories and system
-	apt -y update
-	apt -y upgrade
+	apt -y -qq update
+	apt -y -qq upgrade
 
 	# GNU C compiler, git suite, python3, python2
-	apt install -y gcc git-all python3 python
+	apt install -y -qq gcc git-all python3 python
 
 	# pypy dependencies
-	apt-get install -y pkg-config
-	apt-get install -y libfreetype6-dev
-	apt-get install -y libpng-dev
+	apt-get install -y -qq pkg-config
+	apt-get install -y -qq libfreetype6-dev
+	apt-get install -y -qq libpng-dev
 
 	# Google Chrome
-	apt-get install -y libxss1 libappindicator1 libindicator7
+	apt-get install -y -qq libxss1 libappindicator1 libindicator7
 	if [ -z "$(which google-chrome)" ]; then
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        apt install -y ./google-chrome*.deb
+        apt install -y -qq ./google-chrome*.deb
         rm google-chrome*.deb
     fi
 
 	# Clean
-	apt -y autoremove
-	apt -y autoclean 
+	apt -y -qq autoremove
+	apt -y -qq autoclean 
 fi
