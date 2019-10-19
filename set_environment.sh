@@ -18,6 +18,10 @@ if [ "$(whoami)" != "root" ]; then
 	chmod 755 .bin
 	userBinariesFolder=$(pwd)/.bin
 	cd ~
+
+	# Make sure that ~/.local/bin is present
+	mkdir -p ~/.local/bin
+
 	
 	# Create folder for user launchers
 	mkdir -p ~/.local/share/applications
@@ -193,7 +197,7 @@ if [ "$(whoami)" != "root" ]; then
 Version=1.0
 Type=Application
 Name=PyCharm
-Icon=~/.bin/$pycharm_version/bin/pycharm.png
+Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
 Exec=pycharm
 Comment=Python IDE for Professional Developers
 Categories=Development;IDE;
@@ -220,7 +224,7 @@ Version=1.0
 Type=Application
 Name=Sublime Text
 GenericName=Text Editor
-Icon=~/.bin/sublime_text_3/Icon/256x256/sublime-text.png
+Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Categories=TextEditor;IDE;Development
 Terminal=false
