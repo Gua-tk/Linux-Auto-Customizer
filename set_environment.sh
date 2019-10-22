@@ -171,14 +171,12 @@ if [ "$(whoami)" != "root" ]; then
 		rm pypy3.5-v7.0.0-linux64.tar.bz2*
 		cd pypy3.5-v7.0.0-linux64/bin
 		./pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
-		./pip3 -q --no-cache-dir install --upgrade pip
-		./pip3 -q --no-cache-dir install cython numpy matplotlib
+		./pip3.5 -q install --upgrade pip
+		./pip3.5 -q install cython numpy matplotlib biopython
 		rm -f ~/.local/bin/pypy3
 		ln -s $(pwd)/pypy3 ~/.local/bin/pypy3
 		rm -f ~/.local/bin/pip-pypy3
-		ln -s $(pwd)/pip ~/.local/bin/pip-pypy3
-		rm -f ~/.local/bin/pip3-pypy
-		ln -s $(pwd)/pip3 ~/.local/bin/pip3-pypy
+		ln -s $(pwd)/pip3.5 ~/.local/bin/pip-pypy3
 	fi
 
 	# pycharm
