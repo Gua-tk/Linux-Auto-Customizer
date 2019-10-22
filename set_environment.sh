@@ -262,7 +262,7 @@ else
     fi
 
     # LaTeX
-    apt-get -y -qq install texlive-latex-extra
+    apt -y -qq install texlive-latex-extra
 
 	# Clean
 	apt -y -qq autoremove
