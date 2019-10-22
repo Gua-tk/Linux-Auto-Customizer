@@ -171,8 +171,8 @@ if [ "$(whoami)" != "root" ]; then
 		rm pypy3.5-v7.0.0-linux64.tar.bz2*
 		cd pypy3.5-v7.0.0-linux64/bin
 		./pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
-		./pip3.5 -q install --upgrade pip
-		./pip3.5 -q install cython numpy matplotlib biopython
+		./pip3.5 --no-cache-dir -q install --upgrade pip
+		./pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
 		rm -f ~/.local/bin/pypy3
 		ln -s $(pwd)/pypy3 ~/.local/bin/pypy3
 		rm -f ~/.local/bin/pip-pypy3
@@ -257,10 +257,9 @@ else
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         apt install -y -qq ./google-chrome*.deb
         rm google-chrome*.deb
-    fi
 
-    # LaTeX
-    apt -y -qq install texlive-latex-extra
+    	# LaTeX
+    	apt -y -qq install texlive-latex-extra
 
 	# Clean
 	apt -y -qq autoremove
