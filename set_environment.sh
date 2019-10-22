@@ -200,7 +200,6 @@ Name=PyCharm
 Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
 Exec=pycharm
 Comment=Python IDE for Professional Developers
-Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
 		echo -e "$pycharm_launcher" > ~/.local/share/applications/pycharm.desktop
@@ -226,7 +225,6 @@ Name=Sublime Text
 GenericName=Text Editor
 Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
-Categories=TextEditor;IDE;Development
 Terminal=false
 Exec=sublime"
 #X-Ayatana-Desktop-Shortcuts=NewWindow
