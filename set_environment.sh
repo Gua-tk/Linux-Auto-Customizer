@@ -152,6 +152,10 @@ if [ "$(whoami)" != "root" ]; then
 		echo "#!/usr/bin/env bash" > New_Shell_Script.sh
 		echo "#!/usr/bin/env python3" > New_Python3_Script.py
 		echo "#!/usr/bin/env python2" > New_Python2_Script.py
+		echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+" > New_LaTeX_Document.tex
 		chmod 755 *
 		cd ..
 	fi
@@ -171,14 +175,12 @@ if [ "$(whoami)" != "root" ]; then
 		rm pypy3.5-v7.0.0-linux64.tar.bz2*
 		cd pypy3.5-v7.0.0-linux64/bin
 		./pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
-		./pip3 -q --no-cache-dir install --upgrade pip
-		./pip3 -q --no-cache-dir install cython numpy matplotlib
+		./pip3.5 -q install --upgrade pip
+		./pip3.5 -q install cython numpy matplotlib biopython
 		rm -f ~/.local/bin/pypy3
 		ln -s $(pwd)/pypy3 ~/.local/bin/pypy3
 		rm -f ~/.local/bin/pip-pypy3
-		ln -s $(pwd)/pip ~/.local/bin/pip-pypy3
-		rm -f ~/.local/bin/pip3-pypy
-		ln -s $(pwd)/pip3 ~/.local/bin/pip3-pypy
+		ln -s $(pwd)/pip3.5 ~/.local/bin/pip-pypy3
 	fi
 
 	# pycharm
@@ -235,6 +237,8 @@ Exec=sublime"
 		echo -e "$sublime_launcher" > ~/.local/share/applications/sublime.desktop
 		chmod 775 ~/.local/share/applications/sublime.desktop
 	fi
+
+
 else
 	##### Software #####
 	# Update repositories and system
@@ -256,6 +260,9 @@ else
         apt install -y -qq ./google-chrome*.deb
         rm google-chrome*.deb
     fi
+
+    # LaTeX
+    apt -y -qq install texlive-latex-extra
 
 	# Clean
 	apt -y -qq autoremove
