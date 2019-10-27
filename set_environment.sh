@@ -259,11 +259,10 @@ else
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         apt install -y -qq ./google-chrome*.deb
         rm google-chrome*.deb
-
+    fi
     	# LaTeX
     	apt -y -qq install texlive-latex-extra
-
 	# Clean
 	apt -y -qq autoremove
-	apt -y -qq autoclean 
+	apt -y -qq autoclean
 fi
