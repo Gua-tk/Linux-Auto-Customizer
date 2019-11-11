@@ -260,6 +260,9 @@ else
         apt install -y -qq ./google-chrome*.deb
         rm google-chrome*.deb
     fi
+	# GNU-parallel
+	apt-get install parallel
+ehich parale
     	# LaTeX
     	apt -y -qq install texlive-latex-extra
 	# Clean
