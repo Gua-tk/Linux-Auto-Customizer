@@ -262,7 +262,7 @@ else
     fi
 	# GNU-parallel
 	apt-get install parallel
-ehich parale
+
     	# LaTeX
     	apt -y -qq install texlive-latex-extra
 	# Clean
