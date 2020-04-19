@@ -22,3 +22,7 @@ All user software is going to be installed under ~/.bin
 ##### Software
 * git-suite (git-all)
 * Google Chrome
+
+
+TODO add walpapers
+add automount external unities

@@ -2,9 +2,123 @@
 # A simple portable shell script to initialize and customize a Linux working environment. Needs root permission for some features.
 # Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
 # Created on 28/5/19
+# Last Update 19/4/2020
+
+###### SOFTWARE INSTALLATION FUNCTIONS ######
+
+# Checks if Google Chrome is already installed and installs it and its dependencies
+# Needs roots permission to install the package
+function install_google_chrome()
+{
+  apt-get install -y -qq libxss1 libappindicator1 libindicator7
+  if [[ -z "$(which google-chrome)" ]]; then
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    apt install -y -qq ./google-chrome*.deb
+    rm google-chrome*.deb
+  else
+    err "WARNING: Google Chrome is already installed. Skipping"
+  fi
+}
+
+# Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib) using pip3 from pypy3
+# Needs roots permission to install dependencies
+function install_pypy3()
+{
+  # pypy3 module dependencies
+  apt-get install -y -qq pkg-config
+  apt-get install -y -qq libfreetype6-dev
+  apt-get install -y -qq libpng-dev
+
+  # Downloads pypy3 and install modules
+  pypy3_version=pypy3.5-v7.0.0-linux64
+
+  cd ${userBinariesFolder}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
+
+  if [[ ! -d ${pypy3_version} ]]; then
+    wget -q https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
+    tar xjf pypy3.5-v7.0.0-linux64.tar.bz2
+    rm pypy3.5-v7.0.0-linux64.tar.bz2*
+    cd pypy3.5-v7.0.0-linux64/bin
+    ./pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
+    ./pip3.5 --no-cache-dir -q install --upgrade pip
+    ./pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
+    rm -f ~/.local/bin/pypy3
+    ln -s $(pwd)/pypy3 ~/.local/bin/pypy3
+    rm -f ~/.local/bin/pip-pypy3
+    ln -s $(pwd)/pip3.5 ~/.local/bin/pip-pypy3
+  else
+    err "WARNING: pypy3 is already installed. Skipping"
+  fi
+
+}
+
+# Installs pycharm, links it to the PATH and creates a launcher for it
+function install_pycharm()
+{
+  pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
+  cd ${userBinariesFolder}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
+
+  # Download pycharm
+  if [[ ! -d ${pycharm_version} ]]; then
+    wget -q https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+    tar xzf ${pycharm_version}.tar.gz
+    rm ${pycharm_version}.tar.gz*
+    rm -f ~/.local/bin/pycharm
+    ln -s $(pwd)/${pycharm_version}/bin/pycharm.sh ~/.local/bin/pycharm
+  else
+    err "WARNING: pycharm is already installed. Skipping"
+  fi
+
+  # Create desktop entry for pycharm launcher
+  if [[ -d ${pycharm_version} ]]; then
+    pycharm_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PyCharm
+Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
+Exec=pycharm
+Comment=Python IDE for Professional Developers
+Terminal=false
+StartupWMClass=jetbrains-pycharm"
+    echo -e "$pycharm_launcher" > ~/.local/share/applications/pycharm.desktop
+    chmod 775 ~/.local/share/applications/pycharm.desktop
+  fi
+}
+
+# Install GIT and all its related utilities (gitk e.g.)
+function install_git()
+{
+    apt install -y -qq git-all
+}
+
+# Install gcc (C compiler)
+function install_gcc()
+{
+  apt install -y -qq gcc
+}
+
+# Install Python3
+function install_python3()
+{
+  apt install -y -qq python3
+}
+
+###### AUXILIAR FUNCTIONS ######
+
+# Prints the given arguments to the stderr
+function err()
+{
+  echo "$*" >&2
+}
+
+###### MAIN ######
+function main()
+{
+    return 0
+
+}
 
 if [ "$(whoami)" != "root" ]; then
-	pycharm_version=pycharm-community-2019.1.1
 	sublime_text_version=sublime_text_3_build_3211_x64
 	DESK=$(more ~/.config/user-dirs.dirs | grep "XDG_DESKTOP_DIR" | cut -d '"' -f2)  # obtain desktop path (not affected by sys language)
 	eval DESK=$DESK  # Expand variables recursively
@@ -25,12 +139,6 @@ if [ "$(whoami)" != "root" ]; then
 	
 	# Create folder for user launchers
 	mkdir -p ~/.local/share/applications
-
-    	# git credentials
-    	if [ "$*" == 1 ]; then
-	    git config --global user.email "aleixaretra@gmail.com"
-	    git config --global user.name "AleixMT"
-	fi
 
 	##### Console Features #####
 	# Increase history size
@@ -73,14 +181,6 @@ if [ "$(whoami)" != "root" ]; then
 	fi
 
 	##### Add aliases and global variables #####
-
-	# Block comment
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "alias BEGINCOMMENT" )" ]; then 
-		echo "alias BEGINCOMMENT=\"if [ ]; then\"" >> $BASHRC_PATH
-	fi
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "alias ENDCOMMENT" )" ]; then 
-		echo "alias ENDCOMMENT=\"fi\"" >> $BASHRC_PATH
-	fi
 
 	# Force "l" as alias for ls -lAh
 	if [ -z "$(more $BASHRC_PATH | grep -Fo "alias l=" )" ]; then 
@@ -164,50 +264,6 @@ if [ "$(whoami)" != "root" ]; then
 		echo "export PATH=$PATH:~/.local/bin" >> $BASHRC_PATH
 	fi
 
-	# pypy3
-	# Create and add dependencies of pypy3 virtual environment
-	# Downloads pypy3 and adds dependencies with cython, numpy and matplotlib
-	echo "Installing pypy"
-    cd $userBinariesFolder
-	if [ ! -d "pypy3.5-v7.0.0-linux64" ]; then
-		wget -q https://bitbucket.org/pypy/pypy/downloads/pypy3.5-v7.0.0-linux64.tar.bz2
-		tar xjf pypy3.5-v7.0.0-linux64.tar.bz2
-		rm pypy3.5-v7.0.0-linux64.tar.bz2*
-		cd pypy3.5-v7.0.0-linux64/bin
-		./pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
-		./pip3.5 --no-cache-dir -q install --upgrade pip
-		./pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
-		rm -f ~/.local/bin/pypy3
-		ln -s $(pwd)/pypy3 ~/.local/bin/pypy3
-		rm -f ~/.local/bin/pip-pypy3
-		ln -s $(pwd)/pip3.5 ~/.local/bin/pip-pypy3
-	fi
-
-	# pycharm
-	echo "Installing pycharm"
-	cd $userBinariesFolder
-	if [ ! -d $pycharm_version ]; then
-		wget -q https://download.jetbrains.com/python/$pycharm_version.tar.gz
-		tar xzf $pycharm_version.tar.gz
-		rm $pycharm_version.tar.gz*
-		rm -f ~/.local/bin/pycharm
-		ln -s $(pwd)/$pycharm_version/bin/pycharm.sh ~/.local/bin/pycharm
-	fi
-	# Create desktop entry for pycharm launcher
-	if [ -d $pycharm_version ]; then
-		pycharm_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=PyCharm
-Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
-Exec=pycharm
-Comment=Python IDE for Professional Developers
-Terminal=false
-StartupWMClass=jetbrains-pycharm"
-		echo -e "$pycharm_launcher" > ~/.local/share/applications/pycharm.desktop
-		chmod 775 ~/.local/share/applications/pycharm.desktop
-	fi
-
     # sublime_text
 	echo "Installing sublime-text"
 	cd $userBinariesFolder
@@ -246,20 +302,11 @@ else
 	apt -y -qq upgrade
 
 	# GNU C compiler, git suite, python3, python2
-	apt install -y -qq gcc git-all python3 python
+	install_python3
+    install_gcc
+    install_git
+    install_google_chrome
 
-	# pypy dependencies
-	apt-get install -y -qq pkg-config
-	apt-get install -y -qq libfreetype6-dev
-	apt-get install -y -qq libpng-dev
-
-	# Google Chrome
-	apt-get install -y -qq libxss1 libappindicator1 libindicator7
-	if [ -z "$(which google-chrome)" ]; then
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        apt install -y -qq ./google-chrome*.deb
-        rm google-chrome*.deb
-    fi
 	# GNU-parallel
 	apt-get install parallel
 
