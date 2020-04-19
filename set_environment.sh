@@ -7,7 +7,7 @@
 ###### SOFTWARE INSTALLATION FUNCTIONS ######
 
 # Checks if Google Chrome is already installed and installs it and its dependencies
-# Needs roots permission to install the package
+# Needs root permission
 function install_google_chrome()
 {
   apt-get install -y -qq libxss1 libappindicator1 libindicator7
@@ -30,7 +30,7 @@ function install_pypy3()
   apt-get install -y -qq libpng-dev
 
   # Downloads pypy3 and install modules
-  pypy3_version=pypy3.5-v7.0.0-linux64
+  readonly pypy3_version=pypy3.5-v7.0.0-linux64
 
   cd ${userBinariesFolder}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
 
@@ -82,27 +82,144 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm"
     echo -e "$pycharm_launcher" > ~/.local/share/applications/pycharm.desktop
     chmod 775 ~/.local/share/applications/pycharm.desktop
+
   fi
 }
 
 # Install GIT and all its related utilities (gitk e.g.)
+# Needs root permission
 function install_git()
 {
     apt install -y -qq git-all
 }
 
 # Install gcc (C compiler)
+# Needs root permission
 function install_gcc()
 {
   apt install -y -qq gcc
 }
 
 # Install Python3
+# Needs root permission
 function install_python3()
 {
   apt install -y -qq python3
 }
 
+# Install GNU parallel
+function install_GNU_parallel()
+{
+  apt-get install parallel
+}
+
+# Install Sublime text 3
+function install_sublime_text()
+{
+  sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
+
+  # Download sublime_text
+  echo "Installing sublime-text"
+  cd ${userBinariesFolder}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
+  if [[ ! -d "sublime_text_3" ]]; then
+    wget -q https://download.sublimetext.com/${sublime_text_version}.tar.bz2
+    tar xjf ${sublime_text_version}.tar.bz2
+    rm ${sublime_text_version}.tar.bz2*
+    rm -f ~/.local/bin/subl
+    ln -s $(pwd)/sublime_text_3/sublime_text ~/.local/bin/subl
+  fi
+
+  # Create desktop launcher entry for pycharm launcher
+  if [[ -d "sublime_text_3" ]]; then
+    sublime_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Sublime Text
+GenericName=Text Editor
+Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
+Comment=General Purpose Programming Text Editor
+Terminal=false
+Exec=sublime"
+    echo -e "$sublime_launcher" > ~/.local/share/applications/sublime_text.desktop
+    chmod 775 ~/.local/share/applications/sublime_text.desktop
+  fi
+}
+
+# Install latex
+# Needs root permission
+function install_latex()
+{
+  apt -y -qq install texlive-latex-extra
+}
+
+###### SYSTEM FEATURES ######
+
+# Install templates (available files in the right click --> new --> ...)
+# Python3, bash shell scripts, latex documents
+function install_templates()
+{
+  # Add templates
+  echo "Adding user file templates"
+  cd ~
+  if [[ -f ~/.config/user-dirs.dirs ]]; then
+    templates=$(more ~/.config/user-dirs.dirs | grep "XDG_TEMPLATES_DIR" | cut -d '"' -f2)  # obtain templates path (not affected by sys language)
+    eval templates=${templates}  # Expand recursively all variables in $DESK (usually $HOME)
+    cd ${templates}
+    echo "#!/usr/bin/env bash" > New_Shell_Script.sh
+    echo "#!/usr/bin/env python3" > New_Python3_Script.py
+    echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+" > New_LaTeX_Document.tex
+    chmod 755 *
+  fi
+}
+
+###### SHELL FEATURES ######
+
+# Forces l as alias for ls -lAh
+function install_ls_alias()
+{
+  # TODO(aleix) assure bashrc_path variable
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
+    echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
+  else
+    sed -i 's/^alias l=.*/alias l=\"ls -lAh --color=auto\"/' ${BASHRC_PATH}
+  fi
+}
+
+# Defines a function to extract all types of compressed files
+function install_extract_function()
+{
+    # TODO(aleix) assure bashrc_path variable
+	if [[ -z "$(more $BASHRC_PATH | grep -Fo "extract () {" )" ]]; then
+		extract="
+
+	# Function that allows to extract any type of compressed files
+	extract () {
+	     if [ -f \$1 ] ; then
+	         case \$1 in
+	             *.tar.bz2)   tar xjf \$1        ;;
+	             *.tar.gz)    tar xzf \$1     ;;
+	             *.bz2)       bunzip2 \$1       ;;
+	             *.rar)       rar x \$1     ;;
+	             *.gz)        gunzip \$1     ;;
+	             *.tar)       tar xf \$1        ;;
+	             *.tbz2)      tar xjf \$1      ;;
+	             *.tgz)       tar xzf \$1       ;;
+	             *.zip)       unzip \$1     ;;
+	             *.Z)         uncompress \$1  ;;
+	             *.7z)        7z x \$1    ;;
+	             *)           echo \"'\$1' cannot be extracted via extract()\" ;;
+	         esac
+	     else
+	         echo \"'\$1' is not a valid file\"
+	     fi
+	}"
+		echo -e "$extract" >> $BASHRC_PATH
+	fi
+
+}
 ###### AUXILIAR FUNCTIONS ######
 
 # Prints the given arguments to the stderr
@@ -111,15 +228,17 @@ function err()
   echo "$*" >&2
 }
 
+##################
 ###### MAIN ######
+##################
 function main()
 {
-    return 0
+  # TODO(aleix) prepare environment and variables for the installation
+  return 0
 
 }
 
 if [ "$(whoami)" != "root" ]; then
-	sublime_text_version=sublime_text_3_build_3211_x64
 	DESK=$(more ~/.config/user-dirs.dirs | grep "XDG_DESKTOP_DIR" | cut -d '"' -f2)  # obtain desktop path (not affected by sys language)
 	eval DESK=$DESK  # Expand variables recursively
 
@@ -182,12 +301,7 @@ if [ "$(whoami)" != "root" ]; then
 
 	##### Add aliases and global variables #####
 
-	# Force "l" as alias for ls -lAh
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "alias l=" )" ]; then 
-		echo "alias l=\"ls -lAh --color=auto\"" >> $BASHRC_PATH
-	else
-		sed -i 's/^alias l=.*/alias l=\"ls -lAh --color=auto\"/' $BASHRC_PATH
-	fi
+
 
 	# Force "gitk" as alias for gitk --all --date-order
 	if [ -z "$(more $BASHRC_PATH | grep -Fo "alias gitk=" )" ]; then 
@@ -202,97 +316,12 @@ if [ "$(whoami)" != "root" ]; then
 		echo "export DESK=$DESK" >> $BASHRC_PATH
 	fi
 
-	# Git folder global variable pointer
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "export GIT=" )" ]; then 
-		cd $DESK
-		if [ ! -d "GIT" ]; then
-			mkdir GIT
-		fi
-		cd GIT
-		echo "export GIT=$(pwd)" >> $BASHRC_PATH
-	fi
-
-
-	##### Add Global functions #####
-	# Extract function, allows to extract from any type of compressed file
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "extract () {" )" ]; then 
-		extract="
-
-	# Function that allows to extract any type of compressed files
-	extract () {
-	     if [ -f \$1 ] ; then
-	         case \$1 in
-	             *.tar.bz2)   tar xjf \$1        ;;
-	             *.tar.gz)    tar xzf \$1     ;;
-	             *.bz2)       bunzip2 \$1       ;;
-	             *.rar)       rar x \$1     ;;
-	             *.gz)        gunzip \$1     ;;
-	             *.tar)       tar xf \$1        ;;
-	             *.tbz2)      tar xjf \$1      ;;
-	             *.tgz)       tar xzf \$1       ;;
-	             *.zip)       unzip \$1     ;;
-	             *.Z)         uncompress \$1  ;;
-	             *.7z)        7z x \$1    ;;
-	             *)           echo \"'\$1' cannot be extracted via extract()\" ;;
-	         esac
-	     else
-	         echo \"'\$1' is not a valid file\"
-	     fi
-	}"
-		echo -e "$extract" >> $BASHRC_PATH
-	fi
-
-	# Add templates
-	echo "Adding user file templates"
-	cd ~
-	if [ -f ~/.config/user-dirs.dirs ]; then
-		templates=$(more ~/.config/user-dirs.dirs | grep "XDG_TEMPLATES_DIR" | cut -d '"' -f2)  # obtain templates path (not affected by sys language)
-		eval templates=$templates  # Expand recursively all variables in $DESK (usually $HOME)
-		cd $templates
-		echo "#!/usr/bin/env bash" > New_Shell_Script.sh
-		echo "#!/usr/bin/env python3" > New_Python3_Script.py
-		echo "#!/usr/bin/env python2" > New_Python2_Script.py
-		echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%2345678901234567890123456789012345678901234567890123456789012345678901234567890
-%        1         2         3         4         5         6         7         8
-" > New_LaTeX_Document.tex
-		chmod 755 *
-		cd ..
-	fi
 
 	if [ -z "$(echo $PATH | grep -Eo "~/.local/bin" )" ]; then 
 		echo "export PATH=$PATH:~/.local/bin" >> $BASHRC_PATH
 	fi
 
-    # sublime_text
-	echo "Installing sublime-text"
-	cd $userBinariesFolder
-	if [ ! -d "sublime_text_3" ]; then
-		wget -q https://download.sublimetext.com/$sublime_text_version.tar.bz2
-		tar xjf $sublime_text_version.tar.bz2
-		rm $sublime_text_version.tar.bz2*
-		rm -f ~/.local/bin/sublime
-		ln -s $(pwd)/sublime_text_3/sublime_text ~/.local/bin/sublime
-	fi
-		# Create desktop entry for pycharm launcher
-	if [ -d "sublime_text_3" ]; then
-		sublime_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Sublime Text
-GenericName=Text Editor
-Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
-Comment=General Purpose Programming Text Editor
-Terminal=false
-Exec=sublime"
-#X-Ayatana-Desktop-Shortcuts=NewWindow
-#[NewWindow Shortcut Group]
-#Name=New Window
-#Exec=sublime -n
-#TargetEnvironment=Unity
-		echo -e "$sublime_launcher" > ~/.local/share/applications/sublime.desktop
-		chmod 775 ~/.local/share/applications/sublime.desktop
-	fi
+
 
 
 else
@@ -308,10 +337,10 @@ else
     install_google_chrome
 
 	# GNU-parallel
-	apt-get install parallel
 
-    	# LaTeX
-    	apt -y -qq install texlive-latex-extra
+    # LaTeX
+    apt -y -qq install texlive-latex-extra
+
 	# Clean
 	apt -y -qq autoremove
 	apt -y -qq autoclean
