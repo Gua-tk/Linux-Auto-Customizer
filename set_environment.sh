@@ -30,9 +30,9 @@ function install_pypy3()
   apt-get install -y -qq libpng-dev
 
   # Downloads pypy3 and install modules
-  readonly pypy3_version=pypy3.5-v7.0.0-linux64
+  local -r pypy3_version=pypy3.5-v7.0.0-linux64
 
-  cd ${userBinariesFolder}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
+  cd ${USR_BIN_FOLDER}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
 
   if [[ ! -d ${pypy3_version} ]]; then
     wget -q https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
@@ -55,8 +55,8 @@ function install_pypy3()
 # Installs pycharm, links it to the PATH and creates a launcher for it
 function install_pycharm()
 {
-  pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
-  cd ${userBinariesFolder}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
+  local -r pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
+  cd ${USR_BIN_FOLDER}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
 
   # Download pycharm
   if [[ ! -d ${pycharm_version} ]]; then
@@ -82,7 +82,7 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm"
     echo -e "$pycharm_launcher" > ~/.local/share/applications/pycharm.desktop
     chmod 775 ~/.local/share/applications/pycharm.desktop
-
+    # TODO(aleix) copy launcher to desktop
   fi
 }
 
@@ -90,7 +90,13 @@ StartupWMClass=jetbrains-pycharm"
 # Needs root permission
 function install_git()
 {
-    apt install -y -qq git-all
+  # Force "gitk" as alias for gitk --all --date-order
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias gitk=" )" ]]; then
+    echo "alias gitk=\"gitk --all --date-order \"" >> ${BASHRC_PATH}
+  else
+    sed -Ei 's/^alias gitk=.*/alias gitk=\"gitk --all --date-order \"/' ${BASHRC_PATH}
+  fi
+  apt install -y -qq git-all
 }
 
 # Install gcc (C compiler)
@@ -120,7 +126,7 @@ function install_sublime_text()
 
   # Download sublime_text
   echo "Installing sublime-text"
-  cd ${userBinariesFolder}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
+  cd ${USR_BIN_FOLDER}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
   if [[ ! -d "sublime_text_3" ]]; then
     wget -q https://download.sublimetext.com/${sublime_text_version}.tar.bz2
     tar xjf ${sublime_text_version}.tar.bz2
@@ -191,33 +197,79 @@ function install_ls_alias()
 # Defines a function to extract all types of compressed files
 function install_extract_function()
 {
-    # TODO(aleix) assure bashrc_path variable
-	if [[ -z "$(more $BASHRC_PATH | grep -Fo "extract () {" )" ]]; then
-		extract="
+  # TODO(aleix) assure bashrc_path variable
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "extract () {" )" ]]; then
+      extract="
 
-	# Function that allows to extract any type of compressed files
-	extract () {
-	     if [ -f \$1 ] ; then
-	         case \$1 in
-	             *.tar.bz2)   tar xjf \$1        ;;
-	             *.tar.gz)    tar xzf \$1     ;;
-	             *.bz2)       bunzip2 \$1       ;;
-	             *.rar)       rar x \$1     ;;
-	             *.gz)        gunzip \$1     ;;
-	             *.tar)       tar xf \$1        ;;
-	             *.tbz2)      tar xjf \$1      ;;
-	             *.tgz)       tar xzf \$1       ;;
-	             *.zip)       unzip \$1     ;;
-	             *.Z)         uncompress \$1  ;;
-	             *.7z)        7z x \$1    ;;
-	             *)           echo \"'\$1' cannot be extracted via extract()\" ;;
-	         esac
-	     else
-	         echo \"'\$1' is not a valid file\"
-	     fi
-	}"
-		echo -e "$extract" >> $BASHRC_PATH
-	fi
+  # Function that allows to extract any type of compressed files
+  extract () {
+    if [ -f \$1 ] ; then
+      case \$1 in
+        *.tar.bz2)   tar xjf \$1        ;;
+        *.tar.gz)    tar xzf \$1     ;;
+        *.bz2)       bunzip2 \$1       ;;
+        *.rar)       rar x \$1     ;;
+        *.gz)        gunzip \$1     ;;
+        *.tar)       tar xf \$1        ;;
+        *.tbz2)      tar xjf \$1      ;;
+        *.tgz)       tar xzf \$1       ;;
+        *.zip)       unzip \$1     ;;
+        *.Z)         uncompress \$1  ;;
+        *.7z)        7z x \$1    ;;
+        *)           echo \"'\$1' cannot be extracted via extract()\" ;;
+      esac
+    else
+        echo \"'\$1' is not a valid file\"
+    fi
+  }"
+    echo -e "$extract" >> ${BASHRC_PATH}
+fi
+
+}
+
+# Increases file history size, size of the history and forces to append to history, never overwrite
+# Ignore repeated commands and simple commands
+# Store multiline comments in just one command
+function install_shell_history_optimization()
+{
+  # TODO(aleix) assure bashrc_path variable
+
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTSIZE=" )" ]]; then
+    echo "export HISTSIZE=10000" >> ${BASHRC_PATH}
+  else
+    sed -i 's/HISTSIZE=.*/HISTSIZE=10000/' ${BASHRC_PATH}
+  fi
+
+  # Increase File history size
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTFILESIZE=" )" ]]; then
+    echo "export HISTFILESIZE=100000" >> ${BASHRC_PATH}
+  else
+    sed -i 's/HISTFILESIZE=.*/HISTFILESIZE=100000/' ${BASHRC_PATH}
+  fi
+
+  # Append and not overwrite history
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "shopt -s histappend" )" ]]; then
+    echo "shopt -s histappend" >> ${BASHRC_PATH}
+  fi
+
+  # Ignore repeated commands
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTCONTROL=" )" ]]; then
+    echo "HISTCONTROL=ignoredups" >> ${BASHRC_PATH}
+  else
+    sed -i 's/HISTCONTROL=.*/HISTCONTROL=ignoredups/' ${BASHRC_PATH}
+  fi
+
+  # Ignore simple commands
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTIGNORE=" )" ]]; then
+    echo "HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"" >> ${BASHRC_PATH}
+  else
+    sed -i 's/HISTIGNORE=.*/HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"/' ${BASHRC_PATH}
+  fi
+
+  # store multiline commands in just one command
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "shopt -s cmdhist" )" ]]; then
+    echo "shopt -s cmdhist" >> ${BASHRC_PATH}
+  fi
 
 }
 ###### AUXILIAR FUNCTIONS ######
@@ -234,114 +286,51 @@ function err()
 function main()
 {
   # TODO(aleix) prepare environment and variables for the installation
+  # Update repositories and system before doing anything
+  apt -y -qq update
+  apt -y -qq upgrade
+
+  DESK=$(more ~/.config/user-dirs.dirs | grep "XDG_DESKTOP_DIR" | cut -d '"' -f2)  # obtain desktop path (not affected by sys language)
+  eval DESK=${DESK}  # Expand variables recursively  # TODO(aleix) eval is WICKED
+
+  # Locate bash customizing files
+  global BASHRC_PATH=~/.bashrc
+
+  # Create folder for user software
+  cd ~
+  mkdir -p ~/.bin
+  chmod 755 .bin
+  global USR_BIN_FOLDER=$(pwd)/.bin
+  cd ~
+
+  # Make sure that ~/.local/bin is present
+  mkdir -p ~/.local/bin
+
+  # Create folder for user launchers
+  mkdir -p ~/.local/share/applications
+
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "export DESK=" )" ]]; then
+    echo "export DESK=$DESK" >> ${BASHRC_PATH}
+  fi
+
+  if [[ -z "$(echo $PATH | grep -Eo "~/.local/bin" )" ]]; then
+    echo "export PATH=$PATH:~/.local/bin" >> ${BASHRC_PATH}
+  fi
+
+  install_python3
+  install_gcc
+  install_git
+  install_google_chrome
+  install_GNU_parallel
+  install_latex
+
+  # Clean
+  apt -y -qq autoremove
+  apt -y -qq autoclean
   return 0
 
 }
 
-if [ "$(whoami)" != "root" ]; then
-	DESK=$(more ~/.config/user-dirs.dirs | grep "XDG_DESKTOP_DIR" | cut -d '"' -f2)  # obtain desktop path (not affected by sys language)
-	eval DESK=$DESK  # Expand variables recursively
-
-	# Locate bash customizing files
-	BASHRC_PATH=~/.bashrc
-
-	# Create folder for user software
-	cd ~
-	mkdir -p ~/.bin
-	chmod 755 .bin
-	userBinariesFolder=$(pwd)/.bin
-	cd ~
-
-	# Make sure that ~/.local/bin is present
-	mkdir -p ~/.local/bin
-
-	
-	# Create folder for user launchers
-	mkdir -p ~/.local/share/applications
-
-	##### Console Features #####
-	# Increase history size
-	echo "Applying console features"
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "HISTSIZE=" )" ]; then 
-		echo "export HISTSIZE=10000" >> $BASHRC_PATH
-	else
-		sed -i 's/HISTSIZE=.*/HISTSIZE=10000/' $BASHRC_PATH
-	fi
-
-	# Increase File history size
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "HISTFILESIZE=" )" ]; then 
-		echo "export HISTFILESIZE=100000" >> $BASHRC_PATH
-	else
-		sed -i 's/HISTFILESIZE=.*/HISTFILESIZE=100000/' $BASHRC_PATH
-	fi
-
-	# Append and not overwrite history
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "shopt -s histappend" )" ]; then 
-		echo "shopt -s histappend" >> $BASHRC_PATH
-	fi
-
-	# Ignore repeated commands
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "HISTCONTROL=" )" ]; then 
-		echo "HISTCONTROL=ignoredups" >> $BASHRC_PATH
-	else
-		sed -i 's/HISTCONTROL=.*/HISTCONTROL=ignoredups/' $BASHRC_PATH
-	fi
-
-	# Ignore simple commands
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "HISTIGNORE=" )" ]; then 
-		echo "HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"" >> $BASHRC_PATH
-	else
-		sed -i 's/HISTIGNORE=.*/HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"/' $BASHRC_PATH
-	fi
-
-	# store multiline commands in just one command
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "shopt -s cmdhist" )" ]; then 
-		echo "shopt -s cmdhist" >> $BASHRC_PATH
-	fi
-
-	##### Add aliases and global variables #####
-
-
-
-	# Force "gitk" as alias for gitk --all --date-order
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "alias gitk=" )" ]; then 
-		echo "alias gitk=\"gitk --all --date-order \"" >> $BASHRC_PATH
-	else
-		sed -Ei 's/^alias gitk=.*/alias gitk=\"gitk --all --date-order \"/' $BASHRC_PATH
-	fi
-
-	# Desktop global variable pointer
-	eval DESK=$DESK  # Expand recursively all variables in $DESK (usually $HOME)
-	if [ -z "$(more $BASHRC_PATH | grep -Fo "export DESK=" )" ]; then 
-		echo "export DESK=$DESK" >> $BASHRC_PATH
-	fi
-
-
-	if [ -z "$(echo $PATH | grep -Eo "~/.local/bin" )" ]; then 
-		echo "export PATH=$PATH:~/.local/bin" >> $BASHRC_PATH
-	fi
-
-
-
-
-else
-	##### Software #####
-	# Update repositories and system
-	apt -y -qq update
-	apt -y -qq upgrade
-
-	# GNU C compiler, git suite, python3, python2
-	install_python3
-    install_gcc
-    install_git
-    install_google_chrome
-
-	# GNU-parallel
-
-    # LaTeX
-    apt -y -qq install texlive-latex-extra
-
-	# Clean
-	apt -y -qq autoremove
-	apt -y -qq autoclean
-fi
+USR_BIN_FOLDER=
+BASHRC_PATH=
+main "$@"
