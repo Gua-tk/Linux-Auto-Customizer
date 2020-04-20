@@ -24,32 +24,25 @@ install_google_chrome()
 
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 # Links it to the path
-# Needs roots permission to install dependencies
 install_pypy3()
 {
   # Targeted version of pypy3
   local -r pypy3_version=pypy3.5-v7.0.0-linux64
 
-  # pypy3 module dependencies
-  apt-get install -y -qq pkg-config
-  apt-get install -y -qq libfreetype6-dev
-  apt-get install -y -qq libpng-dev
-
   # Point to the user binaries folder
   cd ${USR_BIN_FOLDER}
 
   if [[ ! -d ${pypy3_version} ]]; then
-    wget -q https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
-    tar xjf ${pypy3_version}.tar.bz2
-    rm ${pypy3_version}.tar.bz2*
-    cd ${pypy3_version}/bin
+    wget -q -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
+    tar xjf ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
+    rm ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
 
     # Install modules using pip
-    ./pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
+    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
 
     # Forces download
-    ./pip3.5 --no-cache-dir -q install --upgrade pip
-    ./pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
+    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 --no-cache-dir -q install --upgrade pip
+    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
 
     # Create links to the PATH
     rm -f ${HOME}/.local/bin/pypy3
@@ -59,7 +52,15 @@ install_pypy3()
   else
     err "WARNING: pypy3 is already installed. Skipping"
   fi
+}
 
+# Needs roots permission
+install_pypy3_dependencies()
+{
+  # pypy3 module dependencies
+  apt-get install -y -qq pkg-config
+  apt-get install -y -qq libfreetype6-dev
+  apt-get install -y -qq libpng-dev
 }
 
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
@@ -67,14 +68,11 @@ install_pycharm()
 {
   local -r pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
 
-  # Point to the user binaries folder
-  cd ${USR_BIN_FOLDER}
-
   # Download pycharm
   if [[ ! -d ${pycharm_version} ]]; then
-    wget -q https://download.jetbrains.com/python/${pycharm_version}.tar.gz
-    tar xzf ${pycharm_version}.tar.gz
-    rm ${pycharm_version}.tar.gz*
+    wget -q -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+    tar xzf ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
+    rm ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
 
     # Create links to the PATH
     rm -f ${HOME}/.local/bin/pycharm
@@ -136,9 +134,9 @@ install_sublime_text()
 
   # Download sublime_text
   if [[ ! -d "sublime_text_3" ]]; then
-    wget -q https://download.sublimetext.com/${sublime_text_version}.tar.bz2
-    tar xjf ${sublime_text_version}.tar.bz2
-    rm ${sublime_text_version}.tar.bz2*
+    wget -q -P ${USR_BIN_FOLDER} https://download.sublimetext.com/${sublime_text_version}.tar.bz2
+    tar xjf -P ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2
+    rm -P ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
 
     # Create link to the PATH
     rm -f ${HOME}/.local/bin/subl
@@ -179,13 +177,12 @@ install_templates()
 {
   # Add templates
   if [[ -f ${HOME}/.config/user-dirs.dirs ]]; then
-    cd ${XDG_TEMPLATES_DIR}
-    echo "#!/usr/bin/env bash" > New_Shell_Script.sh
-    echo "#!/usr/bin/env python3" > New_Python3_Script.py
+    echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/New_Shell_Script.sh
+    echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/New_Python3_Script.py
     echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
-" > New_LaTeX_Document.tex
+" > ${XDG_TEMPLATES_DIR}/New_LaTeX_Document.tex
     chmod 755 *
   fi
 }
@@ -205,7 +202,6 @@ install_ls_alias()
 # Defines a function to extract all types of compressed files
 install_extract_function()
 {
-  # TODO(aleix) assure bashrc_path variable
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "extract () {" )" ]]; then
       extract="
 
@@ -314,17 +310,22 @@ function err()
 ##################
 function main()
 {
-  # Update repositories and system before doing anything
-  apt -y -qq update
-  apt -y -qq upgrade
+  # Update repositories and system before doing anything if we have permissions
+  if [[ "$(whoami)" == "root" ]]; then
+    apt -y -qq update
+    apt -y -qq upgrade
+  fi
 
   # Locate bash customizing files
   BASHRC_PATH=${HOME}/.bashrc
 
+  # Do a safe copy
+  cp ${BASHRC_PATH} ${HOME}/.bashrc.bak
+
   # Create folder for user software
   mkdir -p ${HOME}/.bin
   chmod 755 ${HOME}/.bin
-  USR_BIN_FOLDER=$(HOME)/.bin
+  USR_BIN_FOLDER=${HOME}/.bin
 
   # Make sure that ${HOME}/.local/bin is present
   mkdir -p ${HOME}/.local/bin
@@ -340,12 +341,17 @@ function main()
   ###### ARGUMENT PROCESSING ######
   install_pycharm
 
-  # Clean
-  apt -y -qq autoremove
-  apt -y -qq autoclean
-  return 0
+  # Clean if we have permissions
+  if [[ "$(whoami)" == "root" ]]; then
+    apt -y -qq autoremove
+    apt -y -qq autoclean
+  fi
 
+  return 0
 }
+
+set -e
+# Script will exit if any command fails
 
 # GLOBAL VARIABLES
 # Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
