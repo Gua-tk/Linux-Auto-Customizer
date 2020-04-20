@@ -52,10 +52,10 @@ install_pypy3()
     ./pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
 
     # Create links to the PATH
-    rm -f ~/.local/bin/pypy3
-    ln -s $(pwd)/pypy3 ~/.local/bin/pypy3
-    rm -f ~/.local/bin/pip-pypy3
-    ln -s $(pwd)/pip3.5 ~/.local/bin/pip-pypy3
+    rm -f ${HOME}/.local/bin/pypy3
+    ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 ${HOME}/.local/bin/pypy3
+    rm -f ${HOME}/.local/bin/pip-pypy3
+    ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 ${HOME}/.local/bin/pip-pypy3
   else
     err "WARNING: pypy3 is already installed. Skipping"
   fi
@@ -77,8 +77,8 @@ install_pycharm()
     rm ${pycharm_version}.tar.gz*
 
     # Create links to the PATH
-    rm -f ~/.local/bin/pycharm
-    ln -s $(pwd)/${pycharm_version}/bin/pycharm.sh ~/.local/bin/pycharm
+    rm -f ${HOME}/.local/bin/pycharm
+    ln -s ${USR_BIN_FOLDER}/${pycharm_version}/bin/pycharm.sh ${HOME}/.local/bin/pycharm
   else
     err "WARNING: pycharm is already installed. Skipping"
   fi
@@ -94,9 +94,9 @@ Exec=pycharm
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
-    echo -e "$pycharm_launcher" > ~/.local/share/applications/pycharm.desktop
-    chmod 775 ~/.local/share/applications/pycharm.desktop
-    cp ~/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
+    echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
+    chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
+    cp ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
   fi
 }
 
@@ -141,8 +141,8 @@ install_sublime_text()
     rm ${sublime_text_version}.tar.bz2*
 
     # Create link to the PATH
-    rm -f ~/.local/bin/subl
-    ln -s $(pwd)/sublime_text_3/sublime_text ~/.local/bin/subl
+    rm -f ${HOME}/.local/bin/subl
+    ln -s ${USR_BIN_FOLDER}/sublime_text_3/sublime_text ${HOME}/.local/bin/subl
   fi
 
   # Create desktop launcher entry for pycharm launcher
@@ -156,11 +156,11 @@ Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Terminal=false
 Exec=subl"
-    echo -e "$sublime_launcher" > ~/.local/share/applications/sublime_text.desktop
-    chmod 775 ~/.local/share/applications/sublime_text.desktop
+    echo -e "$sublime_launcher" > ${HOME}/.local/share/applications/sublime_text.desktop
+    chmod 775 ${HOME}/.local/share/applications/sublime_text.desktop
 
     # Copy launcher to the desktop
-    cp ~/.local/share/applications/sublime_text.desktop ${XDG_DESKTOP_DIR}
+    cp ${HOME}/.local/share/applications/sublime_text.desktop ${XDG_DESKTOP_DIR}
   fi
 }
 
@@ -178,8 +178,7 @@ install_latex()
 install_templates()
 {
   # Add templates
-  cd ~
-  if [[ -f ~/.config/user-dirs.dirs ]]; then
+  if [[ -f ${HOME}/.config/user-dirs.dirs ]]; then
     cd ${XDG_TEMPLATES_DIR}
     echo "#!/usr/bin/env bash" > New_Shell_Script.sh
     echo "#!/usr/bin/env python3" > New_Python3_Script.py
@@ -323,27 +322,23 @@ function main()
   BASHRC_PATH=${HOME}/.bashrc
 
   # Create folder for user software
-  mkdir -p ~/.bin
-  chmod 755 ~/.bin
+  mkdir -p ${HOME}/.bin
+  chmod 755 ${HOME}/.bin
   USR_BIN_FOLDER=$(HOME)/.bin
 
-  # Make sure that ~/.local/bin is present
-  mkdir -p ~/.local/bin
+  # Make sure that ${HOME}/.local/bin is present
+  mkdir -p ${HOME}/.local/bin
 
   # Make sure that folder for user launchers is present
-  mkdir -p ~/.local/share/applications
+  mkdir -p ${HOME}/.local/share/applications
 
-  # Make sure that PATH is pointing to ~/.local/bin (where we will put our links to the software)
+  # Make sure that PATH is pointing to ${HOME}/.local/bin (where we will put our links to the software)
   if [[ -z "$(echo $PATH | grep -Eo "${HOME}/.local/bin" )" ]]; then
     echo "export PATH=$PATH:${HOME}/.local/bin" >> ${BASHRC_PATH}
   fi
 
-  install_python3
-  install_gcc
-  install_git
-  install_google_chrome
-  install_GNU_parallel
-  install_latex
+  ###### ARGUMENT PROCESSING ######
+  install_pycharm
 
   # Clean
   apt -y -qq autoremove
