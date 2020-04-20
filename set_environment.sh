@@ -10,7 +10,9 @@
 # Needs root permission
 function install_google_chrome()
 {
+  # Chrome dependencies
   apt-get install -y -qq libxss1 libappindicator1 libindicator7
+
   if [[ -z "$(which google-chrome)" ]]; then
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     apt install -y -qq ./google-chrome*.deb
@@ -20,28 +22,36 @@ function install_google_chrome()
   fi
 }
 
-# Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib) using pip3 from pypy3
+# Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
+# Links it to the path
 # Needs roots permission to install dependencies
 function install_pypy3()
 {
+  # Targeted version of pypy3
+  local -r pypy3_version=pypy3.5-v7.0.0-linux64
+
   # pypy3 module dependencies
   apt-get install -y -qq pkg-config
   apt-get install -y -qq libfreetype6-dev
   apt-get install -y -qq libpng-dev
 
-  # Downloads pypy3 and install modules
-  local -r pypy3_version=pypy3.5-v7.0.0-linux64
-
-  cd ${USR_BIN_FOLDER}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
+  # Point to the user binaries folder
+  cd ${USR_BIN_FOLDER}
 
   if [[ ! -d ${pypy3_version} ]]; then
     wget -q https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
-    tar xjf pypy3.5-v7.0.0-linux64.tar.bz2
-    rm pypy3.5-v7.0.0-linux64.tar.bz2*
-    cd pypy3.5-v7.0.0-linux64/bin
+    tar xjf ${pypy3_version}.tar.bz2
+    rm ${pypy3_version}.tar.bz2*
+    cd ${pypy3_version}/bin
+
+    # Install modules using pip
     ./pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
+
+    # Forces download
     ./pip3.5 --no-cache-dir -q install --upgrade pip
     ./pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
+
+    # Create links to the PATH
     rm -f ~/.local/bin/pypy3
     ln -s $(pwd)/pypy3 ~/.local/bin/pypy3
     rm -f ~/.local/bin/pip-pypy3
@@ -52,17 +62,21 @@ function install_pypy3()
 
 }
 
-# Installs pycharm, links it to the PATH and creates a launcher for it
+# Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 function install_pycharm()
 {
   local -r pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
-  cd ${USR_BIN_FOLDER}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
+
+  # Point to the user binaries folder
+  cd ${USR_BIN_FOLDER}
 
   # Download pycharm
   if [[ ! -d ${pycharm_version} ]]; then
     wget -q https://download.jetbrains.com/python/${pycharm_version}.tar.gz
     tar xzf ${pycharm_version}.tar.gz
     rm ${pycharm_version}.tar.gz*
+
+    # Create links to the PATH
     rm -f ~/.local/bin/pycharm
     ln -s $(pwd)/${pycharm_version}/bin/pycharm.sh ~/.local/bin/pycharm
   else
@@ -82,7 +96,7 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm"
     echo -e "$pycharm_launcher" > ~/.local/share/applications/pycharm.desktop
     chmod 775 ~/.local/share/applications/pycharm.desktop
-    # TODO(aleix) copy launcher to desktop
+    cp ~/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
   fi
 }
 
@@ -96,6 +110,14 @@ function install_git()
   else
     sed -Ei 's/^alias gitk=.*/alias gitk=\"gitk --all --date-order \"/' ${BASHRC_PATH}
   fi
+
+  # Create alias for dummycommit
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias dummycommit=" )" ]]; then
+    echo "alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"" >> ${BASHRC_PATH}
+  else
+    sed -Ei 's/^alias dummycommit=.*/alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"/' ${BASHRC_PATH}
+  fi
+
   apt install -y -qq git-all
 }
 
@@ -124,13 +146,15 @@ function install_sublime_text()
 {
   sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
 
+  cd ${USR_BIN_FOLDER}  # Point to the user binaries folder
+
   # Download sublime_text
-  echo "Installing sublime-text"
-  cd ${USR_BIN_FOLDER}  # TODO(aleix)  # TODO(aleix) make sure that pwd is pointing to ~/.bin
   if [[ ! -d "sublime_text_3" ]]; then
     wget -q https://download.sublimetext.com/${sublime_text_version}.tar.bz2
     tar xjf ${sublime_text_version}.tar.bz2
     rm ${sublime_text_version}.tar.bz2*
+
+    # Create link to the PATH
     rm -f ~/.local/bin/subl
     ln -s $(pwd)/sublime_text_3/sublime_text ~/.local/bin/subl
   fi
@@ -145,9 +169,12 @@ GenericName=Text Editor
 Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Terminal=false
-Exec=sublime"
+Exec=subl"
     echo -e "$sublime_launcher" > ~/.local/share/applications/sublime_text.desktop
     chmod 775 ~/.local/share/applications/sublime_text.desktop
+
+    # Copy launcher to the desktop
+    cp ~/.local/share/applications/sublime_text.desktop ${XDG_DESKTOP_DIR}
   fi
 }
 
@@ -165,12 +192,9 @@ function install_latex()
 function install_templates()
 {
   # Add templates
-  echo "Adding user file templates"
   cd ~
   if [[ -f ~/.config/user-dirs.dirs ]]; then
-    templates=$(more ~/.config/user-dirs.dirs | grep "XDG_TEMPLATES_DIR" | cut -d '"' -f2)  # obtain templates path (not affected by sys language)
-    eval templates=${templates}  # Expand recursively all variables in $DESK (usually $HOME)
-    cd ${templates}
+    cd ${XDG_TEMPLATES_DIR}
     echo "#!/usr/bin/env bash" > New_Shell_Script.sh
     echo "#!/usr/bin/env python3" > New_Python3_Script.py
     echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -186,7 +210,6 @@ function install_templates()
 # Forces l as alias for ls -lAh
 function install_ls_alias()
 {
-  # TODO(aleix) assure bashrc_path variable
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
     echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
   else
@@ -285,34 +308,31 @@ function err()
 ##################
 function main()
 {
-  # TODO(aleix) prepare environment and variables for the installation
   # Update repositories and system before doing anything
   apt -y -qq update
   apt -y -qq upgrade
 
-  DESK=$(more ~/.config/user-dirs.dirs | grep "XDG_DESKTOP_DIR" | cut -d '"' -f2)  # obtain desktop path (not affected by sys language)
-  eval DESK=${DESK}  # Expand variables recursively  # TODO(aleix) eval is WICKED
-
   # Locate bash customizing files
-  global BASHRC_PATH=~/.bashrc
+  BASHRC_PATH=~/.bashrc
 
   # Create folder for user software
   cd ~
   mkdir -p ~/.bin
   chmod 755 .bin
-  global USR_BIN_FOLDER=$(pwd)/.bin
+  USR_BIN_FOLDER=$(pwd)/.bin
   cd ~
 
   # Make sure that ~/.local/bin is present
   mkdir -p ~/.local/bin
 
-  # Create folder for user launchers
+  # Make sure that folder for user launchers is present
   mkdir -p ~/.local/share/applications
 
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "export DESK=" )" ]]; then
     echo "export DESK=$DESK" >> ${BASHRC_PATH}
   fi
 
+  # Make sure that PATH is pointing to ~/.local/bin (where we will put our links to the software)
   if [[ -z "$(echo $PATH | grep -Eo "~/.local/bin" )" ]]; then
     echo "export PATH=$PATH:~/.local/bin" >> ${BASHRC_PATH}
   fi
@@ -331,6 +351,13 @@ function main()
 
 }
 
+# GLOBAL VARIABLES
+# Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
+. ~/.config/user-dirs.dirs
+# Other script-specific variables
+DESK=
 USR_BIN_FOLDER=
 BASHRC_PATH=
+
+# Call main function
 main "$@"

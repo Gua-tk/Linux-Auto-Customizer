@@ -5,4 +5,4 @@ rm ~/.local/share/applications/sublime.desktop
 rm ~/.local/bin/pip-pypy3
 rm ~/.local/bin/pypy3
 rm ~/.local/bin/pycharm
-rm ~/.local/bin/sublime
+rm ~/.local/bin/subl
