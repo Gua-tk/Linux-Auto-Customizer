@@ -8,7 +8,7 @@
 
 # Checks if Google Chrome is already installed and installs it and its dependencies
 # Needs root permission
-function install_google_chrome()
+install_google_chrome()
 {
   # Chrome dependencies
   apt-get install -y -qq libxss1 libappindicator1 libindicator7
@@ -25,7 +25,7 @@ function install_google_chrome()
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 # Links it to the path
 # Needs roots permission to install dependencies
-function install_pypy3()
+install_pypy3()
 {
   # Targeted version of pypy3
   local -r pypy3_version=pypy3.5-v7.0.0-linux64
@@ -63,7 +63,7 @@ function install_pypy3()
 }
 
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
-function install_pycharm()
+install_pycharm()
 {
   local -r pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
 
@@ -102,47 +102,33 @@ StartupWMClass=jetbrains-pycharm"
 
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
-function install_git()
+install_git()
 {
-  # Force "gitk" as alias for gitk --all --date-order
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias gitk=" )" ]]; then
-    echo "alias gitk=\"gitk --all --date-order \"" >> ${BASHRC_PATH}
-  else
-    sed -Ei 's/^alias gitk=.*/alias gitk=\"gitk --all --date-order \"/' ${BASHRC_PATH}
-  fi
-
-  # Create alias for dummycommit
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias dummycommit=" )" ]]; then
-    echo "alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"" >> ${BASHRC_PATH}
-  else
-    sed -Ei 's/^alias dummycommit=.*/alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"/' ${BASHRC_PATH}
-  fi
-
   apt install -y -qq git-all
 }
 
 # Install gcc (C compiler)
 # Needs root permission
-function install_gcc()
+install_gcc()
 {
   apt install -y -qq gcc
 }
 
 # Install Python3
 # Needs root permission
-function install_python3()
+install_python3()
 {
   apt install -y -qq python3
 }
 
 # Install GNU parallel
-function install_GNU_parallel()
+install_GNU_parallel()
 {
   apt-get install parallel
 }
 
 # Install Sublime text 3
-function install_sublime_text()
+install_sublime_text()
 {
   sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
 
@@ -180,7 +166,7 @@ Exec=subl"
 
 # Install latex
 # Needs root permission
-function install_latex()
+install_latex()
 {
   apt -y -qq install texlive-latex-extra
 }
@@ -189,7 +175,7 @@ function install_latex()
 
 # Install templates (available files in the right click --> new --> ...)
 # Python3, bash shell scripts, latex documents
-function install_templates()
+install_templates()
 {
   # Add templates
   cd ~
@@ -208,7 +194,7 @@ function install_templates()
 ###### SHELL FEATURES ######
 
 # Forces l as alias for ls -lAh
-function install_ls_alias()
+install_ls_alias()
 {
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
     echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
@@ -218,7 +204,7 @@ function install_ls_alias()
 }
 
 # Defines a function to extract all types of compressed files
-function install_extract_function()
+install_extract_function()
 {
   # TODO(aleix) assure bashrc_path variable
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "extract () {" )" ]]; then
@@ -253,10 +239,8 @@ fi
 # Increases file history size, size of the history and forces to append to history, never overwrite
 # Ignore repeated commands and simple commands
 # Store multiline comments in just one command
-function install_shell_history_optimization()
+install_shell_history_optimization()
 {
-  # TODO(aleix) assure bashrc_path variable
-
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTSIZE=" )" ]]; then
     echo "export HISTSIZE=10000" >> ${BASHRC_PATH}
   else
@@ -293,7 +277,30 @@ function install_shell_history_optimization()
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "shopt -s cmdhist" )" ]]; then
     echo "shopt -s cmdhist" >> ${BASHRC_PATH}
   fi
+}
 
+install_git_aliases()
+{
+  # Force "gitk" as alias for gitk --all --date-order
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias gitk=" )" ]]; then
+    echo "alias gitk=\"gitk --all --date-order \"" >> ${BASHRC_PATH}
+  else
+    sed -Ei 's/^alias gitk=.*/alias gitk=\"gitk --all --date-order \"/' ${BASHRC_PATH}
+  fi
+
+  # Create alias for dummycommit
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias dummycommit=" )" ]]; then
+    echo "alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"" >> ${BASHRC_PATH}
+  else
+    sed -Ei 's/^alias dummycommit=.*/alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"/' ${BASHRC_PATH}
+  fi
+}
+
+install_environment_aliases()
+{
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "export DESK=" )" ]]; then
+    echo "export DESK=${XDG_DESKTOP_DIR}" >> ${BASHRC_PATH}
+  fi
 }
 ###### AUXILIAR FUNCTIONS ######
 
@@ -313,14 +320,12 @@ function main()
   apt -y -qq upgrade
 
   # Locate bash customizing files
-  BASHRC_PATH=~/.bashrc
+  BASHRC_PATH=${HOME}/.bashrc
 
   # Create folder for user software
-  cd ~
   mkdir -p ~/.bin
-  chmod 755 .bin
-  USR_BIN_FOLDER=$(pwd)/.bin
-  cd ~
+  chmod 755 ~/.bin
+  USR_BIN_FOLDER=$(HOME)/.bin
 
   # Make sure that ~/.local/bin is present
   mkdir -p ~/.local/bin
@@ -328,13 +333,9 @@ function main()
   # Make sure that folder for user launchers is present
   mkdir -p ~/.local/share/applications
 
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "export DESK=" )" ]]; then
-    echo "export DESK=$DESK" >> ${BASHRC_PATH}
-  fi
-
   # Make sure that PATH is pointing to ~/.local/bin (where we will put our links to the software)
-  if [[ -z "$(echo $PATH | grep -Eo "~/.local/bin" )" ]]; then
-    echo "export PATH=$PATH:~/.local/bin" >> ${BASHRC_PATH}
+  if [[ -z "$(echo $PATH | grep -Eo "${HOME}/.local/bin" )" ]]; then
+    echo "export PATH=$PATH:${HOME}/.local/bin" >> ${BASHRC_PATH}
   fi
 
   install_python3
@@ -353,7 +354,7 @@ function main()
 
 # GLOBAL VARIABLES
 # Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
-. ~/.config/user-dirs.dirs
+. ${HOME}/.config/user-dirs.dirs
 # Other script-specific variables
 DESK=
 USR_BIN_FOLDER=
