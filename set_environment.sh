@@ -29,9 +29,6 @@ install_pypy3()
   # Targeted version of pypy3
   local -r pypy3_version=pypy3.5-v7.0.0-linux64
 
-  # Point to the user binaries folder
-  cd ${USR_BIN_FOLDER}
-
   if [[ ! -d ${pypy3_version} ]]; then
     wget -q -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
     tar xjf ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
@@ -129,8 +126,6 @@ install_GNU_parallel()
 install_sublime_text()
 {
   sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
-
-  cd ${USR_BIN_FOLDER}  # Point to the user binaries folder
 
   # Download sublime_text
   if [[ ! -d "sublime_text_3" ]]; then
