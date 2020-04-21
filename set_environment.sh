@@ -10,6 +10,8 @@
 # Needs root permission
 install_google_chrome()
 {
+  echo "Attempting to install Google Chrome"	
+
   # Chrome dependencies
   apt-get install -y -qq libxss1 libappindicator1 libindicator7
 
@@ -23,6 +25,8 @@ install_google_chrome()
   else
     err "WARNING: Google Chrome is already installed. Skipping"
   fi
+
+  echo "Finished"
 }
 
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
@@ -32,6 +36,8 @@ install_pypy3()
   # Targeted version of pypy3
   local -r pypy3_version=pypy3.5-v7.0.0-linux64
 
+  echo "Attempting to install $pypy3_version"
+
   if [[ -z $(which pypy3) ]]; then
   	# Avoid error due to possible previous aborted installations
     rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.gz*
@@ -39,7 +45,7 @@ install_pypy3()
   	# Download pypy
     wget -q -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) <  ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
+    (cd "${USR_BIN_FOLDER}"; tar -xjf -) <  ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
     # Clean
     rm ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
 
@@ -58,21 +64,27 @@ install_pypy3()
   else
     err "WARNING: pypy3 is already installed. Skipping"
   fi
+
+  echo "Finished"
 }
 
 # Needs roots permission
 install_pypy3_dependencies()
 {
+  echo "Attempting to install pypy3 dependencies"
   # pypy3 module dependencies
   apt-get install -y -qq pkg-config
   apt-get install -y -qq libfreetype6-dev
   apt-get install -y -qq libpng-dev
+
+  echo "Finished"
 }
 
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_community()
 {
   local -r pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
+  echo "Attempting to install $pycharm_version"
 
   if [[ -z $(which pycharm) ]]; then
     # Avoid error due to possible previous aborted installations
@@ -104,12 +116,16 @@ StartupWMClass=jetbrains-pycharm"
   else
   	err "WARNING: pycharm is already installed. Skipping"
   fi
+
+  echo "Finished"
 }
 
 # Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_professional()
 {
   local -r pycharm_version=pycharm-professional-2020.1  # Targeted version of pycharm
+  local -r pycharm_ver=$(echo $pycharm_version | cut -d '-' -f3)
+  echo "Attempting to install $pycharm_version"
 
   if [[ -z $(which pycharm-pro) ]]; then
     # Avoid error due to possible previous aborted installations
@@ -123,7 +139,7 @@ install_pycharm_professional()
     rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
     # Create links to the PATH
     rm -f ${HOME}/.local/bin/pycharm-pro
-    ln -s ${USR_BIN_FOLDER}/${pycharm_version}/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
+    ln -s ${USR_BIN_FOLDER}/pycharm-${pycharm_ver}/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
     # Create launcher for pycharm in the desktop and in the launcher menu
     pycharm_launcher="[Desktop Entry]
 Version=1.0
@@ -140,11 +156,15 @@ StartupWMClass=jetbrains-pycharm"
   else
   	err "WARNING: pycharm-pro is already installed. Skipping"
   fi
+
+  echo "Finished"
 }
 
 install_clion()
 {
   local -r clion_version=CLion-2020.1  # Targeted version of pycharm
+
+  echo "Attempting to install $clion_version"
 
   if [[ -z $(which clion) ]]; then
     # Avoid error due to possible previous aborted installations
@@ -175,39 +195,59 @@ StartupWMClass=jetbrains-clion"
   else
   	err "WARNING: CLion is already installed. Skipping"
   fi
+
+  echo "Finished"
 }
 
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
 install_git()
 {
+  echo "Attempting to install GIT"
+
   apt install -y -qq git-all
+
+  echo "Finished"
 }
 
 # Install gcc (C compiler)
 # Needs root permission
 install_gcc()
 {
+  echo "Attempting to install gcc"
+
   apt install -y -qq gcc
+
+  echo "Finished"
 }
 
 # Install Python3
 # Needs root permission
 install_python3()
 {
+  echo "Attempting to install python3"
+
   apt install -y -qq python3
+
+  echo "Finished"
 }
 
 # Install GNU parallel
 install_GNU_parallel()
 {
-  apt-get install parallel
+  echo "Attempting to install GNU-parallel"	
+
+  apt-get -y -qq install parallel
+
+  echo "Finished"
 }
 
 # Install Sublime text 3
 install_sublime_text()
 {
   sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
+
+  echo "Attempting to install $sublime_text_version"
 
   if [[ -z $(which subl) ]]; then
   	# Avoid error due to possible previous aborted installations
@@ -216,7 +256,7 @@ install_sublime_text()
   	# Download sublime_text
     wget -q -P ${USR_BIN_FOLDER} https://download.sublimetext.com/${sublime_text_version}.tar.bz2
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2
+    (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2
     # Clean
     rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
     # Create link to the PATH
@@ -239,13 +279,19 @@ Exec=subl"
   else
     err "WARNING: sublime text is already installed. Skipping"
   fi
+
+  echo "Finished"
 }
 
 # Install latex
 # Needs root permission
 install_latex()
 {
+  echo "Attempting to install latex"
+
   apt -y -qq install texlive-latex-extra
+
+  echo "Finished"
 }
 
 ###### SYSTEM FEATURES ######
@@ -254,6 +300,8 @@ install_latex()
 # Python3, bash shell scripts, latex documents
 install_templates()
 {
+  echo "Attempting to install templates"
+
   # Add templates
   if [[ -f ${HOME}/.config/user-dirs.dirs ]]; then
     echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/New_Shell_Script.sh
@@ -264,6 +312,8 @@ install_templates()
 " > ${XDG_TEMPLATES_DIR}/New_LaTeX_Document.tex
     chmod 755 *
   fi
+
+  echo "Finished"
 }
 
 ###### SHELL FEATURES ######
@@ -271,16 +321,22 @@ install_templates()
 # Forces l as alias for ls -lAh
 install_ls_alias()
 {
+  echo "Attempting to install ls alias"
+
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
     echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
   else
     sed -i 's/^alias l=.*/alias l=\"ls -lAh --color=auto\"/' ${BASHRC_PATH}
   fi
+
+  echo "Finished"
 }
 
 # Defines a function to extract all types of compressed files
 install_extract_function()
 {
+  echo "Attempting to install extract function"
+
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "extract () {" )" ]]; then
       extract="
 
@@ -306,8 +362,11 @@ install_extract_function()
     fi
   }"
     echo -e "$extract" >> ${BASHRC_PATH}
-fi
+  else
+  	err "WARNING: Extract function is already installed. Skipping"
+  fi
 
+  echo "Finished"
 }
 
 # Increases file history size, size of the history and forces to append to history, never overwrite
@@ -315,6 +374,8 @@ fi
 # Store multiline comments in just one command
 install_shell_history_optimization()
 {
+  echo "Attempting to install shell history optimization"
+
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTSIZE=" )" ]]; then
     echo "export HISTSIZE=10000" >> ${BASHRC_PATH}
   else
@@ -351,10 +412,14 @@ install_shell_history_optimization()
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "shopt -s cmdhist" )" ]]; then
     echo "shopt -s cmdhist" >> ${BASHRC_PATH}
   fi
+
+  echo "Finished"
 }
 
 install_git_aliases()
 {
+  echo "Attempting to install git aliases"
+
   # Force "gitk" as alias for gitk --all --date-order
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias gitk=" )" ]]; then
     echo "alias gitk=\"gitk --all --date-order \"" >> ${BASHRC_PATH}
@@ -368,13 +433,21 @@ install_git_aliases()
   else
     sed -Ei 's/^alias dummycommit=.*/alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"/' ${BASHRC_PATH}
   fi
+
+  echo "Finished"
 }
 
 install_environment_aliases()
 {
+  echo "Attempting to install environment aliases"
+
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "export DESK=" )" ]]; then
     echo "export DESK=${XDG_DESKTOP_DIR}" >> ${BASHRC_PATH}
+  else
+    err "WARNING: DESK environment alias is already installed. Skipping"
   fi
+
+  echo "Finished"
 }
 
 root_install()
@@ -391,15 +464,16 @@ root_install()
 user_install()
 {
   install_templates
-  install_pypy3
   install_environment_aliases
   install_git_aliases
   install_ls_alias
-  install_sublime_text
+  install_shell_history_optimization
   install_extract_function
   install_pycharm_professional
   install_pycharm_community
-  install_shell_history_optimization
+  install_clion
+  install_sublime_text
+  install_pypy3
 }
 
 ###### AUXILIAR FUNCTIONS ######
