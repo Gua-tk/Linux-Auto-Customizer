@@ -142,6 +142,41 @@ StartupWMClass=jetbrains-pycharm"
   fi
 }
 
+install_clion()
+{
+  local -r clion_version=CLion-2020.1  # Targeted version of pycharm
+
+  if [[ -z $(which clion) ]]; then
+    # Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
+    rm -Rf ${USR_BIN_FOLDER}/${clion_version}
+    # Download CLion
+    wget -q -P ${USR_BIN_FOLDER} https://download.jetbrains.com/cpp/${clion_version}.tar.gz
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${clion_version}.tar.gz
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
+    # Create links to the PATH
+    rm -f ${HOME}/.local/bin/clion
+    ln -s ${USR_BIN_FOLDER}/${clion_version}/bin/clion.sh ${HOME}/.local/bin/clion
+    # Create launcher for pycharm in the desktop and in the launcher menu
+    clion_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CLion
+Icon=$HOME/.bin/$clion_version/bin/clion.png
+Exec=clion
+Comment=C and C++ IDE for Professional Developers
+Terminal=false
+StartupWMClass=jetbrains-clion"
+    echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
+    chmod 775 ${HOME}/.local/share/applications/clion.desktop
+    cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
+  else
+  	err "WARNING: CLion is already installed. Skipping"
+  fi
+}
+
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
 install_git()
