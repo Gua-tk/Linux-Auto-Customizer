@@ -145,7 +145,7 @@ install_pycharm_professional()
 Version=1.0
 Type=Application
 Name=PyCharm-pro
-Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
+Icon=$HOME/.bin/pycharm-$pycharm_ver/bin/pycharm.png
 Exec=pycharm-pro
 Comment=Python IDE for Professional Developers
 Terminal=false
