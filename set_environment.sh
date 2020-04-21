@@ -174,7 +174,7 @@ install_sublime_text()
 {
   sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
 
-  if [[ ! -d "sublime_text_3" ]]; then
+  if [[ -z $(which subl) ]]; then
   	# Avoid error due to possible previous aborted installations
     rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
     rm -Rf ${USR_BIN_FOLDER}/${sublime_text_version}
@@ -200,7 +200,9 @@ Exec=subl"
     echo -e "$sublime_launcher" > ${HOME}/.local/share/applications/sublime_text.desktop
     chmod 775 ${HOME}/.local/share/applications/sublime_text.desktop
     # Copy launcher to the desktop
-    cp ${HOME}/.local/share/applications/sublime_text.desktop ${XDG_DESKTOP_DIR}
+    cp -p ${HOME}/.local/share/applications/sublime_text.desktop ${XDG_DESKTOP_DIR}
+  else
+    err "WARNING: sublime text is already installed. Skipping"
   fi
 }
 
@@ -339,6 +341,32 @@ install_environment_aliases()
     echo "export DESK=${XDG_DESKTOP_DIR}" >> ${BASHRC_PATH}
   fi
 }
+
+root_install()
+{
+  install_google_chrome
+  install_gcc
+  install_git
+  install_latex
+  install_python3
+  install_GNU_parallel
+  install_pypy3_dependencies
+}
+
+user_install()
+{
+  install_templates
+  install_pypy3
+  install_environment_aliases
+  install_git_aliases
+  install_ls_alias
+  install_sublime_text
+  install_extract_function
+  install_pycharm_professional
+  install_pycharm_community
+  install_shell_history_optimization
+}
+
 ###### AUXILIAR FUNCTIONS ######
 
 # Prints the given arguments to the stderr
@@ -375,13 +403,36 @@ function main()
   # Make sure that folder for user launchers is present
   mkdir -p ${HOME}/.local/share/applications
 
-  # Make sure that PATH is pointing to ${HOME}/.local/bin (where we will put our links to the software)
+  # Make sure that PATH is pointing to ${HOME}/.local/bin (where we will put our soft links to the software)
   if [[ -z "$(echo $PATH | grep -Eo "${HOME}/.local/bin" )" ]]; then
     echo "export PATH=$PATH:${HOME}/.local/bin" >> ${BASHRC_PATH}
   fi
 
   ###### ARGUMENT PROCESSING ######
-  install_pycharm_community
+
+  # If we don't receive arguments we try to install everything that we can given our permissions
+  if [[ -z "$@" ]]; then
+    if [[ "$(whoami)" == "root" ]]; then
+      root_install
+      user_install
+    else
+      user_install
+    fi
+  else
+    while [[ $# -gt 0 ]]; do
+      key="$1"
+
+      case $key in
+        --chrome)
+          
+          ;;
+        *)    # unknown option
+          POSITIONAL+=("$1") # save it in an array for later
+          shift # past argument
+          ;;
+      esac
+    done
+  fi
 
   # Clean if we have permissions
   if [[ "$(whoami)" == "root" ]]; then
@@ -392,8 +443,8 @@ function main()
   return 0
 }
 
-set -e
 # Script will exit if any command fails
+set -e
 
 # GLOBAL VARIABLES
 # Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
