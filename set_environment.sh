@@ -14,9 +14,12 @@ install_google_chrome()
   apt-get install -y -qq libxss1 libappindicator1 libindicator7
 
   if [[ -z "$(which google-chrome)" ]]; then
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    apt install -y -qq ./google-chrome*.deb
-    rm google-chrome*.deb
+  	# Download
+    wget -q -P ${USR_BIN_FOLDER} https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    # Install downloaded version
+    apt install -y -qq ${USR_BIN_FOLDER}/google-chrome*.deb
+    # Clean
+    rm ${USR_BIN_FOLDER}/google-chrome*.deb
   else
     err "WARNING: Google Chrome is already installed. Skipping"
   fi
@@ -29,15 +32,21 @@ install_pypy3()
   # Targeted version of pypy3
   local -r pypy3_version=pypy3.5-v7.0.0-linux64
 
-  if [[ ! -d ${pypy3_version} ]]; then
+  if [[ -z $(which pypy3) ]]; then
+  	# Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.gz*
+    rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
+  	# Download pypy
     wget -q -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
-    tar xjf ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) <  ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
+    # Clean
     rm ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
 
     # Install modules using pip
     ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
 
-    # Forces download
+    # Forces download of pip and of modules
     ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 --no-cache-dir -q install --upgrade pip
     ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
 
@@ -61,25 +70,25 @@ install_pypy3_dependencies()
 }
 
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
-install_pycharm()
+install_pycharm_community()
 {
   local -r pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
 
-  # Download pycharm
-  if [[ ! -d ${pycharm_version} ]]; then
+  if [[ -z $(which pycharm) ]]; then
+    # Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
+    rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
+    # Download pycharm
     wget -q -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
-    tar xzf ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
-    rm ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
-
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
     # Create links to the PATH
     rm -f ${HOME}/.local/bin/pycharm
     ln -s ${USR_BIN_FOLDER}/${pycharm_version}/bin/pycharm.sh ${HOME}/.local/bin/pycharm
-  else
-    err "WARNING: pycharm is already installed. Skipping"
-  fi
 
-  # Create desktop entry for pycharm launcher
-  if [[ -d ${pycharm_version} ]]; then
+    # Create launcher for pycharm in the desktop and in the launcher menu
     pycharm_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
@@ -91,7 +100,45 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm"
     echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
     chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
-    cp ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
+    cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
+  else
+  	err "WARNING: pycharm is already installed. Skipping"
+  fi
+}
+
+# Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
+install_pycharm_professional()
+{
+  local -r pycharm_version=pycharm-professional-2020.1  # Targeted version of pycharm
+
+  if [[ -z $(which pycharm-pro) ]]; then
+    # Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
+    rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
+    # Download pycharm
+    wget -q -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
+    # Create links to the PATH
+    rm -f ${HOME}/.local/bin/pycharm-pro
+    ln -s ${USR_BIN_FOLDER}/${pycharm_version}/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
+    # Create launcher for pycharm in the desktop and in the launcher menu
+    pycharm_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PyCharm-pro
+Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
+Exec=pycharm-pro
+Comment=Python IDE for Professional Developers
+Terminal=false
+StartupWMClass=jetbrains-pycharm"
+    echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
+    chmod 775 ${HOME}/.local/share/applications/pycharm-pro.desktop
+    cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
+  else
+  	err "WARNING: pycharm-pro is already installed. Skipping"
   fi
 }
 
@@ -127,19 +174,20 @@ install_sublime_text()
 {
   sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
 
-  # Download sublime_text
   if [[ ! -d "sublime_text_3" ]]; then
+  	# Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
+    rm -Rf ${USR_BIN_FOLDER}/${sublime_text_version}
+  	# Download sublime_text
     wget -q -P ${USR_BIN_FOLDER} https://download.sublimetext.com/${sublime_text_version}.tar.bz2
-    tar xjf -P ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2
-    rm -P ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
-
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
     # Create link to the PATH
     rm -f ${HOME}/.local/bin/subl
     ln -s ${USR_BIN_FOLDER}/sublime_text_3/sublime_text ${HOME}/.local/bin/subl
-  fi
-
-  # Create desktop launcher entry for pycharm launcher
-  if [[ -d "sublime_text_3" ]]; then
+    # Create desktop launcher entry for pycharm launcher
     sublime_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
@@ -151,7 +199,6 @@ Terminal=false
 Exec=subl"
     echo -e "$sublime_launcher" > ${HOME}/.local/share/applications/sublime_text.desktop
     chmod 775 ${HOME}/.local/share/applications/sublime_text.desktop
-
     # Copy launcher to the desktop
     cp ${HOME}/.local/share/applications/sublime_text.desktop ${XDG_DESKTOP_DIR}
   fi
@@ -334,7 +381,7 @@ function main()
   fi
 
   ###### ARGUMENT PROCESSING ######
-  install_pycharm
+  install_pycharm_community
 
   # Clean if we have permissions
   if [[ "$(whoami)" == "root" ]]; then
