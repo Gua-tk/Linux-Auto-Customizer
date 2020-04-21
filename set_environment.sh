@@ -503,7 +503,6 @@ function main()
 
   # Create folder for user software
   mkdir -m 0000 -p ${HOME}/.bin
-  chmod 755 ${HOME}/.bin
   USR_BIN_FOLDER=${HOME}/.bin
 
   # Make sure that ${HOME}/.local/bin is present
