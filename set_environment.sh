@@ -499,18 +499,18 @@ function main()
   BASHRC_PATH=${HOME}/.bashrc
 
   # Do a safe copy
-  cp ${BASHRC_PATH} ${HOME}/.bashrc.bak
+  cp -p ${BASHRC_PATH} ${HOME}/.bashrc.bak
 
   # Create folder for user software
-  mkdir -p ${HOME}/.bin
+  mkdir -m 0000 -p ${HOME}/.bin
   chmod 755 ${HOME}/.bin
   USR_BIN_FOLDER=${HOME}/.bin
 
   # Make sure that ${HOME}/.local/bin is present
-  mkdir -p ${HOME}/.local/bin
+  mkdir -m 0000 -p ${HOME}/.local/bin
 
   # Make sure that folder for user launchers is present
-  mkdir -p ${HOME}/.local/share/applications
+  mkdir -m 0000 -p ${HOME}/.local/share/applications
 
   # Make sure that PATH is pointing to ${HOME}/.local/bin (where we will put our soft links to the software)
   if [[ -z "$(echo $PATH | grep -Eo "${HOME}/.local/bin" )" ]]; then
