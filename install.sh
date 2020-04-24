@@ -162,7 +162,8 @@ StartupWMClass=jetbrains-pycharm"
 
 install_clion()
 {
-  local -r clion_version=CLion-2020.1  # Targeted version of pycharm
+  local -r clion_version=CLion-2020.1  # Targeted version of CLion
+  local -r clion_version_caps_down=$(echo "${clion_version}" | tr '[:upper:]' '[:lower:]')  # Desirable filename in lowercase
 
   echo "Attempting to install $clion_version"
 
@@ -178,13 +179,13 @@ install_clion()
     rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
     # Create links to the PATH
     rm -f ${HOME}/.local/bin/clion
-    ln -s ${USR_BIN_FOLDER}/${clion_version}/bin/clion.sh ${HOME}/.local/bin/clion
+    ln -s ${USR_BIN_FOLDER}/${clion_version_caps_down}/bin/clion.sh ${HOME}/.local/bin/clion
     # Create launcher for pycharm in the desktop and in the launcher menu
     clion_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
 Name=CLion
-Icon=$HOME/.bin/$clion_version/bin/clion.png
+Icon=$HOME/.bin/${clion_version_caps_down}/bin/clion.png
 Exec=clion
 Comment=C and C++ IDE for Professional Developers
 Terminal=false
@@ -262,7 +263,7 @@ install_sublime_text()
     # Create link to the PATH
     rm -f ${HOME}/.local/bin/subl
     ln -s ${USR_BIN_FOLDER}/sublime_text_3/sublime_text ${HOME}/.local/bin/subl
-    # Create desktop launcher entry for pycharm launcher
+    # Create desktop launcher entry for sublime text
     sublime_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
@@ -504,6 +505,11 @@ function main()
   # Create folder for user software
   mkdir -m 0000 -p ${HOME}/.bin
   USR_BIN_FOLDER=${HOME}/.bin
+  if [[ "$(whoami)" == "root" ]]; then
+    chown ${SUDO_USER} ${USR_BIN_FOLDER}
+    chgrp ${SUDO_USER} ${USR_BIN_FOLDER}
+    chmod 777 ${USR_BIN_FOLDER}
+  fi
 
   # Make sure that ${HOME}/.local/bin is present
   mkdir -m 0000 -p ${HOME}/.local/bin
@@ -522,7 +528,6 @@ function main()
   if [[ -z "$@" ]]; then
     if [[ "$(whoami)" == "root" ]]; then
       root_install
-      user_install
     else
       user_install
     fi

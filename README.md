@@ -26,3 +26,8 @@ All user software is going to be installed under ~/.bin
 
 TODO add walpapers
 add automount external unities
+
+
+Installation:
+
+sudo bash install.sh && bash install.sh
