@@ -24,4 +24,7 @@ rm -f ~/Escritorio/jetbrains-clion.desktop
 
 rm -f ~/Plantillas/*
 
-apt-get remove git-all google-chrome gcc python3-dev python-dev
+apt-get remove git-all gcc python3-dev python-dev parallel pkg-config libfreetype6-dev libpng-dev texlive-latex-extra google-chrome-stable
+apt -y -qq autoremove
+apt -y -qq autoclean
+# //RF chrome
