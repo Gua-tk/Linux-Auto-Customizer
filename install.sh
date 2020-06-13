@@ -8,6 +8,48 @@
 
 # Checks if Google Chrome is already installed and installs it and its dependencies
 # Needs root permission
+install_android_studio()
+{
+  local -r android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of pycharm
+  if [[ -z "$(which studio)" ]]; then
+    # avoid collisions
+    rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
+    # Download
+    wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.0.0.16/${android_studio_version}.tar.gz
+    
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) <  ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
+    
+    # Create links to the PATH
+    rm -f ${HOME}/.local/bin/studio
+    ln -s ${USR_BIN_FOLDER}/android-studio/bin/studio.sh ${HOME}/.local/bin/studio
+    
+    # Create launcher
+    android_studio_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Android Studio
+Exec=studio
+Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
+Categories=Development;IDE;
+Terminal=false
+StartupNotify=true
+StartupWMClass=jetbrains-android-studio
+Name[en_GB]=android-studio.desktop"
+
+    echo -e "${android_studio_launcher}" > "${HOME}/.local/share/applications/Android Studio.desktop"
+    chmod 775 "${HOME}/.local/share/applications/Android Studio.desktop"
+    cp -p "${HOME}/.local/share/applications/Android Studio.desktop" ${XDG_DESKTOP_DIR}
+  else
+    err "WARNING: Android Studio is already installed. Skipping"
+  fi
+}
+
+
+# Checks if Google Chrome is already installed and installs it and its dependencies
+# Needs root permission
 install_google_chrome()
 {
   # Chrome dependencies
@@ -39,8 +81,7 @@ install_pypy3()
   echo "Attempting to install $pypy3_version"
 
   if [[ -z $(which pypy3) ]]; then
-  	# Avoid error due to possible previous aborted installations
-    echo "really"
+    # Avoid error due to possible previous aborted installations
     rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.gz*
     rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
   	# Download pypy
@@ -49,7 +90,6 @@ install_pypy3()
     (cd "${USR_BIN_FOLDER}"; tar -xjf -) <  ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
     # Clean
     rm ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
-    echo "jjij"
 
     # Install modules using pip
     ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 -m ensurepip   # redirection to hide output
@@ -60,7 +100,6 @@ install_pypy3()
     ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
 
     # Create links to the PATH
-    echo "yesIS HEREEEE"  # //rf
     rm -f ${HOME}/.local/bin/pypy3
     ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 ${HOME}/.local/bin/pypy3
     rm -f ${HOME}/.local/bin/pip-pypy3
@@ -90,7 +129,7 @@ install_pycharm_community()
     rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
     rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
     # Download pycharm
-    wget -q -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
     # Clean
@@ -167,7 +206,7 @@ install_clion()
     rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
     rm -Rf ${USR_BIN_FOLDER}/${clion_version}
     # Download CLion
-    wget -q -P ${USR_BIN_FOLDER} https://download.jetbrains.com/cpp/${clion_version}.tar.gz
+    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/cpp/${clion_version}.tar.gz
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${clion_version}.tar.gz
     # Clean
@@ -219,6 +258,13 @@ install_GNU_parallel()
 {
   apt-get -y -qq install parallel
 }
+
+# Install pdf grep
+install_pdfgrep()
+{
+  apt-get -y -qq install pdfgrep
+}
+
 
 # Install Sublime text 3
 install_sublime_text()
@@ -421,6 +467,9 @@ root_install()
   echo "Attempting to install gnu parallel3"
   install_GNU_parallel
   echo "Finished"
+  echo "Attempting to install pdfgrep"
+  install_pdfgrep
+  echo "Finished"
   echo "Attempting to install pypy3 dependencies"
   install_pypy3_dependencies
   echo "Finished"
@@ -457,6 +506,9 @@ user_install()
   echo "Finished"
   echo "Attempting to install sublime text"
   install_sublime_text
+  echo "Finished"
+  echo "Attempting to install Android Studio"
+  install_android_studio
   echo "Finished"
   echo "Attempting to install pypy3"
   install_pypy3
@@ -532,7 +584,7 @@ function main()
             echo "WARNING: Could not install gcc. You need root permissions. Skipping..."
           fi
         ;;
-        -o|--chrome|--Chrome)
+        -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
           if [[ "$(whoami)" == "root" ]]; then
             echo "Attempting to install Google Chrome"
             install_google_chrome
@@ -595,7 +647,7 @@ function main()
             echo "Finished"
           fi
         ;;
-        -s|--shell|--shellCustomization|--shellOptimization|-e|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)
+        -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)
           echo "Attempting to install shell history optimization"
           install_shell_history_optimization
           echo "Finished"
@@ -639,7 +691,7 @@ function main()
             echo "Finished"
           fi
         ;;
-        -u|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
+        -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
           if [[ "$(whoami)" == "root" ]]; then
             echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
           else
@@ -657,7 +709,39 @@ function main()
             echo "Finished"
           fi
         ;;
-        -a|--all)
+        -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "WARNING: Could not install Android Studio. You should be normal user. Skipping..."
+          else
+            echo "Attempting to install Android Studio"
+            install_android_studio
+            echo "Finished"
+          fi
+        ;;
+        -f|--pdfgrep|--findpdf|--pdf)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install pdfgrep"
+            install_pdfgrep
+            echo "Finished"
+          else
+            echo "WARNING: Could not install pdfgrep. You should be root. Skipping..."
+          fi
+        ;;
+        -u|--user|--regular|--normal)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "WARNING: Could not install user packages being root. You should be normal user."
+          else
+           user_install
+          fi
+        ;;
+        -r|--root|--superuser|--su)
+          if [[ "$(whoami)" == "root" ]]; then
+            rootinstall
+          else
+            echo "WARNING: Could not install root packages being user. You should be root."
+          fi
+        ;;
+        -|--all)
           if [[ "$(whoami)" == "root" ]]; then
             root_install
           else
@@ -669,6 +753,7 @@ function main()
           shift # past argument
           ;;
       esac
+      shift
     done
   fi
 
