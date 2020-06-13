@@ -484,18 +484,18 @@ function main()
 
   else
     # Create folder for user software
-    mkdir -m 0000 -p ${HOME}/.bin
+    mkdir -p ${HOME}/.bin
 
     # Make sure that ${HOME}/.local/bin is present
-    mkdir -m 0000 -p ${HOME}/.local/bin
+    mkdir -p ${HOME}/.local/bin
 
     # Make sure that folder for user launchers is present
-    mkdir -m 0000 -p ${HOME}/.local/share/applications
+    mkdir -p ${HOME}/.local/share/applications
     # Update repositories and system before doing anything if we have permissions
 
 
     # Make sure that PATH is pointing to ${HOME}/.local/bin (where we will put our soft links to the software)
-    if [[ -z "$(echo ${BASHRC_PATH} | grep -Fo "${HOME}/.local/bin" )" ]]; then
+    if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${HOME}/.local/bin" )" ]]; then
       echo "export PATH=$PATH:${HOME}/.local/bin" >> ${BASHRC_PATH}
     fi
 
