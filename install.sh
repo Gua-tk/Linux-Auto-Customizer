@@ -679,7 +679,9 @@ set -e
 # GLOBAL VARIABLES
 # Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
 
-source ${HOME}/.config/user-dirs.dirs
+if [[ "$(whoami)" != "root" ]]; then
+  source ${HOME}/.config/user-dirs.dirs
+fi
 # Other script-specific variables
 DESK=
 USR_BIN_FOLDER=
