@@ -10,8 +10,6 @@
 # Needs root permission
 install_google_chrome()
 {
-  echo "Attempting to install Google Chrome"	
-
   # Chrome dependencies
   apt-get install -y -qq libxss1 libappindicator1 libindicator7
 
@@ -25,8 +23,6 @@ install_google_chrome()
   else
     err "WARNING: Google Chrome is already installed. Skipping"
   fi
-
-  echo "Finished"
 }
 
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
@@ -64,20 +60,15 @@ install_pypy3()
   else
     err "WARNING: pypy3 is already installed. Skipping"
   fi
-
-  echo "Finished"
 }
 
 # Needs roots permission
 install_pypy3_dependencies()
 {
-  echo "Attempting to install pypy3 dependencies"
   # pypy3 module dependencies
   apt-get install -y -qq pkg-config
   apt-get install -y -qq libfreetype6-dev
   apt-get install -y -qq libpng-dev
-
-  echo "Finished"
 }
 
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
@@ -116,8 +107,6 @@ StartupWMClass=jetbrains-pycharm"
   else
   	err "WARNING: pycharm is already installed. Skipping"
   fi
-
-  echo "Finished"
 }
 
 # Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
@@ -156,8 +145,6 @@ StartupWMClass=jetbrains-pycharm"
   else
   	err "WARNING: pycharm-pro is already installed. Skipping"
   fi
-
-  echo "Finished"
 }
 
 install_clion()
@@ -196,51 +183,33 @@ StartupWMClass=jetbrains-clion"
   else
   	err "WARNING: CLion is already installed. Skipping"
   fi
-
-  echo "Finished"
 }
 
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
 install_git()
 {
-  echo "Attempting to install GIT"
-
   apt install -y -qq git-all
-
-  echo "Finished"
 }
 
 # Install gcc (C compiler)
 # Needs root permission
 install_gcc()
 {
-  echo "Attempting to install gcc"
-
   apt install -y -qq gcc
-
-  echo "Finished"
 }
 
 # Install Python3
 # Needs root permission
 install_python3()
 {
-  echo "Attempting to install python3"
-
   apt install -y -qq python3
-
-  echo "Finished"
 }
 
 # Install GNU parallel
 install_GNU_parallel()
 {
-  echo "Attempting to install GNU-parallel"	
-
   apt-get -y -qq install parallel
-
-  echo "Finished"
 }
 
 # Install Sublime text 3
@@ -288,11 +257,7 @@ Exec=subl"
 # Needs root permission
 install_latex()
 {
-  echo "Attempting to install latex"
-
   apt -y -qq install texlive-latex-extra
-
-  echo "Finished"
 }
 
 ###### SYSTEM FEATURES ######
@@ -301,8 +266,6 @@ install_latex()
 # Python3, bash shell scripts, latex documents
 install_templates()
 {
-  echo "Attempting to install templates"
-
   # Add templates
   if [[ -f ${HOME}/.config/user-dirs.dirs ]]; then
     echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/New_Shell_Script.sh
@@ -313,8 +276,6 @@ install_templates()
 " > ${XDG_TEMPLATES_DIR}/New_LaTeX_Document.tex
     chmod 755 *
   fi
-
-  echo "Finished"
 }
 
 ###### SHELL FEATURES ######
@@ -322,22 +283,16 @@ install_templates()
 # Forces l as alias for ls -lAh
 install_ls_alias()
 {
-  echo "Attempting to install ls alias"
-
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
     echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
   else
     sed -i 's/^alias l=.*/alias l=\"ls -lAh --color=auto\"/' ${BASHRC_PATH}
   fi
-
-  echo "Finished"
 }
 
 # Defines a function to extract all types of compressed files
 install_extract_function()
 {
-  echo "Attempting to install extract function"
-
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "extract () {" )" ]]; then
       extract="
 
@@ -366,8 +321,6 @@ install_extract_function()
   else
   	err "WARNING: Extract function is already installed. Skipping"
   fi
-
-  echo "Finished"
 }
 
 # Increases file history size, size of the history and forces to append to history, never overwrite
@@ -375,8 +328,6 @@ install_extract_function()
 # Store multiline comments in just one command
 install_shell_history_optimization()
 {
-  echo "Attempting to install shell history optimization"
-
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTSIZE=" )" ]]; then
     echo "export HISTSIZE=10000" >> ${BASHRC_PATH}
   else
@@ -413,14 +364,10 @@ install_shell_history_optimization()
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "shopt -s cmdhist" )" ]]; then
     echo "shopt -s cmdhist" >> ${BASHRC_PATH}
   fi
-
-  echo "Finished"
 }
 
 install_git_aliases()
 {
-  echo "Attempting to install git aliases"
-
   # Force "gitk" as alias for gitk --all --date-order
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias gitk=" )" ]]; then
     echo "alias gitk=\"gitk --all --date-order \"" >> ${BASHRC_PATH}
@@ -434,47 +381,78 @@ install_git_aliases()
   else
     sed -Ei 's/^alias dummycommit=.*/alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"/' ${BASHRC_PATH}
   fi
-
-  echo "Finished"
 }
 
 install_environment_aliases()
 {
-  echo "Attempting to install environment aliases"
 
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "export DESK=" )" ]]; then
     echo "export DESK=${XDG_DESKTOP_DIR}" >> ${BASHRC_PATH}
   else
     err "WARNING: DESK environment alias is already installed. Skipping"
   fi
-
-  echo "Finished"
 }
 
 root_install()
 {
+  echo "Attempting to install chrome"
   install_google_chrome
+  echo "Finished"
+  echo "Attempting to install gcc"
   install_gcc
+  echo "Finished"
+  echo "Attempting to install git"
   install_git
+  echo "Finished"
+  echo "Attempting to install latex"
   install_latex
+  echo "Finished"
+  echo "Attempting to install python3"
   install_python3
+  echo "Finished"
+  echo "Attempting to install gnu parallel3"
   install_GNU_parallel
+  echo "Finished"
+  echo "Attempting to install pypy3 dependencies"
   install_pypy3_dependencies
+  echo "Finished"
 }
 
 user_install()
 {
+  echo "Attempting to install templates"
   install_templates
+  echo "Finished"
+  echo "Attempting to install environment aliases"
   install_environment_aliases
+  echo "Finished"
+  echo "Attempting to install git aliases"
   install_git_aliases
+  echo "Finished"
+  echo "Attempting to install ls aliases"
   install_ls_alias
+  echo "Finished"
+  echo "Attempting to install shell history optimization"
   install_shell_history_optimization
+  echo "Finished"
+  echo "Attempting to install extract shell function"
   install_extract_function
+  echo "Finished"
+  echo "Attempting to install pycharm professional"
   install_pycharm_professional
+  echo "Finished"
+  echo "Attempting to install pycharm community"
   install_pycharm_community
+  echo "Finished"
+  echo "Attempting to install clion"
   install_clion
+  echo "Finished"
+  echo "Attempting to install sublime text"
   install_sublime_text
+  echo "Finished"
+  echo "Attempting to install pypy3"
   install_pypy3
+  echo "Finished"
 }
 
 ###### AUXILIAR FUNCTIONS ######
@@ -490,36 +468,37 @@ function err()
 ##################
 function main()
 {
-  # Update repositories and system before doing anything if we have permissions
-  if [[ "$(whoami)" == "root" ]]; then
-    apt -y -qq update
-    apt -y -qq upgrade
-  fi
+  USR_BIN_FOLDER=${HOME}/.bin
 
   # Locate bash customizing files
   BASHRC_PATH=${HOME}/.bashrc
 
-  # Do a safe copy
-  cp -p ${BASHRC_PATH} ${HOME}/.bashrc.bak
-
-  # Create folder for user software
-  mkdir -m 0000 -p ${HOME}/.bin
-  USR_BIN_FOLDER=${HOME}/.bin
   if [[ "$(whoami)" == "root" ]]; then
-    chown ${SUDO_USER} ${USR_BIN_FOLDER}
-    chgrp ${SUDO_USER} ${USR_BIN_FOLDER}
-    chmod 777 ${USR_BIN_FOLDER}
-  fi
+    # Update repositories and system before doing anything
 
-  # Make sure that ${HOME}/.local/bin is present
-  mkdir -m 0000 -p ${HOME}/.local/bin
+    apt -y -qq update
+    apt -y -qq upgrade
 
-  # Make sure that folder for user launchers is present
-  mkdir -m 0000 -p ${HOME}/.local/share/applications
+     # Do a safe copy
+    cp -p ${BASHRC_PATH} ${HOME}/.bashrc.bak
 
-  # Make sure that PATH is pointing to ${HOME}/.local/bin (where we will put our soft links to the software)
-  if [[ -z "$(echo $PATH | grep -Eo "${HOME}/.local/bin" )" ]]; then
-    echo "export PATH=$PATH:${HOME}/.local/bin" >> ${BASHRC_PATH}
+  else
+    # Create folder for user software
+    mkdir -m 0000 -p ${HOME}/.bin
+
+    # Make sure that ${HOME}/.local/bin is present
+    mkdir -m 0000 -p ${HOME}/.local/bin
+
+    # Make sure that folder for user launchers is present
+    mkdir -m 0000 -p ${HOME}/.local/share/applications
+    # Update repositories and system before doing anything if we have permissions
+
+
+    # Make sure that PATH is pointing to ${HOME}/.local/bin (where we will put our soft links to the software)
+    if [[ -z "$(echo ${BASHRC_PATH} | grep -Fo "${HOME}/.local/bin" )" ]]; then
+      echo "export PATH=$PATH:${HOME}/.local/bin" >> ${BASHRC_PATH}
+    fi
+
   fi
 
   ###### ARGUMENT PROCESSING ######
@@ -535,10 +514,148 @@ function main()
     while [[ $# -gt 0 ]]; do
       key="$1"
 
-      case $key in
-        --chrome)
-          
-          ;;
+      case ${key} in
+        -c|--gcc)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install gcc"
+            install_google_gcc
+            echo "Finished"
+          else
+            echo "WARNING: Could not install gcc. You need root permissions. Skipping..."
+          fi
+        ;;
+        -o|--chrome|--Chrome)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install Google Chrome"
+            install_google_chrome
+            echo "Finished"
+          else
+            echo "WARNING: Could not install google chrome. You need root permissions. Skipping..."
+          fi
+        ;;
+        -g|--git)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install GIT"
+            install_git
+            echo "Finished"
+          else
+            echo "WARNING: Could not install git. You need root permissions. Skipping..."
+          fi
+        ;;
+        -x|--latex|--LaTeX)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install latex"
+            install_latex
+            echo "Finished"
+          else
+            echo "WARNING: Could not install latex. You need root permissions. Skipping..."
+          fi
+        ;;
+        -p|--python|--python3|--Python3|--Python)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install python3"
+            install_python3
+            echo "Finished"
+          else
+            echo "WARNING: Could not install python. You need root permissions. Skipping..."
+          fi
+        ;;
+        -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install GNU-parallel"
+            install_GNU_parallel
+            echo "Finished"
+          else
+            echo "WARNING: Could not install GNU parallel. You need root permissions. Skipping..."
+          fi
+        ;;
+        -d|--dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install pypy3 dependencies"
+            install_pypy3_dependencies
+            echo "Finished"
+          else
+            echo "WARNING: Could not install dependencies. You need root permissions. Skipping..."
+          fi
+        ;;
+        -t|--templates)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "WARNING: Could not install templates. You should be normal user. Skipping..."
+          else
+            echo "Attempting to install templates"
+            install_templates
+            echo "Finished"
+          fi
+        ;;
+        -s|--shell|--shellCustomization|--shellOptimization|-e|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)
+          echo "Attempting to install shell history optimization"
+          install_shell_history_optimization
+          echo "Finished"
+          echo "Attempting to install ls alias"
+          install_ls_alias
+          echo "Finished"
+          echo "Attempting to install git aliases"
+          install_git_aliases
+          echo "Finished"
+          echo "Attempting to install environment aliases"
+          install_environment_aliases
+          echo "Finished"
+          echo "Attempting to install extract function"
+          install_extract_function
+          echo "Finished"
+        ;;
+        -h|--pycharmpro|--pycharmPro|--pycharm_pro)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "WARNING: Could not install pycharm pro. You should be normal user. Skipping..."
+          else
+            echo "Attempting to install pycharm pro"
+            install_pycharm_professional
+            echo "Finished"
+          fi
+        ;;
+        -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
+          else
+            echo "Attempting to install pycharm community"
+            install_pycharm_community
+            echo "Finished"
+          fi
+        ;;
+        -n|--clion|--Clion|--CLion)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "WARNING: Could not install clion. You should be normal user. Skipping..."
+          else
+            echo "Attempting to install clion"
+            install_clion
+            echo "Finished"
+          fi
+        ;;
+        -u|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
+          else
+            echo "Attempting to install sublime text"
+            install_sublime_text
+            echo "Finished"
+          fi
+        ;;
+        -y|--pypy|--pypy3|--PyPy3|--PyPy)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
+          else
+            echo "Attempting to install pypy3"
+            install_pypy3
+            echo "Finished"
+          fi
+        ;;
+        -a|--all)
+          if [[ "$(whoami)" == "root" ]]; then
+            root_install
+          else
+           user_install
+          fi
+        ;;
         *)    # unknown option
           POSITIONAL+=("$1") # save it in an array for later
           shift # past argument
@@ -561,7 +678,8 @@ set -e
 
 # GLOBAL VARIABLES
 # Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
-. ${HOME}/.config/user-dirs.dirs
+
+source ${HOME}/.config/user-dirs.dirs
 # Other script-specific variables
 DESK=
 USR_BIN_FOLDER=
