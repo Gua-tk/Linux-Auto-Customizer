@@ -20,6 +20,10 @@ install_google_chrome()
     apt install -y -qq ${USR_BIN_FOLDER}/google-chrome*.deb
     # Clean
     rm ${USR_BIN_FOLDER}/google-chrome*.deb
+    
+    # Create launcher
+    cp /usr/share/applications/google-chrome.desktop ${XDG_DESKTOP_DIR}
+    chmod 775 ${XDG_DESKTOP_DIR}/google-chrome.desktop
   else
     err "WARNING: Google Chrome is already installed. Skipping"
   fi
