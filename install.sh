@@ -36,6 +36,7 @@ install_pypy3()
 
   if [[ -z $(which pypy3) ]]; then
   	# Avoid error due to possible previous aborted installations
+    echo "really"
     rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.gz*
     rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
   	# Download pypy
@@ -44,15 +45,18 @@ install_pypy3()
     (cd "${USR_BIN_FOLDER}"; tar -xjf -) <  ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
     # Clean
     rm ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
+    echo "jjij"
 
     # Install modules using pip
-    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 -m ensurepip >/dev/null 2>&1  # redirection to hide output
+    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 -m ensurepip   # redirection to hide output
 
+    echo "helo"
     # Forces download of pip and of modules
     ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 --no-cache-dir -q install --upgrade pip
     ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
 
     # Create links to the PATH
+    echo "yesIS HEREEEE"  # //rf
     rm -f ${HOME}/.local/bin/pypy3
     ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 ${HOME}/.local/bin/pypy3
     rm -f ${HOME}/.local/bin/pip-pypy3
@@ -203,7 +207,7 @@ install_gcc()
 # Needs root permission
 install_python3()
 {
-  apt install -y -qq python3
+  apt install -y -qq python3-dev python-dev
 }
 
 # Install GNU parallel
