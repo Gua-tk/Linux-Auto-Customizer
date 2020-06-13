@@ -578,7 +578,7 @@ function main()
         -c|--gcc)
           if [[ "$(whoami)" == "root" ]]; then
             echo "Attempting to install gcc"
-            install_google_gcc
+            install_gcc
             echo "Finished"
           else
             echo "WARNING: Could not install gcc. You need root permissions. Skipping..."
