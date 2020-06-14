@@ -76,7 +76,7 @@ install_google_chrome()
 install_pypy3()
 {
   # Targeted version of pypy3
-  local -r pypy3_version=pypy3.5-v7.0.0-linux64
+  local -r pypy3_version=pypy3.6-v7.3.1-linux64
 
   echo "Attempting to install $pypy3_version"
 
@@ -85,25 +85,26 @@ install_pypy3()
     rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.gz*
     rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
   	# Download pypy
-    wget -q -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
+    wget -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar -xjf -) <  ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
     # Clean
     rm ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
 
     # Install modules using pip
-    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 -m ensurepip   # redirection to hide output
+    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 -m ensurepip  
 
-    echo "helo"
     # Forces download of pip and of modules
-    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 --no-cache-dir -q install --upgrade pip
-    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 --no-cache-dir -q install cython numpy matplotlib biopython
+    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir -q install --upgrade pip
+    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install cython numpy
+    # Currently not supported
+    # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
 
     # Create links to the PATH
     rm -f ${HOME}/.local/bin/pypy3
     ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 ${HOME}/.local/bin/pypy3
-    rm -f ${HOME}/.local/bin/pip-pypy3
-    ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.5 ${HOME}/.local/bin/pip-pypy3
+    rm -f ${HOME}/.local/bin/pypy3-pip
+    ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 ${HOME}/.local/bin/pypy3-pip
   else
     err "WARNING: pypy3 is already installed. Skipping"
   fi
@@ -116,6 +117,7 @@ install_pypy3_dependencies()
   apt-get install -y -qq pkg-config
   apt-get install -y -qq libfreetype6-dev
   apt-get install -y -qq libpng-dev
+  apt-get install -y -qq libffi-dev
 }
 
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
