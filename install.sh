@@ -14,17 +14,17 @@ register_file_associations()
 # Check if the association is already existent
 if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
   if [[ -z "$(more ~/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
-    # File type is already registered. We need to register another application for it
-    if [[ -z "$(more ~/.config/mimeapps.list | grep -o "$1=.*;$" )" ]]; then
-      # File type is registered with comma at the end. Just add program at end of line
-      sed -i 's|$1=.*;$|&$2;|g' ~/.config/mimeapps.list
-    else
-      # File type is registered without comma. Add the program at the end of the line with comma
-      sed -i 's|$1=.*$|&;$2;|g' ~/.config/mimeapps.list
-    fi
-  else
     # File type is not registered so we can add the hole line
-    sed '/\[Added Associations\]/a $1=$2;' ~/.config/mimeapps.list
+    sed -i "/\[Added Associations\]/a $1=$2;" ~/.config/mimeapps.list
+  else
+    # File type is already registered. We need to register another application for it
+    if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*;$" )" ]]; then
+      # File type is registered without comma. Add the program at the end of the line with comma
+      sed -i "s|$1=.*$|&;$2;|g" ~/.config/mimeapps.list
+    else
+      # File type is registered with comma at the end. Just add program at end of line
+      sed -i "s|$1=.*;$|&$2;|g" ~/.config/mimeapps.list
+    fi
   fi
 else
   err "WARNING: File association between $1 and $2 is already done"
@@ -82,12 +82,15 @@ install_google_chrome()
   apt-get install -y -qq libxss1 libappindicator1 libindicator7
 
   if [[ -z "$(which google-chrome)" ]]; then
-  	# Download
-    wget -q -P ${USR_BIN_FOLDER} https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+    # Delete possible collisions with previous installation
+    rm -f google-chrome*.deb*  
+    # Download
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     # Install downloaded version
-    apt install -y -qq ${USR_BIN_FOLDER}/google-chrome*.deb
+    apt install -y -qq ./google-chrome-stable_current_amd64.deb
     # Clean
-    rm ${USR_BIN_FOLDER}/google-chrome*.deb
+    rm -f google-chrome*.deb
     
     # Create launcher
     cp /usr/share/applications/google-chrome.desktop ${XDG_DESKTOP_DIR}
@@ -182,8 +185,8 @@ StartupWMClass=jetbrains-pycharm"
     cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
 
     # register file associations
-    install_file_associations "text/x-python" "pycharm.desktop"
-    install_file_associations "text/x-python3" "pycharm.desktop"
+    register_file_associations "text/x-python" "pycharm.desktop"
+    register_file_associations "text/x-python3" "pycharm.desktop"
 
   else
   	err "WARNING: pycharm is already installed. Skipping"
@@ -225,9 +228,8 @@ StartupWMClass=jetbrains-pycharm"
     cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
 
     # register file associations
-    echo "debugging"
-    install_file_associations "text/x-python" "pycharm.desktop"
-    install_file_associations "text/x-python3" "pycharm.desktop"
+    register_file_associations "text/x-python" "pycharm-pro.desktop"
+    register_file_associations "text/x-python3" "pycharm-pro.desktop"
   else
   	err "WARNING: pycharm-pro is already installed. Skipping"
   fi
@@ -268,10 +270,10 @@ StartupWMClass=jetbrains-clion"
     cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
 
     # register file associations
-    install_file_associations "text/x-c++hdr" "clion.desktop"
-    install_file_associations "text/x-c++src" "clion.desktop"
-    install_file_associations "text/x-chdr" "clion.desktop"
-    install_file_associations "text/x-csrc" "clion.desktop"
+    register_file_associations "text/x-c++hdr" "clion.desktop"
+    register_file_associations "text/x-c++src" "clion.desktop"
+    register_file_associations "text/x-chdr" "clion.desktop"
+    register_file_associations "text/x-csrc" "clion.desktop"
     
   else
   	err "WARNING: CLion is already installed. Skipping"
@@ -342,13 +344,13 @@ Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Terminal=false
 Exec=subl %F"
-    echo -e "$sublime_launcher" > ${HOME}/.local/share/applications/sublime_text.desktop
-    chmod 775 ${HOME}/.local/share/applications/sublime_text.desktop
+    echo -e "$sublime_launcher" > ${HOME}/.local/share/applications/sublime-text.desktop
+    chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
     # Copy launcher to the desktop
-    cp -p ${HOME}/.local/share/applications/sublime_text.desktop ${XDG_DESKTOP_DIR}
+    cp -p ${HOME}/.local/share/applications/sublime-text.desktop ${XDG_DESKTOP_DIR}
 
     # register file associations
-    install_file_associations "text/x-sh" "sublime_text.desktop"
+    register_file_associations "text/x-sh" "sublime-text.desktop"
   else
     err "WARNING: sublime text is already installed. Skipping"
   fi
