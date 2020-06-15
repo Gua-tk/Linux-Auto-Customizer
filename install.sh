@@ -202,7 +202,7 @@ install_pycharm_professional()
     rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
     rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
     # Download pycharm
-    wget -q -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
     # Clean
@@ -225,6 +225,7 @@ StartupWMClass=jetbrains-pycharm"
     cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
 
     # register file associations
+    echo "debugging"
     install_file_associations "text/x-python" "pycharm.desktop"
     install_file_associations "text/x-python3" "pycharm.desktop"
   else
@@ -576,23 +577,32 @@ function err()
 ##################
 function main()
 {
-  USR_BIN_FOLDER=${HOME}/.bin
 
-  # Locate bash customizing files
-  BASHRC_PATH=${HOME}/.bashrc
+
 
   if [[ "$(whoami)" == "root" ]]; then
     # Update repositories and system before doing anything
-
     apt -y -qq update
     apt -y -qq upgrade
 
-     # Do a safe copy
+    # Locate bash customizing files
+    BASHRC_PATH=/home/${SUDO_USER}/.bashrc
+
+    # Do a safe copy
     cp -p ${BASHRC_PATH} ${HOME}/.bashrc.bak
+
+    # Fill var to locate user software
+    USR_BIN_FOLDER=/home/${SUDO_USER}/.bin
 
   else
     # Create folder for user software
     mkdir -p ${HOME}/.bin
+    
+    # Fill var to locate user software
+    USR_BIN_FOLDER=${HOME}/.bin
+
+    # Locate bash customizing files
+    BASHRC_PATH=${HOME}/.bashrc
 
     # Make sure that ${HOME}/.local/bin is present
     mkdir -p ${HOME}/.local/bin
