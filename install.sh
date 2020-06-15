@@ -4,6 +4,31 @@
 # Created on 28/5/19
 # Last Update 19/4/2020
 
+###### AUXILIAR FUNCTIONS ######
+
+# Associate a file type (mime type) to a certaina application.
+# Argument 1 File types. Example: application/x-shellscript
+# Argument 2 Application. Example: sublime_text.desktop
+register_file_associations()
+{
+# Check if the association is already existent
+if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
+  if [[ -z "$(more ~/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
+    # File type is already registered. We need to register another application for it
+    if [[ -z "$(more ~/.config/mimeapps.list | grep -o "$1=.*;$" )" ]]; then
+      # File type is registered with comma at the end. Just add program at end of line
+      sed -i 's|$1=.*;$|&$2;|g' ~/.config/mimeapps.list
+    else
+      # File type is registered without comma. Add the program at the end of the line with comma
+      sed -i 's|$1=.*$|&;$2;|g' ~/.config/mimeapps.list
+  else
+    # File type is not registered so we can add the hole line
+    sed '/\[Added Associations\]/a $1=$2;' ~/.config/mimeapps.list
+  fi
+else
+  err "WARNING: File association between $1 and $2 is already done"
+}
+
 ###### SOFTWARE INSTALLATION FUNCTIONS ######
 
 # Checks if Google Chrome is already installed and installs it and its dependencies
@@ -31,7 +56,7 @@ install_android_studio()
 Version=1.0
 Type=Application
 Name=Android Studio
-Exec=studio
+Exec=studio %F
 Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
 Categories=Development;IDE;
 Terminal=false
@@ -105,6 +130,7 @@ install_pypy3()
     ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 ${HOME}/.local/bin/pypy3
     rm -f ${HOME}/.local/bin/pypy3-pip
     ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 ${HOME}/.local/bin/pypy3-pip
+
   else
     err "WARNING: pypy3 is already installed. Skipping"
   fi
@@ -146,13 +172,18 @@ Version=1.0
 Type=Application
 Name=PyCharm
 Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
-Exec=pycharm
+Exec=pycharm %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
     echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
     chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
     cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    install_file_associations "text/x-python" "pycharm.desktop"
+    install_file_associations "text/x-python3" "pycharm.desktop"
+
   else
   	err "WARNING: pycharm is already installed. Skipping"
   fi
@@ -184,13 +215,17 @@ Version=1.0
 Type=Application
 Name=PyCharm-pro
 Icon=$HOME/.bin/pycharm-$pycharm_ver/bin/pycharm.png
-Exec=pycharm-pro
+Exec=pycharm-pro %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
     echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
     chmod 775 ${HOME}/.local/share/applications/pycharm-pro.desktop
     cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    install_file_associations "text/x-python" "pycharm.desktop"
+    install_file_associations "text/x-python3" "pycharm.desktop"
   else
   	err "WARNING: pycharm-pro is already installed. Skipping"
   fi
@@ -222,13 +257,20 @@ Version=1.0
 Type=Application
 Name=CLion
 Icon=$HOME/.bin/${clion_version_caps_down}/bin/clion.png
-Exec=clion
+Exec=clion %F
 Comment=C and C++ IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-clion"
     echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
     chmod 775 ${HOME}/.local/share/applications/clion.desktop
     cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    install_file_associations "text/x-c++hdr" "clion.desktop"
+    install_file_associations "text/x-c++src" "clion.desktop"
+    install_file_associations "text/x-chdr" "clion.desktop"
+    install_file_associations "text/x-csrc" "clion.desktop"
+    
   else
   	err "WARNING: CLion is already installed. Skipping"
   fi
@@ -297,11 +339,14 @@ GenericName=Text Editor
 Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Terminal=false
-Exec=subl"
+Exec=subl %F"
     echo -e "$sublime_launcher" > ${HOME}/.local/share/applications/sublime_text.desktop
     chmod 775 ${HOME}/.local/share/applications/sublime_text.desktop
     # Copy launcher to the desktop
     cp -p ${HOME}/.local/share/applications/sublime_text.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    install_file_associations "text/x-sh" "sublime_text.desktop"
   else
     err "WARNING: sublime text is already installed. Skipping"
   fi
