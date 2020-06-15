@@ -33,11 +33,10 @@ fi
 
 ###### SOFTWARE INSTALLATION FUNCTIONS ######
 
-# Checks if Google Chrome is already installed and installs it and its dependencies
-# Needs root permission
+# Checks if Android studio is already installed and installs it if not
 install_android_studio()
 {
-  local -r android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of pycharm
+  local -r android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of Android Studio
   if [[ -z "$(which studio)" ]]; then
     # avoid collisions
     rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
@@ -823,6 +822,8 @@ set -e
 
 if [[ "$(whoami)" != "root" ]]; then
   source ${HOME}/.config/user-dirs.dirs
+else  # //RF add a specific root way to import the file
+  source /home/${SUDO_USER}/.config/user-dirs.dirs
 fi
 # Other script-specific variables
 DESK=
