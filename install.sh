@@ -21,12 +21,14 @@ if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
     else
       # File type is registered without comma. Add the program at the end of the line with comma
       sed -i 's|$1=.*$|&;$2;|g' ~/.config/mimeapps.list
+    fi
   else
     # File type is not registered so we can add the hole line
     sed '/\[Added Associations\]/a $1=$2;' ~/.config/mimeapps.list
   fi
 else
   err "WARNING: File association between $1 and $2 is already done"
+fi
 }
 
 ###### SOFTWARE INSTALLATION FUNCTIONS ######
