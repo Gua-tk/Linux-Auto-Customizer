@@ -93,6 +93,7 @@ install_google_chrome()
     rm -f google-chrome*.deb*
     
     # Create launcher
+    echo ${XDG_DESKTOP_DIR}
     cp /usr/share/applications/google-chrome.desktop ${XDG_DESKTOP_DIR}
     chmod 775 ${XDG_DESKTOP_DIR}/google-chrome.desktop
     chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/google-chrome.desktop
@@ -219,7 +220,7 @@ install_pycharm_professional()
     pycharm_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
-Name=PyCharm-pro
+Name=PyCharm Professional
 Icon=$HOME/.bin/pycharm-$pycharm_ver/bin/pycharm.png
 Exec=pycharm-pro %F
 Comment=Python IDE for Professional Developers
@@ -364,7 +365,7 @@ Exec=subl %F"
 # Needs root permission
 install_latex()
 {
-  apt -y -qq install texlive-latex-extra
+  apt -y install texlive-latex-extra
 }
 
 ###### SYSTEM FEATURES ######
@@ -581,9 +582,6 @@ function err()
 ##################
 function main()
 {
-
-
-
   if [[ "$(whoami)" == "root" ]]; then
     # Update repositories and system before doing anything
     apt -y -qq update
@@ -837,7 +835,7 @@ set -e
 if [[ "$(whoami)" != "root" ]]; then
   source ${HOME}/.config/user-dirs.dirs
 else
-  source /home/${SUDO_USER}/.config/user-dirs.dirs
+  declare $(cat /home/${SUDO_USER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
 fi
 # Other script-specific variables
 DESK=
