@@ -776,6 +776,8 @@ set -e
 
 if [[ "$(whoami)" != "root" ]]; then
   source ${HOME}/.config/user-dirs.dirs
+else
+  source /${HOME}/${SUDO_USER}/.config/user-dirs.dirs
 fi
 # Other script-specific variables
 DESK=
