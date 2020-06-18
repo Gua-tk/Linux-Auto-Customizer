@@ -13,6 +13,7 @@ rm -f ~/.local/bin/studio
 rm -f ~/.local/share/applications/pycharm.desktop
 rm -f ~/.local/share/applications/sublime.desktop
 rm -f ~/.local/share/applications/sublime_text.desktop
+rm -f ~/.local/share/applications/sublime-text.desktop
 rm -f ~/.local/share/applications/clion.desktop
 rm -f ~/.local/share/applications/jetbrains-clion.desktop
 rm -f "~/.local/share/applications/Android Studio.desktop"
@@ -21,13 +22,14 @@ rm -f ~/Escritorio/pycharm.desktop
 rm -f ~/Escritorio/pycharm-pro.desktop
 rm -f ~/Escritorio/sublime.desktop
 rm -f ~/Escritorio/sublime_text.desktop
+rm -f ~/Escritorio/sublime-text.desktop
 rm -f ~/Escritorio/clion.desktop
 rm -f ~/Escritorio/jetbrains-clion.desktop
 rm -f "~/Escritorio/Android Studio.desktop"
 
 rm -f ~/Plantillas/*
 
-apt-get remove git-all gcc python3-dev python-dev parallel pkg-config libfreetype6-dev libpng-dev texlive-latex-extra google-chrome-stable
+apt-get remove -y git-all gcc python3-dev python-dev parallel pkg-config libfreetype6-dev libpng-dev libffi-dev texlive-latex-extra google-chrome-stable
 apt -y -qq autoremove
 apt -y -qq autoclean
 # //RF chrome

@@ -4,13 +4,39 @@
 # Created on 28/5/19
 # Last Update 19/4/2020
 
+###### AUXILIAR FUNCTIONS ######
+
+# Associate a file type (mime type) to a certaina application.
+# Argument 1 File types. Example: application/x-shellscript
+# Argument 2 Application. Example: sublime_text.desktop
+register_file_associations()
+{
+# Check if the association is already existent
+if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
+  if [[ -z "$(more ~/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
+    # File type is not registered so we can add the hole line
+    sed -i "/\[Added Associations\]/a $1=$2;" ~/.config/mimeapps.list
+  else
+    # File type is already registered. We need to register another application for it
+    if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*;$" )" ]]; then
+      # File type is registered without comma. Add the program at the end of the line with comma
+      sed -i "s|$1=.*$|&;$2;|g" ~/.config/mimeapps.list
+    else
+      # File type is registered with comma at the end. Just add program at end of line
+      sed -i "s|$1=.*;$|&$2;|g" ~/.config/mimeapps.list
+    fi
+  fi
+else
+  err "WARNING: File association between $1 and $2 is already done"
+fi
+}
+
 ###### SOFTWARE INSTALLATION FUNCTIONS ######
 
-# Checks if Google Chrome is already installed and installs it and its dependencies
-# Needs root permission
+# Checks if Android studio is already installed and installs it if not
 install_android_studio()
 {
-  local -r android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of pycharm
+  local -r android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of Android Studio
   if [[ -z "$(which studio)" ]]; then
     # avoid collisions
     rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
@@ -18,7 +44,7 @@ install_android_studio()
     wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.0.0.16/${android_studio_version}.tar.gz
     
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) <  ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz
     # Clean
     rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
     
@@ -31,7 +57,7 @@ install_android_studio()
 Version=1.0
 Type=Application
 Name=Android Studio
-Exec=studio
+Exec=studio %F
 Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
 Categories=Development;IDE;
 Terminal=false
@@ -56,12 +82,15 @@ install_google_chrome()
   apt-get install -y -qq libxss1 libappindicator1 libindicator7
 
   if [[ -z "$(which google-chrome)" ]]; then
-  	# Download
-    wget -q -P ${USR_BIN_FOLDER} https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+    # Delete possible collisions with previous installation
+    rm -f google-chrome*.deb*  
+    # Download
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     # Install downloaded version
-    apt install -y -qq ${USR_BIN_FOLDER}/google-chrome*.deb
+    apt install -y -qq ./google-chrome-stable_current_amd64.deb
     # Clean
-    rm ${USR_BIN_FOLDER}/google-chrome*.deb
+    rm -f google-chrome*.deb
     
     # Create launcher
     cp /usr/share/applications/google-chrome.desktop ${XDG_DESKTOP_DIR}
@@ -87,7 +116,7 @@ install_pypy3()
   	# Download pypy
     wget -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xjf -) <  ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
+    (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
     # Clean
     rm ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
 
@@ -105,6 +134,7 @@ install_pypy3()
     ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 ${HOME}/.local/bin/pypy3
     rm -f ${HOME}/.local/bin/pypy3-pip
     ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 ${HOME}/.local/bin/pypy3-pip
+
   else
     err "WARNING: pypy3 is already installed. Skipping"
   fi
@@ -146,13 +176,18 @@ Version=1.0
 Type=Application
 Name=PyCharm
 Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
-Exec=pycharm
+Exec=pycharm %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
     echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
     chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
     cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    register_file_associations "text/x-python" "pycharm.desktop"
+    register_file_associations "text/x-python3" "pycharm.desktop"
+
   else
   	err "WARNING: pycharm is already installed. Skipping"
   fi
@@ -170,7 +205,7 @@ install_pycharm_professional()
     rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
     rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
     # Download pycharm
-    wget -q -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
     # Clean
@@ -184,13 +219,17 @@ Version=1.0
 Type=Application
 Name=PyCharm-pro
 Icon=$HOME/.bin/pycharm-$pycharm_ver/bin/pycharm.png
-Exec=pycharm-pro
+Exec=pycharm-pro %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
     echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
     chmod 775 ${HOME}/.local/share/applications/pycharm-pro.desktop
     cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    register_file_associations "text/x-python" "pycharm-pro.desktop"
+    register_file_associations "text/x-python3" "pycharm-pro.desktop"
   else
   	err "WARNING: pycharm-pro is already installed. Skipping"
   fi
@@ -222,13 +261,20 @@ Version=1.0
 Type=Application
 Name=CLion
 Icon=$HOME/.bin/${clion_version_caps_down}/bin/clion.png
-Exec=clion
+Exec=clion %F
 Comment=C and C++ IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-clion"
     echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
     chmod 775 ${HOME}/.local/share/applications/clion.desktop
     cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    register_file_associations "text/x-c++hdr" "clion.desktop"
+    register_file_associations "text/x-c++src" "clion.desktop"
+    register_file_associations "text/x-chdr" "clion.desktop"
+    register_file_associations "text/x-csrc" "clion.desktop"
+    
   else
   	err "WARNING: CLion is already installed. Skipping"
   fi
@@ -297,11 +343,14 @@ GenericName=Text Editor
 Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Terminal=false
-Exec=subl"
-    echo -e "$sublime_launcher" > ${HOME}/.local/share/applications/sublime_text.desktop
-    chmod 775 ${HOME}/.local/share/applications/sublime_text.desktop
+Exec=subl %F"
+    echo -e "$sublime_launcher" > ${HOME}/.local/share/applications/sublime-text.desktop
+    chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
     # Copy launcher to the desktop
-    cp -p ${HOME}/.local/share/applications/sublime_text.desktop ${XDG_DESKTOP_DIR}
+    cp -p ${HOME}/.local/share/applications/sublime-text.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    register_file_associations "text/x-sh" "sublime-text.desktop"
   else
     err "WARNING: sublime text is already installed. Skipping"
   fi
@@ -530,23 +579,32 @@ function err()
 ##################
 function main()
 {
-  USR_BIN_FOLDER=${HOME}/.bin
 
-  # Locate bash customizing files
-  BASHRC_PATH=${HOME}/.bashrc
+
 
   if [[ "$(whoami)" == "root" ]]; then
     # Update repositories and system before doing anything
-
     apt -y -qq update
     apt -y -qq upgrade
 
-     # Do a safe copy
+    # Locate bash customizing files
+    BASHRC_PATH=/home/${SUDO_USER}/.bashrc
+
+    # Do a safe copy
     cp -p ${BASHRC_PATH} ${HOME}/.bashrc.bak
+
+    # Fill var to locate user software
+    USR_BIN_FOLDER=/home/${SUDO_USER}/.bin
 
   else
     # Create folder for user software
     mkdir -p ${HOME}/.bin
+    
+    # Fill var to locate user software
+    USR_BIN_FOLDER=${HOME}/.bin
+
+    # Locate bash customizing files
+    BASHRC_PATH=${HOME}/.bashrc
 
     # Make sure that ${HOME}/.local/bin is present
     mkdir -p ${HOME}/.local/bin
@@ -777,7 +835,7 @@ set -e
 if [[ "$(whoami)" != "root" ]]; then
   source ${HOME}/.config/user-dirs.dirs
 else
-  source /${HOME}/${SUDO_USER}/.config/user-dirs.dirs
+  source /home/${SUDO_USER}/.config/user-dirs.dirs
 fi
 # Other script-specific variables
 DESK=
