@@ -90,11 +90,13 @@ install_google_chrome()
     # Install downloaded version
     apt install -y -qq ./google-chrome-stable_current_amd64.deb
     # Clean
-    rm -f google-chrome*.deb
+    rm -f google-chrome*.deb*
     
     # Create launcher
     cp /usr/share/applications/google-chrome.desktop ${XDG_DESKTOP_DIR}
     chmod 775 ${XDG_DESKTOP_DIR}/google-chrome.desktop
+    chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/google-chrome.desktop
+    chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/google-chrome.desktop
   else
     err "WARNING: Google Chrome is already installed. Skipping"
   fi
@@ -118,7 +120,7 @@ install_pypy3()
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
     # Clean
-    rm ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
+    rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
 
     # Install modules using pip
     ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 -m ensurepip  
