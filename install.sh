@@ -2,7 +2,7 @@
 # A simple portable shell script to initialize and customize a Linux working environment. Needs root permission for some features.
 # Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
 # Created on 28/5/19
-# Last Update 19/4/2020
+# Last Update 19/4/2020register_file_associations
 
 ###### AUXILIAR FUNCTIONS ######
 
@@ -11,23 +11,27 @@
 # Argument 2 Application. Example: sublime_text.desktop
 register_file_associations()
 {
-# Check if the association is already existent
-if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
-  if [[ -z "$(more ~/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
-    # File type is not registered so we can add the hole line
-    sed -i "/\[Added Associations\]/a $1=$2;" ~/.config/mimeapps.list
-  else
-    # File type is already registered. We need to register another application for it
-    if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*;$" )" ]]; then
-      # File type is registered without comma. Add the program at the end of the line with comma
-      sed -i "s|$1=.*$|&;$2;|g" ~/.config/mimeapps.list
+if [[ -f ${HOME}/.config/mimeapps.list ]]; then
+  # Check if the association is already existent
+  if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
+    if [[ -z "$(more ~/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
+      # File type is not registered so we can add the hole line
+      sed -i "/\[Added Associations\]/a $1=$2;" ~/.config/mimeapps.list
     else
-      # File type is registered with comma at the end. Just add program at end of line
-      sed -i "s|$1=.*;$|&$2;|g" ~/.config/mimeapps.list
+      # File type is already registered. We need to register another application for it
+      if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*;$" )" ]]; then
+        # File type is registered without comma. Add the program at the end of the line with comma
+        sed -i "s|$1=.*$|&;$2;|g" ~/.config/mimeapps.list
+      else
+        # File type is registered with comma at the end. Just add program at end of line
+        sed -i "s|$1=.*;$|&$2;|g" ~/.config/mimeapps.list
+      fi
     fi
+  else
+    err "WARNING: File association between $1 and $2 is already done"
   fi
 else
-  err "WARNING: File association between $1 and $2 is already done"
+  err "WARNING: File association between $1 and $2 can not be done because ~/.config/mimeaps.list does not exist."
 fi
 }
 
