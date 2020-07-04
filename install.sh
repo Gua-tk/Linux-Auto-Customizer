@@ -289,40 +289,6 @@ StartupWMClass=jetbrains-clion"
   fi
 }
 
-# Install GIT and all its related utilities (gitk e.g.)
-# Needs root permission
-install_git()
-{
-  apt install -y -qq git-all
-}
-
-# Install gcc (C compiler)
-# Needs root permission
-install_gcc()
-{
-  apt install -y -qq gcc
-}
-
-# Install Python3
-# Needs root permission
-install_python3()
-{
-  apt install -y -qq python3-dev python-dev
-}
-
-# Install GNU parallel
-install_GNU_parallel()
-{
-  apt-get -y -qq install parallel
-}
-
-# Install pdf grep
-install_pdfgrep()
-{
-  apt-get -y -qq install pdfgrep
-}
-
-
 # Install Sublime text 3
 install_sublime_text()
 {
@@ -373,6 +339,65 @@ Exec=subl %F"
   echo "Finished"
 }
 
+# steam ubuntu client
+install_steam()
+{
+	# steam dependencies
+	apt-get install curl
+
+	if [[ -z $(which steam) ]]; then
+	  # Avoid collision from possible previous interrumped installations
+	  rm -f ${USR_BIN_FOLDER}/steam.deb*
+  	  # Download sublime_text
+      wget -P ${USR_BIN_FOLDER} https://steamcdn-a.akamaihd.net/client/installer/steam.deb
+      # Install
+      dpkg -i ${USR_BIN_FOLDER}/steam.deb
+      # Clean after
+      rm -f ${USR_BIN_FOLDER}/steam.deb*
+    else
+      err "WARNING: steam is already installed. Skipping"
+    fi
+}
+
+# Install GIT and all its related utilities (gitk e.g.)
+# Needs root permission
+install_git()
+{
+  apt install -y -qq git-all
+}
+
+# Install gcc (C compiler)
+# Needs root permission
+install_gcc()
+{
+  apt install -y -qq gcc
+}
+
+# Install Python3
+# Needs root permission
+install_python3()
+{
+  apt install -y -qq python3-dev python-dev
+}
+
+# Install GNU parallel
+install_GNU_parallel()
+{
+  apt-get -y -qq install parallel
+}
+
+# Install pdf grep
+install_pdfgrep()
+{
+  apt-get -y -qq install pdfgrep
+}
+
+# install VLC
+install_vlc()
+{
+	apt-get -y -qq install vlc
+}
+
 # Install latex
 # Needs root permission
 install_latex()
@@ -414,30 +439,7 @@ install_ls_alias()
 install_extract_function()
 {
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "extract () {" )" ]]; then
-      extract="
-
-  # Function that allows to extract any type of compressed files
-  extract () {
-    if [ -f \$1 ] ; then
-      case \$1 in
-        *.tar.bz2)   tar xjf \$1        ;;
-        *.tar.gz)    tar xzf \$1     ;;
-        *.bz2)       bunzip2 \$1       ;;
-        *.rar)       rar x \$1     ;;
-        *.gz)        gunzip \$1     ;;
-        *.tar)       tar xf \$1        ;;
-        *.tbz2)      tar xjf \$1      ;;
-        *.tgz)       tar xzf \$1       ;;
-        *.zip)       unzip \$1     ;;
-        *.Z)         uncompress \$1  ;;
-        *.7z)        7z x \$1    ;;
-        *)           echo \"'\$1' cannot be extracted via extract()\" ;;
-      esac
-    else
-        echo \"'\$1' is not a valid file\"
-    fi
-  }"
-    echo -e "$extract" >> ${BASHRC_PATH}
+    echo -e "$extract_function" >> ${BASHRC_PATH}
   else
   	err "WARNING: Extract function is already installed. Skipping"
   fi
@@ -535,6 +537,12 @@ root_install()
   echo "Finished"
   echo "Attempting to install pdfgrep"
   install_pdfgrep
+  echo "Finished"
+  echo "Attempting to install VLC"
+  install_vlc
+  echo "Finished"
+  echo "Attempting to install steam"
+  install_steam
   echo "Finished"
   echo "Attempting to install pypy3 dependencies"
   install_pypy3_dependencies
@@ -799,6 +807,24 @@ function main()
             echo "WARNING: Could not install pdfgrep. You should be root. Skipping..."
           fi
         ;;
+        -v|--vlc|--VLC|--Vlc)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install vlc"
+            install_vlc
+            echo "Finished"
+          else
+            echo "WARNING: Could not install vlc. You should be root. Skipping..."
+          fi
+        ;;
+        -w|--steam|--Steam|--STEAM)
+          if [[ "$(whoami)" == "root" ]]; then
+            echo "Attempting to install steam"
+            install_steam
+            echo "Finished"
+          else
+            echo "WARNING: Could not install steam. You should be root. Skipping..."
+          fi
+        ;;
         -u|--user|--regular|--normal)
           if [[ "$(whoami)" == "root" ]]; then
             echo "WARNING: Could not install user packages being root. You should be normal user."
@@ -841,12 +867,17 @@ function main()
 # Script will exit if any command fails
 set -e
 
+# Import file of common variables
+# WARNING: That makes that the script has to be executed from the directory containing it
+source common_data.sh
+
 # GLOBAL VARIABLES
 # Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
 
 if [[ "$(whoami)" != "root" ]]; then
   source ${HOME}/.config/user-dirs.dirs
 else
+  # declare same variables but with absolute path
   declare $(cat /home/${SUDO_USER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
 fi
 # Other script-specific variables
