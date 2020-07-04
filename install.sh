@@ -96,7 +96,7 @@ install_google_chrome()
     # Clean
     rm -f google-chrome*.deb*
     
-    # Create launcher
+    # Create launcher and change its permissions (we are root)
     echo ${XDG_DESKTOP_DIR}
     cp /usr/share/applications/google-chrome.desktop ${XDG_DESKTOP_DIR}
     chmod 775 ${XDG_DESKTOP_DIR}/google-chrome.desktop
@@ -194,6 +194,7 @@ StartupWMClass=jetbrains-pycharm"
     # register file associations
     register_file_associations "text/x-python" "pycharm.desktop"
     register_file_associations "text/x-python3" "pycharm.desktop"
+    register_file_associations "text/x-sh" "pycharm.desktop"
 
   else
   	err "WARNING: pycharm is already installed. Skipping"
@@ -235,6 +236,7 @@ StartupWMClass=jetbrains-pycharm"
     cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
 
     # register file associations
+    register_file_associations "text/x-sh" "pycharm-pro.desktop"
     register_file_associations "text/x-python" "pycharm-pro.desktop"
     register_file_associations "text/x-python3" "pycharm-pro.desktop"
   else
@@ -351,13 +353,19 @@ Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Terminal=false
 Exec=subl %F"
-    echo -e "$sublime_launcher" > ${HOME}/.local/share/applications/sublime-text.desktop
+    echo -e "${sublime_launcher}" > ${HOME}/.local/share/applications/sublime-text.desktop
     chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
     # Copy launcher to the desktop
     cp -p ${HOME}/.local/share/applications/sublime-text.desktop ${XDG_DESKTOP_DIR}
 
     # register file associations
     register_file_associations "text/x-sh" "sublime-text.desktop"
+    register_file_associations "text/x-c++hdr" "sublime-text.desktop"
+    register_file_associations "text/x-c++src" "sublime-text.desktop"
+    register_file_associations "text/x-chdr" "sublime-text.desktop"
+    register_file_associations "text/x-csrc" "sublime-text.desktop"
+    register_file_associations "text/x-python" "sublime-text.desktop"
+    register_file_associations "text/x-python3" "sublime-text.desktop"
   else
     err "WARNING: sublime text is already installed. Skipping"
   fi
