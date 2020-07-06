@@ -296,7 +296,7 @@ install_sublime_text()
 
   echo "Attempting to install $sublime_text_version"
 
-  if [[ -z $(which subl) ]]; then
+  if [[ -z $(which sublime) ]]; then
   	# Avoid error due to possible previous aborted installations
     rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
     rm -Rf ${USR_BIN_FOLDER}/${sublime_text_version}
@@ -307,8 +307,8 @@ install_sublime_text()
     # Clean
     rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
     # Create link to the PATH
-    rm -f ${HOME}/.local/bin/subl
-    ln -s ${USR_BIN_FOLDER}/sublime_text_3/sublime_text ${HOME}/.local/bin/subl
+    rm -f ${HOME}/.local/bin/sublime
+    ln -s ${USR_BIN_FOLDER}/sublime_text_3/sublime_text ${HOME}/.local/bin/sublime
     # Create desktop launcher entry for sublime text
     sublime_launcher="[Desktop Entry]
 Version=1.0
@@ -357,6 +357,34 @@ install_steam()
     else
       err "WARNING: steam is already installed. Skipping"
     fi
+}
+
+# discord desktop client
+install_discord()
+{
+  echo "Attempting to install discord"
+  if [[ -z $(which discord) ]]; then
+    rm -f ${USR_BIN_FOLDER}/${discord_version}.tar.gz*
+    (cd "${USR_BIN_FOLDER}"; wget -O ${discord_version}.tar.gz "https://discord.com/api/download?platform=linux&format=tar.gz")
+    rm -Rf "${USR_BIN_FOLDER}/Discord"
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${discord_version}.tar.gz
+    rm -f ${USR_BIN_FOLDER}/discord.tar.gz*
+    rm -f ${HOME}/.local/bin/discord
+    ln -s ${USR_BIN_FOLDER}/Discord/Discord ${HOME}/.local/bin/discord
+echo "[Desktop Entry]
+Name=Discord
+StartupWMClass=discord
+Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
+GenericName=Internet Messenger
+Exec=discord
+Icon=${USR_BIN_FOLDER}/Discord/discord.png
+Type=Application
+Categories=Network;InstantMessaging;" > ${XDG_DESKTOP_DIR}/Discord.Desktop
+    chmod 755 ${XDG_DESKTOP_DIR}/Discord.Desktop
+  else
+    err "WARNING: discord is already installed. Skipping"
+  fi
+  echo "Finished"
 }
 
 # Install GIT and all its related utilities (gitk e.g.)
@@ -412,15 +440,40 @@ install_latex()
 install_templates()
 {
   # Add templates
-  if [[ -f ${HOME}/.config/user-dirs.dirs ]]; then
-    echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/New_Shell_Script.sh
-    echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/New_Python3_Script.py
-    echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/New_Shell_Script.sh
+  echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/New_Python3_Script.py
+  echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
-" > ${XDG_TEMPLATES_DIR}/New_LaTeX_Document.tex
-    chmod 755 *
-  fi
+" > ${XDG_TEMPLATES_DIR}/New_LaTeX_Document.texç
+  echo "CC = gcc
+CFLAGS = -O3 -Wall
+
+all : Cscript
+
+Cscript : Cscript.c
+  $(CC) $(CFLAGS) Cscript.c -o Cscript.c -lm
+
+run : Cscript
+  ./Cscript
+
+.PHONY : clean
+clean :
+  rm -f Cscript" > makefile
+  echo "#include \"Cscript.h\"
+  int main(int nargs, char* args[])
+{
+  printf(\"Hello World\");
+}
+
+" > ${XDG_TEMPLATES_DIR}/Cscript.c
+  echo "// Includes
+#include <stdio.h>
+#include <stdbool.h>  // To use booleans
+#include <stdlib.h>
+" > ${XDG_TEMPLATES_DIR}/Cscript.h
+  
+  chmod 755 *
 }
 
 ###### SHELL FEATURES ######
@@ -584,6 +637,7 @@ user_install()
   echo "Attempting to install Android Studio"
   install_android_studio
   echo "Finished"
+  install_discord
   echo "Attempting to install pypy3"
   install_pypy3
   echo "Finished"
@@ -823,6 +877,15 @@ function main()
             echo "Finished"
           else
             echo "WARNING: Could not install steam. You should be root. Skipping..."
+          fi
+        ;;
+        -i|--discord|--Discord|--disc)
+          if [[ "$(whoami)" != "root" ]]; then
+            echo "Attempting to install discord"
+            install_discord
+            echo "Finished"
+          else
+            echo "WARNING: Could not install discord. You should be normal user. Skipping..."
           fi
         ;;
         -u|--user|--regular|--normal)

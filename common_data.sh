@@ -22,4 +22,4 @@ extract_function="
     fi
   }"
   
-  
+discord_version=discord-0.0.10
