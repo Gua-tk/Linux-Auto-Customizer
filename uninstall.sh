@@ -16,7 +16,7 @@ uninstall_gcc()
 uninstall_google_chrome()
 {
   apt-get purge -y google-chrome-stable
-  rm -f ${XDG_DESKTOP_DIR}/chrome*
+  rm -f ${XDG_DESKTOP_DIR}/google-chrome.desktop
 }
 
 uninstall_git()
@@ -26,7 +26,7 @@ uninstall_git()
 
 uninstall_latex()
 {
-  apt-get purge -y texlive-latex-extra
+  apt-get purge -y texlive-latex-extra perl-tk
   rm -f ${XDG_DESKTOP_DIR}/texdoctk.desktop
   rm -f ${XDG_DESKTOP_DIR}/texmaker.desktop
 }
@@ -63,7 +63,7 @@ uninstall_shell_customization()
 uninstall_pycharm_professional()
 {
   rm -Rf ${USR_BIN_FOLDER}/pycharm-${pycharm_professional_ver}
-  rm -f ${XDG_DESKTOP_DIR}/pycharm-pro
+  rm -f ${XDG_DESKTOP_DIR}/pycharm-pro.desktop
   rm -f /home/${SUDO_USER}/.local/bin/pycharm-pro
   rm -f /home/${SUDO_USER}/.local/share/applications/pycharm-pro.desktop
 }
@@ -71,7 +71,7 @@ uninstall_pycharm_professional()
 uninstall_pycharm_community()
 {
   rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
-  rm -f ${XDG_DESKTOP_DIR}/pycharm
+  rm -f ${XDG_DESKTOP_DIR}/pycharm.desktop
   rm -f /home/${SUDO_USER}/.local/bin/pycharm
   rm -f /home/${SUDO_USER}/.local/share/applications/pycharm.desktop
 }
@@ -87,7 +87,7 @@ uninstall_clion()
 uninstall_sublime_text()
 {
   rm -Rf ${USR_BIN_FOLDER}/sublime_text_3
-  rm -f ${XDG_DESKTOP_DIR}/sublime
+  rm -f ${XDG_DESKTOP_DIR}/sublime-text.desktop
   rm -f /home/${SUDO_USER}/.local/bin/sublime
   rm -f /home/${SUDO_USER}/.local/share/applications/sublime.desktop
 }
@@ -121,6 +121,7 @@ uninstall_steam()
 {
   apt-get install -y curl
   dpkg -P steam-launcher
+  rm -f ${XDG_DESKTOP_DIR}/steam.desktop
 }
 
 uninstall_discord()
@@ -135,6 +136,7 @@ uninstall_megasync()
   dpkg -P megasync
   dpkg -P nautilus-megasync
   rm -f ${XDG_DESKTOP_DIR}/megasync.desktop
+  apt-get purge -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 }
 
 # Uninstall all functions
