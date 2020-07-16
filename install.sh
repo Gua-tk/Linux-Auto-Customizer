@@ -430,6 +430,7 @@ install_vlc()
 # Needs root permission
 install_latex()
 {
+  apt-get install -y perl-tk
   apt -y install texlive-latex-extra
 }
 
