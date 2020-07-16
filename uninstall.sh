@@ -126,7 +126,7 @@ uninstall_steam()
 
 uninstall_discord()
 {
-  rm -f ${HOME}/.local/bin/discord
+  rm -f /home/${SUDO_USER}/.local/bin/discord
   rm -f ${XDG_DESKTOP_DIR}/Discord.Desktop
   rm -Rf ${USR_BIN_FOLDER}/Discord
 }
