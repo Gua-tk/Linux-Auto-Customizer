@@ -21,6 +21,7 @@ uninstall_google_chrome()
 
 uninstall_git()
 {
+  apt-get purge -y git
   apt-get purge -y git-all
 }
 
