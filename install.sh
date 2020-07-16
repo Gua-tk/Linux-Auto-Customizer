@@ -7,8 +7,8 @@
 ###### AUXILIAR FUNCTIONS ######
 
 # Associate a file type (mime type) to a certaina application.
-# Argument 1 File types. Example: application/x-shellscript
-# Argument 2 Application. Example: sublime_text.desktop
+# Argument 1: File types. Example: application/x-shellscript
+# Argument 2: Application. Example: sublime_text.desktop
 register_file_associations()
 {
 if [[ -f ${HOME}/.config/mimeapps.list ]]; then
@@ -35,11 +35,25 @@ else
 fi
 }
 
+# Creates a valid launcher for the normal user in the desktop using an
+# already created launcher from an automatic install (using apt or dpkg).
+# This function does not need to have root permissions for its instructions,
+# but is expected to be call as root since it uses the variable $SUDO_USER 
+# Argument 1: name of the desktop launcher in /usr/share/applications
+copy_launcher()
+{
+  cp /usr/share/applications/$1 ${XDG_DESKTOP_DIR}
+  chmod 775 ${XDG_DESKTOP_DIR}/$1
+  chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
+  chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
+}
+
 ###### SOFTWARE INSTALLATION FUNCTIONS ######
 
 # Checks if Android studio is already installed and installs it if not
 install_android_studio()
 {
+  echo "Attempting to install Android Studio"
   local -r android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of Android Studio
   if [[ -z "$(which studio)" ]]; then
     # avoid collisions
@@ -57,24 +71,13 @@ install_android_studio()
     ln -s ${USR_BIN_FOLDER}/android-studio/bin/studio.sh ${HOME}/.local/bin/studio
     
     # Create launcher
-    android_studio_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Android Studio
-Exec=studio %F
-Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
-Categories=Development;IDE;
-Terminal=false
-StartupNotify=true
-StartupWMClass=jetbrains-android-studio
-Name[en_GB]=android-studio.desktop"
-
     echo -e "${android_studio_launcher}" > "${HOME}/.local/share/applications/Android Studio.desktop"
     chmod 775 "${HOME}/.local/share/applications/Android Studio.desktop"
     cp -p "${HOME}/.local/share/applications/Android Studio.desktop" ${XDG_DESKTOP_DIR}
   else
     err "WARNING: Android Studio is already installed. Skipping"
   fi
+  echo "Finished"
 }
 
 
@@ -97,11 +100,7 @@ install_google_chrome()
     rm -f google-chrome*.deb*
     
     # Create launcher and change its permissions (we are root)
-    echo ${XDG_DESKTOP_DIR}
-    cp /usr/share/applications/google-chrome.desktop ${XDG_DESKTOP_DIR}
-    chmod 775 ${XDG_DESKTOP_DIR}/google-chrome.desktop
-    chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/google-chrome.desktop
-    chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/google-chrome.desktop
+    copy_launcher "google-chrome.desktop"
   else
     err "WARNING: Google Chrome is already installed. Skipping"
   fi
@@ -145,22 +144,24 @@ install_pypy3()
   else
     err "WARNING: pypy3 is already installed. Skipping"
   fi
+  echo "Finished"
 }
 
 # Needs roots permission
 install_pypy3_dependencies()
 {
   # pypy3 module dependencies
+  echo "Attempting to install pypy3 dependencies"
   apt-get install -y -qq pkg-config
   apt-get install -y -qq libfreetype6-dev
   apt-get install -y -qq libpng-dev
   apt-get install -y -qq libffi-dev
+  echo "Finished"
 }
 
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_community()
 {
-  local -r pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
   echo "Attempting to install $pycharm_version"
 
   if [[ -z $(which pycharm) ]]; then
@@ -178,15 +179,6 @@ install_pycharm_community()
     ln -s ${USR_BIN_FOLDER}/${pycharm_version}/bin/pycharm.sh ${HOME}/.local/bin/pycharm
 
     # Create launcher for pycharm in the desktop and in the launcher menu
-    pycharm_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=PyCharm
-Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
-Exec=pycharm %F
-Comment=Python IDE for Professional Developers
-Terminal=false
-StartupWMClass=jetbrains-pycharm"
     echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
     chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
     cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
@@ -204,34 +196,23 @@ StartupWMClass=jetbrains-pycharm"
 # Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_professional()
 {
-  local -r pycharm_version=pycharm-professional-2020.1  # Targeted version of pycharm
-  local -r pycharm_ver=$(echo $pycharm_version | cut -d '-' -f3)
   echo "Attempting to install $pycharm_version"
 
   if [[ -z $(which pycharm-pro) ]]; then
     # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
+    rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
+    rm -Rf ${USR_BIN_FOLDER}/${pycharm_professional_version}
     # Download pycharm
-    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_professional_version}.tar.gz
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz
     # Clean
-    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
+    rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
     # Create links to the PATH
     rm -f ${HOME}/.local/bin/pycharm-pro
-    ln -s ${USR_BIN_FOLDER}/pycharm-${pycharm_ver}/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
+    ln -s ${USR_BIN_FOLDER}/pycharm-${pycharm_professional_ver}/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
     # Create launcher for pycharm in the desktop and in the launcher menu
-    pycharm_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=PyCharm Professional
-Icon=$HOME/.bin/pycharm-$pycharm_ver/bin/pycharm.png
-Exec=pycharm-pro %F
-Comment=Python IDE for Professional Developers
-Terminal=false
-StartupWMClass=jetbrains-pycharm"
-    echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
+    echo -e "$pycharm_professional_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
     chmod 775 ${HOME}/.local/share/applications/pycharm-pro.desktop
     cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
 
@@ -246,9 +227,6 @@ StartupWMClass=jetbrains-pycharm"
 
 install_clion()
 {
-  local -r clion_version=CLion-2020.1  # Targeted version of CLion
-  local -r clion_version_caps_down=$(echo "${clion_version}" | tr '[:upper:]' '[:lower:]')  # Desirable filename in lowercase
-
   echo "Attempting to install $clion_version"
 
   if [[ -z $(which clion) ]]; then
@@ -265,15 +243,6 @@ install_clion()
     rm -f ${HOME}/.local/bin/clion
     ln -s ${USR_BIN_FOLDER}/${clion_version_caps_down}/bin/clion.sh ${HOME}/.local/bin/clion
     # Create launcher for pycharm in the desktop and in the launcher menu
-    clion_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=CLion
-Icon=$HOME/.bin/${clion_version_caps_down}/bin/clion.png
-Exec=clion %F
-Comment=C and C++ IDE for Professional Developers
-Terminal=false
-StartupWMClass=jetbrains-clion"
     echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
     chmod 775 ${HOME}/.local/share/applications/clion.desktop
     cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
@@ -310,15 +279,6 @@ install_sublime_text()
     rm -f ${HOME}/.local/bin/sublime
     ln -s ${USR_BIN_FOLDER}/sublime_text_3/sublime_text ${HOME}/.local/bin/sublime
     # Create desktop launcher entry for sublime text
-    sublime_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Sublime Text
-GenericName=Text Editor
-Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
-Comment=General Purpose Programming Text Editor
-Terminal=false
-Exec=subl %F"
     echo -e "${sublime_launcher}" > ${HOME}/.local/share/applications/sublime-text.desktop
     chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
     # Copy launcher to the desktop
@@ -342,21 +302,23 @@ Exec=subl %F"
 # steam ubuntu client
 install_steam()
 {
+  echo "Attempting to install steam"
 	# steam dependencies
 	apt-get install curl
 
 	if [[ -z $(which steam) ]]; then
 	  # Avoid collision from possible previous interrumped installations
 	  rm -f ${USR_BIN_FOLDER}/steam.deb*
-  	  # Download sublime_text
-      wget -P ${USR_BIN_FOLDER} https://steamcdn-a.akamaihd.net/client/installer/steam.deb
-      # Install
-      dpkg -i ${USR_BIN_FOLDER}/steam.deb
-      # Clean after
-      rm -f ${USR_BIN_FOLDER}/steam.deb*
-    else
-      err "WARNING: steam is already installed. Skipping"
-    fi
+	  # Download sublime_text
+    wget -P ${USR_BIN_FOLDER} https://steamcdn-a.akamaihd.net/client/installer/steam.deb
+    # Install
+    dpkg -i ${USR_BIN_FOLDER}/steam.deb
+    # Clean after
+    rm -f ${USR_BIN_FOLDER}/steam.deb*
+  else
+    err "WARNING: steam is already installed. Skipping"
+  fi
+  echo "Steam Finished installing"
 }
 
 # discord desktop client
@@ -371,18 +333,37 @@ install_discord()
     rm -f ${USR_BIN_FOLDER}/discord.tar.gz*
     rm -f ${HOME}/.local/bin/discord
     ln -s ${USR_BIN_FOLDER}/Discord/Discord ${HOME}/.local/bin/discord
-echo "[Desktop Entry]
-Name=Discord
-StartupWMClass=discord
-Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
-GenericName=Internet Messenger
-Exec=discord
-Icon=${USR_BIN_FOLDER}/Discord/discord.png
-Type=Application
-Categories=Network;InstantMessaging;" > ${XDG_DESKTOP_DIR}/Discord.Desktop
+echo ${discord_launcher} > ${XDG_DESKTOP_DIR}/Discord.Desktop
     chmod 755 ${XDG_DESKTOP_DIR}/Discord.Desktop
   else
     err "WARNING: discord is already installed. Skipping"
+  fi
+  echo "Finished"
+}
+
+# MEGA desktop client
+install_megasync()
+{
+  echo "Attemptying to install megasync"
+  if [[ -z $(which megasync) ]]; then
+    # Dependencies
+    apt-get install -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
+
+    rm -f ${USR_BIN_FOLDER}/${megasync_version}.deb*
+    (cd "${USR_BIN_FOLDER}"; wget -O ${megasync_version}.deb "${megasync_repository}${megasync_version}")
+
+    rm -f ${USR_BIN_FOLDER}/${megasync_integrator_version}.deb*
+    (cd "${USR_BIN_FOLDER}"; wget -O ${megasync_integrator_version}.deb "${megasync_repository}${megasync_integrator_version}")
+
+    dpkg -i ${USR_BIN_FOLDER}/${megasync_version}.deb
+    dpkg -i ${USR_BIN_FOLDER}/${megasync_integrator_version}.deb
+
+    rm -f ${USR_BIN_FOLDER}/${megasync_integrator_version}.deb*
+    rm -f ${USR_BIN_FOLDER}/${megasync_version}.deb*
+
+    copy_launcher megasync.desktop
+  else
+    err "WARNING: megasync is already installed. Skipping"
   fi
   echo "Finished"
 }
@@ -432,6 +413,8 @@ install_latex()
 {
   apt-get install -y perl-tk
   apt -y install texlive-latex-extra
+  copy_launcher "texmaker.desktop"
+  copy_launcher "texdoctk.desktop"
 }
 
 ###### SYSTEM FEATURES ######
@@ -441,12 +424,12 @@ install_latex()
 install_templates()
 {
   # Add templates
-  echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/New_Shell_Script.sh
-  echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/New_Python3_Script.py
+  echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/shell_script.sh
+  echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/python3_script.py
   echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
-" > ${XDG_TEMPLATES_DIR}/New_LaTeX_Document.texç
+" > ${XDG_TEMPLATES_DIR}/latex_document.tex
   echo "CC = gcc
 CFLAGS = -O3 -Wall
 
@@ -467,14 +450,14 @@ clean :
   printf(\"Hello World\");
 }
 
-" > ${XDG_TEMPLATES_DIR}/Cscript.c
+" > ${XDG_TEMPLATES_DIR}/c_script.c
   echo "// Includes
 #include <stdio.h>
 #include <stdbool.h>  // To use booleans
 #include <stdlib.h>
-" > ${XDG_TEMPLATES_DIR}/Cscript.h
+" > ${XDG_TEMPLATES_DIR}/c_script.h
   
-  chmod 755 *
+  chmod 775 *
 }
 
 ###### SHELL FEATURES ######
@@ -595,12 +578,9 @@ root_install()
   echo "Attempting to install VLC"
   install_vlc
   echo "Finished"
-  echo "Attempting to install steam"
   install_steam
-  echo "Finished"
-  echo "Attempting to install pypy3 dependencies"
   install_pypy3_dependencies
-  echo "Finished"
+  install_megasync
 }
 
 user_install()
@@ -635,19 +615,15 @@ user_install()
   echo "Attempting to install sublime text"
   install_sublime_text
   echo "Finished"
-  echo "Attempting to install Android Studio"
   install_android_studio
-  echo "Finished"
   install_discord
-  echo "Attempting to install pypy3"
   install_pypy3
-  echo "Finished"
 }
 
 ###### AUXILIAR FUNCTIONS ######
 
 # Prints the given arguments to the stderr
-function err()
+err()
 {
   echo "$*" >&2
 }
@@ -655,39 +631,24 @@ function err()
 ##################
 ###### MAIN ######
 ##################
-function main()
+main()
 {
   if [[ "$(whoami)" == "root" ]]; then
     # Update repositories and system before doing anything
     apt -y -qq update
     apt -y -qq upgrade
 
-    # Locate bash customizing files
-    BASHRC_PATH=/home/${SUDO_USER}/.bashrc
-
     # Do a safe copy
     cp -p ${BASHRC_PATH} ${HOME}/.bashrc.bak
-
-    # Fill var to locate user software
-    USR_BIN_FOLDER=/home/${SUDO_USER}/.bin
-
   else
     # Create folder for user software
     mkdir -p ${HOME}/.bin
-    
-    # Fill var to locate user software
-    USR_BIN_FOLDER=${HOME}/.bin
-
-    # Locate bash customizing files
-    BASHRC_PATH=${HOME}/.bashrc
 
     # Make sure that ${HOME}/.local/bin is present
     mkdir -p ${HOME}/.local/bin
 
     # Make sure that folder for user launchers is present
     mkdir -p ${HOME}/.local/share/applications
-    # Update repositories and system before doing anything if we have permissions
-
 
     # Make sure that PATH is pointing to ${HOME}/.local/bin (where we will put our soft links to the software)
     if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${HOME}/.local/bin" )" ]]; then
@@ -889,6 +850,13 @@ function main()
             echo "WARNING: Could not install discord. You should be normal user. Skipping..."
           fi
         ;;
+        --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
+          if [[ "$(whoami)" == "root" ]]; then
+            install_megasync
+          else
+            echo "WARNING: Could not install megasync. You should be root user. Skipping..."
+          fi
+        ;;
         -u|--user|--regular|--normal)
           if [[ "$(whoami)" == "root" ]]; then
             echo "WARNING: Could not install user packages being root. You should be normal user."
@@ -935,17 +903,7 @@ set -e
 # WARNING: That makes that the script has to be executed from the directory containing it
 source common_data.sh
 
-# GLOBAL VARIABLES
-# Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
-
-if [[ "$(whoami)" != "root" ]]; then
-  source ${HOME}/.config/user-dirs.dirs
-else
-  # declare same variables but with absolute path
-  declare $(cat /home/${SUDO_USER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
-fi
 # Other script-specific variables
-DESK=
 USR_BIN_FOLDER=
 BASHRC_PATH=
 
