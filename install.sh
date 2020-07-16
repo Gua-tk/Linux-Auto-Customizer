@@ -903,9 +903,5 @@ set -e
 # WARNING: That makes that the script has to be executed from the directory containing it
 source common_data.sh
 
-# Other script-specific variables
-USR_BIN_FOLDER=
-BASHRC_PATH=
-
 # Call main function
 main "$@"
