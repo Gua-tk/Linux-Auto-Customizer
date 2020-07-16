@@ -639,7 +639,7 @@ main()
     apt -y -qq upgrade
 
     # Do a safe copy
-    cp -p ${BASHRC_PATH} ${HOME}/.bashrc.bak
+    cp -p ${BASHRC_PATH} ${BASHRC_PATH}.bak
   else
     # Create folder for user software
     mkdir -p ${HOME}/.bin

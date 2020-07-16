@@ -21,7 +21,6 @@ uninstall_google_chrome()
 
 uninstall_git()
 {
-  apt-get purge -y git
   apt-get purge -y git-all
 }
 
@@ -80,7 +79,7 @@ uninstall_pycharm_community()
 uninstall_clion()
 {
   rm -Rf ${USR_BIN_FOLDER}/${clion_version_caps_down}
-  rm -f ${XDG_DESKTOP_DIR}/clion
+  rm -f ${XDG_DESKTOP_DIR}/clion.desktop
   rm -f /home/${SUDO_USER}/.local/bin/clion
   rm -f /home/${SUDO_USER}/.local/share/applications/clion.desktop
 }
