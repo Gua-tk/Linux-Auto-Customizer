@@ -381,7 +381,7 @@ install_git()
 # Needs root permission
 install_gcc()
 {
-  apt install -y -gcc
+  apt install -y gcc
 }
 
 # Install Python3
