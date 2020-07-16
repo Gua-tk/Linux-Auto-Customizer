@@ -81,31 +81,6 @@ install_android_studio()
 }
 
 
-# Checks if Google Chrome is already installed and installs it and its dependencies
-# Needs root permission
-install_google_chrome()
-{
-  # Chrome dependencies
-  apt-get install -y -qq libxss1 libappindicator1 libindicator7
-
-  if [[ -z "$(which google-chrome)" ]]; then
-
-    # Delete possible collisions with previous installation
-    rm -f google-chrome*.deb*  
-    # Download
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    # Install downloaded version
-    apt install -y -qq ./google-chrome-stable_current_amd64.deb
-    # Clean
-    rm -f google-chrome*.deb*
-    
-    # Create launcher and change its permissions (we are root)
-    copy_launcher "google-chrome.desktop"
-  else
-    err "WARNING: Google Chrome is already installed. Skipping"
-  fi
-}
-
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 # Links it to the path
 install_pypy3()
@@ -144,18 +119,6 @@ install_pypy3()
   else
     err "WARNING: pypy3 is already installed. Skipping"
   fi
-  echo "Finished"
-}
-
-# Needs roots permission
-install_pypy3_dependencies()
-{
-  # pypy3 module dependencies
-  echo "Attempting to install pypy3 dependencies"
-  apt-get install -y -qq pkg-config
-  apt-get install -y -qq libfreetype6-dev
-  apt-get install -y -qq libpng-dev
-  apt-get install -y -qq libffi-dev
   echo "Finished"
 }
 
@@ -299,28 +262,6 @@ install_sublime_text()
   echo "Finished"
 }
 
-# steam ubuntu client
-install_steam()
-{
-  echo "Attempting to install steam"
-	# steam dependencies
-	apt-get install curl
-
-	if [[ -z $(which steam) ]]; then
-	  # Avoid collision from possible previous interrumped installations
-	  rm -f ${USR_BIN_FOLDER}/steam.deb*
-	  # Download sublime_text
-    wget -P ${USR_BIN_FOLDER} https://steamcdn-a.akamaihd.net/client/installer/steam.deb
-    # Install
-    dpkg -i ${USR_BIN_FOLDER}/steam.deb
-    # Clean after
-    rm -f ${USR_BIN_FOLDER}/steam.deb*
-  else
-    err "WARNING: steam is already installed. Skipping"
-  fi
-  echo "Steam Finished installing"
-}
-
 # discord desktop client
 install_discord()
 {
@@ -333,12 +274,61 @@ install_discord()
     rm -f ${USR_BIN_FOLDER}/discord.tar.gz*
     rm -f ${HOME}/.local/bin/discord
     ln -s ${USR_BIN_FOLDER}/Discord/Discord ${HOME}/.local/bin/discord
-echo ${discord_launcher} > ${XDG_DESKTOP_DIR}/Discord.Desktop
+    echo ${discord_launcher} > ${XDG_DESKTOP_DIR}/Discord.Desktop
     chmod 755 ${XDG_DESKTOP_DIR}/Discord.Desktop
   else
     err "WARNING: discord is already installed. Skipping"
   fi
   echo "Finished"
+}
+
+###### ROOT FUNCTIONS ######
+
+# Checks if Google Chrome is already installed and installs it and its dependencies
+# Needs root permission
+install_google_chrome()
+{
+  # Chrome dependencies
+  apt-get install -y -qq libxss1 libappindicator1 libindicator7
+
+  if [[ -z "$(which google-chrome)" ]]; then
+
+    # Delete possible collisions with previous installation
+    rm -f google-chrome*.deb*  
+    # Download
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    # Install downloaded version
+    apt install -y -qq ./google-chrome-stable_current_amd64.deb
+    # Clean
+    rm -f google-chrome*.deb*
+    
+    # Create launcher and change its permissions (we are root)
+    copy_launcher "google-chrome.desktop"
+  else
+    err "WARNING: Google Chrome is already installed. Skipping"
+  fi
+}
+
+# steam ubuntu client
+install_steam()
+{
+  echo "Attempting to install steam"
+  # steam dependencies
+  apt-get install curl
+
+  if [[ -z $(which steam) ]]; then
+    # Avoid collision from possible previous interrumped installations
+    rm -f steam.deb*
+    # Download steam
+    wget -O steam.deb https://steamcdn-a.akamaihd.net/client/installer/steam.deb
+    # Install
+    dpkg -i steam.deb
+    # Clean after
+    rm -f steam.deb*
+  else
+    err "WARNING: steam is already installed. Skipping"
+  fi
+  echo "Steam Finished installing"
 }
 
 # MEGA desktop client
@@ -349,17 +339,17 @@ install_megasync()
     # Dependencies
     apt-get install -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 
-    rm -f ${USR_BIN_FOLDER}/${megasync_version}.deb*
-    (cd "${USR_BIN_FOLDER}"; wget -O ${megasync_version}.deb "${megasync_repository}${megasync_version}")
+    rm -f ${megasync_version}.deb*
+    wget -O ${megasync_version}.deb "${megasync_repository}${megasync_version}"
 
-    rm -f ${USR_BIN_FOLDER}/${megasync_integrator_version}.deb*
-    (cd "${USR_BIN_FOLDER}"; wget -O ${megasync_integrator_version}.deb "${megasync_repository}${megasync_integrator_version}")
+    rm -f ${megasync_integrator_version}.deb*
+    wget -O ${megasync_integrator_version}.deb "${megasync_repository}${megasync_integrator_version}"
 
-    dpkg -i ${USR_BIN_FOLDER}/${megasync_version}.deb
-    dpkg -i ${USR_BIN_FOLDER}/${megasync_integrator_version}.deb
+    dpkg -i ${megasync_version}.deb
+    dpkg -i ${megasync_integrator_version}.deb
 
-    rm -f ${USR_BIN_FOLDER}/${megasync_integrator_version}.deb*
-    rm -f ${USR_BIN_FOLDER}/${megasync_version}.deb*
+    rm -f ${megasync_integrator_version}.deb*
+    rm -f ${megasync_version}.deb*
 
     copy_launcher megasync.desktop
   else
@@ -368,43 +358,55 @@ install_megasync()
   echo "Finished"
 }
 
+# Needs roots permission
+install_pypy3_dependencies()
+{
+  # pypy3 module dependencies
+  echo "Attempting to install pypy3 dependencies"
+  apt-get install -y -qq pkg-config
+  apt-get install -y -qq libfreetype6-dev
+  apt-get install -y -qq libpng-dev
+  apt-get install -y -qq libffi-dev
+  echo "Finished"
+}
+
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
 install_git()
 {
-  apt install -y -qq git-all
+  apt install -y git-all
 }
 
 # Install gcc (C compiler)
 # Needs root permission
 install_gcc()
 {
-  apt install -y -qq gcc
+  apt install -y -gcc
 }
 
 # Install Python3
 # Needs root permission
 install_python3()
 {
-  apt install -y -qq python3-dev python-dev
+  apt install -y python3-dev python-dev
 }
 
 # Install GNU parallel
 install_GNU_parallel()
 {
-  apt-get -y -qq install parallel
+  apt-get -y install parallel
 }
 
 # Install pdf grep
 install_pdfgrep()
 {
-  apt-get -y -qq install pdfgrep
+  apt-get -y install pdfgrep
 }
 
 # install VLC
 install_vlc()
 {
-	apt-get -y -qq install vlc
+  apt-get -y install vlc
 }
 
 # Install latex
@@ -443,7 +445,7 @@ run : Cscript
 
 .PHONY : clean
 clean :
-  rm -f Cscript" > makefile
+  rm -f Cscript" > ${XDG_TEMPLATES_DIR}/makefile
   echo "#include \"Cscript.h\"
   int main(int nargs, char* args[])
 {
