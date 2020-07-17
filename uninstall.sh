@@ -127,7 +127,7 @@ uninstall_steam()
 uninstall_discord()
 {
   rm -f /home/${SUDO_USER}/.local/bin/discord
-  rm -f ${XDG_DESKTOP_DIR}/Discord.Desktop
+  rm -f ${XDG_DESKTOP_DIR}/discord.desktop
   rm -Rf ${USR_BIN_FOLDER}/Discord
 }
 
@@ -137,6 +137,18 @@ uninstall_megasync()
   dpkg -P nautilus-megasync
   rm -f ${XDG_DESKTOP_DIR}/megasync.desktop
   apt-get purge -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
+}
+
+uninstall_thunderbird()
+{
+  apt-get purge -y thunderbird
+  rm -f ${XDG_DESKTOP_DIR}/thunderbird.desktop
+}
+
+uninstall_transmission()
+{
+  apt-get purge -y transmission
+  rm -f ${XDG_DESKTOP_DIR}/transmission.desktop
 }
 
 # Uninstall all functions
@@ -162,6 +174,8 @@ uninstall_all()
   uninstall_steam
   uninstall_discord
   uninstall_megasync
+  uninstall_transmission
+  uninstall_thunderbird
 }
 
 ##################
@@ -210,7 +224,7 @@ main()
         -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)
           uninstall_shell_customization
         ;;
-        -h|--pycharmpro|--pycharmPro|--pycharm_pro)
+        -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
           uninstall_pycharm_professional
         ;;
         -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
@@ -247,8 +261,7 @@ main()
           uninstall_all
         ;;
         *)    # unknown option
-          POSITIONAL+=("$1") # save it in an array for later
-          shift # past argument
+          err "$1 is not a recognized command"
           ;;
       esac
       shift

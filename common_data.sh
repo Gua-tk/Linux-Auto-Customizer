@@ -71,7 +71,7 @@ GenericName=Text Editor
 Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Terminal=false
-Exec=subl %F"
+Exec=sublime %F"
 
 
 clion_version=CLion-2020.1  # Targeted version of CLion
@@ -91,21 +91,21 @@ pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
 pycharm_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
-Name=PyCharm Professional
-Icon=$HOME/.bin/pycharm-$pycharm_ver/bin/pycharm.png
-Exec=pycharm-pro %F
+Name=PyCharm 
+Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
+Exec=pycharm %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
 
 pycharm_professional_version=pycharm-professional-2020.1  # Targeted version of pycharm
-pycharm_professional_ver=$(echo $pycharm_version | cut -d '-' -f3)
+pycharm_professional_ver=$(echo $pycharm_professional_version | cut -d '-' -f3)
 pycharm_professional_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
-Name=PyCharm
-Icon=$HOME/.bin/$pycharm_version/bin/pycharm.png
-Exec=pycharm %F
+Name=PyCharm Professional
+Icon=$HOME/.bin/pycharm-${pycharm_professional_ver}/bin/pycharm.png
+Exec=pycharm-pro %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"

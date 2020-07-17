@@ -81,6 +81,129 @@ install_android_studio()
 }
 
 
+install_clion()
+{
+  echo "Attempting to install $clion_version"
+
+  if [[ -z $(which clion) ]]; then
+    # Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
+    rm -Rf ${USR_BIN_FOLDER}/${clion_version}
+    # Download CLion
+    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/cpp/${clion_version}.tar.gz
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${clion_version}.tar.gz
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
+    # Create links to the PATH
+    rm -f ${HOME}/.local/bin/clion
+    ln -s ${USR_BIN_FOLDER}/${clion_version_caps_down}/bin/clion.sh ${HOME}/.local/bin/clion
+    # Create launcher for pycharm in the desktop and in the launcher menu
+    echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
+    chmod 775 ${HOME}/.local/share/applications/clion.desktop
+    cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    register_file_associations "text/x-c++hdr" "clion.desktop"
+    register_file_associations "text/x-c++src" "clion.desktop"
+    register_file_associations "text/x-chdr" "clion.desktop"
+    register_file_associations "text/x-csrc" "clion.desktop"
+    
+  else
+    err "WARNING: CLion is already installed. Skipping"
+  fi
+}
+
+
+# discord desktop client
+install_discord()
+{
+  echo "Attempting to install discord"
+  if [[ -z $(which discord) ]]; then
+    rm -f ${USR_BIN_FOLDER}/${discord_version}.tar.gz*
+    (cd "${USR_BIN_FOLDER}"; wget -O ${discord_version}.tar.gz "https://discord.com/api/download?platform=linux&format=tar.gz")
+    rm -Rf "${USR_BIN_FOLDER}/Discord"
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${discord_version}.tar.gz
+    rm -f ${USR_BIN_FOLDER}/discord*.tar.gz*
+    rm -f ${HOME}/.local/bin/discord
+    ln -s ${USR_BIN_FOLDER}/Discord/Discord ${HOME}/.local/bin/discord
+    echo -e "${discord_launcher}" > ${XDG_DESKTOP_DIR}/discord.desktop
+    chmod 755 ${XDG_DESKTOP_DIR}/discord.desktop
+  else
+    err "WARNING: discord is already installed. Skipping"
+  fi
+  echo "Finished"
+}
+
+
+# Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
+install_pycharm_community()
+{
+  echo "Attempting to install $pycharm_version"
+
+  if [[ -z $(which pycharm) ]]; then
+    # Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
+    rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
+    # Download pycharm
+    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
+    # Create links to the PATH
+    rm -f ${HOME}/.local/bin/pycharm
+    ln -s ${USR_BIN_FOLDER}/${pycharm_version}/bin/pycharm.sh ${HOME}/.local/bin/pycharm
+
+    # Create launcher for pycharm in the desktop and in the launcher menu
+    echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
+    chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
+    cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    register_file_associations "text/x-python" "pycharm.desktop"
+    register_file_associations "text/x-python3" "pycharm.desktop"
+    register_file_associations "text/x-sh" "pycharm.desktop"
+
+  else
+    err "WARNING: pycharm is already installed. Skipping"
+  fi
+}
+
+
+# Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
+install_pycharm_professional()
+{
+  echo "Attempting to install $pycharm_professional_version"
+
+  if [[ -z $(which pycharm-pro) ]]; then
+    # Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
+    rm -Rf ${USR_BIN_FOLDER}/${pycharm_professional_version}
+    # Download pycharm
+    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_professional_version}.tar.gz
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
+    # Create links to the PATH
+    rm -f ${HOME}/.local/bin/pycharm-pro
+    ln -s ${USR_BIN_FOLDER}/pycharm-${pycharm_professional_ver}/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
+    # Create launcher for pycharm in the desktop and in the launcher menu
+    echo -e "$pycharm_professional_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
+    chmod 775 ${HOME}/.local/share/applications/pycharm-pro.desktop
+    cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    register_file_associations "text/x-sh" "pycharm-pro.desktop"
+    register_file_associations "text/x-python" "pycharm-pro.desktop"
+    register_file_associations "text/x-python3" "pycharm-pro.desktop"
+  else
+    err "WARNING: pycharm-pro is already installed. Skipping"
+  fi
+}
+
+
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 # Links it to the path
 install_pypy3()
@@ -122,104 +245,6 @@ install_pypy3()
   echo "Finished"
 }
 
-# Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
-install_pycharm_community()
-{
-  echo "Attempting to install $pycharm_version"
-
-  if [[ -z $(which pycharm) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
-    # Download pycharm
-    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
-    # Create links to the PATH
-    rm -f ${HOME}/.local/bin/pycharm
-    ln -s ${USR_BIN_FOLDER}/${pycharm_version}/bin/pycharm.sh ${HOME}/.local/bin/pycharm
-
-    # Create launcher for pycharm in the desktop and in the launcher menu
-    echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
-    chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
-    cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
-
-    # register file associations
-    register_file_associations "text/x-python" "pycharm.desktop"
-    register_file_associations "text/x-python3" "pycharm.desktop"
-    register_file_associations "text/x-sh" "pycharm.desktop"
-
-  else
-  	err "WARNING: pycharm is already installed. Skipping"
-  fi
-}
-
-# Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
-install_pycharm_professional()
-{
-  echo "Attempting to install $pycharm_version"
-
-  if [[ -z $(which pycharm-pro) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${pycharm_professional_version}
-    # Download pycharm
-    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_professional_version}.tar.gz
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
-    # Create links to the PATH
-    rm -f ${HOME}/.local/bin/pycharm-pro
-    ln -s ${USR_BIN_FOLDER}/pycharm-${pycharm_professional_ver}/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
-    # Create launcher for pycharm in the desktop and in the launcher menu
-    echo -e "$pycharm_professional_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
-    chmod 775 ${HOME}/.local/share/applications/pycharm-pro.desktop
-    cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
-
-    # register file associations
-    register_file_associations "text/x-sh" "pycharm-pro.desktop"
-    register_file_associations "text/x-python" "pycharm-pro.desktop"
-    register_file_associations "text/x-python3" "pycharm-pro.desktop"
-  else
-  	err "WARNING: pycharm-pro is already installed. Skipping"
-  fi
-}
-
-install_clion()
-{
-  echo "Attempting to install $clion_version"
-
-  if [[ -z $(which clion) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${clion_version}
-    # Download CLion
-    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/cpp/${clion_version}.tar.gz
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${clion_version}.tar.gz
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
-    # Create links to the PATH
-    rm -f ${HOME}/.local/bin/clion
-    ln -s ${USR_BIN_FOLDER}/${clion_version_caps_down}/bin/clion.sh ${HOME}/.local/bin/clion
-    # Create launcher for pycharm in the desktop and in the launcher menu
-    echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
-    chmod 775 ${HOME}/.local/share/applications/clion.desktop
-    cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
-
-    # register file associations
-    register_file_associations "text/x-c++hdr" "clion.desktop"
-    register_file_associations "text/x-c++src" "clion.desktop"
-    register_file_associations "text/x-chdr" "clion.desktop"
-    register_file_associations "text/x-csrc" "clion.desktop"
-    
-  else
-  	err "WARNING: CLion is already installed. Skipping"
-  fi
-}
 
 # Install Sublime text 3
 install_sublime_text()
@@ -233,7 +258,7 @@ install_sublime_text()
     rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
     rm -Rf ${USR_BIN_FOLDER}/${sublime_text_version}
   	# Download sublime_text
-    wget -q -P ${USR_BIN_FOLDER} https://download.sublimetext.com/${sublime_text_version}.tar.bz2
+    wget -P ${USR_BIN_FOLDER} https://download.sublimetext.com/${sublime_text_version}.tar.bz2
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2
     # Clean
@@ -259,26 +284,6 @@ install_sublime_text()
     err "WARNING: sublime text is already installed. Skipping"
   fi
 
-  echo "Finished"
-}
-
-# discord desktop client
-install_discord()
-{
-  echo "Attempting to install discord"
-  if [[ -z $(which discord) ]]; then
-    rm -f ${USR_BIN_FOLDER}/${discord_version}.tar.gz*
-    (cd "${USR_BIN_FOLDER}"; wget -O ${discord_version}.tar.gz "https://discord.com/api/download?platform=linux&format=tar.gz")
-    rm -Rf "${USR_BIN_FOLDER}/Discord"
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${discord_version}.tar.gz
-    rm -f ${USR_BIN_FOLDER}/discord.tar.gz*
-    rm -f ${HOME}/.local/bin/discord
-    ln -s ${USR_BIN_FOLDER}/Discord/Discord ${HOME}/.local/bin/discord
-    echo ${discord_launcher} > ${XDG_DESKTOP_DIR}/Discord.Desktop
-    chmod 755 ${XDG_DESKTOP_DIR}/Discord.Desktop
-  else
-    err "WARNING: discord is already installed. Skipping"
-  fi
   echo "Finished"
 }
 
@@ -374,49 +379,79 @@ install_pypy3_dependencies()
 # Needs root permission
 install_git()
 {
+  echo "Attemptying to install git"
   apt install -y git-all
+  echo "Finished"
 }
 
 # Install gcc (C compiler)
 # Needs root permission
 install_gcc()
 {
+  echo "Attemptying to install gcc"
   apt install -y gcc
+  echo "Finished"
 }
 
 # Install Python3
 # Needs root permission
 install_python3()
 {
+  echo "Attemptying to install python3"
   apt install -y python3-dev python-dev
+  echo "Finished"
 }
 
 # Install GNU parallel
 install_GNU_parallel()
 {
+  echo "Attemptying to install parallel"
   apt-get -y install parallel
+  echo "Finished"
 }
 
 # Install pdf grep
 install_pdfgrep()
 {
+  echo "Attemptying to install pdfgrep"
   apt-get -y install pdfgrep
+  echo "Finished"
 }
 
 # install VLC
 install_vlc()
 {
+  echo "Attemptying to install vlc"
   apt-get -y install vlc
+  echo "Finished"
 }
 
 # Install latex
 # Needs root permission
 install_latex()
 {
+  echo "Attemptying to install latex"
   apt-get install -y perl-tk
   apt -y install texlive-latex-extra
   copy_launcher "texmaker.desktop"
   copy_launcher "texdoctk.desktop"
+  echo "Finished"
+}
+
+install_transmission()
+{
+  echo "Attemptying to install transmission"
+  apt-get install -y transmission 
+  copy_launcher "transmission-gtk.desktop"
+  echo "Finished"
+}
+
+install_thunderbird()
+{
+  echo "Attemptying to install thunderbird"
+  apt-get install -y thunderbird 
+  copy_launcher "thunderbird.desktop"
+  echo "Finished"
 }
 
 ###### SYSTEM FEATURES ######
@@ -425,7 +460,7 @@ install_latex()
 # Python3, bash shell scripts, latex documents
 install_templates()
 {
-  # Add templates
+  echo "Attemptying to install templates"
   echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/shell_script.sh
   echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/python3_script.py
   echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -459,7 +494,9 @@ clean :
 #include <stdlib.h>
 " > ${XDG_TEMPLATES_DIR}/c_script.h
   
-  chmod 775 *
+  > ${XDG_TEMPLATES_DIR}/text_file.txt
+  chmod 775 ${XDG_TEMPLATES_DIR}/*
+  echo "Finished"
 }
 
 ###### SHELL FEATURES ######
@@ -556,33 +593,19 @@ install_environment_aliases()
 
 root_install()
 {
-  echo "Attempting to install chrome"
   install_google_chrome
-  echo "Finished"
-  echo "Attempting to install gcc"
   install_gcc
-  echo "Finished"
-  echo "Attempting to install git"
   install_git
-  echo "Finished"
-  echo "Attempting to install latex"
   install_latex
-  echo "Finished"
-  echo "Attempting to install python3"
   install_python3
-  echo "Finished"
-  echo "Attempting to install gnu parallel3"
   install_GNU_parallel
-  echo "Finished"
-  echo "Attempting to install pdfgrep"
   install_pdfgrep
-  echo "Finished"
-  echo "Attempting to install VLC"
   install_vlc
-  echo "Finished"
   install_steam
   install_pypy3_dependencies
   install_megasync
+  install_thunderbird
+  install_transmission
 }
 
 user_install()
@@ -605,12 +628,8 @@ user_install()
   echo "Attempting to install extract shell function"
   install_extract_function
   echo "Finished"
-  echo "Attempting to install pycharm professional"
   install_pycharm_professional
-  echo "Finished"
-  echo "Attempting to install pycharm community"
   install_pycharm_community
-  echo "Finished"
   echo "Attempting to install clion"
   install_clion
   echo "Finished"
@@ -762,7 +781,7 @@ main()
           install_extract_function
           echo "Finished"
         ;;
-        -h|--pycharmpro|--pycharmPro|--pycharm_pro)
+        -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
           if [[ "$(whoami)" == "root" ]]; then
             echo "WARNING: Could not install pycharm pro. You should be normal user. Skipping..."
           else
@@ -859,6 +878,20 @@ main()
             echo "WARNING: Could not install megasync. You should be root user. Skipping..."
           fi
         ;;
+        --transmission|--transmission-gtk|--Transmission)
+          if [[ "$(whoami)" == "root" ]]; then
+            install_transmission
+          else
+            echo "WARNING: Could not install transmission. You should be root user. Skipping..."
+          fi
+        ;;
+        --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
+          if [[ "$(whoami)" == "root" ]]; then
+            install_thunderbird
+          else
+            echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
+          fi
+        ;;
         -u|--user|--regular|--normal)
           if [[ "$(whoami)" == "root" ]]; then
             echo "WARNING: Could not install user packages being root. You should be normal user."
@@ -881,8 +914,7 @@ main()
           fi
         ;;
         *)    # unknown option
-          POSITIONAL+=("$1") # save it in an array for later
-          shift # past argument
+          err "$1 is not a recognized command"
           ;;
       esac
       shift
