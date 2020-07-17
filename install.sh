@@ -209,9 +209,6 @@ install_pycharm_professional()
 # Links it to the path
 install_pypy3()
 {
-  # Targeted version of pypy3
-  local -r pypy3_version=pypy3.6-v7.3.1-linux64
-
   echo "Attempting to install $pypy3_version"
 
   if [[ -z $(which pypy3) ]]; then

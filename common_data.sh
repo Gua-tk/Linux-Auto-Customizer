@@ -110,6 +110,8 @@ Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
 
+pypy3_version=pypy3.6-v7.3.1-linux64
+
 android_studio_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
