@@ -149,7 +149,7 @@ uninstall_thunderbird()
 uninstall_transmission()
 {
   apt-get purge -y transmission
-  rm -f ${XDG_DESKTOP_DIR}/transmission.desktop
+  rm -f ${XDG_DESKTOP_DIR}/transmission-gtk.desktop
 }
 
 # Uninstall all functions
