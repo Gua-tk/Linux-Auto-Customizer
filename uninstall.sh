@@ -17,6 +17,7 @@ uninstall_google_chrome()
 {
   apt-get purge -y google-chrome-stable
   rm -f ${XDG_DESKTOP_DIR}/google-chrome.desktop
+  rm -f ${XDG_DESKTOP_DIR}/chrome*.desktop
 }
 
 uninstall_git()
@@ -119,7 +120,7 @@ uninstall_vlc()
 
 uninstall_steam()
 {
-  apt-get install -y curl
+  apt-get purge -y curl
   dpkg -P steam-launcher
   rm -f ${XDG_DESKTOP_DIR}/steam.desktop
 }
@@ -206,7 +207,7 @@ main()
         -g|--git)
           uninstall_git
         ;;
-        -x|--latex|--LaTeX)
+        -x|--latex|--LaTeX|--tex|--TeX)
           uninstall_latex
         ;;
         -p|--python|--python3|--Python3|--Python)

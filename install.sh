@@ -129,6 +129,7 @@ install_discord()
     ln -s ${USR_BIN_FOLDER}/Discord/Discord ${HOME}/.local/bin/discord
     echo -e "${discord_launcher}" > ${XDG_DESKTOP_DIR}/discord.desktop
     chmod 755 ${XDG_DESKTOP_DIR}/discord.desktop
+    cp -p ${XDG_DESKTOP_DIR}/discord.desktop ${HOME}/.local/share/applications
   else
     err "WARNING: discord is already installed. Skipping"
   fi
@@ -309,6 +310,8 @@ install_google_chrome()
     
     # Create launcher and change its permissions (we are root)
     copy_launcher "google-chrome.desktop"
+    cp /home/${SUDO_USER}/.local/share/applications/chrome* ${XDG_DESKTOP_DIR}
+    chmod 775 ${XDG_DESKTOP_DIR}/chrome*
   else
     err "WARNING: Google Chrome is already installed. Skipping"
   fi
@@ -435,6 +438,7 @@ install_latex()
   apt -y install texlive-latex-extra
   copy_launcher "texmaker.desktop"
   copy_launcher "texdoctk.desktop"
+  echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
   echo "Finished"
 }
 
@@ -610,32 +614,16 @@ root_install()
 
 user_install()
 {
-  echo "Attempting to install templates"
   install_templates
-  echo "Finished"
-  echo "Attempting to install environment aliases"
   install_environment_aliases
-  echo "Finished"
-  echo "Attempting to install git aliases"
   install_git_aliases
-  echo "Finished"
-  echo "Attempting to install ls aliases"
   install_ls_alias
-  echo "Finished"
-  echo "Attempting to install shell history optimization"
   install_shell_history_optimization
-  echo "Finished"
-  echo "Attempting to install extract shell function"
   install_extract_function
-  echo "Finished"
   install_pycharm_professional
   install_pycharm_community
-  echo "Attempting to install clion"
   install_clion
-  echo "Finished"
-  echo "Attempting to install sublime text"
   install_sublime_text
-  echo "Finished"
   install_android_studio
   install_discord
   install_pypy3
@@ -719,7 +707,7 @@ main()
             echo "WARNING: Could not install git. You need root permissions. Skipping..."
           fi
         ;;
-        -x|--latex|--LaTeX)
+        -x|--latex|--LaTeX|--tex|--TeX)
           if [[ "$(whoami)" == "root" ]]; then
             echo "Attempting to install latex"
             install_latex
