@@ -54,7 +54,6 @@ copy_launcher()
 install_android_studio()
 {
   echo "Attempting to install Android Studio"
-  local -r android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of Android Studio
   if [[ -z "$(which studio)" ]]; then
     # avoid collisions
     rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
@@ -247,8 +246,6 @@ install_pypy3()
 # Install Sublime text 3
 install_sublime_text()
 {
-  sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
-
   echo "Attempting to install $sublime_text_version"
 
   if [[ -z $(which sublime) ]]; then

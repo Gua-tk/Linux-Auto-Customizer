@@ -124,3 +124,8 @@ StartupNotify=true
 StartupWMClass=jetbrains-android-studio
 Name[en_GB]=android-studio.desktop"
 
+android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of Android Studio
+
+sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
+
+

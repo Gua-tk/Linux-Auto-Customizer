@@ -1,33 +1,152 @@
 # Linux-Customizer
 
-This software is intended to work as a time-saver when setting up a new virtual machine with Ubuntu. The script applies some custom features to the current user console and to the Ubuntu-Linux environment, such as local functions, file templates and global variables. Also, some software is installed too, including its dependencies.
+This software is an automatization script for Ubuntu/Debian machines. The `install.sh` script can apply some custom features (depending on the received arguments) to the current user console and to the Ubuntu-Linux environment, such as local functions, file templates and global variables. Also, third-party software can be installed too, including its dependencies.
 
-This repository includes two scripts: one is to install the custom features and the other is to uninstall them. The installation script is also divided in two parts depending on what your user privileges are when running the script (regular user, root)
+The `uninstall.sh` script can be used to uninstall features previously installed by the install script by giving it arguments, too.
 
-## Local user features
-##### Console features
-* Increased the size of history
-* Deleted tracking history of some simple commands: ls, cd, gitk...
-* Added a user global variable to $DESK (~/Desktop)
-* Added a user global function that extracts from any type of compressed file
+## Features
+### General features
+* All software installed is intended to appear as a valid binary in your `PATH`, so you can directly call the program without the path to the binary. This script forces `~/.local/bin` to be under your `PATH`, so we will create the symlinks to the binaries in there.
+* Most of all software (except the software that does not have UI) puts its own launcher to the dashboard (user launchers are located in `~/.local/share/applications`). It also creates a launcher for each in the Desktop.
+* Software that reads or recognizes files (specially IDEs) are configured to be default application when opening certain type of files. For example, associate PyCharm to open `.py` by default.
+* The script will change its behaviour (be able to install some features and not others) depending on the given privileges when executing the script. 
+* Both behaviors of the script use the file `~/.config/user-dirs.dirs` to set some language-independent environment variables, so the script will fail if this file does not exist.
+* Each feature is expected to be executed with certain permissions (root / normal user). So the script will fail if the asked features to be installed have different permissions requirements than the given.
 
+### Local user features 
+This section enumerates which features can be installed without root permissions in the context of the normal user running the script.
+
+Software that needs to be "manually" installed as normal user is stored under `~/.bin`.
+
+#### Console features
+* Increased the size of bash history.
+* Store multiline commands in just one line.
+* Force append and not overwrite to history.
+* Ignore repeated commands when appending to history.
+* Deleted tracking history of some simple commands: `ls`, `cd`, `gitk`...
+* Added a user global alias `dummycommit` to add, commit and push to github.
+* Added a non-language dependent user global variable `DESK` to point to the path of the desktop of the current user.
+* Added a user global function `extract` that extracts from any type of compressed file.
+* Added alias to `l` as `ls -lAh --color=auto`
+* Added a user alias `gitk` as `gitk --all --date-order`.
+* Creates a copy of the file `~/.bashrc` to `~/.bashrc.bak` that is restored when uninstalling this feature.
+
+#### Templates
+Creates the new file templates in the Templates folder of the current user, allowing to create new files in the "new file" context menu:
+* Python3 script (`.py`)
+* Bash script (`.sh`)
+* LaTeX script (`.tex`)
+* C script (`.c`)
+* C headers (`.h`)
+* makefile
+* text file (`.txt`)
+
+#### Software
+* PyCharm professional 2020.1
+* PyCharm community 2019.1
+* CLion 2020.1
+* Sublime Text 3 (build 3211 x64)
+* Android Studio (193.6514223-linux)
+* Discord (0.0.10)
+* PyPy3 (pypy3.6-v7.3.1-linux64). Setting up its own `pip` and installing `cython` and `numpy`.
+
+### Root features
 ##### Software
-* pycharm 2019.1 community.
-* pypy3 (as a virtual environment, including pip)
-* sublime-Text-3
-The script also performs the addition of a symlink for each installed program into a user folder pointed by PATH variable in order to execute the software from anywhere in the system. A launcher is also generated for sublime-text and pycharm.
-All user software is going to be installed under ~/.bin
+* Google Chrome (includes Google Drive Desktop client, Google Play Music, Google Remote Desktop)(using `dpkg -i`)
+* gcc (using `apt-get`)
+* git suite (using `apt-get`)
+* LaTeX suite (using `apt-get`)
+* Python3 (using `apt-get`)
+* GNU parallel (using `apt-get`)
+* pdfgrep (using `apt-get`)
+* VLC (using `apt-get`)
+* Steam (using `dpkg -i`)
+* PyPy3 dependencies (using `apt-get`). PyPy is "split" because we need root for dependencies but not for the main installation.
+* Mega-sync and Mega-sync desktop integration (using `dpkg -i`).
+* Thunderbird (using `apt-get`)
+* Transmission (using `apt-get`)
 
-## Root features
-##### Software
-* git-suite (git-all)
-* Google Chrome
+## Usage
+### Download
+To install this software you must begin cloning this repository to you computer. You can either download a `.zip` file containing the repository from github, or you can clone the repository using a terminal. To do the last option, you must have installed git. If not open a terminal and type the following:
+```
+sudo apt-get install git  # To install basic git and do the cloning
+```
+Then, navigate to the directory where you want to clone the repository using `cd`. Anywhere in your user folder will be fine. 
+Then clone the repository with `git clone`:
+```
+git clone https://github.com/AleixMT/Linux-Auto-Customizer  # Download repo
+```
+Navigate to the interior of the repository with cd:
+```
+cd Linux-Auto-Customizer  
+```
+Now that the current directory is the repository we can call the main scripts directly without specifying an absolute path. This will be the expected situation in the following explanations.
 
-
-TODO add walpapers
-add automount external unities
-
-
-Installation:
-
+### Full installation
+To install ALL the features available for the root user in the script you must type in a terminal:
+```
+sudo bash install.sh
+```
+To install ALL the features available for the normal user in the script you must type in a terminal:
+```
+bash install.sh
+```
+So, to install ALL the features available in the script you must type in a terminal:
+```
 sudo bash install.sh && bash install.sh
+```
+This command will install all root features first and then it will install all the local user features. 
+
+### Partial installation
+
+Both `install.sh` and `uninstall.sh` accept arguments to selectively choose which feature we want to install or uninstall, respectively.
+The argument list is the following:
+
+| Parameter                 | Default       | Description   |	
+| :------------------------ |:-------------:| :-------------|
+| -sc --scorecutoff 	       |	0.1           |the score from the classifier for each C position
+| -p  --pruncutoff          | 0.1           |the SVM score checked for consecutive Cs from both ends to refine the boundaries
+| -npp -–numprocess 	       |	8	            |number of cores to be used
+| -ml --minlength  		       | 50	           | minimum length of DMRs required to be reported 
+| -ncb --numcb 		           | 5             | minimum number of Cs present between DMRs to keep them seperate
+| -md  -–mergedist 	        | 500           | maximum distance allowed between DMRs to merge 
+| -prn --prunningC	         | 3             | number of consecutives Cs to be considered for pruning for boundary refinement2
+| -ns --numsamples          | all           | no.of samples to use for DMR calling; default takes all sample in the file
+| -sp --startposition       | 1st position  | start position of sample in the sample file to use for timeseries DMR calling 
+| -BSSeeker2 --BSSeeker2    | False         | input CGmap file from BSSeeker2
+| -mc --minc			             | 3 	           | minimum number of Cs in a DMR
+| -sin --singlechrom			     | False         | parallel code for single chromosome; *npp* will be used for parallel run for each chr
+| -d --delta			             | 0.1     	     | minimum average difference in methylation required in a DMR 
+| -wrt --withrespectto		    | all     	     | samples to use for DMR calling for pairwise comparisions with respect to specific samples
+| -Keepall --Keepall		      | False     	   | Keep all cytosine positions present in atleast one of the replicate
+
+| Parameter                 | Description   |	
+| :------------------------ | :-------------|
+| -c --gcc|Installs / uninstalls the GNU C Compiler
+| -o --chrome --Chrome --google-chrome --Google-Chrome| Installs / uninstalls Google Chrome, Google Drive, Google Play Music, Google Remote Desktop
+| -g --git| Installs / uninstalls all git suite, including `gitk`
+| -p --python --python3 --Python3 --Python| Installs / uninstalls Python3 and Python2 interpreter
+| -l --parallel --gnu_parallel --GNUparallel --GNUParallel --gnu-parallel| Installs / uninstalls GNU parallel
+| -d --dependencies --pypy3_dependencies --pypy3Dependencies --PyPy3Dependencies --pypy3dependencies --pypy3-dependencies| Installs / uninstalls PyPy3 dependencies
+| -e --shell --shellCustomization --shellOptimization --environment --environmentaliases --environment_aliases --environmentAliases --alias --Aliases| Installs / uninstalls shell history optimization, environament aliases, functions and variables.
+| -h --pycharmpro --pycharmPro --pycharm_pro --pycharm-pro --Pycharm-Pro --PyCharm-pro|Installs / uninstalls PyCharm Pro
+| -m --pycharmcommunity --pycharmCommunity --pycharm_community --pycharm --pycharm-community| Installs / uninstalls PyCharm Community
+| -n --clion --Clion --CLion| Installs / uninstalls CLion C IDE
+| -s --sublime --sublimeText --sublime_text --Sublime --sublime-Text --sublime-text| Installs / uninstalls Sublime Text 3
+| -y --pypy --pypy3 --PyPy3 --PyPy| Installs / uninstalls PyPy3 Python3 interpreter
+| -a --android --AndroidStudio --androidstudio --studio --android-studio --android_studio --Androidstudio| Installs / uninstalls Android Studio Android IDE
+| -f --pdfgrep --findpdf --pdf| Installs / uninstalls pdfgrep
+| -v --vlc --VLC --Vlc| Installs / uninstalls VLC media player
+| -w --steam --Steam --STEAM| Installs / uninstalls Steam
+| -i --discord --Discord --disc| Installs / uninstalls Discord
+| --mega --Mega --MEGA --MegaSync --MEGAsync --MEGA-sync --megasync| Installs / uninstalls MEGAsync and MEGAsync desktop integration
+| --transmission --transmission-gtk --Transmission | Installs / uninstalls Transmission torrent downloader
+| --thunderbird --mozillathunderbird --mozilla-thunderbird --Thunderbird --thunder-bird| Installs / uninstalls thunderbird email client
+
+## Progression and original idea
+This repository is a partial fork from my repo [TrigenicInteractionPredictor](https://github.com/AleixMT/TrigenicInteractionPredictor). 
+In that repository I started programming a script to auto-configurate an Ubuntu machine with the dependencies of that project. At first the script was short and simple, but every time I made a change to my 
+
+
+
