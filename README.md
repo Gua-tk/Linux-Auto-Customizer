@@ -103,24 +103,6 @@ This command will install all root features first and then it will install all t
 Both `install.sh` and `uninstall.sh` accept arguments to selectively choose which feature we want to install or uninstall, respectively.
 The argument list is the following:
 
-| Parameter                 | Default       | Description   |	
-| :------------------------ |:-------------:| :-------------|
-| -sc --scorecutoff 	       |	0.1           |the score from the classifier for each C position
-| -p  --pruncutoff          | 0.1           |the SVM score checked for consecutive Cs from both ends to refine the boundaries
-| -npp -–numprocess 	       |	8	            |number of cores to be used
-| -ml --minlength  		       | 50	           | minimum length of DMRs required to be reported 
-| -ncb --numcb 		           | 5             | minimum number of Cs present between DMRs to keep them seperate
-| -md  -–mergedist 	        | 500           | maximum distance allowed between DMRs to merge 
-| -prn --prunningC	         | 3             | number of consecutives Cs to be considered for pruning for boundary refinement2
-| -ns --numsamples          | all           | no.of samples to use for DMR calling; default takes all sample in the file
-| -sp --startposition       | 1st position  | start position of sample in the sample file to use for timeseries DMR calling 
-| -BSSeeker2 --BSSeeker2    | False         | input CGmap file from BSSeeker2
-| -mc --minc			             | 3 	           | minimum number of Cs in a DMR
-| -sin --singlechrom			     | False         | parallel code for single chromosome; *npp* will be used for parallel run for each chr
-| -d --delta			             | 0.1     	     | minimum average difference in methylation required in a DMR 
-| -wrt --withrespectto		    | all     	     | samples to use for DMR calling for pairwise comparisions with respect to specific samples
-| -Keepall --Keepall		      | False     	   | Keep all cytosine positions present in atleast one of the replicate
-
 | Parameter                 | Description   |	
 | :------------------------ | :-------------|
 | -c --gcc|Installs / uninstalls the GNU C Compiler
@@ -146,7 +128,32 @@ The argument list is the following:
 
 ## Progression and original idea
 This repository is a partial fork from my repo [TrigenicInteractionPredictor](https://github.com/AleixMT/TrigenicInteractionPredictor). 
-In that repository I started programming a script to auto-configurate an Ubuntu machine with the dependencies of that project. At first the script was short and simple, but every time I made a change to my 
+
+In that repository I started programming a script to auto-configurate an Ubuntu machine with the dependencies of that project. At first the script was short and simple, but every time I made a change to my machines I added the corresponding auto-configuration lines to my script.
+
+Sooner, the script grew in complexity and my autoconfigurated machines had more and more extra features. I even added heavier software that I was using, and the execution time of the script became much larger.
+
+Since it was working well (but slow) and is a script that could be reused in other projects, I decided to give to the script more interaction with the user using parameters. In that way, you can choose exactly which features you want to install, making it easier and faster for the final user.
+
+So I decided to do a major refactor of the code and implement argument processing to be able to install the different features selectively. Because of that I had to wrap each feature within a function, extracted all the "common" code to the main and also started to code the dependency of some features to certain permissions. 
+
+For example: Manually installed software usually needs to be executed as normal user, and automatic installed software (`apt-get`, `dpkg -i`) needs to be executed as superuser. 
+
+I also used the [Google Bash Style Guide](https://google.github.io/styleguide/shellguide.html) to standarize the code.
+
+The last major change include the creation of a "complementary" uninstallation script, that allows to selectively uninstall the features that you desire using arguments. Arguments in `uninstall.sh` are identical to the arguments in `install.sh`.
+
+Also the script `common_variables.sh` have been created. This script contains declared variables that are used in one or both scripts. Most of the variables are long strings that specify a certain version of a software. Those variables are used to know which is the targeted version of a certain software. By changing those variables you can easily change the targeted version of a certain software (easier to update script).
+
+## Coming features
+- [ ] Automount available drives.
+- [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
+- [ ] Program function to unregister default opening applications on `uninstall.sh`
+- [ ] Add IntelliJ IDE from Jetbrains
+
+## Author and Acknowledgements
+* Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)
+* Tester: **Axel Fernández** - [Axlfc](https://github.com/Axlfc) [axelfernandezcurros@gmail.com](axelfernandezcurros@gmail.com)
 
 
 
