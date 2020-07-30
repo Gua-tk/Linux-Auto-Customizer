@@ -378,6 +378,7 @@ install_git()
 {
   echo "Attemptying to install git"
   apt install -y git-all
+  apt-get install -y git-lfs
   echo "Finished"
 }
 

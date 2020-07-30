@@ -23,6 +23,7 @@ uninstall_google_chrome()
 uninstall_git()
 {
   apt-get purge -y git-all
+  apt-get purge -y git-lfs
 }
 
 uninstall_latex()
