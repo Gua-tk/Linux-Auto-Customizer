@@ -150,6 +150,8 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Add IntelliJ IDE from Jetbrains
+- [ ] Java Development Kit
+- [ ] Firebase environment + dependencies 
 
 ## Author and Acknowledgements
 * Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)
