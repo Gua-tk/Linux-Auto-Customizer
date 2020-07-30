@@ -38,7 +38,7 @@ Creates the new file templates in the Templates folder of the current user, allo
 * LaTeX script (`.tex`)
 * C script (`.c`)
 * C headers (`.h`)
-* makefile
+* makefile (`makefile`)
 * text file (`.txt`)
 
 #### Software
@@ -54,7 +54,7 @@ Creates the new file templates in the Templates folder of the current user, allo
 ##### Software
 * Google Chrome (includes Google Drive Desktop client, Google Play Music, Google Remote Desktop)(using `dpkg -i`)
 * gcc (using `apt-get`)
-* git suite (using `apt-get`)
+* git suite (using `apt-get`): Git binaries, graphic interface `gitk` git-LFS (using `apt-get`)
 * LaTeX suite (using `apt-get`)
 * Python3 (using `apt-get`)
 * GNU parallel (using `apt-get`)
@@ -150,8 +150,6 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Add IntelliJ IDE from Jetbrains
-- [ ] Java Development Kit
-- [ ] Firebase environment + dependencies 
 
 ## Author and Acknowledgements
 * Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)

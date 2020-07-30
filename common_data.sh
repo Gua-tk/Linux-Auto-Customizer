@@ -128,4 +128,17 @@ android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version 
 
 sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
 
+intellij_ultimate_version=ideaIU-2020.2
+intellij_ultimate_ver=idea-IU-202.6397.94
+intellij_ultimate_launcher="[Desktop Entry]
+Version=13.0
+Type=Application
+Name=IntelliJ Ultimate
+Exec=/home/rob/.intellij-13/bin/idea.sh
+
+Terminal=false
+Icon[en_US]=/home/rob/.intellij-13/bin/idea.png
+Name=IntelliJ
+Icon=/home/rob/.intellij-13/bin/idea.png"
+
 
