@@ -8,7 +8,7 @@ The `uninstall.sh` script can be used to uninstall features previously installed
 ### General features
 * All software installed is intended to appear as a valid binary in your `PATH`, so you can directly call the program without the path to the binary. This script forces `~/.local/bin` to be under your `PATH`, so we will create the symlinks to the binaries in there.
 * Most of all software (except the software that does not have UI) puts its own launcher to the dashboard (user launchers are located in `~/.local/share/applications`). It also creates a launcher for each in the Desktop.
-* Software that reads or recognizes files (specially IDEs) are configured to be default application when opening certain type of files. For example, associate PyCharm to open `.py` by default.
+* Software that reads or recognizes files (specially IDEs) are configured to be default apautomatically apply some custom settings and application installation to Ubuntu Linuxplication when opening certain type of files. For example, associate PyCharm to open `.py` by default.
 * The script will change its behaviour (be able to install some features and not others) depending on the given privileges when executing the script. 
 * Both behaviors of the script use the file `~/.config/user-dirs.dirs` to set some language-independent environment variables, so the script will fail if this file does not exist.
 * Each feature is expected to be executed with certain permissions (root / normal user). So the script will fail if the asked features to be installed have different permissions requirements than the given.
@@ -150,6 +150,10 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Add IntelliJ IDE from Jetbrains
+- [ ] Add JDK and global variables to JDK
+- [ ] Telegram
+
+
 
 ## Author and Acknowledgements
 * Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)
