@@ -7,10 +7,10 @@ The `uninstall.sh` script can be used to uninstall features previously installed
 ## Features
 ### General features
 * All software installed is intended to appear as a valid binary in your `PATH`, so you can directly call the program without the path to the binary. This script forces `~/.local/bin` to be under your `PATH`, so we will create the symlinks to the binaries in there.
-* Most of all software (except the software that does not have UI) puts its own launcher to the dashboard (user launchers are located in `~/.local/share/applications`). It also creates a launcher for each in the Desktop.
+* Most of all software (except the software that does not have UI) puts its own launcher in the dashboard (user launchers are located in `~/.local/share/applications`). It also creates a launcher for each in the Desktop.
 * Software that reads or recognizes files (specially IDEs) are configured to be default apautomatically apply some custom settings and application installation to Ubuntu Linuxplication when opening certain type of files. For example, associate PyCharm to open `.py` by default.
 * The script will change its behaviour (be able to install some features and not others) depending on the given privileges when executing the script. 
-* Both behaviors of the script use the file `~/.config/user-dirs.dirs` to set some language-independent environment variables, so the script will fail if this file does not exist.
+* Both behaviors of the script use the file `~/.config/user-dirs.dirs` to set some language-independent environment variables (for example, to get an independent system-language path to the Desktop), so the script will fail if this file does not exist.
 * Each feature is expected to be executed with certain permissions (root / normal user). So the script will fail if the asked features to be installed have different permissions requirements than the given.
 
 ### Local user features 
@@ -68,14 +68,14 @@ Creates the new file templates in the Templates folder of the current user, allo
 
 ## Usage
 ### Download
-To install this software you must begin cloning this repository to you computer. You can either download a `.zip` file containing the repository from github, or you can clone the repository using a terminal. To do the last option, you must have installed git. If not open a terminal and type the following:
+To install this software you must begin cloning this repository to you computer. You can either download a `.zip` file containing the repository from github from [here](https://github.com/AleixMT/Linux-Auto-Customizer/archive/master.zip), or you can clone the repository using a terminal. To do the last option, you must have installed `git`. If you don't have it, you can install it opening a terminal and typing the following:
 ```
-sudo apt-get install git  # To install basic git and do the cloning
+sudo apt-get install git
 ```
 Then, navigate to the directory where you want to clone the repository using `cd`. Anywhere in your user folder will be fine. 
 Then clone the repository with `git clone`:
 ```
-git clone https://github.com/AleixMT/Linux-Auto-Customizer  # Download repo
+git clone https://github.com/AleixMT/Linux-Auto-Customizer
 ```
 Navigate to the interior of the repository with cd:
 ```
@@ -106,22 +106,21 @@ The argument list is the following:
 | Parameter                 | Description   |	
 | :------------------------ | :-------------|
 | -c --gcc|Installs / uninstalls the GNU C Compiler
-| -o --chrome --Chrome --google-chrome --Google-Chrome| Installs / uninstalls Google Chrome, Google Drive, Google Play Music, Google Remote Desktop
-| -g --git| Installs / uninstalls all git suite, including `gitk`
-| -p --python --python3 --Python3 --Python| Installs / uninstalls Python3 and Python2 interpreter
-| -l --parallel --gnu_parallel --GNUparallel --GNUParallel --gnu-parallel| Installs / uninstalls GNU parallel
 | -d --dependencies --pypy3_dependencies --pypy3Dependencies --PyPy3Dependencies --pypy3dependencies --pypy3-dependencies| Installs / uninstalls PyPy3 dependencies
 | -e --shell --shellCustomization --shellOptimization --environment --environmentaliases --environment_aliases --environmentAliases --alias --Aliases| Installs / uninstalls shell history optimization, environament aliases, functions and variables.
+| -f --pdfgrep --findpdf --pdf| Installs / uninstalls pdfgrep
+| -g --git| Installs / uninstalls all git suite, including `gitk`
 | -h --pycharmpro --pycharmPro --pycharm_pro --pycharm-pro --Pycharm-Pro --PyCharm-pro|Installs / uninstalls PyCharm Pro
+| -i --discord --Discord --disc| Installs / uninstalls Discord
+| -l --parallel --gnu_parallel --GNUparallel --GNUParallel --gnu-parallel| Installs / uninstalls GNU parallel
 | -m --pycharmcommunity --pycharmCommunity --pycharm_community --pycharm --pycharm-community| Installs / uninstalls PyCharm Community
 | -n --clion --Clion --CLion| Installs / uninstalls CLion C IDE
+| -o --chrome --Chrome --google-chrome --Google-Chrome| Installs / uninstalls Google Chrome, Google Drive, Google Play Music, Google Remote Desktop
+| -p --python --python3 --Python3 --Python| Installs / uninstalls Python3 and Python2 interpreter
 | -s --sublime --sublimeText --sublime_text --Sublime --sublime-Text --sublime-text| Installs / uninstalls Sublime Text 3
-| -y --pypy --pypy3 --PyPy3 --PyPy| Installs / uninstalls PyPy3 Python3 interpreter
-| -a --android --AndroidStudio --androidstudio --studio --android-studio --android_studio --Androidstudio| Installs / uninstalls Android Studio Android IDE
-| -f --pdfgrep --findpdf --pdf| Installs / uninstalls pdfgrep
 | -v --vlc --VLC --Vlc| Installs / uninstalls VLC media player
 | -w --steam --Steam --STEAM| Installs / uninstalls Steam
-| -i --discord --Discord --disc| Installs / uninstalls Discord
+| -y --pypy --pypy3 --PyPy3 --PyPy| Installs / uninstalls PyPy3 Python3 interpreter
 | --mega --Mega --MEGA --MegaSync --MEGAsync --MEGA-sync --megasync| Installs / uninstalls MEGAsync and MEGAsync desktop integration
 | --transmission --transmission-gtk --Transmission | Installs / uninstalls Transmission torrent downloader
 | --thunderbird --mozillathunderbird --mozilla-thunderbird --Thunderbird --thunder-bird| Installs / uninstalls thunderbird email client
@@ -152,7 +151,6 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Add IntelliJ IDE from Jetbrains
 - [ ] Add JDK and global variables to JDK
 - [ ] Telegram
-
 
 
 ## Author and Acknowledgements
