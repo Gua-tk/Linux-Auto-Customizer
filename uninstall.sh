@@ -157,7 +157,7 @@ uninstall_intellij_ultimate()
 {
   rm -Rf ${USR_BIN_FOLDER}/${intellij_ultimate_ver}
   rm -f /home/${SUDO_USER}/.local/bin/ideau
-  rm -f /home/${SUDO_USER}/Escritorio/ideau.desktop
+  rm -f /home/${XDG_DESKTOP_DIR}/ideau.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/ideau.desktop
 }
 
@@ -165,8 +165,16 @@ uninstall_intellij_community()
 {
   rm -Rf ${USR_BIN_FOLDER}/${intellij_community_ver}
   rm -f /home/${SUDO_USER}/.local/bin/ideac
-  rm -f /home/${SUDO_USER}/Escritorio/ideac.desktop
+  rm -f /home/${XDG_DESKTOP_DIR}/ideac.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/ideac.desktop
+}
+
+uninstall_telegram()
+{
+  rm -Rf ${USR_BIN_FOLDER}/Telegram
+  rm -f /home/${SUDO_USER}/.local/bin/telegram
+  rm -f /home/${XDG_DESKTOP_DIR}/telegram.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
 }
 
 # Uninstall all functions
@@ -196,6 +204,7 @@ uninstall_all()
   uninstall_thunderbird
   uninstall_intellij_ultimate
   uninstall_intellij_community
+  uninstall_telegram
 }
 
 ##################
@@ -252,6 +261,9 @@ main()
         ;;
         -n|--clion|--Clion|--CLion)
           uninstall_clion
+        ;;
+        -r|--Telegram|--telegram)
+          uninstall_telegram
         ;;
         -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
           uninstall_sublime_text

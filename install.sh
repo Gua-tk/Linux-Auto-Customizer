@@ -287,7 +287,7 @@ install_sublime_text()
 install_intellij_community()
 {
   echo "Attempting to install ${intellij_community_version}"
-  if [[ -z $(which ideau) ]]; then
+  if [[ -z $(which ideac) ]]; then
     # Avoid error due to possible previous aborted installations
     rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
     rm -Rf ${USR_BIN_FOLDER}/${intellij_community_ver}
@@ -349,6 +349,37 @@ install_intellij_ultimate()
 }
 
 
+# Telegram installation
+install_telegram()
+{
+  echo "Attempting to install Telegram"
+  if [[ -z $(which telegram) ]]; then
+    # Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/linux*
+    rm -Rf ${USR_BIN_FOLDER}/Telegram
+    # Download sublime_text
+    wget -P ${USR_BIN_FOLDER} https://telegram.org/dl/desktop/linux
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar xJf -) < ${USR_BIN_FOLDER}/linux
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/linux*
+    wget -P ${USR_BIN_FOLDER}/Telegram https://www.iconfinder.com/icons/986956/download/png/512
+    mv ${USR_BIN_FOLDER}/Telegram/512 ${USR_BIN_FOLDER}/Telegram/telegram.png
+
+    # Create link to the PATH
+    rm -f ${HOME}/.local/bin/telegram
+    ln -s ${USR_BIN_FOLDER}/Telegram/Telegram ${HOME}/.local/bin/telegram
+    # Create desktop launcher entry for telegram
+    echo -e "${telegram_launcher}" > ${HOME}/.local/share/applications/telegram.desktop
+    chmod 775 ${HOME}/.local/share/applications/telegram.desktop
+    # Copy launcher to the desktop
+    cp -p ${HOME}/.local/share/applications/telegram.desktop ${XDG_DESKTOP_DIR}
+  else
+    err "WARNING: Telegram is already installed. Skipping"
+  fi
+
+  echo "Finished"
+}
 
 ###### ROOT FUNCTIONS ######
 
@@ -689,6 +720,8 @@ user_install()
   install_sublime_text
   install_android_studio
   install_intellij_ultimate
+  install_intellij_community
+  install_telegram
   install_discord
   install_pypy3
 }
@@ -708,8 +741,8 @@ main()
 {
   if [[ "$(whoami)" == "root" ]]; then
     # Update repositories and system before doing anything
-    apt -y -qq update
-    apt -y -qq upgrade
+    apt -y update
+    apt -y upgrade
 
     # Do a safe copy
     cp -p ${BASHRC_PATH} ${BASHRC_PATH}.bak
@@ -923,6 +956,15 @@ main()
             echo "WARNING: Could not install discord. You should be normal user. Skipping..."
           fi
         ;;
+        -r|--Telegram|--telegram)
+          if [[ "$(whoami)" != "root" ]]; then
+            echo "Attempting to install telegram"
+            install_telegram
+            echo "Finished"
+          else
+            echo "WARNING: Could not install telegram. You should be normal user. Skipping..."
+          fi
+        ;;
         --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
           if [[ "$(whoami)" == "root" ]]; then
             install_megasync
@@ -989,8 +1031,8 @@ main()
 
   # Clean if we have permissions
   if [[ "$(whoami)" == "root" ]]; then
-    apt -y -qq autoremove
-    apt -y -qq autoclean
+    apt -y autoremove
+    apt -y autoclean
   fi
 
   return 0
