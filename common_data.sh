@@ -131,14 +131,26 @@ sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublim
 intellij_ultimate_version=ideaIU-2020.2
 intellij_ultimate_ver=idea-IU-202.6397.94
 intellij_ultimate_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=IntelliJ IDEA Ultimate Edition
+Icon=${HOME}/.bin/${intellij_ultimate_ver}/bin/idea.svg
+Exec=ideau %f
+Comment=Capable and Ergonomic IDE for JVM
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=jetbrains-idea"
+
+
+intellij_community_version=ideaIC-2020.2
+intellij_community_ver=idea-IC-202.6397.94
+intellij_community_launcher="[Desktop Entry]
 Version=13.0
 Type=Application
-Name=IntelliJ Ultimate
-Exec=/home/rob/.intellij-13/bin/idea.sh
-
 Terminal=false
-Icon[en_US]=/home/rob/.intellij-13/bin/idea.png
-Name=IntelliJ
-Icon=/home/rob/.intellij-13/bin/idea.png"
-
-
+Comment=Capable and Ergonomic IDE for JVM
+Categories=Development;IDE;
+Icon[en_US]=${HOME}/.bin/${intellij_community_ver}/bin/idea.png
+Exec=ideac %f
+Name=IntelliJ IDEA Community Edition
+StartupWMClass=jetbrains-idea"

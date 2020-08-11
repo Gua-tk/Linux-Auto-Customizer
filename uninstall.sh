@@ -153,6 +153,22 @@ uninstall_transmission()
   rm -f ${XDG_DESKTOP_DIR}/transmission-gtk.desktop
 }
 
+uninstall_intellij_ultimate()
+{
+  rm -Rf ${USR_BIN_FOLDER}/${intellij_ultimate_ver}
+  rm -f /home/${SUDO_USER}/.local/bin/ideau
+  rm -f /home/${SUDO_USER}/Escritorio/ideau.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/ideau.desktop
+}
+
+uninstall_intellij_community()
+{
+  rm -Rf ${USR_BIN_FOLDER}/${intellij_community_ver}
+  rm -f /home/${SUDO_USER}/.local/bin/ideac
+  rm -f /home/${SUDO_USER}/Escritorio/ideac.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/ideac.desktop
+}
+
 # Uninstall all functions
 uninstall_all()
 {
@@ -178,6 +194,8 @@ uninstall_all()
   uninstall_megasync
   uninstall_transmission
   uninstall_thunderbird
+  uninstall_intellij_ultimate
+  uninstall_intellij_community
 }
 
 ##################
@@ -258,6 +276,12 @@ main()
         ;;
         --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
           uninstall_megasync
+        ;;
+        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
+          uninstall_intellij_ultimate
+        ;;
+        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community)
+          uninstall_intellij_community
         ;;
         -|--all)
           uninstall_all

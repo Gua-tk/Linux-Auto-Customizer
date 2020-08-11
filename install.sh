@@ -282,6 +282,40 @@ install_sublime_text()
   echo "Finished"
 }
 
+
+# Install IntelliJ Community
+install_intellij_community()
+{
+  echo "Attempting to install ${intellij_community_version}"
+  if [[ -z $(which ideau) ]]; then
+    # Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
+    rm -Rf ${USR_BIN_FOLDER}/${intellij_community_ver}
+    # Download sublime_text
+    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/ideaIC-2020.2.tar.gz
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz
+    # Clean
+    rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
+    # Create link to the PATH
+    rm -f ${HOME}/.local/bin/ideau
+    ln -s ${USR_BIN_FOLDER}/${intellij_community_ver}/bin/idea.sh ${HOME}/.local/bin/ideac
+    # Create desktop launcher entry for sublime text
+    echo -e "${intellij_community_launcher}" > ${HOME}/.local/share/applications/ideac.desktop
+    chmod 775 ${HOME}/.local/share/applications/ideac.desktop
+    # Copy launcher to the desktop
+    cp -p ${HOME}/.local/share/applications/ideac.desktop ${XDG_DESKTOP_DIR}
+
+    # register file associations
+    register_file_associations "text/x-java" "ideac.desktop"
+  else
+    err "WARNING: intelliJ is already installed. Skipping"
+  fi
+
+  echo "Finished"
+}
+
+
 # Install IntelliJ Ultimate
 install_intellij_ultimate()
 {
@@ -289,7 +323,7 @@ install_intellij_ultimate()
   if [[ -z $(which ideau) ]]; then
     # Avoid error due to possible previous aborted installations
     rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${intellij_ultimate_version}
+    rm -Rf ${USR_BIN_FOLDER}/${intellij_ultimate_ver}
     # Download sublime_text
     wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_ultimate_version}.tar.gz
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
@@ -910,14 +944,21 @@ main()
             echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
           fi
         ;;
-        --j|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
+        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
           if [[ "$(whoami)" != "root" ]]; then
             install_intellij_ultimate
           else
-            echo "WARNING: Could not install intelliJ. You should be normal user. Skipping..."
+            echo "WARNING: Could not install intelliJ Ultimate. You should be normal user. Skipping..."
           fi
         ;;
-        -u|--user|--regular|--normal)
+        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community)
+          if [[ "$(whoami)" != "root" ]]; then
+            install_intellij_community
+          else
+            echo "WARNING: Could not install intelliJ Community. You should be normal user. Skipping..."
+          fi
+        ;;
+        --user|--regular|--normal)
           if [[ "$(whoami)" == "root" ]]; then
             echo "WARNING: Could not install user packages being root. You should be normal user."
           else

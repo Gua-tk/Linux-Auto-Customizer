@@ -112,12 +112,14 @@ The argument list is the following:
 | -g --git| Installs / uninstalls all git suite, including `gitk`
 | -h --pycharmpro --pycharmPro --pycharm_pro --pycharm-pro --Pycharm-Pro --PyCharm-pro|Installs / uninstalls PyCharm Pro
 | -i --discord --Discord --disc| Installs / uninstalls Discord
+| -j --intellijcommunity --intelliJCommunity --intelliJ-Community --intellij-community| Installs / uninstalls IntelliJ Community
 | -l --parallel --gnu_parallel --GNUparallel --GNUParallel --gnu-parallel| Installs / uninstalls GNU parallel
 | -m --pycharmcommunity --pycharmCommunity --pycharm_community --pycharm --pycharm-community| Installs / uninstalls PyCharm Community
 | -n --clion --Clion --CLion| Installs / uninstalls CLion C IDE
 | -o --chrome --Chrome --google-chrome --Google-Chrome| Installs / uninstalls Google Chrome, Google Drive, Google Play Music, Google Remote Desktop
 | -p --python --python3 --Python3 --Python| Installs / uninstalls Python3 and Python2 interpreter
 | -s --sublime --sublimeText --sublime_text --Sublime --sublime-Text --sublime-text| Installs / uninstalls Sublime Text 3
+| -u --intellijultimate --intelliJUltimate --intelliJ-Ultimate --intellij-ultimate | Installs / uninstalls IDEA IntelliJ Ultimate
 | -v --vlc --VLC --Vlc| Installs / uninstalls VLC media player
 | -w --steam --Steam --STEAM| Installs / uninstalls Steam
 | -y --pypy --pypy3 --PyPy3 --PyPy| Installs / uninstalls PyPy3 Python3 interpreter
