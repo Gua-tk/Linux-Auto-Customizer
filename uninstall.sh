@@ -177,6 +177,11 @@ uninstall_telegram()
   rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
 }
 
+uninstall_jdk11()
+{
+	apt -y purge default-jdk
+}
+
 # Uninstall all functions
 uninstall_all()
 {
@@ -205,6 +210,7 @@ uninstall_all()
   uninstall_intellij_ultimate
   uninstall_intellij_community
   uninstall_telegram
+  uninstall_jdk11
 }
 
 ##################
@@ -237,6 +243,9 @@ main()
         ;;
         -x|--latex|--LaTeX|--tex|--TeX)
           uninstall_latex
+        ;;
+        -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
+          uninstall_jdk11
         ;;
         -p|--python|--python3|--Python3|--Python)
           uninstall_python3

@@ -552,6 +552,11 @@ install_thunderbird()
   echo "Finished"
 }
 
+install_jdk11()
+{
+  apt -y install default-jdk
+}
+
 ###### SYSTEM FEATURES ######
 
 # Install templates (available files in the right click --> new --> ...)
@@ -704,6 +709,7 @@ root_install()
   install_megasync
   install_thunderbird
   install_transmission
+  install_jdk11
 }
 
 user_install()
@@ -998,6 +1004,13 @@ main()
             install_intellij_community
           else
             echo "WARNING: Could not install intelliJ Community. You should be normal user. Skipping..."
+          fi
+        ;;
+        -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
+          if [[ "$(whoami)" == "root" ]]; then
+            install_jdk11
+          else
+            echo "WARNING: Could not install java development kit 11. You should be root."
           fi
         ;;
         --user|--regular|--normal)

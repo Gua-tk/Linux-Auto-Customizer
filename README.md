@@ -150,9 +150,9 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Automount available drives.
 - [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
-- [ ] Add IntelliJ IDE from Jetbrains
-- [ ] Add JDK and global variables to JDK
-- [ ] Telegram
+- [x] Add IntelliJ IDE from Jetbrains
+- [x] Add JDK and global variables to JDK
+- [x] Telegram
 
 
 ## Author and Acknowledgements
