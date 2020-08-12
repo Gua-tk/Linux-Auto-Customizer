@@ -48,11 +48,13 @@ extract_function="
     fi
   }"
   
-discord_version=discord-0.0.10
 megasync_version=megasync_4.3.3-5.1_amd64.deb
 megasync_repository=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/
 megasync_integrator_version=nautilus-megasync_3.6.6_amd64.deb
 
+dropbox_version=2020.03.04
+
+discord_version=discord-0.0.10
 discord_launcher="[Desktop Entry]
 Name=Discord
 StartupWMClass=discord

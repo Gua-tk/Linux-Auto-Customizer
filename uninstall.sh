@@ -179,7 +179,13 @@ uninstall_telegram()
 
 uninstall_jdk11()
 {
-	apt -y purge default-jdk
+  apt -y purge default-jdk
+}
+
+uninstall_dropbox()
+{
+  apt-get purge -y dropbox
+  rm -f ${XDG_DESKTOP_DIR}/dropbox.desktop
 }
 
 # Uninstall all functions
@@ -211,6 +217,7 @@ uninstall_all()
   uninstall_intellij_community
   uninstall_telegram
   uninstall_jdk11
+  uninstall_dropbox
 }
 
 ##################

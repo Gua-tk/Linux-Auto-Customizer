@@ -459,6 +459,33 @@ install_megasync()
   echo "Finished"
 }
 
+# Dropbox desktop client and integration
+install_dropbox()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attemptying to install dropbox"
+    if [[ -z $(which dropbox) ]]; then
+      # Dependency
+      apt-get -y install python3-gpg
+      
+      rm -f dropbox_${dropbox_version}_amd64.deb*
+
+      wget -O ${dropbox_version}.deb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
+
+      dpkg -i ${dropbox_version}.deb
+
+      rm -f ${dropbox_version}.deb*
+
+      copy_launcher dropbox.desktop
+    else
+      err "WARNING: dropbox is already installed. Skipping"
+    fi
+    echo "Finished"
+  else
+    echo "WARNING: Could not install dropbox. You should be root."
+  fi
+}
+
 # Needs roots permission
 install_pypy3_dependencies()
 {
@@ -710,6 +737,7 @@ root_install()
   install_thunderbird
   install_transmission
   install_jdk11
+  install_dropbox
 }
 
 user_install()
@@ -1012,6 +1040,9 @@ main()
           else
             echo "WARNING: Could not install java development kit 11. You should be root."
           fi
+        ;;
+        -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
+            install_dropbox
         ;;
         --user|--regular|--normal)
           if [[ "$(whoami)" == "root" ]]; then
