@@ -207,7 +207,7 @@ uninstall_mendeley()
 
 uninstall_mendeley_dependencies()
 {
-  
+  apt-get -y purge gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
 }
 
 # Uninstall all functions

@@ -125,7 +125,9 @@ The argument list is the following:
 | -y --pypy --pypy3 --PyPy3 --PyPy| Installs / uninstalls PyPy3 Python3 interpreter
 | --mega --Mega --MEGA --MegaSync --MEGAsync --MEGA-sync --megasync| Installs / uninstalls MEGAsync and MEGAsync desktop integration
 | --transmission --transmission-gtk --Transmission | Installs / uninstalls Transmission torrent downloader
-| --thunderbird --mozillathunderbird --mozilla-thunderbird --Thunderbird --thunder-bird| Installs / uninstalls thunderbird email client
+| --thunderbird --mozillathunderbird --mozilla-thunderbird --Thunderbird --thunder-bird | Installs / uninstalls thunderbird email client
+| --MendeleyDependencies --mendeleydependencies --mendeleydesktopdependencies --mendeley-desktop-dependencies --Mendeley-Desktop-Dependencies | Installs / uninstalls Mendeley desktop dependencies
+| --Mendeley --mendeley --mendeleyDesktop --mendeley-desktop --Mendeley-Desktop | Installs / uninstalls Mendeley desktop
 
 ## Progression and original idea
 This repository is a partial fork from my repo [TrigenicInteractionPredictor](https://github.com/AleixMT/TrigenicInteractionPredictor). 
@@ -153,6 +155,9 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [x] Add IntelliJ IDE from Jetbrains
 - [x] Add JDK and global variables to JDK
 - [x] Telegram
+- [x] Mendeley
+- [x] Mendeley Dependenecies
+- [x] Sorted functions and menus in alphabetical order
 
 
 ## Author and Acknowledgements
