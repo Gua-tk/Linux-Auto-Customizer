@@ -22,6 +22,11 @@ else
   BASHRC_PATH=/home/${SUDO_USER}/.bashrc
 fi
 
+# If there is no backup of bashrc do it conserving permissions
+if  [[ ! -f ${BASHRC_PATH}.bak ]]; then
+  cp -p ${BASHRC_PATH} BASHRC_PATH.bak
+fi
+
 
 ##### COMMON VARIABLES #####
 
