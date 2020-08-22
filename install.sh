@@ -512,7 +512,7 @@ install_google_chrome()
 }
 
 
-# MEGA desktop client
+# Automatic install of megasync + megasync nautilus. Creates launcher in the desktop 
 install_megasync()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -544,7 +544,7 @@ install_megasync()
 }
 
 
-# Mendeley Desktop
+# Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
 install_mendeley()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -584,7 +584,7 @@ install_mendeley()
   echo "Finished"
 }
 
-
+# Automatic install + Creates desktop launcher in launcher and in desktop. 
 install_musicmanager()
 {
 if [[ "$(whoami)" == "root" ]]; then
