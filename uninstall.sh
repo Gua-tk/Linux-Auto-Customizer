@@ -64,7 +64,7 @@ uninstall_shell_customization()
 
 uninstall_pycharm_professional()
 {
-  rm -Rf ${USR_BIN_FOLDER}/pycharm-${pycharm_professional_ver}
+  rm -Rf ${USR_BIN_FOLDER}/pycharm-pro
   rm -f ${XDG_DESKTOP_DIR}/pycharm-pro.desktop
   rm -f /home/${SUDO_USER}/.local/bin/pycharm-pro
   rm -f /home/${SUDO_USER}/.local/share/applications/pycharm-pro.desktop
@@ -72,7 +72,7 @@ uninstall_pycharm_professional()
 
 uninstall_pycharm_community()
 {
-  rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
+  rm -Rf ${USR_BIN_FOLDER}/pycharm-community
   rm -f ${XDG_DESKTOP_DIR}/pycharm.desktop
   rm -f /home/${SUDO_USER}/.local/bin/pycharm
   rm -f /home/${SUDO_USER}/.local/share/applications/pycharm.desktop
@@ -80,7 +80,7 @@ uninstall_pycharm_community()
 
 uninstall_clion()
 {
-  rm -Rf ${USR_BIN_FOLDER}/${clion_version_caps_down}
+  rm -Rf ${USR_BIN_FOLDER}/clion
   rm -f ${XDG_DESKTOP_DIR}/clion.desktop
   rm -f /home/${SUDO_USER}/.local/bin/clion
   rm -f /home/${SUDO_USER}/.local/share/applications/clion.desktop
@@ -88,7 +88,7 @@ uninstall_clion()
 
 uninstall_sublime_text()
 {
-  rm -Rf ${USR_BIN_FOLDER}/sublime_text_3
+  rm -Rf ${USR_BIN_FOLDER}/sublime_text
   rm -f ${XDG_DESKTOP_DIR}/sublime-text.desktop
   rm -f /home/${SUDO_USER}/.local/bin/sublime
   rm -f /home/${SUDO_USER}/.local/share/applications/sublime.desktop
@@ -96,7 +96,7 @@ uninstall_sublime_text()
 
 uninstall_pypy3()
 {
-  rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
+  rm -Rf ${USR_BIN_FOLDER}/pypy3
   rm -f /home/${SUDO_USER}/.local/bin/pypy3
   rm -f /home/${SUDO_USER}/.local/bin/pypy3-pip
 }
@@ -130,7 +130,7 @@ uninstall_discord()
 {
   rm -f /home/${SUDO_USER}/.local/bin/discord
   rm -f ${XDG_DESKTOP_DIR}/discord.desktop
-  rm -Rf ${USR_BIN_FOLDER}/Discord
+  rm -Rf ${USR_BIN_FOLDER}/discord
 }
 
 uninstall_megasync()
@@ -155,25 +155,25 @@ uninstall_transmission()
 
 uninstall_intellij_ultimate()
 {
-  rm -Rf ${USR_BIN_FOLDER}/${intellij_ultimate_ver}
+  rm -Rf ${USR_BIN_FOLDER}/idea-IU
   rm -f /home/${SUDO_USER}/.local/bin/ideau
-  rm -f /home/${XDG_DESKTOP_DIR}/ideau.desktop
+  rm -f ${XDG_DESKTOP_DIR}/ideau.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/ideau.desktop
 }
 
 uninstall_intellij_community()
 {
-  rm -Rf ${USR_BIN_FOLDER}/${intellij_community_ver}
+  rm -Rf ${USR_BIN_FOLDER}/idea-IC
   rm -f /home/${SUDO_USER}/.local/bin/ideac
-  rm -f /home/${XDG_DESKTOP_DIR}/ideac.desktop
+  rm -f ${XDG_DESKTOP_DIR}/ideac.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/ideac.desktop
 }
 
 uninstall_telegram()
 {
-  rm -Rf ${USR_BIN_FOLDER}/Telegram
+  rm -Rf ${USR_BIN_FOLDER}/telegram
   rm -f /home/${SUDO_USER}/.local/bin/telegram
-  rm -f /home/${XDG_DESKTOP_DIR}/telegram.desktop
+  rm -f ${XDG_DESKTOP_DIR}/telegram.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
 }
 
@@ -190,7 +190,10 @@ uninstall_dropbox()
 
 uninstall_mendeley()
 {
-
+  rm -Rf ${USR_BIN_FOLDER}/mendeley
+  rm -f /home/${SUDO_USER}/.local/bin/mendeley
+  rm -f /home/${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
 }
 
 # Uninstall all functions

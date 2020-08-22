@@ -53,30 +53,36 @@ copy_launcher()
 # Checks if Android studio is already installed and installs it if not
 install_android_studio()
 {
-  echo "Attempting to install Android Studio"
-  if [[ -z "$(which studio)" ]]; then
-    # avoid collisions
-    rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
-    # Download
-    wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.0.0.16/${android_studio_version}.tar.gz
-    
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
-    
-    # Create links to the PATH
-    rm -f ${HOME}/.local/bin/studio
-    ln -s ${USR_BIN_FOLDER}/android-studio/bin/studio.sh ${HOME}/.local/bin/studio
-    
-    # Create launcher
-    echo -e "${android_studio_launcher}" > "${HOME}/.local/share/applications/Android Studio.desktop"
-    chmod 775 "${HOME}/.local/share/applications/Android Studio.desktop"
-    cp -p "${HOME}/.local/share/applications/Android Studio.desktop" ${XDG_DESKTOP_DIR}
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "WARNING: Could not install Android Studio. You should be normal user. Skipping..."
   else
-    err "WARNING: Android Studio is already installed. Skipping"
+    echo "Attempting to install Android Studio"
+    if [[ -z "$(which studio)" ]]; then
+      # avoid collisions
+      rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
+      # Download
+      wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.0.0.16/${android_studio_version}.tar.gz
+      
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
+      
+      # Create links to the PATH
+      rm -f ${HOME}/.local/bin/studio
+      ln -s ${USR_BIN_FOLDER}/android-studio/bin/studio.sh ${HOME}/.local/bin/studio
+      
+      # Create launcher
+      echo -e "${android_studio_launcher}" > "${HOME}/.local/share/applications/Android Studio.desktop"
+      chmod 775 "${HOME}/.local/share/applications/Android Studio.desktop"
+      cp -p "${HOME}/.local/share/applications/Android Studio.desktop" ${XDG_DESKTOP_DIR}
+    else
+      err "WARNING: Android Studio is already installed. Skipping"
+    fi
+    echo "Finished"
   fi
-  echo "Finished"
+
+  
 }
 
 
@@ -124,56 +130,67 @@ install_clion()
 # discord desktop client
 install_discord()
 {
-  echo "Attempting to install discord"
-  if [[ -z $(which discord) ]]; then
-    rm -f ${USR_BIN_FOLDER}/discord.tar.gz*
-    (cd "${USR_BIN_FOLDER}"; wget -O discord.tar.gz "https://discord.com/api/download?platform=linux&format=tar.gz")
-    rm -Rf "${USR_BIN_FOLDER}/discord"
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/discord.tar.gz
-    rm -f ${USR_BIN_FOLDER}/discord*.tar.gz*
-    rm -f ${HOME}/.local/bin/discord
-    ln -s ${USR_BIN_FOLDER}/discord/Discord ${HOME}/.local/bin/discord
-    echo -e "${discord_launcher}" > ${XDG_DESKTOP_DIR}/discord.desktop
-    chmod 755 ${XDG_DESKTOP_DIR}/discord.desktop
-    cp -p ${XDG_DESKTOP_DIR}/discord.desktop ${HOME}/.local/share/applications
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "Attempting to install discord"
+    if [[ -z $(which discord) ]]; then
+      rm -f ${USR_BIN_FOLDER}/discord.tar.gz*
+      (cd "${USR_BIN_FOLDER}"; wget -O discord.tar.gz "https://discord.com/api/download?platform=linux&format=tar.gz")
+      rm -Rf "${USR_BIN_FOLDER}/discord"
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/discord.tar.gz
+      rm -f ${USR_BIN_FOLDER}/discord*.tar.gz*
+      rm -f ${HOME}/.local/bin/discord
+      ln -s ${USR_BIN_FOLDER}/discord/Discord ${HOME}/.local/bin/discord
+      echo -e "${discord_launcher}" > ${XDG_DESKTOP_DIR}/discord.desktop
+      chmod 755 ${XDG_DESKTOP_DIR}/discord.desktop
+      cp -p ${XDG_DESKTOP_DIR}/discord.desktop ${HOME}/.local/share/applications
+    else
+      err "WARNING: discord is already installed. Skipping"
+    fi
+    echo "Finished"
   else
-    err "WARNING: discord is already installed. Skipping"
+    echo "WARNING: Could not install discord. You should be normal user. Skipping..."
   fi
-  echo "Finished"
+  
 }
 
 
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_community()
 {
-  echo "Attempting to install $pycharm_version"
-
-  if [[ -z $(which pycharm) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
-    # Download pycharm
-    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
-    # Create links to the PATH
-    rm -f ${HOME}/.local/bin/pycharm
-    ln -s ${USR_BIN_FOLDER}/${pycharm_version}/bin/pycharm.sh ${HOME}/.local/bin/pycharm
-
-    # Create launcher for pycharm in the desktop and in the launcher menu
-    echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
-    chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
-    cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
-
-    # register file associations
-    register_file_associations "text/x-python" "pycharm.desktop"
-    register_file_associations "text/x-python3" "pycharm.desktop"
-    register_file_associations "text/x-sh" "pycharm.desktop"
-
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
   else
-    err "WARNING: pycharm is already installed. Skipping"
+    echo "Attempting to install pycharm community"
+    if [[ -z $(which pycharm) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
+      rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
+      # Download pycharm
+      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
+      # Rename folder for coherence
+      mv ${USR_BIN_FOLDER}/pycharm.community* ${USR_BIN_FOLDER}/pycharm-community
+      # Create links to the PATH
+      rm -f ${HOME}/.local/bin/pycharm
+      ln -s ${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.sh ${HOME}/.local/bin/pycharm
+
+      # Create launcher for pycharm in the desktop and in the launcher menu
+      echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
+      chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
+      cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
+
+      # register file associations
+      register_file_associations "text/x-python" "pycharm.desktop"
+      register_file_associations "text/x-python3" "pycharm.desktop"
+      register_file_associations "text/x-sh" "pycharm.desktop"
+
+    else
+      err "WARNING: pycharm is already installed. Skipping"
+    fi
+    echo "Finished"
   fi
 }
 
@@ -181,32 +198,38 @@ install_pycharm_community()
 # Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_professional()
 {
-  echo "Attempting to install $pycharm_professional_version"
-
-  if [[ -z $(which pycharm-pro) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${pycharm_professional_version}
-    # Download pycharm
-    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_professional_version}.tar.gz
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
-    # Create links to the PATH
-    rm -f ${HOME}/.local/bin/pycharm-pro
-    ln -s ${USR_BIN_FOLDER}/pycharm-${pycharm_professional_ver}/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
-    # Create launcher for pycharm in the desktop and in the launcher menu
-    echo -e "$pycharm_professional_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
-    chmod 775 ${HOME}/.local/share/applications/pycharm-pro.desktop
-    cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
-
-    # register file associations
-    register_file_associations "text/x-sh" "pycharm-pro.desktop"
-    register_file_associations "text/x-python" "pycharm-pro.desktop"
-    register_file_associations "text/x-python3" "pycharm-pro.desktop"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "WARNING: Could not install pycharm pro. You should be normal user. Skipping..."
   else
-    err "WARNING: pycharm-pro is already installed. Skipping"
+    echo "Attempting to install pycharm pro"
+    if [[ -z $(which pycharm-pro) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
+      rm -Rf ${USR_BIN_FOLDER}/${pycharm_professional_version}
+      # Download pycharm
+      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_professional_version}.tar.gz
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
+      # Rename folder for coherence
+      mv ${USR_BIN_FOLDER}/pycharm-[0-9]* ${USR_BIN_FOLDER}/pycharm-pro
+      # Create links to the PATH
+      rm -f ${HOME}/.local/bin/pycharm-pro
+      ln -s ${USR_BIN_FOLDER}/pycharm-pro/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
+      # Create launcher for pycharm in the desktop and in the launcher menu
+      echo -e "$pycharm_professional_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
+      chmod 775 ${HOME}/.local/share/applications/pycharm-pro.desktop
+      cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
+
+      # register file associations
+      register_file_associations "text/x-sh" "pycharm-pro.desktop"
+      register_file_associations "text/x-python" "pycharm-pro.desktop"
+      register_file_associations "text/x-python3" "pycharm-pro.desktop"
+    else
+      err "WARNING: pycharm-pro is already installed. Skipping"
+    fi
+    echo "Finished"
   fi
 }
 
@@ -215,78 +238,88 @@ install_pycharm_professional()
 # Links it to the path
 install_pypy3()
 {
-  echo "Attempting to install $pypy3_version"
-
-  if [[ -z $(which pypy3) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
-  	# Download pypy
-    wget -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
-
-    # Install modules using pip
-    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 -m ensurepip  
-
-    # Forces download of pip and of modules
-    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir -q install --upgrade pip
-    ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install cython numpy
-    # Currently not supported
-    # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
-
-    # Create links to the PATH
-    rm -f ${HOME}/.local/bin/pypy3
-    ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pypy3 ${HOME}/.local/bin/pypy3
-    rm -f ${HOME}/.local/bin/pypy3-pip
-    ln -s ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 ${HOME}/.local/bin/pypy3-pip
-
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "WARNING: Could not install pypy3. You should be normal user. Skipping..."
   else
-    err "WARNING: pypy3 is already installed. Skipping"
+    echo "Attempting to install pypy3"
+    if [[ -z $(which pypy3) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.gz*
+      rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
+      # Download pypy
+      wget -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
+      # Rename folder for coherence
+      mv ${USR_BIN_FOLDER}/${pypy3_version} ${USR_BIN_FOLDER}/pypy3
+      # Install modules using pip
+      ${USR_BIN_FOLDER}/pypy3/bin/pypy3 -m ensurepip  
+
+      # Forces download of pip and of modules
+      ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 --no-cache-dir -q install --upgrade pip
+      ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 --no-cache-dir install cython numpy
+      # Currently not supported
+      # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
+
+      # Create links to the PATH
+      rm -f ${HOME}/.local/bin/pypy3
+      ln -s ${USR_BIN_FOLDER}/pypy3/bin/pypy3 ${HOME}/.local/bin/pypy3
+      rm -f ${HOME}/.local/bin/pypy3-pip
+      ln -s ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 ${HOME}/.local/bin/pypy3-pip
+
+    else
+      err "WARNING: pypy3 is already installed. Skipping"
+    fi
+    echo "Finished"
   fi
-  echo "Finished"
+
+  
 }
 
 
 # Install Sublime text 3
 install_sublime_text()
 {
-  echo "Attempting to install $sublime_text_version"
-
-  if [[ -z $(which sublime) ]]; then
-  	# Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
-    rm -Rf ${USR_BIN_FOLDER}/${sublime_text_version}
-  	# Download sublime_text
-    wget -P ${USR_BIN_FOLDER} https://download.sublimetext.com/${sublime_text_version}.tar.bz2
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
-    # Create link to the PATH
-    rm -f ${HOME}/.local/bin/sublime
-    ln -s ${USR_BIN_FOLDER}/sublime_text_3/sublime_text ${HOME}/.local/bin/sublime
-    # Create desktop launcher entry for sublime text
-    echo -e "${sublime_launcher}" > ${HOME}/.local/share/applications/sublime-text.desktop
-    chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
-    # Copy launcher to the desktop
-    cp -p ${HOME}/.local/share/applications/sublime-text.desktop ${XDG_DESKTOP_DIR}
-
-    # register file associations
-    register_file_associations "text/x-sh" "sublime-text.desktop"
-    register_file_associations "text/x-c++hdr" "sublime-text.desktop"
-    register_file_associations "text/x-c++src" "sublime-text.desktop"
-    register_file_associations "text/x-chdr" "sublime-text.desktop"
-    register_file_associations "text/x-csrc" "sublime-text.desktop"
-    register_file_associations "text/x-python" "sublime-text.desktop"
-    register_file_associations "text/x-python3" "sublime-text.desktop"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
   else
-    err "WARNING: sublime text is already installed. Skipping"
-  fi
+    echo "Attempting to install sublime text"
+      if [[ -z $(which sublime) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
+      rm -Rf ${USR_BIN_FOLDER}/${sublime_text_version}
+      # Download sublime_text
+      wget -P ${USR_BIN_FOLDER} https://download.sublimetext.com/${sublime_text_version}.tar.bz2
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
+      # Rename folder for coherence 
+      mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime_text
+      # Create link to the PATH
+      rm -f ${HOME}/.local/bin/sublime
+      ln -s ${USR_BIN_FOLDER}/sublime_text/sublime_text ${HOME}/.local/bin/sublime
+      # Create desktop launcher entry for sublime text
+      echo -e "${sublime_launcher}" > ${HOME}/.local/share/applications/sublime-text.desktop
+      chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
+      # Copy launcher to the desktop
+      cp -p ${HOME}/.local/share/applications/sublime-text.desktop ${XDG_DESKTOP_DIR}
 
-  echo "Finished"
+      # register file associations
+      register_file_associations "text/x-sh" "sublime-text.desktop"
+      register_file_associations "text/x-c++hdr" "sublime-text.desktop"
+      register_file_associations "text/x-c++src" "sublime-text.desktop"
+      register_file_associations "text/x-chdr" "sublime-text.desktop"
+      register_file_associations "text/x-csrc" "sublime-text.desktop"
+      register_file_associations "text/x-python" "sublime-text.desktop"
+      register_file_associations "text/x-python3" "sublime-text.desktop"
+    else
+      err "WARNING: sublime text is already installed. Skipping"
+    fi
+    echo "Finished"
+  fi
 }
 
 
@@ -299,7 +332,7 @@ install_intellij_community()
       # Avoid error due to possible previous aborted installations
       rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
       rm -Rf ${USR_BIN_FOLDER}/idea-IC
-      # Download sublime_text
+      # Download intellij community
       wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_community_version}.tar.gz
       # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
       (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz
@@ -349,7 +382,7 @@ install_intellij_ultimate()
       # Create link to the PATH
       rm -f ${HOME}/.local/bin/ideau
       ln -s ${USR_BIN_FOLDER}/idea-IU/bin/idea.sh ${HOME}/.local/bin/ideau
-      # Create desktop launcher entry for sublime text
+      # Create desktop launcher entry for intellij ultimate
       echo -e "${intellij_ultimate_launcher}" > ${HOME}/.local/share/applications/ideau.desktop
       chmod 775 ${HOME}/.local/share/applications/ideau.desktop
       # Copy launcher to the desktop
@@ -370,32 +403,40 @@ install_intellij_ultimate()
 # Telegram installation
 install_telegram()
 {
-  echo "Attempting to install Telegram"
-  if [[ -z $(which telegram) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/linux*
-    rm -Rf ${USR_BIN_FOLDER}/Telegram
-    # Download telegram
-    wget -P ${USR_BIN_FOLDER} https://telegram.org/dl/desktop/linux
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar xJf -) < ${USR_BIN_FOLDER}/linux
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/linux*
-    wget -P ${USR_BIN_FOLDER}/Telegram https://www.iconfinder.com/icons/986956/download/png/512
-    mv ${USR_BIN_FOLDER}/Telegram/512 ${USR_BIN_FOLDER}/Telegram/telegram.png
-
-    # Create link to the PATH
-    rm -f ${HOME}/.local/bin/telegram
-    ln -s ${USR_BIN_FOLDER}/Telegram/Telegram ${HOME}/.local/bin/telegram
-    # Create desktop launcher entry for telegram
-    echo -e "${telegram_launcher}" > ${HOME}/.local/share/applications/telegram.desktop
-    chmod 775 ${HOME}/.local/share/applications/telegram.desktop
-    # Copy launcher to the desktop
-    cp -p ${HOME}/.local/share/applications/telegram.desktop ${XDG_DESKTOP_DIR}
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "Attempting to install telegram"
+    if [[ -z $(which telegram) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/linux*
+      rm -Rf ${USR_BIN_FOLDER}/Telegram
+      # Download telegram
+      wget -P ${USR_BIN_FOLDER} https://telegram.org/dl/desktop/linux
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar xJf -) < ${USR_BIN_FOLDER}/linux
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/linux*
+      # Rename folder for coherence
+      mv ${USR_BIN_FOLDER}/Telegram ${USR_BIN_FOLDER}/telegram
+      # Download icon for telegram
+      wget -P ${USR_BIN_FOLDER}/telegram https://www.iconfinder.com/icons/986956/download/png/512
+      mv ${USR_BIN_FOLDER}/telegram/512 ${USR_BIN_FOLDER}/telegram/telegram.png
+      # Create link to the PATH
+      rm -f ${HOME}/.local/bin/telegram
+      ln -s ${USR_BIN_FOLDER}/telegram/Telegram ${HOME}/.local/bin/telegram
+      # Create desktop launcher entry for telegram
+      echo -e "${telegram_launcher}" > ${HOME}/.local/share/applications/telegram.desktop
+      chmod 775 ${HOME}/.local/share/applications/telegram.desktop
+      # Copy launcher to the desktop
+      cp -p ${HOME}/.local/share/applications/telegram.desktop ${XDG_DESKTOP_DIR}
+    else
+      err "WARNING: Telegram is already installed. Skipping"
+    fi
+    echo "Finished"
   else
-    err "WARNING: Telegram is already installed. Skipping"
+    echo "WARNING: Could not install telegram. You should be normal user. Skipping..."
   fi
-  echo "Finished"
+
+  
 }
 
 
@@ -412,7 +453,7 @@ install_mendeley()
     # Avoid error due to possible previous aborted installations
     rm -f ${USR_BIN_FOLDER}/stable-incoming*
     rm -Rf ${USR_BIN_FOLDER}/mendeley*
-    # Download sublime_text
+    # Download mendeley
     wget -P ${USR_BIN_FOLDER} https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/stable-incoming
@@ -429,6 +470,8 @@ install_mendeley()
     sed -i 's-Icon=.*-Icon=/home/aleixmt/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
     # Modify exec line
     sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+    # Copy to desktop  launchers of the current user
+    cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${HOME}/.local/share/applications
   else
     err "WARNING: Mendeley is already installed. Skipping"
   fi
@@ -440,76 +483,92 @@ install_mendeley()
 # Needs root permission
 install_google_chrome()
 {
-  # Chrome dependencies
-  apt-get install -y -qq libxss1 libappindicator1 libindicator7
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install Google Chrome"
+    # Chrome dependencies
+    apt-get install -y -qq libxss1 libappindicator1 libindicator7
 
-  if [[ -z "$(which google-chrome)" ]]; then
+    if [[ -z "$(which google-chrome)" ]]; then
 
-    # Delete possible collisions with previous installation
-    rm -f google-chrome*.deb*  
-    # Download
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    # Install downloaded version
-    apt install -y -qq ./google-chrome-stable_current_amd64.deb
-    # Clean
-    rm -f google-chrome*.deb*
-    
-    # Create launcher and change its permissions (we are root)
-    copy_launcher "google-chrome.desktop"
-    cp /home/${SUDO_USER}/.local/share/applications/chrome* ${XDG_DESKTOP_DIR}
-    chmod 775 ${XDG_DESKTOP_DIR}/chrome*
+      # Delete possible collisions with previous installation
+      rm -f google-chrome*.deb*  
+      # Download
+      wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      # Install downloaded version
+      apt install -y -qq ./google-chrome-stable_current_amd64.deb
+      # Clean
+      rm -f google-chrome*.deb*
+      
+      # Create launcher and change its permissions (we are root)
+      copy_launcher "google-chrome.desktop"
+      cp /home/${SUDO_USER}/.local/share/applications/chrome* ${XDG_DESKTOP_DIR}
+      chmod 775 ${XDG_DESKTOP_DIR}/chrome*
+    else
+      err "WARNING: Google Chrome is already installed. Skipping"
+    fi
+    echo "Finished"
   else
-    err "WARNING: Google Chrome is already installed. Skipping"
+    echo "WARNING: Could not install google chrome. You need root permissions. Skipping..."
   fi
 }
 
 # steam ubuntu client
 install_steam()
 {
-  echo "Attempting to install steam"
-  # steam dependencies
-  apt-get install curl
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install steam"
+    # steam dependencies
+    apt-get install curl
 
-  if [[ -z $(which steam) ]]; then
-    # Avoid collision from possible previous interrumped installations
-    rm -f steam.deb*
-    # Download steam
-    wget -O steam.deb https://steamcdn-a.akamaihd.net/client/installer/steam.deb
-    # Install
-    dpkg -i steam.deb
-    # Clean after
-    rm -f steam.deb*
+    if [[ -z $(which steam) ]]; then
+      # Avoid collision from possible previous interrumped installations
+      rm -f steam.deb*
+      # Download steam
+      wget -O steam.deb https://steamcdn-a.akamaihd.net/client/installer/steam.deb
+      # Install
+      dpkg -i steam.deb
+      # Clean after
+      rm -f steam.deb*
+    else
+      err "WARNING: steam is already installed. Skipping"
+    fi
+    echo "Finished"
   else
-    err "WARNING: steam is already installed. Skipping"
+    echo "WARNING: Could not install steam. You should be root. Skipping..."
   fi
-  echo "Steam Finished installing"
 }
 
 # MEGA desktop client
 install_megasync()
 {
-  echo "Attemptying to install megasync"
-  if [[ -z $(which megasync) ]]; then
-    # Dependencies
-    apt-get install -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attemptying to install megasync"
+    if [[ -z $(which megasync) ]]; then
+      # Dependencies
+      apt-get install -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 
-    rm -f ${megasync_version}.deb*
-    wget -O ${megasync_version}.deb "${megasync_repository}${megasync_version}"
+      rm -f ${megasync_version}.deb*
+      wget -O ${megasync_version}.deb "${megasync_repository}${megasync_version}"
 
-    rm -f ${megasync_integrator_version}.deb*
-    wget -O ${megasync_integrator_version}.deb "${megasync_repository}${megasync_integrator_version}"
+      rm -f ${megasync_integrator_version}.deb*
+      wget -O ${megasync_integrator_version}.deb "${megasync_repository}${megasync_integrator_version}"
 
-    dpkg -i ${megasync_version}.deb
-    dpkg -i ${megasync_integrator_version}.deb
+      dpkg -i ${megasync_version}.deb
+      dpkg -i ${megasync_integrator_version}.deb
 
-    rm -f ${megasync_integrator_version}.deb*
-    rm -f ${megasync_version}.deb*
+      rm -f ${megasync_integrator_version}.deb*
+      rm -f ${megasync_version}.deb*
 
-    copy_launcher megasync.desktop
+      copy_launcher megasync.desktop
+    else
+      err "WARNING: megasync is already installed. Skipping"
+    fi
+    echo "Finished"
   else
-    err "WARNING: megasync is already installed. Skipping"
+    echo "WARNING: Could not install megasync. You should be root user. Skipping..."
   fi
-  echo "Finished"
+
+  
 }
 
 # Dropbox desktop client and integration
@@ -542,100 +601,147 @@ install_dropbox()
 # Needs roots permission
 install_pypy3_dependencies()
 {
-  # pypy3 module dependencies
-  echo "Attempting to install pypy3 dependencies"
-  apt-get install -y -qq pkg-config
-  apt-get install -y -qq libfreetype6-dev
-  apt-get install -y -qq libpng-dev
-  apt-get install -y -qq libffi-dev
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install pypy3 dependencies"
+    # pypy3 module dependencies
+    apt-get install -y -qq pkg-config
+    apt-get install -y -qq libfreetype6-dev
+    apt-get install -y -qq libpng-dev
+    apt-get install -y -qq libffi-dev
+    echo "Finished"
+  else
+    echo "WARNING: Could not install dependencies. You need root permissions. Skipping..."
+  fi
+  
 }
 
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
 install_git()
 {
-  echo "Attemptying to install git"
-  apt install -y git-all
-  apt-get install -y git-lfs
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install GIT"
+    apt install -y git-all
+    apt-get install -y git-lfs
+    echo "Finished"
+  else
+    echo "WARNING: Could not install git. You need root permissions. Skipping..."
+  fi
+  
 }
 
 # Install gcc (C compiler)
 # Needs root permission
 install_gcc()
 {
-  echo "Attemptying to install gcc"
-  apt install -y gcc
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install gcc"
+    apt install -y gcc
+    echo "Finished"
+  else
+    echo "WARNING: Could not install gcc. You need root permissions. Skipping..."
+  fi
 }
 
 # Install Python3
 # Needs root permission
 install_python3()
 {
-  echo "Attemptying to install python3"
-  apt install -y python3-dev python-dev
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install python3"
+    apt install -y python3-dev python-dev
+    echo "Finished"
+  else
+    echo "WARNING: Could not install python. You need root permissions. Skipping..."
+  fi
 }
 
 # Install GNU parallel
 install_GNU_parallel()
 {
-  echo "Attemptying to install parallel"
-  apt-get -y install parallel
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install GNU-parallel"
+    apt-get -y install parallel
+    echo "Finished"
+  else
+    echo "WARNING: Could not install GNU parallel. You need root permissions. Skipping..."
+  fi
 }
 
 # Install pdf grep
 install_pdfgrep()
 {
-  echo "Attemptying to install pdfgrep"
-  apt-get -y install pdfgrep
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install pdfgrep"
+    apt-get -y install pdfgrep
+    echo "Finished"
+  else
+    echo "WARNING: Could not install pdfgrep. You should be root. Skipping..."
+  fi
 }
 
 # install VLC
 install_vlc()
 {
-  echo "Attemptying to install vlc"
-  apt-get -y install vlc
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install vlc"
+    apt-get -y install vlc
+    echo "Finished"
+  else
+    echo "WARNING: Could not install vlc. You should be root. Skipping..."
+  fi
 }
 
 # Install latex
 # Needs root permission
 install_latex()
 {
-  echo "Attemptying to install latex"
-  apt-get install -y perl-tk
-  apt -y install texlive-latex-extra
-  copy_launcher "texmaker.desktop"
-  copy_launcher "texdoctk.desktop"
-  echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install latex"
+    apt-get install -y perl-tk
+    apt -y install texlive-latex-extra
+    copy_launcher "texmaker.desktop"
+    copy_launcher "texdoctk.desktop"
+    echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
+    echo "Finished"
+  else
+    echo "WARNING: Could not install latex. You need root permissions. Skipping..."
+  fi
 }
 
 install_transmission()
 {
-  echo "Attemptying to install transmission"
-  apt-get install -y transmission 
-  copy_launcher "transmission-gtk.desktop"
-  ln -s $(which transmission-gtk) ${HOME}/.local/bin/transmission
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attemptying to install transmission"
+    apt-get install -y transmission 
+    copy_launcher "transmission-gtk.desktop"
+    ln -s $(which transmission-gtk) ${HOME}/.local/bin/transmission
+    echo "Finished"
+  else
+    echo "WARNING: Could not install transmission. You should be root user. Skipping..."
+  fi
 }
 
 install_thunderbird()
 {
-  echo "Attemptying to install thunderbird"
-  apt-get install -y thunderbird 
-  copy_launcher "thunderbird.desktop"
-  echo "Finished"
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attemptying to install thunderbird"
+    apt-get install -y thunderbird 
+    copy_launcher "thunderbird.desktop"
+    echo "Finished"
+  else
+    echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
+  fi
+  
 }
 
 install_jdk11()
 {
-  apt -y install default-jdk
+  if [[ "$(whoami)" == "root" ]]; then
+    apt -y install default-jdk
+  else
+    echo "WARNING: Could not install java development kit 11. You should be root."
+  fi
 }
 
 ###### SYSTEM FEATURES ######
@@ -644,14 +750,17 @@ install_jdk11()
 # Python3, bash shell scripts, latex documents
 install_templates()
 {
-  echo "Attemptying to install templates"
-  echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/shell_script.sh
-  echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/python3_script.py
-  echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "WARNING: Could not install templates. You should be normal user. Skipping..."
+  else
+    echo "Attemptying to install templates"
+    echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/shell_script.sh
+    echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/python3_script.py
+    echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 " > ${XDG_TEMPLATES_DIR}/latex_document.tex
-  echo "CC = gcc
+    echo "CC = gcc
 CFLAGS = -O3 -Wall
 
 all : Cscript
@@ -665,22 +774,23 @@ run : Cscript
 .PHONY : clean
 clean :
   rm -f Cscript" > ${XDG_TEMPLATES_DIR}/makefile
-  echo "#include \"Cscript.h\"
+    echo "#include \"Cscript.h\"
   int main(int nargs, char* args[])
 {
   printf(\"Hello World\");
 }
 
 " > ${XDG_TEMPLATES_DIR}/c_script.c
-  echo "// Includes
+    echo "// Includes
 #include <stdio.h>
 #include <stdbool.h>  // To use booleans
 #include <stdlib.h>
 " > ${XDG_TEMPLATES_DIR}/c_script.h
-  
+    
   > ${XDG_TEMPLATES_DIR}/text_file.txt
-  chmod 775 ${XDG_TEMPLATES_DIR}/*
-  echo "Finished"
+    chmod 775 ${XDG_TEMPLATES_DIR}/*
+    echo "Finished"
+  fi
 }
 
 ###### SHELL FEATURES ######
@@ -868,207 +978,77 @@ main()
 
       case ${key} in
         -c|--gcc)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install gcc"
-            install_gcc
-            echo "Finished"
-          else
-            echo "WARNING: Could not install gcc. You need root permissions. Skipping..."
-          fi
+          install_gcc
         ;;
         -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install Google Chrome"
-            install_google_chrome
-            echo "Finished"
-          else
-            echo "WARNING: Could not install google chrome. You need root permissions. Skipping..."
-          fi
+          install_google_chrome
         ;;
         -g|--git)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install GIT"
-            install_git
-            echo "Finished"
-          else
-            echo "WARNING: Could not install git. You need root permissions. Skipping..."
-          fi
+          install_git
         ;;
         -x|--latex|--LaTeX|--tex|--TeX)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install latex"
-            install_latex
-            echo "Finished"
-          else
-            echo "WARNING: Could not install latex. You need root permissions. Skipping..."
-          fi
+          install_latex
         ;;
         -p|--python|--python3|--Python3|--Python)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install python3"
-            install_python3
-            echo "Finished"
-          else
-            echo "WARNING: Could not install python. You need root permissions. Skipping..."
-          fi
+          install_python3
         ;;
         -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install GNU-parallel"
-            install_GNU_parallel
-            echo "Finished"
-          else
-            echo "WARNING: Could not install GNU parallel. You need root permissions. Skipping..."
-          fi
+          install_GNU_parallel
         ;;
         -d|--dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install pypy3 dependencies"
-            install_pypy3_dependencies
-            echo "Finished"
-          else
-            echo "WARNING: Could not install dependencies. You need root permissions. Skipping..."
-          fi
+          install_pypy3_dependencies
         ;;
         -t|--templates)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "WARNING: Could not install templates. You should be normal user. Skipping..."
-          else
-            echo "Attempting to install templates"
-            install_templates
-            echo "Finished"
-          fi
+          install_templates
         ;;
         -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)
-          echo "Attempting to install shell history optimization"
           install_shell_history_optimization
-          echo "Finished"
-          echo "Attempting to install ls alias"
           install_ls_alias
-          echo "Finished"
-          echo "Attempting to install git aliases"
           install_git_aliases
-          echo "Finished"
-          echo "Attempting to install environment aliases"
           install_environment_aliases
-          echo "Finished"
-          echo "Attempting to install extract function"
           install_extract_function
-          echo "Finished"
         ;;
         -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "WARNING: Could not install pycharm pro. You should be normal user. Skipping..."
-          else
-            echo "Attempting to install pycharm pro"
-            install_pycharm_professional
-            echo "Finished"
-          fi
+          install_pycharm_professional
         ;;
         -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
-          else
-            echo "Attempting to install pycharm community"
-            install_pycharm_community
-            echo "Finished"
-          fi
+          install_pycharm_community
         ;;
         -n|--clion|--Clion|--CLion)
           install_clion
         ;;
         -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
-          else
-            echo "Attempting to install sublime text"
-            install_sublime_text
-            echo "Finished"
-          fi
+          install_sublime_text
         ;;
         -y|--pypy|--pypy3|--PyPy3|--PyPy)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
-          else
-            echo "Attempting to install pypy3"
-            install_pypy3
-            echo "Finished"
-          fi
+          install_pypy3
         ;;
         -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "WARNING: Could not install Android Studio. You should be normal user. Skipping..."
-          else
-            echo "Attempting to install Android Studio"
-            install_android_studio
-            echo "Finished"
-          fi
+          install_android_studio
         ;;
         -f|--pdfgrep|--findpdf|--pdf)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install pdfgrep"
-            install_pdfgrep
-            echo "Finished"
-          else
-            echo "WARNING: Could not install pdfgrep. You should be root. Skipping..."
-          fi
+          install_pdfgrep
         ;;
         -v|--vlc|--VLC|--Vlc)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install vlc"
-            install_vlc
-            echo "Finished"
-          else
-            echo "WARNING: Could not install vlc. You should be root. Skipping..."
-          fi
+          install_vlc
         ;;
         -w|--steam|--Steam|--STEAM)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "Attempting to install steam"
-            install_steam
-            echo "Finished"
-          else
-            echo "WARNING: Could not install steam. You should be root. Skipping..."
-          fi
+          install_steam
         ;;
         -i|--discord|--Discord|--disc)
-          if [[ "$(whoami)" != "root" ]]; then
-            echo "Attempting to install discord"
-            install_discord
-            echo "Finished"
-          else
-            echo "WARNING: Could not install discord. You should be normal user. Skipping..."
-          fi
+          install_discord
         ;;
         -r|--Telegram|--telegram)
-          if [[ "$(whoami)" != "root" ]]; then
-            echo "Attempting to install telegram"
-            install_telegram
-            echo "Finished"
-          else
-            echo "WARNING: Could not install telegram. You should be normal user. Skipping..."
-          fi
+          install_telegram
         ;;
         --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
-          if [[ "$(whoami)" == "root" ]]; then
-            install_megasync
-          else
-            echo "WARNING: Could not install megasync. You should be root user. Skipping..."
-          fi
+          install_megasync
         ;;
         --transmission|--transmission-gtk|--Transmission)
-          if [[ "$(whoami)" == "root" ]]; then
-            install_transmission
-          else
-            echo "WARNING: Could not install transmission. You should be root user. Skipping..."
-          fi
+          install_transmission
         ;;
         --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
-          if [[ "$(whoami)" == "root" ]]; then
-            install_thunderbird
-          else
-            echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
-          fi
+          install_thunderbird
         ;;
         -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
           install_intellij_ultimate
@@ -1077,11 +1057,7 @@ main()
           install_intellij_community
         ;;
         -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
-          if [[ "$(whoami)" == "root" ]]; then
-            install_jdk11
-          else
-            echo "WARNING: Could not install java development kit 11. You should be root."
-          fi
+          install_jdk11
         ;;
         -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
             install_dropbox
