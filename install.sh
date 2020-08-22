@@ -142,8 +142,11 @@ install_discord()
       rm -Rf "${USR_BIN_FOLDER}/discord"
       (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/discord.tar.gz
       rm -f ${USR_BIN_FOLDER}/discord*.tar.gz*
+      mv ${USR_BIN_FOLDER}/Discord ${USR_BIN_FOLDER}/discord
+      # Create links in the PATH
       rm -f ${HOME}/.local/bin/discord
       ln -s ${USR_BIN_FOLDER}/discord/Discord ${HOME}/.local/bin/discord
+      # Create launchers in launcher and in desktop
       echo -e "${discord_launcher}" > ${XDG_DESKTOP_DIR}/discord.desktop
       chmod 755 ${XDG_DESKTOP_DIR}/discord.desktop
       cp -p ${XDG_DESKTOP_DIR}/discord.desktop ${HOME}/.local/share/applications
@@ -276,7 +279,7 @@ install_mendeley()
       wget -P ${USR_BIN_FOLDER} https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
       # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
       (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/stable-incoming
-      rm -f stable-incoming
+      rm -f ${USR_BIN_FOLDER}/stable-incoming
       # Rename folder for coherence
       mv ${USR_BIN_FOLDER}/mendeley* ${USR_BIN_FOLDER}/mendeley
       # Create link to the PATH
@@ -319,7 +322,7 @@ install_pycharm_community()
       # Clean
       rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
       # Rename folder for coherence
-      mv ${USR_BIN_FOLDER}/pycharm.community* ${USR_BIN_FOLDER}/pycharm-community
+      mv ${USR_BIN_FOLDER}/pycharm-community* ${USR_BIN_FOLDER}/pycharm-community
       # Create links to the PATH
       rm -f ${HOME}/.local/bin/pycharm
       ln -s ${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.sh ${HOME}/.local/bin/pycharm
@@ -391,10 +394,11 @@ install_pypy3()
     echo "Attempting to install pypy3"
     if [[ -z $(which pypy3) ]]; then
       # Avoid error due to possible previous aborted installations
-      rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.gz*
+      rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
       rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
+      rm -Rf ${USR_BIN_FOLDER}/pypy3
       # Download pypy
-      wget -P ${USR_BIN_FOLDER} https://bitbucket.org/pypy/pypy/downloads/${pypy3_version}.tar.bz2
+      wget -P ${USR_BIN_FOLDER} https://downloads.python.org/pypy/${pypy3_version}.tar.bz2
       # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
       (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
       # Clean
@@ -787,6 +791,8 @@ install_transmission()
     copy_launcher "transmission-gtk.desktop"
     rm /home/${SUDO_USER}/.local/bin/transmission
     ln -s $(which transmission-gtk) /home/${SUDO_USER}/.local/bin/transmission
+    chgrp ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
+    chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
     echo "Finished"
   else
     echo "WARNING: Could not install transmission. You should be root user. Skipping..."
@@ -806,8 +812,10 @@ install_vlc()
   fi
 }
 
-
+#############################
 ###### SYSTEM FEATURES ######
+#############################
+# Most (all) of them just use user permissions
 
 # Install templates (available files in the right click --> new --> ...)
 # Python3, bash shell scripts, latex documents
@@ -829,7 +837,7 @@ CFLAGS = -O3 -Wall
 all : Cscript
 
 Cscript : Cscript.c
-  $(CC) $(CFLAGS) Cscript.c -o Cscript.c -lm
+  \$(CC) \$(CFLAGS) Cscript.c -o Cscript.c -lm
 
 run : Cscript
   ./Cscript
@@ -856,7 +864,6 @@ clean :
   fi
 }
 
-###### SHELL FEATURES ######
 
 # Forces l as alias for ls -lAh
 install_ls_alias()
@@ -950,8 +957,6 @@ install_environment_aliases()
 
 root_install()
 {
-
-
   install_dropbox
   install_gcc
   install_git

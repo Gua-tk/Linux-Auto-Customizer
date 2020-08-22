@@ -141,7 +141,8 @@ Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
 
-pypy3_version=pypy3.6-v7.3.1-linux64
+pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
+pypy3_version=$(echo ${pypy3_downloader} | rev | cut -d '/' -f1 | cut -d '.' -f3- | rev)  # get last piece of the last string
 
 sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
 sublime_launcher="[Desktop Entry]
