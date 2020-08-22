@@ -547,35 +547,39 @@ install_megasync()
 # Mendeley Desktop
 install_mendeley()
 {
-  echo "Attempting to install Mendeley"
-  if [[ -z $(which mendeley) ]]; then
-    # Dependencies
-    apt-get -y install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-doc-htm qtbase5-examples qml-module-qtwebengine
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install Mendeley"
+    if [[ -z $(which mendeley) ]]; then
+      # Dependencies
+      apt-get -y -qq install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
 
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/stable-incoming*
-    rm -Rf ${USR_BIN_FOLDER}/mendeley*
-    # Download mendeley
-    wget -P ${USR_BIN_FOLDER} https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/stable-incoming
-    rm -f stable-incoming
-    # Rename folder for coherence
-    mv ${USR_BIN_FOLDER}/mendeley* ${USR_BIN_FOLDER}/mendeley
-    # Create link to the PATH
-    rm -f ${HOME}/.local/bin/mendeley
-    ln -s ${USR_BIN_FOLDER}/mendeley/bin/mendeleydesktop ${HOME}/.local/bin/mendeley
-    # Create Desktop launcher
-    cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
-    chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-    # Modify Icon line
-    sed -i 's-Icon=.*-Icon=/home/aleixmt/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-    # Modify exec line
-    sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-    # Copy to desktop  launchers of the current user
-    cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${HOME}/.local/share/applications
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/stable-incoming*
+      rm -Rf ${USR_BIN_FOLDER}/mendeley*
+      # Download mendeley
+      wget -P ${USR_BIN_FOLDER} https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/stable-incoming
+      rm -f stable-incoming
+      # Rename folder for coherence
+      mv ${USR_BIN_FOLDER}/mendeley* ${USR_BIN_FOLDER}/mendeley
+      # Create link to the PATH
+      rm -f ${HOME}/.local/bin/mendeley
+      ln -s ${USR_BIN_FOLDER}/mendeley/bin/mendeleydesktop ${HOME}/.local/bin/mendeley
+      # Create Desktop launcher
+      cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
+      chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+      # Modify Icon line
+      sed -i 's-Icon=.*-Icon=/home/aleixmt/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+      # Modify exec line
+      sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+      # Copy to desktop  launchers of the current user
+      cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${HOME}/.local/share/applications
+    else
+      err "WARNING: Mendeley is already installed. Skipping"
+    fi
   else
-    err "WARNING: Mendeley is already installed. Skipping"
+    echo "WARNING: Could not install Mendeley. You need root permissions. Skipping..."
   fi
   echo "Finished"
 }
