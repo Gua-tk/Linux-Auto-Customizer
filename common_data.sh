@@ -165,3 +165,5 @@ Icon=${USR_BIN_FOLDER}/Telegram/telegram.png
 Type=Application
 Categories=Network;
 MimeType=x-scheme-handler/tg;"
+
+mendeley_version=

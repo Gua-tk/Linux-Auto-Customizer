@@ -377,11 +377,36 @@ install_telegram()
   else
     err "WARNING: Telegram is already installed. Skipping"
   fi
-
   echo "Finished"
 }
 
+
 ###### ROOT FUNCTIONS ######
+
+# Mendeley Desktop
+install_mendeley()
+{
+  echo "Attempting to install Mendeley"
+  if [[ -z $(which mendeley) ]]; then
+    # Dependencies
+    apt-get -y install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-doc-htm qtbase5-examples qml-module-qtwebengine
+
+    # Avoid error due to possible previous aborted installations
+    rm -f ${USR_BIN_FOLDER}/stable-incoming*
+    rm -Rf ${USR_BIN_FOLDER}/mendeley*
+    # Download sublime_text
+    wget -P ${USR_BIN_FOLDER} https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
+    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+    (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/stable-incoming
+
+
+
+  else
+    err "WARNING: Mendeley is already installed. Skipping"
+  fi
+  echo "Finished"
+}
+
 
 # Checks if Google Chrome is already installed and installs it and its dependencies
 # Needs root permission
@@ -568,6 +593,7 @@ install_transmission()
   echo "Attemptying to install transmission"
   apt-get install -y transmission 
   copy_launcher "transmission-gtk.desktop"
+  ln -s $(which transmission-gtk) ${HOME}/.local/bin/transmission
   echo "Finished"
 }
 
@@ -738,6 +764,7 @@ root_install()
   install_transmission
   install_jdk11
   install_dropbox
+  install_mendeley
 }
 
 user_install()
@@ -1043,6 +1070,9 @@ main()
         ;;
         -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
             install_dropbox
+        ;;
+        --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
+            install_mendeley
         ;;
         --user|--regular|--normal)
           if [[ "$(whoami)" == "root" ]]; then
