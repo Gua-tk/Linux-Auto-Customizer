@@ -756,6 +756,7 @@ install_transmission()
     echo "Attemptying to install transmission"
     apt-get install -y transmission 
     copy_launcher "transmission-gtk.desktop"
+    rm /home/${SUDO_USER}/.local/bin/transmission
     ln -s $(which transmission-gtk) /home/${SUDO_USER}/.local/bin/transmission
     echo "Finished"
   else
