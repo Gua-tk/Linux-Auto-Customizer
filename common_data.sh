@@ -23,6 +23,43 @@ else
 fi
 
 
+##### COMMON VARIABLES #####
+
+android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of Android Studio
+android_studio_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Android Studio
+Exec=studio %F
+Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
+Categories=Development;IDE;
+Terminal=false
+StartupNotify=true
+StartupWMClass=jetbrains-android-studio
+Name[en_GB]=android-studio.desktop"
+
+clion_version=CLion-2020.1  # Targeted version of CLion
+clion_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CLion
+Icon=$HOME/.bin/${clion_version_caps_down}/bin/clion.png
+Exec=clion %F
+Comment=C and C++ IDE for Professional Developers
+Terminal=false
+StartupWMClass=jetbrains-clion"
+
+dropbox_version=2020.03.04
+
+discord_launcher="[Desktop Entry]
+Name=Discord
+StartupWMClass=discord
+Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
+GenericName=Internet Messenger
+Exec=discord
+Icon=${USR_BIN_FOLDER}/Discord/discord.png
+Type=Application
+Categories=Network;InstantMessaging;"
 
 extract_function="
 
@@ -48,46 +85,34 @@ extract_function="
     fi
   }"
   
+intellij_ultimate_version=ideaIU-2020.2
+intellij_ultimate_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=IntelliJ IDEA Ultimate Edition
+Icon=${HOME}/.bin/idea-IU/bin/idea.png
+Exec=ideau %f
+Comment=Capable and Ergonomic IDE for JVM
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=jetbrains-idea"
+
+
+intellij_community_version=ideaIC-2020.2
+intellij_community_launcher="[Desktop Entry]
+Version=13.0
+Type=Application
+Terminal=false
+Comment=Capable and Ergonomic IDE for JVM
+Categories=Development;IDE;
+Icon=${HOME}/.bin/idea-IC/bin/idea.png
+Exec=ideac %f
+Name=IntelliJ IDEA Community Edition
+StartupWMClass=jetbrains-idea"
+
 megasync_version=megasync_4.3.3-5.1_amd64.deb
 megasync_repository=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/
 megasync_integrator_version=nautilus-megasync_3.6.6_amd64.deb
-
-dropbox_version=2020.03.04
-
-discord_version=discord-0.0.10
-discord_launcher="[Desktop Entry]
-Name=Discord
-StartupWMClass=discord
-Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
-GenericName=Internet Messenger
-Exec=discord
-Icon=${USR_BIN_FOLDER}/Discord/discord.png
-Type=Application
-Categories=Network;InstantMessaging;"
-
-sublime_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Sublime Text
-GenericName=Text Editor
-Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
-Comment=General Purpose Programming Text Editor
-Terminal=false
-Exec=sublime %F"
-
-
-clion_version=CLion-2020.1  # Targeted version of CLion
-clion_version_caps_down=$(echo "${clion_version}" | tr '[:upper:]' '[:lower:]')  # Desirable filename in lowercase
-
-clion_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=CLion
-Icon=$HOME/.bin/${clion_version_caps_down}/bin/clion.png
-Exec=clion %F
-Comment=C and C++ IDE for Professional Developers
-Terminal=false
-StartupWMClass=jetbrains-clion"
 
 pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
 pycharm_launcher="[Desktop Entry]
@@ -114,48 +139,16 @@ StartupWMClass=jetbrains-pycharm"
 
 pypy3_version=pypy3.6-v7.3.1-linux64
 
-android_studio_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Android Studio
-Exec=studio %F
-Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
-Categories=Development;IDE;
-Terminal=false
-StartupNotify=true
-StartupWMClass=jetbrains-android-studio
-Name[en_GB]=android-studio.desktop"
-
-android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of Android Studio
-
 sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
-
-intellij_ultimate_version=ideaIU-2020.2
-intellij_ultimate_ver=idea-IU-202.6397.94
-intellij_ultimate_launcher="[Desktop Entry]
+sublime_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
-Name=IntelliJ IDEA Ultimate Edition
-Icon=${HOME}/.bin/${intellij_ultimate_ver}/bin/idea.png
-Exec=ideau %f
-Comment=Capable and Ergonomic IDE for JVM
-Categories=Development;IDE;
+Name=Sublime Text
+GenericName=Text Editor
+Icon=$HOME/.bin/sublime_text_3/Icon/256x256/sublime-text.png
+Comment=General Purpose Programming Text Editor
 Terminal=false
-StartupWMClass=jetbrains-idea"
-
-
-intellij_community_version=ideaIC-2020.2
-intellij_community_ver=idea-IC-202.6397.94
-intellij_community_launcher="[Desktop Entry]
-Version=13.0
-Type=Application
-Terminal=false
-Comment=Capable and Ergonomic IDE for JVM
-Categories=Development;IDE;
-Icon=${HOME}/.bin/${intellij_community_ver}/bin/idea.png
-Exec=ideac %f
-Name=IntelliJ IDEA Community Edition
-StartupWMClass=jetbrains-idea"
+Exec=sublime %F"
 
 telegram_launcher="[Desktop Entry]
 Encoding=UTF-8
@@ -166,4 +159,6 @@ Type=Application
 Categories=Network;
 MimeType=x-scheme-handler/tg;"
 
-mendeley_version=
+
+
+

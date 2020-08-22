@@ -82,35 +82,42 @@ install_android_studio()
 
 install_clion()
 {
-  echo "Attempting to install $clion_version"
-
-  if [[ -z $(which clion) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${clion_version}
-    # Download CLion
-    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/cpp/${clion_version}.tar.gz
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${clion_version}.tar.gz
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
-    # Create links to the PATH
-    rm -f ${HOME}/.local/bin/clion
-    ln -s ${USR_BIN_FOLDER}/${clion_version_caps_down}/bin/clion.sh ${HOME}/.local/bin/clion
-    # Create launcher for pycharm in the desktop and in the launcher menu
-    echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
-    chmod 775 ${HOME}/.local/share/applications/clion.desktop
-    cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
-
-    # register file associations
-    register_file_associations "text/x-c++hdr" "clion.desktop"
-    register_file_associations "text/x-c++src" "clion.desktop"
-    register_file_associations "text/x-chdr" "clion.desktop"
-    register_file_associations "text/x-csrc" "clion.desktop"
-    
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "WARNING: Could not install clion. You should be normal user. Skipping..."
   else
-    err "WARNING: CLion is already installed. Skipping"
+    echo "Attempting to install $clion_version"
+
+    if [[ -z $(which clion) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
+      rm -Rf ${USR_BIN_FOLDER}/${clion_version}
+      # Download CLion
+      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/cpp/${clion_version}.tar.gz
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${clion_version}.tar.gz
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
+      # Modify folder name for coherence
+      mv ${USR_BIN_FOLDER}/clion* ${USR_BIN_FOLDER}/clion
+      # Create links to the PATH
+      rm -f ${HOME}/.local/bin/clion
+      ln -s ${USR_BIN_FOLDER}/clion/bin/clion.sh ${HOME}/.local/bin/clion
+      # Create launcher for pycharm in the desktop and in the launcher menu
+      echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
+      chmod 775 ${HOME}/.local/share/applications/clion.desktop
+      cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
+
+      # register file associations
+      register_file_associations "text/x-c++hdr" "clion.desktop"
+      register_file_associations "text/x-c++src" "clion.desktop"
+      register_file_associations "text/x-chdr" "clion.desktop"
+      register_file_associations "text/x-csrc" "clion.desktop"
+    
+    else
+      err "WARNING: CLion is already installed. Skipping"
+    fi
   fi
+  
 }
 
 
@@ -119,13 +126,13 @@ install_discord()
 {
   echo "Attempting to install discord"
   if [[ -z $(which discord) ]]; then
-    rm -f ${USR_BIN_FOLDER}/${discord_version}.tar.gz*
-    (cd "${USR_BIN_FOLDER}"; wget -O ${discord_version}.tar.gz "https://discord.com/api/download?platform=linux&format=tar.gz")
-    rm -Rf "${USR_BIN_FOLDER}/Discord"
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${discord_version}.tar.gz
+    rm -f ${USR_BIN_FOLDER}/discord.tar.gz*
+    (cd "${USR_BIN_FOLDER}"; wget -O discord.tar.gz "https://discord.com/api/download?platform=linux&format=tar.gz")
+    rm -Rf "${USR_BIN_FOLDER}/discord"
+    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/discord.tar.gz
     rm -f ${USR_BIN_FOLDER}/discord*.tar.gz*
     rm -f ${HOME}/.local/bin/discord
-    ln -s ${USR_BIN_FOLDER}/Discord/Discord ${HOME}/.local/bin/discord
+    ln -s ${USR_BIN_FOLDER}/discord/Discord ${HOME}/.local/bin/discord
     echo -e "${discord_launcher}" > ${XDG_DESKTOP_DIR}/discord.desktop
     chmod 755 ${XDG_DESKTOP_DIR}/discord.desktop
     cp -p ${XDG_DESKTOP_DIR}/discord.desktop ${HOME}/.local/share/applications
@@ -286,66 +293,77 @@ install_sublime_text()
 # Install IntelliJ Community
 install_intellij_community()
 {
-  echo "Attempting to install ${intellij_community_version}"
-  if [[ -z $(which ideac) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${intellij_community_ver}
-    # Download sublime_text
-    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/ideaIC-2020.2.tar.gz
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
-    # Create link to the PATH
-    rm -f ${HOME}/.local/bin/ideau
-    ln -s ${USR_BIN_FOLDER}/${intellij_community_ver}/bin/idea.sh ${HOME}/.local/bin/ideac
-    # Create desktop launcher entry for sublime text
-    echo -e "${intellij_community_launcher}" > ${HOME}/.local/share/applications/ideac.desktop
-    chmod 775 ${HOME}/.local/share/applications/ideac.desktop
-    # Copy launcher to the desktop
-    cp -p ${HOME}/.local/share/applications/ideac.desktop ${XDG_DESKTOP_DIR}
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "Attempting to install ${intellij_community_version}"
+    if [[ -z $(which ideac) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
+      rm -Rf ${USR_BIN_FOLDER}/idea-IC
+      # Download sublime_text
+      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_community_version}.tar.gz
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
+      # Modify name for coherence
+      mv ${USR_BIN_FOLDER}/idea-IC* ${USR_BIN_FOLDER}/idea-IC
+      # Create link to the PATH
+      rm -f ${HOME}/.local/bin/ideac
+      ln -s ${USR_BIN_FOLDER}/idea-IC/bin/idea.sh ${HOME}/.local/bin/ideac
+      # Create desktop launcher entry for intelliJ community
+      echo -e "${intellij_community_launcher}" > ${HOME}/.local/share/applications/ideac.desktop
+      chmod 775 ${HOME}/.local/share/applications/ideac.desktop
+      # Copy launcher to the desktop
+      cp -p ${HOME}/.local/share/applications/ideac.desktop ${XDG_DESKTOP_DIR}
 
-    # register file associations
-    register_file_associations "text/x-java" "ideac.desktop"
+      # register file associations
+      register_file_associations "text/x-java" "ideac.desktop"
+    else
+      err "WARNING: intelliJ is already installed. Skipping"
+    fi
+
+    echo "Finished" 
   else
-    err "WARNING: intelliJ is already installed. Skipping"
+    echo "WARNING: Could not install intelliJ Community. You should be normal user. Skipping..."
   fi
-
-  echo "Finished"
 }
 
 
 # Install IntelliJ Ultimate
 install_intellij_ultimate()
 {
-  echo "Attempting to install ${intellij_ultimate_version}"
-  if [[ -z $(which ideau) ]]; then
-    # Avoid error due to possible previous aborted installations
-    rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
-    rm -Rf ${USR_BIN_FOLDER}/${intellij_ultimate_ver}
-    # Download sublime_text
-    wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_ultimate_version}.tar.gz
-    # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-    (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz
-    # Clean
-    rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
-    # Create link to the PATH
-    rm -f ${HOME}/.local/bin/ideau
-    ln -s ${USR_BIN_FOLDER}/${intellij_ultimate_ver}/bin/idea.sh ${HOME}/.local/bin/ideau
-    # Create desktop launcher entry for sublime text
-    echo -e "${intellij_ultimate_launcher}" > ${HOME}/.local/share/applications/ideau.desktop
-    chmod 775 ${HOME}/.local/share/applications/ideau.desktop
-    # Copy launcher to the desktop
-    cp -p ${HOME}/.local/share/applications/ideau.desktop ${XDG_DESKTOP_DIR}
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "Attempting to install ${intellij_ultimate_version}"
+    if [[ -z $(which ideau) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
+      rm -Rf ${USR_BIN_FOLDER}/idea-IU
+      # Download intellij ultimate
+      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_ultimate_version}.tar.gz
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
+      # Modify name for coherence
+      mv ${USR_BIN_FOLDER}/idea-IU* ${USR_BIN_FOLDER}/idea-IU
+      # Create link to the PATH
+      rm -f ${HOME}/.local/bin/ideau
+      ln -s ${USR_BIN_FOLDER}/idea-IU/bin/idea.sh ${HOME}/.local/bin/ideau
+      # Create desktop launcher entry for sublime text
+      echo -e "${intellij_ultimate_launcher}" > ${HOME}/.local/share/applications/ideau.desktop
+      chmod 775 ${HOME}/.local/share/applications/ideau.desktop
+      # Copy launcher to the desktop
+      cp -p ${HOME}/.local/share/applications/ideau.desktop ${XDG_DESKTOP_DIR}
+      # register file associations
+      register_file_associations "text/x-java" "ideau.desktop"
+    else
+      err "WARNING: intelliJ is already installed. Skipping"
+    fi
 
-    # register file associations
-    register_file_associations "text/x-java" "ideau.desktop"
+    echo "Finished"
   else
-    err "WARNING: intelliJ is already installed. Skipping"
+    echo "WARNING: Could not install intelliJ Ultimate. You should be normal user. Skipping..."
   fi
-
-  echo "Finished"
 }
 
 
@@ -357,7 +375,7 @@ install_telegram()
     # Avoid error due to possible previous aborted installations
     rm -f ${USR_BIN_FOLDER}/linux*
     rm -Rf ${USR_BIN_FOLDER}/Telegram
-    # Download sublime_text
+    # Download telegram
     wget -P ${USR_BIN_FOLDER} https://telegram.org/dl/desktop/linux
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar xJf -) < ${USR_BIN_FOLDER}/linux
@@ -398,9 +416,19 @@ install_mendeley()
     wget -P ${USR_BIN_FOLDER} https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
     # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
     (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/stable-incoming
-
-
-
+    rm -f stable-incoming
+    # Rename folder for coherence
+    mv ${USR_BIN_FOLDER}/mendeley* ${USR_BIN_FOLDER}/mendeley
+    # Create link to the PATH
+    rm -f ${HOME}/.local/bin/mendeley
+    ln -s ${USR_BIN_FOLDER}/mendeley/bin/mendeleydesktop ${HOME}/.local/bin/mendeley
+    # Create Desktop launcher
+    cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
+    chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+    # Modify Icon line
+    sed -i 's-Icon=.*-Icon=/home/aleixmt/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+    # Modify exec line
+    sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
   else
     err "WARNING: Mendeley is already installed. Skipping"
   fi
@@ -784,6 +812,7 @@ user_install()
   install_intellij_community
   install_telegram
   install_discord
+  install_mendeley
   install_pypy3
 }
 
@@ -946,13 +975,7 @@ main()
           fi
         ;;
         -n|--clion|--Clion|--CLion)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "WARNING: Could not install clion. You should be normal user. Skipping..."
-          else
-            echo "Attempting to install clion"
-            install_clion
-            echo "Finished"
-          fi
+          install_clion
         ;;
         -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
           if [[ "$(whoami)" == "root" ]]; then
@@ -1048,18 +1071,10 @@ main()
           fi
         ;;
         -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
-          if [[ "$(whoami)" != "root" ]]; then
-            install_intellij_ultimate
-          else
-            echo "WARNING: Could not install intelliJ Ultimate. You should be normal user. Skipping..."
-          fi
+          install_intellij_ultimate
         ;;
         -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community)
-          if [[ "$(whoami)" != "root" ]]; then
-            install_intellij_community
-          else
-            echo "WARNING: Could not install intelliJ Community. You should be normal user. Skipping..."
-          fi
+          install_intellij_community
         ;;
         -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
           if [[ "$(whoami)" == "root" ]]; then
@@ -1092,7 +1107,7 @@ main()
           if [[ "$(whoami)" == "root" ]]; then
             root_install
           else
-           user_install
+            user_install
           fi
         ;;
         *)    # unknown option

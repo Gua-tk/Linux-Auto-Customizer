@@ -188,6 +188,11 @@ uninstall_dropbox()
   rm -f ${XDG_DESKTOP_DIR}/dropbox.desktop
 }
 
+uninstall_mendeley()
+{
+
+}
+
 # Uninstall all functions
 uninstall_all()
 {
@@ -218,6 +223,7 @@ uninstall_all()
   uninstall_telegram
   uninstall_jdk11
   uninstall_dropbox
+  uninstall_mendeley
 }
 
 ##################
