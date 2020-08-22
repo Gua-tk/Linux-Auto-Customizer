@@ -24,7 +24,7 @@ fi
 
 # If there is no backup of bashrc do it conserving permissions
 if  [[ ! -f ${BASHRC_PATH}.bak ]]; then
-  cp -p ${BASHRC_PATH} BASHRC_PATH.bak
+  cp -p ${BASHRC_PATH} ${BASHRC_PATH}.bak
 fi
 
 

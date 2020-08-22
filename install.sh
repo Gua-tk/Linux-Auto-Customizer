@@ -4,7 +4,9 @@
 # Created on 28/5/19
 # Last Update 19/4/2020register_file_associations
 
+################################
 ###### AUXILIAR FUNCTIONS ######
+################################
 
 # Associate a file type (mime type) to a certaina application.
 # Argument 1: File types. Example: application/x-shellscript
@@ -48,9 +50,11 @@ copy_launcher()
   chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
 }
 
+#############################################
 ###### SOFTWARE INSTALLATION FUNCTIONS ######
+#############################################
 
-# Checks if Android studio is already installed and installs it if not
+
 install_android_studio()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -150,7 +154,111 @@ install_discord()
   else
     echo "WARNING: Could not install discord. You should be normal user. Skipping..."
   fi
-  
+}
+
+
+# Dropbox desktop client and integration
+install_dropbox()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attemptying to install dropbox"
+    if [[ -z $(which dropbox) ]]; then
+      # Dependency
+      apt-get -y install python3-gpg
+      
+      rm -f dropbox_${dropbox_version}_amd64.deb*
+
+      wget -O ${dropbox_version}.deb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
+
+      dpkg -i ${dropbox_version}.deb
+
+      rm -f ${dropbox_version}.deb*
+
+      copy_launcher dropbox.desktop
+    else
+      err "WARNING: dropbox is already installed. Skipping"
+    fi
+    echo "Finished"
+  else
+    echo "WARNING: Could not install dropbox. You should be root."
+  fi
+}
+
+
+# Install IntelliJ Community
+install_intellij_community()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "Attempting to install ${intellij_community_version}"
+    if [[ -z $(which ideac) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
+      rm -Rf ${USR_BIN_FOLDER}/idea-IC
+      # Download intellij community
+      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_community_version}.tar.gz
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
+      # Modify name for coherence
+      mv ${USR_BIN_FOLDER}/idea-IC* ${USR_BIN_FOLDER}/idea-IC
+      # Create link to the PATH
+      rm -f ${HOME}/.local/bin/ideac
+      ln -s ${USR_BIN_FOLDER}/idea-IC/bin/idea.sh ${HOME}/.local/bin/ideac
+      # Create desktop launcher entry for intelliJ community
+      echo -e "${intellij_community_launcher}" > ${HOME}/.local/share/applications/ideac.desktop
+      chmod 775 ${HOME}/.local/share/applications/ideac.desktop
+      # Copy launcher to the desktop
+      cp -p ${HOME}/.local/share/applications/ideac.desktop ${XDG_DESKTOP_DIR}
+
+      # register file associations
+      register_file_associations "text/x-java" "ideac.desktop"
+    else
+      err "WARNING: intelliJ is already installed. Skipping"
+    fi
+
+    echo "Finished" 
+  else
+    echo "WARNING: Could not install intelliJ Community. You should be normal user. Skipping..."
+  fi
+}
+
+
+# Install IntelliJ Ultimate
+install_intellij_ultimate()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "Attempting to install ${intellij_ultimate_version}"
+    if [[ -z $(which ideau) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
+      rm -Rf ${USR_BIN_FOLDER}/idea-IU
+      # Download intellij ultimate
+      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_ultimate_version}.tar.gz
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
+      # Modify name for coherence
+      mv ${USR_BIN_FOLDER}/idea-IU* ${USR_BIN_FOLDER}/idea-IU
+      # Create link to the PATH
+      rm -f ${HOME}/.local/bin/ideau
+      ln -s ${USR_BIN_FOLDER}/idea-IU/bin/idea.sh ${HOME}/.local/bin/ideau
+      # Create desktop launcher entry for intellij ultimate
+      echo -e "${intellij_ultimate_launcher}" > ${HOME}/.local/share/applications/ideau.desktop
+      chmod 775 ${HOME}/.local/share/applications/ideau.desktop
+      # Copy launcher to the desktop
+      cp -p ${HOME}/.local/share/applications/ideau.desktop ${XDG_DESKTOP_DIR}
+      # register file associations
+      register_file_associations "text/x-java" "ideau.desktop"
+    else
+      err "WARNING: intelliJ is already installed. Skipping"
+    fi
+
+    echo "Finished"
+  else
+    echo "WARNING: Could not install intelliJ Ultimate. You should be normal user. Skipping..."
+  fi
 }
 
 
@@ -323,82 +431,6 @@ install_sublime_text()
 }
 
 
-# Install IntelliJ Community
-install_intellij_community()
-{
-  if [[ "$(whoami)" != "root" ]]; then
-    echo "Attempting to install ${intellij_community_version}"
-    if [[ -z $(which ideac) ]]; then
-      # Avoid error due to possible previous aborted installations
-      rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
-      rm -Rf ${USR_BIN_FOLDER}/idea-IC
-      # Download intellij community
-      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_community_version}.tar.gz
-      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz
-      # Clean
-      rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
-      # Modify name for coherence
-      mv ${USR_BIN_FOLDER}/idea-IC* ${USR_BIN_FOLDER}/idea-IC
-      # Create link to the PATH
-      rm -f ${HOME}/.local/bin/ideac
-      ln -s ${USR_BIN_FOLDER}/idea-IC/bin/idea.sh ${HOME}/.local/bin/ideac
-      # Create desktop launcher entry for intelliJ community
-      echo -e "${intellij_community_launcher}" > ${HOME}/.local/share/applications/ideac.desktop
-      chmod 775 ${HOME}/.local/share/applications/ideac.desktop
-      # Copy launcher to the desktop
-      cp -p ${HOME}/.local/share/applications/ideac.desktop ${XDG_DESKTOP_DIR}
-
-      # register file associations
-      register_file_associations "text/x-java" "ideac.desktop"
-    else
-      err "WARNING: intelliJ is already installed. Skipping"
-    fi
-
-    echo "Finished" 
-  else
-    echo "WARNING: Could not install intelliJ Community. You should be normal user. Skipping..."
-  fi
-}
-
-
-# Install IntelliJ Ultimate
-install_intellij_ultimate()
-{
-  if [[ "$(whoami)" != "root" ]]; then
-    echo "Attempting to install ${intellij_ultimate_version}"
-    if [[ -z $(which ideau) ]]; then
-      # Avoid error due to possible previous aborted installations
-      rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
-      rm -Rf ${USR_BIN_FOLDER}/idea-IU
-      # Download intellij ultimate
-      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_ultimate_version}.tar.gz
-      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz
-      # Clean
-      rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
-      # Modify name for coherence
-      mv ${USR_BIN_FOLDER}/idea-IU* ${USR_BIN_FOLDER}/idea-IU
-      # Create link to the PATH
-      rm -f ${HOME}/.local/bin/ideau
-      ln -s ${USR_BIN_FOLDER}/idea-IU/bin/idea.sh ${HOME}/.local/bin/ideau
-      # Create desktop launcher entry for intellij ultimate
-      echo -e "${intellij_ultimate_launcher}" > ${HOME}/.local/share/applications/ideau.desktop
-      chmod 775 ${HOME}/.local/share/applications/ideau.desktop
-      # Copy launcher to the desktop
-      cp -p ${HOME}/.local/share/applications/ideau.desktop ${XDG_DESKTOP_DIR}
-      # register file associations
-      register_file_associations "text/x-java" "ideau.desktop"
-    else
-      err "WARNING: intelliJ is already installed. Skipping"
-    fi
-
-    echo "Finished"
-  else
-    echo "WARNING: Could not install intelliJ Ultimate. You should be normal user. Skipping..."
-  fi
-}
-
 
 # Telegram installation
 install_telegram()
@@ -439,8 +471,78 @@ install_telegram()
   
 }
 
-
+############################
 ###### ROOT FUNCTIONS ######
+############################
+
+
+# Checks if Google Chrome is already installed and installs it and its dependencies
+# Needs root permission
+install_google_chrome()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install Google Chrome"
+    # Chrome dependencies
+    apt-get install -y -qq libxss1 libappindicator1 libindicator7
+
+    if [[ -z "$(which google-chrome)" ]]; then
+      ##### CHROME #####
+      # Delete possible collisions with previous installation
+      rm -f google-chrome*.deb*  
+      # Download
+      wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      
+      # Install downloaded version
+      apt install -y -qq ./google-chrome-stable_current_amd64.deb
+      # Clean
+      rm -f google-chrome*.deb*
+      
+      # Create launcher and change its permissions (we are root)
+      copy_launcher "google-chrome.desktop"
+      #cp /home/${SUDO_USER}/.local/share/applications/chrome* ${XDG_DESKTOP_DIR}
+      #chmod 775 ${XDG_DESKTOP_DIR}/chrome*
+
+    else
+      err "WARNING: Google Chrome is already installed. Skipping"
+    fi
+    echo "Finished"
+  else
+    echo "WARNING: Could not install google chrome. You need root permissions. Skipping..."
+  fi
+}
+
+
+# MEGA desktop client
+install_megasync()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attemptying to install megasync"
+    if [[ -z $(which megasync) ]]; then
+      # Dependencies
+      apt-get install -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
+
+      rm -f ${megasync_version}.deb*
+      wget -O ${megasync_version}.deb "${megasync_repository}${megasync_version}"
+
+      rm -f ${megasync_integrator_version}.deb*
+      wget -O ${megasync_integrator_version}.deb "${megasync_repository}${megasync_integrator_version}"
+
+      dpkg -i ${megasync_version}.deb
+      dpkg -i ${megasync_integrator_version}.deb
+
+      rm -f ${megasync_integrator_version}.deb*
+      rm -f ${megasync_version}.deb*
+
+      copy_launcher megasync.desktop
+    else
+      err "WARNING: megasync is already installed. Skipping"
+    fi
+    echo "Finished"
+  else
+    echo "WARNING: Could not install megasync. You should be root user. Skipping..."
+  fi
+}
+
 
 # Mendeley Desktop
 install_mendeley()
@@ -479,36 +581,30 @@ install_mendeley()
 }
 
 
-# Checks if Google Chrome is already installed and installs it and its dependencies
-# Needs root permission
-install_google_chrome()
+install_musicmanager()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install Google Chrome"
-    # Chrome dependencies
-    apt-get install -y -qq libxss1 libappindicator1 libindicator7
-
-    if [[ -z "$(which google-chrome)" ]]; then
-
+if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install Google music manager"
+    if [[ -z "$(which google-musicmanager)" ]]; then
       # Delete possible collisions with previous installation
-      rm -f google-chrome*.deb*  
+      rm -f google-musicmanager*.deb*  
       # Download
-      wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      wget https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
+      
       # Install downloaded version
-      apt install -y -qq ./google-chrome-stable_current_amd64.deb
+      apt install -y -qq ./google-musicmanager-beta_current_amd64.deb
       # Clean
-      rm -f google-chrome*.deb*
+      rm -f google-musicmanager*.deb*  
       
       # Create launcher and change its permissions (we are root)
-      copy_launcher "google-chrome.desktop"
-      cp /home/${SUDO_USER}/.local/share/applications/chrome* ${XDG_DESKTOP_DIR}
-      chmod 775 ${XDG_DESKTOP_DIR}/chrome*
+      copy_launcher "google-musicmanager.desktop"
+
     else
-      err "WARNING: Google Chrome is already installed. Skipping"
+      err "WARNING: Google Music Manager is already installed. Skipping"
     fi
     echo "Finished"
   else
-    echo "WARNING: Could not install google chrome. You need root permissions. Skipping..."
+    echo "WARNING: Could not install Google Music Manager. You need root permissions. Skipping..."
   fi
 }
 
@@ -538,65 +634,6 @@ install_steam()
   fi
 }
 
-# MEGA desktop client
-install_megasync()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attemptying to install megasync"
-    if [[ -z $(which megasync) ]]; then
-      # Dependencies
-      apt-get install -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
-
-      rm -f ${megasync_version}.deb*
-      wget -O ${megasync_version}.deb "${megasync_repository}${megasync_version}"
-
-      rm -f ${megasync_integrator_version}.deb*
-      wget -O ${megasync_integrator_version}.deb "${megasync_repository}${megasync_integrator_version}"
-
-      dpkg -i ${megasync_version}.deb
-      dpkg -i ${megasync_integrator_version}.deb
-
-      rm -f ${megasync_integrator_version}.deb*
-      rm -f ${megasync_version}.deb*
-
-      copy_launcher megasync.desktop
-    else
-      err "WARNING: megasync is already installed. Skipping"
-    fi
-    echo "Finished"
-  else
-    echo "WARNING: Could not install megasync. You should be root user. Skipping..."
-  fi
-
-  
-}
-
-# Dropbox desktop client and integration
-install_dropbox()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attemptying to install dropbox"
-    if [[ -z $(which dropbox) ]]; then
-      # Dependency
-      apt-get -y install python3-gpg
-      
-      rm -f dropbox_${dropbox_version}_amd64.deb*
-
-      wget -O ${dropbox_version}.deb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-
-      dpkg -i ${dropbox_version}.deb
-
-      rm -f ${dropbox_version}.deb*
-
-      copy_launcher dropbox.desktop
-    else
-      err "WARNING: dropbox is already installed. Skipping"
-    fi
-    echo "Finished"
-  else
-    echo "WARNING: Could not install dropbox. You should be root."
-  fi
-}
 
 # Needs roots permission
 install_pypy3_dependencies()
@@ -715,7 +752,7 @@ install_transmission()
     echo "Attemptying to install transmission"
     apt-get install -y transmission 
     copy_launcher "transmission-gtk.desktop"
-    ln -s $(which transmission-gtk) ${HOME}/.local/bin/transmission
+    ln -s $(which transmission-gtk) /home/${SUDO_USER}/.local/bin/transmission
     echo "Finished"
   else
     echo "WARNING: Could not install transmission. You should be root user. Skipping..."
@@ -888,6 +925,7 @@ install_environment_aliases()
 root_install()
 {
   install_google_chrome
+  install_musicmanager
   install_gcc
   install_git
   install_latex
@@ -1064,6 +1102,9 @@ main()
         ;;
         --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
             install_mendeley
+        ;;
+        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
+            install_musicmanager
         ;;
         --user|--regular|--normal)
           if [[ "$(whoami)" == "root" ]]; then

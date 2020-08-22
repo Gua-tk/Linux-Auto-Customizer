@@ -18,6 +18,14 @@ uninstall_google_chrome()
   apt-get purge -y google-chrome-stable
   rm -f ${XDG_DESKTOP_DIR}/google-chrome.desktop
   rm -f ${XDG_DESKTOP_DIR}/chrome*.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/chrome*.desktop
+}
+
+uninstall_musicmanager()
+{
+  apt-get purge -y google-musicmanager google-musicmanager-beta
+  rm -f ${XDG_DESKTOP_DIR}/google-musicmanager.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/google-musicmanager.desktop
 }
 
 uninstall_git()
@@ -91,7 +99,7 @@ uninstall_sublime_text()
   rm -Rf ${USR_BIN_FOLDER}/sublime_text
   rm -f ${XDG_DESKTOP_DIR}/sublime-text.desktop
   rm -f /home/${SUDO_USER}/.local/bin/sublime
-  rm -f /home/${SUDO_USER}/.local/share/applications/sublime.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/sublime-text.desktop
 }
 
 uninstall_pypy3()
@@ -130,13 +138,14 @@ uninstall_discord()
 {
   rm -f /home/${SUDO_USER}/.local/bin/discord
   rm -f ${XDG_DESKTOP_DIR}/discord.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/discord.desktop
   rm -Rf ${USR_BIN_FOLDER}/discord
 }
 
 uninstall_megasync()
 {
-  dpkg -P megasync
   dpkg -P nautilus-megasync
+  dpkg -P megasync
   rm -f ${XDG_DESKTOP_DIR}/megasync.desktop
   apt-get purge -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 }
@@ -192,8 +201,8 @@ uninstall_mendeley()
 {
   rm -Rf ${USR_BIN_FOLDER}/mendeley
   rm -f /home/${SUDO_USER}/.local/bin/mendeley
-  rm -f /home/${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
+  rm -f ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/mendeleydesktop.desktop
 }
 
 # Uninstall all functions
@@ -227,6 +236,7 @@ uninstall_all()
   uninstall_jdk11
   uninstall_dropbox
   uninstall_mendeley
+  uninstall_musicmanager
 }
 
 ##################
@@ -320,6 +330,9 @@ main()
         -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community)
           uninstall_intellij_community
         ;;
+        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
+          uninstall_musicmanager
+        ;;
         -|--all)
           uninstall_all
         ;;
@@ -337,11 +350,6 @@ main()
 
   return 0
 }
-
-
-
-
-
 
 
 # Import file of common variables
