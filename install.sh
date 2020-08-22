@@ -262,6 +262,45 @@ install_intellij_ultimate()
 }
 
 
+# Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
+install_mendeley()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "Attempting to install Mendeley"
+    if [[ -z $(which mendeley) ]]; then
+
+      # Avoid error due to possible previous aborted installations
+      rm -f ${USR_BIN_FOLDER}/stable-incoming*
+      rm -Rf ${USR_BIN_FOLDER}/mendeley*
+      # Download mendeley
+      wget -P ${USR_BIN_FOLDER} https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/stable-incoming
+      rm -f stable-incoming
+      # Rename folder for coherence
+      mv ${USR_BIN_FOLDER}/mendeley* ${USR_BIN_FOLDER}/mendeley
+      # Create link to the PATH
+      rm -f ${HOME}/.local/bin/mendeley
+      ln -s ${USR_BIN_FOLDER}/mendeley/bin/mendeleydesktop ${HOME}/${SUDO_USER}/.local/bin/mendeley
+      # Create Desktop launcher
+      cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
+      chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+      # Modify Icon line
+      sed -i 's-Icon=.*-Icon=/home/aleixmt/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+      # Modify exec line
+      sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+      # Copy to desktop  launchers of the current user
+      cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${HOME}/.local/share/applications
+    else
+      err "WARNING: Mendeley is already installed. Skipping"
+    fi
+  else
+    echo "WARNING: Could not install Mendeley. You should be normal user. Skipping..."
+  fi
+  echo "Finished"
+}
+
+
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_community()
 {
@@ -476,6 +515,48 @@ install_telegram()
 ############################
 
 
+# Install gcc (C compiler)
+# Needs root permission
+install_gcc()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install gcc"
+    apt install -y gcc
+    echo "Finished"
+  else
+    echo "WARNING: Could not install gcc. You need root permissions. Skipping..."
+  fi
+}
+
+
+# Install GIT and all its related utilities (gitk e.g.)
+# Needs root permission
+install_git()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install GIT"
+    apt install -y git-all
+    apt-get install -y git-lfs
+    echo "Finished"
+  else
+    echo "WARNING: Could not install git. You need root permissions. Skipping..."
+  fi
+}
+
+
+# Install GNU parallel
+install_GNU_parallel()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install GNU-parallel"
+    apt-get -y install parallel
+    echo "Finished"
+  else
+    echo "WARNING: Could not install GNU parallel. You need root permissions. Skipping..."
+  fi
+}
+
+
 # Checks if Google Chrome is already installed and installs it and its dependencies
 # Needs root permission
 install_google_chrome()
@@ -512,6 +593,33 @@ install_google_chrome()
 }
 
 
+install_jdk11()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    apt -y install default-jdk
+  else
+    echo "WARNING: Could not install java development kit 11. You should be root."
+  fi
+}
+
+# Install latex
+# Needs root permission
+install_latex()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install latex"
+    apt-get install -y perl-tk
+    apt -y install texlive-latex-extra
+    copy_launcher "texmaker.desktop"
+    copy_launcher "texdoctk.desktop"
+    echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
+    echo "Finished"
+  else
+    echo "WARNING: Could not install latex. You need root permissions. Skipping..."
+  fi
+}
+
+
 # Automatic install of megasync + megasync nautilus. Creates launcher in the desktop 
 install_megasync()
 {
@@ -544,50 +652,24 @@ install_megasync()
 }
 
 
-# Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
-install_mendeley()
+# Mendeley Dependencies
+install_mendeley_dependencies()
 {
   if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install Mendeley"
-    if [[ -z $(which mendeley) ]]; then
-      # Dependencies
-      apt-get -y -qq install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
-
-      # Avoid error due to possible previous aborted installations
-      rm -f ${USR_BIN_FOLDER}/stable-incoming*
-      rm -Rf ${USR_BIN_FOLDER}/mendeley*
-      # Download mendeley
-      wget -P ${USR_BIN_FOLDER} https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
-      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-      (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/stable-incoming
-      rm -f stable-incoming
-      # Rename folder for coherence
-      mv ${USR_BIN_FOLDER}/mendeley* ${USR_BIN_FOLDER}/mendeley
-      # Create link to the PATH
-      rm -f ${HOME}/.local/bin/mendeley
-      ln -s ${USR_BIN_FOLDER}/mendeley/bin/mendeleydesktop ${HOME}/.local/bin/mendeley
-      # Create Desktop launcher
-      cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
-      chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-      # Modify Icon line
-      sed -i 's-Icon=.*-Icon=/home/aleixmt/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-      # Modify exec line
-      sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-      # Copy to desktop  launchers of the current user
-      cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${HOME}/.local/share/applications
-    else
-      err "WARNING: Mendeley is already installed. Skipping"
-    fi
+    echo "Attempting to install mendeley dependencies"
+    # Mendeley dependencies
+    apt-get -y -qq install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
+    echo "Finished"
   else
-    echo "WARNING: Could not install Mendeley. You need root permissions. Skipping..."
+    echo "WARNING: Could not install dependencies. You need root permissions. Skipping..."
   fi
-  echo "Finished"
 }
+
 
 # Automatic install + Creates desktop launcher in launcher and in desktop. 
 install_musicmanager()
 {
-if [[ "$(whoami)" == "root" ]]; then
+  if [[ "$(whoami)" == "root" ]]; then
     echo "Attempting to install Google music manager"
     if [[ -z "$(which google-musicmanager)" ]]; then
       # Delete possible collisions with previous installation
@@ -611,6 +693,51 @@ if [[ "$(whoami)" == "root" ]]; then
     echo "WARNING: Could not install Google Music Manager. You need root permissions. Skipping..."
   fi
 }
+
+
+# Install pdf grep
+install_pdfgrep()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install pdfgrep"
+    apt-get -y install pdfgrep
+    echo "Finished"
+  else
+    echo "WARNING: Could not install pdfgrep. You should be root. Skipping..."
+  fi
+}
+
+
+# Needs roots permission
+install_pypy3_dependencies()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install pypy3 dependencies"
+    # pypy3 module dependencies
+    apt-get install -y -qq pkg-config
+    apt-get install -y -qq libfreetype6-dev
+    apt-get install -y -qq libpng-dev
+    apt-get install -y -qq libffi-dev
+    echo "Finished"
+  else
+    echo "WARNING: Could not install dependencies. You need root permissions. Skipping..."
+  fi
+}
+
+
+# Install Python3
+# Needs root permission
+install_python3()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install python3"
+    apt install -y python3-dev python-dev
+    echo "Finished"
+  else
+    echo "WARNING: Could not install python. You need root permissions. Skipping..."
+  fi
+}
+
 
 # steam ubuntu client
 install_steam()
@@ -639,116 +766,18 @@ install_steam()
 }
 
 
-# Needs roots permission
-install_pypy3_dependencies()
+install_thunderbird()
 {
   if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install pypy3 dependencies"
-    # pypy3 module dependencies
-    apt-get install -y -qq pkg-config
-    apt-get install -y -qq libfreetype6-dev
-    apt-get install -y -qq libpng-dev
-    apt-get install -y -qq libffi-dev
+    echo "Attemptying to install thunderbird"
+    apt-get install -y thunderbird 
+    copy_launcher "thunderbird.desktop"
     echo "Finished"
   else
-    echo "WARNING: Could not install dependencies. You need root permissions. Skipping..."
-  fi
-  
-}
-
-# Install GIT and all its related utilities (gitk e.g.)
-# Needs root permission
-install_git()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install GIT"
-    apt install -y git-all
-    apt-get install -y git-lfs
-    echo "Finished"
-  else
-    echo "WARNING: Could not install git. You need root permissions. Skipping..."
-  fi
-  
-}
-
-# Install gcc (C compiler)
-# Needs root permission
-install_gcc()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install gcc"
-    apt install -y gcc
-    echo "Finished"
-  else
-    echo "WARNING: Could not install gcc. You need root permissions. Skipping..."
+    echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
   fi
 }
 
-# Install Python3
-# Needs root permission
-install_python3()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install python3"
-    apt install -y python3-dev python-dev
-    echo "Finished"
-  else
-    echo "WARNING: Could not install python. You need root permissions. Skipping..."
-  fi
-}
-
-# Install GNU parallel
-install_GNU_parallel()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install GNU-parallel"
-    apt-get -y install parallel
-    echo "Finished"
-  else
-    echo "WARNING: Could not install GNU parallel. You need root permissions. Skipping..."
-  fi
-}
-
-# Install pdf grep
-install_pdfgrep()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install pdfgrep"
-    apt-get -y install pdfgrep
-    echo "Finished"
-  else
-    echo "WARNING: Could not install pdfgrep. You should be root. Skipping..."
-  fi
-}
-
-# install VLC
-install_vlc()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install vlc"
-    apt-get -y install vlc
-    echo "Finished"
-  else
-    echo "WARNING: Could not install vlc. You should be root. Skipping..."
-  fi
-}
-
-# Install latex
-# Needs root permission
-install_latex()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install latex"
-    apt-get install -y perl-tk
-    apt -y install texlive-latex-extra
-    copy_launcher "texmaker.desktop"
-    copy_launcher "texdoctk.desktop"
-    echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
-    echo "Finished"
-  else
-    echo "WARNING: Could not install latex. You need root permissions. Skipping..."
-  fi
-}
 
 install_transmission()
 {
@@ -764,27 +793,19 @@ install_transmission()
   fi
 }
 
-install_thunderbird()
+
+# install VLC
+install_vlc()
 {
   if [[ "$(whoami)" == "root" ]]; then
-    echo "Attemptying to install thunderbird"
-    apt-get install -y thunderbird 
-    copy_launcher "thunderbird.desktop"
+    echo "Attempting to install vlc"
+    apt-get -y install vlc
     echo "Finished"
   else
-    echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
+    echo "WARNING: Could not install vlc. You should be root. Skipping..."
   fi
-  
 }
 
-install_jdk11()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    apt -y install default-jdk
-  else
-    echo "WARNING: Could not install java development kit 11. You should be root."
-  fi
-}
 
 ###### SYSTEM FEATURES ######
 
@@ -929,44 +950,46 @@ install_environment_aliases()
 
 root_install()
 {
-  install_google_chrome
-  install_musicmanager
+
+
+  install_dropbox
   install_gcc
   install_git
-  install_latex
-  install_python3
   install_GNU_parallel
-  install_pdfgrep
-  install_vlc
-  install_steam
-  install_pypy3_dependencies
+  install_google_chrome
+  install_jdk11
+  install_latex
   install_megasync
+  install_mendeley_dependencies
+  install_musicmanager
+  install_pdfgrep
+  install_python3
+  install_pypy3_dependencies
+  install_steam
   install_thunderbird
   install_transmission
-  install_jdk11
-  install_dropbox
-  install_mendeley
+  install_vlc
 }
 
 user_install()
 {
-  install_templates
-  install_environment_aliases
-  install_git_aliases
-  install_ls_alias
-  install_shell_history_optimization
-  install_extract_function
-  install_pycharm_professional
-  install_pycharm_community
-  install_clion
-  install_sublime_text
   install_android_studio
-  install_intellij_ultimate
-  install_intellij_community
-  install_telegram
+  install_clion
   install_discord
+  install_environment_aliases 
+  install_extract_function 
+  install_git_aliases
+  install_intellij_community
+  install_intellij_ultimate
+  install_ls_alias
   install_mendeley
+  install_pycharm_community
+  install_pycharm_professional
   install_pypy3
+  install_shell_history_optimization
+  install_sublime_text
+  install_telegram
+  install_templates
 }
 
 ###### AUXILIAR FUNCTIONS ######
@@ -1020,112 +1043,120 @@ main()
       key="$1"
 
       case ${key} in
+      
+        ### INDIVIDUAL ARGUMENTS ###
+        # Sorted alphabetically by function name:
+        -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
+          install_android_studio
+        ;;
+        -n|--clion|--Clion|--CLion)
+          install_clion
+        ;;
+        -i|--discord|--Discord|--disc)
+          install_discord
+        ;;
+        -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
+          install_dropbox
+        ;;
         -c|--gcc)
           install_gcc
-        ;;
-        -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
-          install_google_chrome
         ;;
         -g|--git)
           install_git
         ;;
+        -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
+          install_GNU_parallel
+        ;;
+        -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
+          install_google_chrome
+        ;;
+        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community)
+          install_intellij_community
+        ;;
+        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
+          install_intellij_ultimate
+        ;;
+        -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
+          install_jdk11
+        ;;
         -x|--latex|--LaTeX|--tex|--TeX)
           install_latex
+        ;;
+        --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
+          install_megasync
+        ;;
+        --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
+          install_mendeley
+        ;;
+        --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
+          install_mendeley_dependencies
+        ;;
+        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
+          install_musicmanager
+        ;;
+        -f|--pdfgrep|--findpdf|--pdf)
+          install_pdfgrep
+        ;;
+        -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
+          install_pycharm_community
+        ;;
+        -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
+          install_pycharm_professional
         ;;
         -p|--python|--python3|--Python3|--Python)
           install_python3
         ;;
-        -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
-          install_GNU_parallel
+        -y|--pypy|--pypy3|--PyPy3|--PyPy)
+          install_pypy3
         ;;
         -d|--dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
           install_pypy3_dependencies
         ;;
-        -t|--templates)
-          install_templates
-        ;;
-        -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)
+        -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
           install_shell_history_optimization
           install_ls_alias
           install_git_aliases
           install_environment_aliases
           install_extract_function
         ;;
-        -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
-          install_pycharm_professional
-        ;;
-        -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
-          install_pycharm_community
-        ;;
-        -n|--clion|--Clion|--CLion)
-          install_clion
-        ;;
         -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
           install_sublime_text
-        ;;
-        -y|--pypy|--pypy3|--PyPy3|--PyPy)
-          install_pypy3
-        ;;
-        -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
-          install_android_studio
-        ;;
-        -f|--pdfgrep|--findpdf|--pdf)
-          install_pdfgrep
-        ;;
-        -v|--vlc|--VLC|--Vlc)
-          install_vlc
         ;;
         -w|--steam|--Steam|--STEAM)
           install_steam
         ;;
-        -i|--discord|--Discord|--disc)
-          install_discord
-        ;;
         -r|--Telegram|--telegram)
           install_telegram
         ;;
-        --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
-          install_megasync
-        ;;
-        --transmission|--transmission-gtk|--Transmission)
-          install_transmission
+        -t|--templates)
+          install_templates
         ;;
         --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
           install_thunderbird
         ;;
-        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
-          install_intellij_ultimate
+        --transmission|--transmission-gtk|--Transmission)
+          install_transmission
         ;;
-        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community)
-          install_intellij_community
+        -v|--vlc|--VLC|--Vlc)
+          install_vlc
         ;;
-        -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
-          install_jdk11
-        ;;
-        -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
-            install_dropbox
-        ;;
-        --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
-            install_mendeley
-        ;;
-        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
-            install_musicmanager
-        ;;
-        --user|--regular|--normal)
+        
+        ### WRAPPER ARGUMENTS ###
+        -U|--user|--regular|--normal)
           if [[ "$(whoami)" == "root" ]]; then
             echo "WARNING: Could not install user packages being root. You should be normal user."
           else
            user_install
           fi
         ;;
-        -r|--root|--superuser|--su)
+        -R|--root|--superuser|--su)
           if [[ "$(whoami)" == "root" ]]; then
-            rootinstall
+            root_install
           else
             echo "WARNING: Could not install root packages being user. You should be root."
           fi
         ;;
-        -|--all)
+        -A|-|--all)
           if [[ "$(whoami)" == "root" ]]; then
             root_install
           else
@@ -1134,7 +1165,7 @@ main()
         ;;
         *)    # unknown option
           err "$1 is not a recognized command"
-          ;;
+        ;;
       esac
       shift
     done

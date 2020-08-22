@@ -205,38 +205,44 @@ uninstall_mendeley()
   rm -f /home/${SUDO_USER}/.local/share/applications/mendeleydesktop.desktop
 }
 
+uninstall_mendeley_dependencies()
+{
+  
+}
+
 # Uninstall all functions
 uninstall_all()
 {
+  uninstall_android_studio
+  uninstall_clion
+  uninstall_discord
+  uninstall_dropbox
   uninstall_gcc
-  uninstall_google_chrome
   uninstall_git
-  uninstall_latex
-  uninstall_python3
   uninstall_GNU_parallel
-  uninstall_pypy3_dependencies
-  uninstall_templates
-  uninstall_shell_customization
+  uninstall_google_chrome
+  uninstall_intellij_community
+  uninstall_intellij_ultimate
+  uninstall_jdk11
+  uninstall_latex
+  uninstall_megasync
+  uninstall_mendeley
+  uninstall_mendeley_dependencies
+  uninstall_musicmanager
+  uninstall_pdfgrep
   uninstall_pycharm_professional
   uninstall_pycharm_community
-  uninstall_clion
-  uninstall_sublime_text
   uninstall_pypy3
-  uninstall_android_studio
-  uninstall_pdfgrep
-  uninstall_vlc
+  uninstall_pypy3_dependencies
+  uninstall_python3
+  uninstall_shell_customization
   uninstall_steam
-  uninstall_discord
-  uninstall_megasync
-  uninstall_transmission
-  uninstall_thunderbird
-  uninstall_intellij_ultimate
-  uninstall_intellij_community
+  uninstall_sublime_text
   uninstall_telegram
-  uninstall_jdk11
-  uninstall_dropbox
-  uninstall_mendeley
-  uninstall_musicmanager
+  uninstall_templates
+  uninstall_thunderbird
+  uninstall_transmission
+  uninstall_vlc
 }
 
 ##################
@@ -258,84 +264,105 @@ main()
       key="$1"
 
       case ${key} in
-        -c|--gcc)
-          uninstall_gcc
-        ;;
-        -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
-          uninstall_google_chrome
-        ;;
-        -g|--git)
-          uninstall_git
-        ;;
-        -x|--latex|--LaTeX|--tex|--TeX)
-          uninstall_latex
-        ;;
-        -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
-          uninstall_jdk11
-        ;;
-        -p|--python|--python3|--Python3|--Python)
-          uninstall_python3
-        ;;
-        -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
-          uninstall_GNU_parallel
-        ;;
-        -d|--dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
-          uninstall_pypy3_dependencies
-        ;;
-        -t|--templates)
-          uninstall_templates
-        ;;
-        -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)
-          uninstall_shell_customization
-        ;;
-        -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
-          uninstall_pycharm_professional
-        ;;
-        -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
-          uninstall_pycharm_community
+        ### INDIVIDUAL ARGUMENTS ###
+        # Sorted alphabetically by function name:
+        -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
+          uninstall_android_studio
         ;;
         -n|--clion|--Clion|--CLion)
           uninstall_clion
         ;;
-        -r|--Telegram|--telegram)
-          uninstall_telegram
-        ;;
-        -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
-          uninstall_sublime_text
-        ;;
-        -y|--pypy|--pypy3|--PyPy3|--PyPy)
-          uninstall_pypy3
-        ;;
-        -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
-          uninstall_android_studio
-        ;;
-        -f|--pdfgrep|--findpdf|--pdf)
-          uninstall_pdfgrep
-        ;;
-        -v|--vlc|--VLC|--Vlc)
-          uninstall_vlc
-        ;;
-        -w|--steam|--Steam|--STEAM)
-          uninstall_steam
-        ;;
         -i|--discord|--Discord|--disc)
           uninstall_discord
         ;;
-        --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
-          uninstall_megasync
+        -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
+          uninstall_dropbox
         ;;
-        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
-          uninstall_intellij_ultimate
+        -c|--gcc)
+          uninstall_gcc
+        ;;
+        -g|--git)
+          uninstall_git
+        ;;
+        -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
+          uninstall_GNU_parallel
+        ;;
+        -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
+          uninstall_google_chrome
         ;;
         -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community)
           uninstall_intellij_community
         ;;
+        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
+          uninstall_intellij_ultimate
+        ;;
+        -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
+          uninstall_jdk11
+        ;;
+        -x|--latex|--LaTeX|--tex|--TeX)
+          uninstall_latex
+        ;;
+        --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
+          uninstall_megasync
+        ;;
+        --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
+          uninstall_mendeley
+        ;;
+        --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
+          uninstall_mendeley_dependencies
+        ;;
         --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
           uninstall_musicmanager
         ;;
+        -f|--pdfgrep|--findpdf|--pdf)
+          uninstall_pdfgrep
+        ;;
+        -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
+          uninstall_pycharm_community
+        ;;
+        -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
+          uninstall_pycharm_professional
+        ;;
+        -p|--python|--python3|--Python3|--Python)
+          uninstall_python3
+        ;;
+        -y|--pypy|--pypy3|--PyPy3|--PyPy)
+          uninstall_pypy3
+        ;;
+        -d|--dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
+          uninstall_pypy3_dependencies
+        ;;
+        -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
+          uninstall_shell_customization
+        ;;
+        -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
+          uninstall_sublime_text
+        ;;
+        -w|--steam|--Steam|--STEAM)
+          uninstall_steam
+        ;;
+        -r|--Telegram|--telegram)
+          uninstall_telegram
+        ;;
+        -t|--templates)
+          uninstall_templates
+        ;;
+        --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
+          uninstall_thunderbird
+        ;;
+        --transmission|--transmission-gtk|--Transmission)
+          uninstall_transmission
+        ;;
+        -v|--vlc|--VLC|--Vlc)
+          uninstall_vlc
+        ;;
+        
+        ### WRAPPER ARGUMENT(S) ###
         -|--all)
           uninstall_all
         ;;
+        
+        
         *)    # unknown option
           err "$1 is not a recognized command"
           ;;
