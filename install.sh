@@ -812,6 +812,32 @@ install_vlc()
   fi
 }
 
+
+# VirtualBox
+install_virtualbox()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install virtualbox"
+    if [[ -z "$(which virtualbox)" ]]; then
+      # Delete possible collisions with previous installation
+      rm -f virtualbox*.deb*  
+      # Download
+      wget -O virtualbox.deb ${virtualbox_downloader}
+      # Install
+      dpkg -i virtualbox.deb
+      # Clean
+      rm -f virtualbox*.deb*
+      # Create launcher and change its permissions (we are root)
+      copy_launcher "virtualbox.desktop"
+    else
+      err "WARNING: Virtualbox is already installed. Skipping"
+    fi
+    echo "Finished"
+  else
+    echo "WARNING: Could not install virtualbox. You need root permissions. Skipping..."
+  fi
+}
+
 #############################
 ###### SYSTEM FEATURES ######
 #############################

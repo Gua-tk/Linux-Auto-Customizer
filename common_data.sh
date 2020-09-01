@@ -164,6 +164,8 @@ Type=Application
 Categories=Network;
 MimeType=x-scheme-handler/tg;"
 
+virtualbox_downloader=https://download.virtualbox.org/virtualbox/6.1.12/virtualbox-6.1_6.1.12-139181~Ubuntu~eoan_amd64.deb
+
 
 
 
