@@ -624,7 +624,7 @@ install_latex()
 }
 
 
-# Automatic install of megasync + megasync nautilus. Creates launcher in the desktop 
+# Automatic install of megasync + megasync nautilus. creates launcher in the desktop 
 install_megasync()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -662,7 +662,7 @@ install_mendeley_dependencies()
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attempting to install mendeley dependencies"
     # Mendeley dependencies
-    apt-get -y -qq install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
+    apt-get -y install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
     echo "Finished"
   else
     echo "WARNING: Could not install dependencies. You need root permissions. Skipping..."
@@ -789,7 +789,7 @@ install_transmission()
     echo "Attemptying to install transmission"
     apt-get install -y transmission 
     copy_launcher "transmission-gtk.desktop"
-    rm /home/${SUDO_USER}/.local/bin/transmission
+    rm -f /home/${SUDO_USER}/.local/bin/transmission
     ln -s $(which transmission-gtk) /home/${SUDO_USER}/.local/bin/transmission
     chgrp ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
     chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
