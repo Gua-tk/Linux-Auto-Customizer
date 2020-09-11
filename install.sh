@@ -613,7 +613,7 @@ install_latex()
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attempting to install latex"
     apt-get install -y perl-tk
-    apt -y install texlive-latex-extra
+    apt -y install texlive-latex-extra texmaker
     copy_launcher "texmaker.desktop"
     copy_launcher "texdoctk.desktop"
     echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
