@@ -571,7 +571,6 @@ install_google_chrome()
     apt-get install -y -qq libxss1 libappindicator1 libindicator7
 
     if [[ -z "$(which google-chrome)" ]]; then
-      ##### CHROME #####
       # Delete possible collisions with previous installation
       rm -f google-chrome*.deb*  
       # Download
@@ -1000,6 +999,7 @@ root_install()
   install_thunderbird
   install_transmission
   install_vlc
+  install_virtualbox
 }
 
 user_install()
@@ -1167,6 +1167,9 @@ main()
         ;;
         --transmission|--transmission-gtk|--Transmission)
           install_transmission
+        ;;
+        --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
+          install_virtualbox
         ;;
         -v|--vlc|--VLC|--Vlc)
           install_vlc

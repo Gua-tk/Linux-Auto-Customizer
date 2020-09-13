@@ -210,6 +210,12 @@ uninstall_mendeley_dependencies()
   apt-get -y purge gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
 }
 
+uninstall_virtualbox()
+{
+  dpkg -P virtualbox-6.1
+  rm -f ${XDG_DESKTOP_DIR}/virtualbox.desktop
+}
+
 # Uninstall all functions
 uninstall_all()
 {
@@ -242,6 +248,7 @@ uninstall_all()
   uninstall_templates
   uninstall_thunderbird
   uninstall_transmission
+  uninstall_virtualbox
   uninstall_vlc
 }
 
@@ -352,6 +359,9 @@ main()
         ;;
         --transmission|--transmission-gtk|--Transmission)
           uninstall_transmission
+        ;;
+        --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
+          uninstall_virtualbox
         ;;
         -v|--vlc|--VLC|--Vlc)
           uninstall_vlc
