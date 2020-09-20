@@ -158,7 +158,7 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [x] Mendeley
 - [x] Mendeley Dependenecies
 - [x] Sorted functions and menus in alphabetical order
-
+- [] Add nemo and set it as default : `xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search`
 
 ## Author and Acknowledgements
 * Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)

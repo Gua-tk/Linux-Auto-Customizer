@@ -735,7 +735,7 @@ install_python3()
 {
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attempting to install python3"
-    apt install -y python3-dev python-dev
+    apt install -y python3-dev python-dev python3-pip
     echo "Finished"
   else
     echo "WARNING: Could not install python. You need root permissions. Skipping..."
