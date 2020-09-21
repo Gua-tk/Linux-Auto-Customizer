@@ -474,7 +474,6 @@ install_sublime_text()
 }
 
 
-
 # Telegram installation
 install_telegram()
 {
@@ -510,9 +509,44 @@ install_telegram()
   else
     echo "WARNING: Could not install telegram. You should be normal user. Skipping..."
   fi
-
-  
 }
+
+
+# Microsoft Visual Studio Code
+install_visualstudiocode()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "Attempting to install Visual Studio Code"
+    if [[ -z $(which code) ]]; then
+      # Avoid error due to possible previous aborted installations
+      rm -Rf ${USR_BIN_FOLDER}/VSCode-linux-x64*
+      rm -Rf ${USR_BIN_FOLDER}/visual-studio-code
+      rm -Rf visualstudiocode.tar.gz
+      # Download 
+      (cd "${USR_BIN_FOLDER}"; wget -O "visualstudiocode.tar.gz" "${visualstudiocode_downloader}")
+      # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
+      (cd "${USR_BIN_FOLDER}"; tar xzf -) < ${USR_BIN_FOLDER}/visualstudiocode.tar.gz
+      # Clean
+      rm -f ${USR_BIN_FOLDER}/visualstudiocode.tar.gz*
+      # Rename folder for coherence
+      mv ${USR_BIN_FOLDER}/VSCode-linux-x64 ${USR_BIN_FOLDER}/visual-studio-code
+      # Create link to the PATH
+      rm -f ${HOME}/.local/bin/code
+      ln -s ${USR_BIN_FOLDER}/visual-studio-code/code ${HOME}/.local/bin/code
+      # Create desktop launcher entry 
+      echo -e "${visualstudiocode_launcher}" > ${HOME}/.local/share/applications/visual-studio-code.desktop
+      chmod 775 ${HOME}/.local/share/applications/visual-studio-code.desktop
+      # Copy launcher to the desktop
+      cp -p ${HOME}/.local/share/applications/visual-studio-code.desktop ${XDG_DESKTOP_DIR}
+    else
+      err "WARNING: Visual Studio Code is already installed. Skipping"
+    fi
+    echo "Finished"
+  else
+    echo "WARNING: Could not install Visual Studio Code. You should be normal user. Skipping..."
+  fi
+}
+
 
 ############################
 ###### ROOT FUNCTIONS ######
@@ -1021,6 +1055,7 @@ user_install()
   install_sublime_text
   install_telegram
   install_templates
+  install_visualstudiocode
 }
 
 ###### AUXILIAR FUNCTIONS ######
@@ -1170,6 +1205,9 @@ main()
         ;;
         --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
           install_virtualbox
+        ;;
+        --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
+          install_visualstudiocode
         ;;
         -v|--vlc|--VLC|--Vlc)
           install_vlc

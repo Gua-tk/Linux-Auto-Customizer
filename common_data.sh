@@ -166,6 +166,17 @@ MimeType=x-scheme-handler/tg;"
 
 virtualbox_downloader=https://download.virtualbox.org/virtualbox/6.1.12/virtualbox-6.1_6.1.12-139181~Ubuntu~eoan_amd64.deb
 
+visualstudiocode_downloader="https://go.microsoft.com/fwlink/?LinkID=620884"
+visualstudiocode_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Visual Studio Code
+Icon=$HOME/.bin/visual-studio-code/resources/app/extensions/jake/images/cowboy_hat.png
+Exec=code
+Comment=Develop with pleasure!
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=visual-studio-code"
 
 
 

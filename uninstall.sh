@@ -216,6 +216,14 @@ uninstall_virtualbox()
   rm -f ${XDG_DESKTOP_DIR}/virtualbox.desktop
 }
 
+uninstall_visualstudiocode()
+{
+  rm -Rf ${USR_BIN_FOLDER}/visual-studio-code
+  rm -f /home/${SUDO_USER}/.local/share/applications/visual-studio-code.desktop
+  rm -f /home/${SUDO_USER}/.local/bin/code
+  rm -f ${XDG_DESKTOP_DIR}/visual-studio-code.desktop
+}
+
 # Uninstall all functions
 uninstall_all()
 {
@@ -249,6 +257,7 @@ uninstall_all()
   uninstall_thunderbird
   uninstall_transmission
   uninstall_virtualbox
+  uninstall_visualstudiocode
   uninstall_vlc
 }
 
@@ -362,6 +371,9 @@ main()
         ;;
         --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
           uninstall_virtualbox
+        ;;
+        --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
+          uninstall_visualstudiocode
         ;;
         -v|--vlc|--VLC|--Vlc)
           uninstall_vlc
