@@ -44,10 +44,12 @@ fi
 # Argument 1: name of the desktop launcher in /usr/share/applications
 copy_launcher()
 {
-  cp /usr/share/applications/$1 ${XDG_DESKTOP_DIR}
-  chmod 775 ${XDG_DESKTOP_DIR}/$1
-  chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
-  chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
+  if [[ -f /usr/share/applications/$1 ]]; then
+    cp /usr/share/applications/$1 ${XDG_DESKTOP_DIR}
+    chmod 775 ${XDG_DESKTOP_DIR}/$1
+    chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
+    chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
+  fi
 }
 
 #############################################
@@ -289,7 +291,7 @@ install_mendeley()
       cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
       chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
       # Modify Icon line
-      sed -i 's-Icon=.*-Icon=/home/aleixmt/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+      sed -i 's-Icon=.*-Icon=${HOME}/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
       # Modify exec line
       sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
       # Copy to desktop  launchers of the current user
@@ -552,6 +554,40 @@ install_visualstudiocode()
 ###### ROOT FUNCTIONS ######
 ############################
 
+install_firefox()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install firefox"
+    apt-get install -y firefox
+    copy_launcher "firefox.desktop"
+    echo "Finished"
+  else
+    echo "WARNING: Could not install firefox. You need root permissions. Skipping..."
+  fi
+}
+
+
+install_games()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install games"
+
+    apt-get install -y pacman
+    copy_launcher "pacman.desktop"
+    apt-get install -y gnome-mines
+    copy_launcher "org.gnome.Mines.desktop"
+    apt-get install -y aisleriot
+    copy_launcher "sol.desktop"
+    apt-get install -y gnome-mahjongg
+    copy_launcher "org.gnome.Mahjongg.desktop"
+    apt-get install -y gnome-sudoku
+    copy_launcher "org.gnome.Sudoku.desktop"
+
+    echo "Finished"
+  else
+    echo "WARNING: Could not install games. You need root permissions. Skipping..."
+  fi
+}
 
 # Install gcc (C compiler)
 # Needs root permission
@@ -793,6 +829,7 @@ install_steam()
       dpkg -i steam.deb
       # Clean after
       rm -f steam.deb*
+      copy_launcher "steam.desktop"
     else
       err "WARNING: steam is already installed. Skipping"
     fi
@@ -1045,6 +1082,7 @@ install_environment_aliases()
 root_install()
 {
   install_dropbox
+  install_firefox
   install_gcc
   install_git
   install_GNU_parallel
@@ -1239,6 +1277,12 @@ main()
         ;;
         -v|--vlc|--VLC|--Vlc)
           install_vlc
+        ;;
+        --firefox|--Firefox)
+          install_firefox
+        ;;
+        --games|--Gaming|--Games)
+          install_games
         ;;
         
         ### WRAPPER ARGUMENTS ###

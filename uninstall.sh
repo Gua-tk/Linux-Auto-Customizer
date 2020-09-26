@@ -8,6 +8,26 @@ err()
   echo "$*" >&2
 }
 
+uninstall_firefox()
+{
+  apt-get purge -y firefox
+  rm -f ${XDG_DESKTOP_DIR}/firefox.desktop
+}
+
+uninstall_games()
+{
+  apt-get purge -y pacman
+  rm -f ${XDG_DESKTOP_DIR}/pacman.desktop
+  apt-get purge -y gnome-mines
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mines.desktop
+  apt-get purge -y aisleriot
+  rm -f ${XDG_DESKTOP_DIR}/sol.desktop
+  apt-get purge -y gnome-mahjongg
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mahjongg.desktop
+  apt-get purge -y gnome-sudoku
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Sudoku.desktop
+}
+
 uninstall_gcc()
 {
   apt-get purge -y gcc
@@ -231,6 +251,8 @@ uninstall_all()
   uninstall_clion
   uninstall_discord
   uninstall_dropbox
+  uninstall_firefox
+  uninstall_games
   uninstall_gcc
   uninstall_git
   uninstall_GNU_parallel
@@ -377,6 +399,12 @@ main()
         ;;
         -v|--vlc|--VLC|--Vlc)
           uninstall_vlc
+        ;;
+        --firefox|--Firefox)
+          uninstall_firefox
+        ;;
+        --games|--Gaming|--Games)
+          uninstall_games
         ;;
         
         ### WRAPPER ARGUMENT(S) ###
