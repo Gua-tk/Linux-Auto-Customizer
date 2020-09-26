@@ -942,7 +942,7 @@ install_ls_alias()
   #  fi
   #done
 
-
+  echo ""
 
 
   #if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
