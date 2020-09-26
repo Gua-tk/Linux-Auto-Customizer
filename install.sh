@@ -893,18 +893,18 @@ install_templates()
     echo "CC = gcc
 CFLAGS = -O3 -Wall
 
-all : Cscript
+all : c_script
 
-Cscript : Cscript.c
-  \$(CC) \$(CFLAGS) Cscript.c -o Cscript.c -lm
+c_script : c_script.c
+	\$(CC) \$(CFLAGS) c_script.c -o c_script -lm
 
-run : Cscript
-  ./Cscript
+run : c_script
+	./c_script
 
 .PHONY : clean
 clean :
-  rm -f Cscript" > ${XDG_TEMPLATES_DIR}/makefile
-    echo "#include \"Cscript.h\"
+	rm -f c_script" > ${XDG_TEMPLATES_DIR}/makefile
+    echo "#include \"c_script.h\"
   int main(int nargs, char* args[])
 {
   printf(\"Hello World\");
@@ -927,11 +927,39 @@ clean :
 # Forces l as alias for ls -lAh
 install_ls_alias()
 {
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
-    echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
-  else
-    sed -i 's/^alias l=.*/alias l=\"ls -lAh --color=auto\"/' ${BASHRC_PATH}
-  fi
+  #lsdisplay=$(ls -lhA | tr -s " ")
+  #dudisplay=$(du -shxc .[!.]* * | sort -h | tr -s "\t" " ")
+  #IFS=$'\n'
+  #for linels in ${lsdisplay}; do
+  #  if [[ $linels =~ ^d.* ]]; then
+  #    foldername=$(echo $linels | cut -d " " -f9)
+  #    for linedu in ${dudisplay}; do
+  #      if [[ "$(echo ${linedu} | cut -d " " -f2)" = ${foldername} ]]; then
+  #        # Replace $lsdisplay with values in folder size 
+  #        break
+  #      fi
+  #    done
+  #  fi
+  #done
+
+
+
+
+  #if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
+  #  echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
+  #else
+  #  sed -i 's/^alias l=.*/alias l=\"ls -lAh \"/' ${BASHRC_PATH}
+  #fi
+
+  #alias a="echo '---------------Alias----------------';alias"
+  #alias c="clear"
+  #alias h="history | grep $1"
+  #du -shxc .[!.]* * | sort -h
+
+
+
+
+
 }
 
 # Defines a function to extract all types of compressed files
