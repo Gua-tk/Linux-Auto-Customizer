@@ -768,6 +768,31 @@ install_musicmanager()
 }
 
 
+install_nemo()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install nemo"
+    apt -y install nemo
+    apt -y install dconf-editor gnome-tweak-tool
+    for nautilus_command in "${nautilus_conf[@]}"; do
+      if [[ ! -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nautilus_command}" )" ]]; then
+        sed "s:${nautilus_command}::g" -i /home/${SUDO_USER}/.profile
+      fi
+    done
+    for nemo_command in "${nemo_conf[@]}"; do
+      echo $nemo_command
+      if [[ -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nemo_command}" )" ]]; then
+        echo "${nemo_command}" >> /home/${SUDO_USER}/.profile
+      fi
+    done
+    echo "WARNING: If Nemo has been installed,restart Ubuntu"
+    echo "Finished"
+  else
+    echo "WARNING: Could not install nemo You should be root. Skipping..."
+  fi
+}
+
+
 # Install pdf grep
 install_pdfgrep()
 {
@@ -982,21 +1007,16 @@ install_ls_alias()
   echo ""
 
 
-  #if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
-  #  echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
-  #else
-  #  sed -i 's/^alias l=.*/alias l=\"ls -lAh \"/' ${BASHRC_PATH}
-  #fi
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
+    echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
+  else
+    sed -i 's/^alias l=.*/alias l=\"ls -lAh \"/' ${BASHRC_PATH}
+  fi
 
   #alias a="echo '---------------Alias----------------';alias"
   #alias c="clear"
   #alias h="history | grep $1"
   #du -shxc .[!.]* * | sort -h
-
-
-
-
-
 }
 
 # Defines a function to extract all types of compressed files
@@ -1083,6 +1103,7 @@ root_install()
 {
   install_dropbox
   install_firefox
+  #install_games
   install_gcc
   install_git
   install_GNU_parallel
@@ -1092,6 +1113,7 @@ root_install()
   install_megasync
   install_mendeley_dependencies
   install_musicmanager
+  install_nemo
   install_pdfgrep
   install_python3
   install_pypy3_dependencies
@@ -1222,6 +1244,9 @@ main()
         ;;
         --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
           install_mendeley_dependencies
+        ;;
+        --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
+          install_nemo
         ;;
         --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
           install_musicmanager

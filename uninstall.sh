@@ -230,6 +230,20 @@ uninstall_mendeley_dependencies()
   apt-get -y purge gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
 }
 
+uninstall_nemo()
+{
+  apt -y purge nemo
+  apt -y purge dconf-editor gnome-tweak-tool
+  for command in "${nemo_conf[@]}"; do
+    sed "s:${command}::g" -i /home/${SUDO_USER}/.profile
+  done
+  for command in "${nautilus_conf[@]}"; do
+    echo "${command}" >> /home/${SUDO_USER}/.profile
+  done
+  echo "WARNING: If Nemo has been uninstalled restart Ubuntu to update the desktop back to Nautilus"
+
+}
+
 uninstall_virtualbox()
 {
   dpkg -P virtualbox-6.1
@@ -265,6 +279,7 @@ uninstall_all()
   uninstall_mendeley
   uninstall_mendeley_dependencies
   uninstall_musicmanager
+  uninstall_nemo
   uninstall_pdfgrep
   uninstall_pycharm_professional
   uninstall_pycharm_community
@@ -348,6 +363,9 @@ main()
         ;;
         --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
           uninstall_mendeley_dependencies
+        ;;
+         --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
+          uninstall_nemo
         ;;
         --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
           uninstall_musicmanager

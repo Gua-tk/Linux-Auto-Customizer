@@ -119,6 +119,17 @@ megasync_version=megasync_4.3.3-5.1_amd64.deb
 megasync_repository=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/
 megasync_integrator_version=nautilus-megasync_3.6.6_amd64.deb
 
+nautilus_conf=("xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
+"gsettings set org.gnome.desktop.background show-desktop-icons true"
+"xdg-mime default org.gnome.Nautilus.desktop inode/directory"
+)
+
+nemo_conf=("xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search"
+"gsettings set org.gnome.desktop.background show-desktop-icons false"
+"gsettings set org.nemo.desktop show-desktop-icons true"
+"nemo-desktop &"
+)
+
 pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
 pycharm_launcher="[Desktop Entry]
 Version=1.0
