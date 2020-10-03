@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 
 # GLOBAL VARIABLES
@@ -89,7 +90,38 @@ extract_function="
         echo \"'\$1' is not a valid file\"
     fi
   }"
-  
+
+
+L_function="L()
+{
+  NEW_LINE=\$'\\\n'
+  lsdisplay=\$(ls -lhA | tr -s \" \" | tail -n+2)
+  numfiles=\$(printf \"\$lsdisplay\" | wc -l)
+  dudisplay=\$(du -shxc .[!.]* * | sort -h | tr -s \"\\\t\" \" \")
+  totaldu=\$(echo \${dudisplay} | rev | cut -d \" \" -f2 | rev)
+  finaldisplay=\"\${totaldu} in \${numfiles} files and directories\$NEW_LINE\"
+  IFS=\$'\\\n'
+  for linels in \${lsdisplay}; do
+    if [[ \$linels =~ ^d.* ]]; then
+      foldername=\$(echo \$linels | cut -d \" \" -f9-)
+      for linedu in \${dudisplay}; do
+        if [[ \"\$(echo \${linedu} | cut -d \" \" -f2-)\" = \"${foldername}\" ]]; then
+          currentline=\$(echo \${linels} | cut -d \" \" -f-4)
+          currentline=\"\$currentline \$(echo \${linedu} | cut -d \" \" -f1)\"
+          currentline=\"\$currentline \$(echo \${linels} | cut -d \" \" -f6-)\"
+          finaldisplay=\"\$finaldisplay\$NEW_LINE\$currentline\"
+          break
+        fi
+      done
+    else
+      finaldisplay=\"\$finaldisplay\$NEW_LINE\$linels\"
+    fi
+  done
+  finaldisplay=\"\$finaldisplay\$NEW_LINE\$NEW_LINE\"
+  printf \"\$finaldisplay\"
+}
+"
+
 intellij_ultimate_version=ideaIU-2020.2
 intellij_ultimate_launcher="[Desktop Entry]
 Version=1.0

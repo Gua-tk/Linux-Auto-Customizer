@@ -985,26 +985,9 @@ clean :
   fi
 }
 
-
 # Forces l as alias for ls -lAh
 install_ls_alias()
 {
-  #lsdisplay=$(ls -lhA | tr -s " ")
-  #dudisplay=$(du -shxc .[!.]* * | sort -h | tr -s "\t" " ")
-  #IFS=$'\n'
-  #for linels in ${lsdisplay}; do
-  #  if [[ $linels =~ ^d.* ]]; then
-  #    foldername=$(echo $linels | cut -d " " -f9)
-  #    for linedu in ${dudisplay}; do
-  #      if [[ "$(echo ${linedu} | cut -d " " -f2)" = ${foldername} ]]; then
-  #        # Replace $lsdisplay with values in folder size 
-  #        break
-  #      fi
-  #    done
-  #  fi
-  #done
-
-  echo ""
 
 
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
@@ -1013,6 +996,7 @@ install_ls_alias()
     sed -i 's/^alias l=.*/alias l=\"ls -lAh \"/' ${BASHRC_PATH}
   fi
 
+  echo -e "${L_function}" >> ${BASHRC_PATH}
   #alias a="echo '---------------Alias----------------';alias"
   #alias c="clear"
   #alias h="history | grep $1"
