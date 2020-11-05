@@ -103,12 +103,12 @@ L_function="L()
   IFS=\$'\\\n'
   for linels in \${lsdisplay}; do
     if [[ \$linels =~ ^d.* ]]; then
-      foldername=\$(echo \$linels | cut -d \" \" -f9-)
+      foldername=\$(echo \$linels | cut -d \' \' -f9-)
       for linedu in \${dudisplay}; do
-        if [[ \"\$(echo \${linedu} | cut -d \" \" -f2-)\" = \"${foldername}\" ]]; then
+        if [[ \"\$(echo \${linedu} | cut -d \' \' -f2-)\" = \"\${foldername}\" ]]; then
           currentline=\$(echo \${linels} | cut -d \" \" -f-4)
-          currentline=\"\$currentline \$(echo \${linedu} | cut -d \" \" -f1)\"
-          currentline=\"\$currentline \$(echo \${linels} | cut -d \" \" -f6-)\"
+          currentline=\"\$currentline \$(echo \${linedu} | cut -d \' \' -f1)\"
+          currentline=\"\$currentline \$(echo \${linels} | cut -d \' \' -f6-)\"
           finaldisplay=\"\$finaldisplay\$NEW_LINE\$currentline\"
           break
         fi
@@ -117,7 +117,7 @@ L_function="L()
       finaldisplay=\"\$finaldisplay\$NEW_LINE\$linels\"
     fi
   done
-  finaldisplay=\"\$finaldisplay\$NEW_LINE\$NEW_LINE\"
+  finaldisplay=\"\${finaldisplay}\$NEW_LINE\$NEW_LINE\"
   printf \"\$finaldisplay\"
 }
 "
