@@ -31,7 +31,7 @@ fi
 
 ##### COMMON VARIABLES #####
 
-android_studio_version=android-studio-ide-193.6514223-linux  # Targeted version of Android Studio
+android_studio_version=android-studio-ide-201.6953283-linux  # Targeted version of Android Studio
 android_studio_launcher="[Desktop Entry]
 Version=1.0
 Type=Application

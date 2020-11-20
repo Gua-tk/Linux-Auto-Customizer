@@ -2,7 +2,7 @@
 # A simple portable shell script to initialize and customize a Linux working environment. Needs root permission for some features.
 # Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
 # Created on 28/5/19
-# Last Update 19/4/2020register_file_associations
+# Last Update 19/4/2020
 
 ################################
 ###### AUXILIAR FUNCTIONS ######
@@ -67,7 +67,7 @@ install_android_studio()
       # avoid collisions
       rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
       # Download
-      wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.0.0.16/${android_studio_version}.tar.gz
+      wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.1.0/${android_studio_version}.tar.gz
       
       # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
       (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz
@@ -450,10 +450,10 @@ install_sublime_text()
       # Clean
       rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
       # Rename folder for coherence 
-      mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime_text
+      mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime-text
       # Create link to the PATH
       rm -f ${HOME}/.local/bin/sublime
-      ln -s ${USR_BIN_FOLDER}/sublime_text/sublime_text ${HOME}/.local/bin/sublime
+      ln -s ${USR_BIN_FOLDER}/sublime-text/sublime-text ${HOME}/.local/bin/sublime
       # Create desktop launcher entry for sublime text
       echo -e "${sublime_launcher}" > ${HOME}/.local/share/applications/sublime-text.desktop
       chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
