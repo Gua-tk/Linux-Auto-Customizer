@@ -453,7 +453,7 @@ install_sublime_text()
       mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime-text
       # Create link to the PATH
       rm -f ${HOME}/.local/bin/sublime
-      ln -s ${USR_BIN_FOLDER}/sublime-text/sublime-text ${HOME}/.local/bin/sublime
+      ln -s ${USR_BIN_FOLDER}/sublime-text/sublime_text ${HOME}/.local/bin/sublime
       # Create desktop launcher entry for sublime text
       echo -e "${sublime_launcher}" > ${HOME}/.local/share/applications/sublime-text.desktop
       chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
