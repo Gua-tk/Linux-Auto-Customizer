@@ -116,7 +116,7 @@ uninstall_clion()
 
 uninstall_sublime_text()
 {
-  rm -Rf ${USR_BIN_FOLDER}/sublime_text
+  rm -Rf ${USR_BIN_FOLDER}/sublime-text
   rm -f ${XDG_DESKTOP_DIR}/sublime-text.desktop
   rm -f /home/${SUDO_USER}/.local/bin/sublime
   rm -f /home/${SUDO_USER}/.local/share/applications/sublime-text.desktop

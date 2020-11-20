@@ -180,8 +180,9 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Automount available drives.
 - [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
-- [ ] Delete arguments of one letter
+- [ ] Delete / rearrange arguments of one letter
 - [ ] Wireshark
+- [ ] nettools
 
 ## Author and Acknowledgements
 * Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)
