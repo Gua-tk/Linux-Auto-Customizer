@@ -1259,6 +1259,7 @@ root_install()
   install_pdfgrep
   install_python3
   install_pypy3_dependencies
+  install_slack
   install_steam
   install_thunderbird
   install_transmission
