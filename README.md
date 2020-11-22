@@ -182,7 +182,6 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Delete / rearrange arguments of one letter
-- [ ] Wireshark, make unattended installation
 - [ ] nettools
 - [ ] geanny
 - [ ] Notepad++

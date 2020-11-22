@@ -940,8 +940,10 @@ install_wireshark()
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attempting to install wireshark"
     if [[ -z "$(which wireshark)" ]]; then
+      # make wireshark installation unattended
+      echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
       # Install
-      apt-get install -y wireshark
+      DEBIAN_FRONTEND=noninteractive apt-get install -y wireshark
       # Create launcher and change its permissions (we are root)
       copy_launcher "wireshark.desktop"
     else
@@ -1230,7 +1232,7 @@ root_install()
   install_transmission
   install_vlc
   install_virtualbox
-  #install_wireshark  # interactive installation --> fix
+  install_wireshark  # interactive installation --> fix
 }
 
 user_install()
