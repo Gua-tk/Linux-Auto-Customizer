@@ -977,6 +977,7 @@ install_wireshark()
       DEBIAN_FRONTEND=noninteractive apt-get install -y wireshark
       # Create launcher and change its permissions (we are root)
       copy_launcher "wireshark.desktop"
+      sed -i 's-Icon=.*-Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg-' ${XDG_DESKTOP_DIR}/wireshark.desktop
     else
       err "WARNING: Wireshark is already installed. Skipping"
     fi

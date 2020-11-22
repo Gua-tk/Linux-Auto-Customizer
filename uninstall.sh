@@ -23,7 +23,7 @@ uninstall_games()
   apt-get purge -y aisleriot
   rm -f ${XDG_DESKTOP_DIR}/sol.desktop
   apt-get purge -y gnome-mahjongg
-  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mahjongg.desktop
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mahjongg
   apt-get purge -y gnome-sudoku
   rm -f ${XDG_DESKTOP_DIR}/org.gnome.Sudoku.desktop
 }
