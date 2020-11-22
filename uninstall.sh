@@ -258,6 +258,14 @@ uninstall_visualstudiocode()
   rm -f ${XDG_DESKTOP_DIR}/visual-studio-code.desktop
 }
 
+
+uninstall_wireshark()
+{
+  rm -f ${XDG_DESKTOP_DIR}/wireshark.desktop
+  apt-get purge -y wireshark
+  apt-get autoremove -y --purge wireshark
+}
+
 # Uninstall all functions
 uninstall_all()
 {
@@ -296,6 +304,7 @@ uninstall_all()
   uninstall_virtualbox
   uninstall_visualstudiocode
   uninstall_vlc
+  uninstall_wireshark
 }
 
 ##################
@@ -423,6 +432,9 @@ main()
         ;;
         --games|--Gaming|--Games)
           uninstall_games
+        ;;
+        --wireshark|--Wireshark)
+          uninstall_wireshark
         ;;
         
         ### WRAPPER ARGUMENT(S) ###

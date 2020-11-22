@@ -178,11 +178,14 @@ Also the script `common_variables.sh` have been created. This script contains de
 
 ## Coming features
 - [ ] Automount available drives.
+- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", ""
 - [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Delete / rearrange arguments of one letter
-- [ ] Wireshark
+- [ ] Wireshark, make unattended installation
 - [ ] nettools
+- [ ] geanny
+- [ ] Notepad++
 
 ## Author and Acknowledgements
 * Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)

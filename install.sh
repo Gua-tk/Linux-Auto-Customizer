@@ -933,6 +933,26 @@ install_virtualbox()
   fi
 }
 
+
+# Wireshark
+install_wireshark()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install wireshark"
+    if [[ -z "$(which wireshark)" ]]; then
+      # Install
+      apt-get install -y wireshark
+      # Create launcher and change its permissions (we are root)
+      copy_launcher "wireshark.desktop"
+    else
+      err "WARNING: Wireshark is already installed. Skipping"
+    fi
+    echo "Finished"
+  else
+    echo "WARNING: Could not install wireshark. You need root permissions. Skipping..."
+  fi
+}
+
 #############################
 ###### SYSTEM FEATURES ######
 #############################
@@ -1210,6 +1230,7 @@ root_install()
   install_transmission
   install_vlc
   install_virtualbox
+  #install_wireshark  # interactive installation --> fix
 }
 
 user_install()
@@ -1396,6 +1417,9 @@ main()
         ;;
         --games|--Gaming|--Games)
           install_games
+        ;;
+        --wireshark|--Wireshark)
+          install_wireshark
         ;;
         
         ### WRAPPER ARGUMENTS ###
