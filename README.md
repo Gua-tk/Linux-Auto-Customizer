@@ -183,7 +183,6 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Delete / rearrange arguments of one letter
 - [ ] nettools
-- [ ] geanny
 - [ ] Notepad++
 
 ## Author and Acknowledgements

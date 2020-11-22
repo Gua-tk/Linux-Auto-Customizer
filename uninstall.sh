@@ -33,6 +33,12 @@ uninstall_gcc()
   apt-get purge -y gcc
 }
 
+uninstall_geany()
+{
+  apt-get purge -y geany
+  rm -f ${XDG_DESKTOP_DIR}/geany.desktop
+}
+
 uninstall_google_chrome()
 {
   apt-get purge -y google-chrome-stable
@@ -170,6 +176,12 @@ uninstall_megasync()
   apt-get purge -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 }
 
+uninstall_slack()
+{
+  dpkg -P slack-desktop
+  rm -f ${XDG_DESKTOP_DIR}/slack.desktop
+}
+
 uninstall_thunderbird()
 {
   apt-get purge -y thunderbird
@@ -276,6 +288,7 @@ uninstall_all()
   uninstall_firefox
   uninstall_games
   uninstall_gcc
+  uninstall_geany
   uninstall_git
   uninstall_GNU_parallel
   uninstall_google_chrome
@@ -295,6 +308,7 @@ uninstall_all()
   uninstall_pypy3_dependencies
   uninstall_python3
   uninstall_shell_customization
+  uninstall_slack
   uninstall_steam
   uninstall_sublime_text
   uninstall_telegram
@@ -435,6 +449,12 @@ main()
         ;;
         --wireshark|--Wireshark)
           uninstall_wireshark
+        ;;
+        --geany|--Geany|--geanny|--Geanny)
+          uninstall_geany
+        ;;
+        --slack|--Slack)
+          uninstall_slack
         ;;
         
         ### WRAPPER ARGUMENT(S) ###

@@ -427,8 +427,6 @@ install_pypy3()
     fi
     echo "Finished"
   fi
-
-  
 }
 
 
@@ -549,7 +547,6 @@ install_visualstudiocode()
   fi
 }
 
-
 ############################
 ###### ROOT FUNCTIONS ######
 ############################
@@ -602,6 +599,19 @@ install_gcc()
   fi
 }
 
+
+# Install Geany
+install_geany()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install Geany"
+    apt-get -y install geany
+    copy_launcher "geany.desktop"
+    echo "Finished"
+  else
+    echo "WARNING: Could not install Geany. You need root permissions. Skipping..."
+  fi
+}
 
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
@@ -780,7 +790,6 @@ install_nemo()
       fi
     done
     for nemo_command in "${nemo_conf[@]}"; do
-      echo $nemo_command
       if [[ -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nemo_command}" )" ]]; then
         echo "${nemo_command}" >> /home/${SUDO_USER}/.profile
       fi
@@ -830,6 +839,26 @@ install_python3()
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attempting to install python3"
     apt install -y python3-dev python-dev python3-pip
+    echo "Finished"
+  else
+    echo "WARNING: Could not install python. You need root permissions. Skipping..."
+  fi
+}
+
+
+install_slack()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install slack"
+    # delete possible previous aborted install to avoid collisions
+    rm -f ${slack_version}*
+    # Download
+    wget -O ${slack_version} "${slack_repository}${slack_version}"
+    # Install
+    dpkg -i ${slack_version}
+    # delete .deb package
+    rm -f ${slack_version}*
+    copy_launcher "slack.desktop"
     echo "Finished"
   else
     echo "WARNING: Could not install python. You need root permissions. Skipping..."
@@ -915,7 +944,9 @@ install_virtualbox()
     echo "Attempting to install virtualbox"
     if [[ -z "$(which virtualbox)" ]]; then
       # Delete possible collisions with previous installation
-      rm -f virtualbox*.deb*  
+      rm -f virtualbox*.deb*
+      # install dependencies
+      apt-get install -y libsdl1.2debian
       # Download
       wget -O virtualbox.deb ${virtualbox_downloader}
       # Install
@@ -1232,7 +1263,8 @@ root_install()
   install_transmission
   install_vlc
   install_virtualbox
-  install_wireshark  # interactive installation --> fix
+  install_wireshark
+  install_geany
 }
 
 user_install()
@@ -1420,8 +1452,14 @@ main()
         --games|--Gaming|--Games)
           install_games
         ;;
+        --geany|--Geany|--geanny|--Geanny)
+          install_geany
+        ;;
         --wireshark|--Wireshark)
           install_wireshark
+        ;;
+        --slack|--Slack)
+          install_slack
         ;;
         
         ### WRAPPER ARGUMENTS ###

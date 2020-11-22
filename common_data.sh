@@ -187,6 +187,9 @@ StartupWMClass=jetbrains-pycharm"
 pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
 pypy3_version=$(echo ${pypy3_downloader} | rev | cut -d '/' -f1 | cut -d '.' -f3- | rev)  # get last piece of the last string
 
+slack_repository=https://downloads.slack-edge.com/linux_releases/
+slack_version=slack-desktop-4.11.1-amd64.deb
+
 sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
 sublime_launcher="[Desktop Entry]
 Version=1.0
