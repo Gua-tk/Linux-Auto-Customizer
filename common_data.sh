@@ -147,7 +147,7 @@ Exec=ideac %f
 Name=IntelliJ IDEA Community Edition
 StartupWMClass=jetbrains-idea"
 
-megasync_version=megasync_4.3.3-5.1_amd64.deb
+megasync_version=megasync_4.3.7-1.1_amd64.deb
 megasync_repository=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/
 megasync_integrator_version=nautilus-megasync_3.6.6_amd64.deb
 
