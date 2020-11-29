@@ -1000,150 +1000,18 @@ install_templates()
     echo "WARNING: Could not install templates. You should be normal user. Skipping..."
   else
     echo "Attemptying to install templates"
-    echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/shell_script.sh
-    echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/python3_script.py
-    echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%2345678901234567890123456789012345678901234567890123456789012345678901234567890
-%        1         2         3         4         5         6         7         8
-\documentclass[11pt]{article}
-
-% Use helvetica font (similar to Arial)
-\renewcommand{\familydefault}{\sfdefault}  
-\usepackage[scaled=1]{helvet}
-
-% Don't include Table of Contents (ToC) in ToC
-% Don't include List of Figures (LoF) in ToC
-% Don't include List of Tables (LoT) in ToC
-% Include bibliography in ToC with its own section number
-\usepackage[nottoc, notlot, notlof, numbib]{tocbibind}
-
-% //W: Kept because error if these commands are removed
-\title{}
-\date{}
-\author{}
-
-\begin{document}
-
-
-% Title Page   
-\begin{titlepage}
-\centering
-%\includegraphics[width=0.5\textwidth]{imgs/logourv}  % Logo 
-\par        
-\vspace{1cm}
-\Large
-{An exemple document of LaTeX\par}
-\vspace{1cm}
-{John Doe \par}
-\vspace{1cm}
-{\itshape\Large LaTeX FINAL PROJECT \par}
-\vfill
-
-\vspace{1cm} 
-%\includegraphics[width=0.7\textwidth]{imgs/grafportada}  % Portada Imagen
-\par    
-\vspace{1cm}  
-\vfill
-
-\large
-\raggedright
-{Tutor and supervisor: Jane Doe, UL, (jane.doe@LaTeX.cat) \par}
-{In cooperation with: LaTeX and Friends \par}
-\vspace{2cm}
-
-\raggedleft
-\large 
-November 2020
-\par
-\end{titlepage}
-
-% Dont number the title page
-\pagenumbering{gobble}
-
-% Rest of the document
-\setlength{\parskip}{1em}  % Set vertical separation between paragraphs
-%\onehalfspacing  % spacing 1.5
-\normalsize  % //Spec: normalsize = 11 pt (declared at e headers)
-
-% Resumen (Abstract)
-\newpage
-\section*{Abstract}  % Use the * to not include section in ToC
-  We try to explain a basic example of LaTeX. We will include ToC and references.
-
-% Index (ToC)
-\newpage
-\setlength{\parskip}{0em}  % Set vertical separation = 0 between paragraphs in the index
-\tableofcontents
-\newpage
-
-\setlength{\parskip}{1em}  % Set vertical separation between paragraphs for the rest of the doc
-%\onehalfspacing  % //Spec: spacing 1.5
-
-% First Section
-\pagenumbering{arabic}  % Start numbering in the intro, not in the title or abstract page
-\section{Hello World!}
-  Hello World!
-
-% Second Section
-\section{Advanced Hello World}
-  Hello, World. Basic LaTeX Operations:
-  \subsection{Itemizes}
-    \begin{itemize}
-      \item One thing.
-      \item Two things.
-      \item Last
-    \end{itemize}
-  \subsection{Enumerates}
-    \begin{enumerate}
-      \item First thing
-      \item Second thing 
-      \item Third thing \textbf{and last!}
-    \end{enumerate}
-  \subsection{References}
-    We can use \cite{Doe20} to cite, but the same happens citing \cite{Doe19}.
-
-% Bibliography
-\newpage
-\begin{thebibliography}{0}
-\bibitem{Doe20} Doe, J., Martínez A. (2020). How to LaTeX with Linux Auto Customizer. University of Computing, Girona, Spain
-\bibitem{Doe19} Doe, J., Priyatniva, A. \& Solanas, A. (2019). Referencing in LaTeX, 10th International Conference on Information, Intelligence, Systems and Applications. https://doi.org/20.1105/IISO.2019.8903718
-\end{thebibliography}
-
-\end{document}
-
-" > ${XDG_TEMPLATES_DIR}/latex_document.tex
-    echo "CC = gcc
-CFLAGS = -O3 -Wall
-
-all : c_script
-
-c_script : c_script.c
-	\$(CC) \$(CFLAGS) c_script.c -o c_script -lm
-
-run : c_script
-	./c_script
-
-.PHONY : clean
-clean :
-	rm -f c_script" > ${XDG_TEMPLATES_DIR}/makefile
-    echo "#include \"c_script.h\"
-  int main(int nargs, char* args[])
-{
-  printf(\"Hello World\");
-}
-
-" > ${XDG_TEMPLATES_DIR}/c_script.c
-    echo "// Includes
-#include <stdio.h>
-#include <stdbool.h>  // To use booleans
-#include <stdlib.h>
-" > ${XDG_TEMPLATES_DIR}/c_script.h
-    
-  > ${XDG_TEMPLATES_DIR}/text_file.txt
+    echo ${bash_file_template} > ${XDG_TEMPLATES_DIR}/shell_script.sh
+    echo ${python_file_template} > ${XDG_TEMPLATES_DIR}/python3_script.py
+    echo ${latex_file_template} > ${XDG_TEMPLATES_DIR}/latex_document.tex
+    echo ${c_file_template} > ${XDG_TEMPLATES_DIR}/c_script.c
+    echo ${c_header_file_template} > ${XDG_TEMPLATES_DIR}/c_script.h
+    echo ${makefile_file_template} > ${XDG_TEMPLATES_DIR}/makefile
+    > ${XDG_TEMPLATES_DIR}/empty_text_file.txt
     chmod 775 ${XDG_TEMPLATES_DIR}/*
     echo "Finished"
   fi
 }
+
 
 # Forces l as alias for ls -lAh
 install_ls_alias()
@@ -1161,6 +1029,7 @@ install_ls_alias()
   fi
 }
 
+
 # Defines a function to extract all types of compressed files
 install_extract_function()
 {
@@ -1170,6 +1039,7 @@ install_extract_function()
   	err "WARNING: Extract function is already installed. Skipping"
   fi
 }
+
 
 # Increases file history size, size of the history and forces to append to history, never overwrite
 # Ignore repeated commands and simple commands
@@ -1214,6 +1084,7 @@ install_shell_history_optimization()
   fi
 }
 
+
 install_git_aliases()
 {
   # Force "gitk" as alias for gitk --all --date-order
@@ -1231,6 +1102,7 @@ install_git_aliases()
   fi
 }
 
+
 install_environment_aliases()
 {
 
@@ -1240,6 +1112,7 @@ install_environment_aliases()
     err "WARNING: DESK environment alias is already installed. Skipping"
   fi
 }
+
 
 root_install()
 {
@@ -1269,6 +1142,7 @@ root_install()
   install_geany
 }
 
+
 user_install()
 {
   install_android_studio
@@ -1291,7 +1165,12 @@ user_install()
   install_visualstudiocode
 }
 
+
+
+################################
 ###### AUXILIAR FUNCTIONS ######
+################################
+
 
 # Prints the given arguments to the stderr
 err()
@@ -1299,9 +1178,13 @@ err()
   echo "$*" >&2
 }
 
+
+
 ##################
 ###### MAIN ######
 ##################
+
+
 main()
 {
   if [[ "$(whoami)" == "root" ]]; then
