@@ -178,12 +178,14 @@ Also the script `common_variables.sh` have been created. This script contains de
 
 ## Coming features
 - [ ] Automount available drives.
-- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", ""
+- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
+- [ ] Create argument (! or --not) for deselecting installed or uninstalled features.
+- [ ] -v --verbose Verbose mode (make the software not verbose by default)
+- [ ] -h --help to show help to use the program.
 - [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Delete / rearrange arguments of one letter
 - [ ] nettools
-- [ ] Notepad++
 
 ## Author and Acknowledgements
 * Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)
