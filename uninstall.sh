@@ -92,7 +92,7 @@ uninstall_shell_customization()
 {
   mv /home/${SUDO_USER}/.bashrc.bak /home/${SUDO_USER}/.bashrc
   chmod 775 /home/${SUDO_USER}/.bashrc
-  chgrp ${SUDO_USER} $/home/${SUDO_USER}/.bashrc
+  chgrp ${SUDO_USER} /home/${SUDO_USER}/.bashrc
   chown ${SUDO_USER} /home/${SUDO_USER}/.bashrc
 }
 
