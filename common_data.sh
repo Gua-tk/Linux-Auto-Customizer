@@ -125,7 +125,7 @@ L()
 }
 "
 
-intellij_ultimate_version=ideaIU-2020.2
+intellij_ultimate_version=ideaIU-2020.3.1
 intellij_ultimate_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
@@ -138,7 +138,7 @@ Terminal=false
 StartupWMClass=jetbrains-idea"
 
 
-intellij_community_version=ideaIC-2020.2
+intellij_community_version=ideaIC-2020.3.1
 intellij_community_launcher="[Desktop Entry]
 Version=13.0
 Type=Application
@@ -165,7 +165,7 @@ nemo_conf=("xdg-mime default nemo.desktop inode/directory application/x-gnome-sa
 "nemo-desktop &"
 )
 
-pycharm_version=pycharm-community-2019.1.1  # Targeted version of pycharm
+pycharm_version=pycharm-community-2020.3.2  # Targeted version of pycharm
 pycharm_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
@@ -176,7 +176,7 @@ Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
 
-pycharm_professional_version=pycharm-professional-2020.1  # Targeted version of pycharm
+pycharm_professional_version=pycharm-professional-2020.3.2  # Targeted version of pycharm
 pycharm_professional_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
