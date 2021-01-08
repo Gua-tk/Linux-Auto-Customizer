@@ -366,10 +366,10 @@ main()
         -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
           uninstall_google_chrome
         ;;
-        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community)
+        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
           uninstall_intellij_community
         ;;
-        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
+        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
           uninstall_intellij_ultimate
         ;;
         -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
