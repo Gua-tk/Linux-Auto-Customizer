@@ -2,7 +2,7 @@
 # A simple portable shell script to initialize and customize a Linux working environment. Needs root permission for some features.
 # Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
 # Created on 28/5/19
-# Last Update 19/4/2020
+# Last Update 19/4/2020register_file_associations
 
 ################################
 ###### AUXILIAR FUNCTIONS ######
@@ -67,7 +67,7 @@ install_android_studio()
       # avoid collisions
       rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
       # Download
-      wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.1.0/${android_studio_version}.tar.gz
+      wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.0.0.16/${android_studio_version}.tar.gz
       
       # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
       (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz
@@ -114,7 +114,7 @@ install_clion()
       # Create links to the PATH
       rm -f ${HOME}/.local/bin/clion
       ln -s ${USR_BIN_FOLDER}/clion/bin/clion.sh ${HOME}/.local/bin/clion
-      # Create launcher for pycharm in the desktop and in the launcher menu
+      # Create launcher for clion in the desktop and in the launcher menu
       echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
       chmod 775 ${HOME}/.local/share/applications/clion.desktop
       cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
@@ -427,6 +427,8 @@ install_pypy3()
     fi
     echo "Finished"
   fi
+
+  
 }
 
 
@@ -448,10 +450,10 @@ install_sublime_text()
       # Clean
       rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
       # Rename folder for coherence 
-      mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime-text
+      mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime_text
       # Create link to the PATH
       rm -f ${HOME}/.local/bin/sublime
-      ln -s ${USR_BIN_FOLDER}/sublime-text/sublime_text ${HOME}/.local/bin/sublime
+      ln -s ${USR_BIN_FOLDER}/sublime_text/sublime_text ${HOME}/.local/bin/sublime
       # Create desktop launcher entry for sublime text
       echo -e "${sublime_launcher}" > ${HOME}/.local/share/applications/sublime-text.desktop
       chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
@@ -547,6 +549,7 @@ install_visualstudiocode()
   fi
 }
 
+
 ############################
 ###### ROOT FUNCTIONS ######
 ############################
@@ -599,19 +602,6 @@ install_gcc()
   fi
 }
 
-
-# Install Geany
-install_geany()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install Geany"
-    apt-get -y install geany
-    copy_launcher "geany.desktop"
-    echo "Finished"
-  else
-    echo "WARNING: Could not install Geany. You need root permissions. Skipping..."
-  fi
-}
 
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
@@ -790,6 +780,7 @@ install_nemo()
       fi
     done
     for nemo_command in "${nemo_conf[@]}"; do
+      echo $nemo_command
       if [[ -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nemo_command}" )" ]]; then
         echo "${nemo_command}" >> /home/${SUDO_USER}/.profile
       fi
@@ -839,26 +830,6 @@ install_python3()
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attempting to install python3"
     apt install -y python3-dev python-dev python3-pip
-    echo "Finished"
-  else
-    echo "WARNING: Could not install python. You need root permissions. Skipping..."
-  fi
-}
-
-
-install_slack()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install slack"
-    # delete possible previous aborted install to avoid collisions
-    rm -f ${slack_version}*
-    # Download
-    wget -O ${slack_version} "${slack_repository}${slack_version}"
-    # Install
-    dpkg -i ${slack_version}
-    # delete .deb package
-    rm -f ${slack_version}*
-    copy_launcher "slack.desktop"
     echo "Finished"
   else
     echo "WARNING: Could not install python. You need root permissions. Skipping..."
@@ -944,9 +915,7 @@ install_virtualbox()
     echo "Attempting to install virtualbox"
     if [[ -z "$(which virtualbox)" ]]; then
       # Delete possible collisions with previous installation
-      rm -f virtualbox*.deb*
-      # install dependencies
-      apt-get install -y libsdl1.2debian
+      rm -f virtualbox*.deb*  
       # Download
       wget -O virtualbox.deb ${virtualbox_downloader}
       # Install
@@ -964,29 +933,6 @@ install_virtualbox()
   fi
 }
 
-
-# Wireshark
-install_wireshark()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install wireshark"
-    if [[ -z "$(which wireshark)" ]]; then
-      # make wireshark installation unattended
-      echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
-      # Install
-      DEBIAN_FRONTEND=noninteractive apt-get install -y wireshark
-      # Create launcher and change its permissions (we are root)
-      copy_launcher "wireshark.desktop"
-      sed -i 's-Icon=.*-Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg-' ${XDG_DESKTOP_DIR}/wireshark.desktop
-    else
-      err "WARNING: Wireshark is already installed. Skipping"
-    fi
-    echo "Finished"
-  else
-    echo "WARNING: Could not install wireshark. You need root permissions. Skipping..."
-  fi
-}
-
 #############################
 ###### SYSTEM FEATURES ######
 #############################
@@ -1000,13 +946,40 @@ install_templates()
     echo "WARNING: Could not install templates. You should be normal user. Skipping..."
   else
     echo "Attemptying to install templates"
-    echo ${bash_file_template} > ${XDG_TEMPLATES_DIR}/shell_script.sh
-    echo ${python_file_template} > ${XDG_TEMPLATES_DIR}/python3_script.py
-    echo ${latex_file_template} > ${XDG_TEMPLATES_DIR}/latex_document.tex
-    echo ${c_file_template} > ${XDG_TEMPLATES_DIR}/c_script.c
-    echo ${c_header_file_template} > ${XDG_TEMPLATES_DIR}/c_script.h
-    echo ${makefile_file_template} > ${XDG_TEMPLATES_DIR}/makefile
-    > ${XDG_TEMPLATES_DIR}/empty_text_file.txt
+    echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/shell_script.sh
+    echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/python3_script.py
+    echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+" > ${XDG_TEMPLATES_DIR}/latex_document.tex
+    echo "CC = gcc
+CFLAGS = -O3 -Wall
+
+all : c_script
+
+c_script : c_script.c
+	\$(CC) \$(CFLAGS) c_script.c -o c_script -lm
+
+run : c_script
+	./c_script
+
+.PHONY : clean
+clean :
+	rm -f c_script" > ${XDG_TEMPLATES_DIR}/makefile
+    echo "#include \"c_script.h\"
+  int main(int nargs, char* args[])
+{
+  printf(\"Hello World\");
+}
+
+" > ${XDG_TEMPLATES_DIR}/c_script.c
+    echo "// Includes
+#include <stdio.h>
+#include <stdbool.h>  // To use booleans
+#include <stdlib.h>
+" > ${XDG_TEMPLATES_DIR}/c_script.h
+    
+  > ${XDG_TEMPLATES_DIR}/text_file.txt
     chmod 775 ${XDG_TEMPLATES_DIR}/*
     echo "Finished"
   fi
@@ -1016,6 +989,22 @@ install_templates()
 # Forces l as alias for ls -lAh
 install_ls_alias()
 {
+  #lsdisplay=$(ls -lhA | tr -s " ")
+  #dudisplay=$(du -shxc .[!.]* * | sort -h | tr -s "\t" " ")
+  #IFS=$'\n'
+  #for linels in ${lsdisplay}; do
+  #  if [[ $linels =~ ^d.* ]]; then
+  #    foldername=$(echo $linels | cut -d " " -f9)
+  #    for linedu in ${dudisplay}; do
+  #      if [[ "$(echo ${linedu} | cut -d " " -f2)" = ${foldername} ]]; then
+  #        # Replace $lsdisplay with values in folder size 
+  #        break
+  #      fi
+  #    done
+  #  fi
+  #done
+
+  echo ""
 
 
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
@@ -1024,11 +1013,11 @@ install_ls_alias()
     sed -i 's/^alias l=.*/alias l=\"ls -lAh \"/' ${BASHRC_PATH}
   fi
 
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "L()" )" ]]; then
-    echo -e "${L_function}" >> ${BASHRC_PATH}
-  fi
+  #alias a="echo '---------------Alias----------------';alias"
+  #alias c="clear"
+  #alias h="history | grep $1"
+  #du -shxc .[!.]* * | sort -h
 }
-
 
 # Defines a function to extract all types of compressed files
 install_extract_function()
@@ -1039,7 +1028,6 @@ install_extract_function()
   	err "WARNING: Extract function is already installed. Skipping"
   fi
 }
-
 
 # Increases file history size, size of the history and forces to append to history, never overwrite
 # Ignore repeated commands and simple commands
@@ -1084,7 +1072,6 @@ install_shell_history_optimization()
   fi
 }
 
-
 install_git_aliases()
 {
   # Force "gitk" as alias for gitk --all --date-order
@@ -1102,7 +1089,6 @@ install_git_aliases()
   fi
 }
 
-
 install_environment_aliases()
 {
 
@@ -1112,7 +1098,6 @@ install_environment_aliases()
     err "WARNING: DESK environment alias is already installed. Skipping"
   fi
 }
-
 
 root_install()
 {
@@ -1132,16 +1117,12 @@ root_install()
   install_pdfgrep
   install_python3
   install_pypy3_dependencies
-  install_slack
   install_steam
   install_thunderbird
   install_transmission
   install_vlc
   install_virtualbox
-  install_wireshark
-  install_geany
 }
-
 
 user_install()
 {
@@ -1165,12 +1146,7 @@ user_install()
   install_visualstudiocode
 }
 
-
-
-################################
 ###### AUXILIAR FUNCTIONS ######
-################################
-
 
 # Prints the given arguments to the stderr
 err()
@@ -1178,13 +1154,9 @@ err()
   echo "$*" >&2
 }
 
-
-
 ##################
 ###### MAIN ######
 ##################
-
-
 main()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -1252,10 +1224,10 @@ main()
         -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
           install_google_chrome
         ;;
-        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community)
+        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
           install_intellij_community
         ;;
-        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate)
+        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
           install_intellij_ultimate
         ;;
         -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
@@ -1336,15 +1308,6 @@ main()
         ;;
         --games|--Gaming|--Games)
           install_games
-        ;;
-        --geany|--Geany|--geanny|--Geanny)
-          install_geany
-        ;;
-        --wireshark|--Wireshark)
-          install_wireshark
-        ;;
-        --slack|--Slack)
-          install_slack
         ;;
         
         ### WRAPPER ARGUMENTS ###
