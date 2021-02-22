@@ -31,7 +31,7 @@ fi
 
 ##### COMMON VARIABLES #####
 
-android_studio_version=android-studio-ide-201.6953283-linux  # Targeted version of Android Studio
+android_studio_version=android-studio-ide-201.7042882-linux  # Targeted version of Android Studio
 android_studio_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
@@ -149,8 +149,7 @@ Icon=${HOME}/.bin/idea-IC/bin/idea.png
 Exec=ideac %f
 Name=IntelliJ IDEA Community Edition
 StartupWMClass=jetbrains-idea"
-
-megasync_version=megasync_4.3.7-1.1_amd64.deb
+megasync_version=megasync_4.3.8-1.1_amd64.deb
 megasync_repository=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/
 megasync_integrator_version=nautilus-megasync_3.6.6_amd64.deb
 
@@ -162,8 +161,13 @@ nautilus_conf=("xdg-mime default nautilus.desktop inode/directory application/x-
 nemo_conf=("xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search"
 "gsettings set org.gnome.desktop.background show-desktop-icons false"
 "gsettings set org.nemo.desktop show-desktop-icons true"
-"nemo-desktop &"
 )
+nemo_desktop_launcher="[Desktop Entry]
+Type=Application
+Name=Files
+Exec=nemo-desktop
+OnlyShowIn=GNOME;Unity;
+X-Ubuntu-Gettext-Domain=nemo"
 
 pycharm_version=pycharm-community-2020.3.2  # Targeted version of pycharm
 pycharm_launcher="[Desktop Entry]

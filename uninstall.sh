@@ -246,11 +246,14 @@ uninstall_nemo()
 {
   apt -y purge nemo
   apt -y purge dconf-editor gnome-tweak-tool
-  for command in "${nemo_conf[@]}"; do
-    sed "s:${command}::g" -i /home/${SUDO_USER}/.profile
-  done
+  apt install -y nautilus gnome-shell-extension-desktop-icons
+  rm -f /etc/xdg/autostart/nemo-autostart.desktop
+  #for command in "${nemo_conf[@]}"; do
+   # sed "s:${command}::g" -i /home/${SUDO_USER}/.profile
+  #done
   for command in "${nautilus_conf[@]}"; do
-    echo "${command}" >> /home/${SUDO_USER}/.profile
+    $command
+    #echo "${command}" >> /home/${SUDO_USER}/.profile
   done
   echo "WARNING: If Nemo has been uninstalled restart Ubuntu to update the desktop back to Nautilus"
 

@@ -67,7 +67,7 @@ install_android_studio()
       # avoid collisions
       rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
       # Download
-      wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.0.0.16/${android_studio_version}.tar.gz
+      wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/${android_studio_version}.tar.gz
       
       # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
       (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz
@@ -772,18 +772,20 @@ install_nemo()
 {
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attempting to install nemo"
-    apt -y install nemo
+    apt purge -y nautilus gnome-shell-extension-desktop-icons
+    apt -y install nemo 
     apt -y install dconf-editor gnome-tweak-tool
-    for nautilus_command in "${nautilus_conf[@]}"; do
-      if [[ ! -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nautilus_command}" )" ]]; then
-        sed "s:${nautilus_command}::g" -i /home/${SUDO_USER}/.profile
-      fi
-    done
+    echo -e "${nemo_desktop_launcher}" > /etc/xdg/autostart/nemo-autostart.desktop
+    #for nautilus_command in "${nautilus_conf[@]}"; do
+     # if [[ ! -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nautilus_command}" )" ]]; then
+      #  sed "s:${nautilus_command}::g" -i /home/${SUDO_USER}/.profile
+      #fi
+    #done
     for nemo_command in "${nemo_conf[@]}"; do
-      echo $nemo_command
-      if [[ -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nemo_command}" )" ]]; then
-        echo "${nemo_command}" >> /home/${SUDO_USER}/.profile
-      fi
+      #if [[ -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nemo_command}" )" ]]; then
+       # echo "${nemo_command}" >> /home/${SUDO_USER}/.profile
+        $nemo_command
+      #fi
     done
     echo "WARNING: If Nemo has been installed,restart Ubuntu"
     echo "Finished"
