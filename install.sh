@@ -291,7 +291,7 @@ install_mendeley()
       cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
       chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
       # Modify Icon line
-      sed -i 's-Icon=.*-Icon=${HOME}/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+      sed -i s-Icon=.*-Icon=${HOME}/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png- ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
       # Modify exec line
       sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
       # Copy to desktop  launchers of the current user
@@ -450,10 +450,10 @@ install_sublime_text()
       # Clean
       rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
       # Rename folder for coherence 
-      mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime_text
+      mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime-text
       # Create link to the PATH
       rm -f ${HOME}/.local/bin/sublime
-      ln -s ${USR_BIN_FOLDER}/sublime_text/sublime_text ${HOME}/.local/bin/sublime
+      ln -s ${USR_BIN_FOLDER}/sublime-text/sublime_text ${HOME}/.local/bin/sublime
       # Create desktop launcher entry for sublime text
       echo -e "${sublime_launcher}" > ${HOME}/.local/share/applications/sublime-text.desktop
       chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
