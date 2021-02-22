@@ -55,6 +55,15 @@ Comment=C and C++ IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-clion"
 
+cmatrix_launcher="[Desktop Entry]
+Name=CMatrix
+StartupWMClass=cmatrix
+Comment=Matrix
+Terminal=true
+Exec=cmatrix
+Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/bless_bless-48x48.png
+Type=Application"
+
 dropbox_version=2020.03.04
 
 discord_launcher="[Desktop Entry]

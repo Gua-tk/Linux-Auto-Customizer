@@ -554,6 +554,19 @@ install_visualstudiocode()
 ###### ROOT FUNCTIONS ######
 ############################
 
+install_cmatrix()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install cmatrix"
+    apt-get install -y cmatrix
+    echo -e "${cmatrix_launcher}" > ${XDG_DESKTOP_DIR}/cmatrix.desktop
+    chmod 775 ${XDG_DESKTOP_DIR}/cmatrix.desktop
+    echo "Finished"
+  else
+    echo "WARNING: Could not install cmatrix. You need root permissions. Skipping..."
+  fi
+}
+
 install_firefox()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -1103,6 +1116,7 @@ install_environment_aliases()
 
 root_install()
 {
+  install_cmatrix
   install_dropbox
   install_firefox
   #install_games
@@ -1207,6 +1221,9 @@ main()
         ;;
         -n|--clion|--Clion|--CLion)
           install_clion
+        ;;
+        --cmatrix|--Cmatrix)
+          install_cmatrix
         ;;
         -i|--discord|--Discord|--disc)
           install_discord

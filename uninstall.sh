@@ -8,6 +8,12 @@ err()
   echo "$*" >&2
 }
 
+uninstall_cmatrix()
+{
+  apt-get purge -y cmatrix
+  rm -f ${XDG_DESKTOP_DIR}/cmatrix.desktop
+}
+
 uninstall_firefox()
 {
   apt-get purge -y firefox
@@ -23,7 +29,7 @@ uninstall_games()
   apt-get purge -y aisleriot
   rm -f ${XDG_DESKTOP_DIR}/sol.desktop
   apt-get purge -y gnome-mahjongg
-  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mahjongg
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mahjongg.desktop
   apt-get purge -y gnome-sudoku
   rm -f ${XDG_DESKTOP_DIR}/org.gnome.Sudoku.desktop
 }
@@ -286,6 +292,7 @@ uninstall_all()
 {
   uninstall_android_studio
   uninstall_clion
+  uninstall_cmatrix
   uninstall_discord
   uninstall_dropbox
   uninstall_firefox
@@ -350,6 +357,9 @@ main()
         ;;
         -n|--clion|--Clion|--CLion)
           uninstall_clion
+        ;;
+        --cmatrix|--Cmatrix)
+          uninstall_cmatrix
         ;;
         -i|--discord|--Discord|--disc)
           uninstall_discord
