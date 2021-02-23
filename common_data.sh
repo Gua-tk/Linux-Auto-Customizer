@@ -185,7 +185,7 @@ Name=Files
 Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
-
+PS1_custom="\[\e[1;37m\]\\d \\t \[\e[0;32m\]\\u\[\e[4;35m\]@\[\e[0;36m\]\\H\[\e[0;33m\] \\w\[\e[0;32m\] \\$ "
 pycharm_version=pycharm-community-2020.3.2  # Targeted version of pycharm
 pycharm_launcher="[Desktop Entry]
 Version=1.0

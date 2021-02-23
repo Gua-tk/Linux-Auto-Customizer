@@ -841,6 +841,7 @@ install_nemo()
         $nemo_command
       #fi
     done
+    copy_launcher "nemo.desktop"
     echo "WARNING: If Nemo has been installed,restart Ubuntu"
     echo "Finished"
   else
@@ -1153,6 +1154,13 @@ install_environment_aliases()
   else
     err "WARNING: DESK environment alias is already installed. Skipping"
   fi
+  
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "export PS1=" )" ]]; then
+    echo "export PS1=\"${PS1_custom}\"" >> ${BASHRC_PATH}
+  else
+    err "WARNING: PS1 environment alias is already installed. Skipping"
+  fi
+  
 }
 
 root_install()
