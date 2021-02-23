@@ -55,6 +55,14 @@ Comment=C and C++ IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-clion"
 
+clonezilla_launcher="[Desktop Entry]
+Name=CloneZilla
+Comment=Create bootable clonezilla images
+Icon=/usr/share/gdm/themes/drbl-gdm/clonezilla/ocslogo-1.png
+Exec=sudo clonezilla
+Terminal=true
+Type=Application"
+
 cmatrix_launcher="[Desktop Entry]
 Name=CMatrix
 StartupWMClass=cmatrix

@@ -554,6 +554,23 @@ install_visualstudiocode()
 ###### ROOT FUNCTIONS ######
 ############################
 
+#Install CloneZilla
+install_clonezilla()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install clonezilla"
+    apt-get install -y clonezilla
+    echo -e "${clonezilla_launcher}" > ${XDG_DESKTOP_DIR}/clonezilla.desktop
+    chmod 775 ${XDG_DESKTOP_DIR}/clonezilla.desktop
+    chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/clonezilla.desktop
+    chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/clonezilla.desktop
+    cp ${XDG_DESKTOP_DIR}/clonezilla.desktop /home/${SUDO_USER}/.local/share/applications
+    echo "Finished"
+  else
+    echo "WARNING: Could not install clonezilla. You need root permissions. Skipping..."
+  fi
+}
+
 install_cmatrix()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -615,6 +632,18 @@ install_gcc()
   fi
 }
 
+# Install GIMP
+install_gimp()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install gimp"
+    apt install -y gimp
+    copy_launcher "gimp.desktop"
+    echo "Finished"
+  else
+    echo "WARNING: Could not install gimp. You need root permissions. Skipping..."
+  fi
+}
 
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
@@ -643,6 +672,18 @@ install_GNU_parallel()
   fi
 }
 
+# Install gparted
+install_gparted()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install gparted"
+    apt install -y gparted
+    copy_launcher "gparted.desktop"
+    echo "Finished"
+  else
+    echo "WARNING: Could not install gparted. You need root permissions. Skipping..."
+  fi
+}
 
 # Checks if Google Chrome is already installed and installs it and its dependencies
 # Needs root permission
@@ -1121,8 +1162,11 @@ root_install()
   install_firefox
   #install_games
   install_gcc
+  install_clonezilla
+  install_gimp
   install_git
   install_GNU_parallel
+  install_gparted
   install_google_chrome
   install_jdk11
   install_latex
@@ -1234,8 +1278,17 @@ main()
         -c|--gcc)
           install_gcc
         ;;
+        --clonezilla|--CloneZilla|--cloneZilla)
+          install_clonezilla
+        ;;
         -g|--git)
           install_git
+        ;;
+        --GIMP|--gimp|--Gimp)
+          install_gimp
+        ;;
+        --GParted|--gparted|--GPARTED|--Gparted)
+          install_gparted
         ;;
         -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
           install_GNU_parallel

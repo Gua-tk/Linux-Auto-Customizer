@@ -14,6 +14,13 @@ uninstall_cmatrix()
   rm -f ${XDG_DESKTOP_DIR}/cmatrix.desktop
 }
 
+uninstall_clonezilla()
+{
+  apt-get purge -y clonezilla
+  rm -f ${XDG_DESKTOP_DIR}/clonezilla.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/clonezilla.desktop
+}
+
 uninstall_firefox()
 {
   apt-get purge -y firefox
@@ -60,12 +67,23 @@ uninstall_musicmanager()
   rm -f /home/${SUDO_USER}/.local/share/applications/google-musicmanager.desktop
 }
 
+uninstall_gimp()
+{
+  apt purge -y gimp
+  rm -f ${XDG_DESKTOP_DIR}/gimp.desktop
+}
+
 uninstall_git()
 {
   apt-get purge -y git-all
   apt-get purge -y git-lfs
 }
 
+uninstall_gparted()
+{
+  apt purge -y gparted
+  rm -f ${XDG_DESKTOP_DIR}/gparted.desktop
+}
 uninstall_latex()
 {
   apt-get purge -y texlive-latex-extra perl-tk
@@ -292,6 +310,7 @@ uninstall_all()
 {
   uninstall_android_studio
   uninstall_clion
+  uninstall_clonezilla
   uninstall_cmatrix
   uninstall_discord
   uninstall_dropbox
@@ -299,9 +318,11 @@ uninstall_all()
   uninstall_games
   uninstall_gcc
   uninstall_geany
+  uninstall_gimp
   uninstall_git
   uninstall_GNU_parallel
   uninstall_google_chrome
+  uninstall_gparted
   uninstall_intellij_community
   uninstall_intellij_ultimate
   uninstall_jdk11
@@ -361,6 +382,9 @@ main()
         --cmatrix|--Cmatrix)
           uninstall_cmatrix
         ;;
+        --clonezilla|--CloneZilla|--cloneZilla)
+          uninstall_clonezilla
+        ;;
         -i|--discord|--Discord|--disc)
           uninstall_discord
         ;;
@@ -372,6 +396,12 @@ main()
         ;;
         -g|--git)
           uninstall_git
+        ;;
+        --GIMP|--gimp|--Gimp)
+          uninstall_gimp
+        ;;
+        --GParted|--gparted|--GPARTED|--Gparted)
+          uninstall_gparted
         ;;
         -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
           uninstall_GNU_parallel
