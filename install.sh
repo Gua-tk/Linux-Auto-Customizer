@@ -1160,7 +1160,21 @@ install_environment_aliases()
   else
     err "WARNING: PS1 environment alias is already installed. Skipping"
   fi
+  echo $(dconf list /org/gnome/terminal/legacy/profiles:/)
+  dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(0,0,0)'"
   
+  # Install git bash prompt
+  if [[ "$(whoami)" != "root" ]]; then
+    if [[ -d "${USR_BIN_FOLDER}/.bash-git-prompt" ]]; then
+      rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
+      git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
+    else
+      git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
+      echo "${bash_git_prompt_bashrc}" >> ${BASHRC_PATH}
+    fi
+  else
+    err "WARNING: Could not install bash prompt you should be normal user. Skipping"
+  fi
 }
 
 root_install()

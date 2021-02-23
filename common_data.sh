@@ -186,6 +186,7 @@ Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
 PS1_custom="\[\e[1;37m\]\\d \\t \[\e[0;32m\]\\u\[\e[4;35m\]@\[\e[0;36m\]\\H\[\e[0;33m\] \\w\[\e[0;32m\] \\$ "
+
 pycharm_version=pycharm-community-2020.3.2  # Targeted version of pycharm
 pycharm_launcher="[Desktop Entry]
 Version=1.0
@@ -282,6 +283,13 @@ python_file_template="#!/usr/bin/env python3
 
 if __name__ == \"__main__\":
     exit(0)
+"
+
+bash_git_prompt_bashrc="
+if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
+    GIT_PROMPT_ONLY_IN_REPO=1
+    source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
+fi
 "
 
 bash_file_template="#!/usr/bin/env bash\
