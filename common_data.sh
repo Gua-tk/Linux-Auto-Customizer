@@ -2,6 +2,7 @@
 
 
 # GLOBAL VARIABLES
+# LAUNCHERS_DIR, DIR_IN_PATH, USR_BIN_FOLDER, BASHRC_PATH
 # Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
 if [[ "$(whoami)" != "root" ]]; then
   # declare lenguage specific user environment variables

@@ -87,8 +87,6 @@ install_android_studio()
     fi
     echo "Finished"
   fi
-
-  
 }
 
 install_clion()
@@ -128,7 +126,6 @@ install_clion()
       err "WARNING: CLion is already installed. Skipping"
     fi
   fi
-  
 }
 
 
@@ -157,34 +154,6 @@ install_discord()
     echo "Finished"
   else
     echo "WARNING: Could not install discord. You should be normal user. Skipping..."
-  fi
-}
-
-
-# Dropbox desktop client and integration
-install_dropbox()
-{
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attemptying to install dropbox"
-    if [[ -z $(which dropbox) ]]; then
-      # Dependency
-      apt-get -y install python3-gpg
-      
-      rm -f dropbox_${dropbox_version}_amd64.deb*
-
-      wget -O ${dropbox_version}.deb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-
-      dpkg -i ${dropbox_version}.deb
-
-      rm -f ${dropbox_version}.deb*
-
-      copy_launcher dropbox.desktop
-    else
-      err "WARNING: dropbox is already installed. Skipping"
-    fi
-    echo "Finished"
-  else
-    echo "WARNING: Could not install dropbox. You should be root."
   fi
 }
 
@@ -426,8 +395,6 @@ install_pypy3()
     fi
     echo "Finished"
   fi
-
-  
 }
 
 
@@ -435,7 +402,7 @@ install_pypy3()
 install_sublime_text()
 {
   if [[ "$(whoami)" == "root" ]]; then
-    echo "WARNING: Could not install pycharm community. You should be normal user. Skipping..."
+    echo "WARNING: Could not install sublime text. You should be normal user. Skipping..."
   else
     echo "Attempting to install sublime text"
       if [[ -z $(which sublime) ]]; then
@@ -553,6 +520,17 @@ install_visualstudiocode()
 ###### ROOT FUNCTIONS ######
 ############################
 
+install_audacity()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "WARNING: Could not install audacity. You should be root. Skipping..."
+  else
+    echo "Attempting to install audacity"
+    apt install -y audacity
+    copy_launcher "audacity.desktop"
+  fi
+}
+
 install_cheat()
 {
   if [[ "$(whoami)" != "root" ]]; then
@@ -577,7 +555,6 @@ install_cheat()
     chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/cheat
   fi
 }
-
 
 #Install CloneZilla
 install_clonezilla()
@@ -609,6 +586,33 @@ install_cmatrix()
   fi
 }
 
+# Dropbox desktop client and integration
+install_dropbox()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attemptying to install dropbox"
+    if [[ -z $(which dropbox) ]]; then
+      # Dependency
+      apt-get -y install python3-gpg
+      
+      rm -f dropbox_${dropbox_version}_amd64.deb*
+
+      wget -O ${dropbox_version}.deb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
+
+      dpkg -i ${dropbox_version}.deb
+
+      rm -f ${dropbox_version}.deb*
+
+      copy_launcher dropbox.desktop
+    else
+      err "WARNING: dropbox is already installed. Skipping"
+    fi
+    echo "Finished"
+  else
+    echo "WARNING: Could not install dropbox. You should be root."
+  fi
+}
+
 install_firefox()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -621,6 +625,16 @@ install_firefox()
   fi
 }
 
+install_f-irc()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install f-irc"
+    apt-get install -y f-irc
+    echo "Finished"
+  else
+    echo "WARNING: Could not install f-irc. You need root permissions. Skipping..."
+  fi
+}
 
 install_games()
 {
@@ -960,6 +974,17 @@ install_thunderbird()
 }
 
 
+install_tmux()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install tmux"
+    apt-get -y install tmux
+    echo "Finished"
+  else
+    echo "WARNING: Could not install tmux. You should be root. Skipping..."
+  fi
+}
+
 install_transmission()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -1204,13 +1229,15 @@ install_environment_aliases()
 
 root_install()
 {
+  install_audacity
   install_cheat
   install_cmatrix
+  install_clonezilla
   install_dropbox
   install_firefox
+  install_f-irc
   #install_games
   install_gcc
-  install_clonezilla
   install_gimp
   install_git
   install_GNU_parallel
@@ -1227,6 +1254,7 @@ root_install()
   install_pypy3_dependencies
   install_steam
   install_thunderbird
+  install_tmux
   install_transmission
   install_vlc
   install_virtualbox
@@ -1311,6 +1339,9 @@ main()
         -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
           install_android_studio
         ;;
+        --audacity|--Audacity)
+          install_audacity
+        ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           install_cheat
         ;;
@@ -1377,6 +1408,9 @@ main()
         -f|--pdfgrep|--findpdf|--pdf)
           install_pdfgrep
         ;;
+        --f-irc|--firc|--Firc|--irc)
+          install_f-irc
+        ;;
         -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
           install_pycharm_community
         ;;
@@ -1410,6 +1444,9 @@ main()
         ;;
         -t|--templates)
           install_templates
+        ;;
+        --tmux|--Tmux)
+          install_tmux
         ;;
         --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
           install_thunderbird

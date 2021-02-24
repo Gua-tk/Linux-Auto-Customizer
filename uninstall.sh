@@ -8,6 +8,20 @@ err()
   echo "$*" >&2
 }
 
+uninstall_android_studio()
+{
+  rm -Rf ${USR_BIN_FOLDER}/android-studio
+  rm -f /home/${SUDO_USER}/.local/bin/studio
+  rm -f "${XDG_DESKTOP_DIR}/Android Studio.desktop"
+  rm -f "/home/${SUDO_USER}/.local/share/applications/Android Studio.desktop"
+}
+
+uninstall_audacity()
+{
+  apt-get purge -y audacity audacity-data
+  rm -f ${XDG_DESKTOP_DIR}/audacity.desktop
+}
+
 uninstall_cheat()
 {
   #there's a curl dependency for cht.sh
@@ -22,17 +36,45 @@ uninstall_cmatrix()
   rm -f ${XDG_DESKTOP_DIR}/cmatrix.desktop
 }
 
+uninstall_clion()
+{
+  rm -Rf ${USR_BIN_FOLDER}/clion
+  rm -f ${XDG_DESKTOP_DIR}/clion.desktop
+  rm -f /home/${SUDO_USER}/.local/bin/clion
+  rm -f /home/${SUDO_USER}/.local/share/applications/clion.desktop
+}
+
 uninstall_clonezilla()
 {
   apt-get purge -y clonezilla
   rm -f ${XDG_DESKTOP_DIR}/clonezilla.desktop
+  # {LAUNCHERS_DIR}
   rm -f /home/${SUDO_USER}/.local/share/applications/clonezilla.desktop
+}
+
+uninstall_discord()
+{
+  rm -f /home/${SUDO_USER}/.local/bin/discord
+  rm -f ${XDG_DESKTOP_DIR}/discord.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/discord.desktop
+  rm -Rf ${USR_BIN_FOLDER}/discord
+}
+
+uninstall_dropbox()
+{
+  apt-get purge -y dropbox
+  rm -f ${XDG_DESKTOP_DIR}/dropbox.desktop
 }
 
 uninstall_firefox()
 {
   apt-get purge -y firefox
   rm -f ${XDG_DESKTOP_DIR}/firefox.desktop
+}
+
+uninstall_f-irc()
+{
+  apt-get purge -y f-irc
 }
 
 uninstall_games()
@@ -60,21 +102,6 @@ uninstall_geany()
   rm -f ${XDG_DESKTOP_DIR}/geany.desktop
 }
 
-uninstall_google_chrome()
-{
-  apt-get purge -y google-chrome-stable
-  rm -f ${XDG_DESKTOP_DIR}/google-chrome.desktop
-  rm -f ${XDG_DESKTOP_DIR}/chrome*.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/chrome*.desktop
-}
-
-uninstall_musicmanager()
-{
-  apt-get purge -y google-musicmanager google-musicmanager-beta
-  rm -f ${XDG_DESKTOP_DIR}/google-musicmanager.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/google-musicmanager.desktop
-}
-
 uninstall_gimp()
 {
   apt purge -y gimp
@@ -87,147 +114,22 @@ uninstall_git()
   apt-get purge -y git-lfs
 }
 
-uninstall_gparted()
-{
-  apt purge -y gparted
-  rm -f ${XDG_DESKTOP_DIR}/gparted.desktop
-}
-uninstall_latex()
-{
-  apt-get purge -y texlive-latex-extra perl-tk
-  rm -f ${XDG_DESKTOP_DIR}/texdoctk.desktop
-  rm -f ${XDG_DESKTOP_DIR}/texmaker.desktop
-}
-
-uninstall_python3()
-{
-  apt-get purge -y python3-dev
-  apt-get purge -y python-dev
-}
-
 uninstall_GNU_parallel()
 {
   apt-get purge -y parallel
 }
 
-uninstall_pypy3_dependencies()
+uninstall_google_chrome()
 {
-  apt-get purge -y pkg-config libfreetype6-dev libpng-dev libffi-dev
+  apt-get purge -y google-chrome-stable
+  rm -f ${XDG_DESKTOP_DIR}/google-chrome.desktop
+  rm -f ${XDG_DESKTOP_DIR}/chrome*.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/chrome*.desktop
 }
-
-uninstall_templates()
+uninstall_gparted()
 {
-  rm -f ${XDG_TEMPLATES_DIR}/*
-}
-
-uninstall_shell_customization()
-{
-  mv /home/${SUDO_USER}/.bashrc.bak /home/${SUDO_USER}/.bashrc
-  chmod 775 /home/${SUDO_USER}/.bashrc
-  chgrp ${SUDO_USER} /home/${SUDO_USER}/.bashrc
-  chown ${SUDO_USER} /home/${SUDO_USER}/.bashrc
-  
-  # uninstall git bash prompt here
-  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
-  dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(48,10,36)'"
-}
-
-uninstall_pycharm_professional()
-{
-  rm -Rf ${USR_BIN_FOLDER}/pycharm-pro
-  rm -f ${XDG_DESKTOP_DIR}/pycharm-pro.desktop
-  rm -f /home/${SUDO_USER}/.local/bin/pycharm-pro
-  rm -f /home/${SUDO_USER}/.local/share/applications/pycharm-pro.desktop
-}
-
-uninstall_pycharm_community()
-{
-  rm -Rf ${USR_BIN_FOLDER}/pycharm-community
-  rm -f ${XDG_DESKTOP_DIR}/pycharm.desktop
-  rm -f /home/${SUDO_USER}/.local/bin/pycharm
-  rm -f /home/${SUDO_USER}/.local/share/applications/pycharm.desktop
-}
-
-uninstall_clion()
-{
-  rm -Rf ${USR_BIN_FOLDER}/clion
-  rm -f ${XDG_DESKTOP_DIR}/clion.desktop
-  rm -f /home/${SUDO_USER}/.local/bin/clion
-  rm -f /home/${SUDO_USER}/.local/share/applications/clion.desktop
-}
-
-uninstall_sublime_text()
-{
-  rm -Rf ${USR_BIN_FOLDER}/sublime-text
-  rm -f ${XDG_DESKTOP_DIR}/sublime-text.desktop
-  rm -f /home/${SUDO_USER}/.local/bin/sublime
-  rm -f /home/${SUDO_USER}/.local/share/applications/sublime-text.desktop
-}
-
-uninstall_pypy3()
-{
-  rm -Rf ${USR_BIN_FOLDER}/pypy3
-  rm -f /home/${SUDO_USER}/.local/bin/pypy3
-  rm -f /home/${SUDO_USER}/.local/bin/pypy3-pip
-}
-
-uninstall_android_studio()
-{
-  rm -Rf ${USR_BIN_FOLDER}/android-studio
-  rm -f /home/${SUDO_USER}/.local/bin/studio
-  rm -f "${XDG_DESKTOP_DIR}/Android Studio.desktop"
-  rm -f "/home/${SUDO_USER}/.local/share/applications/Android Studio.desktop"
-}
-
-uninstall_pdfgrep()
-{
-  apt-get purge -y pdfgrep
-}
-
-uninstall_vlc()
-{
-  apt-get purge -y vlc
-}
-
-uninstall_steam()
-{
-  apt-get purge -y curl
-  dpkg -P steam-launcher
-  rm -f ${XDG_DESKTOP_DIR}/steam.desktop
-}
-
-uninstall_discord()
-{
-  rm -f /home/${SUDO_USER}/.local/bin/discord
-  rm -f ${XDG_DESKTOP_DIR}/discord.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/discord.desktop
-  rm -Rf ${USR_BIN_FOLDER}/discord
-}
-
-uninstall_megasync()
-{
-  dpkg -P nautilus-megasync
-  dpkg -P megasync
-  rm -f ${XDG_DESKTOP_DIR}/megasync.desktop
-  apt-get purge -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
-}
-
-uninstall_slack()
-{
-  dpkg -P slack-desktop
-  rm -f ${XDG_DESKTOP_DIR}/slack.desktop
-}
-
-uninstall_thunderbird()
-{
-  apt-get purge -y thunderbird
-  rm -f ${XDG_DESKTOP_DIR}/thunderbird.desktop
-}
-
-uninstall_transmission()
-{
-  apt-get purge -y transmission
-  rm -f ${XDG_DESKTOP_DIR}/transmission-gtk.desktop
+  apt purge -y gparted
+  rm -f ${XDG_DESKTOP_DIR}/gparted.desktop
 }
 
 uninstall_intellij_ultimate()
@@ -246,23 +148,24 @@ uninstall_intellij_community()
   rm -f /home/${SUDO_USER}/.local/share/applications/ideac.desktop
 }
 
-uninstall_telegram()
-{
-  rm -Rf ${USR_BIN_FOLDER}/telegram
-  rm -f /home/${SUDO_USER}/.local/bin/telegram
-  rm -f ${XDG_DESKTOP_DIR}/telegram.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
-}
-
 uninstall_jdk11()
 {
   apt -y purge default-jdk
 }
 
-uninstall_dropbox()
+uninstall_latex()
 {
-  apt-get purge -y dropbox
-  rm -f ${XDG_DESKTOP_DIR}/dropbox.desktop
+  apt-get purge -y texlive-latex-extra perl-tk
+  rm -f ${XDG_DESKTOP_DIR}/texdoctk.desktop
+  rm -f ${XDG_DESKTOP_DIR}/texmaker.desktop
+}
+
+uninstall_megasync()
+{
+  dpkg -P nautilus-megasync
+  dpkg -P megasync
+  rm -f ${XDG_DESKTOP_DIR}/megasync.desktop
+  apt-get purge -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 }
 
 uninstall_mendeley()
@@ -276,6 +179,13 @@ uninstall_mendeley()
 uninstall_mendeley_dependencies()
 {
   apt-get -y purge gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
+}
+
+uninstall_musicmanager()
+{
+  apt-get purge -y google-musicmanager google-musicmanager-beta
+  rm -f ${XDG_DESKTOP_DIR}/google-musicmanager.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/google-musicmanager.desktop
 }
 
 uninstall_nemo()
@@ -295,6 +205,108 @@ uninstall_nemo()
 
 }
 
+uninstall_pdfgrep()
+{
+  apt-get purge -y pdfgrep
+}
+
+uninstall_pycharm_professional()
+{
+  rm -Rf ${USR_BIN_FOLDER}/pycharm-pro
+  rm -f ${XDG_DESKTOP_DIR}/pycharm-pro.desktop
+  rm -f /home/${SUDO_USER}/.local/bin/pycharm-pro
+  rm -f /home/${SUDO_USER}/.local/share/applications/pycharm-pro.desktop
+}
+
+uninstall_pycharm_community()
+{
+  rm -Rf ${USR_BIN_FOLDER}/pycharm-community
+  rm -f ${XDG_DESKTOP_DIR}/pycharm.desktop
+  rm -f /home/${SUDO_USER}/.local/bin/pycharm
+  rm -f /home/${SUDO_USER}/.local/share/applications/pycharm.desktop
+}
+
+uninstall_pypy3()
+{
+  rm -Rf ${USR_BIN_FOLDER}/pypy3
+  rm -f /home/${SUDO_USER}/.local/bin/pypy3
+  rm -f /home/${SUDO_USER}/.local/bin/pypy3-pip
+}
+
+uninstall_python3()
+{
+  apt-get purge -y python3-dev
+  apt-get purge -y python-dev
+}
+
+uninstall_pypy3_dependencies()
+{
+  apt-get purge -y pkg-config libfreetype6-dev libpng-dev libffi-dev
+}
+
+uninstall_shell_customization()
+{
+  mv /home/${SUDO_USER}/.bashrc.bak /home/${SUDO_USER}/.bashrc
+  chmod 775 /home/${SUDO_USER}/.bashrc
+  chgrp ${SUDO_USER} /home/${SUDO_USER}/.bashrc
+  chown ${SUDO_USER} /home/${SUDO_USER}/.bashrc
+  
+  # uninstall git bash prompt here
+  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
+  dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(48,10,36)'"
+}
+
+uninstall_slack()
+{
+  dpkg -P slack-desktop
+  rm -f ${XDG_DESKTOP_DIR}/slack.desktop
+}
+
+uninstall_steam()
+{
+  apt-get purge -y curl
+  dpkg -P steam-launcher
+  rm -f ${XDG_DESKTOP_DIR}/steam.desktop
+}
+
+uninstall_sublime_text()
+{
+  rm -Rf ${USR_BIN_FOLDER}/sublime-text
+  rm -f ${XDG_DESKTOP_DIR}/sublime-text.desktop
+  rm -f /home/${SUDO_USER}/.local/bin/sublime
+  rm -f /home/${SUDO_USER}/.local/share/applications/sublime-text.desktop
+}
+
+uninstall_telegram()
+{
+  rm -Rf ${USR_BIN_FOLDER}/telegram
+  rm -f /home/${SUDO_USER}/.local/bin/telegram
+  rm -f ${XDG_DESKTOP_DIR}/telegram.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
+}
+
+uninstall_templates()
+{
+  rm -f ${XDG_TEMPLATES_DIR}/*
+}
+
+uninstall_thunderbird()
+{
+  apt-get purge -y thunderbird
+  rm -f ${XDG_DESKTOP_DIR}/thunderbird.desktop
+}
+
+uninstall_tmux()
+{
+  apt purge -y tmux
+}
+
+uninstall_transmission()
+{
+  apt-get purge -y transmission
+  rm -f ${XDG_DESKTOP_DIR}/transmission-gtk.desktop
+}
+
 uninstall_virtualbox()
 {
   dpkg -P virtualbox-6.1
@@ -309,6 +321,10 @@ uninstall_visualstudiocode()
   rm -f ${XDG_DESKTOP_DIR}/visual-studio-code.desktop
 }
 
+uninstall_vlc()
+{
+  apt-get purge -y vlc
+}
 
 uninstall_wireshark()
 {
@@ -317,10 +333,12 @@ uninstall_wireshark()
   apt-get autoremove -y --purge wireshark
 }
 
+
 # Uninstall all functions
 uninstall_all()
 {
   uninstall_android_studio
+  uninstall_audacity
   uninstall_cheat
   uninstall_clion
   uninstall_clonezilla
@@ -328,6 +346,7 @@ uninstall_all()
   uninstall_discord
   uninstall_dropbox
   uninstall_firefox
+  uninstall_f-irc
   uninstall_games
   uninstall_gcc
   uninstall_geany
@@ -358,6 +377,7 @@ uninstall_all()
   uninstall_telegram
   uninstall_templates
   uninstall_thunderbird
+  uninstall_tmux
   uninstall_transmission
   uninstall_virtualbox
   uninstall_visualstudiocode
@@ -389,6 +409,9 @@ main()
         -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
           uninstall_android_studio
         ;;
+        --audacity|--Audacity)
+          uninstall_audacity
+        ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           uninstall_cheat
         ;;
@@ -409,6 +432,9 @@ main()
         ;;
         -c|--gcc)
           uninstall_gcc
+        ;;
+        --f-irc|--firc|--Firc|--irc)
+          uninstall_f-irc
         ;;
         -g|--git)
           uninstall_git
@@ -487,6 +513,9 @@ main()
         ;;
         --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
           uninstall_thunderbird
+        ;;
+        --tmux|--Tmux)
+          uninstall_tmux
         ;;
         --transmission|--transmission-gtk|--Transmission)
           uninstall_transmission
