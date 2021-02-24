@@ -888,6 +888,36 @@ install_nemo()
   fi
 }
 
+install_openoffice()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install openoffice"
+    apt remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
+    apt autoremove -y
+    rm -f office.tar.gz*
+    wget -O "office.tar.gz" "${openoffice_downloader}"
+    rm -Rf en-US
+    tar -xvf "office.tar.gz"
+    rm -f office.tar.gz*
+    cd en-US/DEBS/
+    dpkg -i *.deb
+    cd desktop-integration/
+    dpkg -i *.deb
+    cd ../../..
+    rm -Rf en-US
+    
+    copy_launcher "openoffice4-base.desktop"
+    copy_launcher "openoffice4-calc.desktop"
+    copy_launcher "openoffice4-draw.desktop"
+    copy_launcher "openoffice4-math.desktop"
+    copy_launcher "openoffice4-writer.desktop"
+    
+    echo "Finished"
+  else
+    echo "WARNING: Could not install openoffice. You should be root. Skipping..."
+  fi
+  
+}
 
 # Install pdf grep
 install_pdfgrep()
@@ -1249,6 +1279,7 @@ root_install()
   install_mendeley_dependencies
   install_musicmanager
   install_nemo
+  install_openoffice
   install_pdfgrep
   install_python3
   install_pypy3_dependencies
@@ -1419,6 +1450,9 @@ main()
         ;;
         -p|--python|--python3|--Python3|--Python)
           install_python3
+        ;;
+        --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
+          install_openoffice
         ;;
         -y|--pypy|--pypy3|--PyPy3|--PyPy)
           install_pypy3

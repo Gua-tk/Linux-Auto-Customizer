@@ -2,8 +2,14 @@
 
 
 # GLOBAL VARIABLES
-# LAUNCHERS_DIR, DIR_IN_PATH, USR_BIN_FOLDER, BASHRC_PATH
-# Contains variables XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR
+# PERSONAL_LAUNCHERS_DIR: /home/username/.local/share/applications
+# ALL_USERS_LAUNCHERS_DIR: /usr/share/applications
+# USR_BIN_FOLDER: /home/username/.bin
+# BASHRC_PATH: /home/username/.bashrc
+# DIR_IN_PATH: /home/username/.local/bin
+# XDG_DESKTOP_DIR: /home/username/Desktop
+# XDG_PICTURES_DIR: /home/username/Images
+# XDG_TEMPLATES_DIR: /home/username/Templates
 if [[ "$(whoami)" != "root" ]]; then
   # declare lenguage specific user environment variables
   source ${HOME}/.config/user-dirs.dirs
@@ -186,6 +192,7 @@ Name=Files
 Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
+openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 PS1_custom="\[\e[1;37m\]\\d \\t \[\e[0;32m\]\\u\[\e[4;35m\]@\[\e[0;36m\]\\H\[\e[0;33m\] \\w\[\e[0;32m\] \\$ "
 
 pycharm_version=pycharm-community-2020.3.2  # Targeted version of pycharm

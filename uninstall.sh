@@ -205,6 +205,16 @@ uninstall_nemo()
 
 }
 
+uninstall_openoffice()
+{
+  apt-get purge -y openoffice*.*
+  rm -f ${XDG_DESKTOP_DIR}/openoffice4-base.desktop
+  rm -f ${XDG_DESKTOP_DIR}/openoffice4-calc.desktop
+  rm -f ${XDG_DESKTOP_DIR}/openoffice4-draw.desktop
+  rm -f ${XDG_DESKTOP_DIR}/openoffice4-math.desktop
+  rm -f ${XDG_DESKTOP_DIR}/openoffice4-writer.desktop
+}
+
 uninstall_pdfgrep()
 {
   apt-get purge -y pdfgrep
@@ -364,6 +374,7 @@ uninstall_all()
   uninstall_mendeley_dependencies
   uninstall_musicmanager
   uninstall_nemo
+  uninstall_openoffice
   uninstall_pdfgrep
   uninstall_pycharm_professional
   uninstall_pycharm_community
@@ -486,6 +497,9 @@ main()
         ;;
         -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
           uninstall_pycharm_professional
+        ;;
+        --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
+          uninstall_openoffice
         ;;
         -p|--python|--python3|--Python3|--Python)
           uninstall_python3
