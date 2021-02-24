@@ -91,7 +91,6 @@ install_android_studio()
   
 }
 
-
 install_clion()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -553,6 +552,32 @@ install_visualstudiocode()
 ############################
 ###### ROOT FUNCTIONS ######
 ############################
+
+install_cheat()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "WARNING: Could not install cheat.sh. You should be root. Skipping..."
+  else
+    echo "Attempting to install cheat.sh"
+    # there's a curl dependency to use cht.sh
+    apt-get install -y curl
+
+    rm -f ${USR_BIN_FOLDER}/cht.sh
+    rm -f ${USR_BIN_FOLDER}/:cht.sh
+    wget -P ${USR_BIN_FOLDER} https://cht.sh/:cht.sh
+    mv ${USR_BIN_FOLDER}/:cht.sh ${USR_BIN_FOLDER}/cht.sh
+    chmod +x ${USR_BIN_FOLDER}/cht.sh
+    chgrp ${SUDO_USER} ${USR_BIN_FOLDER}/cht.sh
+    chown ${SUDO_USER} ${USR_BIN_FOLDER}/cht.sh
+    
+    rm -f /home/${SUDO_USER}/.local/bin/cheat
+    ln -s ${USR_BIN_FOLDER}/cht.sh /home/${SUDO_USER}/.local/bin/cheat
+    chmod +x /home/${SUDO_USER}/.local/bin/cheat
+    chgrp ${SUDO_USER} /home/${SUDO_USER}/.local/bin/cheat
+    chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/cheat
+  fi
+}
+
 
 #Install CloneZilla
 install_clonezilla()
@@ -1179,6 +1204,7 @@ install_environment_aliases()
 
 root_install()
 {
+  install_cheat
   install_cmatrix
   install_dropbox
   install_firefox
@@ -1284,6 +1310,9 @@ main()
         # Sorted alphabetically by function name:
         -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
           install_android_studio
+        ;;
+        --cheat|--cheat.sh|--Cheat.sh|--che)
+          install_cheat
         ;;
         -n|--clion|--Clion|--CLion)
           install_clion

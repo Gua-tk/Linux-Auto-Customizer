@@ -8,6 +8,14 @@ err()
   echo "$*" >&2
 }
 
+uninstall_cheat()
+{
+  #there's a curl dependency for cht.sh
+  apt-get purge -y curl
+  rm -f ${USR_BIN_FOLDER}/cht.sh
+  rm -f /home/${SUDO_USER}/.local/bin/cheat
+}
+
 uninstall_cmatrix()
 {
   apt-get purge -y cmatrix
@@ -313,6 +321,7 @@ uninstall_wireshark()
 uninstall_all()
 {
   uninstall_android_studio
+  uninstall_cheat
   uninstall_clion
   uninstall_clonezilla
   uninstall_cmatrix
@@ -379,6 +388,9 @@ main()
         # Sorted alphabetically by function name:
         -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
           uninstall_android_studio
+        ;;
+        --cheat|--cheat.sh|--Cheat.sh|--che)
+          uninstall_cheat
         ;;
         -n|--clion|--Clion|--CLion)
           uninstall_clion
