@@ -81,6 +81,33 @@ Type=Application"
 
 converters_downloader="https://github.com/Axlfc/asix1Atesting"
 
+converters_links="
+
+bintohex()
+{
+  bintodec \$1 | dectohex
+}
+bintoutf()
+{
+  bintodec \$1 | dectoutf
+}
+hextobin()
+{
+  hextodec \$1 | dectobin
+}
+hextoutf()
+{
+  hextodec \$1 | dectoutf
+}
+utftobin()
+{
+  utftodec \$1 | dectobin
+}
+utftohex()
+{
+  utftodec \$1 | dectohex
+}"
+
 dropbox_version=2020.03.04
 
 discord_launcher="[Desktop Entry]

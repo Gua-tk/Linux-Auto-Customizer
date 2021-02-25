@@ -130,10 +130,14 @@ install_clion()
 
 install_program()
 {
+  # Remove program
+  # Install program
   if [[ -f "$1" ]]; then
         name=$(echo '$1' | cut -d '.' -f1)
     cp $1 ${HOME}/.local/bin/$name
     chmod u+x ${HOME}/.local/bin/$name
+  # remove soft link
+  # Set up softlink
   fi
 }
 
@@ -165,6 +169,7 @@ install_converters()
     ln -s ${USR_BIN_FOLDER}/converters/dectoutf.py ${HOME}/.local/bin/dectoutf
     ln -s ${USR_BIN_FOLDER}/converters/dectooct.py ${HOME}/.local/bin/dectooct
     ln -s ${USR_BIN_FOLDER}/converters/utftodec.py ${HOME}/.local/bin/utftodec
+    echo "${converters_links}" >> ${BASHRC_PATH}
     echo "converters installed"
   fi
 
@@ -1229,6 +1234,7 @@ install_shell_history_optimization()
 {
   if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTSIZE=" )" ]]; then
     echo "export HISTSIZE=10000" >> ${BASHRC_PATH}
+    
   else
     sed -i 's/HISTSIZE=.*/HISTSIZE=10000/' ${BASHRC_PATH}
   fi
