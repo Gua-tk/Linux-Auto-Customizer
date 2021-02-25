@@ -10,13 +10,6 @@ err()
 
 uninstall_converters()
 {
-  rm -f ${HOME}/.local/bin/dectohex
-  rm -f ${HOME}/.local/bin/hextodec
-  rm -f ${HOME}/.local/bin/bintodec
-  rm -f ${HOME}/.local/bin/dectobin
-  rm -f ${HOME}/.local/bin/dectoutf
-  rm -f ${HOME}/.local/bin/dectooct
-  rm -f ${HOME}/.local/bin/utftodec
   rm -f /home/${SUDO_USER}/.local/bin/dectohex
   rm -f /home/${SUDO_USER}/.local/bin/hextodec
   rm -f /home/${SUDO_USER}/.local/bin/bintodec
@@ -24,6 +17,10 @@ uninstall_converters()
   rm -f /home/${SUDO_USER}/.local/bin/dectoutf
   rm -f /home/${SUDO_USER}/.local/bin/dectooct
   rm -f /home/${SUDO_USER}/.local/bin/utftodec
+  echo "attempting to delete converters functions from bashrc"
+  # //RF
+  sed "s-${converters_bashrc_call}--" -i ${BASHRC_PATH}
+  rm -f /home/${SUDO_USER}/.bash_functions
 }
 
 uninstall_android_studio()
@@ -327,6 +324,8 @@ uninstall_thunderbird()
 uninstall_tmux()
 {
   apt purge -y tmux
+  rm -f ${XDG_DESKTOP_DIR}/tmux.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/tmux.desktop
 }
 
 uninstall_transmission()

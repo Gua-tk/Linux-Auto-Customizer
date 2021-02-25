@@ -81,6 +81,8 @@ Type=Application"
 
 converters_downloader="https://github.com/Axlfc/asix1Atesting"
 
+converters_bashrc_call="source ${HOME}/.bash_functions"
+
 converters_links="
 
 bintohex()
@@ -271,6 +273,16 @@ Icon=${USR_BIN_FOLDER}/telegram/telegram.png
 Type=Application
 Categories=Network;
 MimeType=x-scheme-handler/tg;"
+
+tmux_launcher="[Desktop Entry]
+Name=tmux
+StartupWMClass=tmux
+Comment=Terminal Multiplexer
+Exec=tmux
+Terminal=true
+Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/carla_carla.png
+Type=Application
+Categories=Network;"
 
 virtualbox_downloader=https://download.virtualbox.org/virtualbox/6.1.12/virtualbox-6.1_6.1.12-139181~Ubuntu~eoan_amd64.deb
 

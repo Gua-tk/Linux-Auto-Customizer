@@ -128,28 +128,16 @@ install_clion()
   fi
 }
 
-install_program()
-{
-  # Remove program
-  # Install program
-  if [[ -f "$1" ]]; then
-        name=$(echo '$1' | cut -d '.' -f1)
-    cp $1 ${HOME}/.local/bin/$name
-    chmod u+x ${HOME}/.local/bin/$name
-  # remove soft link
-  # Set up softlink
-  fi
-}
 
 install_converters()
 {
-  converters=("dectohex.py" "hextodec.py" "bintodec.py" "dectobin.py" "dectoutf.py" "utftodec.py" "dectooct.py")
   if [[ "$(whoami)" == "root" ]]; then
     echo "ERROR: you need to be user"
   else
     echo "Attempting to install converters"
     rm -Rf ${USR_BIN_FOLDER}/converters
     git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
+    
     rm -f ${HOME}/.local/bin/dectohex
     rm -f ${HOME}/.local/bin/hextodec
     rm -f ${HOME}/.local/bin/bintodec
@@ -157,11 +145,6 @@ install_converters()
     rm -f ${HOME}/.local/bin/dectoutf
     rm -f ${HOME}/.local/bin/dectooct
     rm -f ${HOME}/.local/bin/utftodec
-    
-    for program in ${converters[@]}; do
-        install_program $program
-    done
-    
     ln -s ${USR_BIN_FOLDER}/converters/dectohex.py ${HOME}/.local/bin/dectohex
     ln -s ${USR_BIN_FOLDER}/converters/hextodec.py ${HOME}/.local/bin/hextodec
     ln -s ${USR_BIN_FOLDER}/converters/bintodec.py ${HOME}/.local/bin/bintodec
@@ -169,7 +152,14 @@ install_converters()
     ln -s ${USR_BIN_FOLDER}/converters/dectoutf.py ${HOME}/.local/bin/dectoutf
     ln -s ${USR_BIN_FOLDER}/converters/dectooct.py ${HOME}/.local/bin/dectooct
     ln -s ${USR_BIN_FOLDER}/converters/utftodec.py ${HOME}/.local/bin/utftodec
-    echo "${converters_links}" >> ${BASHRC_PATH}
+    
+    # //RF
+    if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${converters_bashrc_call}" )" ]]; then
+      echo -e "$converters_bashrc_call" >> ${BASHRC_PATH}
+    else
+  	err "WARNING: converters functions are already installed. Skipping"
+    fi
+    echo "${converters_links}" > ${HOME}/.bash_functions
     echo "converters installed"
   fi
 
@@ -1070,6 +1060,9 @@ install_tmux()
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attempting to install tmux"
     apt-get -y install tmux
+    echo -e "${tmux_launcher}" > ${XDG_DESKTOP_DIR}/tmux.desktop
+    chmod 775 ${XDG_DESKTOP_DIR}/tmux.desktop
+    cp -p ${XDG_DESKTOP_DIR}/tmux.desktop /home/${SUDO_USER}/.local/share/applications
     echo "Finished"
   else
     echo "WARNING: Could not install tmux. You should be root. Skipping..."
