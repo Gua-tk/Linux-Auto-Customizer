@@ -128,6 +128,47 @@ install_clion()
   fi
 }
 
+install_program()
+{
+  if [[ -f "$1" ]]; then
+        name=$(echo '$1' | cut -d '.' -f1)
+    cp $1 ${HOME}/.local/bin/$name
+    chmod u+x ${HOME}/.local/bin/$name
+  fi
+}
+
+install_converters()
+{
+  converters=("dectohex.py" "hextodec.py" "bintodec.py" "dectobin.py" "dectoutf.py" "utftodec.py" "dectooct.py")
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "ERROR: you need to be user"
+  else
+    echo "Attempting to install converters"
+    rm -Rf ${USR_BIN_FOLDER}/converters
+    git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
+    rm -f ${HOME}/.local/bin/dectohex
+    rm -f ${HOME}/.local/bin/hextodec
+    rm -f ${HOME}/.local/bin/bintodec
+    rm -f ${HOME}/.local/bin/dectobin
+    rm -f ${HOME}/.local/bin/dectoutf
+    rm -f ${HOME}/.local/bin/dectooct
+    rm -f ${HOME}/.local/bin/utftodec
+    
+    for program in ${converters[@]}; do
+        install_program $program
+    done
+    
+    ln -s ${USR_BIN_FOLDER}/converters/dectohex.py ${HOME}/.local/bin/dectohex
+    ln -s ${USR_BIN_FOLDER}/converters/hextodec.py ${HOME}/.local/bin/hextodec
+    ln -s ${USR_BIN_FOLDER}/converters/bintodec.py ${HOME}/.local/bin/bintodec
+    ln -s ${USR_BIN_FOLDER}/converters/dectobin.py ${HOME}/.local/bin/dectobin
+    ln -s ${USR_BIN_FOLDER}/converters/dectoutf.py ${HOME}/.local/bin/dectoutf
+    ln -s ${USR_BIN_FOLDER}/converters/dectooct.py ${HOME}/.local/bin/dectooct
+    ln -s ${USR_BIN_FOLDER}/converters/utftodec.py ${HOME}/.local/bin/utftodec
+    echo "converters installed"
+  fi
+
+}
 
 # discord desktop client
 install_discord()
@@ -531,6 +572,7 @@ install_audacity()
   fi
 }
 
+
 install_cheat()
 {
   if [[ "$(whoami)" != "root" ]]; then
@@ -556,6 +598,7 @@ install_cheat()
   fi
 }
 
+
 #Install CloneZilla
 install_clonezilla()
 {
@@ -573,6 +616,7 @@ install_clonezilla()
   fi
 }
 
+
 install_cmatrix()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -585,6 +629,7 @@ install_cmatrix()
     echo "WARNING: Could not install cmatrix. You need root permissions. Skipping..."
   fi
 }
+
 
 # Dropbox desktop client and integration
 install_dropbox()
@@ -613,6 +658,7 @@ install_dropbox()
   fi
 }
 
+
 install_firefox()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -625,6 +671,7 @@ install_firefox()
   fi
 }
 
+
 install_f-irc()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -635,6 +682,7 @@ install_f-irc()
     echo "WARNING: Could not install f-irc. You need root permissions. Skipping..."
   fi
 }
+
 
 install_games()
 {
@@ -658,6 +706,7 @@ install_games()
   fi
 }
 
+
 # Install gcc (C compiler)
 # Needs root permission
 install_gcc()
@@ -671,6 +720,7 @@ install_gcc()
   fi
 }
 
+
 # Install GIMP
 install_gimp()
 {
@@ -683,6 +733,7 @@ install_gimp()
     echo "WARNING: Could not install gimp. You need root permissions. Skipping..."
   fi
 }
+
 
 # Install GIT and all its related utilities (gitk e.g.)
 # Needs root permission
@@ -711,6 +762,7 @@ install_GNU_parallel()
   fi
 }
 
+
 # Install gparted
 install_gparted()
 {
@@ -723,6 +775,7 @@ install_gparted()
     echo "WARNING: Could not install gparted. You need root permissions. Skipping..."
   fi
 }
+
 
 # Checks if Google Chrome is already installed and installs it and its dependencies
 # Needs root permission
@@ -767,6 +820,7 @@ install_jdk11()
     echo "WARNING: Could not install java development kit 11. You should be root."
   fi
 }
+
 
 # Install latex
 # Needs root permission
@@ -888,6 +942,7 @@ install_nemo()
   fi
 }
 
+
 install_openoffice()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -918,6 +973,7 @@ install_openoffice()
   fi
   
 }
+
 
 # Install pdf grep
 install_pdfgrep()
@@ -1263,6 +1319,7 @@ root_install()
   install_cheat
   install_cmatrix
   install_clonezilla
+  install_converters
   install_dropbox
   install_firefox
   install_f-irc
@@ -1381,6 +1438,9 @@ main()
         ;;
         --cmatrix|--Cmatrix)
           install_cmatrix
+        ;;
+        --converters|--Converters)
+          install_converters
         ;;
         -i|--discord|--Discord|--disc)
           install_discord

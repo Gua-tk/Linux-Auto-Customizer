@@ -79,6 +79,8 @@ Exec=cmatrix
 Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/bless_bless-48x48.png
 Type=Application"
 
+converters_downloader="https://github.com/Axlfc/asix1Atesting"
+
 dropbox_version=2020.03.04
 
 discord_launcher="[Desktop Entry]

@@ -8,6 +8,24 @@ err()
   echo "$*" >&2
 }
 
+uninstall_converters()
+{
+  rm -f ${HOME}/.local/bin/dectohex
+  rm -f ${HOME}/.local/bin/hextodec
+  rm -f ${HOME}/.local/bin/bintodec
+  rm -f ${HOME}/.local/bin/dectobin
+  rm -f ${HOME}/.local/bin/dectoutf
+  rm -f ${HOME}/.local/bin/dectooct
+  rm -f ${HOME}/.local/bin/utftodec
+  rm -f /home/${SUDO_USER}/.local/bin/dectohex
+  rm -f /home/${SUDO_USER}/.local/bin/hextodec
+  rm -f /home/${SUDO_USER}/.local/bin/bintodec
+  rm -f /home/${SUDO_USER}/.local/bin/dectobin
+  rm -f /home/${SUDO_USER}/.local/bin/dectoutf
+  rm -f /home/${SUDO_USER}/.local/bin/dectooct
+  rm -f /home/${SUDO_USER}/.local/bin/utftodec
+}
+
 uninstall_android_studio()
 {
   rm -Rf ${USR_BIN_FOLDER}/android-studio
@@ -353,6 +371,7 @@ uninstall_all()
   uninstall_clion
   uninstall_clonezilla
   uninstall_cmatrix
+  uninstall_converters
   uninstall_discord
   uninstall_dropbox
   uninstall_firefox
@@ -434,6 +453,9 @@ main()
         ;;
         --clonezilla|--CloneZilla|--cloneZilla)
           uninstall_clonezilla
+        ;;
+        --converters|--Converters)
+          uninstall_converters
         ;;
         -i|--discord|--Discord|--disc)
           uninstall_discord
