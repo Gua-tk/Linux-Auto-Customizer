@@ -223,7 +223,6 @@ Name=Files
 Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
-
 obs_desktop_launcher="[Desktop Entry]
 StartupWMClass=obs
 Version=1.0
@@ -263,6 +262,16 @@ StartupWMClass=jetbrains-pycharm"
 
 pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
 pypy3_version=$(echo ${pypy3_downloader} | rev | cut -d '/' -f1 | cut -d '.' -f3- | rev)  # get last piece of the last string
+
+shotcut_desktop_launcher="[Desktop Entry]
+Type=Application
+Name=Shotcut
+GenericName=shotcut
+Icon=/usr/share/icons/hicolor/64x64/apps/org.shotcut.Shotcut.png
+Exec=shotcut
+Comment= Open Source, cross-platform video editor
+Terminal=false
+"
 
 slack_repository=https://downloads.slack-edge.com/linux_releases/
 slack_version=slack-desktop-4.11.1-amd64.deb

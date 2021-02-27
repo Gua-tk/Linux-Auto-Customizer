@@ -303,6 +303,12 @@ uninstall_shell_customization()
   dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(48,10,36)'"
 }
 
+uninstall_shotcut()
+{
+  apt purge -y shotcut
+  rm -f ${XDG_DESKTOP_DIR}/shotcut.desktop
+}
+
 uninstall_slack()
 {
   dpkg -P slack-desktop
@@ -425,6 +431,7 @@ uninstall_all()
   uninstall_pypy3_dependencies
   uninstall_python3
   uninstall_shell_customization
+  uninstall_shotcut
   uninstall_slack
   uninstall_steam
   uninstall_sublime_text
@@ -567,6 +574,9 @@ main()
         ;;
         -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
           uninstall_shell_customization
+        ;;
+        --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
+          uninstall_shotcut
         ;;
         -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
           uninstall_sublime_text

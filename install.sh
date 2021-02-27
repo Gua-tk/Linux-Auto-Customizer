@@ -434,6 +434,20 @@ install_pypy3()
 }
 
 
+install_shotcut()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install shotcut"
+    apt install -y shotcut
+    echo -e "${shotcut_desktop_launcher}" > ${XDG_DESKTOP_DIR}/shotcut.desktop
+    chmod 775 ${XDG_DESKTOP_DIR}/shotcut.desktop
+    echo "Finished"
+  else
+    echo "WARNING: Could not install shotcut. You need root permissions. Skipping..."
+  fi
+
+}
+
 # Install Sublime text 3
 install_sublime_text()
 {
@@ -725,7 +739,7 @@ install_gimp()
     copy_launcher "gimp.desktop"
     echo "Finished"
   else
-    echo "WARNING: Could not install gimp. You need root permissionfs. Skipping..."
+    echo "WARNING: Could not install gimp. You need root permissions. Skipping..."
   fi
 }
 
@@ -1404,6 +1418,7 @@ user_install()
   install_pycharm_professional
   install_pypy3
   install_shell_history_optimization
+  install_shotcut
   install_sublime_text
   install_telegram
   install_templates
@@ -1470,6 +1485,15 @@ main()
         --audacity|--Audacity)
           install_audacity
         ;;
+        -i|--discord|--Discord|--disc)
+          install_discord
+        ;;
+        -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
+          install_dropbox
+        ;;
+        -c|--gcc)
+          install_gcc
+        ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           install_cheat
         ;;
@@ -1482,17 +1506,11 @@ main()
         --converters|--Converters)
           install_converters
         ;;
-        -i|--discord|--Discord|--disc)
-          install_discord
-        ;;
-        -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
-          install_dropbox
-        ;;
-        -c|--gcc)
-          install_gcc
-        ;;
         --clonezilla|--CloneZilla|--cloneZilla)
           install_clonezilla
+        ;;
+        --f-irc|--firc|--Firc|--irc)
+          install_f-irc
         ;;
         -g|--git)
           install_git
@@ -1542,11 +1560,14 @@ main()
         --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
           install_musicmanager
         ;;
+        --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
+          install_openoffice
+        ;;
+        --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
+          install_obs-studio
+        ;;
         -f|--pdfgrep|--findpdf|--pdf)
           install_pdfgrep
-        ;;
-        --f-irc|--firc|--Firc|--irc)
-          install_f-irc
         ;;
         -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
           install_pycharm_community
@@ -1556,12 +1577,6 @@ main()
         ;;
         -p|--python|--python3|--Python3|--Python)
           install_python3
-        ;;
-        --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
-          install_openoffice
-        ;;
-        --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
-          install_obs-studio
         ;;
         -y|--pypy|--pypy3|--PyPy3|--PyPy)
           install_pypy3
@@ -1575,6 +1590,9 @@ main()
           install_git_aliases
           install_environment_aliases
           install_extract_function
+        ;;
+        --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
+          install_shotcut
         ;;
         -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
           install_sublime_text
