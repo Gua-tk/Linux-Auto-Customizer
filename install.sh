@@ -1074,7 +1074,7 @@ install_thunderbird()
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attemptying to install thunderbird"
     apt-get install -y thunderbird 
-    echo -e "${tmux_launcher}" > ${XDG_DESKTOP_DIR}/tmux.desktop
+    copy_launcher "thunderbird.desktop"
     echo "Finished"
   else
     echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
