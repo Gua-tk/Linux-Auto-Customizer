@@ -806,6 +806,17 @@ install_google_chrome()
   fi
 }
 
+install_gvim()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    apt -y install vim-gtk3
+    copy_launcher "gvim.desktop"
+  else
+    echo "WARNING: Could not install gvim. You should be root."
+  fi
+
+}
+
 
 install_jdk11()
 {
@@ -969,6 +980,22 @@ install_openoffice()
   
 }
 
+install_obs-studio()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install obs-studio"
+    # There's a dependency
+    apt install -y ffmpeg
+    apt install -y obs-studio
+    echo -e "${obs_desktop_launcher}" > ${XDG_DESKTOP_DIR}/obs-studio.desktop
+    chmod 775 ${XDG_DESKTOP_DIR}/obs-studio.desktop
+    cp -p ${XDG_DESKTOP_DIR}/obs-studio.desktop /home/${SUDO_USER}/.local/share/applications
+    echo "Finished"
+  else
+    echo "WARNING: Could not install obs-studio. You should be root. Skipping..."
+  fi
+}
+
 
 # Install pdf grep
 install_pdfgrep()
@@ -1047,7 +1074,7 @@ install_thunderbird()
   if [[ "$(whoami)" == "root" ]]; then
     echo "Attemptying to install thunderbird"
     apt-get install -y thunderbird 
-    copy_launcher "thunderbird.desktop"
+    echo -e "${tmux_launcher}" > ${XDG_DESKTOP_DIR}/tmux.desktop
     echo "Finished"
   else
     echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
@@ -1329,6 +1356,7 @@ root_install()
   install_GNU_parallel
   install_gparted
   install_google_chrome
+  install_gvim
   install_jdk11
   install_latex
   install_megasync
@@ -1336,6 +1364,7 @@ root_install()
   install_musicmanager
   install_nemo
   install_openoffice
+  install_obs-studio
   install_pdfgrep
   install_python3
   install_pypy3_dependencies
@@ -1462,6 +1491,9 @@ main()
         --GParted|--gparted|--GPARTED|--Gparted)
           install_gparted
         ;;
+        --gvim|--vim-gtk3|--Gvim|--GVim)
+          install_gvim
+        ;;
         -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
           install_GNU_parallel
         ;;
@@ -1512,6 +1544,9 @@ main()
         ;;
         --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
           install_openoffice
+        ;;
+        --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
+          install_obs-studio
         ;;
         -y|--pypy|--pypy3|--PyPy3|--PyPy)
           install_pypy3

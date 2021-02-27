@@ -147,6 +147,12 @@ uninstall_gparted()
   rm -f ${XDG_DESKTOP_DIR}/gparted.desktop
 }
 
+uninstall_gvim()
+{
+  apt purge -y vim-gtk3
+  rm -f ${XDG_DESKTOP_DIR}/gvim.desktop
+}
+
 uninstall_intellij_ultimate()
 {
   rm -Rf ${USR_BIN_FOLDER}/idea-IU
@@ -218,6 +224,16 @@ uninstall_nemo()
   done
   echo "WARNING: If Nemo has been uninstalled restart Ubuntu to update the desktop back to Nautilus"
 
+}
+
+uninstall_obs-studio()
+{
+  # Remove dependency
+  apt purge -y ffmpeg
+  # Uninstall OBS Studio
+  apt purge -y obs-studio
+  rm -f ${XDG_DESKTOP_DIR}/obs-studio.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/obs-studio.desktop
 }
 
 uninstall_openoffice()
@@ -383,6 +399,7 @@ uninstall_all()
   uninstall_GNU_parallel
   uninstall_google_chrome
   uninstall_gparted
+  uninstall_gvim
   uninstall_intellij_community
   uninstall_intellij_ultimate
   uninstall_jdk11
@@ -392,6 +409,7 @@ uninstall_all()
   uninstall_mendeley_dependencies
   uninstall_musicmanager
   uninstall_nemo
+  uninstall_obs-studio
   uninstall_openoffice
   uninstall_pdfgrep
   uninstall_pycharm_professional
@@ -477,6 +495,9 @@ main()
         --GParted|--gparted|--GPARTED|--Gparted)
           uninstall_gparted
         ;;
+        --gvim|--vim-gtk3|--Gvim|--GVim)
+          uninstall_gvim
+        ;;
         -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
           uninstall_GNU_parallel
         ;;
@@ -518,6 +539,9 @@ main()
         ;;
         -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
           uninstall_pycharm_professional
+        ;;
+        --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
+          uninstall_obs-studio
         ;;
         --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
           uninstall_openoffice

@@ -223,6 +223,19 @@ Name=Files
 Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
+
+obs_desktop_launcher="[Desktop Entry]
+StartupWMClass=obs
+Version=1.0
+Name=OBS
+GenericName=Streaming/Recording Software
+Comment=Free and Open Source Streaming/Recording Software
+Exec=obs
+Icon=/usr/share/icons/hicolor/256x256/apps/com.obsproject.Studio.png
+Terminal=false
+Type=Application
+Categories=AudioVideo;Recorder;
+StartupNotify=true"
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 PS1_custom="\[\e[1;37m\]\\d \\t \[\e[0;32m\]\\u\[\e[4;35m\]@\[\e[0;36m\]\\H\[\e[0;33m\] \\w\[\e[0;32m\] \\$ "
 
