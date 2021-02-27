@@ -153,6 +153,12 @@ uninstall_gvim()
   rm -f ${XDG_DESKTOP_DIR}/gvim.desktop
 }
 
+uninstall_inkscape()
+{
+  apt purge -y inkscape
+  rm -f ${XDG_DESKTOP_DIR}/inkscape.desktop
+}
+
 uninstall_intellij_ultimate()
 {
   rm -Rf ${USR_BIN_FOLDER}/idea-IU
@@ -399,6 +405,7 @@ uninstall_all()
   uninstall_google_chrome
   uninstall_gparted
   uninstall_gvim
+  uninstall_inkscape
   uninstall_intellij_community
   uninstall_intellij_ultimate
   uninstall_jdk11
@@ -496,6 +503,9 @@ main()
         ;;
         --gvim|--vim-gtk3|--Gvim|--GVim)
           uninstall_gvim
+        ;;
+        --inkscape|--ink-scape|--Inkscape|--InkScape)
+          uninstall_inkscape
         ;;
         -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
           uninstall_GNU_parallel

@@ -725,7 +725,7 @@ install_gimp()
     copy_launcher "gimp.desktop"
     echo "Finished"
   else
-    echo "WARNING: Could not install gimp. You need root permissions. Skipping..."
+    echo "WARNING: Could not install gimp. You need root permissionfs. Skipping..."
   fi
 }
 
@@ -815,6 +815,18 @@ install_gvim()
     echo "WARNING: Could not install gvim. You should be root."
   fi
 
+}
+
+install_inkscape()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install inkscape"
+    apt install -y inkscape
+    copy_launcher "inkscape.desktop"
+    echo "Finished"
+  else
+    echo "WARNING: Could not install inkscape. You need root permissions. Skipping..."
+  fi
 }
 
 
@@ -1356,6 +1368,7 @@ root_install()
   install_gparted
   install_google_chrome
   install_gvim
+  install_inkscape
   install_jdk11
   install_latex
   install_megasync
@@ -1492,6 +1505,9 @@ main()
         ;;
         --gvim|--vim-gtk3|--Gvim|--GVim)
           install_gvim
+        ;;
+        --inkscape|--ink-scape|--Inkscape|--InkScape)
+          install_inkscape
         ;;
         -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
           install_GNU_parallel
