@@ -233,7 +233,6 @@ uninstall_obs-studio()
   # Uninstall OBS Studio
   apt purge -y obs-studio
   rm -f ${XDG_DESKTOP_DIR}/obs-studio.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/obs-studio.desktop
 }
 
 uninstall_openoffice()
