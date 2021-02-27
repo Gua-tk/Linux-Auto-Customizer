@@ -989,7 +989,6 @@ install_obs-studio()
     apt install -y obs-studio
     echo -e "${obs_desktop_launcher}" > ${XDG_DESKTOP_DIR}/obs-studio.desktop
     chmod 775 ${XDG_DESKTOP_DIR}/obs-studio.desktop
-    cp -p ${XDG_DESKTOP_DIR}/obs-studio.desktop /home/${SUDO_USER}/.local/share/applications
     echo "Finished"
   else
     echo "WARNING: Could not install obs-studio. You should be root. Skipping..."
