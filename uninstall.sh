@@ -298,6 +298,7 @@ uninstall_shell_customization()
   chown ${SUDO_USER} /home/${SUDO_USER}/.bashrc
   
   # uninstall git bash prompt here
+  # Rf
   rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
   dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(48,10,36)'"
 }
