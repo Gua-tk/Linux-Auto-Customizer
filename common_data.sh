@@ -52,7 +52,7 @@ fi
 
 ##### COMMON VARIABLES #####
 
-android_studio_version=android-studio-ide-201.7042882-linux  # Targeted version of Android Studio
+android_studio_downloader=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz
 android_studio_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
@@ -65,7 +65,8 @@ StartupNotify=true
 StartupWMClass=jetbrains-android-studio
 Name[en_GB]=android-studio.desktop"
 
-clion_version=CLion-2020.1  # Targeted version of CLion
+
+clion_downloader=https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz
 clion_launcher="[Desktop Entry]
 Version=1.0
 Type=Application

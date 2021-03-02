@@ -44,8 +44,8 @@ fi
 # Argument 1: name of the desktop launcher in /usr/share/applications
 copy_launcher()
 {
-  if [[ -f /usr/share/applications/$1 ]]; then
-    cp /usr/share/applications/$1 ${XDG_DESKTOP_DIR}
+  if [[ -f ${ALL_USERS_LAUNCHERS_DIR}/$1 ]]; then
+    cp ${ALL_USERS_LAUNCHERS_DIR}/$1 ${XDG_DESKTOP_DIR}
     chmod 775 ${XDG_DESKTOP_DIR}/$1
     chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
     chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
@@ -67,21 +67,21 @@ install_android_studio()
       # avoid collisions
       rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
       # Download
-      wget -P ${USR_BIN_FOLDER} https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/${android_studio_version}.tar.gz
+      (cd "${USR_BIN_FOLDER}"; wget -O "android_studio.tar.gz" "${android_studio_downloader}")
       
       # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/android_studio.tar.gz
       # Clean
-      rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
+      rm -f ${USR_BIN_FOLDER}/android_studio.tar.gz*
       
       # Create links to the PATH
-      rm -f ${HOME}/.local/bin/studio
-      ln -s ${USR_BIN_FOLDER}/android-studio/bin/studio.sh ${HOME}/.local/bin/studio
+      rm -f ${DIR_IN_PATH}/studio
+      ln -s ${USR_BIN_FOLDER}/android-studio/bin/studio.sh ${DIR_IN_PATH}/studio
       
       # Create launcher
-      echo -e "${android_studio_launcher}" > "${HOME}/.local/share/applications/Android Studio.desktop"
-      chmod 775 "${HOME}/.local/share/applications/Android Studio.desktop"
-      cp -p "${HOME}/.local/share/applications/Android Studio.desktop" ${XDG_DESKTOP_DIR}
+      echo -e "${android_studio_launcher}" > "${PERSONAL_LAUNCHERS_DIR}/Android Studio.desktop"
+      chmod 775 "${PERSONAL_LAUNCHERS_DIR}/Android Studio.desktop"
+      cp -p "${PERSONAL_LAUNCHERS_DIR}/Android Studio.desktop" ${XDG_DESKTOP_DIR}
     else
       err "WARNING: Android Studio is already installed. Skipping"
     fi
@@ -98,23 +98,24 @@ install_clion()
 
     if [[ -z $(which clion) ]]; then
       # Avoid error due to possible previous aborted installations
-      rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
+      clion_version=$(echo ${clion_downloader} | rev | cut -d "/" -f1 | rev)
+      rm -f ${USR_BIN_FOLDER}/${clion_version}*
       rm -Rf ${USR_BIN_FOLDER}/${clion_version}
       # Download CLion
-      wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/cpp/${clion_version}.tar.gz
+      (cd "${USR_BIN_FOLDER}"; wget -O "${clion_version}" "${clion_downloader}")
       # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${clion_version}.tar.gz
+      (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${clion_version}
       # Clean
-      rm -f ${USR_BIN_FOLDER}/${clion_version}.tar.gz*
+      rm -f ${USR_BIN_FOLDER}/${clion_version}*
       # Modify folder name for coherence
-      mv ${USR_BIN_FOLDER}/clion* ${USR_BIN_FOLDER}/clion
+      mv ${USR_BIN_FOLDER}/${clion_version} ${USR_BIN_FOLDER}/clion
       # Create links to the PATH
-      rm -f ${HOME}/.local/bin/clion
-      ln -s ${USR_BIN_FOLDER}/clion/bin/clion.sh ${HOME}/.local/bin/clion
+      rm -f ${DIR_IN_PATH}/clion
+      ln -s ${USR_BIN_FOLDER}/clion/bin/clion.sh ${DIR_IN_PATH}/clion
       # Create launcher for clion in the desktop and in the launcher menu
-      echo -e "$clion_launcher" > ${HOME}/.local/share/applications/clion.desktop
-      chmod 775 ${HOME}/.local/share/applications/clion.desktop
-      cp -p ${HOME}/.local/share/applications/clion.desktop ${XDG_DESKTOP_DIR}
+      echo -e "$clion_launcher" > ${PERSONAL_LAUNCHERS_DIR}/clion.desktop
+      chmod 775 ${PERSONAL_LAUNCHERS_DIR}/clion.desktop
+      cp -p ${PERSONAL_LAUNCHERS_DIR}/clion.desktop ${XDG_DESKTOP_DIR}
 
       # register file associations
       register_file_associations "text/x-c++hdr" "clion.desktop"
@@ -138,20 +139,20 @@ install_converters()
     rm -Rf ${USR_BIN_FOLDER}/converters
     git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
     
-    rm -f ${HOME}/.local/bin/dectohex
-    rm -f ${HOME}/.local/bin/hextodec
-    rm -f ${HOME}/.local/bin/bintodec
-    rm -f ${HOME}/.local/bin/dectobin
-    rm -f ${HOME}/.local/bin/dectoutf
-    rm -f ${HOME}/.local/bin/dectooct
-    rm -f ${HOME}/.local/bin/utftodec
-    ln -s ${USR_BIN_FOLDER}/converters/dectohex.py ${HOME}/.local/bin/dectohex
-    ln -s ${USR_BIN_FOLDER}/converters/hextodec.py ${HOME}/.local/bin/hextodec
-    ln -s ${USR_BIN_FOLDER}/converters/bintodec.py ${HOME}/.local/bin/bintodec
-    ln -s ${USR_BIN_FOLDER}/converters/dectobin.py ${HOME}/.local/bin/dectobin
-    ln -s ${USR_BIN_FOLDER}/converters/dectoutf.py ${HOME}/.local/bin/dectoutf
-    ln -s ${USR_BIN_FOLDER}/converters/dectooct.py ${HOME}/.local/bin/dectooct
-    ln -s ${USR_BIN_FOLDER}/converters/utftodec.py ${HOME}/.local/bin/utftodec
+    rm -f ${DIR_IN_PATH}/dectohex
+    rm -f ${DIR_IN_PATH}/hextodec
+    rm -f ${DIR_IN_PATH}/bintodec
+    rm -f ${DIR_IN_PATH}/dectobin
+    rm -f ${DIR_IN_PATH}/dectoutf
+    rm -f ${DIR_IN_PATH}/dectooct
+    rm -f ${DIR_IN_PATH}/utftodec
+    ln -s ${USR_BIN_FOLDER}/converters/dectohex.py ${DIR_IN_PATH}/dectohex
+    ln -s ${USR_BIN_FOLDER}/converters/hextodec.py ${DIR_IN_PATH}/hextodec
+    ln -s ${USR_BIN_FOLDER}/converters/bintodec.py ${DIR_IN_PATH}/bintodec
+    ln -s ${USR_BIN_FOLDER}/converters/dectobin.py ${DIR_IN_PATH}/dectobin
+    ln -s ${USR_BIN_FOLDER}/converters/dectoutf.py ${DIR_IN_PATH}/dectoutf
+    ln -s ${USR_BIN_FOLDER}/converters/dectooct.py ${DIR_IN_PATH}/dectooct
+    ln -s ${USR_BIN_FOLDER}/converters/utftodec.py ${DIR_IN_PATH}/utftodec
     
     # //RF
     if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${converters_bashrc_call}" )" ]]; then
@@ -178,12 +179,12 @@ install_discord()
       rm -f ${USR_BIN_FOLDER}/discord*.tar.gz*
       mv ${USR_BIN_FOLDER}/Discord ${USR_BIN_FOLDER}/discord
       # Create links in the PATH
-      rm -f ${HOME}/.local/bin/discord
-      ln -s ${USR_BIN_FOLDER}/discord/Discord ${HOME}/.local/bin/discord
+      rm -f ${DIR_IN_PATH}/discord
+      ln -s ${USR_BIN_FOLDER}/discord/Discord ${DIR_IN_PATH}/discord
       # Create launchers in launcher and in desktop
       echo -e "${discord_launcher}" > ${XDG_DESKTOP_DIR}/discord.desktop
       chmod 755 ${XDG_DESKTOP_DIR}/discord.desktop
-      cp -p ${XDG_DESKTOP_DIR}/discord.desktop ${HOME}/.local/share/applications
+      cp -p ${XDG_DESKTOP_DIR}/discord.desktop ${PERSONAL_LAUNCHERS_DIR}
     else
       err "WARNING: discord is already installed. Skipping"
     fi
@@ -212,13 +213,13 @@ install_intellij_community()
       # Modify name for coherence
       mv ${USR_BIN_FOLDER}/idea-IC* ${USR_BIN_FOLDER}/idea-IC
       # Create link to the PATH
-      rm -f ${HOME}/.local/bin/ideac
-      ln -s ${USR_BIN_FOLDER}/idea-IC/bin/idea.sh ${HOME}/.local/bin/ideac
+      rm -f ${DIR_IN_PATH}/ideac
+      ln -s ${USR_BIN_FOLDER}/idea-IC/bin/idea.sh ${DIR_IN_PATH}/ideac
       # Create desktop launcher entry for intelliJ community
-      echo -e "${intellij_community_launcher}" > ${HOME}/.local/share/applications/ideac.desktop
-      chmod 775 ${HOME}/.local/share/applications/ideac.desktop
+      echo -e "${intellij_community_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/ideac.desktop
+      chmod 775 ${PERSONAL_LAUNCHERS_DIR}/ideac.desktop
       # Copy launcher to the desktop
-      cp -p ${HOME}/.local/share/applications/ideac.desktop ${XDG_DESKTOP_DIR}
+      cp -p ${PERSONAL_LAUNCHERS_DIR}/ideac.desktop ${XDG_DESKTOP_DIR}
 
       # register file associations
       register_file_associations "text/x-java" "ideac.desktop"
@@ -251,13 +252,13 @@ install_intellij_ultimate()
       # Modify name for coherence
       mv ${USR_BIN_FOLDER}/idea-IU* ${USR_BIN_FOLDER}/idea-IU
       # Create link to the PATH
-      rm -f ${HOME}/.local/bin/ideau
-      ln -s ${USR_BIN_FOLDER}/idea-IU/bin/idea.sh ${HOME}/.local/bin/ideau
+      rm -f ${DIR_IN_PATH}/ideau
+      ln -s ${USR_BIN_FOLDER}/idea-IU/bin/idea.sh ${DIR_IN_PATH}/ideau
       # Create desktop launcher entry for intellij ultimate
-      echo -e "${intellij_ultimate_launcher}" > ${HOME}/.local/share/applications/ideau.desktop
-      chmod 775 ${HOME}/.local/share/applications/ideau.desktop
+      echo -e "${intellij_ultimate_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/ideau.desktop
+      chmod 775 ${PERSONAL_LAUNCHERS_DIR}/ideau.desktop
       # Copy launcher to the desktop
-      cp -p ${HOME}/.local/share/applications/ideau.desktop ${XDG_DESKTOP_DIR}
+      cp -p ${PERSONAL_LAUNCHERS_DIR}/ideau.desktop ${XDG_DESKTOP_DIR}
       # register file associations
       register_file_associations "text/x-java" "ideau.desktop"
     else
@@ -289,7 +290,7 @@ install_mendeley()
       # Rename folder for coherence
       mv ${USR_BIN_FOLDER}/mendeley* ${USR_BIN_FOLDER}/mendeley
       # Create link to the PATH
-      rm -f ${HOME}/.local/bin/mendeley
+      rm -f ${DIR_IN_PATH}/mendeley
       ln -s ${USR_BIN_FOLDER}/mendeley/bin/mendeleydesktop ${HOME}/${SUDO_USER}/.local/bin/mendeley
       # Create Desktop launcher
       cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
@@ -299,7 +300,7 @@ install_mendeley()
       # Modify exec line
       sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
       # Copy to desktop  launchers of the current user
-      cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${HOME}/.local/share/applications
+      cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${PERSONAL_LAUNCHERS_DIR}
     else
       err "WARNING: Mendeley is already installed. Skipping"
     fi
@@ -330,13 +331,13 @@ install_pycharm_community()
       # Rename folder for coherence
       mv ${USR_BIN_FOLDER}/pycharm-community* ${USR_BIN_FOLDER}/pycharm-community
       # Create links to the PATH
-      rm -f ${HOME}/.local/bin/pycharm
-      ln -s ${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.sh ${HOME}/.local/bin/pycharm
+      rm -f ${DIR_IN_PATH}/pycharm
+      ln -s ${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.sh ${DIR_IN_PATH}/pycharm
 
       # Create launcher for pycharm in the desktop and in the launcher menu
-      echo -e "$pycharm_launcher" > ${HOME}/.local/share/applications/pycharm.desktop
-      chmod 775 ${HOME}/.local/share/applications/pycharm.desktop
-      cp -p ${HOME}/.local/share/applications/pycharm.desktop ${XDG_DESKTOP_DIR}
+      echo -e "$pycharm_launcher" > ${PERSONAL_LAUNCHERS_DIR}/pycharm.desktop
+      chmod 775 ${PERSONAL_LAUNCHERS_DIR}/pycharm.desktop
+      cp -p ${PERSONAL_LAUNCHERS_DIR}/pycharm.desktop ${XDG_DESKTOP_DIR}
 
       # register file associations
       register_file_associations "text/x-python" "pycharm.desktop"
@@ -371,12 +372,12 @@ install_pycharm_professional()
       # Rename folder for coherence
       mv ${USR_BIN_FOLDER}/pycharm-[0-9]* ${USR_BIN_FOLDER}/pycharm-pro
       # Create links to the PATH
-      rm -f ${HOME}/.local/bin/pycharm-pro
-      ln -s ${USR_BIN_FOLDER}/pycharm-pro/bin/pycharm.sh ${HOME}/.local/bin/pycharm-pro
+      rm -f ${DIR_IN_PATH}/pycharm-pro
+      ln -s ${USR_BIN_FOLDER}/pycharm-pro/bin/pycharm.sh ${DIR_IN_PATH}/pycharm-pro
       # Create launcher for pycharm in the desktop and in the launcher menu
-      echo -e "$pycharm_professional_launcher" > ${HOME}/.local/share/applications/pycharm-pro.desktop
-      chmod 775 ${HOME}/.local/share/applications/pycharm-pro.desktop
-      cp -p ${HOME}/.local/share/applications/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
+      echo -e "$pycharm_professional_launcher" > ${PERSONAL_LAUNCHERS_DIR}/pycharm-pro.desktop
+      chmod 775 ${PERSONAL_LAUNCHERS_DIR}/pycharm-pro.desktop
+      cp -p ${PERSONAL_LAUNCHERS_DIR}/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
 
       # register file associations
       register_file_associations "text/x-sh" "pycharm-pro.desktop"
@@ -421,10 +422,10 @@ install_pypy3()
       # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
 
       # Create links to the PATH
-      rm -f ${HOME}/.local/bin/pypy3
-      ln -s ${USR_BIN_FOLDER}/pypy3/bin/pypy3 ${HOME}/.local/bin/pypy3
-      rm -f ${HOME}/.local/bin/pypy3-pip
-      ln -s ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 ${HOME}/.local/bin/pypy3-pip
+      rm -f ${DIR_IN_PATH}/pypy3
+      ln -s ${USR_BIN_FOLDER}/pypy3/bin/pypy3 ${DIR_IN_PATH}/pypy3
+      rm -f ${DIR_IN_PATH}/pypy3-pip
+      ln -s ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 ${DIR_IN_PATH}/pypy3-pip
 
     else
       err "WARNING: pypy3 is already installed. Skipping"
@@ -468,13 +469,13 @@ install_sublime_text()
       # Rename folder for coherence 
       mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime-text
       # Create link to the PATH
-      rm -f ${HOME}/.local/bin/sublime
-      ln -s ${USR_BIN_FOLDER}/sublime-text/sublime_text ${HOME}/.local/bin/sublime
+      rm -f ${DIR_IN_PATH}/sublime
+      ln -s ${USR_BIN_FOLDER}/sublime-text/sublime_text ${DIR_IN_PATH}/sublime
       # Create desktop launcher entry for sublime text
-      echo -e "${sublime_launcher}" > ${HOME}/.local/share/applications/sublime-text.desktop
-      chmod 775 ${HOME}/.local/share/applications/sublime-text.desktop
+      echo -e "${sublime_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/sublime-text.desktop
+      chmod 775 ${PERSONAL_LAUNCHERS_DIR}/sublime-text.desktop
       # Copy launcher to the desktop
-      cp -p ${HOME}/.local/share/applications/sublime-text.desktop ${XDG_DESKTOP_DIR}
+      cp -p ${PERSONAL_LAUNCHERS_DIR}/sublime-text.desktop ${XDG_DESKTOP_DIR}
 
       # register file associations
       register_file_associations "text/x-sh" "sublime-text.desktop"
@@ -513,13 +514,13 @@ install_telegram()
       wget -P ${USR_BIN_FOLDER}/telegram https://www.iconfinder.com/icons/986956/download/png/512
       mv ${USR_BIN_FOLDER}/telegram/512 ${USR_BIN_FOLDER}/telegram/telegram.png
       # Create link to the PATH
-      rm -f ${HOME}/.local/bin/telegram
-      ln -s ${USR_BIN_FOLDER}/telegram/Telegram ${HOME}/.local/bin/telegram
+      rm -f ${DIR_IN_PATH}/telegram
+      ln -s ${USR_BIN_FOLDER}/telegram/Telegram ${DIR_IN_PATH}/telegram
       # Create desktop launcher entry for telegram
-      echo -e "${telegram_launcher}" > ${HOME}/.local/share/applications/telegram.desktop
-      chmod 775 ${HOME}/.local/share/applications/telegram.desktop
+      echo -e "${telegram_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/telegram.desktop
+      chmod 775 ${PERSONAL_LAUNCHERS_DIR}/telegram.desktop
       # Copy launcher to the desktop
-      cp -p ${HOME}/.local/share/applications/telegram.desktop ${XDG_DESKTOP_DIR}
+      cp -p ${PERSONAL_LAUNCHERS_DIR}/telegram.desktop ${XDG_DESKTOP_DIR}
     else
       err "WARNING: Telegram is already installed. Skipping"
     fi
@@ -549,13 +550,13 @@ install_visualstudiocode()
       # Rename folder for coherence
       mv ${USR_BIN_FOLDER}/VSCode-linux-x64 ${USR_BIN_FOLDER}/visual-studio-code
       # Create link to the PATH
-      rm -f ${HOME}/.local/bin/code
-      ln -s ${USR_BIN_FOLDER}/visual-studio-code/code ${HOME}/.local/bin/code
+      rm -f ${DIR_IN_PATH}/code
+      ln -s ${USR_BIN_FOLDER}/visual-studio-code/code ${DIR_IN_PATH}/code
       # Create desktop launcher entry 
-      echo -e "${visualstudiocode_launcher}" > ${HOME}/.local/share/applications/visual-studio-code.desktop
-      chmod 775 ${HOME}/.local/share/applications/visual-studio-code.desktop
+      echo -e "${visualstudiocode_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/visual-studio-code.desktop
+      chmod 775 ${PERSONAL_LAUNCHERS_DIR}/visual-studio-code.desktop
       # Copy launcher to the desktop
-      cp -p ${HOME}/.local/share/applications/visual-studio-code.desktop ${XDG_DESKTOP_DIR}
+      cp -p ${PERSONAL_LAUNCHERS_DIR}/visual-studio-code.desktop ${XDG_DESKTOP_DIR}
     else
       err "WARNING: Visual Studio Code is already installed. Skipping"
     fi
@@ -1449,18 +1450,25 @@ main()
     # Create folder for user software
     mkdir -p ${HOME}/.bin
 
-    # Make sure that ${HOME}/.local/bin is present
-    mkdir -p ${HOME}/.local/bin
+    # Make sure that ${DIR_IN_PATH} is present
+    mkdir -p ${DIR_IN_PATH}
 
     # Make sure that folder for user launchers is present
-    mkdir -p ${HOME}/.local/share/applications
+    mkdir -p ${PERSONAL_LAUNCHERS_DIR}
 
-    # Make sure that PATH is pointing to ${HOME}/.local/bin (where we will put our soft links to the software)
-    if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${HOME}/.local/bin" )" ]]; then
-      echo "export PATH=$PATH:${HOME}/.local/bin" >> ${BASHRC_PATH}
+    # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
+    if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${DIR_IN_PATH}" )" ]]; then
+      echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASHRC_PATH}
     fi
 
   fi
+
+  FLAG_QUIETNESS=0
+  FLAG_FORCENESS=0
+
+  UPGRADE=2
+  AUTOCLEAN=2
+
 
   ###### ARGUMENT PROCESSING ######
 
