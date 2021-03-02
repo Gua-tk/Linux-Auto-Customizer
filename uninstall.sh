@@ -647,8 +647,11 @@ main()
 
 
 # Import file of common variables
-# WARNING: That makes that the script has to be executed from the directory containing it
-source common_data.sh
+DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "${DIR}" ]]; then
+  DIR="${PWD}"
+fi
+source "${DIR}/common_data.sh"
 
 # Call main function
 main "$@"

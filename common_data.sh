@@ -7,6 +7,8 @@
 # USR_BIN_FOLDER: /home/username/.bin
 # BASHRC_PATH: /home/username/.bashrc
 # DIR_IN_PATH: /home/username/.local/bin
+
+# Imported from ${HOME}/.config/user-dirs.dirs
 # XDG_DESKTOP_DIR: /home/username/Desktop
 # XDG_PICTURES_DIR: /home/username/Images
 # XDG_TEMPLATES_DIR: /home/username/Templates
@@ -19,6 +21,12 @@ if [[ "$(whoami)" != "root" ]]; then
 
   # Locate bash customizing files
   BASHRC_PATH=${HOME}/.bashrc
+
+  PERSONAL_LAUNCHERS_DIR=${HOME}/.local/share/applications
+
+  ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
+
+  DIR_IN_PATH=${HOME}/.local/bin
 else
   # declare same variables but with absolute path
   declare $(cat /home/${SUDO_USER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
@@ -28,6 +36,12 @@ else
 
   # Locate bash customizing files
   BASHRC_PATH=/home/${SUDO_USER}/.bashrc
+
+  PERSONAL_LAUNCHERS_DIR=/home/${SUDO_USER}/.local/share/applications
+
+  ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
+
+  DIR_IN_PATH=/home/${SUDO_USER}/.local/bin
 fi
 
 # If there is no backup of bashrc do it conserving permissions

@@ -1479,16 +1479,16 @@ main()
       
         ### INDIVIDUAL ARGUMENTS ###
         # Sorted alphabetically by function name:
-        -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
+        --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
           install_android_studio
         ;;
         --audacity|--Audacity)
           install_audacity
         ;;
-        -i|--discord|--Discord|--disc)
+        --discord|--Discord|--disc)
           install_discord
         ;;
-        -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
+        --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
           install_dropbox
         ;;
         -c|--gcc)
@@ -1497,7 +1497,7 @@ main()
         --cheat|--cheat.sh|--Cheat.sh|--che)
           install_cheat
         ;;
-        -n|--clion|--Clion|--CLion)
+        --clion|--Clion|--CLion)
           install_clion
         ;;
         --cmatrix|--Cmatrix)
@@ -1512,7 +1512,7 @@ main()
         --f-irc|--firc|--Firc|--irc)
           install_f-irc
         ;;
-        -g|--git)
+        --git)
           install_git
         ;;
         --GIMP|--gimp|--Gimp)
@@ -1527,22 +1527,22 @@ main()
         --inkscape|--ink-scape|--Inkscape|--InkScape)
           install_inkscape
         ;;
-        -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
+        --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
           install_GNU_parallel
         ;;
-        -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
+        --chrome|--Chrome|--google-chrome|--Google-Chrome)
           install_google_chrome
         ;;
-        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
+        --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
           install_intellij_community
         ;;
-        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
+        --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
           install_intellij_ultimate
         ;;
-        -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
+        --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
           install_jdk11
         ;;
-        -x|--latex|--LaTeX|--tex|--TeX)
+        --latex|--LaTeX|--tex|--TeX)
           install_latex
         ;;
         --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
@@ -1557,7 +1557,7 @@ main()
         --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
           install_nemo
         ;;
-        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
+        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
           install_musicmanager
         ;;
         --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
@@ -1566,25 +1566,25 @@ main()
         --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
           install_obs-studio
         ;;
-        -f|--pdfgrep|--findpdf|--pdf)
+        --pdfgrep|--findpdf|--pdf)
           install_pdfgrep
         ;;
-        -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
+        --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
           install_pycharm_community
         ;;
-        -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
+        --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
           install_pycharm_professional
         ;;
         -p|--python|--python3|--Python3|--Python)
           install_python3
         ;;
-        -y|--pypy|--pypy3|--PyPy3|--PyPy)
+        --pypy|--pypy3|--PyPy3|--PyPy)
           install_pypy3
         ;;
-        -d|--dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
+        --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
           install_pypy3_dependencies
         ;;
-        -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
+        --shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
           install_shell_history_optimization
           install_ls_alias
           install_git_aliases
@@ -1594,16 +1594,16 @@ main()
         --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
           install_shotcut
         ;;
-        -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
+        --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
           install_sublime_text
         ;;
-        -w|--steam|--Steam|--STEAM)
+        --steam|--Steam|--STEAM)
           install_steam
         ;;
-        -r|--Telegram|--telegram)
+        --Telegram|--telegram)
           install_telegram
         ;;
-        -t|--templates)
+        --templates)
           install_templates
         ;;
         --tmux|--Tmux)
@@ -1621,7 +1621,7 @@ main()
         --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
           install_visualstudiocode
         ;;
-        -v|--vlc|--VLC|--Vlc)
+        --vlc|--VLC|--Vlc)
           install_vlc
         ;;
         --firefox|--Firefox)
@@ -1632,21 +1632,21 @@ main()
         ;;
         
         ### WRAPPER ARGUMENTS ###
-        -U|--user|--regular|--normal)
+        --user|--regular|--normal)
           if [[ "$(whoami)" == "root" ]]; then
             echo "WARNING: Could not install user packages being root. You should be normal user."
           else
            user_install
           fi
         ;;
-        -R|--root|--superuser|--su)
+        --root|--superuser|--su)
           if [[ "$(whoami)" == "root" ]]; then
             root_install
           else
             echo "WARNING: Could not install root packages being user. You should be root."
           fi
         ;;
-        -A|-|--all)
+        --ALL|--all|--All)
           if [[ "$(whoami)" == "root" ]]; then
             root_install
           else
@@ -1674,8 +1674,11 @@ main()
 set -e
 
 # Import file of common variables
-# WARNING: That makes that the script has to be executed from the directory containing it
-source common_data.sh
+DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "${DIR}" ]]; then
+  DIR="${PWD}"
+fi
+source "${DIR}/common_data.sh"
 
 # Call main function
 main "$@"
