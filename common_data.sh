@@ -161,6 +161,7 @@ extract_function="
     fi
   }"
 
+gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 
 L_function="
 

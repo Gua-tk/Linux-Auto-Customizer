@@ -153,6 +153,12 @@ uninstall_gvim()
   rm -f ${XDG_DESKTOP_DIR}/gvim.desktop
 }
 
+uninstall_gpaint()
+{
+  apt purge -y gpaint
+  rm -f ${XDG_DESKTOP_DIR}/gpaint.desktop
+}
+
 uninstall_inkscape()
 {
   apt purge -y inkscape
@@ -412,6 +418,7 @@ uninstall_all()
   uninstall_google_chrome
   uninstall_gparted
   uninstall_gvim
+  uninstall_gpaint
   uninstall_inkscape
   uninstall_intellij_community
   uninstall_intellij_ultimate
@@ -512,6 +519,9 @@ main()
         --gvim|--vim-gtk3|--Gvim|--GVim)
           uninstall_gvim
         ;;
+        --gpaint|--paint|--Gpaint)
+          uninstall_gpaint
+        ;;
         --inkscape|--ink-scape|--Inkscape|--InkScape)
           uninstall_inkscape
         ;;
@@ -547,6 +557,9 @@ main()
         ;;
         --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
           uninstall_musicmanager
+        ;;
+        --gpaint|--paint|--Gpaint)
+          uninstall_gpaint
         ;;
         -f|--pdfgrep|--findpdf|--pdf)
           uninstall_pdfgrep

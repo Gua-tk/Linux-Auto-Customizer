@@ -829,7 +829,17 @@ install_gvim()
   else
     echo "WARNING: Could not install gvim. You should be root."
   fi
+}
 
+install_gpaint()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    apt -y install gpaint
+    copy_launcher "gpaint.desktop"
+    sed "s|Icon=gpaint.svg|Icon=${gpaint_icon_path}|" -i ${XDG_DESKTOP_DIR}/gpaint.desktop
+  else
+    echo "WARNING: Could not install gpaint. You should be root."
+  fi
 }
 
 install_inkscape()
@@ -1383,6 +1393,7 @@ root_install()
   install_gparted
   install_google_chrome
   install_gvim
+  install_gpaint
   install_inkscape
   install_jdk11
   install_latex
@@ -1567,6 +1578,9 @@ main()
         ;;
         --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
           install_musicmanager
+        ;;
+        --gpaint|--paint|--Gpaint)
+          install_gpaint
         ;;
         --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
           install_openoffice
