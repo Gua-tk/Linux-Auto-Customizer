@@ -250,6 +250,7 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Blender3D, Spotify, USB Image Writer,  WireShark...
 - [ ] apache2, MySQL Server*, glpi*, FOG Server*, Proxmox*
 - [ ] To add more useful directory path variables in common_data.sh
+- [ ] Make sure USR_BIN_FOLDER is present in any user roll
 ## Author and Acknowledgements
 * Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)
 * Tester: **Axel Fernández** - [Axlfc](https://github.com/Axlfc) [axelfernandezcurros@gmail.com](axelfernandezcurros@gmail.com)

@@ -1001,174 +1001,114 @@ install_megasync()
 # Mendeley Dependencies
 install_mendeley_dependencies()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install mendeley dependencies"
-    # Mendeley dependencies
-    apt-get -y install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
-    echo "Finished"
-  else
-    echo "WARNING: Could not install dependencies. You need root permissions. Skipping..."
-  fi
+
+  # Mendeley dependencies
+  apt-get -y install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
+
 }
 
 
 # Automatic install + Creates desktop launcher in launcher and in desktop. 
 install_musicmanager()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install Google music manager"
-    if [[ -z "$(which google-musicmanager)" ]]; then
-      # Delete possible collisions with previous installation
-      rm -f google-musicmanager*.deb*  
-      # Download
-      wget https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
-      
-      # Install downloaded version
-      apt install -y -qq ./google-musicmanager-beta_current_amd64.deb
-      # Clean
-      rm -f google-musicmanager*.deb*  
-      
-      # Create launcher and change its permissions (we are root)
-      copy_launcher "google-musicmanager.desktop"
+  if [[ -z "$(which google-musicmanager)" ]]; then
+    # Delete possible collisions with previous installation
+    rm -f google-musicmanager*.deb*
+    # Download
+    wget https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
 
-    else
-      err "WARNING: Google Music Manager is already installed. Skipping"
-    fi
-    echo "Finished"
-  else
-    echo "WARNING: Could not install Google Music Manager. You need root permissions. Skipping..."
-  fi
+    # Install downloaded version
+    apt install -y -qq ./google-musicmanager-beta_current_amd64.deb
+    # Clean
+    rm -f google-musicmanager*.deb*
+
+    # Create launcher and change its permissions (we are root)
+    copy_launcher "google-musicmanager.desktop"
 }
 
 
 install_nemo()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install nemo"
-    apt purge -y nautilus gnome-shell-extension-desktop-icons
-    apt -y install nemo 
-    apt -y install dconf-editor gnome-tweak-tool
-    echo -e "${nemo_desktop_launcher}" > /etc/xdg/autostart/nemo-autostart.desktop
-    #for nautilus_command in "${nautilus_conf[@]}"; do
-     # if [[ ! -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nautilus_command}" )" ]]; then
-      #  sed "s:${nautilus_command}::g" -i /home/${SUDO_USER}/.profile
-      #fi
-    #done
-    for nemo_command in "${nemo_conf[@]}"; do
-      #if [[ -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nemo_command}" )" ]]; then
-       # echo "${nemo_command}" >> /home/${SUDO_USER}/.profile
-        $nemo_command
-      #fi
-    done
-    copy_launcher "nemo.desktop"
-    echo "WARNING: If Nemo has been installed,restart Ubuntu"
-    echo "Finished"
-  else
-    echo "WARNING: Could not install nemo You should be root. Skipping..."
-  fi
+  apt purge -y nautilus gnome-shell-extension-desktop-icons
+  apt -y install nemo
+  apt -y install dconf-editor gnome-tweak-tool
+  echo -e "${nemo_desktop_launcher}" > /etc/xdg/autostart/nemo-autostart.desktop
+  #for nautilus_command in "${nautilus_conf[@]}"; do
+   # if [[ ! -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nautilus_command}" )" ]]; then
+    #  sed "s:${nautilus_command}::g" -i /home/${SUDO_USER}/.profile
+    #fi
+  #done
+  for nemo_command in "${nemo_conf[@]}"; do
+    #if [[ -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nemo_command}" )" ]]; then
+     # echo "${nemo_command}" >> /home/${SUDO_USER}/.profile
+      $nemo_command
+    #fi
+  done
+  copy_launcher "nemo.desktop"
 }
 
 
 install_notepadqq()
 {
- if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install notepadqq"
-    apt install -y notepadqq
-    copy_launcher notepadqq.desktop
-    echo "Finished"
-  else
-    echo "WARNING: Could not install notepadqq. You need root permissions. Skipping..."
-  fi
+  apt install -y notepadqq
+  copy_launcher notepadqq.desktop
 }
 
 
 install_openoffice()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install openoffice"
-    apt remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
-    apt autoremove -y
-    rm -f office.tar.gz*
-    wget -O "office.tar.gz" "${openoffice_downloader}"
-    rm -Rf en-US
-    tar -xvf "office.tar.gz"
-    rm -f office.tar.gz*
-    cd en-US/DEBS/
-    dpkg -i *.deb
-    cd desktop-integration/
-    dpkg -i *.deb
-    cd ../../..
-    rm -Rf en-US
-    
-    copy_launcher "openoffice4-base.desktop"
-    copy_launcher "openoffice4-calc.desktop"
-    copy_launcher "openoffice4-draw.desktop"
-    copy_launcher "openoffice4-math.desktop"
-    copy_launcher "openoffice4-writer.desktop"
-    
-    echo "Finished"
-  else
-    echo "WARNING: Could not install openoffice. You should be root. Skipping..."
-  fi
-  
+  apt remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
+  apt autoremove -y
+  rm -f office.tar.gz*
+  wget -O "office.tar.gz" "${openoffice_downloader}"
+  rm -Rf en-US
+  tar -xvf "office.tar.gz"
+  rm -f office.tar.gz*
+  cd en-US/DEBS/
+  dpkg -i *.deb
+  cd desktop-integration/
+  dpkg -i *.deb
+  cd ../../..
+  rm -Rf en-US
+
+  copy_launcher "openoffice4-base.desktop"
+  copy_launcher "openoffice4-calc.desktop"
+  copy_launcher "openoffice4-draw.desktop"
+  copy_launcher "openoffice4-math.desktop"
+  copy_launcher "openoffice4-writer.desktop"
 }
 
 
 install_obs-studio()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install obs-studio"
-    # There's a dependency
-    apt install -y ffmpeg
-    apt install -y obs-studio
-    echo -e "${obs_desktop_launcher}" > ${XDG_DESKTOP_DIR}/obs-studio.desktop
-    chmod 775 ${XDG_DESKTOP_DIR}/obs-studio.desktop
-    echo "Finished"
-  else
-    echo "WARNING: Could not install obs-studio. You should be root. Skipping..."
-  fi
+  apt install -y ffmpeg
+  apt install -y obs-studio
+  echo -e "${obs_desktop_launcher}" > ${XDG_DESKTOP_DIR}/obs-studio.desktop
+  chmod 775 ${XDG_DESKTOP_DIR}/obs-studio.desktop
 }
 
 
 install_okular()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install okular"
-    apt-get -y install okular
-    echo "Finished"
-  else
-    echo "WARNING: Could not install okular. You should be root. Skipping..."
-  fi
+  apt-get -y install okular
 }
 
 
 # Install pdf grep
 install_pdfgrep()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install pdfgrep"
-    apt-get -y install pdfgrep
-    echo "Finished"
-  else
-    echo "WARNING: Could not install pdfgrep. You should be root. Skipping..."
-  fi
+  apt-get -y install pdfgrep
 }
 
 
 # Needs roots permission
 install_pypy3_dependencies()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install pypy3 dependencies"
-    # pypy3 module dependencies
-    apt-get install -y -qq pkg-config
-    apt-get install -y -qq libfreetype6-dev
-    apt-get install -y -qq libpng-dev
-    apt-get install -y -qq libffi-dev
-    echo "Finished"
-  else
-    echo "WARNING: Could not install dependencies. You need root permissions. Skipping..."
-  fi
+  # pypy3 module dependencies
+  apt-get install -y -qq pkg-config
+  apt-get install -y -qq libfreetype6-dev
+  apt-get install -y -qq libpng-dev
+  apt-get install -y -qq libffi-dev
 }
 
 
@@ -1176,145 +1116,85 @@ install_pypy3_dependencies()
 # Needs root permission
 install_python3()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install python3"
-    apt install -y python3-dev python-dev python3-pip
-    echo "Finished"
-  else
-    echo "WARNING: Could not install python. You need root permissions. Skipping..."
-  fi
+  apt install -y python3-dev python-dev python3-pip
 }
 
 
 # steam ubuntu client
 install_steam()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install steam"
-    # steam dependencies
-    apt-get install curl
+apt-get install curl
 
-    if [[ -z $(which steam) ]]; then
-      # Avoid collision from possible previous interrumped installations
-      rm -f steam.deb*
-      # Download steam
-      wget -O steam.deb https://steamcdn-a.akamaihd.net/client/installer/steam.deb
-      # Install
-      dpkg -i steam.deb
-      # Clean after
-      rm -f steam.deb*
-      copy_launcher "steam.desktop"
-    else
-      err "WARNING: steam is already installed. Skipping"
-    fi
-    echo "Finished"
-  else
-    echo "WARNING: Could not install steam. You should be root. Skipping..."
-  fi
+if [[ -z $(which steam) ]]; then
+  # Avoid collision from possible previous interrumped installations
+  rm -f steam.deb*
+  # Download steam
+  wget -O steam.deb https://steamcdn-a.akamaihd.net/client/installer/steam.deb
+  # Install
+  dpkg -i steam.deb
+  # Clean after
+  rm -f steam.deb*
+  copy_launcher "steam.desktop"
 }
 
 install_terminator()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install terminator"
-    apt-get -y install terminator
-    copy_launcher terminator.desktop
-    echo "Finished"
-  else
-    echo "WARNING: Could not install terminator. You should be root. Skipping..."
-  fi
+
+  apt-get -y install terminator
+  copy_launcher terminator.desktop
 
 }
 install_thunderbird()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attemptying to install thunderbird"
-    apt-get install -y thunderbird 
-    copy_launcher "thunderbird.desktop"
-    echo "Finished"
-  else
-    echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
-  fi
+  apt-get install -y thunderbird
+  copy_launcher "thunderbird.desktop"
 }
 install_tilix()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attemptying to install tilix"
-    apt-get install -y tilix
-    copy_launcher tilix.desktop
-    echo "Finished"
-  else
-    echo "WARNING: Could not install tilix. You should be root user. Skipping..."
-  fi
+  apt-get install -y tilix
+  copy_launcher tilix.desktop
 }
 
 install_tmux()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install tmux"
-    apt-get -y install tmux
-    echo -e "${tmux_launcher}" > ${XDG_DESKTOP_DIR}/tmux.desktop
-    chmod 775 ${XDG_DESKTOP_DIR}/tmux.desktop
-    cp -p ${XDG_DESKTOP_DIR}/tmux.desktop /home/${SUDO_USER}/.local/share/applications
-    echo "Finished"
-  else
-    echo "WARNING: Could not install tmux. You should be root. Skipping..."
-  fi
+  apt-get -y install tmux
+  echo -e "${tmux_launcher}" > ${XDG_DESKTOP_DIR}/tmux.desktop
+  chmod 775 ${XDG_DESKTOP_DIR}/tmux.desktop
+  cp -p ${XDG_DESKTOP_DIR}/tmux.desktop /home/${SUDO_USER}/.local/share/applications
+
 }
 
 install_transmission()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attemptying to install transmission"
-    apt-get install -y transmission 
-    copy_launcher "transmission-gtk.desktop"
-    rm -f /home/${SUDO_USER}/.local/bin/transmission
-    ln -s $(which transmission-gtk) /home/${SUDO_USER}/.local/bin/transmission
-    chgrp ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
-    chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
-    echo "Finished"
-  else
-    echo "WARNING: Could not install transmission. You should be root user. Skipping..."
-  fi
+  apt-get install -y transmission
+  copy_launcher "transmission-gtk.desktop"
+  rm -f /home/${SUDO_USER}/.local/bin/transmission
+  ln -s $(which transmission-gtk) /home/${SUDO_USER}/.local/bin/transmission
+  chgrp ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
+  chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
 }
 
 
 # install VLC
 install_vlc()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install vlc"
-    apt-get -y install vlc
-    echo "Finished"
-  else
-    echo "WARNING: Could not install vlc. You should be root. Skipping..."
-  fi
+  apt-get -y install vlc
 }
 
 
 # VirtualBox
 install_virtualbox()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "Attempting to install virtualbox"
-    if [[ -z "$(which virtualbox)" ]]; then
-      # Delete possible collisions with previous installation
-      rm -f virtualbox*.deb*  
-      # Download
-      wget -O virtualbox.deb ${virtualbox_downloader}
-      # Install
-      dpkg -i virtualbox.deb
-      # Clean
-      rm -f virtualbox*.deb*
-      # Create launcher and change its permissions (we are root)
-      copy_launcher "virtualbox.desktop"
-    else
-      err "WARNING: Virtualbox is already installed. Skipping"
-    fi
-    echo "Finished"
-  else
-    echo "WARNING: Could not install virtualbox. You need root permissions. Skipping..."
-  fi
+  # Delete possible collisions with previous installation
+  rm -f virtualbox*.deb*
+  # Download
+  wget -O virtualbox.deb ${virtualbox_downloader}
+  # Install
+  dpkg -i virtualbox.deb
+  # Clean
+  rm -f virtualbox*.deb*
+  # Create launcher and change its permissions (we are root)
+  copy_launcher "virtualbox.desktop"
 }
 
 #############################
@@ -1505,78 +1385,35 @@ install_environment_aliases()
   fi
 }
 
-root_install()
+add_root_programs()
 {
-  install_audacity
-  install_atom
-  install_caffeine
-  install_calibre
-  install_cheat
-  install_cmatrix
-  install_clementine
-  install_clonezilla
-  install_converters
-  install_copyq
-  install_dropbox
-  install_firefox
-  install_f-irc
-  #install_games
-  install_gcc
-  install_geany
-  install_gimp
-  install_git
-  install_GNU_parallel
-  install_gparted
-  install_google_chrome
-  install_gvim
-  install_gpaint
-  install_inkscape
-  install_jdk11
-  install_latex
-  install_megasync
-  install_mendeley_dependencies
-  install_musicmanager
-  install_nemo
-  install_notepadqq
-  install_openoffice
-  install_obs-studio
-  install_okular
-  install_pdfgrep
-  install_python3
-  install_pypy3_dependencies
-  install_steam
-  install_terminator
-  install_thunderbird
-  install_tilix
-  install_tmux
-  install_transmission
-  install_vlc
-  install_virtualbox
+  for program in ${installation_data[@]}; do
+    permissions=$(echo ${program} | cut -d ";" -f4)
+    if [[ ${permissions} != 0]]; then
+      name=$(echo ${program} | cut -d ";" -f5)
+      add_program ${name}
+    fi
+  done
 }
 
-user_install()
+add_user_programs()
 {
-  install_android_studio
-  install_clion
-  install_discord
-  install_environment_aliases 
-  install_extract_function 
-  install_git_aliases
-  install_intellij_community
-  install_intellij_ultimate
-  install_ls_alias
-  install_mendeley
-  install_pycharm_community
-  install_pycharm_professional
-  install_pypy3
-  install_shell_history_optimization
-  install_shotcut
-  install_sublime_text
-  install_telegram
-  install_templates
-  install_visualstudiocode
+  for program in ${installation_data[@]}; do
+    permissions=$(echo ${program} | cut -d ";" -f4)
+    if [[ ${permissions} != 1]]; then
+      name=$(echo ${program} | cut -d ";" -f5)
+      add_program ${name}
+    fi
+  done
 }
 
+add_all_programs()
+{
+  for program in ${installation_data[@]}; do
+    name=$(echo ${program} | cut -d ";" -f5)
+    add_program $name
+  done
+}
 ###### AUXILIAR FUNCTIONS ######
 
 # Prints the given arguments to the stderr
@@ -1585,21 +1422,104 @@ err()
   echo "$*" >&2
 }
 
+execute_installation()
+{
+  for program in ${installation_data[@]}; do
+    # Installation bit processiong
+    installation_bit=$( echo ${program} | cut -d ";" -f1 )
+    if [[ ${installation_bit} == 1 ]]; then
+      forceness_bit=$( echo ${program} | cut -d ";" -f2 )
+      if [[ ${forceness_bit} == 1 ]]; then
+        set +e
+      else
+        set -e
+      fi
+      quietness_bit=$( echo ${program} | cut -d ";" -f3 )
+      if [[ ${quietness_bit} == 1 ]]; then
+        quietness_lvl_1="&>/dev/null"
+      else if [[ ${quietness_bit} == 2 ]]; then
+        quietness_lvl_2="&>/dev/null"
+      fi
+      program_function=$( echo ${program} | cut -d ";" -f5 )
+      program_name=$( echo ${program_function) | cut -d "_" -f2- )
+      program_privileges=$( echo ${program} | cut -d ";" -f4 )
+      if [[ ${program_privileges} == 1 ]]; then
+        if [[ ${EUID} -ne 0]]; then
+          err "WARNING: $program_name needs root permissions to be installed" ${quietness_lvl_2}
+        else
+          if [[ ! -z "$(which ${program_name})" ]]; then
+            err "WARNING: ${program_name} is already installed" ${quietness_lvl_2}
+          fi
+          echo "INFO: Attemptying to install ${program_name}" ${quietness_lvl_2}
+          $program_function ${quietness_lvl_1}
+          echo "INFO: ${program_name} installed" ${quietness_lvl_2}
+        fi
+      else if [[ ${program_privileges} == 0 ]]; then
+        if [[ ${EUID} -ne 0]]; then
+          if [[ ! -z "$(which ${program_name})" ]]; then
+            err "WARNING: ${program_name} is already installed" ${quietness_lvl_2}
+          fi
+          echo "INFO: Attemptying to install ${program_name}" ${quietness_lvl_2}
+          $program_function ${quietness_lvl_1}
+          echo "INFO: ${program_name} installed" ${quietness_lvl_2}
+        else
+          err "WARNING: $program_name needs user permissions to be installed" ${quietness_lvl_2}
+        fi
+      fi
+    fi
+  done
+}
+
+add_program()
+{
+  FLAG_ANY_INSTALLED=1  # Tells if there is any installed feature in order to determine if implicit to --all should be called
+  total=${#installation_data[*]}
+  for (( i=0; i<$(( ${total} )); i++ )); do
+    program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev )
+
+    if [[ "$1" == "${program_name}" ]]; then
+      # Add bit of installation yes/no
+      rest=$(echo "${installation_data[$i]}" | cut -d ";" -f4- )
+      new="1;${FLAG_FORCENESS};${FLAG_QUIETNESS};${rest}"
+      installation_data[$i]=${new}
+    fi
+    echo "${installation_data[$i]}"
+  done
+
+}
+
+
 ##################
 ###### MAIN ######
 ##################
 main()
 {
   if [[ "$(whoami)" == "root" ]]; then
-    # Update repositories and system before doing anything
-    apt -y update
-    apt -y upgrade
+    # Make sure USR_BIN_FOLDER is present
+    mkdir -p ${USR_BIN_FOLDER}
+    # Convert USR_BIN_FOLDER to a SUDO_ROOT user
+    chgrp ${SUDO_USER} ${USR_BIN_FOLDER}
+    chown ${SUDO_USER} ${USR_BIN_FOLDER}
+    chmod 775 ${USR_BIN_FOLDER}
 
-    # Do a safe copy
-    cp -p ${BASHRC_PATH} ${BASHRC_PATH}.bak
+    # Make sure that DIR_IN_PATH is present
+    mkdir -p ${DIR_IN_PATH}
+    # Convert DIR_IN_PATH to a SUDO_ROOT user
+    chgrp ${SUDO_USER} ${DIR_IN_PATH}
+    chown ${SUDO_USER} ${DIR_IN_PATH}
+    chmod 775 ${DIR_IN_PATH}
+
+    # Make sure that folder for user launchers is present
+    mkdir -p ${PERSONAL_LAUNCHERS_DIR}
+    # Convert PERSONAL_LAUNCHERS_DIR to a SUDO_ROOT user
+    chgrp ${SUDO_USER} ${PERSONAL_LAUNCHERS_DIR}
+    chown ${SUDO_USER} ${PERSONAL_LAUNCHERS_DIR}
+    chmod 775 ${PERSONAL_LAUNCHERS_DIR}
+
+
   else
-    # Create folder for user software
-    mkdir -p ${HOME}/.bin
+    # Make sure USR_BIN_FOLDER is present
+    mkdir -p ${USR_BIN_FOLDER}
 
     # Make sure that ${DIR_IN_PATH} is present
     mkdir -p ${DIR_IN_PATH}
@@ -1608,264 +1528,293 @@ main()
     mkdir -p ${PERSONAL_LAUNCHERS_DIR}
 
     # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
+    #//RF
     if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${DIR_IN_PATH}" )" ]]; then
       echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASHRC_PATH}
     fi
 
   fi
 
-  FLAG_QUIETNESS=0
-  FLAG_FORCENESS=0
+
+
 
   UPGRADE=2
   AUTOCLEAN=2
 
 
+
   ###### ARGUMENT PROCESSING ######
 
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+
+    case ${key} in
+      ### BEHAVIOURAL ARGUMENTS ###
+      -v|--verbose)
+        FLAG_QUIETNESS=0
+      ;;
+      -q|--quiet)
+        FLAG_QUIETNESS=1
+      ;;
+      -Q|--Quiet)
+        FLAG_QUIETNESS=2
+      ;;
+      -f|--force)
+        FLAG_FORCENESS=1
+      ;;
+      -e|--exit|--exit-on-error)
+        FLAG_FORCENESS=0
+      ;;
+
+
+      ### INDIVIDUAL ARGUMENTS ###
+      # Sorted alphabetically by function name:
+      --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
+        add_program install_android_studio
+      ;;
+      --audacity|--Audacity)
+        add_program install_audacity
+      ;;
+      --atom|--Atom)
+        add_program install_atom
+      ;;
+      --discord|--Discord|--disc)
+        add_program install_discord
+      ;;
+      --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
+        add_program install_dropbox
+      ;;
+      --gcc|--GCC)
+        add_program install_gcc
+      ;;
+      --caffeine|--Caffeine|--cafe|--coffee)
+        add_program install_caffeine
+      ;;
+      --calibre|--Calibre|--cali)
+        add_program install_calibre
+      ;;
+      --cheat|--cheat.sh|--Cheat.sh|--che)
+        add_program install_cheat
+      ;;
+      --clementine|--Clementine)
+        add_program install_clementine
+      ;;
+      --clion|--Clion|--CLion)
+        add_program install_clion
+      ;;
+      --cmatrix|--Cmatrix)
+        add_program install_cmatrix
+      ;;
+      --converters|--Converters)
+        add_program install_converters
+      ;;
+      --clonezilla|--CloneZilla|--cloneZilla)
+        add_program install_clonezilla
+      ;;
+      --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
+        add_program install_copyq
+      ;;
+      --f-irc|--firc|--Firc|--irc)
+        add_program install_f-irc
+      ;;
+      --firefox|--Firefox)
+        add_program install_firefox
+      ;;
+      --games|--Gaming|--Games)
+        add_program install_games
+      ;;
+      --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
+        add_program install_musicmanager
+      ;;
+      --gpaint|--paint|--Gpaint)
+        add_program install_gpaint
+      ;;
+      --geany|--Geany)
+        add_program install_geany
+      ;;
+      --git)
+        add_program install_git
+      ;;
+      --GIMP|--gimp|--Gimp)
+        add_program install_gimp
+      ;;
+      --GParted|--gparted|--GPARTED|--Gparted)
+        add_program install_gparted
+      ;;
+      --gvim|--vim-gtk3|--Gvim|--GVim)
+        add_program install_gvim
+      ;;
+      --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
+        add_program install_GNU_parallel
+      ;;
+      --chrome|--Chrome|--google-chrome|--Google-Chrome)
+        add_program install_google_chrome
+      ;;
+      --inkscape|--ink-scape|--Inkscape|--InkScape)
+        add_program install_inkscape
+      ;;
+      --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
+        add_program install_intellij_community
+      ;;
+      --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
+        add_program install_intellij_ultimate
+      ;;
+      --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
+        add_program install_jdk11
+      ;;
+      --latex|--LaTeX|--tex|--TeX)
+        add_program install_latex
+      ;;
+      --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
+        add_program install_megasync
+      ;;
+      --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
+        add_program install_mendeley
+      ;;
+      --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
+        add_program install_mendeley_dependencies
+      ;;
+      --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
+        add_program install_nemo
+      ;;
+      --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
+        add_program install_notepadqq
+      ;;
+      --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
+        add_program install_openoffice
+      ;;
+      --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
+        add_program install_obs-studio
+      ;;
+      --okular|--Okular|--okularpdf)
+        add_program install_okular
+      ;;
+      --pdfgrep|--findpdf|--pdf)
+        add_program install_pdfgrep
+      ;;
+      --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
+        add_program install_pycharm_community
+      ;;
+      --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
+        add_program install_pycharm_professional
+      ;;
+      -p|--python|--python3|--Python3|--Python)
+        add_program install_python3
+      ;;
+      --pypy|--pypy3|--PyPy3|--PyPy)
+        add_program install_pypy3
+      ;;
+      --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
+        add_program install_pypy3_dependencies
+      ;;
+      --shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
+        add_program install_shell_history_optimization
+        add_program install_ls_alias
+        add_program install_git_aliases
+        add_program install_environment_aliases
+        add_program install_extract_function
+      ;;
+      --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
+        add_program install_shotcut
+      ;;
+      --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
+        add_program install_sublime_text
+      ;;
+      --steam|--Steam|--STEAM)
+        add_program install_steam
+      ;;
+      --Telegram|--telegram)
+        add_program install_telegram
+      ;;
+      --templates)
+        add_program install_templates
+      ;;
+      --Terminator|--terminator)
+        add_program install_terminator
+      ;;
+      --Tilix|--tilix)
+        add_program install_tilix
+      ;;
+      --tmux|--Tmux)
+        add_program install_tmux
+      ;;
+      --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
+        add_program install_thunderbird
+      ;;
+      --transmission|--transmission-gtk|--Transmission)
+        add_program install_transmission
+      ;;
+      --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
+        add_program install_virtualbox
+      ;;
+      --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
+        add_program install_visualstudiocode
+      ;;
+      --vlc|--VLC|--Vlc)
+        add_program install_vlc
+      ;;
+
+
+
+      ### WRAPPER ARGUMENTS ###
+
+
+
+
+      --user|--regular|--normal)
+        add_user_programs
+      ;;
+      --root|--superuser|--su)
+        add_root_programs
+      ;;
+      --ALL|--all|--All)
+        add_all_programs
+      ;;
+      *)    # unknown option
+        err "$1 is not a recognized command"
+      ;;
+    esac
+    shift
+  done
+
   # If we don't receive arguments we try to install everything that we can given our permissions
-  if [[ -z "$@" ]]; then
-    if [[ "$(whoami)" == "root" ]]; then
-      root_install
-    else
-      user_install
-    fi
+  if [[ ${ANY_INSTALLED} == 0 ]]; then
+    add_all_programs
   else
-    while [[ $# -gt 0 ]]; do
-      key="$1"
 
-      case ${key} in
-      
-        ### INDIVIDUAL ARGUMENTS ###
-        # Sorted alphabetically by function name:
-        --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
-          install_android_studio
-        ;;
-        --audacity|--Audacity)
-          install_audacity
-        ;;
-        --atom|--Atom)
-          install_atom
-        ;;
-        --discord|--Discord|--disc)
-          install_discord
-        ;;
-        --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
-          install_dropbox
-        ;;
-        -c|--gcc)
-          install_gcc
-        ;;
-        --caffeine|--Caffeine|--cafe|--coffee)
-          install_caffeine
-        ;;
-        --calibre|--Calibre|--cali)
-          install_calibre
-        ;;
-        --cheat|--cheat.sh|--Cheat.sh|--che)
-          install_cheat
-        ;;
-        --clementine|--Clementine)
-          install_clementine
-        ;;
-        --clion|--Clion|--CLion)
-          install_clion
-        ;;
-        --cmatrix|--Cmatrix)
-          install_cmatrix
-        ;;
-        --converters|--Converters)
-          install_converters
-        ;;
-        --clonezilla|--CloneZilla|--cloneZilla)
-          install_clonezilla
-        ;;
-        --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
-          install_copyq
-        ;;
-        --f-irc|--firc|--Firc|--irc)
-          install_f-irc
-        ;;
-        --firefox|--Firefox)
-          install_firefox
-        ;;
-        --games|--Gaming|--Games)
-          install_games
-        ;;
-        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
-          install_musicmanager
-        ;;
-        --gpaint|--paint|--Gpaint)
-          install_gpaint
-        ;;
-        --geany|--Geany)
-          install_geany
-        ;;
-        --git)
-          install_git
-        ;;
-        --GIMP|--gimp|--Gimp)
-          install_gimp
-        ;;
-        --GParted|--gparted|--GPARTED|--Gparted)
-          install_gparted
-        ;;
-        --gvim|--vim-gtk3|--Gvim|--GVim)
-          install_gvim
-        ;;
-        --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
-          install_GNU_parallel
-        ;;
-        --chrome|--Chrome|--google-chrome|--Google-Chrome)
-          install_google_chrome
-        ;;
-        --inkscape|--ink-scape|--Inkscape|--InkScape)
-          install_inkscape
-        ;;
-        --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
-          install_intellij_community
-        ;;
-        --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
-          install_intellij_ultimate
-        ;;
-        --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
-          install_jdk11
-        ;;
-        --latex|--LaTeX|--tex|--TeX)
-          install_latex
-        ;;
-        --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
-          install_megasync
-        ;;
-        --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
-          install_mendeley
-        ;;
-        --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
-          install_mendeley_dependencies
-        ;;
-        --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
-          install_nemo
-        ;;
-        --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
-          install_notepadqq
-        ;;
-        --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
-          install_openoffice
-        ;;
-        --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
-          install_obs-studio
-        ;;
-        --okular|--Okular|--okularpdf)
-          install_okular
-        ;;
-        --pdfgrep|--findpdf|--pdf)
-          install_pdfgrep
-        ;;
-        --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
-          install_pycharm_community
-        ;;
-        --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
-          install_pycharm_professional
-        ;;
-        -p|--python|--python3|--Python3|--Python)
-          install_python3
-        ;;
-        --pypy|--pypy3|--PyPy3|--PyPy)
-          install_pypy3
-        ;;
-        --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
-          install_pypy3_dependencies
-        ;;
-        --shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
-          install_shell_history_optimization
-          install_ls_alias
-          install_git_aliases
-          install_environment_aliases
-          install_extract_function
-        ;;
-        --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
-          install_shotcut
-        ;;
-        --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
-          install_sublime_text
-        ;;
-        --steam|--Steam|--STEAM)
-          install_steam
-        ;;
-        --Telegram|--telegram)
-          install_telegram
-        ;;
-        --templates)
-          install_templates
-        ;;
-        --Terminator|--terminator)
-          install_terminator
-        ;;
-        --Tilix|--tilix)
-          install_tilix
-        ;;
-        --tmux|--Tmux)
-          install_tmux
-        ;;
-        --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
-          install_thunderbird
-        ;;
-        --transmission|--transmission-gtk|--Transmission)
-          install_transmission
-        ;;
-        --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
-          install_virtualbox
-        ;;
-        --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
-          install_visualstudiocode
-        ;;
-        --vlc|--VLC|--Vlc)
-          install_vlc
-        ;;
+  ####### EXECUTION #######
 
+  ### PRE-INSTALLATION ARGUMENTS ###
 
-        
-        ### WRAPPER ARGUMENTS ###
-        --user|--regular|--normal)
-          if [[ "$(whoami)" == "root" ]]; then
-            echo "WARNING: Could not install user packages being root. You should be normal user."
-          else
-           user_install
-          fi
-        ;;
-        --root|--superuser|--su)
-          if [[ "$(whoami)" == "root" ]]; then
-            root_install
-          else
-            echo "WARNING: Could not install root packages being user. You should be root."
-          fi
-        ;;
-        --ALL|--all|--All)
-          if [[ "$(whoami)" == "root" ]]; then
-            root_install
-          else
-            user_install
-          fi
-        ;;
-        *)    # unknown option
-          err "$1 is not a recognized command"
-        ;;
-      esac
-      shift
-    done
+  # UPDATE
+  if [[ ${UPGRADE} > 0 ]]; then
+    apt -y update
+  fi
+  if [[ ${UPGRADE} == 2 ]]; then
+    apt -y upgrade
   fi
 
-  # Clean if we have permissions
+
+
+  ### INSTALLATION ###
+
+  execute_installation
+
+
+
+  ### POST-INSTALLATION ARGUMENTS ###
+
   if [[ "$(whoami)" == "root" ]]; then
-    apt -y autoremove
-    apt -y autoclean
+    if [[ ${AUTOCLEAN} > 0 ]]; then
+      apt -y autoremove
+    fi
+    if [[ ${AUTOCLEAN} == 2 ]]; then
+      apt -y autoclean
+    fi
   fi
 
   return 0
 }
-
-# Script will exit if any command fails
-set -e
 
 # Import file of common variables
 DIR="${BASH_SOURCE%/*}"

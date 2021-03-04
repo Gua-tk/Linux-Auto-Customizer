@@ -32,7 +32,7 @@ else
   declare $(cat /home/${SUDO_USER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
 
   # Fill var to locate user software
-  USR_BIN_FOLDER=/home/${SUDO_USER}/.bin
+  USR_BIN_FOLDER=/home/${SUDO_USER}/.bins
 
   # Locate bash customizing files
   BASHRC_PATH=/home/${SUDO_USER}/.bashrc
@@ -44,10 +44,70 @@ else
   DIR_IN_PATH=/home/${SUDO_USER}/.local/bin
 fi
 
-# If there is no backup of bashrc do it conserving permissions
-if  [[ ! -f ${BASHRC_PATH}.bak ]]; then
-  cp -p ${BASHRC_PATH} ${BASHRC_PATH}.bak
-fi
+
+FLAG_QUIETNESS=0
+FLAG_FORCENESS=0
+FLAG_ANY_INSTALLED=0  # Tells if there is any installed feature in order to determine if implicit to --all should be called
+
+# install_yes/no; forceness; quietness; permissions; function_name
+installation_data=(
+"0;0;0;0;install_android_studio"
+"0;0;0;1;install_audacity"
+"0;0;0;1;install_atom"
+"0;0;0;0;install_discord"
+"0;0;0;1;install_dropbox"
+"0;0;0;1;install_gcc"
+"0;0;0;1;install_caffeine"
+"0;0;0;1;install_clementine"
+"0;0;0;0;install_clion"
+"0;0;0;1;install_cmatrix"
+"0;0;0;0;install_converters"
+"0;0;0;1;install_clonezilla"
+"0;0;0;1;install_copyq"
+"0;0;0;1;install_f-irc"
+"0;0;0;1;install_firefox"
+"0;0;0;1;install_musicmanager"
+"0;0;0;1;install_gpaint"
+"0;0;0;1;install_geany"
+"0;0;0;1;install_git"
+"0;0;0;1;install_gimp"
+"0;0;0;1;install_gparted"
+"0;0;0;1;install_gvim"
+"0;0;0;1;install_google_chrome"
+"0;0;0;1;install_GNU_parallel"
+"0;0;0;1;install_inkscape"
+"0;0;0;0;install_intellij_community"
+"0;0;0;0;install_intellij_ultimate"
+"0;0;0;1;install_jdk11"
+"0;0;0;1;install_latex"
+"0;0;0;1;install_megasync"
+"0;0;0;1;install_mendeley_dependencies"
+"0;0;0;1;install_nemo"
+"0;0;0;1;install_notepadqq"
+"0;0;0;1;install_openoffice"
+"0;0;0;1;install_obs"
+"0;0;0;1;install_okular"
+"0;0;0;1;install_pdfgrep"
+"0;0;0;0;install_pycharm_community"
+"0;0;0;0;install_pycharm_professional"
+"0;0;0;1;install_python3"
+"0;0;0;0;install_pypy3"
+"0;0;0;1;install_pypy3_dependencies"
+"0;0;0;0;install_environment_aliases"
+"0;0;0;1;install_steam"
+"0;0;0;1;install_shotcut"
+"0;0;0;1;install_sublime_text"
+"0;0;0;0;install_telegram"
+"0;0;0;0;install_templates"
+"0;0;0;1;install_terminator"
+"0;0;0;1;install_tilix"
+"0;0;0;1;install_tmux"
+"0;0;0;1;install_thunderbird"
+"0;0;0;1;install_transmission"
+"0;0;0;1;install_virtualbox"
+"0;0;0;0;install_visualstudiocode"
+"0;0;0;1;install_vlc"
+)
 
 
 ##### COMMON VARIABLES #####
