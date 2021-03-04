@@ -46,7 +46,7 @@ uninstall_atom()
 uninstall_caffeine()
 {
   apt purge -y caffeine
-  rm -f ${XDG_DESKTOP_DIR}/caffeine.desktop
+  rm -f ${XDG_DESKTOP_DIR}/caffeine-indicator.desktop
 }
 
 uninstall_cheat()

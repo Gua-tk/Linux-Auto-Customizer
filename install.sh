@@ -602,7 +602,7 @@ install_caffeine()
   else
     echo "Attempting to install caffeine"
     apt install -y caffeine
-    copy_launcher "caffeine.desktop"
+    copy_launcher "caffeine-indicator.desktop"
   fi
 }
 
