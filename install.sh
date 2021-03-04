@@ -620,6 +620,16 @@ install_cheat()
   fi
 }
 
+install_clementine()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "WARNING: Could not install atom. You should be root. Skipping..."
+  else
+    echo "Attempting to install atom"
+    apt install -y clementine
+    copy_launcher clementine.desktop
+  fi
+}
 
 #Install CloneZilla
 install_clonezilla()
@@ -1393,6 +1403,7 @@ root_install()
   install_atom
   install_cheat
   install_cmatrix
+  install_clementine
   install_clonezilla
   install_converters
   install_dropbox
@@ -1531,6 +1542,9 @@ main()
         ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           install_cheat
+        ;;
+        --clementine|--Clementine)
+          install_clementine
         ;;
         --clion|--Clion|--CLion)
           install_clion

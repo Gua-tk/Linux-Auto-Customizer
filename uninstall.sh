@@ -57,6 +57,12 @@ uninstall_cmatrix()
   rm -f ${XDG_DESKTOP_DIR}/cmatrix.desktop
 }
 
+uninstall_clementine()
+{
+  apt purge -y clementine
+  rm -f ${XDG_DESKTOP_DIR}/clementine.desktop
+}
+
 uninstall_clion()
 {
   rm -Rf ${USR_BIN_FOLDER}/clion
@@ -492,6 +498,9 @@ main()
         ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           uninstall_cheat
+        ;;
+        --clementine|--Clementine)
+          uninstall_clementine
         ;;
         -n|--clion|--Clion|--CLion)
           uninstall_clion
