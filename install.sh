@@ -595,6 +595,17 @@ install_atom()
   fi
 }
 
+install_caffeine()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "WARNING: Could not install caffeine. You should be root. Skipping..."
+  else
+    echo "Attempting to install caffeine"
+    apt install -y caffeine
+    copy_launcher "caffeine.desktop"
+  fi
+}
+
 install_cheat()
 {
   if [[ "$(whoami)" != "root" ]]; then
@@ -623,9 +634,9 @@ install_cheat()
 install_clementine()
 {
   if [[ "$(whoami)" != "root" ]]; then
-    echo "WARNING: Could not install atom. You should be root. Skipping..."
+    echo "WARNING: Could not install clementine. You should be root. Skipping..."
   else
-    echo "Attempting to install atom"
+    echo "Attempting to install clementine"
     apt install -y clementine
     copy_launcher clementine.desktop
   fi
@@ -1401,6 +1412,7 @@ root_install()
 {
   install_audacity
   install_atom
+  install_caffeine
   install_cheat
   install_cmatrix
   install_clementine
@@ -1539,6 +1551,9 @@ main()
         ;;
         -c|--gcc)
           install_gcc
+        ;;
+        --caffeine|--Caffeine|--cafe|--coffee)
+          install_caffeine
         ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           install_cheat

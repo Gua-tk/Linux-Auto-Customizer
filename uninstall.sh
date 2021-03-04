@@ -43,6 +43,12 @@ uninstall_atom()
   rm -f ${XDG_DESKTOP_DIR}/atom.desktop
 }
 
+uninstall_caffeine()
+{
+  apt purge -y caffeine
+  rm -f ${XDG_DESKTOP_DIR}/caffeine.desktop
+}
+
 uninstall_cheat()
 {
   #there's a curl dependency for cht.sh
@@ -413,6 +419,7 @@ uninstall_all()
   uninstall_android_studio
   uninstall_audacity
   uninstall_atom
+  uninstall_caffeine
   uninstall_cheat
   uninstall_clion
   uninstall_clonezilla
@@ -495,6 +502,9 @@ main()
         ;;
         --atom|--Atom)
           uninstall_atom
+        ;;
+        --caffeine|--Caffeine|--cafe|--coffee)
+          uninstall_caffeine
         ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           uninstall_cheat
