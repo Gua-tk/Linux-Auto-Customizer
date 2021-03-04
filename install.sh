@@ -580,6 +580,7 @@ install_audacity()
   else
     echo "Attempting to install audacity"
     apt install -y audacity
+    # Rf (not placing icon in desktop)
     copy_launcher "audacity.desktop"
   fi
 }

@@ -43,18 +43,45 @@ Creates the new file templates in the Templates folder of the current user, allo
 
 #### Software
 * Android Studio (193.6514223-linux)
-* CLion 2020.1
-* Discord (0.0.10)
-* Firefox
+* Audacity 
+* Atom 
+* Caffeine 
+* cheat 
+* Clementine
+* CLion 2020.1 
+* Cmatrix 
+* CloneZilla 
+* converters (bintodec, dectohex, utftobin...) 
+* copyq
+* Discord (0.0.10) 
+* Firefox 
+* f-irc 
+* Geany 
+* GIMP 
+* gpaint 
+* Gparted 
+* Gvim 
+* Inkscape
 * IntelliJ Community
 * IntelliJ Ultimate
-* Mendeley Desktop
+* Mendeley Desktop 
+* Notepadqq 
+* OBS Studio 
+* Office 
+* okular
 * PyCharm professional 2020.1
 * PyCharm community 2019.1
-* PyPy3 (pypy3.6-v7.3.1-linux64). Setting up its own `pip` and installing `cython` and `numpy`.
+* PyPy3 (pypy3.6-v7.3.1-linux64). Setting up its own `pip` and installing `cython` and `numpy`. 
+* Shotcut 
+* Slack
 * Sublime Text 3 (build 3211 x64)
-* Telegram
+* Telegram 
+* Terminator 
+* tilix
+* tmux
+* VirtualBox
 * Visual Studio Code
+
 
 ### Root features
 ##### Software
@@ -69,14 +96,14 @@ Creates the new file templates in the Templates folder of the current user, allo
 * Python3 
 * GNU parallel 
 * pdfgrep 
-* VLC 
+
 * Steam
 * PyPy3 dependencies. *PyPy is "split" because we need root for dependencies but not for the main installation.*
 * MEGAand MEGAsync desktop integration.
 * Nemo Desktop
 * Thunderbird 
 * Transmission
-
+* VLC 
 ## Usage
 ### Download
 To install this software you must begin cloning this repository to you computer. You can either download a `.zip` file containing the repository from github from [here](https://github.com/AleixMT/Linux-Auto-Customizer/archive/master.zip), or you can clone the repository using a terminal. To do the last option, you must have installed `git`. If you don't have it, you can install it opening a terminal and typing the following:
@@ -220,7 +247,7 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Delete / rearrange arguments of one letter
 - [ ] nettools*
-- [ ] Blender3D, Spotify, USB Image Writer,  WireShark,
+- [ ] Blender3D, Spotify, USB Image Writer,  WireShark...
 - [ ] apache2, MySQL Server*, glpi*, FOG Server*, Proxmox*
 - [ ] To add more useful directory path variables in common_data.sh
 ## Author and Acknowledgements
