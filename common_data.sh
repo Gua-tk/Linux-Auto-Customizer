@@ -65,6 +65,7 @@ StartupNotify=true
 StartupWMClass=jetbrains-android-studio
 Name[en_GB]=android-studio.desktop"
 
+atom_downloader=https://atom.io/download/deb
 
 clion_downloader=https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz
 clion_launcher="[Desktop Entry]

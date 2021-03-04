@@ -582,6 +582,18 @@ install_audacity()
   fi
 }
 
+install_atom()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "WARNING: Could not install atom. You should be root. Skipping..."
+  else
+    echo "Attempting to install atom"
+    (cd "${USR_BIN_FOLDER}"; wget ${atom_downloader} -O atom.deb; dpkg -i atom.deb; rm -f atom.deb*;)
+    
+
+    copy_launcher atom.desktop
+  fi
+}
 
 install_cheat()
 {
@@ -1378,6 +1390,7 @@ install_environment_aliases()
 root_install()
 {
   install_audacity
+  install_atom
   install_cheat
   install_cmatrix
   install_clonezilla
@@ -1503,6 +1516,9 @@ main()
         ;;
         --audacity|--Audacity)
           install_audacity
+        ;;
+        --atom|--Atom)
+          install_atom
         ;;
         --discord|--Discord|--disc)
           install_discord

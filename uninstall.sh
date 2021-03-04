@@ -37,6 +37,12 @@ uninstall_audacity()
   rm -f ${XDG_DESKTOP_DIR}/audacity.desktop
 }
 
+uninstall_atom()
+{
+  apt purge -y atom
+  rm -f ${XDG_DESKTOP_DIR}/atom.desktop
+}
+
 uninstall_cheat()
 {
   #there's a curl dependency for cht.sh
@@ -400,6 +406,7 @@ uninstall_all()
 {
   uninstall_android_studio
   uninstall_audacity
+  uninstall_atom
   uninstall_cheat
   uninstall_clion
   uninstall_clonezilla
@@ -479,6 +486,9 @@ main()
         ;;
         --audacity|--Audacity)
           uninstall_audacity
+        ;;
+        --atom|--Atom)
+          uninstall_atom
         ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           uninstall_cheat
