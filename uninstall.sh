@@ -8,6 +8,7 @@ err()
   echo "$*" >&2
 }
 
+
 uninstall_converters()
 {
   rm -f /home/${SUDO_USER}/.local/bin/dectohex
@@ -23,6 +24,7 @@ uninstall_converters()
   rm -f /home/${SUDO_USER}/.bash_functions
 }
 
+
 uninstall_android_studio()
 {
   rm -Rf ${USR_BIN_FOLDER}/android-studio
@@ -31,11 +33,13 @@ uninstall_android_studio()
   rm -f "/home/${SUDO_USER}/.local/share/applications/Android Studio.desktop"
 }
 
+
 uninstall_audacity()
 {
   apt-get purge -y audacity audacity-data
   rm -f ${XDG_DESKTOP_DIR}/audacity.desktop
 }
+
 
 uninstall_atom()
 {
@@ -43,11 +47,13 @@ uninstall_atom()
   rm -f ${XDG_DESKTOP_DIR}/atom.desktop
 }
 
+
 uninstall_caffeine()
 {
   apt purge -y caffeine
   rm -f ${XDG_DESKTOP_DIR}/caffeine-indicator.desktop
 }
+
 
 uninstall_cheat()
 {
@@ -57,17 +63,20 @@ uninstall_cheat()
   rm -f /home/${SUDO_USER}/.local/bin/cheat
 }
 
+
 uninstall_cmatrix()
 {
   apt-get purge -y cmatrix
   rm -f ${XDG_DESKTOP_DIR}/cmatrix.desktop
 }
 
+
 uninstall_clementine()
 {
   apt purge -y clementine
   rm -f ${XDG_DESKTOP_DIR}/clementine.desktop
 }
+
 
 uninstall_clion()
 {
@@ -77,6 +86,7 @@ uninstall_clion()
   rm -f /home/${SUDO_USER}/.local/share/applications/clion.desktop
 }
 
+
 uninstall_clonezilla()
 {
   apt-get purge -y clonezilla
@@ -84,6 +94,7 @@ uninstall_clonezilla()
   # {LAUNCHERS_DIR}
   rm -f /home/${SUDO_USER}/.local/share/applications/clonezilla.desktop
 }
+
 
 uninstall_discord()
 {
@@ -93,11 +104,13 @@ uninstall_discord()
   rm -Rf ${USR_BIN_FOLDER}/discord
 }
 
+
 uninstall_dropbox()
 {
   apt-get purge -y dropbox
   rm -f ${XDG_DESKTOP_DIR}/dropbox.desktop
 }
+
 
 uninstall_firefox()
 {
@@ -105,10 +118,12 @@ uninstall_firefox()
   rm -f ${XDG_DESKTOP_DIR}/firefox.desktop
 }
 
+
 uninstall_f-irc()
 {
   apt-get purge -y f-irc
 }
+
 
 uninstall_games()
 {
@@ -124,10 +139,12 @@ uninstall_games()
   rm -f ${XDG_DESKTOP_DIR}/org.gnome.Sudoku.desktop
 }
 
+
 uninstall_gcc()
 {
   apt-get purge -y gcc
 }
+
 
 uninstall_geany()
 {
@@ -135,11 +152,13 @@ uninstall_geany()
   rm -f ${XDG_DESKTOP_DIR}/geany.desktop
 }
 
+
 uninstall_gimp()
 {
   apt purge -y gimp
   rm -f ${XDG_DESKTOP_DIR}/gimp.desktop
 }
+
 
 uninstall_git()
 {
@@ -147,10 +166,12 @@ uninstall_git()
   apt-get purge -y git-lfs
 }
 
+
 uninstall_GNU_parallel()
 {
   apt-get purge -y parallel
 }
+
 
 uninstall_google_chrome()
 {
@@ -159,11 +180,14 @@ uninstall_google_chrome()
   rm -f ${XDG_DESKTOP_DIR}/chrome*.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/chrome*.desktop
 }
+
+
 uninstall_gparted()
 {
   apt purge -y gparted
   rm -f ${XDG_DESKTOP_DIR}/gparted.desktop
 }
+
 
 uninstall_gvim()
 {
@@ -171,17 +195,20 @@ uninstall_gvim()
   rm -f ${XDG_DESKTOP_DIR}/gvim.desktop
 }
 
+
 uninstall_gpaint()
 {
   apt purge -y gpaint
   rm -f ${XDG_DESKTOP_DIR}/gpaint.desktop
 }
 
+
 uninstall_inkscape()
 {
   apt purge -y inkscape
   rm -f ${XDG_DESKTOP_DIR}/inkscape.desktop
 }
+
 
 uninstall_intellij_ultimate()
 {
@@ -191,6 +218,7 @@ uninstall_intellij_ultimate()
   rm -f /home/${SUDO_USER}/.local/share/applications/ideau.desktop
 }
 
+
 uninstall_intellij_community()
 {
   rm -Rf ${USR_BIN_FOLDER}/idea-IC
@@ -199,10 +227,12 @@ uninstall_intellij_community()
   rm -f /home/${SUDO_USER}/.local/share/applications/ideac.desktop
 }
 
+
 uninstall_jdk11()
 {
   apt -y purge default-jdk
 }
+
 
 uninstall_latex()
 {
@@ -210,6 +240,7 @@ uninstall_latex()
   rm -f ${XDG_DESKTOP_DIR}/texdoctk.desktop
   rm -f ${XDG_DESKTOP_DIR}/texmaker.desktop
 }
+
 
 uninstall_megasync()
 {
@@ -219,6 +250,7 @@ uninstall_megasync()
   apt-get purge -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 }
 
+
 uninstall_mendeley()
 {
   rm -Rf ${USR_BIN_FOLDER}/mendeley
@@ -227,10 +259,12 @@ uninstall_mendeley()
   rm -f /home/${SUDO_USER}/.local/share/applications/mendeleydesktop.desktop
 }
 
+
 uninstall_mendeley_dependencies()
 {
   apt-get -y purge gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
 }
+
 
 uninstall_musicmanager()
 {
@@ -238,6 +272,7 @@ uninstall_musicmanager()
   rm -f ${XDG_DESKTOP_DIR}/google-musicmanager.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/google-musicmanager.desktop
 }
+
 
 uninstall_nemo()
 {
@@ -255,11 +290,13 @@ uninstall_nemo()
   echo "WARNING: If Nemo has been uninstalled restart Ubuntu to update the desktop back to Nautilus"
 }
 
+
 uninstall_notepadqq()
 {
   apt purge -y notepadqq
   rm -f ${XDG_DESKTOP_DIR}/notepadqq.desktop
 }
+
 
 uninstall_obs-studio()
 {
@@ -269,6 +306,7 @@ uninstall_obs-studio()
   apt purge -y obs-studio
   rm -f ${XDG_DESKTOP_DIR}/obs-studio.desktop
 }
+
 
 uninstall_openoffice()
 {
@@ -280,10 +318,19 @@ uninstall_openoffice()
   rm -f ${XDG_DESKTOP_DIR}/openoffice4-writer.desktop
 }
 
+
+install_okular()
+{
+  apt-purge -y okular
+  rm -f ${XDG_DESKTOP_DIR}/okular.desktop
+}
+
+
 uninstall_pdfgrep()
 {
   apt-get purge -y pdfgrep
 }
+
 
 uninstall_pycharm_professional()
 {
@@ -293,6 +340,7 @@ uninstall_pycharm_professional()
   rm -f /home/${SUDO_USER}/.local/share/applications/pycharm-pro.desktop
 }
 
+
 uninstall_pycharm_community()
 {
   rm -Rf ${USR_BIN_FOLDER}/pycharm-community
@@ -301,6 +349,7 @@ uninstall_pycharm_community()
   rm -f /home/${SUDO_USER}/.local/share/applications/pycharm.desktop
 }
 
+
 uninstall_pypy3()
 {
   rm -Rf ${USR_BIN_FOLDER}/pypy3
@@ -308,16 +357,19 @@ uninstall_pypy3()
   rm -f /home/${SUDO_USER}/.local/bin/pypy3-pip
 }
 
+
 uninstall_python3()
 {
   apt-get purge -y python3-dev
   apt-get purge -y python-dev
 }
 
+
 uninstall_pypy3_dependencies()
 {
   apt-get purge -y pkg-config libfreetype6-dev libpng-dev libffi-dev
 }
+
 
 uninstall_shell_customization()
 {
@@ -332,11 +384,13 @@ uninstall_shell_customization()
   dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(48,10,36)'"
 }
 
+
 uninstall_shotcut()
 {
   apt purge -y shotcut
   rm -f ${XDG_DESKTOP_DIR}/shotcut.desktop
 }
+
 
 uninstall_slack()
 {
@@ -344,12 +398,14 @@ uninstall_slack()
   rm -f ${XDG_DESKTOP_DIR}/slack.desktop
 }
 
+
 uninstall_steam()
 {
   apt-get purge -y curl
   dpkg -P steam-launcher
   rm -f ${XDG_DESKTOP_DIR}/steam.desktop
 }
+
 
 uninstall_sublime_text()
 {
@@ -359,6 +415,7 @@ uninstall_sublime_text()
   rm -f /home/${SUDO_USER}/.local/share/applications/sublime-text.desktop
 }
 
+
 uninstall_telegram()
 {
   rm -Rf ${USR_BIN_FOLDER}/telegram
@@ -367,16 +424,33 @@ uninstall_telegram()
   rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
 }
 
+
 uninstall_templates()
 {
   rm -f ${XDG_TEMPLATES_DIR}/*
 }
+
 
 uninstall_thunderbird()
 {
   apt-get purge -y thunderbird
   rm -f ${XDG_DESKTOP_DIR}/thunderbird.desktop
 }
+
+
+uninstall_terminator()
+{
+  apt-get purge -y terminator
+  rm -f ${XDG_DESKTOP_DIR}/terminator.desktop
+}
+
+
+uninstall_tilix()
+{
+  apt-get purge -y tilix
+  rm -f ${XDG_DESKTOP_DIR}/tilix.desktop
+}
+
 
 uninstall_tmux()
 {
@@ -385,17 +459,20 @@ uninstall_tmux()
   rm -f /home/${SUDO_USER}/.local/share/applications/tmux.desktop
 }
 
+
 uninstall_transmission()
 {
   apt-get purge -y transmission
   rm -f ${XDG_DESKTOP_DIR}/transmission-gtk.desktop
 }
 
+
 uninstall_virtualbox()
 {
   dpkg -P virtualbox-6.1
   rm -f ${XDG_DESKTOP_DIR}/virtualbox.desktop
 }
+
 
 uninstall_visualstudiocode()
 {
@@ -405,10 +482,12 @@ uninstall_visualstudiocode()
   rm -f ${XDG_DESKTOP_DIR}/visual-studio-code.desktop
 }
 
+
 uninstall_vlc()
 {
   apt-get purge -y vlc
 }
+
 
 uninstall_wireshark()
 {
@@ -469,7 +548,9 @@ uninstall_all()
   uninstall_sublime_text
   uninstall_telegram
   uninstall_templates
+  uninstall_terminator
   uninstall_thunderbird
+  uninstall_tilix
   uninstall_tmux
   uninstall_transmission
   uninstall_virtualbox
@@ -497,9 +578,10 @@ main()
       key="$1"
 
       case ${key} in
+
         ### INDIVIDUAL ARGUMENTS ###
         # Sorted alphabetically by function name:
-        -a|--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
+        --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
           uninstall_android_studio
         ;;
         --audacity|--Audacity)
@@ -517,7 +599,7 @@ main()
         --clementine|--Clementine)
           uninstall_clementine
         ;;
-        -n|--clion|--Clion|--CLion)
+        --clion|--Clion|--CLion)
           uninstall_clion
         ;;
         --cmatrix|--Cmatrix)
@@ -529,10 +611,13 @@ main()
         --converters|--Converters)
           uninstall_converters
         ;;
-        -i|--discord|--Discord|--disc)
+        --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
+          install_copyq
+        ;;
+        --discord|--Discord|--disc)
           uninstall_discord
         ;;
-        -b|--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
+        --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
           uninstall_dropbox
         ;;
         -c|--gcc)
@@ -541,11 +626,26 @@ main()
         --f-irc|--firc|--Firc|--irc)
           uninstall_f-irc
         ;;
-        -g|--git)
+        --firefox|--Firefox)
+          uninstall_firefox
+        ;;
+        --games|--Gaming|--Games)
+          uninstall_games
+        ;;
+        --geany|--Geany)
+          uninstall_geany
+        ;;
+        --git)
           uninstall_git
         ;;
         --GIMP|--gimp|--Gimp)
           uninstall_gimp
+        ;;
+        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
+          uninstall_musicmanager
+        ;;
+        --gpaint|--paint|--Gpaint)
+          uninstall_gpaint
         ;;
         --GParted|--gparted|--GPARTED|--Gparted)
           uninstall_gparted
@@ -553,28 +653,25 @@ main()
         --gvim|--vim-gtk3|--Gvim|--GVim)
           uninstall_gvim
         ;;
-        --gpaint|--paint|--Gpaint)
-          uninstall_gpaint
-        ;;
         --inkscape|--ink-scape|--Inkscape|--InkScape)
           uninstall_inkscape
         ;;
-        -l|--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
+        --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
           uninstall_GNU_parallel
         ;;
-        -o|--chrome|--Chrome|--google-chrome|--Google-Chrome)
+        --chrome|--Chrome|--google-chrome|--Google-Chrome)
           uninstall_google_chrome
         ;;
-        -j|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
+        --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
           uninstall_intellij_community
         ;;
-        -u|--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
+        --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
           uninstall_intellij_ultimate
         ;;
-        -k|--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
+        --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
           uninstall_jdk11
         ;;
-        -x|--latex|--LaTeX|--tex|--TeX)
+        --latex|--LaTeX|--tex|--TeX)
           uninstall_latex
         ;;
         --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
@@ -589,25 +686,16 @@ main()
          --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
           uninstall_nemo
         ;;
-        --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
+        --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadqQ|--NotepadQq|--NotepadqQ|--NotePadQQ|NotePadqq)
           uninstall_notepadqq
         ;;
-        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
-          uninstall_musicmanager
-        ;;
-        --gpaint|--paint|--Gpaint)
-          uninstall_gpaint
-        ;;
-        --geany|--Geany)
-          uninstall_geany
-        ;;
-        -f|--pdfgrep|--findpdf|--pdf)
+        --pdfgrep|--findpdf|--pdf)
           uninstall_pdfgrep
         ;;
-        -m|--pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
+        --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
           uninstall_pycharm_community
         ;;
-        -h|--pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
+        --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
           uninstall_pycharm_professional
         ;;
         --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
@@ -616,35 +704,47 @@ main()
         --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
           uninstall_openoffice
         ;;
+        --okular|--Okular|--okularpdf)
+          install_okular
+        ;;
         -p|--python|--python3|--Python3|--Python)
           uninstall_python3
         ;;
-        -y|--pypy|--pypy3|--PyPy3|--PyPy)
+        --pypy|--pypy3|--PyPy3|--PyPy)
           uninstall_pypy3
         ;;
-        -d|--dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
+        --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
           uninstall_pypy3_dependencies
         ;;
-        -e|--shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
+        --shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
           uninstall_shell_customization
         ;;
         --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
           uninstall_shotcut
         ;;
-        -s|--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
+        --slack|--Slack)
+          uninstall_slack
+        ;;
+        --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
           uninstall_sublime_text
         ;;
-        -w|--steam|--Steam|--STEAM)
+        --steam|--Steam|--STEAM)
           uninstall_steam
         ;;
-        -r|--Telegram|--telegram)
+        --Telegram|--telegram)
           uninstall_telegram
         ;;
-        -t|--templates)
+        --templates)
           uninstall_templates
+        ;;
+        --Terminator|--terminator)
+          uninstall_terminator
         ;;
         --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
           uninstall_thunderbird
+        ;;
+        --tilix|--tilix)
+          uninstall_tilix
         ;;
         --tmux|--Tmux)
           uninstall_tmux
@@ -658,23 +758,11 @@ main()
         --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
           uninstall_visualstudiocode
         ;;
-        -v|--vlc|--VLC|--Vlc)
+        --vlc|--VLC|--Vlc)
           uninstall_vlc
-        ;;
-        --firefox|--Firefox)
-          uninstall_firefox
-        ;;
-        --games|--Gaming|--Games)
-          uninstall_games
         ;;
         --wireshark|--Wireshark)
           uninstall_wireshark
-        ;;
-        --geany|--Geany|--geanny|--Geanny)
-          uninstall_geany
-        ;;
-        --slack|--Slack)
-          uninstall_slack
         ;;
         
         ### WRAPPER ARGUMENT(S) ###

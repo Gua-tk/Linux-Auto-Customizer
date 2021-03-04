@@ -89,6 +89,7 @@ install_android_studio()
   fi
 }
 
+
 install_clion()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -163,8 +164,8 @@ install_converters()
     echo "${converters_links}" > ${HOME}/.bash_functions
     echo "converters installed"
   fi
-
 }
+
 
 # discord desktop client
 install_discord()
@@ -449,6 +450,7 @@ install_shotcut()
 
 }
 
+
 # Install Sublime text 3
 install_sublime_text()
 {
@@ -582,6 +584,7 @@ install_audacity()
   fi
 }
 
+
 install_atom()
 {
   if [[ "$(whoami)" != "root" ]]; then
@@ -595,6 +598,7 @@ install_atom()
   fi
 }
 
+
 install_caffeine()
 {
   if [[ "$(whoami)" != "root" ]]; then
@@ -606,6 +610,19 @@ install_caffeine()
   fi
 }
 
+
+install_calibre()
+{
+  if [[ "$(whoami)" != "root" ]]; then
+    echo "WARNING: Could not install calibre. You should be root. Skipping..."
+  else
+    echo "Attempting to install calibre"
+    apt install -y calibre
+    copy_launcher "calibre.desktop"
+  fi
+
+
+}
 install_cheat()
 {
   if [[ "$(whoami)" != "root" ]]; then
@@ -631,6 +648,7 @@ install_cheat()
   fi
 }
 
+
 install_clementine()
 {
   if [[ "$(whoami)" != "root" ]]; then
@@ -641,6 +659,7 @@ install_clementine()
     copy_launcher clementine.desktop
   fi
 }
+
 
 #Install CloneZilla
 install_clonezilla()
@@ -698,6 +717,19 @@ install_dropbox()
     echo "Finished"
   else
     echo "WARNING: Could not install dropbox. You should be root."
+  fi
+}
+
+
+install_copyq()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install copyq"
+    apt-get install -y copyq
+    copy_launcher "copyq.desktop"
+    echo "Finished"
+  else
+    echo "WARNING: Could not install copyq. You need root permissions. Skipping..."
   fi
 }
 
@@ -763,6 +795,7 @@ install_gcc()
   fi
 }
 
+
 install_geany()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -774,6 +807,7 @@ install_geany()
     echo "WARNING: Could not install geany. You need root permissions. Skipping..."
   fi
 }
+
 
 # Install GIMP
 install_gimp()
@@ -865,6 +899,7 @@ install_google_chrome()
   fi
 }
 
+
 install_gvim()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -874,6 +909,7 @@ install_gvim()
     echo "WARNING: Could not install gvim. You should be root."
   fi
 }
+
 
 install_gpaint()
 {
@@ -1029,6 +1065,7 @@ install_nemo()
   fi
 }
 
+
 install_notepadqq()
 {
  if [[ "$(whoami)" == "root" ]]; then
@@ -1040,6 +1077,7 @@ install_notepadqq()
     echo "WARNING: Could not install notepadqq. You need root permissions. Skipping..."
   fi
 }
+
 
 install_openoffice()
 {
@@ -1072,6 +1110,7 @@ install_openoffice()
   
 }
 
+
 install_obs-studio()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -1084,6 +1123,18 @@ install_obs-studio()
     echo "Finished"
   else
     echo "WARNING: Could not install obs-studio. You should be root. Skipping..."
+  fi
+}
+
+
+install_okular()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install okular"
+    apt-get -y install okular
+    echo "Finished"
+  else
+    echo "WARNING: Could not install okular. You should be root. Skipping..."
   fi
 }
 
@@ -1159,7 +1210,18 @@ install_steam()
   fi
 }
 
+install_terminator()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install terminator"
+    apt-get -y install terminator
+    copy_launcher terminator.desktop
+    echo "Finished"
+  else
+    echo "WARNING: Could not install terminator. You should be root. Skipping..."
+  fi
 
+}
 install_thunderbird()
 {
   if [[ "$(whoami)" == "root" ]]; then
@@ -1171,7 +1233,17 @@ install_thunderbird()
     echo "WARNING: Could not install thunderbird. You should be root user. Skipping..."
   fi
 }
-
+install_tilix()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attemptying to install tilix"
+    apt-get install -y tilix
+    copy_launcher tilix.desktop
+    echo "Finished"
+  else
+    echo "WARNING: Could not install tilix. You should be root user. Skipping..."
+  fi
+}
 
 install_tmux()
 {
@@ -1435,11 +1507,13 @@ root_install()
   install_audacity
   install_atom
   install_caffeine
+  install_calibre
   install_cheat
   install_cmatrix
   install_clementine
   install_clonezilla
   install_converters
+  install_copyq
   install_dropbox
   install_firefox
   install_f-irc
@@ -1463,11 +1537,14 @@ root_install()
   install_notepadqq
   install_openoffice
   install_obs-studio
+  install_okular
   install_pdfgrep
   install_python3
   install_pypy3_dependencies
   install_steam
+  install_terminator
   install_thunderbird
+  install_tilix
   install_tmux
   install_transmission
   install_vlc
@@ -1579,6 +1656,9 @@ main()
         --caffeine|--Caffeine|--cafe|--coffee)
           install_caffeine
         ;;
+        --calibre|--Calibre|--cali)
+          install_calibre
+        ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           install_cheat
         ;;
@@ -1597,8 +1677,26 @@ main()
         --clonezilla|--CloneZilla|--cloneZilla)
           install_clonezilla
         ;;
+        --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
+          install_copyq
+        ;;
         --f-irc|--firc|--Firc|--irc)
           install_f-irc
+        ;;
+        --firefox|--Firefox)
+          install_firefox
+        ;;
+        --games|--Gaming|--Games)
+          install_games
+        ;;
+        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
+          install_musicmanager
+        ;;
+        --gpaint|--paint|--Gpaint)
+          install_gpaint
+        ;;
+        --geany|--Geany)
+          install_geany
         ;;
         --git)
           install_git
@@ -1612,14 +1710,14 @@ main()
         --gvim|--vim-gtk3|--Gvim|--GVim)
           install_gvim
         ;;
-        --inkscape|--ink-scape|--Inkscape|--InkScape)
-          install_inkscape
-        ;;
         --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
           install_GNU_parallel
         ;;
         --chrome|--Chrome|--google-chrome|--Google-Chrome)
           install_google_chrome
+        ;;
+        --inkscape|--ink-scape|--Inkscape|--InkScape)
+          install_inkscape
         ;;
         --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
           install_intellij_community
@@ -1648,20 +1746,14 @@ main()
         --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
           install_notepadqq
         ;;
-        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
-          install_musicmanager
-        ;;
-        --gpaint|--paint|--Gpaint)
-          install_gpaint
-        ;;
-        --geany|--Geany)
-          install_geany
-        ;;
         --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
           install_openoffice
         ;;
         --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
           install_obs-studio
+        ;;
+        --okular|--Okular|--okularpdf)
+          install_okular
         ;;
         --pdfgrep|--findpdf|--pdf)
           install_pdfgrep
@@ -1703,6 +1795,12 @@ main()
         --templates)
           install_templates
         ;;
+        --Terminator|--terminator)
+          install_terminator
+        ;;
+        --Tilix|--tilix)
+          install_tilix
+        ;;
         --tmux|--Tmux)
           install_tmux
         ;;
@@ -1721,12 +1819,8 @@ main()
         --vlc|--VLC|--Vlc)
           install_vlc
         ;;
-        --firefox|--Firefox)
-          install_firefox
-        ;;
-        --games|--Gaming|--Games)
-          install_games
-        ;;
+
+
         
         ### WRAPPER ARGUMENTS ###
         --user|--regular|--normal)

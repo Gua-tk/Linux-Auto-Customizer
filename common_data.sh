@@ -128,6 +128,7 @@ utftohex()
 
 dropbox_version=2020.03.04
 
+
 discord_launcher="[Desktop Entry]
 Name=Discord
 StartupWMClass=discord
@@ -208,8 +209,6 @@ Comment=Capable and Ergonomic IDE for JVM
 Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-idea"
-
-
 intellij_community_version=ideaIC-2020.3.1
 intellij_community_launcher="[Desktop Entry]
 Version=13.0
@@ -221,9 +220,12 @@ Icon=${HOME}/.bin/idea-IC/bin/idea.png
 Exec=ideac %f
 Name=IntelliJ IDEA Community Edition
 StartupWMClass=jetbrains-idea"
+
+
 megasync_version=megasync_4.3.8-1.1_amd64.deb
 megasync_repository=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/
 megasync_integrator_version=nautilus-megasync_3.6.6_amd64.deb
+
 
 nautilus_conf=("xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
 "gsettings set org.gnome.desktop.background show-desktop-icons true"
@@ -240,6 +242,8 @@ Name=Files
 Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
+
+
 obs_desktop_launcher="[Desktop Entry]
 StartupWMClass=obs
 Version=1.0
@@ -252,8 +256,13 @@ Terminal=false
 Type=Application
 Categories=AudioVideo;Recorder;
 StartupNotify=true"
+
+
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
+
+
 PS1_custom="\[\e[1;37m\]\\d \\t \[\e[0;32m\]\\u\[\e[4;35m\]@\[\e[0;36m\]\\H\[\e[0;33m\] \\w\[\e[0;32m\] \\$ "
+
 
 pycharm_version=pycharm-community-2020.3.2  # Targeted version of pycharm
 pycharm_launcher="[Desktop Entry]
@@ -277,8 +286,10 @@ Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
 
+
 pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
 pypy3_version=$(echo ${pypy3_downloader} | rev | cut -d '/' -f1 | cut -d '.' -f3- | rev)  # get last piece of the last string
+
 
 shotcut_desktop_launcher="[Desktop Entry]
 Type=Application
@@ -290,8 +301,10 @@ Comment= Open Source, cross-platform video editor
 Terminal=false
 "
 
+
 slack_repository=https://downloads.slack-edge.com/linux_releases/
 slack_version=slack-desktop-4.11.1-amd64.deb
+
 
 sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
 sublime_launcher="[Desktop Entry]
@@ -304,6 +317,7 @@ Comment=General Purpose Programming Text Editor
 Terminal=false
 Exec=sublime %F"
 
+
 telegram_launcher="[Desktop Entry]
 Encoding=UTF-8
 Name=Telegram
@@ -312,6 +326,7 @@ Icon=${USR_BIN_FOLDER}/telegram/telegram.png
 Type=Application
 Categories=Network;
 MimeType=x-scheme-handler/tg;"
+
 
 tmux_launcher="[Desktop Entry]
 Name=tmux
@@ -323,7 +338,9 @@ Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/carla_carla.png
 Type=Application
 Categories=Network;"
 
+
 virtualbox_downloader=https://download.virtualbox.org/virtualbox/6.1.12/virtualbox-6.1_6.1.12-139181~Ubuntu~eoan_amd64.deb
+
 
 visualstudiocode_downloader="https://go.microsoft.com/fwlink/?LinkID=620884"
 visualstudiocode_launcher="[Desktop Entry]
@@ -337,6 +354,7 @@ Categories=Development;IDE;
 Terminal=false
 StartupWMClass=visual-studio-code"
 
+
 c_file_template="#include \"c_script.h\"
   int main(int nargs, char* args[])
 {
@@ -344,11 +362,13 @@ c_file_template="#include \"c_script.h\"
 }
 "
 
+
 c_header_file_template="// Includes
 #include <stdio.h>
 #include <stdbool.h>  // To use booleans
 #include <stdlib.h>
 "
+
 
 makefile_file_template="CC = gcc
 CFLAGS = -O3 -Wall
@@ -366,6 +386,7 @@ clean :
 	rm -f c_script
 "
 
+
 python_file_template="#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -373,12 +394,14 @@ if __name__ == \"__main__\":
     exit(0)
 "
 
+
 bash_git_prompt_bashrc="
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
 fi
 "
+
 
 bash_file_template="#!/usr/bin/env bash\
 
@@ -389,6 +412,7 @@ main()
 }
 
 main \"\$@\""
+
 
 latex_file_template="%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
