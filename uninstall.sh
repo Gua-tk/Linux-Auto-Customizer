@@ -253,7 +253,12 @@ uninstall_nemo()
     #echo "${command}" >> /home/${SUDO_USER}/.profile
   done
   echo "WARNING: If Nemo has been uninstalled restart Ubuntu to update the desktop back to Nautilus"
+}
 
+uninstall_notepadqq()
+{
+  apt purge -y notepadqq
+  rm -f ${XDG_DESKTOP_DIR}/notepadqq.desktop
 }
 
 uninstall_obs-studio()
@@ -584,11 +589,17 @@ main()
          --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
           uninstall_nemo
         ;;
+        --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
+          uninstall_notepadqq
+        ;;
         --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
           uninstall_musicmanager
         ;;
         --gpaint|--paint|--Gpaint)
           uninstall_gpaint
+        ;;
+        --geany|--Geany)
+          uninstall_geany
         ;;
         -f|--pdfgrep|--findpdf|--pdf)
           uninstall_pdfgrep

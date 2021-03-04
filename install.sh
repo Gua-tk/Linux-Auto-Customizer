@@ -763,6 +763,17 @@ install_gcc()
   fi
 }
 
+install_geany()
+{
+  if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install geany"
+    apt install -y geany
+    copy_launcher geany.desktop
+    echo "Finished"
+  else
+    echo "WARNING: Could not install geany. You need root permissions. Skipping..."
+  fi
+}
 
 # Install GIMP
 install_gimp()
@@ -1018,6 +1029,17 @@ install_nemo()
   fi
 }
 
+install_notepadqq()
+{
+ if [[ "$(whoami)" == "root" ]]; then
+    echo "Attempting to install notepadqq"
+    apt install -y notepadqq
+    copy_launcher notepadqq.desktop
+    echo "Finished"
+  else
+    echo "WARNING: Could not install notepadqq. You need root permissions. Skipping..."
+  fi
+}
 
 install_openoffice()
 {
@@ -1423,6 +1445,7 @@ root_install()
   install_f-irc
   #install_games
   install_gcc
+  install_geany
   install_gimp
   install_git
   install_GNU_parallel
@@ -1437,6 +1460,7 @@ root_install()
   install_mendeley_dependencies
   install_musicmanager
   install_nemo
+  install_notepadqq
   install_openoffice
   install_obs-studio
   install_pdfgrep
@@ -1621,11 +1645,17 @@ main()
         --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
           install_nemo
         ;;
+        --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
+          install_notepadqq
+        ;;
         --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
           install_musicmanager
         ;;
         --gpaint|--paint|--Gpaint)
           install_gpaint
+        ;;
+        --geany|--Geany)
+          install_geany
         ;;
         --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
           install_openoffice
