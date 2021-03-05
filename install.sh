@@ -345,7 +345,6 @@ install_shotcut()
 # Install Sublime text 3
 install_sublime_text()
 {
-  if [[ -z $(which sublime) ]]; then
   # Avoid error due to possible previous aborted installations
   rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
   rm -Rf ${USR_BIN_FOLDER}/${sublime_text_version}
@@ -450,6 +449,7 @@ install_atom()
 
 install_caffeine()
 {
+  echo "qewrw"$1"sfs"
   apt install -y caffeine
   copy_launcher "caffeine-indicator.desktop"
 }
@@ -616,22 +616,20 @@ install_google_chrome()
 {
   # Chrome dependencies
   apt-get install -y -qq libxss1 libappindicator1 libindicator7
+  # Delete possible collisions with previous installation
+  rm -f google-chrome*.deb*
+  # Download
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-  if [[ -z "$(which google-chrome)" ]]; then
-    # Delete possible collisions with previous installation
-    rm -f google-chrome*.deb*
-    # Download
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  # Install downloaded version
+  apt install -y -qq ./google-chrome-stable_current_amd64.deb
+  # Clean
+  rm -f google-chrome*.deb*
 
-    # Install downloaded version
-    apt install -y -qq ./google-chrome-stable_current_amd64.deb
-    # Clean
-    rm -f google-chrome*.deb*
-
-    # Create launcher and change its permissions (we are root)
-    copy_launcher "google-chrome.desktop"
-    #cp /home/${SUDO_USER}/.local/share/applications/chrome* ${XDG_DESKTOP_DIR}
-    #chmod 775 ${XDG_DESKTOP_DIR}/chrome*
+  # Create launcher and change its permissions (we are root)
+  copy_launcher "google-chrome.desktop"
+  #cp /home/${SUDO_USER}/.local/share/applications/chrome* ${XDG_DESKTOP_DIR}
+  #chmod 775 ${XDG_DESKTOP_DIR}/chrome*
 }
 
 
@@ -1087,7 +1085,8 @@ add_root_programs()
 {
   for program in ${installation_data[@]}; do
     permissions=$(echo ${program} | cut -d ";" -f4)
-    if [[ ${permissions} != 0]]; then
+    #echo ${permissions}
+    if [[ ${permissions} != 0 ]]; then
       name=$(echo ${program} | cut -d ";" -f5)
       add_program ${name}
     fi
@@ -1098,7 +1097,7 @@ add_user_programs()
 {
   for program in ${installation_data[@]}; do
     permissions=$(echo ${program} | cut -d ";" -f4)
-    if [[ ${permissions} != 1]]; then
+    if [[ ${permissions} != 1 ]]; then
       name=$(echo ${program} | cut -d ";" -f5)
       add_program ${name}
     fi
@@ -1120,6 +1119,11 @@ err()
   echo "$*" >&2
 }
 
+wrap_install()
+{
+  "$@" &>/dev/null
+}
+
 execute_installation()
 {
   for program in ${installation_data[@]}; do
@@ -1134,34 +1138,38 @@ execute_installation()
       fi
       quietness_bit=$( echo ${program} | cut -d ";" -f3 )
       if [[ ${quietness_bit} == 1 ]]; then
-        quietness_lvl_1="&>/dev/null"
-      else if [[ ${quietness_bit} == 2 ]]; then
+        quietness_lvl_1=&>/dev/null
+      elif [[ ${quietness_bit} == 2 ]]; then
         quietness_lvl_2="&>/dev/null"
+        quietness_lvl_1="&>/dev/null"
       fi
       program_function=$( echo ${program} | cut -d ";" -f5 )
-      program_name=$( echo ${program_function) | cut -d "_" -f2- )
+      program_name=$( echo ${program_function} | cut -d "_" -f2- )
       program_privileges=$( echo ${program} | cut -d ";" -f4 )
       if [[ ${program_privileges} == 1 ]]; then
-        if [[ ${EUID} -ne 0]]; then
-          err "WARNING: $program_name needs root permissions to be installed" ${quietness_lvl_2}
+        if [[ ${EUID} -ne 0 ]]; then
+          err "WARNING: $program_name needs root permissions to be installed. Skipping" ${quietness_lvl_2}
         else
           if [[ ! -z "$(which ${program_name})" ]]; then
             err "WARNING: ${program_name} is already installed" ${quietness_lvl_2}
           fi
-          echo "INFO: Attemptying to install ${program_name}" ${quietness_lvl_2}
+          echo puta
+          $(echo "echo INFO: Attemptying to install ${program_name}") ${quietness_lvl_2}
+          #$program_function &>/dev/null
           $program_function ${quietness_lvl_1}
-          echo "INFO: ${program_name} installed" ${quietness_lvl_2}
+          echo "INFO: ${program_name} installed ${quietness_lvl_2} "
         fi
-      else if [[ ${program_privileges} == 0 ]]; then
-        if [[ ${EUID} -ne 0]]; then
+      elif [[ ${program_privileges} == 0 ]]; then
+        if [[ ${EUID} -ne 0 ]]; then
           if [[ ! -z "$(which ${program_name})" ]]; then
             err "WARNING: ${program_name} is already installed" ${quietness_lvl_2}
           fi
           echo "INFO: Attemptying to install ${program_name}" ${quietness_lvl_2}
-          $program_function ${quietness_lvl_1}
+          $program_function "${quietness_lvl_1}"
+
           echo "INFO: ${program_name} installed" ${quietness_lvl_2}
         else
-          err "WARNING: $program_name needs user permissions to be installed" ${quietness_lvl_2}
+          err "WARNING: $program_name needs user permissions to be installed. Skipping" ${quietness_lvl_2}
         fi
       fi
     fi
@@ -1181,7 +1189,6 @@ add_program()
       new="1;${FLAG_FORCENESS};${FLAG_QUIETNESS};${rest}"
       installation_data[$i]=${new}
     fi
-    echo "${installation_data[$i]}"
   done
 
 }
@@ -1192,7 +1199,7 @@ add_program()
 ##################
 main()
 {
-  if [[ "$(whoami)" == "root" ]]; then
+  if [[ ${EUID} == 0 ]]; then
     # Make sure USR_BIN_FOLDER is present
     mkdir -p ${USR_BIN_FOLDER}
     # Convert USR_BIN_FOLDER to a SUDO_ROOT user
@@ -1262,6 +1269,15 @@ main()
       ;;
       -e|--exit|--exit-on-error)
         FLAG_FORCENESS=0
+      ;;
+      -d|--dirty)
+        AUTOCLEAN=0
+      ;;
+      -c|--clean)
+        AUTOCLEAN=1
+      ;;
+      -C|--Clean)
+        AUTOCLEAN=2
       ;;
 
 
@@ -1452,13 +1468,7 @@ main()
         add_program install_vlc
       ;;
 
-
-
       ### WRAPPER ARGUMENTS ###
-
-
-
-
       --user|--regular|--normal)
         add_user_programs
       ;;
@@ -1478,18 +1488,20 @@ main()
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [[ ${ANY_INSTALLED} == 0 ]]; then
     add_all_programs
-  else
+  fi
 
   ####### EXECUTION #######
 
   ### PRE-INSTALLATION ARGUMENTS ###
 
   # UPDATE
-  if [[ ${UPGRADE} > 0 ]]; then
-    apt -y update
-  fi
-  if [[ ${UPGRADE} == 2 ]]; then
-    apt -y upgrade
+  if [[ ${EUID} == 0 ]]; then
+    if [[ ${UPGRADE} > 0 ]]; then
+      apt -y update
+    fi
+    if [[ ${UPGRADE} == 2 ]]; then
+      apt -y upgrade
+    fi
   fi
 
 
@@ -1502,7 +1514,7 @@ main()
 
   ### POST-INSTALLATION ARGUMENTS ###
 
-  if [[ "$(whoami)" == "root" ]]; then
+  if [[ ${EUID} == 0 ]]; then
     if [[ ${AUTOCLEAN} > 0 ]]; then
       apt -y autoremove
     fi
@@ -1510,8 +1522,6 @@ main()
       apt -y autoclean
     fi
   fi
-
-  return 0
 }
 
 # Import file of common variables
