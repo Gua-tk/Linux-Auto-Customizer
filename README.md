@@ -249,8 +249,8 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [x] Delete / rearrange arguments of one letter
 - [ ] nettools*
-- [ ] uget, cheese, SublimeText-Markdown, WordPress, FreeCAD, GnuCash, Rosegarden, Picasa, Freeciv, Shotwell, pluma, Handbrake, fslint, CMake, Tor browser, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...
-- [ ] Rsync, Axel, GNOME Tweak, Wine 5.0, Synaptic, Bacula, Docker, youtube-dl, Agave, apache2, Moodle, Oracle SQL Developer, PuTTY, MySQL Server instance, glpi*, FOG Server*, Proxmox*, Nessus*, PLEX Media Server
+- [ ] SublimeText-Markdown, WordPress, GnuCash, Rosegarden, Freeciv, Shotwell, Handbrake, fslint, CMake, Tor browser, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...
+- [ ] Rsync, Axel, GNOME Tweak, Wine 5.0, Picasa, Synaptic, Bacula, Docker, kubernetes, youtube-dl, Agave, apache2, Moodle, Oracle SQL Developer, Mdadm, PuTTY, MySQL Server instance, glpi*, FOG Server*, Proxmox*, Nessus*, PLEX Media Server
 - [ ] nmap, gobuster, metasploit, Firewalld, Hydra, Ghidra, THC Hydra, Zenmap, Snort, Hashcat, Pixiewps, Fern Wifi Cracker, gufw, WinFF, chkrootkit, rkhunter, Yersinia, Maltego, GNU MAC Changer, Burp Suite, BackTrack, John the Ripper, aircrack-ng
 - [ ] Repair broken desktop icons
 - [ ] Fonts

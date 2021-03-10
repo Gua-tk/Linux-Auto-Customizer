@@ -482,6 +482,11 @@ install_cheat()
   chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/cheat
 }
 
+install_cheese()
+{
+  apt install -y cheese
+  copy_launcher "cheese.desktop"
+}
 
 install_clementine()
 {
@@ -545,6 +550,13 @@ install_firefox()
 install_f-irc()
 {
   apt-get install -y f-irc
+}
+
+
+install_freecad()
+{
+  apt install -y freecad
+  copy_launcher "freecad.desktop"
 }
 
 
@@ -799,6 +811,12 @@ install_pdfgrep()
 }
 
 
+install_pluma()
+{
+  apt install -y pluma
+  copy_launcher "pluma.desktop"
+
+}
 # Needs roots permission
 install_pypy3_dependencies()
 {
@@ -876,7 +894,9 @@ install_transmission()
 
 install_uget()
 {
-  apt-get install -y uget aria2
+  #Does not install proper //RF
+  apt install -y uget aria2
+  copy_launcher "uget.desktop"
 }
 
 # install VLC
@@ -1374,6 +1394,9 @@ main()
       --cheat|--cheat.sh|--Cheat.sh|--che)
         add_program install_cheat
       ;;
+      --cheese)
+        add_program install_cheese
+      ;;
       --clementine|--Clementine)
         add_program install_clementine
       ;;
@@ -1397,6 +1420,9 @@ main()
       ;;
       --firefox|--Firefox)
         add_program install_firefox
+      ;;
+      --freecad|--FreeCAD|--freeCAD)
+        add_program install_freecad
       ;;
       --games|--Gaming|--Games)
         add_program install_games
@@ -1472,6 +1498,9 @@ main()
       ;;
       --pdfgrep|--findpdf|--pdf)
         add_program install_pdfgrep
+      ;;
+      --pluma)
+        add_program install_pluma
       ;;
       --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
         add_program install_pycharm_community
