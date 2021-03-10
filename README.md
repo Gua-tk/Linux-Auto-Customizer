@@ -247,7 +247,12 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] -h --help to show help to use the program.
 - [x] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
-- [x] Delete / rearrange arguments of one letter
+- [x] Delete / rearrange arguments of one letter 
+- [ ] uninstall --all common parts will need to be taken out to .bash_functions
+- [ ] generic version for the function output_proxy_exec to integrate with feature
+- [ ] Name refactor of functions to make it concice with what command is being thrown
+- [ ] Change environment variables from .bash_profile or .profile and declare variables like DESK, GIT, etc 
+- [ ] Installations must be done by argument order apparition
 - [ ] nettools*
 - [ ] SublimeText-Markdown, WordPress, GnuCash, Rosegarden, Freeciv, Shotwell, Handbrake, fslint, CMake, Tor browser, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...
 - [ ] Rsync, Axel, GNOME Tweak, Wine 5.0, Picasa, Synaptic, Bacula, Docker, kubernetes, youtube-dl, Agave, apache2, Moodle, Oracle SQL Developer, Mdadm, PuTTY, MySQL Server instance, glpi*, FOG Server*, Proxmox*, Nessus*, PLEX Media Server
