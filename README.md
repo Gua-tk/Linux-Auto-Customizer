@@ -249,6 +249,8 @@ Also the script `common_variables.sh` have been created. This script contains de
 - [ ] nettools*
 - [ ] Blender3D, Spotify, USB Image Writer,  WireShark...
 - [ ] apache2, MySQL Server*, glpi*, FOG Server*, Proxmox*
+- [ ] nmap, 
+- [ ] Repair broken desktop icons
 - [ ] To add more useful directory path variables in common_data.sh
 - [ ] Make sure USR_BIN_FOLDER is present in any user roll
 ## Author and Acknowledgements

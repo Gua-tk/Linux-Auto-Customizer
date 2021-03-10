@@ -1085,7 +1085,6 @@ add_root_programs()
 {
   for program in ${installation_data[@]}; do
     permissions=$(echo ${program} | cut -d ";" -f4)
-    #echo ${permissions}
     if [[ ${permissions} != 0 ]]; then
       name=$(echo ${program} | cut -d ";" -f5)
       add_program ${name}
@@ -1119,57 +1118,97 @@ err()
   echo "$*" >&2
 }
 
-wrap_install()
+output_proxy_executioner()
 {
-  "$@" &>/dev/null
+  if [[ $2 == 0 ]]; then
+    $1
+  elif [[ $2 == 1 ]]; then
+    comm=$(echo "$1" | cut -d " " -f1)
+    if [[ "${comm}" == "echo" ]]; then
+      $1
+    else
+      $1 &>/dev/null
+    fi
+  else
+    $1 &>/dev/null
+  fi
 }
+
 
 execute_installation()
 {
+  space=" "
   for program in ${installation_data[@]}; do
     # Installation bit processiong
     installation_bit=$( echo ${program} | cut -d ";" -f1 )
     if [[ ${installation_bit} == 1 ]]; then
       forceness_bit=$( echo ${program} | cut -d ";" -f2 )
-      if [[ ${forceness_bit} == 1 ]]; then
-        set +e
-      else
-        set -e
-      fi
       quietness_bit=$( echo ${program} | cut -d ";" -f3 )
-      if [[ ${quietness_bit} == 1 ]]; then
-        quietness_lvl_1=&>/dev/null
-      elif [[ ${quietness_bit} == 2 ]]; then
-        quietness_lvl_2="&>/dev/null"
-        quietness_lvl_1="&>/dev/null"
-      fi
-      program_function=$( echo ${program} | cut -d ";" -f5 )
+      overwrite_bit=$( echo ${program} | cut -d ";" -f4 )
+      program_function=$( echo ${program} | cut -d ";" -f6 )
       program_name=$( echo ${program_function} | cut -d "_" -f2- )
-      program_privileges=$( echo ${program} | cut -d ";" -f4 )
+      program_privileges=$( echo ${program} | cut -d ";" -f5 )
       if [[ ${program_privileges} == 1 ]]; then
         if [[ ${EUID} -ne 0 ]]; then
-          err "WARNING: $program_name needs root permissions to be installed. Skipping" ${quietness_lvl_2}
+          output_proxy_executioner "echo WARNING: $program_name needs root permissions to be installed. Skipping." ${quietness_bit}
         else
-          if [[ ! -z "$(which ${program_name})" ]]; then
-            err "WARNING: ${program_name} is already installed" ${quietness_lvl_2}
+          if [[ ${overwrite_bit} == 1 ]]; then
+            if [[ ${forceness_bit} == 1 ]]; then
+              set +e
+            else
+              set -e
+            fi
+            output_proxy_executioner "echo INFO: Attemptying to install ${program_name}." ${quietness_bit}
+            output_proxy_executioner ${program_function} ${quietness_bit}
+            output_proxy_executioner "echo INFO: ${program_name} installed." ${quietness_bit}
+            set +e
+          else
+            which ${program_name} >/dev/null
+            if [[ $? != 0 ]]; then
+              if [[ ${forceness_bit} == 1 ]]; then
+                set +e
+              else
+                set -e
+              fi
+              output_proxy_executioner "echo INFO: Attemptying to install ${program_name}." ${quietness_bit}
+              output_proxy_executioner ${program_function} ${quietness_bit}
+              output_proxy_executioner "echo INFO: ${program_name} installed." ${quietness_bit}
+              set +e
+            else
+              output_proxy_executioner "echo WARNING: ${program_name} is already installed." ${quietness_bit}
+            fi
           fi
-          echo puta
-          $(echo "echo INFO: Attemptying to install ${program_name}") ${quietness_lvl_2}
-          #$program_function &>/dev/null
-          $program_function ${quietness_lvl_1}
-          echo "INFO: ${program_name} installed ${quietness_lvl_2} "
         fi
       elif [[ ${program_privileges} == 0 ]]; then
         if [[ ${EUID} -ne 0 ]]; then
-          if [[ ! -z "$(which ${program_name})" ]]; then
-            err "WARNING: ${program_name} is already installed" ${quietness_lvl_2}
+          if [[ ${overwrite_bit} == 1 ]]; then
+            if [[ ${forceness_bit} == 1 ]]; then
+              set +e
+            else
+              set -e
+            fi
+            output_proxy_executioner "echo INFO: Attemptying to install ${program_name}." ${quietness_bit}
+            output_proxy_executioner ${program_function} ${quietness_bit}
+            output_proxy_executioner "echo INFO: ${program_name} installed." ${quietness_bit}
+            set +e
+          else
+            which ${program_name}
+            if [[ $? != 0 ]]; then
+              if [[ ${forceness_bit} == 1 ]]; then
+                set +e
+              else
+                set -e
+              fi
+              output_proxy_executioner "echo INFO: Attemptying to install ${program_name}." ${quietness_bit}
+              output_proxy_executioner ${program_function} ${quietness_bit}
+              output_proxy_executioner "echo INFO: ${program_name} installed." ${quietness_bit}
+              set +e
+            else
+              output_proxy_executioner "echo WARNING: ${program_name} is already installed." ${quietness_bit}
+            fi
           fi
-          echo "INFO: Attemptying to install ${program_name}" ${quietness_lvl_2}
-          $program_function "${quietness_lvl_1}"
-
-          echo "INFO: ${program_name} installed" ${quietness_lvl_2}
         else
-          err "WARNING: $program_name needs user permissions to be installed. Skipping" ${quietness_lvl_2}
+          output_proxy_executioner "echo WARNING: $program_name needs user permissions to be installed. Skipping." ${quietness_bit}
         fi
       fi
     fi
@@ -1185,8 +1224,8 @@ add_program()
 
     if [[ "$1" == "${program_name}" ]]; then
       # Add bit of installation yes/no
-      rest=$(echo "${installation_data[$i]}" | cut -d ";" -f4- )
-      new="1;${FLAG_FORCENESS};${FLAG_QUIETNESS};${rest}"
+      rest=$(echo "${installation_data[$i]}" | cut -d ";" -f5- )
+      new="1;${FLAG_FORCENESS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
       installation_data[$i]=${new}
     fi
   done
@@ -1240,12 +1279,9 @@ main()
 
   fi
 
-
-
-
+  SILENT=0
   UPGRADE=2
   AUTOCLEAN=2
-
 
 
   ###### ARGUMENT PROCESSING ######
@@ -1257,19 +1293,24 @@ main()
       ### BEHAVIOURAL ARGUMENTS ###
       -v|--verbose)
         FLAG_QUIETNESS=0
+        SILENT=0
       ;;
       -q|--quiet)
         FLAG_QUIETNESS=1
+        SILENT=1
       ;;
       -Q|--Quiet)
         FLAG_QUIETNESS=2
+        SILENT=2
       ;;
+
       -f|--force)
         FLAG_FORCENESS=1
       ;;
       -e|--exit|--exit-on-error)
         FLAG_FORCENESS=0
       ;;
+
       -d|--dirty)
         AUTOCLEAN=0
       ;;
@@ -1280,6 +1321,12 @@ main()
         AUTOCLEAN=2
       ;;
 
+      -o|--overwrite)
+        FLAG_OVERWRITE=1
+      ;;
+      -s|--skip)
+        FLAG_OVERWRITE=0
+      ;;
 
       ### INDIVIDUAL ARGUMENTS ###
       # Sorted alphabetically by function name:
@@ -1479,7 +1526,7 @@ main()
         add_all_programs
       ;;
       *)    # unknown option
-        err "$1 is not a recognized command"
+        output_proxy_executioner "echo ERROR: ${key} is not a recognized command." ${SILENT}
       ;;
     esac
     shift
@@ -1497,13 +1544,16 @@ main()
   # UPDATE
   if [[ ${EUID} == 0 ]]; then
     if [[ ${UPGRADE} > 0 ]]; then
-      apt -y update
+      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${SILENT}
+      output_proxy_executioner "apt-get -y update" ${SILENT}
+      output_proxy_executioner "echo INFO: System updated." ${SILENT}
     fi
     if [[ ${UPGRADE} == 2 ]]; then
-      apt -y upgrade
+      output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${SILENT}
+      output_proxy_executioner "apt-get -y upgrade" ${SILENT}
+      output_proxy_executioner "echo INFO: System upgraded." ${SILENT}
     fi
   fi
-
 
 
   ### INSTALLATION ###
@@ -1511,15 +1561,14 @@ main()
   execute_installation
 
 
-
   ### POST-INSTALLATION ARGUMENTS ###
 
   if [[ ${EUID} == 0 ]]; then
     if [[ ${AUTOCLEAN} > 0 ]]; then
-      apt -y autoremove
+      output_proxy_executioner "apt-get -y autoremove" ${SILENT}
     fi
     if [[ ${AUTOCLEAN} == 2 ]]; then
-      apt -y autoclean
+      output_proxy_executioner "apt-get -y autoclean" ${SILENT}
     fi
   fi
 }
