@@ -1365,6 +1365,12 @@ main()
         FLAG_INSTALL=1
       ;;
 
+      -h|--help)
+        echo ${help_text}
+        exit 0
+      ;;
+
+
       ### INDIVIDUAL ARGUMENTS ###
       # Sorted alphabetically by function name:
       --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)

@@ -124,7 +124,7 @@ programming_pro=( "intellij_ultimate" "pycharm_professional" "clion" )
 text_editor_core=( "atom" "openoffice" "latex" "geany" "notepadqq" "gvim" )
 media_core=( "vlc" "gpaint" "okular" "clementine" )
 system_core=( "virtualbox" "gparted" "clonezilla" )
-internet_core=( "transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
+internet_core=( "transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat" )
 art_core=( "audacity" "shotcut" "gimp" "obs" "inkscape" )
 games_install=( "games" "steam" "cmatrix" )
 standard_install=("templates" "virtualbox" "environment" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" )
@@ -277,6 +277,8 @@ L()
   printf \"\$finaldisplay\"
 }
 "
+
+help_text="HELP!!!"
 
 intellij_ultimate_version=ideaIU-2020.3.1
 intellij_ultimate_launcher="[Desktop Entry]
