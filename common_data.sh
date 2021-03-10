@@ -46,6 +46,7 @@ else
 fi
 
 FLAG_OVERWRITE=0
+FLAG_INSTALL=1
 FLAG_QUIETNESS=0
 FLAG_FORCENESS=0
 FLAG_ANY_INSTALLED=0  # Tells if there is any installed feature in order to determine if implicit to --all should be called
@@ -76,6 +77,7 @@ installation_data=(
 "0;0;0;0;1;install_gparted"
 "0;0;0;0;1;install_gvim"
 "0;0;0;0;1;install_google_chrome"
+"0;0;0;0;1;install_gnome-chess"
 "0;0;0;0;1;install_GNU_parallel"
 "0;0;0;0;1;install_inkscape"
 "0;0;0;0;0;install_intellij_community"
@@ -104,12 +106,25 @@ installation_data=(
 "0;0;0;0;1;install_terminator"
 "0;0;0;0;1;install_tilix"
 "0;0;0;0;1;install_tmux"
+"0:0:0:0:1:install_uget"
 "0;0;0;0;1;install_thunderbird"
 "0;0;0;0;1;install_transmission"
 "0;0;0;0;1;install_virtualbox"
 "0;0;0;0;0;install_visualstudiocode"
 "0;0;0;0;1;install_vlc"
 )
+
+##### WRAPPERS #####
+programming_core=( "python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies" )
+programming_ide=( "android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion" )
+programming_pro=( "intellij_ultimate" "pycharm_professional" "clion" )
+text_editor_core=( "atom" "openoffice" "latex" "geany" "notepadqq" "gvim" )
+media_core=( "vlc" "gpaint" "okular" "clementine" )
+system_core=( "virtualbox" "gparted" "clonezilla" )
+internet_core=( "transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
+art_core=( "audacity" "shotcut" "gimp" "obs" "inkscape" )
+games_install=( "games" "steam" "cmatrix" )
+standard_install=("templates" "virtualbox" "environment" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" )
 
 
 ##### COMMON VARIABLES #####

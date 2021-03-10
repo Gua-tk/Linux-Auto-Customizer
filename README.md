@@ -238,21 +238,26 @@ The last major change include the creation of a "complementary" uninstallation s
 Also the script `common_variables.sh` have been created. This script contains declared variables that are used in one or both scripts. Most of the variables are long strings that specify a certain version of a software. Those variables are used to know which is the targeted version of a certain software. By changing those variables you can easily change the targeted version of a certain software (easier to update script).
 
 ## Coming features
-- [ ] Automount available drives.
+- [ ] Automount available drives.*
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
-- [ ] Create argument (! or --not) for deselecting installed or uninstalled features.
-- [ ] -v --verbose Verbose mode (make the software not verbose by default)
+- [ ] Split multiplying lines into functions
+- [ ] Create source in bashrc with file bash_functions.sh with all sources calls
+- [x] Create argument (! or --not) for deselecting installed or uninstalled features.
+- [x] -v --verbose Verbose mode (make the software not verbose by default)
 - [ ] -h --help to show help to use the program.
-- [ ] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
+- [x] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
-- [ ] Delete / rearrange arguments of one letter
+- [x] Delete / rearrange arguments of one letter
 - [ ] nettools*
-- [ ] Blender3D, Spotify, USB Image Writer,  WireShark...
-- [ ] apache2, MySQL Server*, glpi*, FOG Server*, Proxmox*
-- [ ] nmap, 
+- [ ] uget, cheese, SublimeText-Markdown, WordPress, FreeCAD, GnuCash, Rosegarden, Picasa, Freeciv, Shotwell, pluma, Handbrake, fslint, CMake, Tor browser, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...
+- [ ] Rsync, Axel, GNOME Tweak, Wine 5.0, Synaptic, Bacula, Docker, youtube-dl, Agave, apache2, Moodle, Oracle SQL Developer, PuTTY, MySQL Server instance, glpi*, FOG Server*, Proxmox*, Nessus*, PLEX Media Server
+- [ ] nmap, gobuster, metasploit, Firewalld, Hydra, Ghidra, THC Hydra, Zenmap, Snort, Hashcat, Pixiewps, Fern Wifi Cracker, gufw, WinFF, chkrootkit, rkhunter, Yersinia, Maltego, GNU MAC Changer, Burp Suite, BackTrack, John the Ripper, aircrack-ng
 - [ ] Repair broken desktop icons
-- [ ] To add more useful directory path variables in common_data.sh
-- [ ] Make sure USR_BIN_FOLDER is present in any user roll
+- [ ] Fonts
+- [ ] Download wallpapers
+- [ ] Desktop wallpapers
+- [x] To add more useful directory path variables in common_data.sh
+- [x] Make sure USR_BIN_FOLDER is present in any user roll
 ## Author and Acknowledgements
 * Author: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)
 * Tester: **Axel Fernández** - [Axlfc](https://github.com/Axlfc) [axelfernandezcurros@gmail.com](axelfernandezcurros@gmail.com)

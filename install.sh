@@ -594,6 +594,10 @@ install_git()
   apt-get install -y git-lfs
 }
 
+install_gnome-chess()
+{
+  apt-get install -y gnome-chess
+}
 
 # Install GNU parallel
 install_GNU_parallel()
@@ -870,6 +874,10 @@ install_transmission()
   chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
 }
 
+install_uget()
+{
+  apt-get install -y uget aria2
+}
 
 # install VLC
 install_vlc()
@@ -1217,19 +1225,21 @@ execute_installation()
 
 add_program()
 {
-  FLAG_ANY_INSTALLED=1  # Tells if there is any installed feature in order to determine if implicit to --all should be called
-  total=${#installation_data[*]}
-  for (( i=0; i<$(( ${total} )); i++ )); do
-    program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev )
+  while [[ $# -gt 0 ]]; do
+    FLAG_ANY_INSTALLED=1  # Tells if there is any installed feature in order to determine if implicit to --all should be called
+    total=${#installation_data[*]}
+    for (( i=0; i<$(( ${total} )); i++ )); do
+      program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev )
 
-    if [[ "$1" == "${program_name}" ]]; then
-      # Add bit of installation yes/no
-      rest=$(echo "${installation_data[$i]}" | cut -d ";" -f5- )
-      new="1;${FLAG_FORCENESS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
-      installation_data[$i]=${new}
-    fi
+      if [[ "$1" == "${program_name}" ]]; then
+        # Add bit of installation yes/no
+        rest=$(echo "${installation_data[$i]}" | cut -d ";" -f5- )
+        new="${FLAG_INSTALL};${FLAG_FORCENESS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
+        installation_data[$i]=${new}
+      fi
+    done
+    shift
   done
-
 }
 
 
@@ -1328,6 +1338,13 @@ main()
         FLAG_OVERWRITE=0
       ;;
 
+      -n|--not|-!)
+        FLAG_INSTALL=0
+      ;;
+      -y|--yes)
+        FLAG_INSTALL=1
+      ;;
+
       ### INDIVIDUAL ARGUMENTS ###
       # Sorted alphabetically by function name:
       --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
@@ -1398,6 +1415,9 @@ main()
       ;;
       --GIMP|--gimp|--Gimp)
         add_program install_gimp
+      ;;
+      --GNOME_Chess|--gnome_Chess|--gnomechess)
+        add_program install_gnome-chess
       ;;
       --GParted|--gparted|--GPARTED|--Gparted)
         add_program install_gparted
@@ -1504,6 +1524,9 @@ main()
       ;;
       --transmission|--transmission-gtk|--Transmission)
         add_program install_transmission
+      ;;
+      --uget)
+        add_program install_uget
       ;;
       --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
         add_program install_virtualbox
