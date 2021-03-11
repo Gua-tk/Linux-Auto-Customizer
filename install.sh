@@ -2,27 +2,29 @@
 # A simple portable shell script to initialize and customize a Linux working environment. Needs root permission for some features.
 # Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
 # Created on 28/5/19
-# Last Update 19/4/2020register_file_associations
+# Last Update 19/4/2020
+
 
 ################################
 ###### AUXILIAR FUNCTIONS ######
 ################################
 
-# Associate a file type (mime type) to a certaina application.
+# Associate a file type (mime type) to a certain application using its desktop launcher.
 # Argument 1: File types. Example: application/x-shellscript
 # Argument 2: Application. Example: sublime_text.desktop
 register_file_associations()
 {
+# Check if mimeapps exists
 if [[ -f ${HOME}/.config/mimeapps.list ]]; then
-  # Check if the association is already existent
+  # Check if the association between a mime type and desktop launcher is already existent
   if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
+    # If mime type is not even present we can add the hole line
     if [[ -z "$(more ~/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
-      # File type is not registered so we can add the hole line
       sed -i "/\[Added Associations\]/a $1=$2;" ~/.config/mimeapps.list
     else
-      # File type is already registered. We need to register another application for it
+      # If not, mime type is already registered. We need to register another application for it
       if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*;$" )" ]]; then
-        # File type is registered without comma. Add the program at the end of the line with comma
+        # File type(s) is registered without comma. Add the program at the end of the line with comma
         sed -i "s|$1=.*$|&;$2;|g" ~/.config/mimeapps.list
       else
         # File type is registered with comma at the end. Just add program at end of line
