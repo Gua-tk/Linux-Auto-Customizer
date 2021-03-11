@@ -334,14 +334,6 @@ install_pypy3()
 }
 
 
-install_shotcut()
-{
-  apt install -y shotcut
-  echo -e "${shotcut_desktop_launcher}" > ${XDG_DESKTOP_DIR}/shotcut.desktop
-  chmod 775 ${XDG_DESKTOP_DIR}/shotcut.desktop
-}
-
-
 # Install Sublime text 3
 install_sublime_text()
 {
@@ -437,6 +429,7 @@ install_visualstudiocode()
 install_audacity()
 {
   apt install -y audacity
+  copy_launcher audacity.desktop
 }
 
 
@@ -449,7 +442,6 @@ install_atom()
 
 install_caffeine()
 {
-  echo "qewrw"$1"sfs"
   apt install -y caffeine
   copy_launcher "caffeine-indicator.desktop"
 }
@@ -458,7 +450,7 @@ install_caffeine()
 install_calibre()
 {
   apt install -y calibre
-  copy_launcher "calibre.desktop"
+  copy_launcher calibre-gui.desktop
 }
 
 
@@ -482,11 +474,13 @@ install_cheat()
   chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/cheat
 }
 
+
 install_cheese()
 {
   apt install -y cheese
-  copy_launcher "cheese.desktop"
+  copy_launcher "org.gnome.Cheese.desktop"
 }
+
 
 install_clementine()
 {
@@ -536,7 +530,7 @@ install_dropbox()
 install_copyq()
 {
   apt-get install -y copyq
-  copy_launcher "copyq.desktop"
+  copy_launcher "com.github.hluk.copyq.desktop"
 }
 
 
@@ -550,6 +544,8 @@ install_firefox()
 install_f-irc()
 {
   apt-get install -y f-irc
+  echo -e "${firc_launcher}" > ${XDG_DESKTOP_DIR}/f-irc.desktop
+  chmod 775 ${XDG_DESKTOP_DIR}/f-irc.desktop
 }
 
 
@@ -609,6 +605,7 @@ install_git()
 install_gnome-chess()
 {
   apt-get install -y gnome-chess
+  copy_launcher "org.gnome.Chess.desktop"
 }
 
 # Install GNU parallel
@@ -836,6 +833,14 @@ install_python3()
 }
 
 
+install_shotcut()
+{
+  apt install -y shotcut
+  echo -e "${shotcut_desktop_launcher}" > ${XDG_DESKTOP_DIR}/shotcut.desktop
+  chmod 775 ${XDG_DESKTOP_DIR}/shotcut.desktop
+}
+
+
 # steam ubuntu client
 install_steam()
 {
@@ -899,12 +904,6 @@ install_uget()
   copy_launcher "uget.desktop"
 }
 
-# install VLC
-install_vlc()
-{
-  apt-get -y install vlc
-}
-
 
 # VirtualBox
 install_virtualbox()
@@ -919,6 +918,13 @@ install_virtualbox()
   rm -f virtualbox*.deb*
   # Create launcher and change its permissions (we are root)
   copy_launcher "virtualbox.desktop"
+}
+
+
+# install VLC
+install_vlc()
+{
+  apt-get -y install vlc
 }
 
 #############################
@@ -1400,7 +1406,7 @@ main()
       --cheat|--cheat.sh|--Cheat.sh|--che)
         add_program install_cheat
       ;;
-      --cheese)
+      --cheese|--Cheese)
         add_program install_cheese
       ;;
       --clementine|--Clementine)
@@ -1448,7 +1454,7 @@ main()
       --GIMP|--gimp|--Gimp)
         add_program install_gimp
       ;;
-      --GNOME_Chess|--gnome_Chess|--gnomechess)
+      --GNOME_Chess|--gnome_Chess|--gnomechess|--chess)
         add_program install_gnome-chess
       ;;
       --GParted|--gparted|--GPARTED|--Gparted)

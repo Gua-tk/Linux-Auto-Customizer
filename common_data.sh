@@ -60,6 +60,7 @@ installation_data=(
 "0;0;0;0;1;install_dropbox"
 "0;0;0;0;1;install_gcc"
 "0;0;0;0;1;install_caffeine"
+"0;0;0;0;1;install_calibre"
 "0;0;0;0;1;install_clementine"
 "0;0;0;0;0;install_clion"
 "0;0;0;0;1;install_cheat"
@@ -242,6 +243,16 @@ extract_function="
         echo \"'\$1' is not a valid file\"
     fi
   }"
+
+firc_launcher="[Desktop Entry]
+Name=F-irc
+StartupWMClass=f-irc
+Comment=IRC Simple chat
+Terminal=true
+Exec=f-irc
+Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.png
+Type=Application
+"
 
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 

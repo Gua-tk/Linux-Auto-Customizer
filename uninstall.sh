@@ -23,7 +23,11 @@ uninstall_converters()
   sed "s-${converters_bashrc_call}--" -i ${BASHRC_PATH}
   rm -f /home/${SUDO_USER}/.bash_functions
 }
-
+uninstall_copyq()
+{
+  apt-get purge -y copyq
+  rm -f "${XDG_DESKTOP_DIR}/com.github.hluk.copyq.desktop"
+}
 
 uninstall_android_studio()
 {
@@ -54,6 +58,11 @@ uninstall_caffeine()
   rm -f ${XDG_DESKTOP_DIR}/caffeine-indicator.desktop
 }
 
+uninstall_calibre()
+{
+  apt purge -y calibre
+  rm -f ${XDG_DESKTOP_DIR}/calibre.desktop
+}
 
 uninstall_cheat()
 {
@@ -63,6 +72,19 @@ uninstall_cheat()
   rm -f /home/${SUDO_USER}/.local/bin/cheat
 }
 
+
+unistall_cheese()
+{
+  apt purge -y cheese
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Cheese.desktop.desktop
+}
+
+
+uninstall_gnome-chess()
+{
+  apt-get purge -y gnome-chess
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Chess.desktop
+}
 
 uninstall_cmatrix()
 {
@@ -122,6 +144,7 @@ uninstall_firefox()
 uninstall_f-irc()
 {
   apt-get purge -y f-irc
+  rm -f ${XDG_DESKTOP_DIR}/f-irc.desktop
 }
 
 
@@ -321,7 +344,7 @@ uninstall_openoffice()
 
 install_okular()
 {
-  apt-purge -y okular
+  apt purge -y okular
   rm -f ${XDG_DESKTOP_DIR}/okular.desktop
 }
 
@@ -504,7 +527,10 @@ uninstall_all()
   uninstall_audacity
   uninstall_atom
   uninstall_caffeine
+  uninstall_calibre
   uninstall_cheat
+  unistall_cheese
+  uninstall_gnome-chess
   uninstall_clion
   uninstall_clonezilla
   uninstall_cmatrix
@@ -593,8 +619,17 @@ main()
         --caffeine|--Caffeine|--cafe|--coffee)
           uninstall_caffeine
         ;;
+        --calibre|--Calibre|--cali)
+          uninstall_calibre
+        ;;
         --cheat|--cheat.sh|--Cheat.sh|--che)
           uninstall_cheat
+        ;;
+        --cheese|--Cheese)
+          unistall_cheese
+        ;;
+        --GNOME_Chess|--gnome_Chess|--gnomechess|--chess)
+          uninstall_gnome-chess
         ;;
         --clementine|--Clementine)
           uninstall_clementine
@@ -612,7 +647,7 @@ main()
           uninstall_converters
         ;;
         --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
-          install_copyq
+          uninstall_copyq
         ;;
         --discord|--Discord|--disc)
           uninstall_discord
