@@ -1,4 +1,26 @@
 #!/usr/bin/env bash
+######################################
+##### COMMON AUXILIARY FUNCTIONS #####
+######################################
+
+# Execute the command received in the first argument and redirect the output depending on the quietness level
+# Argument 1: Bash command to execute.
+# Argument 2: Quietness level [0, 1, 2].
+output_proxy_executioner()
+{
+  if [[ $2 == 0 ]]; then
+    $1
+  elif [[ $2 == 1 ]]; then
+    comm=$(echo "$1" | cut -d " " -f1)
+    if [[ "${comm}" == "echo" ]]; then
+      $1
+    else
+      $1 &>/dev/null
+    fi
+  else
+    $1 &>/dev/null
+  fi
+}
 
 ############################
 ##### COMMON VARIABLES #####
@@ -57,7 +79,7 @@ else
 fi
 FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
 FLAG_INSTALL=1  # 1 --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
-FLAG_QUIETNESS=0 # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
+FLAG_QUIETNESS=0  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
 FLAG_FORCENESS=0  # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
 FLAG_ANY_INSTALLED=0  # 0 --> No features are provided as arguments, thus, implicit call to --all; 1 --> Any feature provided; no implicit call.
 
