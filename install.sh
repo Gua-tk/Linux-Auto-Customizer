@@ -2,8 +2,24 @@
 # A simple portable shell script to initialize and customize a Linux working environment. Needs root permission for some features.
 # Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
 # Created on 28/5/19
-# Last Update 19/4/2020
+# Last Update 11/3/2021
 
+# //RF:
+# using .bash_functions for shell features: converters,
+
+# common //RF:
+# missing {} around var
+# wget not used with -O and in subshell to avoid cd
+# tar not used in a subshell to avoid cd
+# echo or err directly used instead of using output_proxy_executioner
+# desktop launchers created manually as user created ONLY in the desktop and not also in the user launchers folder
+# desktop launchers created manually as root created ONLY in the desktop and not in the all users launchers folder
+# Files or folders created as root that only change their permissions, and not also its group and owner, using chgrp and chown
+# using ~ or $HOME instead of HOME_FOLDER
+# console feature installed directly in bashrc instead of using the structure provided by the customizer using .bash_functions
+
+# other //RF:
+# unify the format of .desktop launchers
 
 ################################
 ###### AUXILIAR FUNCTIONS ######
@@ -31,11 +47,7 @@ if [[ -f ${HOME}/.config/mimeapps.list ]]; then
         sed -i "s|$1=.*;$|&$2;|g" ${HOME_FOLDER}/.config/mimeapps.list
       fi
     fi
-  else
-    err "WARNING: File association between $1 and $2 is already done"
   fi
-else
-  err "WARNING: File association between $1 and $2 can not be done because ~/.config/mimeaps.list does not exist."
 fi
 }
 
@@ -54,7 +66,26 @@ copy_launcher()
   fi
 }
 
-# Prints the given arguments to the stderr
+# This function creates a valid launcher in the desktop using a a given string with the given name
+# Argument 1: The string of the text of the desktop.
+# Argument 2: The name of the launcher.
+create_manual_launcher()
+{
+# If user
+if [[ ${EUID} -ne 0 ]]; then
+  echo -e "$1" > ${PERSONAL_LAUNCHERS_DIR}/$2.desktop
+  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/$2.desktop
+  cp -p ${PERSONAL_LAUNCHERS_DIR}/$2.desktop ${XDG_DESKTOP_DIR}
+else  # if root
+  echo -e "$1" > ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop
+  chmod 775 ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop
+  chgrp ${SUDO_USER} ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop
+  chown ${SUDO_USER} ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop
+  cp -p ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop ${XDG_DESKTOP_DIR}
+fi
+}
+
+# Prints the given arguments to the stderr //RF
 err()
 {
   echo "$*" >&2
@@ -67,48 +98,41 @@ err()
 
 install_android_studio()
 {
-  # avoid collisions
-  rm -f ${USR_BIN_FOLDER}/${android_studio_version}.tar.gz*
-  # Download
-  (cd "${USR_BIN_FOLDER}"; wget -O "android_studio.tar.gz" "${android_studio_downloader}")
-
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/android_studio.tar.gz
-  # Clean
-  rm -f ${USR_BIN_FOLDER}/android_studio.tar.gz*
+  rm -f ${USR_BIN_FOLDER}/android_studio*.tar.gz*
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd ${USR_BIN_FOLDER}; wget -O "android_studio" ${android_studio_downloader})
+  # Decompress in a subshell to avoid changing the working directory in the current shell
+  rm -Rf ${USR_BIN_FOLDER}/android-studio
+  (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/android_studio
+  rm -f ${USR_BIN_FOLDER}/android_studio*
 
   # Create links to the PATH
   rm -f ${DIR_IN_PATH}/studio
   ln -s ${USR_BIN_FOLDER}/android-studio/bin/studio.sh ${DIR_IN_PATH}/studio
-
   # Create launcher
-  echo -e "${android_studio_launcher}" > "${PERSONAL_LAUNCHERS_DIR}/Android Studio.desktop"
-  chmod 775 "${PERSONAL_LAUNCHERS_DIR}/Android Studio.desktop"
-  cp -p "${PERSONAL_LAUNCHERS_DIR}/Android Studio.desktop" ${XDG_DESKTOP_DIR}
+  create_manual_launcher "${android_studio_launcher}" "Android_Studio"
 }
 
 
 install_clion()
 {
-  # Avoid error due to possible previous aborted installations
-  clion_version=$(echo ${clion_downloader} | rev | cut -d "/" -f1 | rev)
-  rm -f ${USR_BIN_FOLDER}/${clion_version}*
-  rm -Rf ${USR_BIN_FOLDER}/${clion_version}
-  # Download CLion
-  (cd "${USR_BIN_FOLDER}"; wget -O "${clion_version}" "${clion_downloader}")
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${clion_version}
-  # Clean
-  rm -f ${USR_BIN_FOLDER}/${clion_version}*
+  # Folder and file are called the same
+  rm -f ${USR_BIN_FOLDER}/clion*
+  rm -Rf ${USR_BIN_FOLDER}/Clion*
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd "${USR_BIN_FOLDER}"; wget -O "clion" "${clion_downloader}")
+  # Decompress in a subshell to avoid changing the working directory in the current shell
+  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/clion
+  rm -f ${USR_BIN_FOLDER}/clion
   # Modify folder name for coherence
-  mv ${USR_BIN_FOLDER}/${clion_version} ${USR_BIN_FOLDER}/clion
-  # Create links to the PATH
+  mv ${USR_BIN_FOLDER}/Clion* ${USR_BIN_FOLDER}/clion
+
+  # Create links in the PATH
   rm -f ${DIR_IN_PATH}/clion
   ln -s ${USR_BIN_FOLDER}/clion/bin/clion.sh ${DIR_IN_PATH}/clion
+
   # Create launcher for clion in the desktop and in the launcher menu
-  echo -e "$clion_launcher" > ${PERSONAL_LAUNCHERS_DIR}/clion.desktop
-  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/clion.desktop
-  cp -p ${PERSONAL_LAUNCHERS_DIR}/clion.desktop ${XDG_DESKTOP_DIR}
+  create_manual_launcher "${clion_launcher}" "clion"
 
   # register file associations
   register_file_associations "text/x-c++hdr" "clion.desktop"
@@ -121,7 +145,8 @@ install_clion()
 install_converters()
 {
   rm -Rf ${USR_BIN_FOLDER}/converters
-  git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
+  git clone ${converters_downloader} ${USR_BIN_FOLDER}
+
 
   rm -f ${DIR_IN_PATH}/dectohex
   rm -f ${DIR_IN_PATH}/hextodec
@@ -130,6 +155,7 @@ install_converters()
   rm -f ${DIR_IN_PATH}/dectoutf
   rm -f ${DIR_IN_PATH}/dectooct
   rm -f ${DIR_IN_PATH}/utftodec
+
   ln -s ${USR_BIN_FOLDER}/converters/dectohex.py ${DIR_IN_PATH}/dectohex
   ln -s ${USR_BIN_FOLDER}/converters/hextodec.py ${DIR_IN_PATH}/hextodec
   ln -s ${USR_BIN_FOLDER}/converters/bintodec.py ${DIR_IN_PATH}/bintodec
@@ -151,44 +177,46 @@ install_converters()
 # discord desktop client
 install_discord()
 {
-  rm -f ${USR_BIN_FOLDER}/discord.tar.gz*
-  (cd "${USR_BIN_FOLDER}"; wget -O discord.tar.gz "https://discord.com/api/download?platform=linux&format=tar.gz")
-  rm -Rf "${USR_BIN_FOLDER}/discord"
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/discord.tar.gz
-  rm -f ${USR_BIN_FOLDER}/discord*.tar.gz*
+  rm -f ${USR_BIN_FOLDER}/discord*
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd "${USR_BIN_FOLDER}"; wget -O "discord" ${discord_downloader})
+  rm -Rf ${USR_BIN_FOLDER}/discord*
+  rm -Rf ${USR_BIN_FOLDER}/Discord*
+  # Decompress in a subshell to avoid changing the working directory in the current shell
+  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/discord
+  rm -f ${USR_BIN_FOLDER}/discord*
+  # Modify name for coherence
   mv ${USR_BIN_FOLDER}/Discord ${USR_BIN_FOLDER}/discord
+
   # Create links in the PATH
   rm -f ${DIR_IN_PATH}/discord
   ln -s ${USR_BIN_FOLDER}/discord/Discord ${DIR_IN_PATH}/discord
+
   # Create launchers in launcher and in desktop
-  echo -e "${discord_launcher}" > ${XDG_DESKTOP_DIR}/discord.desktop
-  chmod 755 ${XDG_DESKTOP_DIR}/discord.desktop
-  cp -p ${XDG_DESKTOP_DIR}/discord.desktop ${PERSONAL_LAUNCHERS_DIR}
+  create_manual_launcher "${discord_launcher}" "discord"
 }
 
 
 # Install IntelliJ Community
 install_intellij_community()
 {
-  # Avoid error due to possible previous aborted installations
-  rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
-  rm -Rf ${USR_BIN_FOLDER}/idea-IC
-  # Download intellij community
-  wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_community_version}.tar.gz
+  rm -f ${USR_BIN_FOLDER}/ideac*
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd ${USR_BIN_FOLDER}; wget -O ideac ${intellij_community_downloader})
+  rm -Rf ${USR_BIN_FOLDER}/idea-IC*
+  rm -Rf ${USR_BIN_FOLDER}/idea-ic*
   # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz
-  # Clean
-  rm -f ${USR_BIN_FOLDER}/${intellij_community_version}.tar.gz*
+  (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/ideac
+  rm -f ${USR_BIN_FOLDER}/ideac*
   # Modify name for coherence
-  mv ${USR_BIN_FOLDER}/idea-IC* ${USR_BIN_FOLDER}/idea-IC
-  # Create link to the PATH
-  rm -f ${DIR_IN_PATH}/ideac
-  ln -s ${USR_BIN_FOLDER}/idea-IC/bin/idea.sh ${DIR_IN_PATH}/ideac
+  mv ${USR_BIN_FOLDER}/idea-IC* ${USR_BIN_FOLDER}/idea-ic
+
+  # Create link in the PATH
+  rm -f ${DIR_IN_PATH}/ideac*
+  ln -s ${USR_BIN_FOLDER}/ideac/bin/idea.sh ${DIR_IN_PATH}/ideac
+
   # Create desktop launcher entry for intelliJ community
-  echo -e "${intellij_community_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/ideac.desktop
-  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/ideac.desktop
-  # Copy launcher to the desktop
-  cp -p ${PERSONAL_LAUNCHERS_DIR}/ideac.desktop ${XDG_DESKTOP_DIR}
+  create_manual_launcher "${intellij_community_launcher}" "ideac"
 
   # register file associations
   register_file_associations "text/x-java" "ideac.desktop"
@@ -198,25 +226,24 @@ install_intellij_community()
 # Install IntelliJ Ultimate
 install_intellij_ultimate()
 {
-  # Avoid error due to possible previous aborted installations
-  rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
-  rm -Rf ${USR_BIN_FOLDER}/idea-IU
-  # Download intellij ultimate
-  wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/idea/${intellij_ultimate_version}.tar.gz
+  rm -f ${USR_BIN_FOLDER}/ideau*
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd ${USR_BIN_FOLDER}; wget -O ideau ${intellij_ultimate_downloader})
+  rm -Rf ${USR_BIN_FOLDER}/idea-IU*
+  rm -Rf ${USR_BIN_FOLDER}/idea-iu*
   # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz
-  # Clean
-  rm -f ${USR_BIN_FOLDER}/${intellij_ultimate_version}.tar.gz*
+  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/ideau
+  rm -f ${USR_BIN_FOLDER}/ideau*
   # Modify name for coherence
-  mv ${USR_BIN_FOLDER}/idea-IU* ${USR_BIN_FOLDER}/idea-IU
-  # Create link to the PATH
-  rm -f ${DIR_IN_PATH}/ideau
-  ln -s ${USR_BIN_FOLDER}/idea-IU/bin/idea.sh ${DIR_IN_PATH}/ideau
+  mv ${USR_BIN_FOLDER}/idea-IU* ${USR_BIN_FOLDER}/idea-iu
+
+  # Create link in the PATH
+  rm -f ${DIR_IN_PATH}/ideau*
+  ln -s ${USR_BIN_FOLDER}/ideau/bin/idea.sh ${DIR_IN_PATH}/ideau
+
   # Create desktop launcher entry for intellij ultimate
-  echo -e "${intellij_ultimate_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/ideau.desktop
-  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/ideau.desktop
-  # Copy launcher to the desktop
-  cp -p ${PERSONAL_LAUNCHERS_DIR}/ideau.desktop ${XDG_DESKTOP_DIR}
+  create_manual_launcher "${intellij_ultimate_launcher}" "ideau"
+
   # register file associations
   register_file_associations "text/x-java" "ideau.desktop"
 }
@@ -225,19 +252,20 @@ install_intellij_ultimate()
 # Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
 install_mendeley()
 {
-  # Avoid error due to possible previous aborted installations
-  rm -f ${USR_BIN_FOLDER}/stable-incoming*
   rm -Rf ${USR_BIN_FOLDER}/mendeley*
-  # Download mendeley
-  wget -P ${USR_BIN_FOLDER} https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd ${USR_BIN_FOLDER}; wget -O "mendeley" ${mendeley_downloader})
+  rm -Rf ${USR_BIN_FOLDER}/mendeley*
   # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/stable-incoming
-  rm -f ${USR_BIN_FOLDER}/stable-incoming
+  (cd ${USR_BIN_FOLDER}; tar -xjf -) < ${USR_BIN_FOLDER}/mendeley
+  rm -f ${USR_BIN_FOLDER}/mendeley*
   # Rename folder for coherence
   mv ${USR_BIN_FOLDER}/mendeley* ${USR_BIN_FOLDER}/mendeley
-  # Create link to the PATH
-  rm -f ${DIR_IN_PATH}/mendeley
-  ln -s ${USR_BIN_FOLDER}/mendeley/bin/mendeleydesktop ${HOME}/${SUDO_USER}/.local/bin/mendeley
+
+  # Create link in the PATH
+  rm -f ${DIR_IN_PATH}/mendeley*
+  ln -s ${USR_BIN_FOLDER}/mendeley/bin/mendeleydesktop ${DIR_IN_PATH}/mendeley
+
   # Create Desktop launcher
   cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
   chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
@@ -253,25 +281,22 @@ install_mendeley()
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_community()
 {
-  # Avoid error due to possible previous aborted installations
-  rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
-  rm -Rf ${USR_BIN_FOLDER}/${pycharm_version}
-  # Download pycharm
-  wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_version}.tar.gz
+  rm -f ${USR_BIN_FOLDER}/pycharm*
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd ${USR_BIN_FOLDER}; wget -O "pycharm" ${pycharm_downloader})
+  rm -Rf ${USR_BIN_FOLDER}/pycharm-community*
   # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz
-  # Clean
-  rm -f ${USR_BIN_FOLDER}/${pycharm_version}.tar.gz*
+  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/pycharm
+  rm -f ${USR_BIN_FOLDER}/pycharm*
   # Rename folder for coherence
   mv ${USR_BIN_FOLDER}/pycharm-community* ${USR_BIN_FOLDER}/pycharm-community
-  # Create links to the PATH
+
+  # Create links in the PATH
   rm -f ${DIR_IN_PATH}/pycharm
   ln -s ${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.sh ${DIR_IN_PATH}/pycharm
 
   # Create launcher for pycharm in the desktop and in the launcher menu
-  echo -e "$pycharm_launcher" > ${PERSONAL_LAUNCHERS_DIR}/pycharm.desktop
-  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/pycharm.desktop
-  cp -p ${PERSONAL_LAUNCHERS_DIR}/pycharm.desktop ${XDG_DESKTOP_DIR}
+  create_manual_launcher "$pycharm_launcher" "pycharm"
 
   # register file associations
   register_file_associations "text/x-python" "pycharm.desktop"
@@ -284,23 +309,23 @@ install_pycharm_community()
 install_pycharm_professional()
 {
   # Avoid error due to possible previous aborted installations
-  rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
-  rm -Rf ${USR_BIN_FOLDER}/${pycharm_professional_version}
-  # Download pycharm
-  wget -P ${USR_BIN_FOLDER} https://download.jetbrains.com/python/${pycharm_professional_version}.tar.gz
+  rm -f ${USR_BIN_FOLDER}/pycharmpro*
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd ${USR_BIN_FOLDER}; wget -O "pycharmpro" ${pycharm_professional_downloader})
+  rm -Rf ${USR_BIN_FOLDER}/pycharm-[0-9]*
+  rm -Rf ${USR_BIN_FOLDER}/pycharm-pro
   # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz
-  # Clean
-  rm -f ${USR_BIN_FOLDER}/${pycharm_professional_version}.tar.gz*
+  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/pycharmpro
+  rm -f ${USR_BIN_FOLDER}/pycharmpro*
   # Rename folder for coherence
-  mv ${USR_BIN_FOLDER}/pycharm-[0-9]* ${USR_BIN_FOLDER}/pycharm-pro
-  # Create links to the PATH
-  rm -f ${DIR_IN_PATH}/pycharm-pro
-  ln -s ${USR_BIN_FOLDER}/pycharm-pro/bin/pycharm.sh ${DIR_IN_PATH}/pycharm-pro
+  mv ${USR_BIN_FOLDER}/pycharm-[0-9]* ${USR_BIN_FOLDER}/pycharm-professional
+
+  # Create links in the PATH
+  rm -f ${DIR_IN_PATH}/pycharmpro
+  ln -s ${USR_BIN_FOLDER}/pycharm-professional/bin/pycharm.sh ${DIR_IN_PATH}/pycharm-pro
+
   # Create launcher for pycharm in the desktop and in the launcher menu
-  echo -e "$pycharm_professional_launcher" > ${PERSONAL_LAUNCHERS_DIR}/pycharm-pro.desktop
-  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/pycharm-pro.desktop
-  cp -p ${PERSONAL_LAUNCHERS_DIR}/pycharm-pro.desktop ${XDG_DESKTOP_DIR}
+  create_manual_launcher "$pycharm_professional_launcher" "pycharm-pro"
 
   # register file associations
   register_file_associations "text/x-sh" "pycharm-pro.desktop"
@@ -315,16 +340,16 @@ install_pypy3()
 {
   # Avoid error due to possible previous aborted installations
   rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
+  # Download pypy
+  wget -P ${USR_BIN_FOLDER} ${pycharm_downloader}
   rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
   rm -Rf ${USR_BIN_FOLDER}/pypy3
-  # Download pypy
-  wget -P ${USR_BIN_FOLDER} https://downloads.python.org/pypy/${pypy3_version}.tar.bz2
   # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
   (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
-  # Clean
   rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
   # Rename folder for coherence
   mv ${USR_BIN_FOLDER}/${pypy3_version} ${USR_BIN_FOLDER}/pypy3
+
   # Install modules using pip
   ${USR_BIN_FOLDER}/pypy3/bin/pypy3 -m ensurepip
 
@@ -486,7 +511,7 @@ install_cheat()
 install_cheese()
 {
   apt install -y cheese
-  copy_launcher "org.gnome.Cheese.desktop"
+  copy_launcher org.gnome.Cheese.desktop
 }
 
 
@@ -501,19 +526,14 @@ install_clementine()
 install_clonezilla()
 {
   apt-get install -y clonezilla
-  echo -e "${clonezilla_launcher}" > ${XDG_DESKTOP_DIR}/clonezilla.desktop
-  chmod 775 ${XDG_DESKTOP_DIR}/clonezilla.desktop
-  chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/clonezilla.desktop
-  chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/clonezilla.desktop
-  cp ${XDG_DESKTOP_DIR}/clonezilla.desktop /home/${SUDO_USER}/.local/share/applications
+  create_manual_launcher "${clonezilla_launcher}" "clonezilla"
 }
 
 
 install_cmatrix()
 {
   apt-get install -y cmatrix
-  echo -e "${cmatrix_launcher}" > ${XDG_DESKTOP_DIR}/cmatrix.desktop
-  chmod 775 ${XDG_DESKTOP_DIR}/cmatrix.desktop
+  create_manual_launcher "${cmatrix_launcher}" "cmatrix"
 }
 
 
@@ -524,11 +544,8 @@ install_dropbox()
   apt-get -y install python3-gpg
 
   rm -f dropbox_${dropbox_version}_amd64.deb*
-
   wget -O ${dropbox_version}.deb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-
   dpkg -i ${dropbox_version}.deb
-
   rm -f ${dropbox_version}.deb*
 
   copy_launcher dropbox.desktop
@@ -1250,10 +1267,6 @@ main()
 
   fi
 
-  SILENT=1
-  UPGRADE=2
-  AUTOCLEAN=2
-
 
   ###### ARGUMENT PROCESSING ######
 
@@ -1541,7 +1554,7 @@ main()
   ### PRE-INSTALLATION UPDATE ###
 
   if [[ ${EUID} == 0 ]]; then
-    if [[ ${UPGRADE} > 0 ]]; then
+    if [[ ${UPGRADE} -gt 0 ]]; then
       output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${SILENT}
       output_proxy_executioner "apt-get -y update" ${SILENT}
       output_proxy_executioner "echo INFO: System updated." ${SILENT}
@@ -1562,7 +1575,7 @@ main()
   ### POST-INSTALLATION CLEAN ###
 
   if [[ ${EUID} == 0 ]]; then
-    if [[ ${AUTOCLEAN} > 0 ]]; then
+    if [[ ${AUTOCLEAN} -gt 0 ]]; then
       output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${SILENT}
       output_proxy_executioner "apt-get -y autoremove" ${SILENT}
       output_proxy_executioner "echo INFO: Finished." ${SILENT}
