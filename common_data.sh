@@ -77,13 +77,17 @@ else
   # Path pointing to $HOME
   HOME_FOLDER=/home/${SUDO_USER}
 fi
+# The variables that begin with FLAG_ can be changed using arguments. They will continue holding the same value until the
+# end of the execution until another argument
 FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
 FLAG_INSTALL=1  # 1 --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
-FLAG_QUIETNESS=0  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
+FLAG_QUIETNESS=1  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
 FLAG_FORCENESS=0  # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
 FLAG_ANY_INSTALLED=0  # 0 --> No features are provided as arguments, thus, implicit call to --all; 1 --> Any feature provided; no implicit call.
 
-
+SILENT=1
+UPGRADE=2
+AUTOCLEAN=2
 ### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
 
 # PERSONAL_LAUNCHERS_DIR: /home/username/.local/share/applications
@@ -106,7 +110,7 @@ FLAG_ANY_INSTALLED=0  # 0 --> No features are provided as arguments, thus, impli
 # The first values are used to store dynamically the arguments desired for that function:
 # 1.- If we are actually going to install the program.
 # 2.- If we should (or not) abort when finding errors.
-# 3.- What level of standard output is desired for that feature.
+# 3.- What level of standard output is desired for that feature: 0 verbose, 1 quiet (only informative prints), 2 totally quiet
 # 4.- If we should reinstall the feature or not when we find that the desired feature already installed.
 # The last two values are static and are used only to read:
 # 5.- Permissions: 0 for user permissions, 1 for root permissions, 2 for indiferent
@@ -223,7 +227,7 @@ clion_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
 Name=CLion
-Icon=$HOME/.bin/clion/bin/clion.png
+Icon=${HOME_FOLDER}/.bin/clion/bin/clion.png
 Exec=clion %F
 Comment=C and C++ IDE for Professional Developers
 Terminal=false
@@ -248,6 +252,7 @@ Type=Application"
 
 dropbox_version=2020.03.04
 
+discord_downloader="https://discord.com/api/download?platform=linux&format=tar.gz"
 discord_launcher="[Desktop Entry]
 Name=Discord
 StartupWMClass=discord
@@ -271,26 +276,26 @@ Type=Application
 
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 
-intellij_ultimate_version=ideaIU-2020.3.1
+intellij_ultimate_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
 intellij_ultimate_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
 Name=IntelliJ IDEA Ultimate Edition
-Icon=${HOME}/.bin/idea-IU/bin/idea.png
+Icon=${HOME_FOLDER}/.bin/idea-iu/bin/idea.png
 Exec=ideau %f
 Comment=Capable and Ergonomic IDE for JVM
 Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-idea"
 
-intellij_community_version=ideaIC-2020.3.1
+intellij_community_downloader="https://download.jetbrains.com/idea/ideaIC-2020.3.1.tar.gz"
 intellij_community_launcher="[Desktop Entry]
 Version=13.0
 Type=Application
 Terminal=false
 Comment=Capable and Ergonomic IDE for JVM
 Categories=Development;IDE;
-Icon=${HOME}/.bin/idea-IC/bin/idea.png
+Icon=${HOME_FOLDER}/.bin/idea-ic/bin/idea.png
 Exec=ideac %f
 Name=IntelliJ IDEA Community Edition
 StartupWMClass=jetbrains-idea"
@@ -298,6 +303,8 @@ StartupWMClass=jetbrains-idea"
 megasync_version=megasync_4.3.8-1.1_amd64.deb
 megasync_repository=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/
 megasync_integrator_version=nautilus-megasync_3.6.6_amd64.deb
+
+mendeley_downloader=https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
 
 nautilus_conf=("xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
 "gsettings set org.gnome.desktop.background show-desktop-icons true"
@@ -330,30 +337,29 @@ StartupNotify=true"
 
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 
-pycharm_version=pycharm-community-2020.3.2  # Targeted version of pycharm
+pycharm_downloader=https://download.jetbrains.com/python/pycharm-community-2020.3.2.tar.gz
 pycharm_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
 Name=PyCharm 
-Icon=$HOME/.bin/pycharm-community/bin/pycharm.png
+Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png
 Exec=pycharm %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
 
-pycharm_professional_version=pycharm-professional-2020.3.2  # Targeted version of pycharm
+pycharm_professional_downloader=https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz
 pycharm_professional_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
 Name=PyCharm Professional
-Icon=$HOME/.bin/pycharm-pro/bin/pycharm.png
+Icon=${HOME_FOLDER}/.bin/pycharm-professional/bin/pycharm.png
 Exec=pycharm-pro %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
 
 pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
-pypy3_version=$(echo ${pypy3_downloader} | rev | cut -d '/' -f1 | cut -d '.' -f3- | rev)  # get last piece of the last string
 
 shotcut_desktop_launcher="[Desktop Entry]
 Type=Application
@@ -426,8 +432,8 @@ if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
 fi
 "
 
-converters_downloader="https://github.com/Axlfc/asix1Atesting"
-converters_bashrc_call="source ${HOME}/.bash_functions"
+converters_downloader="https://github.com/Axlfc/converters"
+converters_bashrc_call="source ${HOME_FOLDER}/.bash_functions"
 converters_links="
 
 bintohex()
