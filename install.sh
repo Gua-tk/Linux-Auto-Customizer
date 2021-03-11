@@ -2,31 +2,33 @@
 # A simple portable shell script to initialize and customize a Linux working environment. Needs root permission for some features.
 # Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
 # Created on 28/5/19
-# Last Update 19/4/2020register_file_associations
+# Last Update 19/4/2020
+
 
 ################################
 ###### AUXILIAR FUNCTIONS ######
 ################################
 
-# Associate a file type (mime type) to a certaina application.
+# Associate a file type (mime type) to a certain application using its desktop launcher.
 # Argument 1: File types. Example: application/x-shellscript
 # Argument 2: Application. Example: sublime_text.desktop
 register_file_associations()
 {
+# Check if mimeapps exists
 if [[ -f ${HOME}/.config/mimeapps.list ]]; then
-  # Check if the association is already existent
-  if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
-    if [[ -z "$(more ~/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
-      # File type is not registered so we can add the hole line
-      sed -i "/\[Added Associations\]/a $1=$2;" ~/.config/mimeapps.list
+  # Check if the association between a mime type and desktop launcher is already existent
+  if [[ -z "$(more ${HOME_FOLDER}/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
+    # If mime type is not even present we can add the hole line
+    if [[ -z "$(more ${HOME_FOLDER}/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
+      sed -i "/\[Added Associations\]/a $1=$2;" ${HOME_FOLDER}/.config/mimeapps.list
     else
-      # File type is already registered. We need to register another application for it
-      if [[ -z "$(more ~/.config/mimeapps.list | grep -Eo "$1=.*;$" )" ]]; then
-        # File type is registered without comma. Add the program at the end of the line with comma
-        sed -i "s|$1=.*$|&;$2;|g" ~/.config/mimeapps.list
+      # If not, mime type is already registered. We need to register another application for it
+      if [[ -z "$(more ${HOME_FOLDER}/.config/mimeapps.list | grep -Eo "$1=.*;$" )" ]]; then
+        # File type(s) is registered without comma. Add the program at the end of the line with comma
+        sed -i "s|$1=.*$|&;$2;|g" ${HOME_FOLDER}/.config/mimeapps.list
       else
         # File type is registered with comma at the end. Just add program at end of line
-        sed -i "s|$1=.*;$|&$2;|g" ~/.config/mimeapps.list
+        sed -i "s|$1=.*;$|&$2;|g" ${HOME_FOLDER}/.config/mimeapps.list
       fi
     fi
   else
@@ -50,6 +52,12 @@ copy_launcher()
     chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
     chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
   fi
+}
+
+# Prints the given arguments to the stderr
+err()
+{
+  echo "$*" >&2
 }
 
 #############################################
@@ -897,6 +905,7 @@ install_transmission()
   chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
 }
 
+
 install_uget()
 {
   #Does not install proper //RF
@@ -904,27 +913,21 @@ install_uget()
   copy_launcher "uget.desktop"
 }
 
-
-# VirtualBox
-install_virtualbox()
-{
-  # Delete possible collisions with previous installation
-  rm -f virtualbox*.deb*
-  # Download
-  wget -O virtualbox.deb ${virtualbox_downloader}
-  # Install
-  dpkg -i virtualbox.deb
-  # Clean
-  rm -f virtualbox*.deb*
-  # Create launcher and change its permissions (we are root)
-  copy_launcher "virtualbox.desktop"
-}
-
-
 # install VLC
 install_vlc()
 {
   apt-get -y install vlc
+}
+
+
+# VirtualBox
+install_virtualbox()
+{
+  rm -f virtualbox*.deb*
+  wget -O virtualbox.deb ${virtualbox_downloader}
+  dpkg -i virtualbox.deb
+  rm -f virtualbox*.deb*
+  copy_launcher "virtualbox.desktop"
 }
 
 #############################
@@ -936,47 +939,14 @@ install_vlc()
 # Python3, bash shell scripts, latex documents
 install_templates()
 {
-  if [[ "$(whoami)" == "root" ]]; then
-    echo "WARNING: Could not install templates. You should be normal user. Skipping..."
-  else
-    echo "Attemptying to install templates"
-    echo "#!/usr/bin/env bash" > ${XDG_TEMPLATES_DIR}/shell_script.sh
-    echo "#!/usr/bin/env python3" > ${XDG_TEMPLATES_DIR}/python3_script.py
-    echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%2345678901234567890123456789012345678901234567890123456789012345678901234567890
-%        1         2         3         4         5         6         7         8
-" > ${XDG_TEMPLATES_DIR}/latex_document.tex
-    echo "CC = gcc
-CFLAGS = -O3 -Wall
-
-all : c_script
-
-c_script : c_script.c
-	\$(CC) \$(CFLAGS) c_script.c -o c_script -lm
-
-run : c_script
-	./c_script
-
-.PHONY : clean
-clean :
-	rm -f c_script" > ${XDG_TEMPLATES_DIR}/makefile
-    echo "#include \"c_script.h\"
-  int main(int nargs, char* args[])
-{
-  printf(\"Hello World\");
-}
-
-" > ${XDG_TEMPLATES_DIR}/c_script.c
-    echo "// Includes
-#include <stdio.h>
-#include <stdbool.h>  // To use booleans
-#include <stdlib.h>
-" > ${XDG_TEMPLATES_DIR}/c_script.h
-    
-  > ${XDG_TEMPLATES_DIR}/text_file.txt
-    chmod 775 ${XDG_TEMPLATES_DIR}/*
-    echo "Finished"
-  fi
+  echo -e "${bash_file_template}" > ${XDG_TEMPLATES_DIR}/shell_script.sh
+  echo -e "${python_file_template}" > ${XDG_TEMPLATES_DIR}/python3_script.py
+  echo -e "${latex_file_template}" > ${XDG_TEMPLATES_DIR}/latex_document.tex
+  echo -e "${makefile_file_template}" > ${XDG_TEMPLATES_DIR}/makefile
+  echo "${c_file_template}" > ${XDG_TEMPLATES_DIR}/c_script.c
+  echo "${c_header_file_template}" > ${XDG_TEMPLATES_DIR}/c_script_header.h
+  > ${XDG_TEMPLATES_DIR}/empty_text_file.txt
+  chmod 775 ${XDG_TEMPLATES_DIR}/*
 }
 
 
@@ -1146,28 +1116,25 @@ add_all_programs()
 }
 ###### AUXILIAR FUNCTIONS ######
 
-# Prints the given arguments to the stderr
-err()
-{
-  echo "$*" >&2
-}
 
-output_proxy_executioner()
+
+# Common piece of code in the execute_installation function
+# Argument 1: forceness_bit
+# Argument 2: quietness_bit
+# Argument 3: program_function
+execute_installation_install_feature()
 {
-  if [[ $2 == 0 ]]; then
-    $1
-  elif [[ $2 == 1 ]]; then
-    comm=$(echo "$1" | cut -d " " -f1)
-    if [[ "${comm}" == "echo" ]]; then
-      $1
-    else
-      $1 &>/dev/null
-    fi
+  feature_name=$( echo $3 | cut -d "_" -f2- )
+  if [[ $1 == 1 ]]; then
+    set +e
   else
-    $1 &>/dev/null
+    set -e
   fi
+  output_proxy_executioner "echo INFO: Attemptying to install ${feature_name}." $2
+  output_proxy_executioner $3 $2
+  output_proxy_executioner "echo INFO: ${feature_name} installed." $2
+  set +e
 }
-
 
 execute_installation()
 {
@@ -1187,56 +1154,24 @@ execute_installation()
           output_proxy_executioner "echo WARNING: $program_name needs root permissions to be installed. Skipping." ${quietness_bit}
         else
           if [[ ${overwrite_bit} == 1 ]]; then
-            if [[ ${forceness_bit} == 1 ]]; then
-              set +e
-            else
-              set -e
-            fi
-            output_proxy_executioner "echo INFO: Attemptying to install ${program_name}." ${quietness_bit}
-            output_proxy_executioner ${program_function} ${quietness_bit}
-            output_proxy_executioner "echo INFO: ${program_name} installed." ${quietness_bit}
-            set +e
+            execute_installation_install_feature ${forceness_bit} ${quietness_bit} ${program_function}
           else
             which ${program_name} >/dev/null
             if [[ $? != 0 ]]; then
-              if [[ ${forceness_bit} == 1 ]]; then
-                set +e
-              else
-                set -e
-              fi
-              output_proxy_executioner "echo INFO: Attemptying to install ${program_name}." ${quietness_bit}
-              output_proxy_executioner ${program_function} ${quietness_bit}
-              output_proxy_executioner "echo INFO: ${program_name} installed." ${quietness_bit}
-              set +e
+              execute_installation_install_feature ${forceness_bit} ${quietness_bit} ${program_function}
             else
-              output_proxy_executioner "echo WARNING: ${program_name} is already installed." ${quietness_bit}
+              output_proxy_executioner "echo WARNING: ${program_name} is already installed. Skipping" ${quietness_bit}
             fi
           fi
         fi
       elif [[ ${program_privileges} == 0 ]]; then
         if [[ ${EUID} -ne 0 ]]; then
           if [[ ${overwrite_bit} == 1 ]]; then
-            if [[ ${forceness_bit} == 1 ]]; then
-              set +e
-            else
-              set -e
-            fi
-            output_proxy_executioner "echo INFO: Attemptying to install ${program_name}." ${quietness_bit}
-            output_proxy_executioner ${program_function} ${quietness_bit}
-            output_proxy_executioner "echo INFO: ${program_name} installed." ${quietness_bit}
-            set +e
+            execute_installation_install_feature ${forceness_bit} ${quietness_bit} ${program_function}
           else
             which ${program_name}
             if [[ $? != 0 ]]; then
-              if [[ ${forceness_bit} == 1 ]]; then
-                set +e
-              else
-                set -e
-              fi
-              output_proxy_executioner "echo INFO: Attemptying to install ${program_name}." ${quietness_bit}
-              output_proxy_executioner ${program_function} ${quietness_bit}
-              output_proxy_executioner "echo INFO: ${program_name} installed." ${quietness_bit}
-              set +e
+              execute_installation_install_feature ${forceness_bit} ${quietness_bit} ${program_function}
             else
               output_proxy_executioner "echo WARNING: ${program_name} is already installed." ${quietness_bit}
             fi
@@ -1315,7 +1250,7 @@ main()
 
   fi
 
-  SILENT=0
+  SILENT=1
   UPGRADE=2
   AUTOCLEAN=2
 
@@ -1372,7 +1307,7 @@ main()
       ;;
 
       -h|--help)
-        echo ${help_text}
+        echo -e ${help_text}
         exit 0
       ;;
 
@@ -1590,7 +1525,7 @@ main()
         add_all_programs
       ;;
       *)    # unknown option
-        output_proxy_executioner "echo ERROR: ${key} is not a recognized command." ${SILENT}
+        output_proxy_executioner "echo ERROR: ${key} is not a recognized command. Skipping this argument." ${SILENT}
       ;;
     esac
     shift
@@ -1603,9 +1538,8 @@ main()
 
   ####### EXECUTION #######
 
-  ### PRE-INSTALLATION ARGUMENTS ###
+  ### PRE-INSTALLATION UPDATE ###
 
-  # UPDATE
   if [[ ${EUID} == 0 ]]; then
     if [[ ${UPGRADE} > 0 ]]; then
       output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${SILENT}
@@ -1625,19 +1559,24 @@ main()
   execute_installation
 
 
-  ### POST-INSTALLATION ARGUMENTS ###
+  ### POST-INSTALLATION CLEAN ###
 
   if [[ ${EUID} == 0 ]]; then
     if [[ ${AUTOCLEAN} > 0 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${SILENT}
       output_proxy_executioner "apt-get -y autoremove" ${SILENT}
+      output_proxy_executioner "echo INFO: Finished." ${SILENT}
     fi
     if [[ ${AUTOCLEAN} == 2 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${SILENT}
       output_proxy_executioner "apt-get -y autoclean" ${SILENT}
+      output_proxy_executioner "echo INFO: Finished." ${SILENT}
     fi
   fi
 }
 
-# Import file of common variables
+
+# Import file of common variables in a relative way to themselves so they alw
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "${DIR}" ]]; then
   DIR="${PWD}"
