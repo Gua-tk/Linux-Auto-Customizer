@@ -156,11 +156,8 @@ err()
 
 install_android_studio()
 {
-  folder_name=$(download_and_decompress ${android_studio_downloader} "android-studio" "z" )
+  download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
 
-  # Create links to the PATH
-  rm -f ${DIR_IN_PATH}/studio
-  ln -s ${USR_BIN_FOLDER}/${folder_name}/bin/studio.sh ${DIR_IN_PATH}/studio
   # Create launcher
   create_manual_launcher "${android_studio_launcher}" "Android_Studio"
 }
@@ -168,20 +165,7 @@ install_android_studio()
 
 install_clion()
 {
-  # Folder and file are called the same
-  rm -f ${USR_BIN_FOLDER}/clion*
-  rm -Rf ${USR_BIN_FOLDER}/Clion*
-  # Download in a subshell to avoid changing the working directory in the current shell
-  (cd "${USR_BIN_FOLDER}"; wget -O "clion" "${clion_downloader}")
-  # Decompress in a subshell to avoid changing the working directory in the current shell
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/clion
-  rm -f ${USR_BIN_FOLDER}/clion
-  # Modify folder name for coherence
-  mv ${USR_BIN_FOLDER}/Clion* ${USR_BIN_FOLDER}/clion
-
-  # Create links in the PATH
-  rm -f ${DIR_IN_PATH}/clion
-  ln -s ${USR_BIN_FOLDER}/clion/bin/clion.sh ${DIR_IN_PATH}/clion
+  download_and_decompress ${clion_downloader} "clion" "z" "bin/clion.sh" "clion"
 
   # Create launcher for clion in the desktop and in the launcher menu
   create_manual_launcher "${clion_launcher}" "clion"
@@ -194,43 +178,13 @@ install_clion()
 }
 
 
-install_converters()
-{
-  rm -Rf ${USR_BIN_FOLDER}/converters
-  git clone ${converters_downloader} ${USR_BIN_FOLDER}
-
-
-  rm -f ${DIR_IN_PATH}/dectohex
-  rm -f ${DIR_IN_PATH}/hextodec
-  rm -f ${DIR_IN_PATH}/bintodec
-  rm -f ${DIR_IN_PATH}/dectobin
-  rm -f ${DIR_IN_PATH}/dectoutf
-  rm -f ${DIR_IN_PATH}/dectooct
-  rm -f ${DIR_IN_PATH}/utftodec
-
-  ln -s ${USR_BIN_FOLDER}/converters/dectohex.py ${DIR_IN_PATH}/dectohex
-  ln -s ${USR_BIN_FOLDER}/converters/hextodec.py ${DIR_IN_PATH}/hextodec
-  ln -s ${USR_BIN_FOLDER}/converters/bintodec.py ${DIR_IN_PATH}/bintodec
-  ln -s ${USR_BIN_FOLDER}/converters/dectobin.py ${DIR_IN_PATH}/dectobin
-  ln -s ${USR_BIN_FOLDER}/converters/dectoutf.py ${DIR_IN_PATH}/dectoutf
-  ln -s ${USR_BIN_FOLDER}/converters/dectooct.py ${DIR_IN_PATH}/dectooct
-  ln -s ${USR_BIN_FOLDER}/converters/utftodec.py ${DIR_IN_PATH}/utftodec
-
-  # //RF
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${converters_bashrc_call}" )" ]]; then
-    echo -e "$converters_bashrc_call" >> ${BASHRC_PATH}
-  else
-  err "WARNING: converters functions are already installed. Skipping"
-  fi
-  echo "${converters_links}" > ${HOME}/.bash_functions
-}
 
 
 # discord desktop client
 # Permissions: user
 install_discord()
 {
-  folder_name=$(download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord")
+  download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord"
 
   # Create launchers in launcher and in desktop
   create_manual_launcher "${discord_launcher}" "discord"
@@ -240,20 +194,7 @@ install_discord()
 # Install IntelliJ Community
 install_intellij_community()
 {
-  rm -f ${USR_BIN_FOLDER}/ideac*
-  # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -O ideac ${intellij_community_downloader})
-  rm -Rf ${USR_BIN_FOLDER}/idea-IC*
-  rm -Rf ${USR_BIN_FOLDER}/idea-ic*
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/ideac
-  rm -f ${USR_BIN_FOLDER}/ideac*
-  # Modify name for coherence
-  mv ${USR_BIN_FOLDER}/idea-IC* ${USR_BIN_FOLDER}/idea-ic
-
-  # Create link in the PATH
-  rm -f ${DIR_IN_PATH}/ideac*
-  ln -s ${USR_BIN_FOLDER}/ideac/bin/idea.sh ${DIR_IN_PATH}/ideac
+  download_and_decompress ${intellij_community_downloader} "idea-ic" "z" "bin/idea.sh" "ideac"
 
   # Create desktop launcher entry for intelliJ community
   create_manual_launcher "${intellij_community_launcher}" "ideac"
@@ -266,20 +207,7 @@ install_intellij_community()
 # Install IntelliJ Ultimate
 install_intellij_ultimate()
 {
-  rm -f ${USR_BIN_FOLDER}/ideau*
-  # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -O ideau ${intellij_ultimate_downloader})
-  rm -Rf ${USR_BIN_FOLDER}/idea-IU*
-  rm -Rf ${USR_BIN_FOLDER}/idea-iu*
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/ideau
-  rm -f ${USR_BIN_FOLDER}/ideau*
-  # Modify name for coherence
-  mv ${USR_BIN_FOLDER}/idea-IU* ${USR_BIN_FOLDER}/idea-iu
-
-  # Create link in the PATH
-  rm -f ${DIR_IN_PATH}/ideau*
-  ln -s ${USR_BIN_FOLDER}/ideau/bin/idea.sh ${DIR_IN_PATH}/ideau
+  download_and_decompress ${intellij_ultimate_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
 
   # Create desktop launcher entry for intellij ultimate
   create_manual_launcher "${intellij_ultimate_launcher}" "ideau"
@@ -292,19 +220,7 @@ install_intellij_ultimate()
 # Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
 install_mendeley()
 {
-  rm -Rf ${USR_BIN_FOLDER}/mendeley*
-  # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -O "mendeley" ${mendeley_downloader})
-  rm -Rf ${USR_BIN_FOLDER}/mendeley*
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd ${USR_BIN_FOLDER}; tar -xjf -) < ${USR_BIN_FOLDER}/mendeley
-  rm -f ${USR_BIN_FOLDER}/mendeley*
-  # Rename folder for coherence
-  mv ${USR_BIN_FOLDER}/mendeley* ${USR_BIN_FOLDER}/mendeley
-
-  # Create link in the PATH
-  rm -f ${DIR_IN_PATH}/mendeley*
-  ln -s ${USR_BIN_FOLDER}/mendeley/bin/mendeleydesktop ${DIR_IN_PATH}/mendeley
+  download_and_decompress ${mendeley_downloader} "mendeley" "j" "bin/idea.sh" "mendeley"
 
   # Create Desktop launcher
   cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
@@ -321,19 +237,7 @@ install_mendeley()
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_community()
 {
-  rm -f ${USR_BIN_FOLDER}/pycharm*
-  # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -O "pycharm" ${pycharm_downloader})
-  rm -Rf ${USR_BIN_FOLDER}/pycharm-community*
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/pycharm
-  rm -f ${USR_BIN_FOLDER}/pycharm*
-  # Rename folder for coherence
-  mv ${USR_BIN_FOLDER}/pycharm-community* ${USR_BIN_FOLDER}/pycharm-community
-
-  # Create links in the PATH
-  rm -f ${DIR_IN_PATH}/pycharm
-  ln -s ${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.sh ${DIR_IN_PATH}/pycharm
+  download_and_decompress ${pycharm_downloader} "pycharm-community" "z" "bin/pycharm.sh" "pycharm"
 
   # Create launcher for pycharm in the desktop and in the launcher menu
   create_manual_launcher "$pycharm_launcher" "pycharm"
@@ -348,21 +252,7 @@ install_pycharm_community()
 # Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharm_professional()
 {
-  # Avoid error due to possible previous aborted installations
-  rm -f ${USR_BIN_FOLDER}/pycharmpro*
-  # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -O "pycharmpro" ${pycharm_professional_downloader})
-  rm -Rf ${USR_BIN_FOLDER}/pycharm-[0-9]*
-  rm -Rf ${USR_BIN_FOLDER}/pycharm-pro
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/pycharmpro
-  rm -f ${USR_BIN_FOLDER}/pycharmpro*
-  # Rename folder for coherence
-  mv ${USR_BIN_FOLDER}/pycharm-[0-9]* ${USR_BIN_FOLDER}/pycharm-professional
-
-  # Create links in the PATH
-  rm -f ${DIR_IN_PATH}/pycharmpro
-  ln -s ${USR_BIN_FOLDER}/pycharm-professional/bin/pycharm.sh ${DIR_IN_PATH}/pycharm-pro
+  download_and_decompress ${pycharm_professional_downloader} "pycharm-professional" "z" "bin/pycharm.sh" "pycharmpro"
 
   # Create launcher for pycharm in the desktop and in the launcher menu
   create_manual_launcher "$pycharm_professional_launcher" "pycharm-pro"
@@ -378,17 +268,7 @@ install_pycharm_professional()
 # Links it to the path
 install_pypy3()
 {
-  # Avoid error due to possible previous aborted installations
-  rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
-  # Download pypy
-  wget -P ${USR_BIN_FOLDER} ${pycharm_downloader}
-  rm -Rf ${USR_BIN_FOLDER}/${pypy3_version}
-  rm -Rf ${USR_BIN_FOLDER}/pypy3
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2
-  rm -f ${USR_BIN_FOLDER}/${pypy3_version}.tar.bz2*
-  # Rename folder for coherence
-  mv ${USR_BIN_FOLDER}/${pypy3_version} ${USR_BIN_FOLDER}/pypy3
+  download_and_decompress ${pypy3_downloader} "pypy3" "J"
 
   # Install modules using pip
   ${USR_BIN_FOLDER}/pypy3/bin/pypy3 -m ensurepip
@@ -400,35 +280,17 @@ install_pypy3()
   # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
 
   # Create links to the PATH
-  rm -f ${DIR_IN_PATH}/pypy3
-  ln -s ${USR_BIN_FOLDER}/pypy3/bin/pypy3 ${DIR_IN_PATH}/pypy3
-  rm -f ${DIR_IN_PATH}/pypy3-pip
-  ln -s ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 ${DIR_IN_PATH}/pypy3-pip
+  create_links_in_path "${USR_BIN_FOLDER}/pypy3/bin/pypy3" "pypy3" ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 pypy3-pip
 }
 
 
 # Install Sublime text 3
 install_sublime_text()
 {
-  # Avoid error due to possible previous aborted installations
-  rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
-  rm -Rf ${USR_BIN_FOLDER}/${sublime_text_version}
-  # Download sublime_text
-  wget -P ${USR_BIN_FOLDER} https://download.sublimetext.com/${sublime_text_version}.tar.bz2
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar -xjf -) < ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2
-  # Clean
-  rm -f ${USR_BIN_FOLDER}/${sublime_text_version}.tar.bz2*
-  # Rename folder for coherence
-  mv ${USR_BIN_FOLDER}/sublime_text_3 ${USR_BIN_FOLDER}/sublime-text
-  # Create link to the PATH
-  rm -f ${DIR_IN_PATH}/sublime
-  ln -s ${USR_BIN_FOLDER}/sublime-text/sublime_text ${DIR_IN_PATH}/sublime
+  download_and_decompress ${sublime_text_downloader} "sublime-text" "j" "sublime_text" "sublime"
+
   # Create desktop launcher entry for sublime text
-  echo -e "${sublime_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/sublime-text.desktop
-  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/sublime-text.desktop
-  # Copy launcher to the desktop
-  cp -p ${PERSONAL_LAUNCHERS_DIR}/sublime-text.desktop ${XDG_DESKTOP_DIR}
+  create_manual_launcher "${sublime_text_launcher}" "sublime"
 
   # register file associations
   register_file_associations "text/x-sh" "sublime-text.desktop"
@@ -444,54 +306,20 @@ install_sublime_text()
 # Telegram installation
 install_telegram()
 {
-  # Avoid error due to possible previous aborted installations
-  rm -f ${USR_BIN_FOLDER}/linux*
-  rm -Rf ${USR_BIN_FOLDER}/Telegram
-  # Download telegram
-  wget -P ${USR_BIN_FOLDER} https://telegram.org/dl/desktop/linux
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar xJf -) < ${USR_BIN_FOLDER}/linux
-  # Clean
-  rm -f ${USR_BIN_FOLDER}/linux*
-  # Rename folder for coherence
-  mv ${USR_BIN_FOLDER}/Telegram ${USR_BIN_FOLDER}/telegram
-  # Download icon for telegram
-  wget -P ${USR_BIN_FOLDER}/telegram https://www.iconfinder.com/icons/986956/download/png/512
-  mv ${USR_BIN_FOLDER}/telegram/512 ${USR_BIN_FOLDER}/telegram/telegram.png
-  # Create link to the PATH
-  rm -f ${DIR_IN_PATH}/telegram
-  ln -s ${USR_BIN_FOLDER}/telegram/Telegram ${DIR_IN_PATH}/telegram
+  download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
+
   # Create desktop launcher entry for telegram
-  echo -e "${telegram_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/telegram.desktop
-  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/telegram.desktop
-  # Copy launcher to the desktop
-  cp -p ${PERSONAL_LAUNCHERS_DIR}/telegram.desktop ${XDG_DESKTOP_DIR}
+  create_manual_launcher "${telegram_launcher}" "telegram"
 }
 
 
 # Microsoft Visual Studio Code
 install_visualstudiocode()
 {
-  # Avoid error due to possible previous aborted installations
-  rm -Rf ${USR_BIN_FOLDER}/VSCode-linux-x64*
-  rm -Rf ${USR_BIN_FOLDER}/visual-studio-code
-  rm -Rf visualstudiocode.tar.gz
-  # Download
-  (cd "${USR_BIN_FOLDER}"; wget -O "visualstudiocode.tar.gz" "${visualstudiocode_downloader}")
-  # Decompress to $USR_BIN_FOLDER directory in a subshell to avoid cd
-  (cd "${USR_BIN_FOLDER}"; tar xzf -) < ${USR_BIN_FOLDER}/visualstudiocode.tar.gz
-  # Clean
-  rm -f ${USR_BIN_FOLDER}/visualstudiocode.tar.gz*
-  # Rename folder for coherence
-  mv ${USR_BIN_FOLDER}/VSCode-linux-x64 ${USR_BIN_FOLDER}/visual-studio-code
-  # Create link to the PATH
-  rm -f ${DIR_IN_PATH}/code
-  ln -s ${USR_BIN_FOLDER}/visual-studio-code/code ${DIR_IN_PATH}/code
+  download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
+
   # Create desktop launcher entry
-  echo -e "${visualstudiocode_launcher}" > ${PERSONAL_LAUNCHERS_DIR}/visual-studio-code.desktop
-  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/visual-studio-code.desktop
-  # Copy launcher to the desktop
-  cp -p ${PERSONAL_LAUNCHERS_DIR}/visual-studio-code.desktop ${XDG_DESKTOP_DIR}
+  create_manual_launcher "${visualstudiocode_launcher}" "code"
 }
 
 
@@ -992,6 +820,38 @@ install_virtualbox()
 #############################
 # Most (all) of them just use user permissions
 
+
+install_converters()
+{
+  rm -Rf ${USR_BIN_FOLDER}/converters
+  git clone ${converters_downloader} ${USR_BIN_FOLDER}
+
+
+  rm -f ${DIR_IN_PATH}/dectohex
+  rm -f ${DIR_IN_PATH}/hextodec
+  rm -f ${DIR_IN_PATH}/bintodec
+  rm -f ${DIR_IN_PATH}/dectobin
+  rm -f ${DIR_IN_PATH}/dectoutf
+  rm -f ${DIR_IN_PATH}/dectooct
+  rm -f ${DIR_IN_PATH}/utftodec
+
+  ln -s ${USR_BIN_FOLDER}/converters/dectohex.py ${DIR_IN_PATH}/dectohex
+  ln -s ${USR_BIN_FOLDER}/converters/hextodec.py ${DIR_IN_PATH}/hextodec
+  ln -s ${USR_BIN_FOLDER}/converters/bintodec.py ${DIR_IN_PATH}/bintodec
+  ln -s ${USR_BIN_FOLDER}/converters/dectobin.py ${DIR_IN_PATH}/dectobin
+  ln -s ${USR_BIN_FOLDER}/converters/dectoutf.py ${DIR_IN_PATH}/dectoutf
+  ln -s ${USR_BIN_FOLDER}/converters/dectooct.py ${DIR_IN_PATH}/dectooct
+  ln -s ${USR_BIN_FOLDER}/converters/utftodec.py ${DIR_IN_PATH}/utftodec
+
+  # //RF
+  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${converters_bashrc_call}" )" ]]; then
+    echo -e "$converters_bashrc_call" >> ${BASHRC_PATH}
+  else
+  err "WARNING: converters functions are already installed. Skipping"
+  fi
+  echo "${converters_links}" > ${HOME}/.bash_functions
+}
+
 # Install templates (available files in the right click --> new --> ...)
 # Python3, bash shell scripts, latex documents
 install_templates()
@@ -1141,6 +1001,7 @@ install_environment_aliases()
     err "WARNING: Could not install bash prompt you should be normal user. Skipping"
   fi
 }
+
 
 add_root_programs()
 {

@@ -374,8 +374,8 @@ Terminal=false
 slack_repository=https://downloads.slack-edge.com/linux_releases/
 slack_version=slack-desktop-4.11.1-amd64.deb
 
-sublime_text_version=sublime_text_3_build_3211_x64  # Targeted version of sublime text
-sublime_launcher="[Desktop Entry]
+sublime_text_downloader=https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.gz2
+sublime_text_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
 Name=Sublime Text
@@ -385,6 +385,8 @@ Comment=General Purpose Programming Text Editor
 Terminal=false
 Exec=sublime %F"
 
+
+telegram_downloader=https://telegram.org/dl/desktop/linux
 telegram_launcher="[Desktop Entry]
 Encoding=UTF-8
 Name=Telegram
