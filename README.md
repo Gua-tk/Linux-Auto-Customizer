@@ -1,10 +1,78 @@
-# Linux-Customizer
+# Auto-Customizer
 
-This software is an automatization script for Ubuntu/Debian machines. The `install.sh` script can apply some custom features (depending on the received arguments) to the current user console and to the Ubuntu-Linux environment, such as local functions, file templates and global variables. Also, third-party software can be installed too, including its dependencies.
+This software automatizes the installation and uninstallation of different features in a Ubuntu/Debian Linux environment. These features include GNU software and other utilities, programming languages, IDEs, text editors, media players, games, internet applications, file templates, wallpapers, environment aliases, environment functions... all installed in a clean, fancy and confortable way.   
 
-The `uninstall.sh` script can be used to uninstall features previously installed by the install script by giving it arguments, too.
+The scripts `install.sh` and `uninstall.sh` have the same identical arguments, but behave in the opposite way: `install.sh` will install the features selected by the arguments while `uninstall.sh` will uninstall them, using the identical arguments. 
 
 ## Features
+
+Both `install.sh` and `uninstall.sh` accept arguments to selectively choose which feature we want to install or uninstall, respectively.
+The argument list is the following with its own description:
+
+| Parameter                 |`install.sh`   | `uninstall.sh` |
+| :------------------------ | :-------------| :--------------|
+| --android --AndroidStudio --androidstudio --studio --android-studio --android_studio --Androidstudio
+| --audacity --Audacity | | |
+| --atom --Atom | | |
+| --discord --Discord --disc| Installs Discord manually creating its own folder under `~/.bin`. Creates launcher of Discord in the dashboard and in the current user desktop. Makes Discord executable accessible with the command `discord` |  Uninstalls Discord by deleting its launchers, soft-links and the Discord folder |
+| --dropbox --Dropbox --DropBox --Drop-box --drop-box --Drop-Box | | |
+| --gcc | Installs the GNU C Compiler via `apt-get` | Uninstalls the GNU C Compiler via `apt-get purge` | 
+| --caffeine --Caffeine --cafe --coffee | | |
+| --calibre --Calibre --cali | | |
+| --cheat --cheat.sh --Cheat.sh --che | | |
+| --clementine --Clementine | | |
+| --clion --Clion --CLion | Installs CLion manually creating its own folder under `~/.bin`. Creates launcher of CLion in the dashboard and in the current user desktop. Makes CLion executable accessible with the command `clion`. Associate CLion to the mime type of `.c`, `.h`, `.cpp` and `.hpp` files |  Uninstalls CLion by deleting its launchers, soft-links, defaults and the CLion folder |
+| --cmatrix --Cmatrix | | |
+| --converters --Converters | | |
+| --clonezilla --CloneZilla --cloneZilla | | |
+| --copyq --copy-q --copy_q --copqQ --Copyq --copy-Q | | |
+| --f-irc --firc --Firc --irc | | |
+| --firefox --Firefox | | |
+| --google-play-music --musicmanager --music-manager --MusicManager --playmusic --GooglePlayMusic --play-music --google-playmusic --playmusic --google-music
+| --gpaint --paint --Gpaint | | |
+| --geany --Geany | | |
+| --git | Installs `git-all` via `apt-get` which includes all the features of `git`, including the graphical git viewer `gitk`  | Uninstalls `git-all` via `apt-get` |
+| --GIMP --gimp --Gimp | | |
+| --GParted --gparted --GPARTED --Gparted | | |
+| --gvim --vim-gtk3 --Gvim --GVim | | |
+| --chrome --Chrome --google-chrome --Google-Chrome| Installs Google Chrome by downloading manually the software from Google official page but installing it via `apt`. Creates its own launcher in the current user desktop | Uninstalls Google Chrome via `apt-get purge` |
+| --parallel --gnu_parallel --GNUparallel --GNUParallel --gnu-parallel| Installs GNU parallel via `apt-get` | Uninstalls GNU parallel via `apt-get purge` |
+| --inkscape --ink-scape --Inkscape --InkScape | | |
+| --intellijcommunity --intelliJCommunity --intelliJ-Community --intellij-community | Installs IntelliJ Community manually creating its own folder under `~/.bin`. Creates launcher of IntelliJ Community in the dashboard and in the current user desktop. Makes IntelliJ Community executable accessible with the command `ideac`. Associate IntelliJ Community to the mime type of `.java` files |  Uninstalls IntelliJ Community by deleting its launchers, soft-links, defaults and the IntelliJ Community folder |
+| --intellijultimate --intelliJUltimate --intelliJ-Ultimate --intellij-ultimate | Installs IntelliJ Ultimate manually creating its own folder under `~/.bin`. Creates launcher of IntelliJ Ultimate in the dashboard and in the current user desktop. Makes IntelliJ Ultimate executable accessible with the command `ideau`. Associate IntelliJ Ultimate to the mime type of `.java` files |  Uninstalls IntelliJ Ultimate by deleting its launchers, soft-links, defaults and the IntelliJ Ultimate folder |
+| --java --javadevelopmentkit --java-development-kit --java-development-kit-11 --java-development-kit11 --jdk --JDK --jdk11 --JDK11 
+| --latex --LaTeX --tex --TeX
+| --mega --Mega --MEGA --MegaSync --MEGAsync --MEGA-sync --megasync| Installs MEGAsync and MEGAsync desktop integration via `dpkg -i` and creates launcher for MEGAsync in the current user desktop | Uninstalls MEGAsync and MEGAsyn desktop integrator via `dpkg -P` |
+| --MendeleyDependencies --mendeleydependencies --mendeleydesktopdependencies --mendeley-desktop-dependencies --Mendeley-Desktop-Dependencies | Installs Mendeley Desktop dependencies `gconf2`, `qt5-default`, `qt5-doc`, `qt5-doc-html`, `qtbase5-examples` and `qml-module-qtwebengine` via `apt-get` | Uninstalls Mendeley Desktop dependencies `gconf2`, `qt5-default`, `qt5-doc`, `qt5-doc-html`, `qtbase5-examples` and `qml-module-qtwebengine` via `apt-get` |  
+| --Mendeley --mendeley --mendeleyDesktop --mendeley-desktop --Mendeley-Desktop | Installs Mendeley Desktop manually creating its own folder under `~/.bin`. Creates launcher of Mendeley Desktop in the dashboard and in the current user desktop. Makes Mendeley Desktop executable accessible with the command `mendeley`. |  Uninstalls Mendeley Desktop by deleting its launchers, soft-links, defaults and the CLion folder |
+| --nemo --nemo-desktop --Nemo-Desktop --Nemodesktop --nemodesktop --Nemo --Nemodesk --NemoDesktop | | |
+| --notepadqq --Notepadqq --notepadQQ --NotepadQQ --notepadQq --notepadQq --NotepadQq --NotepadqQ | | |
+| --office --Openoffice --OpenOffice --openOfice --open_office --Office | | |
+| --OBS --obs --obs-studio --obs_studio --obs_Studio --OBS_studio --obs-Studio --OBS_Studio --OBS-Studio | | |
+| --okular --Okular --okularpdf | | |
+| --pdfgrep --findpdf --pdf| Installs `pdfgrep` via `apt-get` | Uninstalls `pdfgrep` via `apt-get purge` |
+| --pycharmpro --pycharmPro --pycharm_pro --pycharm-pro --Pycharm-Pro --PyCharm-pro | Installs PyCharm Pro manually creating its own folder under `~/.bin`. Creates launcher of Pycharm Pro in the dashboard and in the current user desktop. Makes Pycharm Pro executable accessible with the command `pycharm-pro` |  uninstalls PyCharm Pro by deleting its launchers, soft-links and the Pycharm Pro folder |
+| --pycharmcommunity --pycharmCommunity --pycharm_community --pycharm --pycharm-community| Installs PyCharm Community manually creating its own folder under `~/.bin`. Creates launcher of PyCharm Community in the dashboard and in the current user desktop. Makes PyCharm Community executable accessible with the command `pycharm`. Associate PyCharm Community to the mime type of `.py` files |  Uninstalls PyCharm Community by deleting its launchers, soft-links, defaults and the PyCharm Community folder |
+| --python --python3 --Python3 --Python| Installs Python 2 and Python 3 by installing `python3-dev`, `python-dev` and `python3-pip` via `apt` | Uninstalls Python3 and Python2 interpreter by uninstalling `python3-dev`, `python-dev` and `python3-pip` via `apt` |
+| --dependencies --pypy3_dependencies --pypy3Dependencies --PyPy3Dependencies --pypy3dependencies --pypy3-dependencies| Installs PyPy3 dependencies via `apt-get`: `pkg-config`, `libfreetype6-dev`, `libpng-dev`, `libffi-dev` | Uninstalls PyPy3 dependencies via `apt-get`: `pkg-config`, `libfreetype6-dev`, `libpng-dev`, `libffi-dev` |
+| --pypy --pypy3 --PyPy3 --PyPy| Installs PyPy3 Python3 interpreter manually by downloading the software and placing it under `~/.bin`. Makes PyPy3 executable and PyPy3/pip accessible with the commands `pypy3` and `pypy3-pip`. |  Uninstalls PyPy3 by deleting the PyPy3 folder |
+| --shell --shellCustomization --shellOptimization --environment --environmentaliases --environment_aliases --environmentAliases --alias --Aliases| Backups your `$HOME/.bashrc` to `$HOME/.bashrc.bak` and installs shell features in `$HOME/.bashrc` including: history optimization, environament aliases, functions and global variables. See *Shell customization* section for more information. | Uninstalls the feature by restoring `$HOME/.bashrc.bak` to `$HOME/.bashrc` if present. |
+| --steam --Steam --STEAM | Installs Steam by downloading its installer and installing it via `dpkg -i` and creates a launcher in the current user desktop | Uninstalls Steam via `dpkg -P` and deleting its launchers. |
+| --shotcut --ShotCut --Shotcut --shot-cut --shot_cut | | |
+| --sublime --sublimeText --sublime_text --Sublime --sublime-Text --sublime-text | Installs Sublime Text manually creating its own folder under `~/.bin`. Creates launcher of Sublime Text in the dashboard and in the current user desktop. Makes Sublime Text executable accessible with the command `sublime`. Associate Sublime Text to the mime type of `.c`, `.h`, `.cpp`, `.hpp`, `.sh`, `.py` files |  Uninstalls Sublime Text by deleting its launchers, soft-links, defaults and the CLion folder |
+| --Telegram --telegram | 
+| --templates
+| --Terminator --terminator | | |
+| --Tilix --tilix | | |
+| --tmux --Tmux | | |
+| --thunderbird --mozillathunderbird --mozilla-thunderbird --Thunderbird --thunder-bird | Installs thunderbird email client via `apt-get` and creates its launcher in the current user desktop | Uninstalls thunderbird via `apt-get purge` and remove its launchers |
+| --transmission --transmission-gtk --Transmission | Installs Transmission torrent downloader via `apt-get` and creates its launcher in the current user desktop | Uninstalls transmission via `apt-get purge` and remove its launchers |
+| --virtualbox --virtual-box --VirtualBox --virtualBox --Virtual-Box --Virtualbox 
+| --visualstudiocode --visual-studio-code --code --Code --visualstudio --visual-studio
+| --vlc --VLC --Vlc | Installs VLC via `apt` and creates its own launcher in the current user desktop. | Uninstalls VLC media player via `apt purge` and deletes its launchers. |
+
+
+
 ### General features
 * Most of the software and command-line utilities installed are intended to appear as a valid binary in your `PATH`, so you can directly call the program without the path to the binary. This script forces `~/.local/bin` to be under your `PATH`, so the symlinks to the binaries will be created in there.
 * Most of the software (except the software that does not have UI) has its own launcher in the desktop and in the dashboard (user launchers are located in `~/.local/share/applications`). It also creates a launcher for each in the Desktop.
@@ -141,71 +209,6 @@ sudo bash uninstall.sh
 ```
 
 ### Partial installation / uninstallation
-
-Both `install.sh` and `uninstall.sh` accept arguments to selectively choose which feature we want to install or uninstall, respectively.
-The argument list is the following with its own description:
-
-| Parameter                 |`install.sh`   | `uninstall.sh` |
-| :------------------------ | :-------------| :--------------|
-| --android --AndroidStudio --androidstudio --studio --android-studio --android_studio --Androidstudio
-| --audacity --Audacity | | |
-| --atom --Atom | | |
-| --discord --Discord --disc| Installs Discord manually creating its own folder under `~/.bin`. Creates launcher of Discord in the dashboard and in the current user desktop. Makes Discord executable accessible with the command `discord` |  Uninstalls Discord by deleting its launchers, soft-links and the Discord folder |
-| --dropbox --Dropbox --DropBox --Drop-box --drop-box --Drop-Box | | |
-| --gcc | Installs the GNU C Compiler via `apt-get` | Uninstalls the GNU C Compiler via `apt-get purge` | 
-| --caffeine --Caffeine --cafe --coffee | | |
-| --calibre --Calibre --cali | | |
-| --cheat --cheat.sh --Cheat.sh --che | | |
-| --clementine --Clementine | | |
-| --clion --Clion --CLion | Installs CLion manually creating its own folder under `~/.bin`. Creates launcher of CLion in the dashboard and in the current user desktop. Makes CLion executable accessible with the command `clion`. Associate CLion to the mime type of `.c`, `.h`, `.cpp` and `.hpp` files |  Uninstalls CLion by deleting its launchers, soft-links, defaults and the CLion folder |
-| --cmatrix --Cmatrix | | |
-| --converters --Converters | | |
-| --clonezilla --CloneZilla --cloneZilla | | |
-| --copyq --copy-q --copy_q --copqQ --Copyq --copy-Q | | |
-| --f-irc --firc --Firc --irc | | |
-| --firefox --Firefox | | |
-| --google-play-music --musicmanager --music-manager --MusicManager --playmusic --GooglePlayMusic --play-music --google-playmusic --playmusic --google-music
-| --gpaint --paint --Gpaint | | |
-| --geany --Geany | | |
-| --git | Installs `git-all` via `apt-get` which includes all the features of `git`, including the graphical git viewer `gitk`  | Uninstalls `git-all` via `apt-get` |
-| --GIMP --gimp --Gimp | | |
-| --GParted --gparted --GPARTED --Gparted | | |
-| --gvim --vim-gtk3 --Gvim --GVim | | |
-| --chrome --Chrome --google-chrome --Google-Chrome| Installs Google Chrome by downloading manually the software from Google official page but installing it via `apt`. Creates its own launcher in the current user desktop | Uninstalls Google Chrome via `apt-get purge` |
-| --parallel --gnu_parallel --GNUparallel --GNUParallel --gnu-parallel| Installs GNU parallel via `apt-get` | Uninstalls GNU parallel via `apt-get purge` |
-| --inkscape --ink-scape --Inkscape --InkScape | | |
-| --intellijcommunity --intelliJCommunity --intelliJ-Community --intellij-community | Installs IntelliJ Community manually creating its own folder under `~/.bin`. Creates launcher of IntelliJ Community in the dashboard and in the current user desktop. Makes IntelliJ Community executable accessible with the command `ideac`. Associate IntelliJ Community to the mime type of `.java` files |  Uninstalls IntelliJ Community by deleting its launchers, soft-links, defaults and the IntelliJ Community folder |
-| --intellijultimate --intelliJUltimate --intelliJ-Ultimate --intellij-ultimate | Installs IntelliJ Ultimate manually creating its own folder under `~/.bin`. Creates launcher of IntelliJ Ultimate in the dashboard and in the current user desktop. Makes IntelliJ Ultimate executable accessible with the command `ideau`. Associate IntelliJ Ultimate to the mime type of `.java` files |  Uninstalls IntelliJ Ultimate by deleting its launchers, soft-links, defaults and the IntelliJ Ultimate folder |
-| --java --javadevelopmentkit --java-development-kit --java-development-kit-11 --java-development-kit11 --jdk --JDK --jdk11 --JDK11 
-| --latex --LaTeX --tex --TeX
-| --mega --Mega --MEGA --MegaSync --MEGAsync --MEGA-sync --megasync| Installs MEGAsync and MEGAsync desktop integration via `dpkg -i` and creates launcher for MEGAsync in the current user desktop | Uninstalls MEGAsync and MEGAsyn desktop integrator via `dpkg -P` |
-| --MendeleyDependencies --mendeleydependencies --mendeleydesktopdependencies --mendeley-desktop-dependencies --Mendeley-Desktop-Dependencies | Installs Mendeley Desktop dependencies `gconf2`, `qt5-default`, `qt5-doc`, `qt5-doc-html`, `qtbase5-examples` and `qml-module-qtwebengine` via `apt-get` | Uninstalls Mendeley Desktop dependencies `gconf2`, `qt5-default`, `qt5-doc`, `qt5-doc-html`, `qtbase5-examples` and `qml-module-qtwebengine` via `apt-get` |  
-| --Mendeley --mendeley --mendeleyDesktop --mendeley-desktop --Mendeley-Desktop | Installs Mendeley Desktop manually creating its own folder under `~/.bin`. Creates launcher of Mendeley Desktop in the dashboard and in the current user desktop. Makes Mendeley Desktop executable accessible with the command `mendeley`. |  Uninstalls Mendeley Desktop by deleting its launchers, soft-links, defaults and the CLion folder |
-| --nemo --nemo-desktop --Nemo-Desktop --Nemodesktop --nemodesktop --Nemo --Nemodesk --NemoDesktop | | |
-| --notepadqq --Notepadqq --notepadQQ --NotepadQQ --notepadQq --notepadQq --NotepadQq --NotepadqQ | | |
-| --office --Openoffice --OpenOffice --openOfice --open_office --Office | | |
-| --OBS --obs --obs-studio --obs_studio --obs_Studio --OBS_studio --obs-Studio --OBS_Studio --OBS-Studio | | |
-| --okular --Okular --okularpdf | | |
-| --pdfgrep --findpdf --pdf| Installs `pdfgrep` via `apt-get` | Uninstalls `pdfgrep` via `apt-get purge` |
-| --pycharmpro --pycharmPro --pycharm_pro --pycharm-pro --Pycharm-Pro --PyCharm-pro | Installs PyCharm Pro manually creating its own folder under `~/.bin`. Creates launcher of Pycharm Pro in the dashboard and in the current user desktop. Makes Pycharm Pro executable accessible with the command `pycharm-pro` |  uninstalls PyCharm Pro by deleting its launchers, soft-links and the Pycharm Pro folder |
-| --pycharmcommunity --pycharmCommunity --pycharm_community --pycharm --pycharm-community| Installs PyCharm Community manually creating its own folder under `~/.bin`. Creates launcher of PyCharm Community in the dashboard and in the current user desktop. Makes PyCharm Community executable accessible with the command `pycharm`. Associate PyCharm Community to the mime type of `.py` files |  Uninstalls PyCharm Community by deleting its launchers, soft-links, defaults and the PyCharm Community folder |
-| --python --python3 --Python3 --Python| Installs Python 2 and Python 3 by installing `python3-dev`, `python-dev` and `python3-pip` via `apt` | Uninstalls Python3 and Python2 interpreter by uninstalling `python3-dev`, `python-dev` and `python3-pip` via `apt` |
-| --dependencies --pypy3_dependencies --pypy3Dependencies --PyPy3Dependencies --pypy3dependencies --pypy3-dependencies| Installs PyPy3 dependencies via `apt-get`: `pkg-config`, `libfreetype6-dev`, `libpng-dev`, `libffi-dev` | Uninstalls PyPy3 dependencies via `apt-get`: `pkg-config`, `libfreetype6-dev`, `libpng-dev`, `libffi-dev` |
-| --pypy --pypy3 --PyPy3 --PyPy| Installs PyPy3 Python3 interpreter manually by downloading the software and placing it under `~/.bin`. Makes PyPy3 executable and PyPy3/pip accessible with the commands `pypy3` and `pypy3-pip`. |  Uninstalls PyPy3 by deleting the PyPy3 folder |
-| --shell --shellCustomization --shellOptimization --environment --environmentaliases --environment_aliases --environmentAliases --alias --Aliases| Backups your `$HOME/.bashrc` to `$HOME/.bashrc.bak` and installs shell features in `$HOME/.bashrc` including: history optimization, environament aliases, functions and global variables. See *Shell customization* section for more information. | Uninstalls the feature by restoring `$HOME/.bashrc.bak` to `$HOME/.bashrc` if present. |
-| --steam --Steam --STEAM | Installs Steam by downloading its installer and installing it via `dpkg -i` and creates a launcher in the current user desktop | Uninstalls Steam via `dpkg -P` and deleting its launchers. |
-| --shotcut --ShotCut --Shotcut --shot-cut --shot_cut | | |
-| --sublime --sublimeText --sublime_text --Sublime --sublime-Text --sublime-text | Installs Sublime Text manually creating its own folder under `~/.bin`. Creates launcher of Sublime Text in the dashboard and in the current user desktop. Makes Sublime Text executable accessible with the command `sublime`. Associate Sublime Text to the mime type of `.c`, `.h`, `.cpp`, `.hpp`, `.sh`, `.py` files |  Uninstalls Sublime Text by deleting its launchers, soft-links, defaults and the CLion folder |
-| --Telegram --telegram | 
-| --templates
-| --Terminator --terminator | | |
-| --Tilix --tilix | | |
-| --tmux --Tmux | | |
-| --thunderbird --mozillathunderbird --mozilla-thunderbird --Thunderbird --thunder-bird | Installs thunderbird email client via `apt-get` and creates its launcher in the current user desktop | Uninstalls thunderbird via `apt-get purge` and remove its launchers |
-| --transmission --transmission-gtk --Transmission | Installs Transmission torrent downloader via `apt-get` and creates its launcher in the current user desktop | Uninstalls transmission via `apt-get purge` and remove its launchers |
-| --virtualbox --virtual-box --VirtualBox --virtualBox --Virtual-Box --Virtualbox 
-| --visualstudiocode --visual-studio-code --code --Code --visualstudio --visual-studio
-| --vlc --VLC --Vlc | Installs VLC via `apt` and creates its own launcher in the current user desktop. | Uninstalls VLC media player via `apt purge` and deletes its launchers. |
 
 
 
