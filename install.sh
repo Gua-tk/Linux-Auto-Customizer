@@ -177,14 +177,14 @@ install_converters()
 # discord desktop client
 install_discord()
 {
-  rm -f ${USR_BIN_FOLDER}/discord*
+  rm -f ${USR_BIN_FOLDER}/disc*
   # Download in a subshell to avoid changing the working directory in the current shell
-  (cd "${USR_BIN_FOLDER}"; wget -O "discord" ${discord_downloader})
+  (cd "${USR_BIN_FOLDER}"; wget -O "disc" ${discord_downloader})
   rm -Rf ${USR_BIN_FOLDER}/discord*
   rm -Rf ${USR_BIN_FOLDER}/Discord*
   # Decompress in a subshell to avoid changing the working directory in the current shell
-  (cd "${USR_BIN_FOLDER}"; tar -xzf -) < ${USR_BIN_FOLDER}/discord
-  rm -f ${USR_BIN_FOLDER}/discord*
+  (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/disc
+  rm -f ${USR_BIN_FOLDER}/disc*
   # Modify name for coherence
   mv ${USR_BIN_FOLDER}/Discord ${USR_BIN_FOLDER}/discord
 
