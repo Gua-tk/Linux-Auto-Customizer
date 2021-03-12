@@ -85,6 +85,64 @@ else  # if root
 fi
 }
 
+# Download and decompress a compressed file pointed by the provided link into USR_BIN_FOLDER.
+# We assume that this compressed file contains only one folder in the root.
+# Argument 1: link to the compressed file
+# Argument 2: Final name of the folder
+# Argument 3: Decompression options: [z, j, J]
+# Argument 4: Relative path to the selected binary to create the links in the path from the just decompressed folder
+# Argument 5: Desired name for the hard-link that points to the previous binary
+# Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
+download_and_decompress()
+{
+  echo iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+
+  # Clean to avoid conflicts with previously installed software or aborted installation
+  rm -f ${USR_BIN_FOLDER}/downloaded_program*
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd ${USR_BIN_FOLDER}; wget -O "downloaded_program" $1)
+  # Capture root folder name
+  program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloaded_program)
+  # Clean to avoid conflicts with previously installed software or aborted installation
+  rm -Rf ${USR_BIN_FOLDER}/${program_folder_name}
+  # Decompress in a subshell to avoid changing the working directory in the current shell
+  (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloaded_program
+  # Delete downloaded files which will be no longer used
+  rm -f ${USR_BIN_FOLDER}/downloaded_program*
+  # Clean older installation to avoid conflicts
+  rm -Rf "${USR_BIN_FOLDER}/$2"
+  # Rename folder for coherence
+  mv ${USR_BIN_FOLDER}/${program_folder_name} "${USR_BIN_FOLDER}/$2"
+  # Save the final name of the folder to regenerate the full path after the shifts
+  program_folder_name="$2"
+  # Shift the first 3 arguments to have only from 4th argument to the last in order to call create_links_in_path
+  shift
+  shift
+  shift
+  # Create links in the PATH
+  while [[ $# -gt 0 ]]; do
+    # Clean to avoid collisions
+    create_links_in_path "${USR_BIN_FOLDER}/${program_folder_name}/$1" $2
+    shift
+    shift
+  done
+}
+
+
+# Argument 1: Absolute path to the binary you want to be in the PATH
+# Argument 2: Name of the hard-link that will be created in the path
+# Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2
+create_links_in_path()
+{
+  while [[ $# -gt 0 ]]; do
+    # Clean to avoid collisions
+    rm -f ${DIR_IN_PATH}/$2
+    ln "$1" ${DIR_IN_PATH}/$2
+    shift
+    shift
+  done
+}
+
 # Prints the given arguments to the stderr //RF
 err()
 {
@@ -98,17 +156,11 @@ err()
 
 install_android_studio()
 {
-  rm -f ${USR_BIN_FOLDER}/android_studio*.tar.gz*
-  # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -O "android_studio" ${android_studio_downloader})
-  # Decompress in a subshell to avoid changing the working directory in the current shell
-  rm -Rf ${USR_BIN_FOLDER}/android-studio
-  (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/android_studio
-  rm -f ${USR_BIN_FOLDER}/android_studio*
+  folder_name=$(download_and_decompress ${android_studio_downloader} "android-studio" "z" )
 
   # Create links to the PATH
   rm -f ${DIR_IN_PATH}/studio
-  ln -s ${USR_BIN_FOLDER}/android-studio/bin/studio.sh ${DIR_IN_PATH}/studio
+  ln -s ${USR_BIN_FOLDER}/${folder_name}/bin/studio.sh ${DIR_IN_PATH}/studio
   # Create launcher
   create_manual_launcher "${android_studio_launcher}" "Android_Studio"
 }
@@ -175,22 +227,10 @@ install_converters()
 
 
 # discord desktop client
+# Permissions: user
 install_discord()
 {
-  rm -f ${USR_BIN_FOLDER}/disc*
-  # Download in a subshell to avoid changing the working directory in the current shell
-  (cd "${USR_BIN_FOLDER}"; wget -O "disc" ${discord_downloader})
-  rm -Rf ${USR_BIN_FOLDER}/discord*
-  rm -Rf ${USR_BIN_FOLDER}/Discord*
-  # Decompress in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/disc
-  rm -f ${USR_BIN_FOLDER}/disc*
-  # Modify name for coherence
-  mv ${USR_BIN_FOLDER}/Discord ${USR_BIN_FOLDER}/discord
-
-  # Create links in the PATH
-  rm -f ${DIR_IN_PATH}/discord
-  ln -s ${USR_BIN_FOLDER}/discord/Discord ${DIR_IN_PATH}/discord
+  folder_name=$(download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord")
 
   # Create launchers in launcher and in desktop
   create_manual_launcher "${discord_launcher}" "discord"

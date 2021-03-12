@@ -129,11 +129,6 @@ sudo bash uninstall.sh
 ```
 
 
-
-
-
-
-
 ### 
 ## Progression and original idea
 This repository is a partial fork from my repo [TrigenicInteractionPredictor](https://github.com/AleixMT/TrigenicInteractionPredictor). 
