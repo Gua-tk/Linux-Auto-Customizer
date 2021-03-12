@@ -95,8 +95,6 @@ fi
 # Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
 download_and_decompress()
 {
-  echo iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-
   # Clean to avoid conflicts with previously installed software or aborted installation
   rm -f ${USR_BIN_FOLDER}/downloaded_program*
   # Download in a subshell to avoid changing the working directory in the current shell
@@ -176,8 +174,6 @@ install_clion()
   register_file_associations "text/x-chdr" "clion.desktop"
   register_file_associations "text/x-csrc" "clion.desktop"
 }
-
-
 
 
 # discord desktop client
@@ -285,7 +281,7 @@ install_pypy3()
 
 
 # Install Sublime text 3
-install_sublime_text()
+install_sublime()
 {
   download_and_decompress ${sublime_text_downloader} "sublime-text" "j" "sublime_text" "sublime"
 
@@ -329,7 +325,7 @@ install_visualstudiocode()
 
 install_audacity()
 {
-  apt install -y audacity
+  apt-get install -y audacity
   copy_launcher audacity.desktop
 }
 
@@ -820,6 +816,10 @@ install_virtualbox()
 #############################
 # Most (all) of them just use user permissions
 
+install_bash_feature()
+{
+  echo -e "$1" >> ${BASHRC_PATH}
+}
 
 install_converters()
 {
@@ -1054,6 +1054,20 @@ execute_installation_install_feature()
   set +e
 }
 
+execute_installation_wrapper_install_feature()
+{
+  if [[ $1 == 1 ]]; then
+    execute_installation_install_feature $2 $3 $4
+  else
+    which ${program_name} &>/dev/null
+    if [[ $? != 0 ]]; then
+      execute_installation_install_feature $2 $3 $4
+    else
+      output_proxy_executioner "echo WARNING: $5 is already installed." $3
+    fi
+  fi
+}
+
 execute_installation()
 {
   space=" "
@@ -1071,29 +1085,11 @@ execute_installation()
         if [[ ${EUID} -ne 0 ]]; then
           output_proxy_executioner "echo WARNING: $program_name needs root permissions to be installed. Skipping." ${quietness_bit}
         else
-          if [[ ${overwrite_bit} == 1 ]]; then
-            execute_installation_install_feature ${forceness_bit} ${quietness_bit} ${program_function}
-          else
-            which ${program_name} >/dev/null
-            if [[ $? != 0 ]]; then
-              execute_installation_install_feature ${forceness_bit} ${quietness_bit} ${program_function}
-            else
-              output_proxy_executioner "echo WARNING: ${program_name} is already installed. Skipping" ${quietness_bit}
-            fi
-          fi
+          execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
         fi
       elif [[ ${program_privileges} == 0 ]]; then
         if [[ ${EUID} -ne 0 ]]; then
-          if [[ ${overwrite_bit} == 1 ]]; then
-            execute_installation_install_feature ${forceness_bit} ${quietness_bit} ${program_function}
-          else
-            which ${program_name}
-            if [[ $? != 0 ]]; then
-              execute_installation_install_feature ${forceness_bit} ${quietness_bit} ${program_function}
-            else
-              output_proxy_executioner "echo WARNING: ${program_name} is already installed." ${quietness_bit}
-            fi
-          fi
+          execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
         else
           output_proxy_executioner "echo WARNING: $program_name needs user permissions to be installed. Skipping." ${quietness_bit}
         fi
@@ -1122,50 +1118,51 @@ add_program()
 }
 
 
+create_folder_as_root()
+{
+  mkdir -p $1
+  # Convert folder to a SUDO_ROOT user
+  chgrp ${SUDO_USER} $1
+  chown ${SUDO_USER} $1
+  chmod 775 $1
+}
+
+
 ##################
 ###### MAIN ######
 ##################
 main()
 {
   if [[ ${EUID} == 0 ]]; then
-    # Make sure USR_BIN_FOLDER is present
-    mkdir -p ${USR_BIN_FOLDER}
-    # Convert USR_BIN_FOLDER to a SUDO_ROOT user
-    chgrp ${SUDO_USER} ${USR_BIN_FOLDER}
-    chown ${SUDO_USER} ${USR_BIN_FOLDER}
-    chmod 775 ${USR_BIN_FOLDER}
+    create_folder_as_root ${USR_BIN_FOLDER}
+    create_folder_as_root ${BASH_FUNCTIONS_FOLDER}
+    create_folder_as_root ${DIR_IN_PATH}
+    create_folder_as_root ${PERSONAL_LAUNCHERS_DIR}
 
-    # Make sure that DIR_IN_PATH is present
-    mkdir -p ${DIR_IN_PATH}
-    # Convert DIR_IN_PATH to a SUDO_ROOT user
-    chgrp ${SUDO_USER} ${DIR_IN_PATH}
-    chown ${SUDO_USER} ${DIR_IN_PATH}
-    chmod 775 ${DIR_IN_PATH}
-
-    # Make sure that folder for user launchers is present
-    mkdir -p ${PERSONAL_LAUNCHERS_DIR}
-    # Convert PERSONAL_LAUNCHERS_DIR to a SUDO_ROOT user
-    chgrp ${SUDO_USER} ${PERSONAL_LAUNCHERS_DIR}
-    chown ${SUDO_USER} ${PERSONAL_LAUNCHERS_DIR}
-    chmod 775 ${PERSONAL_LAUNCHERS_DIR}
-
-
+    if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
+      >${BASH_FUNCTIONS_PATH}
+      chgrp ${SUDO_USER} ${BASH_FUNCTIONS_PATH}
+      chown ${SUDO_USER} ${BASH_FUNCTIONS_PATH}
+      chmod 775 ${BASH_FUNCTIONS_PATH}
+    fi
   else
-    # Make sure USR_BIN_FOLDER is present
     mkdir -p ${USR_BIN_FOLDER}
-
-    # Make sure that ${DIR_IN_PATH} is present
     mkdir -p ${DIR_IN_PATH}
-
-    # Make sure that folder for user launchers is present
     mkdir -p ${PERSONAL_LAUNCHERS_DIR}
+    mkdir -p ${BASH_FUNCTIONS_FOLDER}
 
+    if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
+      >${BASH_FUNCTIONS_PATH}
+    fi
     # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-    #//RF
     if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${DIR_IN_PATH}" )" ]]; then
       echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASHRC_PATH}
     fi
+  fi
 
+  # Make sure .bash_functions and its structure is present
+  if [[ -z "$(cat ${BASHRC_PATH} | grep -Fo "source ${BASH_FUNCTIONS_PATH}" )" ]]; then  # .bash_functions not added
+    echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
   fi
 
 
@@ -1389,7 +1386,7 @@ main()
         add_program install_shotcut
       ;;
       --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
-        add_program install_sublime_text
+        add_program install_sublime
       ;;
       --steam|--Steam|--STEAM)
         add_program install_steam

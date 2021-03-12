@@ -29,54 +29,46 @@ output_proxy_executioner()
 ### DECLARATION ###
 
 if [[ "$(whoami)" != "root" ]]; then
-  # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
-  source ${HOME}/.config/user-dirs.dirs
-
-  # Folder where all the software will be installed
-  USR_BIN_FOLDER=${HOME}/.bin
-
-  # Path pointing to .bashrc file of the user
-  BASHRC_PATH=${HOME}/.bashrc
-
-  # Path pointing to a folder that contains the desktop launchers for the unity application launcher of the current user
-  PERSONAL_LAUNCHERS_DIR=${HOME}/.local/share/applications
-
-  # Path pointing to a folder that contains the desktop launchers of all users
-  ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
-
-  # Path pointing to a directory that is included in the PATH variable
-  DIR_IN_PATH=${HOME}/.local/bin
-
   # Path pointing to $HOME
   HOME_FOLDER=${HOME}
+
+  # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
+  source ${HOME_FOLDER}/.config/user-dirs.dirs
 else
+  # Path pointing to $HOME
+  HOME_FOLDER=/home/${SUDO_USER}
+
   # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
   # for /home/$SUDO_USER to be interpreted correctly as a root user.
-  declare $(cat /home/${SUDO_USER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
-
-  # Folder where all the software will be installed
-  USR_BIN_FOLDER=/home/${SUDO_USER}/.bin
-
-  # Path pointing to .bashrc file of the user
-  BASHRC_PATH=/home/${SUDO_USER}/.bashrc
-
-  # Path pointing to a folder that contains the desktop launchers for the unity application launcher of the current user
-  PERSONAL_LAUNCHERS_DIR=/home/${SUDO_USER}/.local/share/applications
-
-  # Path pointing to a folder that contains the desktop launchers of all users
-  ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
-
-  # Path pointing to a directory that is included in the PATH variable
-  DIR_IN_PATH=/home/${SUDO_USER}/.local/bin
+  declare $(cat ${HOME_FOLDER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
 
   # Force inclusions of DIR_IN_PATH to the PATH of the root user in order to let bash find installed binaries in
   # DIR_IN_PATH when logged as root using which or type calls.
   export PATH=${PATH}:${DIR_IN_PATH}
-
-  # Path pointing to $HOME
-  HOME_FOLDER=/home/${SUDO_USER}
 fi
+
+# Path pointing to a directory that is included in the PATH variable
+DIR_IN_PATH=${HOME_FOLDER}/.local/bin
+
+# Path pointing to a folder that contains the desktop launchers for the unity application launcher of the current user
+PERSONAL_LAUNCHERS_DIR=${HOME_FOLDER}/.local/share/applications
+
+# Path pointing to .bashrc file of the user
+BASHRC_PATH=${HOME_FOLDER}/.bashrc
+
+# Folder where all the software will be installed
+USR_BIN_FOLDER=${HOME_FOLDER}/.bin
+
+# Path pointing to .bash_functions, which is the file used to control the installed features of the customizer
+BASH_FUNCTIONS_PATH=${HOME_FOLDER}/.bash_functions
+
+# Path pointing to the folder containing all the scripts of the bash functions
+BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
+
+# Path pointing to a folder that contains the desktop launchers of all users
+ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
+
 # The variables that begin with FLAG_ can be changed using arguments. They will continue holding the same value until the
 # end of the execution until another argument
 FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
@@ -168,7 +160,7 @@ installation_data=(
 "0;0;0;0;0;install_environment_aliases"
 "0;0;0;0;1;install_steam"
 "0;0;0;0;1;install_shotcut"
-"0;0;0;0;1;install_sublime_text"
+"0;0;0;0;0;install_sublime"
 "0;0;0;0;0;install_telegram"
 "0;0;0;0;0;install_templates"
 "0;0;0;0;1;install_terminator"
@@ -221,6 +213,10 @@ StartupWMClass=jetbrains-android-studio
 Name[en_GB]=android-studio.desktop"
 
 atom_downloader=https://atom.io/download/deb
+
+bash_functions_import="
+source ${BASH_FUNCTIONS_PATH}
+"
 
 clion_downloader=https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz
 clion_launcher="[Desktop Entry]
@@ -374,7 +370,7 @@ Terminal=false
 slack_repository=https://downloads.slack-edge.com/linux_releases/
 slack_version=slack-desktop-4.11.1-amd64.deb
 
-sublime_text_downloader=https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.gz2
+sublime_text_downloader=https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2
 sublime_text_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
