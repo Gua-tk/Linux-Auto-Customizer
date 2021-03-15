@@ -25,6 +25,23 @@
 ###### AUXILIAR FUNCTIONS ######
 ################################
 
+automount()
+{
+  ###automount
+  # https://www.howtogeek.com/444814/how-to-write-an-fstab-file-on-linux/
+  # man lsblk
+  # lsblk | grep sd
+
+  # sudo mkdir /media/usb
+  # sudo mkdir /mnt/ssd
+  # sudo mount /dev/sdb1 /media/usb
+  # Check mounts
+  # lsblk -o +ROTA | grep sd[a-c]1
+  #### Add trimmed line to /etc/fstab
+  ## 'UUID0=${blkid} ${device} ${mount_directory}'
+  echo "test"
+}
+
 # Associate a file type (mime type) to a certain application using its desktop launcher.
 # Argument 1: File types. Example: application/x-shellscript
 # Argument 2: Application. Example: sublime_text.desktop
@@ -798,6 +815,7 @@ install_uget()
 install_vlc()
 {
   apt-get -y install vlc
+  copy_launcher "vlc.desktop"
 }
 
 
