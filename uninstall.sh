@@ -509,6 +509,7 @@ uninstall_visualstudiocode()
 uninstall_vlc()
 {
   apt-get purge -y vlc
+  rm -f ${XDG_DESKTOP_DIR}/vlc.desktop
 }
 
 
