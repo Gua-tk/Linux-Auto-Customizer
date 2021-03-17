@@ -125,6 +125,7 @@ installation_data=(
 "0;0;0;0;0;install_converters"
 "0;0;0;0;1;install_clonezilla"
 "0;0;0;0;1;install_copyq"
+"0;0;0;0;0;install_extract_function"
 "0;0;0;0;1;install_f-irc"
 "0;0;0;0;1;install_firefox"
 "0;0;0;0;1;install_freecad"
@@ -132,17 +133,20 @@ installation_data=(
 "0;0;0;0;1;install_gpaint"
 "0;0;0;0;1;install_geany"
 "0;0;0;0;1;install_git"
+"0;0;0;0;0;install_git_aliases"
 "0;0;0;0;1;install_gimp"
 "0;0;0;0;1;install_gparted"
 "0;0;0;0;1;install_gvim"
 "0;0;0;0;1;install_google_chrome"
 "0;0;0;0;1;install_gnome-chess"
 "0;0;0;0;1;install_GNU_parallel"
+"0;0;0;0;0;install_history_optimization"
 "0;0;0;0;1;install_inkscape"
 "0;0;0;0;0;install_intellij_community"
 "0;0;0;0;0;install_intellij_ultimate"
 "0;0;0;0;1;install_jdk11"
 "0;0;0;0;1;install_latex"
+"0;0;0,0;0;install_ls-alias"
 "0;0;0;0;1;install_megasync"
 "0;0;0;0;1;install_mendeley_dependencies"
 "0;0;0;0;1;install_nemo"
@@ -151,7 +155,8 @@ installation_data=(
 "0;0;0;0;1;install_obs"
 "0;0;0;0;1;install_okular"
 "0;0;0;0;1;install_pdfgrep"
-"0:0:0:0:1:install_pluma"
+"0;0;0;0;1;install_pluma"
+"0;0;0;0;0;install_prompt"
 "0;0;0;0;0;install_pycharm_community"
 "0;0;0;0;0;install_pycharm_professional"
 "0;0;0;0;1;install_python3"
@@ -160,9 +165,11 @@ installation_data=(
 "0;0;0;0;0;install_environment_aliases"
 "0;0;0;0;1;install_steam"
 "0;0;0;0;1;install_shotcut"
+"0;0;0;0;0;install_shortcuts"
 "0;0;0;0;0;install_sublime"
 "0;0;0;0;0;install_telegram"
 "0;0;0;0;0;install_templates"
+"0;0;0;0;0;install_terminal_background"
 "0;0;0;0;1;install_terminator"
 "0;0;0;0;1;install_tilix"
 "0;0;0;0;1;install_tmux"
@@ -269,6 +276,12 @@ Exec=f-irc
 Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.png
 Type=Application
 "
+git_aliases_function="alias gitk=\"gitk --all --date-order \"
+alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"
+if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
+    GIT_PROMPT_ONLY_IN_REPO=1
+    source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
+fi"
 
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 
@@ -295,6 +308,8 @@ Icon=${HOME_FOLDER}/.bin/idea-ic/bin/idea.png
 Exec=ideac %f
 Name=IntelliJ IDEA Community Edition
 StartupWMClass=jetbrains-idea"
+
+l_function="alias l=\"ls -lAh --color=auto\""
 
 megasync_version=megasync_4.3.8-1.1_amd64.deb
 megasync_repository=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/
@@ -333,6 +348,8 @@ StartupNotify=true"
 
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 
+prompt_function="export PS1=\"\\[\\\e[1;37m\\]\\\\\\d \\\\\\\t \\[\\\e[0;32m\\]\\\\\u\[\\\e[4;35m\\]@\\[\\\e[0;36m\\]\\\\\\H\\[\\\e[0;33m\\] \\\\\\w\\[\\\e[0;32m\\] \\\\\\\$ \""
+
 pycharm_downloader=https://download.jetbrains.com/python/pycharm-community-2020.3.2.tar.gz
 pycharm_launcher="[Desktop Entry]
 Version=1.0
@@ -356,6 +373,15 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm"
 
 pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
+
+shell_history_optimization_function="export HISTSIZE=10000
+export HISTFILESIZE=100000
+shopt -s histappend
+HISTCONTROL=ignoredups
+HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
+shopt -s cmdhist"
+
+shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}"
 
 shotcut_desktop_launcher="[Desktop Entry]
 Type=Application
@@ -422,13 +448,6 @@ StartupWMClass=visual-studio-code"
 ###########################
 
 ### SYSTEM FEATURE RELATED VARIABLES ###
-
-bash_git_prompt_bashrc="
-if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
-    GIT_PROMPT_ONLY_IN_REPO=1
-    source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
-fi
-"
 
 converters_downloader="https://github.com/Axlfc/converters"
 converters_bashrc_call="source ${HOME_FOLDER}/.bash_functions"
@@ -518,7 +537,6 @@ L()
 }
 "
 
-PS1_custom="\[\e[1;37m\]\\d \\t \[\e[0;32m\]\\u\[\e[4;35m\]@\[\e[0;36m\]\\H\[\e[0;33m\] \\w\[\e[0;32m\] \\$ "
 
 
 ### TEMPLATES ###
