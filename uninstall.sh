@@ -482,7 +482,12 @@ uninstall_tmux()
   rm -f /home/${SUDO_USER}/.local/share/applications/tmux.desktop
 }
 
+uninstall_torbrowser()
+{
+  apt-get purge -y transmission
+  rm -f ${XDG_DESKTOP_DIR}/torbrowser.desktop
 
+}
 uninstall_transmission()
 {
   apt-get purge -y transmission
@@ -579,6 +584,7 @@ uninstall_all()
   uninstall_thunderbird
   uninstall_tilix
   uninstall_tmux
+  uninstall_torbrowser
   uninstall_transmission
   uninstall_virtualbox
   uninstall_visualstudiocode
@@ -784,6 +790,9 @@ main()
         ;;
         --tmux|--Tmux)
           uninstall_tmux
+        ;;
+        --tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser)
+          uninstall_torbrowser
         ;;
         --transmission|--transmission-gtk|--Transmission)
           uninstall_transmission

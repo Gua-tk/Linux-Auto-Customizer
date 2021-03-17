@@ -792,7 +792,11 @@ install_tmux()
   cp -p ${XDG_DESKTOP_DIR}/tmux.desktop /home/${SUDO_USER}/.local/share/applications
 }
 
-
+install_torbrowser()
+{
+  apt-get install -y torbrowser-launcher
+  copy_launcher "torbrowser.desktop"
+}
 install_transmission()
 {
   apt-get install -y transmission
@@ -1426,6 +1430,9 @@ main()
       ;;
       --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
         add_program install_thunderbird
+      ;;
+      --tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser)
+        add_program install_torbrowser
       ;;
       --transmission|--transmission-gtk|--Transmission)
         add_program install_transmission

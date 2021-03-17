@@ -168,6 +168,7 @@ installation_data=(
 "0;0;0;0;1;install_tmux"
 "0:0:0:0:1:install_uget"
 "0;0;0;0;1;install_thunderbird"
+"0;0;0;0;1;install_torbrowser"
 "0;0;0;0;1;install_transmission"
 "0;0;0;0;1;install_virtualbox"
 "0;0;0;0;0;install_visualstudiocode"
