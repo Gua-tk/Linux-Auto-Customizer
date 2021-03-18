@@ -30,13 +30,6 @@ automount()
   ###automount
   # https://www.howtogeek.com/444814/how-to-write-an-fstab-file-on-linux/
   # man lsblk
-  # lsblk | grep sd
-
-  # sudo mkdir /media/usb
-  # sudo mkdir /mnt/ssd
-  # sudo mount /dev/sdb1 /media/usb
-  # Check mounts
-  # lsblk -o +ROTA | grep sd[a-c]1
   #### Add trimmed line to /etc/fstab is not viable because it is used by the system
   ## 'UUID0=${blkid} ${device} ${mount_directory}'
   echo "test"
