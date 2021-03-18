@@ -838,10 +838,23 @@ install_virtualbox()
 #############################
 # Most (all) of them just use user permissions
 
-install_bash_feature()
+### AUXILIAR FUNCTIONS ###
+# Installs a new bash feature, installing its script into your environment using .bashrc, which uses .bash_functions
+# Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions
+# Argument 2: Name of the file.
+add_bash_function()
 {
-  echo -e "$1" >> ${BASHRC_PATH}
+  # Write code to bash functions folder with the name of the feature we want to install
+  echo -e "$1" > ${BASH_FUNCTIONS_FOLDER}/$2
+  import_line="source ${BASH_FUNCTIONS_FOLDER}/$2"
+  # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
+  echo $import_line
+  if [[ -z $(cat ${BASH_FUNCTIONS_PATH} | grep -Fo "${import_line}") ]]; then
+    echo ${import_line} >> ${BASH_FUNCTIONS_PATH}
+  fi
 }
+
+
 
 install_converters()
 {
@@ -890,140 +903,46 @@ install_templates()
 
 
 # Forces l as alias for ls -lAh
-install_ls_alias()
+install_ls-alias()
 {
-  #lsdisplay=$(ls -lhA | tr -s " ")
-  #dudisplay=$(du -shxc .[!.]* * | sort -h | tr -s "\t" " ")
-  #IFS=$'\n'
-  #for linels in ${lsdisplay}; do
-  #  if [[ $linels =~ ^d.* ]]; then
-  #    foldername=$(echo $linels | cut -d " " -f9)
-  #    for linedu in ${dudisplay}; do
-  #      if [[ "$(echo ${linedu} | cut -d " " -f2)" = ${foldername} ]]; then
-  #        # Replace $lsdisplay with values in folder size 
-  #        break
-  #      fi
-  #    done
-  #  fi
-  #done
-
-  echo ""
-
-
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias l=" )" ]]; then
-    echo "alias l=\"ls -lAh --color=auto\"" >> ${BASHRC_PATH}
-  else
-    sed -i 's/^alias l=.*/alias l=\"ls -lAh \"/' ${BASHRC_PATH}
-  fi
-
-  #alias a="echo '---------------Alias----------------';alias"
-  #alias c="clear"
-  #alias h="history | grep $1"
-  #du -shxc .[!.]* * | sort -h
+  add_bash_function "${l_function}" l.sh
 }
 
 # Defines a function to extract all types of compressed files
 install_extract_function()
 {
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "extract () {" )" ]]; then
-    echo -e "$extract_function" >> ${BASHRC_PATH}
-  else
-  	err "WARNING: Extract function is already installed. Skipping"
-  fi
+  add_bash_function "${extract_function}" extract.sh
 }
 
 # Increases file history size, size of the history and forces to append to history, never overwrite
 # Ignore repeated commands and simple commands
 # Store multiline comments in just one command
-install_shell_history_optimization()
+install_history_optimization()
 {
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTSIZE=" )" ]]; then
-    echo "export HISTSIZE=10000" >> ${BASHRC_PATH}
-    
-  else
-    sed -i 's/HISTSIZE=.*/HISTSIZE=10000/' ${BASHRC_PATH}
-  fi
-
-  # Increase File history size
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTFILESIZE=" )" ]]; then
-    echo "export HISTFILESIZE=100000" >> ${BASHRC_PATH}
-  else
-    sed -i 's/HISTFILESIZE=.*/HISTFILESIZE=100000/' ${BASHRC_PATH}
-  fi
-
-  # Append and not overwrite history
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "shopt -s histappend" )" ]]; then
-    echo "shopt -s histappend" >> ${BASHRC_PATH}
-  fi
-
-  # Ignore repeated commands
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTCONTROL=" )" ]]; then
-    echo "HISTCONTROL=ignoredups" >> ${BASHRC_PATH}
-  else
-    sed -i 's/HISTCONTROL=.*/HISTCONTROL=ignoredups/' ${BASHRC_PATH}
-  fi
-
-  # Ignore simple commands
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "HISTIGNORE=" )" ]]; then
-    echo "HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"" >> ${BASHRC_PATH}
-  else
-    sed -i 's/HISTIGNORE=.*/HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"/' ${BASHRC_PATH}
-  fi
-
-  # store multiline commands in just one command
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "shopt -s cmdhist" )" ]]; then
-    echo "shopt -s cmdhist" >> ${BASHRC_PATH}
-  fi
+  add_bash_function "${shell_history_optimization_function}" history.sh
 }
 
 install_git_aliases()
 {
-  # Force "gitk" as alias for gitk --all --date-order
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias gitk=" )" ]]; then
-    echo "alias gitk=\"gitk --all --date-order \"" >> ${BASHRC_PATH}
-  else
-    sed -Ei 's/^alias gitk=.*/alias gitk=\"gitk --all --date-order \"/' ${BASHRC_PATH}
-  fi
-
-  # Create alias for dummycommit
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "alias dummycommit=" )" ]]; then
-    echo "alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"" >> ${BASHRC_PATH}
-  else
-    sed -Ei 's/^alias dummycommit=.*/alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"/' ${BASHRC_PATH}
-  fi
+  add_bash_function "${git_aliases_function}" git_aliases.sh
+  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
+  git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
-install_environment_aliases()
+install_shortcuts()
 {
-
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "export DESK=" )" ]]; then
-    echo "export DESK=${XDG_DESKTOP_DIR}" >> ${BASHRC_PATH}
-  else
-    err "WARNING: DESK environment alias is already installed. Skipping"
-  fi
-  
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "export PS1=" )" ]]; then
-    echo "export PS1=\"${PS1_custom}\"" >> ${BASHRC_PATH}
-  else
-    err "WARNING: PS1 environment alias is already installed. Skipping"
-  fi
-  echo $(dconf list /org/gnome/terminal/legacy/profiles:/)
-  dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(0,0,0)'"
-  
-  # Install git bash prompt
-  if [[ "$(whoami)" != "root" ]]; then
-    if [[ -d "${USR_BIN_FOLDER}/.bash-git-prompt" ]]; then
-      rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
-      git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
-    else
-      git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
-      echo "${bash_git_prompt_bashrc}" >> ${BASHRC_PATH}
-    fi
-  else
-    err "WARNING: Could not install bash prompt you should be normal user. Skipping"
-  fi
+  add_bash_function "${shortcut_aliases}" shortcuts.sh
 }
 
+install_prompt()
+{
+  add_bash_function "${prompt_function}" prompt.sh
+}
+
+install_terminal_background()
+{
+  dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(0,0,0)'"
+}
 
 add_root_programs()
 {
@@ -1295,6 +1214,9 @@ main()
       --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
         add_program install_copyq
       ;;
+      --extract-function|-extract_function)
+        add_program install_extract_function
+      ;;
       --f-irc|--firc|--Firc|--irc)
         add_program install_f-irc
       ;;
@@ -1319,6 +1241,9 @@ main()
       --git)
         add_program install_git
       ;;
+      --git-aliases|--git_aliases|--git-prompt)
+        add_program install_git_aliases
+      ;;
       --GIMP|--gimp|--Gimp)
         add_program install_gimp
       ;;
@@ -1330,6 +1255,9 @@ main()
       ;;
       --gvim|--vim-gtk3|--Gvim|--GVim)
         add_program install_gvim
+      ;;
+      --history-optimization)
+        add_program install_history_optimization
       ;;
       --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
         add_program install_GNU_parallel
@@ -1351,6 +1279,9 @@ main()
       ;;
       --latex|--LaTeX|--tex|--TeX)
         add_program install_latex
+      ;;
+      --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
+        add_program install_ls-alias
       ;;
       --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
         add_program install_megasync
@@ -1382,6 +1313,9 @@ main()
       --pluma)
         add_program install_pluma
       ;;
+      --prompt)
+        add_program install_prompt
+      ;;
       --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
         add_program install_pycharm_community
       ;;
@@ -1397,15 +1331,11 @@ main()
       --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
         add_program install_pypy3_dependencies
       ;;
-      --shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
-        add_program install_shell_history_optimization
-        add_program install_ls_alias
-        add_program install_git_aliases
-        add_program install_environment_aliases
-        add_program install_extract_function
-      ;;
       --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
         add_program install_shotcut
+      ;;
+      --shortcuts)
+        add_program install_shortcuts
       ;;
       --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
         add_program install_sublime
@@ -1418,6 +1348,9 @@ main()
       ;;
       --templates)
         add_program install_templates
+      ;;
+      --terminal-background|--terminal_background)
+        add_program install_terminal_background
       ;;
       --Terminator|--terminator)
         add_program install_terminator
