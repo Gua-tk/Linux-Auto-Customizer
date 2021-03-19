@@ -20,9 +20,9 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [x] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [x] To add more useful directory path variables in common_data.sh
 - [x] Make sure USR_BIN_FOLDER is present in any user roll
-- [ ] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`  
+- [x] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`  
 - [ ] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
-- [ ] Change environment variables from .bash_profile or .profile and declare variables like DESK, GIT, etc 
+- [ ] Add aliases topycharm, clion, etc  
 - [ ] Installations must be done by argument order apparition (add another column to installation_data to sort an integer that determines the order)
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
 - [ ] Split multifeatures in one function into different functions
@@ -35,6 +35,7 @@ Software that needs to be "manually" installed as normal user is stored under `~
 
 ## Coming features
 - [ ] Automount available drives.*
+- [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] nettools*
 - [ ] SublimeText-Markdown, WordPress, GnuCash, Rosegarden, Remmina, Freeciv, Shotwell, Handbrake, fslint, CMake, Tor browser, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...

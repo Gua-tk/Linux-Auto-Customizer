@@ -25,6 +25,16 @@
 ###### AUXILIAR FUNCTIONS ######
 ################################
 
+create_folder_as_root()
+{
+  mkdir -p $1
+  # Convert folder to a SUDO_ROOT user
+  chgrp ${SUDO_USER} $1
+  chown ${SUDO_USER} $1
+  chmod 775 $1
+}
+
+
 # Associate a file type (mime type) to a certain application using its desktop launcher.
 # Argument 1: File types. Example: application/x-shellscript
 # Argument 2: Application. Example: sublime_text.desktop
@@ -134,18 +144,12 @@ create_links_in_path()
 {
   while [[ $# -gt 0 ]]; do
     # Clean to avoid collisions
-    rm -f ${DIR_IN_PATH}/$2
-    ln "$1" ${DIR_IN_PATH}/$2
+    ln -sf "$1" ${DIR_IN_PATH}/$2
     shift
     shift
   done
 }
 
-# Prints the given arguments to the stderr //RF
-err()
-{
-  echo "$*" >&2
-}
 
 #############################################
 ###### SOFTWARE INSTALLATION FUNCTIONS ######
@@ -323,6 +327,16 @@ install_visualstudiocode()
 ###### ROOT FUNCTIONS ######
 ############################
 
+# Download a package temporarily in USR_BIN_FOLDER and install it using dpkg or other package manager.
+# Argument 1: Link to the package file to download
+download_and_install_package()
+{
+  rm -f ${USR_BIN_FOLDER}/downloading_package*
+  (cd ${USR_BIN_FOLDER}; wget -O downloading_package $1)
+  dpkg -i ${USR_BIN_FOLDER}/downloading_package
+  rm -f ${USR_BIN_FOLDER}/downloading_package*
+}
+
 install_audacity()
 {
   apt-get install -y audacity
@@ -332,15 +346,15 @@ install_audacity()
 
 install_atom()
 {
-    (cd "${USR_BIN_FOLDER}"; wget ${atom_downloader} -O atom.deb; dpkg -i atom.deb; rm -f atom.deb*;)
-    copy_launcher atom.desktop
+  download_and_install_package ${atom_downloader}
+  copy_launcher atom.desktop
 }
 
 
 install_caffeine()
 {
   apt install -y caffeine
-  copy_launcher "caffeine-indicator.desktop"
+  copy_launcher caffeine-indicator.desktop
 }
 
 
@@ -351,24 +365,13 @@ install_calibre()
 }
 
 
+# there's a curl dependency to use cht.sh
 install_cheat()
 {
-  # there's a curl dependency to use cht.sh
-  apt-get install -y curl
+  rm -f ${USR_BIN_FOLDER}/cheat.sh
+  (cd ${USR_BIN_FOLDER}; wget -O cheat.sh ${cheat_downloader})
 
-  rm -f ${USR_BIN_FOLDER}/cht.sh
-  rm -f ${USR_BIN_FOLDER}/:cht.sh
-  wget -P ${USR_BIN_FOLDER} https://cht.sh/:cht.sh
-  mv ${USR_BIN_FOLDER}/:cht.sh ${USR_BIN_FOLDER}/cht.sh
-  chmod +x ${USR_BIN_FOLDER}/cht.sh
-  chgrp ${SUDO_USER} ${USR_BIN_FOLDER}/cht.sh
-  chown ${SUDO_USER} ${USR_BIN_FOLDER}/cht.sh
-
-  rm -f /home/${SUDO_USER}/.local/bin/cheat
-  ln -s ${USR_BIN_FOLDER}/cht.sh /home/${SUDO_USER}/.local/bin/cheat
-  chmod +x /home/${SUDO_USER}/.local/bin/cheat
-  chgrp ${SUDO_USER} /home/${SUDO_USER}/.local/bin/cheat
-  chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/cheat
+  create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
 }
 
 
@@ -386,7 +389,6 @@ install_clementine()
 }
 
 
-#Install CloneZilla
 install_clonezilla()
 {
   apt-get install -y clonezilla
@@ -400,6 +402,10 @@ install_cmatrix()
   create_manual_launcher "${cmatrix_launcher}" "cmatrix"
 }
 
+install_curl()
+{
+  apt-get install -y curl
+}
 
 # Dropbox desktop client and integration
 install_dropbox()
@@ -407,11 +413,7 @@ install_dropbox()
   # Dependency
   apt-get -y install python3-gpg
 
-  rm -f dropbox_${dropbox_version}_amd64.deb*
-  wget -O ${dropbox_version}.deb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-  dpkg -i ${dropbox_version}.deb
-  rm -f ${dropbox_version}.deb*
-
+  download_and_install_package ${dropbox_downloader}
   copy_launcher dropbox.desktop
 }
 
@@ -433,8 +435,7 @@ install_firefox()
 install_f-irc()
 {
   apt-get install -y f-irc
-  echo -e "${firc_launcher}" > ${XDG_DESKTOP_DIR}/f-irc.desktop
-  chmod 775 ${XDG_DESKTOP_DIR}/f-irc.desktop
+  create_manual_launcher "${firc_launcher}" f-irc
 }
 
 
@@ -442,21 +443,6 @@ install_freecad()
 {
   apt install -y freecad
   copy_launcher "freecad.desktop"
-}
-
-
-install_games()
-{
-  apt-get install -y pacman
-  copy_launcher "pacman.desktop"
-  apt-get install -y gnome-mines
-  copy_launcher "org.gnome.Mines.desktop"
-  apt-get install -y aisleriot
-  copy_launcher "sol.desktop"
-  apt-get install -y gnome-mahjongg
-  copy_launcher "org.gnome.Mahjongg.desktop"
-  apt-get install -y gnome-sudoku
-  copy_launcher "org.gnome.Sudoku.desktop"
 }
 
 
@@ -491,11 +477,13 @@ install_git()
   apt-get install -y git-lfs
 }
 
+
 install_gnome-chess()
 {
   apt-get install -y gnome-chess
   copy_launcher "org.gnome.Chess.desktop"
 }
+
 
 # Install GNU parallel
 install_GNU_parallel()
@@ -516,22 +504,11 @@ install_gparted()
 # Needs root permission
 install_google_chrome()
 {
-  # Chrome dependencies
-  apt-get install -y -qq libxss1 libappindicator1 libindicator7
-  # Delete possible collisions with previous installation
-  rm -f google-chrome*.deb*
-  # Download
-  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  # Dependencies
+  apt-get install -y libxss1 libappindicator1 libindicator7
 
-  # Install downloaded version
-  apt install -y -qq ./google-chrome-stable_current_amd64.deb
-  # Clean
-  rm -f google-chrome*.deb*
-
-  # Create launcher and change its permissions (we are root)
+  download_and_install_package ${google_chrome_downloader}
   copy_launcher "google-chrome.desktop"
-  #cp /home/${SUDO_USER}/.local/share/applications/chrome* ${XDG_DESKTOP_DIR}
-  #chmod 775 ${XDG_DESKTOP_DIR}/chrome*
 }
 
 
@@ -552,7 +529,6 @@ install_gpaint()
 
 install_inkscape()
 {
-  echo "Attempting to install inkscape"
   apt install -y inkscape
   copy_launcher "inkscape.desktop"
 }
@@ -564,35 +540,31 @@ install_jdk11()
 }
 
 
-# Install latex
-# Needs root permission
 install_latex()
 {
-    apt-get install -y perl-tk
-    apt -y install texlive-latex-extra texmaker
-    copy_launcher "texmaker.desktop"
-    copy_launcher "texdoctk.desktop"
-    echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
+  # Dependencies
+  apt-get install -y perl-tk texlive-latex-extra texmaker
+  copy_launcher "texmaker.desktop"
+  copy_launcher "texdoctk.desktop"
+  echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
 }
 
 
-# Automatic install of megasync + megasync nautilus. creates launcher in the desktop 
+install_mahjongg()
+{
+  apt-get install -y gnome-mahjongg
+  copy_launcher "org.gnome.Mahjongg.desktop"
+}
+
+
+# megasync + megasync nautilus.
 install_megasync()
 {
+  # Dependencies
   apt-get install -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 
-  rm -f ${megasync_version}.deb*
-  wget -O ${megasync_version}.deb "${megasync_repository}${megasync_version}"
-
-  rm -f ${megasync_integrator_version}.deb*
-  wget -O ${megasync_integrator_version}.deb "${megasync_repository}${megasync_integrator_version}"
-
-  dpkg -i ${megasync_version}.deb
-  dpkg -i ${megasync_integrator_version}.deb
-
-  rm -f ${megasync_integrator_version}.deb*
-  rm -f ${megasync_version}.deb*
-
+  download_and_install_package ${megasync_downloader}
+  download_and_install_package ${megasync_integrator_downloader}
   copy_launcher megasync.desktop
 }
 
@@ -605,41 +577,33 @@ install_mendeley_dependencies()
 }
 
 
+install_mines()
+{
+  apt-get install -y gnome-mines
+  copy_launcher "org.gnome.Mines.desktop"
+}
+
+
 # Automatic install + Creates desktop launcher in launcher and in desktop. 
 install_musicmanager()
 {
-  # Delete possible collisions with previous installation
-  rm -f google-musicmanager*.deb*
-  # Download
-  wget https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
-
-  # Install downloaded version
-  apt install -y -qq ./google-musicmanager-beta_current_amd64.deb
-  # Clean
-  rm -f google-musicmanager*.deb*
-
-  # Create launcher and change its permissions (we are root)
+  download_and_install_package ${music_manager_downloader}z
   copy_launcher "google-musicmanager.desktop"
 }
 
 
 install_nemo()
 {
+  # Delete Nautilus, the default desktop manager to avoid conflicts
   apt purge -y nautilus gnome-shell-extension-desktop-icons
-  apt -y install nemo
-  apt -y install dconf-editor gnome-tweak-tool
+  apt -y install nemo dconf-editor gnome-tweak-tool
+  # Create special launcher to execute nemo daemon at system start
   echo -e "${nemo_desktop_launcher}" > /etc/xdg/autostart/nemo-autostart.desktop
-  #for nautilus_command in "${nautilus_conf[@]}"; do
-   # if [[ ! -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nautilus_command}" )" ]]; then
-    #  sed "s:${nautilus_command}::g" -i /home/${SUDO_USER}/.profile
-    #fi
-  #done
-  for nemo_command in "${nemo_conf[@]}"; do
-    #if [[ -z "$(more /home/${SUDO_USER}/.profile | grep -Fo "${nemo_command}" )" ]]; then
-     # echo "${nemo_command}" >> /home/${SUDO_USER}/.profile
-      $nemo_command
-    #fi
-  done
+  # nemo configuration
+  xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+  gsettings set org.gnome.desktop.background show-desktop-icons false
+  gsettings set org.nemo.desktop show-desktop-icons true
+
   copy_launcher "nemo.desktop"
 }
 
@@ -653,18 +617,18 @@ install_notepadqq()
 
 install_openoffice()
 {
+  # Delete old versions of openoffice to avoid conflicts
   apt remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
   apt autoremove -y
-  rm -f office.tar.gz*
-  wget -O "office.tar.gz" "${openoffice_downloader}"
+
+  rm -f office*
+  (cd ${USR_BIN_FOLDER}; wget -O office ${openoffice_downloader})
+
   rm -Rf en-US
-  tar -xvf "office.tar.gz"
-  rm -f office.tar.gz*
-  cd en-US/DEBS/
-  dpkg -i *.deb
-  cd desktop-integration/
-  dpkg -i *.deb
-  cd ../../..
+  (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/office
+  rm -f office
+
+  $(cd en-US/DEBS/; dpkg -i *.deb; cd desktop-integration/; dpkg -i *.deb  )
   rm -Rf en-US
 
   copy_launcher "openoffice4-base.desktop"
@@ -677,10 +641,11 @@ install_openoffice()
 
 install_obs-studio()
 {
+  # Dependencies
   apt install -y ffmpeg
+
   apt install -y obs-studio
-  echo -e "${obs_desktop_launcher}" > ${XDG_DESKTOP_DIR}/obs-studio.desktop
-  chmod 775 ${XDG_DESKTOP_DIR}/obs-studio.desktop
+  create_manual_launcher "${obs_desktop_launcher}" obs-studio
 }
 
 
@@ -690,7 +655,13 @@ install_okular()
 }
 
 
-# Install pdf grep
+install_pacman()
+{
+  apt-get install -y pacman
+  copy_launcher "pacman.desktop"
+}
+
+
 install_pdfgrep()
 {
   apt-get -y install pdfgrep
@@ -701,12 +672,11 @@ install_pluma()
 {
   apt install -y pluma
   copy_launcher "pluma.desktop"
-
 }
-# Needs roots permission
+
+
 install_pypy3_dependencies()
 {
-  # pypy3 module dependencies
   apt-get install -y -qq pkg-config
   apt-get install -y -qq libfreetype6-dev
   apt-get install -y -qq libpng-dev
@@ -714,8 +684,6 @@ install_pypy3_dependencies()
 }
 
 
-# Install Python3
-# Needs root permission
 install_python3()
 {
   apt install -y python3-dev python-dev python3-pip
@@ -725,24 +693,29 @@ install_python3()
 install_shotcut()
 {
   apt install -y shotcut
-  echo -e "${shotcut_desktop_launcher}" > ${XDG_DESKTOP_DIR}/shotcut.desktop
-  chmod 775 ${XDG_DESKTOP_DIR}/shotcut.desktop
+  create_manual_launcher "${shotcut_desktop_launcher}" shotcut
+}
+
+
+install_solitaire()
+{
+  apt-get install -y aisleriot
+  copy_launcher sol.desktop
 }
 
 
 # steam ubuntu client
 install_steam()
 {
-  apt-get install curl
-  # Avoid collision from possible previous interrumped installations
-  rm -f steam.deb*
-  # Download steam
-  wget -O steam.deb https://steamcdn-a.akamaihd.net/client/installer/steam.deb
-  # Install
-  dpkg -i steam.deb
-  # Clean after
-  rm -f steam.deb*
-  copy_launcher "steam.desktop"
+  download_and_install_package ${steam_downloader}
+  copy_launcher steam.desktop
+}
+
+
+install_sudoku()
+{
+  apt-get install -y gnome-sudoku
+  copy_launcher org.gnome.Sudoku.desktop
 }
 
 
@@ -756,7 +729,7 @@ install_terminator()
 install_thunderbird()
 {
   apt-get install -y thunderbird
-  copy_launcher "thunderbird.desktop"
+  copy_launcher thunderbird.desktop
 }
 
 
@@ -770,9 +743,7 @@ install_tilix()
 install_tmux()
 {
   apt-get -y install tmux
-  echo -e "${tmux_launcher}" > ${XDG_DESKTOP_DIR}/tmux.desktop
-  chmod 775 ${XDG_DESKTOP_DIR}/tmux.desktop
-  cp -p ${XDG_DESKTOP_DIR}/tmux.desktop /home/${SUDO_USER}/.local/share/applications
+  create_manual_launcher ${tmux_launcher} tmux
 }
 
 
@@ -780,36 +751,34 @@ install_transmission()
 {
   apt-get install -y transmission
   copy_launcher "transmission-gtk.desktop"
-  rm -f /home/${SUDO_USER}/.local/bin/transmission
-  ln -s $(which transmission-gtk) /home/${SUDO_USER}/.local/bin/transmission
-  chgrp ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
-  chown ${SUDO_USER} /home/${SUDO_USER}/.local/bin/transmission
+  create_links_in_path $(which transmission-gtk) transmission
 }
 
 
 install_uget()
 {
-  #Does not install proper //RF
-  apt install -y uget aria2
-  copy_launcher "uget.desktop"
+  # Dependencies
+  apt-get install -y aria2
+  apt-get install -y uget
+  copy_launcher uget-gtk.desktop
 }
+
 
 # install VLC
 install_vlc()
 {
   apt-get -y install vlc
+  copy_launcher "vlc.desktop"
 }
 
 
 # VirtualBox
 install_virtualbox()
 {
-  rm -f virtualbox*.deb*
-  wget -O virtualbox.deb ${virtualbox_downloader}
-  dpkg -i virtualbox.deb
-  rm -f virtualbox*.deb*
+  download_and_install_package ${virtualbox_downloader}
   copy_launcher "virtualbox.desktop"
 }
+
 
 #############################
 ###### SYSTEM FEATURES ######
@@ -839,31 +808,13 @@ install_converters()
   rm -Rf ${USR_BIN_FOLDER}/converters
   git clone ${converters_downloader} ${USR_BIN_FOLDER}
 
+  for converter in $(ls ${USR_BIN_FOLDER}/converters); do
+    create_links_in_path ${USR_BIN_FOLDER}/converters/${converter} $(echo ${converter} | cut -d "." -f1)
+  done
 
-  rm -f ${DIR_IN_PATH}/dectohex
-  rm -f ${DIR_IN_PATH}/hextodec
-  rm -f ${DIR_IN_PATH}/bintodec
-  rm -f ${DIR_IN_PATH}/dectobin
-  rm -f ${DIR_IN_PATH}/dectoutf
-  rm -f ${DIR_IN_PATH}/dectooct
-  rm -f ${DIR_IN_PATH}/utftodec
-
-  ln -s ${USR_BIN_FOLDER}/converters/dectohex.py ${DIR_IN_PATH}/dectohex
-  ln -s ${USR_BIN_FOLDER}/converters/hextodec.py ${DIR_IN_PATH}/hextodec
-  ln -s ${USR_BIN_FOLDER}/converters/bintodec.py ${DIR_IN_PATH}/bintodec
-  ln -s ${USR_BIN_FOLDER}/converters/dectobin.py ${DIR_IN_PATH}/dectobin
-  ln -s ${USR_BIN_FOLDER}/converters/dectoutf.py ${DIR_IN_PATH}/dectoutf
-  ln -s ${USR_BIN_FOLDER}/converters/dectooct.py ${DIR_IN_PATH}/dectooct
-  ln -s ${USR_BIN_FOLDER}/converters/utftodec.py ${DIR_IN_PATH}/utftodec
-
-  # //RF
-  if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${converters_bashrc_call}" )" ]]; then
-    echo -e "$converters_bashrc_call" >> ${BASHRC_PATH}
-  else
-  err "WARNING: converters functions are already installed. Skipping"
-  fi
-  echo "${converters_links}" > ${HOME}/.bash_functions
+  add_bash_function ${converters_functions} converters.sh
 }
+
 
 # Install templates (available files in the right click --> new --> ...)
 # Python3, bash shell scripts, latex documents
@@ -886,11 +837,13 @@ install_ls-alias()
   add_bash_function "${l_function}" l.sh
 }
 
+
 # Defines a function to extract all types of compressed files
 install_extract_function()
 {
   add_bash_function "${extract_function}" extract.sh
 }
+
 
 # Increases file history size, size of the history and forces to append to history, never overwrite
 # Ignore repeated commands and simple commands
@@ -900,6 +853,7 @@ install_history_optimization()
   add_bash_function "${shell_history_optimization_function}" history.sh
 }
 
+
 install_git_aliases()
 {
   add_bash_function "${git_aliases_function}" git_aliases.sh
@@ -907,53 +861,26 @@ install_git_aliases()
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
+
 install_shortcuts()
 {
   add_bash_function "${shortcut_aliases}" shortcuts.sh
 }
+
 
 install_prompt()
 {
   add_bash_function "${prompt_function}" prompt.sh
 }
 
+
 install_terminal_background()
 {
-  dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(0,0,0)'"
+  dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)/background-color "'rgb(0,0,0)'"
 }
 
-add_root_programs()
-{
-  for program in ${installation_data[@]}; do
-    permissions=$(echo ${program} | cut -d ";" -f4)
-    if [[ ${permissions} != 0 ]]; then
-      name=$(echo ${program} | cut -d ";" -f5)
-      add_program ${name}
-    fi
-  done
-}
 
-add_user_programs()
-{
-  for program in ${installation_data[@]}; do
-    permissions=$(echo ${program} | cut -d ";" -f4)
-    if [[ ${permissions} != 1 ]]; then
-      name=$(echo ${program} | cut -d ";" -f5)
-      add_program ${name}
-    fi
-  done
-}
-
-add_all_programs()
-{
-  for program in ${installation_data[@]}; do
-    name=$(echo ${program} | cut -d ";" -f5)
-    add_program $name
-  done
-}
 ###### AUXILIAR FUNCTIONS ######
-
-
 
 # Common piece of code in the execute_installation function
 # Argument 1: forceness_bit
@@ -1037,15 +964,10 @@ add_program()
 }
 
 
-create_folder_as_root()
+show_help()
 {
-  mkdir -p $1
-  # Convert folder to a SUDO_ROOT user
-  chgrp ${SUDO_USER} $1
-  chown ${SUDO_USER} $1
-  chmod 775 $1
+  echo ""
 }
-
 
 ##################
 ###### MAIN ######
@@ -1129,6 +1051,16 @@ main()
         FLAG_OVERWRITE=0
       ;;
 
+      -U|--Upgrade)
+        UPGRADE=2
+      ;;
+      -u|--upgrade)
+        UPGRADE=1
+      ;;
+      -k|-K|--keep-outdated)
+        UPGRADE=0
+      ;;
+
       -n|--not|-!)
         FLAG_INSTALL=0
       ;;
@@ -1137,7 +1069,7 @@ main()
       ;;
 
       -h|--help)
-        echo -e ${help_text}
+        show_help
         exit 0
       ;;
 
@@ -1152,6 +1084,9 @@ main()
       ;;
       --atom|--Atom)
         add_program install_atom
+      ;;
+      --curl|--Curl)
+        add_program install_curl
       ;;
       --discord|--Discord|--disc)
         add_program install_discord
@@ -1261,6 +1196,9 @@ main()
       --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
         add_program install_ls-alias
       ;;
+      --mahjongg|--Mahjongg|--gnome-mahjongg)
+        add_program install_mahjongg
+      ;;
       --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
         add_program install_megasync
       ;;
@@ -1269,6 +1207,9 @@ main()
       ;;
       --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
         add_program install_mendeley_dependencies
+      ;;
+      --mines|--Mines|--GNU-mines|--gnome-mines|--gnomemines)
+        add_program install_mines
       ;;
       --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
         add_program install_nemo
@@ -1315,8 +1256,17 @@ main()
       --shortcuts)
         add_program install_shortcuts
       ;;
+      --sudoku|--Sudoku|--gnome-sudoku)
+        add_program install_sudoku
+      ;;
+      --solitaire|--Solitaire|--gnome-solitaire|--aisleriot)
+        add_program install_solitaire
+      ;;
       --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
         add_program install_sublime
+      ;;
+      --sudoku|--Sudoku|--GNU-sudoku|--gnome-sudoku|--gnomesudoku)
+        add_program install_sudoku
       ;;
       --steam|--Steam|--STEAM)
         add_program install_steam
