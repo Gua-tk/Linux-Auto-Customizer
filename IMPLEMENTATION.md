@@ -20,8 +20,10 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [x] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [x] To add more useful directory path variables in common_data.sh
 - [x] Make sure USR_BIN_FOLDER is present in any user roll
-- [ ] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`  
+- [x] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`  
 - [ ] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
+- [ ] Add aliases topycharm, clion, etc  
+- [ ] Installations must be done by argument order apparition (add another column to installation_data to sort an integer that determines the order)
 - [ ] try refactoring the point above by using type, which recognizes alias and functions too
 - [ ] refactor installation bit to be installation order, which contains an integer that if it is greater than 0 means selected for install, and the integer determines the installation order
 - [ ] declare variables like DESK, GIT, etc
@@ -42,6 +44,7 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ... 
 - [ ] make `customizer.sh` 
 - [ ] Automount available drives.*
+- [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] nettools* 
 - [ ] GnuCash, Rosegarden, Remmina, Freeciv, Shotwell, Handbrake, fslint, CMake, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...

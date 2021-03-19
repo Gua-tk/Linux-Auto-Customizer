@@ -119,12 +119,13 @@ installation_data=(
 "0;0;0;0;1;install_calibre"
 "0;0;0;0;1;install_clementine"
 "0;0;0;0;0;install_clion"
-"0;0;0;0;1;install_cheat"
+"0;0;0;0;0;install_cheat"
 "0;0;0;0;1;install_cheese"
 "0;0;0;0;1;install_cmatrix"
 "0;0;0;0;0;install_converters"
 "0;0;0;0;1;install_clonezilla"
 "0;0;0;0;1;install_copyq"
+"0;0;0;0;1;install_curl"
 "0;0;0;0;0;install_extract_function"
 "0;0;0;0;1;install_f-irc"
 "0;0;0;0;1;install_firefox"
@@ -147,8 +148,10 @@ installation_data=(
 "0;0;0;0;1;install_jdk11"
 "0;0;0;0;1;install_latex"
 "0;0;0,0;0;install_ls-alias"
+"0;0;0;0;1;install_mahjongg"
 "0;0;0;0;1;install_megasync"
 "0;0;0;0;1;install_mendeley_dependencies"
+"0;0;0;0;1;install_mines"
 "0;0;0;0;1;install_nemo"
 "0;0;0;0;1;install_notepadqq"
 "0;0;0;0;1;install_openoffice"
@@ -166,14 +169,16 @@ installation_data=(
 "0;0;0;0;1;install_steam"
 "0;0;0;0;1;install_shotcut"
 "0;0;0;0;0;install_shortcuts"
+"0;0;0;0;1;install_solitaire"
 "0;0;0;0;0;install_sublime"
+"0;0;0;0;1;install_sudoku"
 "0;0;0;0;0;install_telegram"
 "0;0;0;0;0;install_templates"
 "0;0;0;0;0;install_terminal_background"
 "0;0;0;0;1;install_terminator"
 "0;0;0;0;1;install_tilix"
 "0;0;0;0;1;install_tmux"
-"0:0:0:0:1:install_uget"
+"0;0;0;0;1;install_uget"
 "0;0;0;0;1;install_thunderbird"
 "0;0;0;0;1;install_torbrowser"
 "0;0;0;0;1;install_transmission"
@@ -200,6 +205,35 @@ art_core=( "audacity" "shotcut" "gimp" "obs" "inkscape" )
 games_install=( "games" "steam" "cmatrix" )
 standard_install=("templates" "virtualbox" "environment" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" )
 
+add_root_programs()
+{
+  for program in ${installation_data[@]}; do
+    permissions=$(echo ${program} | cut -d ";" -f4)
+    if [[ ${permissions} != 0 ]]; then
+      name=$(echo ${program} | cut -d ";" -f5)
+      add_program ${name}
+    fi
+  done
+}
+
+add_user_programs()
+{
+  for program in ${installation_data[@]}; do
+    permissions=$(echo ${program} | cut -d ";" -f4)
+    if [[ ${permissions} != 1 ]]; then
+      name=$(echo ${program} | cut -d ";" -f5)
+      add_program ${name}
+    fi
+  done
+}
+
+add_all_programs()
+{
+  for program in ${installation_data[@]}; do
+    name=$(echo ${program} | cut -d ";" -f5)
+    add_program $name
+  done
+}
 
 #######################################
 ##### SOFTWARE SPECIFIC VARIABLES #####
@@ -225,6 +259,8 @@ atom_downloader=https://atom.io/download/deb
 bash_functions_import="
 source ${BASH_FUNCTIONS_PATH}
 "
+
+cheat_downloader=https://cht.sh/:cht.sh
 
 clion_downloader=https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz
 clion_launcher="[Desktop Entry]
@@ -254,7 +290,7 @@ Exec=cmatrix
 Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/bless_bless-48x48.png
 Type=Application"
 
-dropbox_version=2020.03.04
+dropbox_downloader=https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb
 
 discord_downloader="https://discord.com/api/download?platform=linux&format=tar.gz"
 discord_launcher="[Desktop Entry]
@@ -284,6 +320,8 @@ if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
 fi"
 
+google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 
 intellij_ultimate_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
@@ -312,11 +350,12 @@ StartupWMClass=jetbrains-idea"
 
 l_function="alias l=\"ls -lAh --color=auto\""
 
-megasync_version=megasync_4.3.8-1.1_amd64.deb
-megasync_repository=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/
-megasync_integrator_version=nautilus-megasync_3.6.6_amd64.deb
+megasync_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.3.8-1.1_amd64.deb
+megasync_integrator_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nautilus-megasync_3.6.6_amd64.deb
 
 mendeley_downloader=https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
+
+music_manager_downloader=https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
 
 nautilus_conf=("xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
 "gsettings set org.gnome.desktop.background show-desktop-icons true"
@@ -397,6 +436,8 @@ Terminal=false
 slack_repository=https://downloads.slack-edge.com/linux_releases/
 slack_version=slack-desktop-4.11.1-amd64.deb
 
+steam_downloader=https://steamcdn-a.akamaihd.net/client/installer/steam.deb
+
 sublime_text_downloader=https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2
 sublime_text_launcher="[Desktop Entry]
 Version=1.0
@@ -451,10 +492,7 @@ StartupWMClass=visual-studio-code"
 ### SYSTEM FEATURE RELATED VARIABLES ###
 
 converters_downloader="https://github.com/Axlfc/converters"
-converters_bashrc_call="source ${HOME_FOLDER}/.bash_functions"
-converters_links="
-
-bintohex()
+converters_functions="bintohex()
 {
   bintodec \$1 | dectohex
 }
