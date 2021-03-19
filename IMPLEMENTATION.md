@@ -29,6 +29,7 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [ ] Split multifeatures in one function into different functions
 - [ ] Create source in bashrc with file bash_functions.sh with all sources calls
 - [ ] -h --help to show help to use the program.
+- [ ] [ ] Create generic version for the function output_proxy_exec to integrate with a feature ready to be installed
 - [ ] Desktop wallpapers
 - [ ] Create escape function, which returns an escaped sequence of characters, depending on the programming languages
 - [ ] Add argument to dummy commit
