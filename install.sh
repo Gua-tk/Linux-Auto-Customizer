@@ -971,7 +971,7 @@ add_program()
 
 show_help()
 {
-  echo ""
+  echo "help help"
 }
 
 ##################
