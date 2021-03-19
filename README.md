@@ -33,6 +33,7 @@ The following features can be installed or uninstalled automatically and individ
 | Clion | Cross-platform C/C++ IDE | Installs CLion manually creating its own folder under `~/.bin`. Creates launcher of CLion in the dashboard and in the current user desktop. Makes CLion executable accessible with the command `clion`. Associate CLion to the mime type of `.c`, `.h`, `.cpp` and `.hpp` files |  Uninstalls CLion by deleting its launchers, soft-links, defaults and the CLion folder | --clion --Clion --CLion | 
 | Cmatrix | Screensaver from The Matrix | | --cmatrix --Cmatrix |
 | Converters | | | --converters --Converters | 
+| VSCodium | | | --codium --vscodium |
 | CloneZilla | Disk cloning, disk imaging, data recovery, and deployment | | --clonezilla --CloneZilla --cloneZilla | 
 | copyq | monitoring application or, more precisely, a clipboard manager application that comes with extra features such as editing and scripting | | --copyq --copy-q --copy_q --copqQ --Copyq --copy-Q | 
 | f-irc | irc client for a terminal/command-line/console| | --f-irc --firc --Firc --irc | 

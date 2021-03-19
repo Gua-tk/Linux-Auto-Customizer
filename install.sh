@@ -113,7 +113,7 @@ download_and_decompress()
   # Capture root folder name
   program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloaded_program)
   # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -Rf ${USR_BIN_FOLDER}/${program_folder_name}
+  rm -Rf "${USR_BIN_FOLDER}/${program_folder_name}"
   # Decompress in a subshell to avoid changing the working directory in the current shell
   (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloaded_program
   # Delete downloaded files which will be no longer used
@@ -121,7 +121,7 @@ download_and_decompress()
   # Clean older installation to avoid conflicts
   rm -Rf "${USR_BIN_FOLDER}/$2"
   # Rename folder for coherence
-  mv ${USR_BIN_FOLDER}/${program_folder_name} "${USR_BIN_FOLDER}/$2"
+  mv "${USR_BIN_FOLDER}/${program_folder_name}" "${USR_BIN_FOLDER}/$2"
   # Save the final name of the folder to regenerate the full path after the shifts
   program_folder_name="$2"
   # Shift the first 3 arguments to have only from 4th argument to the last in order to call create_links_in_path
@@ -418,6 +418,18 @@ install_dropbox()
   copy_launcher dropbox.desktop
 }
 
+# We assume that this compressed file contains only one folder in the root.
+# Argument 1: link to the compressed file
+# Argument 2: Final name of the folder
+# Argument 3: Decompression options: [z, j, J]
+# Argument 4: Relative path to the selected binary to create the links in the path from the just decompressed folder
+# Argument 5: Desired name for the hard-link that points to the previous binary
+# Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
+install_codium()
+{
+  download_and_decompress ${codium_downloader} "codium" "z" "bin/codium" "codium"
+  create_manual_launcher "${codium_launcher}" "codium"
+}
 
 install_copyq()
 {
@@ -1129,6 +1141,9 @@ main()
       ;;
       --clonezilla|--CloneZilla|--cloneZilla)
         add_program install_clonezilla
+      ;;
+      --codium|--vscodium)
+        add_program install_codium
       ;;
       --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
         add_program install_copyq

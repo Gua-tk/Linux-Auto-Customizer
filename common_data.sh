@@ -122,6 +122,7 @@ installation_data=(
 "0;0;0;0;0;install_cheat"
 "0;0;0;0;1;install_cheese"
 "0;0;0;0;1;install_cmatrix"
+"0;1;0;0;0;install_codium"
 "0;0;0;0;0;install_converters"
 "0;0;0;0;1;install_clonezilla"
 "0;0;0;0;1;install_copyq"
@@ -289,6 +290,18 @@ Terminal=true
 Exec=cmatrix
 Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/bless_bless-48x48.png
 Type=Application"
+
+codium_downloader=https://github.com/VSCodium/vscodium/releases/download/1.54.3/VSCodium-linux-x64-1.54.3.tar.gz
+codium_launcher="[Desktop Entry]
+Name=VSCodium
+StartupWMClass=codium
+Comment=Community-driven distribution of Microsoft’s editor VSCode.
+GenericName=codium
+Exec=codium
+Icon=${USR_BIN_FOLDER}/codium/resources/app/resources/linux/code.png
+Type=Application
+Categories=IDE;Programming;
+"
 
 dropbox_downloader=https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb
 
