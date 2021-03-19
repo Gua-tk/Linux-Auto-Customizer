@@ -24,16 +24,24 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [ ] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
 - [ ] Add aliases topycharm, clion, etc  
 - [ ] Installations must be done by argument order apparition (add another column to installation_data to sort an integer that determines the order)
+- [ ] try refactoring the point above by using type, which recognizes alias and functions too
+- [ ] refactor installation bit to be installation order, which contains an integer that if it is greater than 0 means selected for install, and the integer determines the installation order
+- [ ] declare variables like DESK, GIT, etc
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
 - [ ] Split multifeatures in one function into different functions
 - [ ] Create source in bashrc with file bash_functions.sh with all sources calls
 - [ ] -h --help to show help to use the program.
 - [ ] Desktop wallpapers
-- [ ] Create generic version for the function output_proxy_exec to integrate with a feature ready to be installed
+- [ ] Create escape function, which returns an escaped sequence of characters, depending on the programming languages
+- [ ] Add argument to dummy commit
+- [ ] Refine extract function
+- [ ] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
-
+- [ ] Add special func in uninstall (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 
 ## Coming features
+- [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ... 
+- [ ] make `customizer.sh` 
 - [ ] Automount available drives.*
 - [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
