@@ -921,7 +921,7 @@ execute_installation_wrapper_install_feature()
   if [[ $1 == 1 ]]; then
     execute_installation_install_feature $2 $3 $4
   else
-    type ${program_name} &>/dev/null
+    type "${program_name}" &>/dev/null
     if [[ $? != 0 ]]; then
       execute_installation_install_feature $2 $3 $4
     else
@@ -1008,7 +1008,11 @@ main()
 
     if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
       >${BASH_FUNCTIONS_PATH}
+    else
+      # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
+      source ${BASH_FUNCTIONS_PATH}
     fi
+    
     # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
     if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${DIR_IN_PATH}" )" ]]; then
       echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASHRC_PATH}

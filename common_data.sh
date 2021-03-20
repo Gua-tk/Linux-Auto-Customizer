@@ -71,8 +71,8 @@ BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 # Path pointing to a folder that contains the desktop launchers of all users
 ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 
-# The variables that begin with FLAG_ can be changed using arguments. They will continue holding the same value until the
-# end of the execution until another argument
+# The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
+# the same value until the end of the execution until another argument
 FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
 FLAG_INSTALL=1  # 1 --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
 FLAG_QUIETNESS=1  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
