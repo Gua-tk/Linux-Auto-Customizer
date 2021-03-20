@@ -21,14 +21,15 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [x] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [x] To add more useful directory path variables in common_data.sh
 - [x] Make sure USR_BIN_FOLDER is present in any user roll
-- [x] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`  
+- [x] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`
+- [x] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
+
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
-- [x] Initial refactor of data table in README.md
+- [x] Refactor of data table in README.md
 ## Currently developing/refactoring features
 
 ## TO-DO
-- [ ] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
 - [ ] Add aliases topycharm, clion, etc  
 - [ ] Installations must be done by argument order apparition (add another column to installation_data to sort an integer that determines the order)
 - [ ] try refactoring the point above by using type, which recognizes alias and functions too

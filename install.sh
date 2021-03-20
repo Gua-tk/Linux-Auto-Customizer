@@ -848,14 +848,14 @@ install_templates()
 
 
 # Forces l as alias for ls -lAh
-install_ls-alias()
+install_l()
 {
   add_bash_function "${l_function}" l.sh
 }
 
 
 # Defines a function to extract all types of compressed files
-install_extract_function()
+install_extract()
 {
   add_bash_function "${extract_function}" extract.sh
 }
@@ -921,11 +921,11 @@ execute_installation_wrapper_install_feature()
   if [[ $1 == 1 ]]; then
     execute_installation_install_feature $2 $3 $4
   else
-    which ${program_name} &>/dev/null
+    type ${program_name} &>/dev/null
     if [[ $? != 0 ]]; then
       execute_installation_install_feature $2 $3 $4
     else
-      output_proxy_executioner "echo WARNING: $5 is already installed." $3
+      output_proxy_executioner "echo WARNING: $5 is already installed. Skipping..." $3
     fi
   fi
 }
@@ -941,8 +941,9 @@ execute_installation()
       quietness_bit=$( echo ${program} | cut -d ";" -f3 )
       overwrite_bit=$( echo ${program} | cut -d ";" -f4 )
       program_function=$( echo ${program} | cut -d ";" -f6 )
-      program_name=$( echo ${program_function} | cut -d "_" -f2- )
       program_privileges=$( echo ${program} | cut -d ";" -f5 )
+
+      program_name=$( echo ${program_function} | cut -d "_" -f2- )
       if [[ ${program_privileges} == 1 ]]; then
         if [[ ${EUID} -ne 0 ]]; then
           output_proxy_executioner "echo WARNING: $program_name needs root permissions to be installed. Skipping." ${quietness_bit}
@@ -960,6 +961,8 @@ execute_installation()
   done
 }
 
+# Receives a list of feature function name (install_pycharm, install_vlc...) and applies the current flags to it,
+# modifying the corresponding line of installation_data
 add_program()
 {
   while [[ $# -gt 0 ]]; do
@@ -969,8 +972,9 @@ add_program()
       program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev )
 
       if [[ "$1" == "${program_name}" ]]; then
-        # Add bit of installation yes/no
+        # Cut static bits
         rest=$(echo "${installation_data[$i]}" | cut -d ";" -f5- )
+        # Append static bits to the state of the flags
         new="${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
         installation_data[$i]=${new}
       fi
@@ -1147,7 +1151,7 @@ main()
         add_program install_copyq
       ;;
       --extract-function|-extract_function)
-        add_program install_extract_function
+        add_program install_extract
       ;;
       --f-irc|--firc|--Firc|--irc)
         add_program install_f-irc
@@ -1213,7 +1217,7 @@ main()
         add_program install_latex
       ;;
       --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
-        add_program install_ls-alias
+        add_program install_l
       ;;
       --mahjongg|--Mahjongg|--gnome-mahjongg)
         add_program install_gnome-mahjongg
