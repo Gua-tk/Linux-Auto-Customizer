@@ -418,13 +418,6 @@ install_dropbox()
   copy_launcher dropbox.desktop
 }
 
-# We assume that this compressed file contains only one folder in the root.
-# Argument 1: link to the compressed file
-# Argument 2: Final name of the folder
-# Argument 3: Decompression options: [z, j, J]
-# Argument 4: Relative path to the selected binary to create the links in the path from the just decompressed folder
-# Argument 5: Desired name for the hard-link that points to the previous binary
-# Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
 install_codium()
 {
   download_and_decompress ${codium_downloader} "codium" "z" "bin/codium" "codium"
@@ -964,7 +957,7 @@ execute_installation()
 add_program()
 {
   while [[ $# -gt 0 ]]; do
-    FLAG_ANY_INSTALLED=1  # Tells if there is any installed feature in order to determine if implicit to --all should be called
+    ANY_INSTALLED=1  # Tells if there is any installed feature in order to determine if implicit to --all should be called
     total=${#installation_data[*]}
     for (( i=0; i<$(( ${total} )); i++ )); do
       program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev )
@@ -972,19 +965,12 @@ add_program()
       if [[ "$1" == "${program_name}" ]]; then
         # Add bit of installation yes/no
         rest=$(echo "${installation_data[$i]}" | cut -d ";" -f5- )
-        new="${FLAG_INSTALL};${FLAG_FORCENESS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
+        new="${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
         installation_data[$i]=${new}
       fi
     done
     shift
   done
-}
-
-
-show_help()
-{
-  echo "Customizer usage"
-  echo "Arguments: "
 }
 
 ##################
@@ -1045,14 +1031,27 @@ main()
         SILENT=2
       ;;
 
-      -f|--force)
-        FLAG_FORCENESS=1
+      -o|--overwrite|--overwrite-if-present)
+        FLAG_OVERWRITE=1
       ;;
-      -e|--exit|--exit-on-error)
-        FLAG_FORCENESS=0
+      -s|--skip|--skip-if-installed)
+        FLAG_OVERWRITE=0
       ;;
 
-      -d|--dirty)
+      -i|--ignore|--ignore-errors)
+        FLAG_IGNORE_ERRORS=1
+      ;;
+      -e|--exit|--exit-on-error)
+        FLAG_IGNORE_ERRORS=0
+      ;;
+
+      # Force is the two previous active behaviours in one
+      -f|--force)
+        FLAG_IGNORE_ERRORS=1
+        FLAG_OVERWRITE=1
+      ;;
+
+      -d|--dirty|--no-autoclean)
         AUTOCLEAN=0
       ;;
       -c|--clean)
@@ -1062,20 +1061,13 @@ main()
         AUTOCLEAN=2
       ;;
 
-      -o|--overwrite)
-        FLAG_OVERWRITE=1
-      ;;
-      -s|--skip)
-        FLAG_OVERWRITE=0
-      ;;
-
-      -U|--Upgrade)
+      -U|--upgrade|--Upgrade)
         UPGRADE=2
       ;;
-      -u|--upgrade)
+      -u|--update)
         UPGRADE=1
       ;;
-      -k|-K|--keep-outdated)
+      -k|--keep-system-outdated)
         UPGRADE=0
       ;;
 
@@ -1087,7 +1079,7 @@ main()
       ;;
 
       -h|--help)
-        show_help
+        output_proxy_executioner "echo ${help_message}" ${SILENT}
         exit 0
       ;;
 
@@ -1351,7 +1343,9 @@ main()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [[ ${ANY_INSTALLED} == 0 ]]; then
-    add_all_programs
+    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${SILENT}
+    output_proxy_executioner "echo ${help_message}" ${SILENT}
+    exit 0
   fi
 
   ####### EXECUTION #######

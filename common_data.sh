@@ -11,9 +11,11 @@ output_proxy_executioner()
   if [[ $2 == 0 ]]; then
     $1
   elif [[ $2 == 1 ]]; then
-    comm=$(echo "$1" | cut -d " " -f1)
+    comm=$(echo "$1" | head -1 | cut -d " " -f1)
     if [[ "${comm}" == "echo" ]]; then
-      $1
+      # If it is a echo command, delete trailing echo and echo formatting
+      rest=$(echo "$1" | sed '1 s@^echo @@')
+      echo "$rest"
     else
       $1 &>/dev/null
     fi
@@ -74,12 +76,13 @@ ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
 FLAG_INSTALL=1  # 1 --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
 FLAG_QUIETNESS=1  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
-FLAG_FORCENESS=0  # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
-FLAG_ANY_INSTALLED=0  # 0 --> No features are provided as arguments, thus, implicit call to --all; 1 --> Any feature provided; no implicit call.
+FLAG_IGNORE_ERRORS=0  # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
 
+ANY_INSTALLED=0
 SILENT=1
 UPGRADE=2
 AUTOCLEAN=2
+
 ### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
 
 # PERSONAL_LAUNCHERS_DIR: /home/username/.local/share/applications
@@ -336,6 +339,82 @@ fi"
 google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
+
+help_message="Usage:
+[sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|[-e|--exit-on-error]]
+                       [[-f|--force]|[-o|--overwrite|--overwrite-if-present]|[-s|--skip|--skip-if-installed]]
+                       [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]
+                       [[-d|--dirty|--no-autoclean]|[-c|--clean]|[-C|-Clean]]
+                       [[-U|--Upgrade]|[-u|--upgrade]|[-k|-K|--keep-system-outdated]]
+                       [[-n|--not|-!]|[-y|--yes]]
+                       SELECTED_FEATURES_TO_INSTALL...
+
+Customizer install.sh performs the automatic configuration of a Linux environment by installing applications,
+adding bash functions, customizing terminal variables, declaring new useful global variables...
+
+Examples:
+    sudo bash install --dropbox --megasync         # Installs megasync and dropbox
+    bash install -v --pycharm                      # Installs Pycharm verbosely showing all the output
+    bash install -v --clion -Q --sublime           # Install Clion verbosely but install sublime_text silently
+    sudo bash install -o -i --nemo                 # Installs Nemo ignoring errors and overwriting previous installs
+    sudo bash install --all && bash install --all  # Installs all features, both root and user features
+
+
+Arguments:
+
+  -c, --clean                                Perform an apt-get autoremove at the end of installation if we are root
+  -C, --Clean                                Perform an apt-get autoremove and autoclean at the end of installation if
+                                             we are root
+  -d, --dirty, --no-autoclean                Do nothing at the end of installation
+
+
+  -i, --ignore, --ignore-errors              Default behaviour of bash, set +e
+  -e, --exit-on-error                        Exit the program if any command throws an error using set -e
+
+
+  -o, --overwrite, --overwrite-if-present    Overwrite if there are previous installation
+  -s, --skip, --skip-if-installed            Skip if the feature is detected in the system by using which
+
+
+  -v, --verbose                              Displays all the possible output
+  -q, --quiet                                Shows only install.sh basic informative output
+  -Q, --Quiet                                No output
+
+
+  -u, --update                               Performs an apt-get update before installation if we are root
+  -U, --upgrade, --Upgrade                   Performs an apt-get update and upgrade before installation if we are root
+  -k, --keep-system-outdated                 Do nothing before the installation
+
+
+  -n, --not                                  Do NOT install the selected features. Used to trim from wrappers
+  -y, --yes                                  Install the selected feature
+
+  Some install.sh arguments change the way in which each feature succeeding that argument is installed. This behaviour
+  is maintained until the end of the program, unless another argument changes this behaviour again.
+
+  For example, consider the following execution:
+      bash install -verbose --ignore-errors --overwrite-if-present --mendeley -Q --skip --discord
+
+  That will execute the script to install mendeley verbosely, ignoring errors and overwriting previous installations;
+  after that we install discord without output and skipping if it is present, but notice also we ignore errors too when
+  installing discord, because we activated the ignore errors behaviour before and it will be still on for the remaining
+  features.
+
+  By default, install.sh runs with the following implicit arguments:
+  --exit-on-error, --skip-if-installed, --quiet, -Clean, --Upgrade, --yes
+
+
+Features:
+
+install.sh has two types of selectable features: feature wrappers and individual features.
+  - Individual features are a certain installation, configuration or customization of a program or system module.
+  - Feature wrappers group many individual features with the same permissions related to the same topic: programming,
+    image edition, system cutomization...
+
+Available individual features:
+  --androidstudio --studio --android-studio      Android Studio
+
+"
 
 intellij_ultimate_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
 intellij_ultimate_launcher="[Desktop Entry]
