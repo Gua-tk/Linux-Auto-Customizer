@@ -157,7 +157,7 @@ create_links_in_path()
 #############################################
 
 
-install_android_studio()
+install_studio()
 {
   download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
 
@@ -193,7 +193,7 @@ install_discord()
 
 
 # Install IntelliJ Community
-install_intellij_community()
+install_ideac()
 {
   download_and_decompress ${intellij_community_downloader} "idea-ic" "z" "bin/idea.sh" "ideac"
 
@@ -206,7 +206,7 @@ install_intellij_community()
 
 
 # Install IntelliJ Ultimate
-install_intellij_ultimate()
+install_ideau()
 {
   download_and_decompress ${intellij_ultimate_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
 
@@ -236,7 +236,7 @@ install_mendeley()
 
 
 # Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
-install_pycharm_community()
+install_pycharm()
 {
   download_and_decompress ${pycharm_downloader} "pycharm-community" "z" "bin/pycharm.sh" "pycharm"
 
@@ -251,7 +251,7 @@ install_pycharm_community()
 
 
 # Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
-install_pycharm_professional()
+install_pycharmpro()
 {
   download_and_decompress ${pycharm_professional_downloader} "pycharm-professional" "z" "bin/pycharm.sh" "pycharmpro"
 
@@ -315,7 +315,7 @@ install_telegram()
 
 
 # Microsoft Visual Studio Code
-install_visualstudiocode()
+install_code()
 {
   download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
 
@@ -492,7 +492,7 @@ install_gnome-chess()
 
 
 # Install GNU parallel
-install_GNU_parallel()
+install_parallel()
 {
   apt-get -y install parallel
 }
@@ -508,7 +508,7 @@ install_gparted()
 
 # Checks if Google Chrome is already installed and installs it and its dependencies
 # Needs root permission
-install_google_chrome()
+install_google-chrome()
 {
   # Dependencies
   apt-get install -y libxss1 libappindicator1 libindicator7
@@ -540,7 +540,7 @@ install_inkscape()
 }
 
 
-install_jdk11()
+install_java()
 {
   apt -y install default-jdk
 }
@@ -556,7 +556,7 @@ install_latex()
 }
 
 
-install_mahjongg()
+install_gnome-mahjongg()
 {
   apt-get install -y gnome-mahjongg
   copy_launcher "org.gnome.Mahjongg.desktop"
@@ -583,7 +583,7 @@ install_mendeley_dependencies()
 }
 
 
-install_mines()
+install_gnome-mines()
 {
   apt-get install -y gnome-mines
   copy_launcher "org.gnome.Mines.desktop"
@@ -593,7 +593,7 @@ install_mines()
 # Automatic install + Creates desktop launcher in launcher and in desktop. 
 install_musicmanager()
 {
-  download_and_install_package ${music_manager_downloader}z
+  download_and_install_package ${music_manager_downloader}
   copy_launcher "google-musicmanager.desktop"
 }
 
@@ -703,7 +703,7 @@ install_shotcut()
 }
 
 
-install_solitaire()
+install_aisleriot()
 {
   apt-get install -y aisleriot
   copy_launcher sol.desktop
@@ -718,7 +718,7 @@ install_steam()
 }
 
 
-install_sudoku()
+install_gnome-sudoku()
 {
   apt-get install -y gnome-sudoku
   copy_launcher org.gnome.Sudoku.desktop
@@ -752,11 +752,14 @@ install_tmux()
   create_manual_launcher ${tmux_launcher} tmux
 }
 
+
 install_torbrowser()
 {
   apt-get install -y torbrowser-launcher
   copy_launcher "torbrowser.desktop"
 }
+
+
 install_transmission()
 {
   apt-get install -y transmission
@@ -785,6 +788,9 @@ install_vlc()
 # VirtualBox
 install_virtualbox()
 {
+  # Dependencies
+  apt-get install libqt5opengl5
+  
   download_and_install_package ${virtualbox_downloader}
   copy_launcher "virtualbox.desktop"
 }
@@ -1087,7 +1093,7 @@ main()
       ### INDIVIDUAL ARGUMENTS ###
       # Sorted alphabetically by function name:
       --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
-        add_program install_android_studio
+        add_program install_studio
       ;;
       --audacity|--Audacity)
         add_program install_audacity
@@ -1186,22 +1192,22 @@ main()
         add_program install_history_optimization
       ;;
       --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
-        add_program install_GNU_parallel
+        add_program install_parallel
       ;;
       --chrome|--Chrome|--google-chrome|--Google-Chrome)
-        add_program install_google_chrome
+        add_program install_google-chrome
       ;;
       --inkscape|--ink-scape|--Inkscape|--InkScape)
         add_program install_inkscape
       ;;
       --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
-        add_program install_intellij_community
+        add_program install_ideac
       ;;
       --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
-        add_program install_intellij_ultimate
+        add_program install_ideau
       ;;
       --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
-        add_program install_jdk11
+        add_program install_java
       ;;
       --latex|--LaTeX|--tex|--TeX)
         add_program install_latex
@@ -1210,7 +1216,7 @@ main()
         add_program install_ls-alias
       ;;
       --mahjongg|--Mahjongg|--gnome-mahjongg)
-        add_program install_mahjongg
+        add_program install_gnome-mahjongg
       ;;
       --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
         add_program install_megasync
@@ -1222,7 +1228,7 @@ main()
         add_program install_mendeley_dependencies
       ;;
       --mines|--Mines|--GNU-mines|--gnome-mines|--gnomemines)
-        add_program install_mines
+        add_program install_gnome-mines
       ;;
       --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
         add_program install_nemo
@@ -1249,10 +1255,10 @@ main()
         add_program install_prompt
       ;;
       --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
-        add_program install_pycharm_community
+        add_program install_pycharm
       ;;
       --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
-        add_program install_pycharm_professional
+        add_program install_pycharmpro
       ;;
       -p|--python|--python3|--Python3|--Python)
         add_program install_python3
@@ -1270,10 +1276,10 @@ main()
         add_program install_shortcuts
       ;;
       --sudoku|--Sudoku|--gnome-sudoku)
-        add_program install_sudoku
+        add_program install_gnome-sudoku
       ;;
       --solitaire|--Solitaire|--gnome-solitaire|--aisleriot)
-        add_program install_solitaire
+        add_program install_aisleriot
       ;;
       --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
         add_program install_sublime
@@ -1318,7 +1324,7 @@ main()
         add_program install_virtualbox
       ;;
       --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
-        add_program install_visualstudiocode
+        add_program install_code
       ;;
       --vlc|--VLC|--Vlc)
         add_program install_vlc

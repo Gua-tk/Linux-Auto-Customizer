@@ -14,15 +14,20 @@ Software that needs to be "manually" installed as normal user is stored under `~
  without the path to the binary. This script forces `~/.local/bin` to be under your `PATH`, so the symlinks to the binaries will be created in there.
   (user launchers are located in `~/.local/share/applications`). It also creates a launcher for each in the Desktop.
  
-
-## Currently developing features
-- [x] Delete / rearrange arguments of one letter 
+## Developed features
+#### Aleix
 - [x] Create argument (! or --not) for deselecting installed or uninstalled features.
 - [x] -v --verbose Verbose mode (make the software not verbose by default)
 - [x] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [x] To add more useful directory path variables in common_data.sh
 - [x] Make sure USR_BIN_FOLDER is present in any user roll
 - [x] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`  
+#### Axel
+- [x] Delete / rearrange arguments of one letter 
+- [x] Initial refactor of data table in README.md
+## Currently developing/refactoring features
+
+## TO-DO
 - [ ] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
 - [ ] Add aliases topycharm, clion, etc  
 - [ ] Installations must be done by argument order apparition (add another column to installation_data to sort an integer that determines the order)
@@ -32,7 +37,6 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
 - [ ] Split multifeatures in one function into different functions
 - [ ] Create source in bashrc with file bash_functions.sh with all sources calls
-- [ ] -h --help to show help to use the program.
 - [ ] [ ] Create generic version for the function output_proxy_exec to integrate with a feature ready to be installed
 - [ ] Desktop wallpapers
 - [ ] Create escape function, which returns an escaped sequence of characters, depending on the programming languages
