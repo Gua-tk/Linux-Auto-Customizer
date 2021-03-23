@@ -23,6 +23,8 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [x] Make sure USR_BIN_FOLDER is present in any user roll
 - [x] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`
 - [x] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
+- [x] try refactoring the point above by using type, which recognizes alias and functions too
+
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
@@ -30,9 +32,8 @@ Software that needs to be "manually" installed as normal user is stored under `~
 ## Currently developing/refactoring features
 
 ## TO-DO
-- [ ] Add aliases topycharm, clion, etc  
+- [ ] Add aliases topycharm, clion, etc
 - [ ] Installations must be done by argument order apparition (add another column to installation_data to sort an integer that determines the order)
-- [ ] try refactoring the point above by using type, which recognizes alias and functions too
 - [ ] refactor installation bit to be installation order, which contains an integer that if it is greater than 0 means selected for install, and the integer determines the installation order
 - [ ] declare variables like DESK, GIT, etc
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
@@ -43,6 +44,7 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [ ] Create escape function, which returns an escaped sequence of characters, depending on the programming languages
 - [ ] Add argument to dummy commit
 - [ ] Refine extract function
+- [ ] Standarize fromat of all launchers: Name, Type, Comment, Version, StartupWMClass, Icon, Exec, Terminal, GenericName, Categories=IDE;Programming;, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 - [ ] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 - [ ] Add special func in uninstall (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall

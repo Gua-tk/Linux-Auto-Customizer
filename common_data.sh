@@ -212,9 +212,9 @@ standard_install=("templates" "virtualbox" "environment" "converters" "thunderbi
 add_root_programs()
 {
   for program in ${installation_data[@]}; do
-    permissions=$(echo ${program} | cut -d ";" -f4)
+    permissions=$(echo ${program} | cut -d ";" -f5)
     if [[ ${permissions} != 0 ]]; then
-      name=$(echo ${program} | cut -d ";" -f5)
+      name=$(echo ${program} | cut -d ";" -f6)
       add_program ${name}
     fi
   done
@@ -223,9 +223,9 @@ add_root_programs()
 add_user_programs()
 {
   for program in ${installation_data[@]}; do
-    permissions=$(echo ${program} | cut -d ";" -f4)
+    permissions=$(echo ${program} | cut -d ";" -f5)
     if [[ ${permissions} != 1 ]]; then
-      name=$(echo ${program} | cut -d ";" -f5)
+      name=$(echo ${program} | cut -d ";" -f6)
       add_program ${name}
     fi
   done
@@ -234,7 +234,7 @@ add_user_programs()
 add_all_programs()
 {
   for program in ${installation_data[@]}; do
-    name=$(echo ${program} | cut -d ";" -f5)
+    name=$(echo ${program} | cut -d ";" -f6)
     add_program $name
   done
 }
@@ -246,6 +246,7 @@ add_all_programs()
 # Variables used exclusively in the corresponding installation function. Alphabetically sorted.
 
 android_studio_downloader=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz
+android_studio_alias="alias studio=\"studio . &>/dev/null &\""
 android_studio_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
@@ -276,6 +277,7 @@ Exec=clion %F
 Comment=C and C++ IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-clion"
+clion_alias="alias clion=\"clion . &>/dev/null &\""
 
 clonezilla_launcher="[Desktop Entry]
 Name=CloneZilla
@@ -340,81 +342,6 @@ google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable
 
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 
-help_message="Usage:
-[sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|[-e|--exit-on-error]]
-                       [[-f|--force]|[-o|--overwrite|--overwrite-if-present]|[-s|--skip|--skip-if-installed]]
-                       [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]
-                       [[-d|--dirty|--no-autoclean]|[-c|--clean]|[-C|-Clean]]
-                       [[-U|--Upgrade]|[-u|--upgrade]|[-k|-K|--keep-system-outdated]]
-                       [[-n|--not|-!]|[-y|--yes]]
-                       SELECTED_FEATURES_TO_INSTALL...
-
-Customizer install.sh performs the automatic configuration of a Linux environment by installing applications,
-adding bash functions, customizing terminal variables, declaring new useful global variables...
-
-Examples:
-    sudo bash install --dropbox --megasync         # Installs megasync and dropbox
-    bash install -v --pycharm                      # Installs Pycharm verbosely showing all the output
-    bash install -v --clion -Q --sublime           # Install Clion verbosely but install sublime_text silently
-    sudo bash install -o -i --nemo                 # Installs Nemo ignoring errors and overwriting previous installs
-    sudo bash install --all && bash install --all  # Installs all features, both root and user features
-
-
-Arguments:
-
-  -c, --clean                                Perform an apt-get autoremove at the end of installation if we are root
-  -C, --Clean                                Perform an apt-get autoremove and autoclean at the end of installation if
-                                             we are root
-  -d, --dirty, --no-autoclean                Do nothing at the end of installation
-
-
-  -i, --ignore, --ignore-errors              Default behaviour of bash, set +e
-  -e, --exit-on-error                        Exit the program if any command throws an error using set -e
-
-
-  -o, --overwrite, --overwrite-if-present    Overwrite if there are previous installation
-  -s, --skip, --skip-if-installed            Skip if the feature is detected in the system by using which
-
-
-  -v, --verbose                              Displays all the possible output
-  -q, --quiet                                Shows only install.sh basic informative output
-  -Q, --Quiet                                No output
-
-
-  -u, --update                               Performs an apt-get update before installation if we are root
-  -U, --upgrade, --Upgrade                   Performs an apt-get update and upgrade before installation if we are root
-  -k, --keep-system-outdated                 Do nothing before the installation
-
-
-  -n, --not                                  Do NOT install the selected features. Used to trim from wrappers
-  -y, --yes                                  Install the selected feature
-
-  Some install.sh arguments change the way in which each feature succeeding that argument is installed. This behaviour
-  is maintained until the end of the program, unless another argument changes this behaviour again.
-
-  For example, consider the following execution:
-      bash install -verbose --ignore-errors --overwrite-if-present --mendeley -Q --skip --discord
-
-  That will execute the script to install mendeley verbosely, ignoring errors and overwriting previous installations;
-  after that we install discord without output and skipping if it is present, but notice also we ignore errors too when
-  installing discord, because we activated the ignore errors behaviour before and it will be still on for the remaining
-  features.
-
-  By default, install.sh runs with the following implicit arguments:
-  --exit-on-error, --skip-if-installed, --quiet, -Clean, --Upgrade, --yes
-
-
-Features:
-
-install.sh has two types of selectable features: feature wrappers and individual features.
-  - Individual features are a certain installation, configuration or customization of a program or system module.
-  - Feature wrappers group many individual features with the same permissions related to the same topic: programming,
-    image edition, system cutomization...
-
-Available individual features:
-  --androidstudio --studio --android-studio      Android Studio
-
-"
 
 intellij_ultimate_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
 intellij_ultimate_launcher="[Desktop Entry]
@@ -427,6 +354,8 @@ Comment=Capable and Ergonomic IDE for JVM
 Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-idea"
+ideau_alias="alias ideau=\"ideau . &>/dev/null &\""
+
 
 intellij_community_downloader="https://download.jetbrains.com/idea/ideaIC-2020.3.1.tar.gz"
 intellij_community_launcher="[Desktop Entry]
@@ -439,6 +368,7 @@ Icon=${HOME_FOLDER}/.bin/idea-ic/bin/idea.png
 Exec=ideac %f
 Name=IntelliJ IDEA Community Edition
 StartupWMClass=jetbrains-idea"
+ideac_alias="alias ideac=\"ideac . &>/dev/null &\""
 
 l_function="alias l=\"ls -lAh --color=auto\""
 
@@ -492,6 +422,7 @@ Exec=pycharm %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
+pycharm_alias="alias pycharm=\"pycharm . &>/dev/null &\""
 
 pycharm_professional_downloader=https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz
 pycharm_professional_launcher="[Desktop Entry]
@@ -503,6 +434,8 @@ Exec=pycharm-pro %F
 Comment=Python IDE for Professional Developers
 Terminal=false
 StartupWMClass=jetbrains-pycharm"
+pycharmpro_alias="alias pycharmpro=\"pycharmpro . &>/dev/null &\""
+
 
 pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
 
@@ -633,8 +566,6 @@ extract_function="
     fi
   }"
 
-# Contains the text shown as help
-help_text="HELP!!!"
 
 L_function="
 

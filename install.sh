@@ -152,6 +152,21 @@ create_links_in_path()
 }
 
 
+### AUXILIAR FUNCTIONS ###
+# Installs a new bash feature, installing its script into your environment using .bashrc, which uses .bash_functions
+# Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions
+# Argument 2: Name of the file.
+add_bash_function()
+{
+  # Write code to bash functions folder with the name of the feature we want to install
+  echo -e "$1" > ${BASH_FUNCTIONS_FOLDER}/$2
+  import_line="source ${BASH_FUNCTIONS_FOLDER}/$2"
+  # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
+  if [[ -z $(cat ${BASH_FUNCTIONS_PATH} | grep -Fo "${import_line}") ]]; then
+    echo ${import_line} >> ${BASH_FUNCTIONS_PATH}
+  fi
+}
+
 #############################################
 ###### SOFTWARE INSTALLATION FUNCTIONS ######
 #############################################
@@ -163,6 +178,8 @@ install_studio()
 
   # Create launcher
   create_manual_launcher "${android_studio_launcher}" "Android_Studio"
+
+  add_bash_function "${android_studio_alias}" "studio_alias.sh"
 }
 
 
@@ -178,6 +195,8 @@ install_clion()
   register_file_associations "text/x-c++src" "clion.desktop"
   register_file_associations "text/x-chdr" "clion.desktop"
   register_file_associations "text/x-csrc" "clion.desktop"
+
+  add_bash_function "${clion_alias}" "clion_alias.sh"
 }
 
 
@@ -202,6 +221,8 @@ install_ideac()
 
   # register file associations
   register_file_associations "text/x-java" "ideac.desktop"
+
+  add_bash_function "${ideac_alias}" "ideac_alias.sh"
 }
 
 
@@ -215,6 +236,8 @@ install_ideau()
 
   # register file associations
   register_file_associations "text/x-java" "ideau.desktop"
+
+  add_bash_function "${ideau_alias}" "ideau_alias.sh"
 }
 
 
@@ -247,6 +270,8 @@ install_pycharm()
   register_file_associations "text/x-python" "pycharm.desktop"
   register_file_associations "text/x-python3" "pycharm.desktop"
   register_file_associations "text/x-sh" "pycharm.desktop"
+
+  add_bash_function "${pycharm_alias}" "pycharm_alias.sh"
 }
 
 
@@ -801,23 +826,6 @@ install_virtualbox()
 #############################
 # Most (all) of them just use user permissions
 
-### AUXILIAR FUNCTIONS ###
-# Installs a new bash feature, installing its script into your environment using .bashrc, which uses .bash_functions
-# Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions
-# Argument 2: Name of the file.
-add_bash_function()
-{
-  # Write code to bash functions folder with the name of the feature we want to install
-  echo -e "$1" > ${BASH_FUNCTIONS_FOLDER}/$2
-  import_line="source ${BASH_FUNCTIONS_FOLDER}/$2"
-  # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
-  echo $import_line
-  if [[ -z $(cat ${BASH_FUNCTIONS_PATH} | grep -Fo "${import_line}") ]]; then
-    echo ${import_line} >> ${BASH_FUNCTIONS_PATH}
-  fi
-}
-
-
 
 install_converters()
 {
@@ -1012,7 +1020,7 @@ main()
       # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
       source ${BASH_FUNCTIONS_PATH}
     fi
-    
+
     # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
     if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${DIR_IN_PATH}" )" ]]; then
       echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASHRC_PATH}
