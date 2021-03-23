@@ -6,7 +6,8 @@
 
 #### Structures
 * The software that is manually installed is put under `USR_BIN_FOLDER`, which by default points to `~/.bin`. `~/.bin` is always **present**.
-* The bash code that has to be included in the user shell environment 
+* Shell features are not installed directly into `~/.bashrc`, instead, there is always present the file `~/.bash_functions`, which is a file imported by `~/.bashrc`. In `~/.bash_functions`, you can write imports to individual scripts that provide a feature to the shell environment. Usually those scripts are stored under `~/.bin/bash_functions/`, which is a location always present. So the generic way to include new content to `~/.bashrc` is writing a script to `~/.bin/bash_functions` and including it in `~/.bash_functions/`.
+* Soft links to include a program in the path are created under `~/.local/bin` which is a directory that is assured to be in the PATH 
 
 #### Behaviour
 * Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
@@ -15,15 +16,8 @@
 #### Syntax
 * All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
 * All variables must be protected by using "" to avoid resplitting because of spaces, despite, customizer is not emphasized to work with spaces in its variables. Spaces are *evil* and are not considered.
+* There is one blankline between functions in the same section. There is two blanklines between sections.
 
-Software that needs to be "manually" installed as normal user is stored under `~/.bin`.
-
-
-| shell | | Backups your `$HOME/.bashrc` to `$HOME/.bashrc.bak` and installs shell features in `$HOME/.bashrc` including: history optimization, environament aliases, functions and global variables. See *Shell customization* section for more information. Uninstalls the feature by restoring `$HOME/.bashrc.bak` to `$HOME/.bashrc` if present. | --shell --shellCustomization --shellOptimization --environment --environmentaliases --environment_aliases --environmentAliases --alias --Aliases | 
-
- without the path to the binary. This script forces `~/.local/bin` to be under your `PATH`, so the symlinks to the binaries will be created in there.
-  (user launchers are located in `~/.local/share/applications`). It also creates a launcher for each in the Desktop.
- 
 ## Developed features
 #### Aleix
 - [x] Create argument (! or --not) for deselecting installed or uninstalled features.
@@ -46,6 +40,7 @@ Software that needs to be "manually" installed as normal user is stored under `~
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
 - [x] Refactor of data table in README.md
+
 ## Currently developing/refactoring features
 
 ## TO-DO
@@ -53,7 +48,7 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [ ] Desktop wallpapers
 - [ ] Create escape function, which returns an escaped sequence of characters
 - [ ] Refine extract function
-- [ ] Standarize fromat of all launchers: Name, Type, Comment, Version, StartupWMClass, Icon, Exec, Terminal, GenericName, Categories=IDE;Programming;, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
+- [ ] Standarize fromat of all launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 - [ ] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 - [ ] Add special func in uninstall (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
