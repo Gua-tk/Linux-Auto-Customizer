@@ -107,17 +107,17 @@ fi
 download_and_decompress()
 {
   # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -f ${USR_BIN_FOLDER}/downloaded_program*
+  rm -f ${USR_BIN_FOLDER}/downloading_program*
   # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -O "downloaded_program" $1)
+  (cd ${USR_BIN_FOLDER}; wget -qO "downloading_program" --show-progress "$1")
   # Capture root folder name
-  program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloaded_program)
+  program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloading_program)
   # Clean to avoid conflicts with previously installed software or aborted installation
   rm -Rf "${USR_BIN_FOLDER}/${program_folder_name}"
   # Decompress in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloaded_program
+  (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloading_program
   # Delete downloaded files which will be no longer used
-  rm -f ${USR_BIN_FOLDER}/downloaded_program*
+  rm -f ${USR_BIN_FOLDER}/downloading_program*
   # Clean older installation to avoid conflicts
   rm -Rf "${USR_BIN_FOLDER}/$2"
   # Rename folder for coherence
@@ -333,7 +333,7 @@ install_visualstudiocode()
 download_and_install_package()
 {
   rm -f ${USR_BIN_FOLDER}/downloading_package*
-  (cd ${USR_BIN_FOLDER}; wget -O downloading_package $1)
+  (cd ${USR_BIN_FOLDER}; wget -qO downloading_package --show-progress $1)
   dpkg -i ${USR_BIN_FOLDER}/downloading_package
   rm -f ${USR_BIN_FOLDER}/downloading_package*
 }
@@ -418,13 +418,6 @@ install_dropbox()
   copy_launcher dropbox.desktop
 }
 
-# We assume that this compressed file contains only one folder in the root.
-# Argument 1: link to the compressed file
-# Argument 2: Final name of the folder
-# Argument 3: Decompression options: [z, j, J]
-# Argument 4: Relative path to the selected binary to create the links in the path from the just decompressed folder
-# Argument 5: Desired name for the hard-link that points to the previous binary
-# Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
 install_codium()
 {
   download_and_decompress ${codium_downloader} "codium" "z" "bin/codium" "codium"
