@@ -107,17 +107,17 @@ fi
 download_and_decompress()
 {
   # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -f ${USR_BIN_FOLDER}/downloaded_program*
+  rm -f ${USR_BIN_FOLDER}/downloading_program*
   # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -O "downloaded_program" $1)
+  (cd ${USR_BIN_FOLDER}; wget -qO "downloading_program" --show-progress "$1")
   # Capture root folder name
-  program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloaded_program)
+  program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloading_program)
   # Clean to avoid conflicts with previously installed software or aborted installation
   rm -Rf "${USR_BIN_FOLDER}/${program_folder_name}"
   # Decompress in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloaded_program
+  (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloading_program
   # Delete downloaded files which will be no longer used
-  rm -f ${USR_BIN_FOLDER}/downloaded_program*
+  rm -f ${USR_BIN_FOLDER}/downloading_program*
   # Clean older installation to avoid conflicts
   rm -Rf "${USR_BIN_FOLDER}/$2"
   # Rename folder for coherence
@@ -358,7 +358,7 @@ install_code()
 download_and_install_package()
 {
   rm -f ${USR_BIN_FOLDER}/downloading_package*
-  (cd ${USR_BIN_FOLDER}; wget -O downloading_package $1)
+  (cd ${USR_BIN_FOLDER}; wget -qO downloading_package --show-progress $1)
   dpkg -i ${USR_BIN_FOLDER}/downloading_package
   rm -f ${USR_BIN_FOLDER}/downloading_package*
 }
