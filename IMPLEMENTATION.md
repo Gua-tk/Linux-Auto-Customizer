@@ -36,7 +36,6 @@
 - [x] Split multifeatures in one function into different functions
 - [x] Create source in bashrc with file bash_functions.sh with all sources calls
 
-
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
 - [x] Refactor of data table in README.md

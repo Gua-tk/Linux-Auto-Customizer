@@ -910,9 +910,22 @@ install_terminal_background()
   dconf write /org/gnome/terminal/legacy/profiles:/${profile}/background-color "'rgb(0,0,0)'"
 }
 
-install_wallpapers()
+install_chwlppr()
 {
-  echo install
+  # Install script changer to be executed manually or with crontab automatically
+  echo -e ${wallpapers_changer_script} > ${USR_BIN_FOLDER}/wallpaper_changer.sh
+  chmod 775 ${USR_BIN_FOLDER}/wallpaper_changer.sh
+  ln -sf ${USR_BIN_FOLDER}/wallpaper_changer.sh ${DIR_IN_PATH}/chwlppr
+
+  echo -e ${wallpapers_cronjob} > ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
+  crontab ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
+
+
+  # Download and install wallpaper
+  git clone ${wallpapers_downloader} ${XDG_PICTURES_DIR}
+  mv ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz ${XDG_PICTURES_DIR}
+  $(cd ${XDG_PICTURES_DIR}; tar -xzf *.tar.gz)
+  rm -f ${XDG_PICTURES_DIR}/*.tar.gz
 }
 
 
@@ -1363,8 +1376,8 @@ main()
       --vlc|--VLC|--Vlc)
         add_program install_vlc
       ;;
-      --Wallpapers|--wallpapers)
-        add_program install_wallpapers
+      --Wallpapers|--wallpapers|--chwlppr)
+        add_program install_chwlppr
       ;;
 
       ### WRAPPER ARGUMENTS ###

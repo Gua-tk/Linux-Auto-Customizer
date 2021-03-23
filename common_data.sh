@@ -95,6 +95,8 @@ AUTOCLEAN=2
 # BASHRC_PATH: /home/username/.bashrc
 # DIR_IN_PATH: /home/username/.local/bin
 # HOME_FOLDER: /home/username
+# BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions
+# BASH_FUNCTIONS_PATH: /home/username/.bash_functions
 
 # Imported from ${HOME}/.config/user-dirs.dirs
 # XDG_DESKTOP_DIR: /home/username/Desktop
@@ -192,7 +194,7 @@ installation_data=(
 "0;0;0;0;1;install_virtualbox"
 "0;0;0;0;0;install_code"
 "0;0;0;0;1;install_vlc"
-"0;0;0;0;0;install_wallpapers"
+"0;0;0;0;0;install_chwlppr"
 )
 
 
@@ -527,6 +529,13 @@ Terminal=false
 StartupWMClass=visual-studio-code"
 code_alias="alias code=\"code . &>/dev/null &\""
 
+wallpapers_downloader=https://github.com/AleixMT/wallpapers
+wallpapers_changer_script="#!/bin/bash
+DIR=\"${XDG_PICTURES_DIR}\"
+PIC=\$(ls $DIR | shuf -n1)
+gsettings set or.gnome.desktop.background picture-uri 'file://${DIR}/${PIC}'
+"
+wallpapers_cronjob="* * * * * . ${USR_BIN_FOLDER}/wallpaper_changer.sh"
 
 ###########################
 ##### SYSTEM FEATURES #####
