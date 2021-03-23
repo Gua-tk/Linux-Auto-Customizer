@@ -287,6 +287,8 @@ install_pycharmpro()
   register_file_associations "text/x-sh" "pycharm-pro.desktop"
   register_file_associations "text/x-python" "pycharm-pro.desktop"
   register_file_associations "text/x-python3" "pycharm-pro.desktop"
+
+  add_bash_function "${pycharmpro_alias}" "pycharmpro_alias.sh"
 }
 
 
@@ -326,6 +328,8 @@ install_sublime()
   register_file_associations "text/x-csrc" "sublime-text.desktop"
   register_file_associations "text/x-python" "sublime-text.desktop"
   register_file_associations "text/x-python3" "sublime-text.desktop"
+
+  add_bash_function "${sublime_alias}" "sublime_alias.sh"
 }
 
 
@@ -346,6 +350,8 @@ install_code()
 
   # Create desktop launcher entry
   create_manual_launcher "${visualstudiocode_launcher}" "code"
+
+  add_bash_function "${code_alias}" "code_alias.sh"
 }
 
 
@@ -830,10 +836,11 @@ install_virtualbox()
 install_converters()
 {
   rm -Rf ${USR_BIN_FOLDER}/converters
-  git clone ${converters_downloader} ${USR_BIN_FOLDER}
+  mkdir -p ${USR_BIN_FOLDER}/converters
+  git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
 
-  for converter in $(ls ${USR_BIN_FOLDER}/converters); do
-    create_links_in_path ${USR_BIN_FOLDER}/converters/${converter} $(echo ${converter} | cut -d "." -f1)
+  for converter in $(ls ${USR_BIN_FOLDER}/converters/converters); do
+    create_links_in_path ${USR_BIN_FOLDER}/converters/converters/${converter} $(echo ${converter} | cut -d "." -f1)
   done
 
   add_bash_function ${converters_functions} converters.sh
@@ -900,7 +907,29 @@ install_prompt()
 
 install_terminal_background()
 {
-  dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)/background-color "'rgb(0,0,0)'"
+  profile=$(dconf list /org/gnome/terminal/legacy/profiles:/)
+  dconf write /org/gnome/terminal/legacy/profiles:/${profile}/background-color "'rgb(0,0,0)'"
+}
+
+install_chwlppr()
+{
+  # Install script changer to be executed manually or with crontab automatically
+  echo "${wallpapers_changer_script}" > ${USR_BIN_FOLDER}/wallpaper_changer.sh
+  chmod 775 ${USR_BIN_FOLDER}/wallpaper_changer.sh
+  ln -sf ${USR_BIN_FOLDER}/wallpaper_changer.sh ${DIR_IN_PATH}/chwlppr
+
+  echo "${wallpapers_cronjob}" > ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
+  crontab ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
+
+
+  # Download and install wallpaper
+  rm -Rf ${XDG_PICTURES_DIR}/wallpapers
+  mkdir -p ${XDG_PICTURES_DIR}/wallpapers
+  git clone ${wallpapers_downloader} ${XDG_PICTURES_DIR}/wallpapers
+  cp ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz ${XDG_PICTURES_DIR}
+  rm -Rf ${XDG_PICTURES_DIR}/wallpapers
+  $(cd ${XDG_PICTURES_DIR}; tar -xzf *.tar.gz)
+  rm -f ${XDG_PICTURES_DIR}/*.tar.gz
 }
 
 
@@ -941,31 +970,33 @@ execute_installation_wrapper_install_feature()
 execute_installation()
 {
   space=" "
-  for program in ${installation_data[@]}; do
-    # Installation bit processiong
-    installation_bit=$( echo ${program} | cut -d ";" -f1 )
-    if [[ ${installation_bit} == 1 ]]; then
-      forceness_bit=$( echo ${program} | cut -d ";" -f2 )
-      quietness_bit=$( echo ${program} | cut -d ";" -f3 )
-      overwrite_bit=$( echo ${program} | cut -d ";" -f4 )
-      program_function=$( echo ${program} | cut -d ";" -f6 )
-      program_privileges=$( echo ${program} | cut -d ";" -f5 )
+  for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
+    for program in ${installation_data[@]}; do
+      # Installation bit processiong
+      installation_bit=$( echo ${program} | cut -d ";" -f1 )
+      if [[ ${installation_bit} == ${i} ]]; then
+        forceness_bit=$( echo ${program} | cut -d ";" -f2 )
+        quietness_bit=$( echo ${program} | cut -d ";" -f3 )
+        overwrite_bit=$( echo ${program} | cut -d ";" -f4 )
+        program_function=$( echo ${program} | cut -d ";" -f6 )
+        program_privileges=$( echo ${program} | cut -d ";" -f5 )
 
-      program_name=$( echo ${program_function} | cut -d "_" -f2- )
-      if [[ ${program_privileges} == 1 ]]; then
-        if [[ ${EUID} -ne 0 ]]; then
-          output_proxy_executioner "echo WARNING: $program_name needs root permissions to be installed. Skipping." ${quietness_bit}
-        else
-          execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
-        fi
-      elif [[ ${program_privileges} == 0 ]]; then
-        if [[ ${EUID} -ne 0 ]]; then
-          execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
-        else
-          output_proxy_executioner "echo WARNING: $program_name needs user permissions to be installed. Skipping." ${quietness_bit}
+        program_name=$( echo ${program_function} | cut -d "_" -f2- )
+        if [[ ${program_privileges} == 1 ]]; then
+          if [[ ${EUID} -ne 0 ]]; then
+            output_proxy_executioner "echo WARNING: $program_name needs root permissions to be installed. Skipping." ${quietness_bit}
+          else
+            execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
+          fi
+        elif [[ ${program_privileges} == 0 ]]; then
+          if [[ ${EUID} -ne 0 ]]; then
+            execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
+          else
+            output_proxy_executioner "echo WARNING: $program_name needs user permissions to be installed. Skipping." ${quietness_bit}
+          fi
         fi
       fi
-    fi
+    done
   done
 }
 
@@ -974,7 +1005,6 @@ execute_installation()
 add_program()
 {
   while [[ $# -gt 0 ]]; do
-    ANY_INSTALLED=1  # Tells if there is any installed feature in order to determine if implicit to --all should be called
     total=${#installation_data[*]}
     for (( i=0; i<$(( ${total} )); i++ )); do
       program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev )
@@ -985,6 +1015,11 @@ add_program()
         # Append static bits to the state of the flags
         new="${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
         installation_data[$i]=${new}
+        # Update flags and program counter
+        if [[ ${FLAG_INSTALL} -gt 0 ]]; then
+          NUM_INSTALLATION=$(( ${NUM_INSTALLATION} + 1 ))
+          FLAG_INSTALL=${NUM_INSTALLATION}
+        fi
       fi
     done
     shift
@@ -1097,7 +1132,7 @@ main()
         FLAG_INSTALL=0
       ;;
       -y|--yes)
-        FLAG_INSTALL=1
+        FLAG_INSTALL=${NUM_INSTALLATION}
       ;;
 
       -h|--help)
@@ -1345,6 +1380,9 @@ main()
       --vlc|--VLC|--Vlc)
         add_program install_vlc
       ;;
+      --Wallpapers|--wallpapers|--chwlppr)
+        add_program install_chwlppr
+      ;;
 
       ### WRAPPER ARGUMENTS ###
       --user|--regular|--normal)
@@ -1364,7 +1402,7 @@ main()
   done
 
   # If we don't receive arguments we try to install everything that we can given our permissions
-  if [[ ${ANY_INSTALLED} == 0 ]]; then
+  if [[ ${NUM_INSTALLATION} == 0 ]]; then
     output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${SILENT}
     output_proxy_executioner "echo ${help_message}" ${SILENT}
     exit 0

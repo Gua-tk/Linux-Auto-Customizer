@@ -74,14 +74,17 @@ ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
 FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
-FLAG_INSTALL=1  # 1 --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
+FLAG_INSTALL=1  # 1 or more --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
+# Also, flag_install is the number used to determine the installation order
 FLAG_QUIETNESS=1  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
 FLAG_IGNORE_ERRORS=0  # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
 
-ANY_INSTALLED=0
+NUM_INSTALLATION=1
 SILENT=1
 UPGRADE=2
 AUTOCLEAN=2
+
+
 
 ### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
 
@@ -92,6 +95,8 @@ AUTOCLEAN=2
 # BASHRC_PATH: /home/username/.bashrc
 # DIR_IN_PATH: /home/username/.local/bin
 # HOME_FOLDER: /home/username
+# BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions
+# BASH_FUNCTIONS_PATH: /home/username/.bash_functions
 
 # Imported from ${HOME}/.config/user-dirs.dirs
 # XDG_DESKTOP_DIR: /home/username/Desktop
@@ -189,6 +194,7 @@ installation_data=(
 "0;0;0;0;1;install_virtualbox"
 "0;0;0;0;0;install_code"
 "0;0;0;0;1;install_vlc"
+"0;0;0;0;0;install_chwlppr"
 )
 
 
@@ -244,20 +250,23 @@ add_all_programs()
 #######################################
 
 # Variables used exclusively in the corresponding installation function. Alphabetically sorted.
-
+#Name, GenericName, Type, Comment, Version, StartupWMClass, Icon, Exec, Terminal, Categories=IDE;Programming;, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 android_studio_downloader=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz
 android_studio_alias="alias studio=\"studio . &>/dev/null &\""
 android_studio_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
 Name=Android Studio
-Exec=studio %F
-Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
-Categories=Development;IDE;
-Terminal=false
-StartupNotify=true
+GenericName=studio
+Type=Application
+Comment=IDE for developing android applications
+Version=1.0
 StartupWMClass=jetbrains-android-studio
-Name[en_GB]=android-studio.desktop"
+Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
+Exec=studio %F
+Terminal=false
+Categories=Development;IDE;
+StartupNotify=true
+MimeType=
+Encoding=UTF-8"
 
 atom_downloader=https://atom.io/download/deb
 
@@ -331,8 +340,16 @@ Exec=f-irc
 Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.png
 Type=Application
 "
-git_aliases_function="alias gitk=\"gitk --all --date-order \"
-alias dummycommit=\"git add -A; git commit -am \"changes\"; git push \"
+
+git_aliases_function="
+dummycommit()
+{
+  git add -A
+  git commit -am \"\$1\"
+  git push
+}
+
+alias gitk=\"gitk --all --date-order \"
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
@@ -446,7 +463,9 @@ HISTCONTROL=ignoredups
 HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
 shopt -s cmdhist"
 
-shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}"
+shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}
+export USR_BIN_FOLDER=${USR_BIN_FOLDER}
+"
 
 shotcut_desktop_launcher="[Desktop Entry]
 Type=Application
@@ -473,7 +492,7 @@ Icon=$HOME/.bin/sublime-text/Icon/256x256/sublime-text.png
 Comment=General Purpose Programming Text Editor
 Terminal=false
 Exec=sublime %F"
-
+sublime_alias="alias sublime=\"sublime . &>/dev/null &\""
 
 telegram_downloader=https://telegram.org/dl/desktop/linux
 telegram_launcher="[Desktop Entry]
@@ -508,7 +527,34 @@ Comment=Develop with pleasure!
 Categories=Development;IDE;
 Terminal=false
 StartupWMClass=visual-studio-code"
+code_alias="alias code=\"code . &>/dev/null &\""
 
+wallpapers_downloader=https://github.com/AleixMT/wallpapers
+wallpapers_changer_script="#!/bin/bash
+DIR=\"${XDG_PICTURES_DIR}\"
+PIC=\$(ls \${DIR} | shuf -n1)
+
+#if [[ -z \"\$DBUS_SESSION_BUS_ADDRESS\" ]]; then
+#  TMP=~/.dbus/session-bus
+#  export \$(grep -h DBUS_SESSION_BUS_ADDRESS=\$TMP/\$(ls -lt \$TMP | head -n 1))
+#fi
+#export \$(xargs -n 1 -0 echo </proc/\$(pidof x-session-manager)/environ | grep -Z \$DBUS_SESSION_BUS_ADDRESS=)
+#echo \$DBUS_SESSION_BUS_ADDRESS > /home/aleixmt/Escritorio/test
+user=\$(whoami)
+
+fl=\$(find /proc -maxdepth 2 -user \$user -name environ -print -quit)
+while [ -z \$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2- | tr -d '\000' ) ]
+do
+  fl=\$(find /proc -maxdepth 2 -user \$user -name environ -newer \"\$fl\" -print -quit)
+done
+
+export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
+
+dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
+
+#gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
+"
+wallpapers_cronjob="* * * * * . ${USR_BIN_FOLDER}/wallpaper_changer.sh"
 
 ###########################
 ##### SYSTEM FEATURES #####
