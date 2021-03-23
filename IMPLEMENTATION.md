@@ -24,6 +24,7 @@ Software that needs to be "manually" installed as normal user is stored under `~
 - [x] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`
 - [x] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
 - [x] try refactoring the point above by using type, which recognizes alias and functions too
+- [x] Add aliases topycharm, clion, etc
 
 
 #### Axel
@@ -32,14 +33,13 @@ Software that needs to be "manually" installed as normal user is stored under `~
 ## Currently developing/refactoring features
 
 ## TO-DO
-- [ ] Add aliases topycharm, clion, etc
 - [ ] Installations must be done by argument order apparition (add another column to installation_data to sort an integer that determines the order)
 - [ ] refactor installation bit to be installation order, which contains an integer that if it is greater than 0 means selected for install, and the integer determines the installation order
 - [ ] declare variables like DESK, GIT, etc
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
 - [ ] Split multifeatures in one function into different functions
 - [ ] Create source in bashrc with file bash_functions.sh with all sources calls
-- [ ] [ ] Create generic version for the function output_proxy_exec to integrate with a feature ready to be installed
+- [ ] Create generic version for the function output_proxy_exec to integrate with a feature ready to be installed
 - [ ] Desktop wallpapers
 - [ ] Create escape function, which returns an escaped sequence of characters, depending on the programming languages
 - [ ] Add argument to dummy commit

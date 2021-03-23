@@ -287,6 +287,8 @@ install_pycharmpro()
   register_file_associations "text/x-sh" "pycharm-pro.desktop"
   register_file_associations "text/x-python" "pycharm-pro.desktop"
   register_file_associations "text/x-python3" "pycharm-pro.desktop"
+
+  add_bash_function "${pycharmpro_alias}" "pycharmpro_alias.sh"
 }
 
 
@@ -326,6 +328,8 @@ install_sublime()
   register_file_associations "text/x-csrc" "sublime-text.desktop"
   register_file_associations "text/x-python" "sublime-text.desktop"
   register_file_associations "text/x-python3" "sublime-text.desktop"
+
+  add_bash_function "${sublime_alias}" "sublime_alias.sh"
 }
 
 
@@ -346,6 +350,8 @@ install_code()
 
   # Create desktop launcher entry
   create_manual_launcher "${visualstudiocode_launcher}" "code"
+
+  add_bash_function "${code_alias}" "code_alias.sh"
 }
 
 
@@ -900,7 +906,8 @@ install_prompt()
 
 install_terminal_background()
 {
-  dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)/background-color "'rgb(0,0,0)'"
+  profile=$(dconf list /org/gnome/terminal/legacy/profiles:/)
+  dconf write /org/gnome/terminal/legacy/profiles:/${profile}/background-color "'rgb(0,0,0)'"
 }
 
 
