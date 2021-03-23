@@ -927,6 +927,7 @@ install_chwlppr()
   mkdir -p ${XDG_PICTURES_DIR}/wallpapers
   git clone ${wallpapers_downloader} ${XDG_PICTURES_DIR}/wallpapers
   cp ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz ${XDG_PICTURES_DIR}
+  rm -Rf ${XDG_PICTURES_DIR}/wallpapers
   $(cd ${XDG_PICTURES_DIR}; tar -xzf *.tar.gz)
   rm -f ${XDG_PICTURES_DIR}/*.tar.gz
 }
