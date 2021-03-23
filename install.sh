@@ -912,7 +912,7 @@ install_terminal_background()
 
 install_wallpapers()
 {
-
+  echo install
 }
 
 

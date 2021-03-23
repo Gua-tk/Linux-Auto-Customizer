@@ -343,7 +343,7 @@ git_aliases_function="
 dummycommit()
 {
   git add -A
-  git commit -am \\\"\\\$1\\\"
+  git commit -am \"\$1\"
   git push
 }
 
