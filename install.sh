@@ -836,10 +836,11 @@ install_virtualbox()
 install_converters()
 {
   rm -Rf ${USR_BIN_FOLDER}/converters
-  git clone ${converters_downloader} ${USR_BIN_FOLDER}
+  mkdir -p ${USR_BIN_FOLDER}/converters
+  git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
 
-  for converter in $(ls ${USR_BIN_FOLDER}/converters); do
-    create_links_in_path ${USR_BIN_FOLDER}/converters/${converter} $(echo ${converter} | cut -d "." -f1)
+  for converter in $(ls ${USR_BIN_FOLDER}/converters/converters); do
+    create_links_in_path ${USR_BIN_FOLDER}/converters/converters/${converter} $(echo ${converter} | cut -d "." -f1)
   done
 
   add_bash_function ${converters_functions} converters.sh
@@ -913,17 +914,19 @@ install_terminal_background()
 install_chwlppr()
 {
   # Install script changer to be executed manually or with crontab automatically
-  echo -e ${wallpapers_changer_script} > ${USR_BIN_FOLDER}/wallpaper_changer.sh
+  echo "${wallpapers_changer_script}" > ${USR_BIN_FOLDER}/wallpaper_changer.sh
   chmod 775 ${USR_BIN_FOLDER}/wallpaper_changer.sh
   ln -sf ${USR_BIN_FOLDER}/wallpaper_changer.sh ${DIR_IN_PATH}/chwlppr
 
-  echo -e ${wallpapers_cronjob} > ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
+  echo "${wallpapers_cronjob}" > ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
   crontab ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
 
 
   # Download and install wallpaper
-  git clone ${wallpapers_downloader} ${XDG_PICTURES_DIR}
-  mv ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz ${XDG_PICTURES_DIR}
+  rm -Rf ${XDG_PICTURES_DIR}/wallpapers
+  mkdir -p ${XDG_PICTURES_DIR}/wallpapers
+  git clone ${wallpapers_downloader} ${XDG_PICTURES_DIR}/wallpapers
+  cp ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz ${XDG_PICTURES_DIR}
   $(cd ${XDG_PICTURES_DIR}; tar -xzf *.tar.gz)
   rm -f ${XDG_PICTURES_DIR}/*.tar.gz
 }
