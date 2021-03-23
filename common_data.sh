@@ -331,8 +331,16 @@ Exec=f-irc
 Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.png
 Type=Application
 "
-git_aliases_function="alias gitk=\"gitk --all --date-order \"
-alias dummycommit=\"git add -A; git commit -am \"\$1\"; git push \"
+
+git_aliases_function="
+dummycommit()
+{
+  git add -A
+  git commit -am \\\"\\\$1\\\"
+  git push
+}
+
+alias gitk=\"gitk --all --date-order \"
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
