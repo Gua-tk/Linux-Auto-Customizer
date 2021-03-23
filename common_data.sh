@@ -74,14 +74,17 @@ ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
 FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
-FLAG_INSTALL=1  # 1 --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
+FLAG_INSTALL=1  # 1 or more --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
+# Also, flag_install is the number used to determine the installation order
 FLAG_QUIETNESS=1  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
 FLAG_IGNORE_ERRORS=0  # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
 
-ANY_INSTALLED=0
+NUM_INSTALLATION=1
 SILENT=1
 UPGRADE=2
 AUTOCLEAN=2
+
+
 
 ### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
 
@@ -189,6 +192,7 @@ installation_data=(
 "0;0;0;0;1;install_virtualbox"
 "0;0;0;0;0;install_code"
 "0;0;0;0;1;install_vlc"
+"0;0;0;0;0;install_wallpapers"
 )
 
 
@@ -244,20 +248,23 @@ add_all_programs()
 #######################################
 
 # Variables used exclusively in the corresponding installation function. Alphabetically sorted.
-
+#Name, GenericName, Type, Comment, Version, StartupWMClass, Icon, Exec, Terminal, Categories=IDE;Programming;, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 android_studio_downloader=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz
 android_studio_alias="alias studio=\"studio . &>/dev/null &\""
 android_studio_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
 Name=Android Studio
-Exec=studio %F
-Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
-Categories=Development;IDE;
-Terminal=false
-StartupNotify=true
+GenericName=studio
+Type=Application
+Comment=IDE for developing android applications
+Version=1.0
 StartupWMClass=jetbrains-android-studio
-Name[en_GB]=android-studio.desktop"
+Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
+Exec=studio %F
+Terminal=false
+Categories=Development;IDE;
+StartupNotify=true
+MimeType=
+Encoding=UTF-8"
 
 atom_downloader=https://atom.io/download/deb
 
@@ -454,7 +461,9 @@ HISTCONTROL=ignoredups
 HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
 shopt -s cmdhist"
 
-shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}"
+shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}
+export USR_BIN_FOLDER=${USR_BIN_FOLDER}
+"
 
 shotcut_desktop_launcher="[Desktop Entry]
 Type=Application
