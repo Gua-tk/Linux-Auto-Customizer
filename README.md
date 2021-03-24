@@ -85,7 +85,7 @@ The following features can be installed or uninstalled automatically and individ
 | VirtualBox| Hosted hypervisor for x86 virtualization | | --virtualbox --virtual-box --VirtualBox --virtualBox --Virtual-Box --Virtualbox |
 | Visual Studio Code| Source-code editor | | --visualstudiocode --visual-studio-code --code --Code --visualstudio --visual-studio1 |
 | VLC | Media player software, and streaming media server | Installs VLC via `apt` and creates its own launcher in the current user desktop. Uninstalls VLC media player via `apt purge` and deletes its launchers. | --vlc --VLC --Vlc |
-
+| youtube-dl | download manager for video and audio from YouTube and over 1000 other video hosting websites. | | --youtube-dl|
 
 ## Usage
 ### Download
