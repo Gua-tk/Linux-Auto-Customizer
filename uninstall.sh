@@ -525,6 +525,13 @@ uninstall_wireshark()
   apt-get autoremove -y --purge wireshark
 }
 
+uninstall_youtube-dl()
+{
+
+  rm -f ${USR_BIN_FOLDER}/youtube-dl
+
+}
+
 
 # Uninstall all functions
 uninstall_all()
@@ -590,6 +597,7 @@ uninstall_all()
   uninstall_visualstudiocode
   uninstall_vlc
   uninstall_wireshark
+  uninstall_youtube-dl
 }
 
 ##################
@@ -808,6 +816,9 @@ main()
         ;;
         --wireshark|--Wireshark)
           uninstall_wireshark
+        ;;
+        --youtube|--youtube-dl)
+          uninstall_youtube-dl
         ;;
         
         ### WRAPPER ARGUMENT(S) ###

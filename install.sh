@@ -836,11 +836,15 @@ install_virtualbox()
 
 install_youtube-dl()
 {
+  # Dependencies
+  apt-get install -y ffmpeg
+
   wget ${youtubedl_downloader} -O ${USR_BIN_FOLDER}/youtube-dl
   chmod a+rx ${USR_BIN_FOLDER}/youtube-dl
-  hash -r
   create_links_in_path ${USR_BIN_FOLDER}/youtube-dl youtube-dl
   add_bash_function "${youtubewav_alias}" youtube-wav_alias.sh
+
+  hash -r
 }
 
 

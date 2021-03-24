@@ -534,23 +534,17 @@ wallpapers_downloader=https://github.com/AleixMT/wallpapers
 wallpapers_changer_script="#!/bin/bash
 DIR=\"${XDG_PICTURES_DIR}\"
 PIC=\$(ls \${DIR} | shuf -n1)
+if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
 
-#if [[ -z \"\$DBUS_SESSION_BUS_ADDRESS\" ]]; then
-#  TMP=~/.dbus/session-bus
-#  export \$(grep -h DBUS_SESSION_BUS_ADDRESS=\$TMP/\$(ls -lt \$TMP | head -n 1))
-#fi
-#export \$(xargs -n 1 -0 echo </proc/\$(pidof x-session-manager)/environ | grep -Z \$DBUS_SESSION_BUS_ADDRESS=)
-#echo \$DBUS_SESSION_BUS_ADDRESS > /home/aleixmt/Escritorio/test
-user=\$(whoami)
-
-fl=\$(find /proc -maxdepth 2 -user \$user -name environ -print -quit)
-while [ -z \$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2- | tr -d '\000' ) ]
-do
-  fl=\$(find /proc -maxdepth 2 -user \$user -name environ -newer \"\$fl\" -print -quit)
-done
-
-export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
-
+  echo \"n\${DBUS_SESSION_BUS_ADDRESS}n\" > /home/aleixmt/Escritorio/log2.txt
+  user=\$(whoami)
+  fl=\$(find /proc -maxdepth 2 -user \$user -name environ -print -quit)
+  while [ -z \$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2- | tr -d '\000' ) ]
+  do
+    fl=\$(find /proc -maxdepth 2 -user \$user -name environ -newer \"\$fl\" -print -quit)
+  done
+  export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
+fi
 dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
 
 #gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
