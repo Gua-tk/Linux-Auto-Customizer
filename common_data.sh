@@ -557,6 +557,7 @@ dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${P
 "
 wallpapers_cronjob="* * * * * . ${USR_BIN_FOLDER}/wallpaper_changer.sh"
 
+youtubedl_downloader=https://yt-dl.org/downloads/latest/youtube-dl
 
 youtubewav_alias="alias youtubewav=\"youtube-dl --extract-audio --audio-format wav\""
 ###########################
