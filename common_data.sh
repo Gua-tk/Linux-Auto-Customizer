@@ -532,11 +532,7 @@ code_alias="alias code=\"code . &>/dev/null &\""
 
 wallpapers_downloader=https://github.com/AleixMT/wallpapers
 wallpapers_changer_script="#!/bin/bash
-DIR=\"${XDG_PICTURES_DIR}\"
-PIC=\$(ls \${DIR} | shuf -n1)
 if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
-
-  echo \"n\${DBUS_SESSION_BUS_ADDRESS}n\" > /home/aleixmt/Escritorio/log2.txt
   user=\$(whoami)
   fl=\$(find /proc -maxdepth 2 -user \$user -name environ -print -quit)
   while [ -z \$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2- | tr -d '\000' ) ]
@@ -545,6 +541,8 @@ if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
   done
   export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
 fi
+DIR=\"${XDG_PICTURES_DIR}\"
+PIC=\$(ls \${DIR} | shuf -n1)
 dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
 
 #gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"

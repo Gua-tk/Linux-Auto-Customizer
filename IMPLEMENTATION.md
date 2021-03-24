@@ -39,6 +39,7 @@
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
 - [x] Refactor of data table in README.md
+- [x] Youtube-dl
 
 ## Currently developing/refactoring features
 
