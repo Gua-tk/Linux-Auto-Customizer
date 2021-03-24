@@ -195,6 +195,7 @@ installation_data=(
 "0;0;0;0;0;install_code"
 "0;0;0;0;1;install_vlc"
 "0;0;0;0;0;install_chwlppr"
+"0;0;0;0;1;install_youtube-dl"
 )
 
 
@@ -556,6 +557,8 @@ dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${P
 "
 wallpapers_cronjob="* * * * * . ${USR_BIN_FOLDER}/wallpaper_changer.sh"
 
+
+youtubewav_alias="alias youtubewav=\"youtube-dl --extract-audio --audio-format wav\""
 ###########################
 ##### SYSTEM FEATURES #####
 ###########################

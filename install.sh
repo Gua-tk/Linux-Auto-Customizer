@@ -160,6 +160,13 @@ add_bash_function()
 {
   # Write code to bash functions folder with the name of the feature we want to install
   echo -e "$1" > ${BASH_FUNCTIONS_FOLDER}/$2
+
+  if [[ ${EUID} == 0 ]]; then
+    chgrp ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/$2
+    chown ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/$2
+    chmod 775 ${BASH_FUNCTIONS_FOLDER}/$2
+  fi
+
   import_line="source ${BASH_FUNCTIONS_FOLDER}/$2"
   # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
   if [[ -z $(cat ${BASH_FUNCTIONS_PATH} | grep -Fo "${import_line}") ]]; then
@@ -820,12 +827,18 @@ install_vlc()
 install_virtualbox()
 {
   # Dependencies
-  apt-get install libqt5opengl5
+  apt-get install -y libqt5opengl5
   
   download_and_install_package ${virtualbox_downloader}
   copy_launcher "virtualbox.desktop"
 }
 
+
+install_youtube-dl()
+{
+  apt install -y youtube-dl
+  add_bash_function "${youtubewav_alias}" youtube-wav_alias.sh
+}
 
 #############################
 ###### SYSTEM FEATURES ######
@@ -1382,6 +1395,9 @@ main()
       ;;
       --Wallpapers|--wallpapers|--chwlppr)
         add_program install_chwlppr
+      ;;
+      --youtube-dl)
+        add_program install_youtube-dl
       ;;
 
       ### WRAPPER ARGUMENTS ###
