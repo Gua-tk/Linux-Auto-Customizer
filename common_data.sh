@@ -547,7 +547,7 @@ dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${P
 
 #gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
 "
-wallpapers_cronjob="*/5 * * * * . ${USR_BIN_FOLDER}/wallpaper_changer.sh"
+wallpapers_cronjob="*/5 * * * * ${USR_BIN_FOLDER}/wallpaper_changer.sh"
 
 youtubedl_downloader=https://yt-dl.org/downloads/latest/youtube-dl
 
