@@ -860,7 +860,7 @@ install_converters()
     create_links_in_path ${USR_BIN_FOLDER}/converters/converters/${converter} $(echo ${converter} | cut -d "." -f1)
   done
 
-  add_bash_function ${converters_functions} converters.sh
+  add_bash_function "${converters_functions}" converters.sh
 }
 
 
