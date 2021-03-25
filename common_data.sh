@@ -342,8 +342,7 @@ Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.p
 Type=Application
 "
 
-git_aliases_function="
-dummycommit()
+git_aliases_function="dummycommit()
 {
   git add -A
   git commit -am \"\$1\"
