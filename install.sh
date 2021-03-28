@@ -851,7 +851,9 @@ install_chwlppr()
 }
 
 
+################################
 ###### AUXILIAR FUNCTIONS ######
+################################
 
 # Common piece of code in the execute_installation function
 # Argument 1: forceness_bit
