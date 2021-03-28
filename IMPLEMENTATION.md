@@ -56,7 +56,7 @@
 - [ ] Test autorun of nemo desktop
 
 ## Coming features
-- [ ] Delete 
+- [ ] Delete
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ... 
 - [ ] make `customizer.sh` 
 - [ ] Automount available drives.*

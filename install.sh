@@ -369,7 +369,7 @@ install_megasync()
 install_mendeley_dependencies()
 {
   # Mendeley dependencies
-  apt-get -y install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
+  apt-get install -y gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
 }
 
 install_gnome-mines()
@@ -413,7 +413,7 @@ install_openoffice()
   apt-get remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
 
   rm -f ${USR_BIN_FOLDER}/office*
-  (cd ${USR_BIN_FOLDER}; wget -O office ${openoffice_downloader})
+  (cd ${USR_BIN_FOLDER}; wget -Oq --show-progress office ${openoffice_downloader})
 
   rm -Rf ${USR_BIN_FOLDER}/en-US
   (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/office
@@ -430,18 +430,19 @@ install_openoffice()
   copy_launcher "openoffice4-writer.desktop"
 }
 
-install_obs-studio()
+install_obs()
 {
   # Dependencies
-  apt install -y ffmpeg
+  apt-get install -y ffmpeg
 
-  apt install -y obs-studio
+  apt-get install -y obs-studio
   create_manual_launcher "${obs_desktop_launcher}" obs-studio
 }
 
 install_okular()
 {
   apt-get -y install okular
+  copy_launcher "org.kde.okular.desktop"
 }
 
 install_pacman()
@@ -452,12 +453,12 @@ install_pacman()
 
 install_pdfgrep()
 {
-  apt-get -y install pdfgrep
+  apt-get install -y pdfgrep
 }
 
 install_pluma()
 {
-  apt install -y pluma
+  apt-get install -y pluma
   copy_launcher "pluma.desktop"
 }
 
@@ -471,12 +472,12 @@ install_pypy3_dependencies()
 
 install_python3()
 {
-  apt install -y python3-dev python-dev python3-pip
+  apt-get install -y python3-dev python-dev python3-pip
 }
 
 install_shotcut()
 {
-  apt install -y shotcut
+  apt-get install -y shotcut
   create_manual_launcher "${shotcut_desktop_launcher}" shotcut
 }
 
@@ -514,13 +515,13 @@ install_thunderbird()
 install_tilix()
 {
   apt-get install -y tilix
-  copy_launcher tilix.desktop
+  copy_launcher com.gexperts.Tilix.desktop
 }
 
 install_tmux()
 {
-  apt-get -y install tmux
-  create_manual_launcher ${tmux_launcher} tmux
+  apt-get install -y tmux
+  create_manual_launcher "${tmux_launcher}" tmux
 }
 
 install_torbrowser()
@@ -533,7 +534,7 @@ install_transmission()
 {
   apt-get install -y transmission
   copy_launcher "transmission-gtk.desktop"
-  create_links_in_path $(which transmission-gtk) transmission
+  create_links_in_path "$(which transmission-gtk)" transmission
 }
 
 install_uget()
@@ -565,7 +566,7 @@ install_youtube-dl()
 {
   # Dependencies
 
-  wget ${youtubedl_downloader} -O ${USR_BIN_FOLDER}/youtube-dl
+  wget ${youtubedl_downloader} -Oq --show-progress ${USR_BIN_FOLDER}/youtube-dl
   chmod a+rx ${USR_BIN_FOLDER}/youtube-dl
   create_links_in_path ${USR_BIN_FOLDER}/youtube-dl youtube-dl
   add_bash_function "${youtubewav_alias}" youtube-wav_alias.sh
@@ -769,7 +770,7 @@ install_code()
 install_cheat()
 {
   rm -f ${USR_BIN_FOLDER}/cheat.sh
-  (cd ${USR_BIN_FOLDER}; wget -O cheat.sh ${cheat_downloader})
+  (cd ${USR_BIN_FOLDER}; wget -Oq --show-progress cheat.sh ${cheat_downloader})
 
   create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
 }
@@ -874,7 +875,7 @@ install_chwlppr()
 # Argument 3: program_function
 execute_installation_install_feature()
 {
-  feature_name=$( echo $3 | cut -d "_" -f2- )
+  feature_name=$( echo "$3" | cut -d "_" -f2- )
   if [[ $1 == 1 ]]; then
     set +e
   else
@@ -1224,10 +1225,13 @@ main()
         add_program install_openoffice
       ;;
       --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
-        add_program install_obs-studio
+        add_program install_obs
       ;;
       --okular|--Okular|--okularpdf)
         add_program install_okular
+      ;;
+      --pacman|--pac-man)
+        add_program install_pacman
       ;;
       --pdfgrep|--findpdf|--pdf)
         add_program install_pdfgrep

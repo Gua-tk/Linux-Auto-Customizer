@@ -165,6 +165,7 @@ installation_data=(
 "0;0;0;0;1;install_openoffice"
 "0;0;0;0;1;install_obs"
 "0;0;0;0;1;install_okular"
+"0;0;0;0;1;install_pacman"
 "0;0;0;0;1;install_pdfgrep"
 "0;0;0;0;1;install_pluma"
 "0;0;0;0;0;install_prompt"
