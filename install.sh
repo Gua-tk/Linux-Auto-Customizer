@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ########################################################################################################################
-# -Name:
+# -Name: Linux Auto-Customizer installation of features.
 # -Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop
 # features... collected in a simple portable shell script to customize a Linux working environment.
 # -Creation Date: 28/5/19
@@ -8,16 +8,12 @@
 # -Author: Aleix Mariné-Tena
 # -Email: aleix.marine@estudiants.urv.cat
 # -Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when
-# logged as root)
-# -Args:
-# -Usage:
-# -License:
+# logged as root).
+# -Args: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens
+# (--pycharm, --gcc).
+# -Usage: Installs the features given by argument.
+# -License: 
 ########################################################################################################################
-
-#
-# Author:
-# Created on
-# Last Update 11/3/2021
 
 
 ################################
