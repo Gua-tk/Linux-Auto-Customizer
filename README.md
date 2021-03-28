@@ -1,6 +1,6 @@
 # Auto-Customizer
 
-This software automatizes the installation and uninstallation of different features in a Ubuntu/Debian Linux environment. These features include GNU software and other utilities, programming languages, IDEs, text editors, media players, games, internet applications, file templates, wallpapers, environment aliases, environment functions... all installed in a clean, fancy and confortable way.   
+This software automatizes the installation and uninstallation of different features in an Ubuntu/Debian Linux environment. These features include GNU software and other utilities, programming languages, IDEs, text editors, media players, games, internet applications, file templates, wallpapers, environment aliases, environment functions... all installed in a clean, fancy and confortable way.   
 
 The scripts `install.sh` and `uninstall.sh` have the same identical arguments, but behave in the opposite way: `install.sh` will install the features selected by the arguments while `uninstall.sh` will uninstall them, using the identical arguments. 
 
@@ -14,53 +14,53 @@ All features are installed following a set of rules:
 
 The following features can be installed or uninstalled automatically and individually using one of the specified arguments:
 
-| Name | Program description | Feature description | Arguments |
+| Name | Feature description | Execution | Arguments |
 | :------------------------ | :-------------| :--------------|------------|
 | Android Studio | Development environment for Google's Android operating system |  | --android --AndroidStudio --androidstudio --studio --android-studio --android_studio --Androidstudio |
-| alias dummycommit | user global alias `dummycommit` to add, commit and push to github in one command. | Append to `~/.bashrc` to add the alias in every console session ||
-| alias l | user global alias `l` for `ls -lAh --color=auto`. | Append to `~/.bashrc` to add the alias in every console session ||
-| alias gitk | user global alias `gitk` for `gitk --all --date-order`. | Append to `~/.bashrc` to add the alias in every console session ||
-| Audacity | Digital audio editor and recording |  | --audacity --Audacity |
-| Atom |  Text and source code editor |  |--atom --Atom |
+| Alias l | Alias for `ls` | Alias `l` | --l-alias |
+| Git aliases | Aliases and functions to work with git repositories | aliases and functions `dummycommit $1` and `gitk` | --git-aliases |
+| Audacity | Digital audio editor and recording | Executable `audacity` in the PATH and desktop icon | --audacity --Audacity |
+| Atom | Text and source code editor | Executable `atom` in the PATH and desktop icon |--atom --Atom |
 | Discord | VoIP, instant messaging and digital distribution | Installs Discord manually creating its own folder under `~/.bin`. Creates launcher of Discord in the dashboard and in the current user desktop. Makes Discord executable accessible with the command `discord`. Uninstalls Discord by deleting its launchers, soft-links and the Discord folder. | --discord --Discord --disc | 
-| Dropbox | File hosting service | | --dropbox --Dropbox --DropBox --Drop-box --drop-box --Drop-Box |
-| GNU C Compiler| Optimizing compiler | Installs the GNU C Compiler via `apt-get` | --gcc | 
-| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the “sleep” powersaving mode. It's helpful when you're watching movies. | | --caffeine --Caffeine --cafe --coffee |
+| Dropbox | File hosting service | Executable `dropbox` in the PATH and desktop launcher | --dropbox --Dropbox --DropBox --Drop-box --drop-box --Drop-Box |
+| GNU C Compiler| C compiler for GNU systems | Executable `gcc` in the PATH | --gcc | 
+| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the “sleep” powersaving mode. | Commands `caffeine`, `caffeinate` and `caffeine-indicator` and desktop launcher for `caffeine` | --caffeine --Caffeine --cafe --coffee |
 | Calibre | e-book reader| | --calibre --Calibre --cali |
 | cheat.sh | Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages| | --cheat --cheat.sh --Cheat.sh --che |
-| Cheese | GNOME webcam application | |  --cheese  --Cheese | 
-| Clementine | Modern music player and library organizer | | --clementine --Clementine |
+| Cheese | GNOME webcam application | Executable `cheese` in the PATH and desktop launcher |  --cheese  --Cheese | 
+| Clementine | Modern music player and library organizer | Executable `clementine` in the PATH and desktop launcher | --clementine --Clementine |
 | Clion | Cross-platform C/C++ IDE | Installs CLion manually creating its own folder under `~/.bin`. Creates launcher of CLion in the dashboard and in the current user desktop. Makes CLion executable accessible with the command `clion`. Associate CLion to the mime type of `.c`, `.h`, `.cpp` and `.hpp` files |  Uninstalls CLion by deleting its launchers, soft-links, defaults and the CLion folder | --clion --Clion --CLion | 
-| Cmatrix | Screensaver from The Matrix | | --cmatrix --Cmatrix |
+| Cmatrix | Screensaver from The Matrix | Executable `cmatrix` in the PATH and desktop launcher | --cmatrix --Cmatrix |
 | Converters | | | --converters --Converters | 
-| VSCodium | | | --codium --vscodium |
-| CloneZilla | Disk cloning, disk imaging, data recovery, and deployment | | --clonezilla --CloneZilla --cloneZilla | 
-| copyq | monitoring application or, more precisely, a clipboard manager application that comes with extra features such as editing and scripting | | --copyq --copy-q --copy_q --copqQ --Copyq --copy-Q | 
-| f-irc | irc client for a terminal/command-line/console| | --f-irc --firc --Firc --irc | 
-| Firefox | Web browser | | --firefox --Firefox | 
-| FreeCAD | General-purpose parametric 3D computer-aided design modeler and a building information modeling  | |--freecad --FreeCAD --freeCAD | 
+| CloneZilla | Disk cloning, disk imaging, data recovery, and deployment | Executable `clonezilla` (needs root permissions) and desktop launcher | --clonezilla --CloneZilla --cloneZilla | 
+| copyq | A clipboard manager application that comes with extra features such as editing and scripting | Executable `copyq` in the PATH and desktop launcher | --copyq --copy-q --copy_q --copqQ --Copyq --copy-Q |
+| Curl | Curl is a CLI command for retrieving or sending data to a server | Executable `curl` in the PATH | --curl |
+| f-irc | CLI IRC client | Executable `f-irc` in the PATH and desktop launcher | --f-irc --firc --Firc --irc | 
+| Firefox | Free web browser | Executable `firefox` in the PATH and desktop launcher | --firefox --Firefox | 
+| FreeCAD | General-purpose parametric 3D computer-aided design modeler and a building information modeling | Executable `freecad` in the PATH and desktop launcher |--freecad --FreeCAD --freeCAD | 
 | function extract | Function to extract from a compressed file, no matter its format | append content to `~/.bashrc` to add the function to every console session ||
-| GooglePlayMusic |  Music and podcast streaming service and online music locker | | --google-play-music --musicmanager --music-manager --MusicManager --playmusic --GooglePlayMusic --play-music --google-playmusic --playmusic --google-music |
-| gpaint | Raster graphics editor similar to Microsoft Paint | | | --gpaint --paint --Gpaint | 
-| Geany | Lightweight GUI text editor using Scintilla and GTK, including basic IDE features | | --geany --Geany |
-| git|  software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development |  Installs `git-all` via `apt-get` which includes all the features of `git`, including the graphical git viewer `gitk`  Uninstalls `git-all` via `apt-get` | --git |
-| Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats, and more specialized tasks | | --GIMP --gimp --Gimp |
-| GNU Chess | Plays a full game of chess against a human being or other computer program | | --GNOME_Chess --gnome_Chess --gnomechess --chess |
-| GParted | Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems | | --GParted --gparted --GPARTED --Gparted |
-| Gvim | Vim with a built-in GUI | | --gvim --vim-gtk3 --Gvim --GVim |
-| Google Chrome | Cross-platform web browser | Installs Google Chrome by downloading manually the software from Google official page but installing it via `apt`. Creates its own launcher in the current user desktop  Uninstalls Google Chrome via `apt-get purge` | --chrome --Chrome --google-chrome --Google-Chrome| 
-| GNUparallel | Command-line driven utility for Linux and other Unix-like operating systems which allows the user to execute shell scripts or commands in parallel | Installs GNU parallel via `apt-get`  Uninstalls GNU parallel via `apt-get purge` | --parallel --gnu_parallel --GNUparallel --GNUParallel --gnu-parallel|
+| Gpaint | Raster graphics editor similar to Microsoft Paint | Executable `gpaint` in the PATH and desktop launcher | --gpaint --paint --Gpaint | 
+| Geany | Lightweight GUI text editor using Scintilla and GTK, including basic IDE features | Executable `geany` in the PATH and desktop launcher | --geany --Geany |
+| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Executables `git` and `gitk` in the PATH | --git |
+| Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats. | Executable `gimp` in the PATH and desktop launcher | --GIMP --gimp --Gimp |
+| GNOME Chess | Plays a full game of chess against a human being or other computer program | Executable `gnome-chess` in the PATH and desktop launcher | --GNOME_Chess --gnome_Chess --gnomechess --chess |
+| GNOME Mines | Implementation for GNU systems of the famous game mines | Executable `gnome-mines` in the PATH and desktop launcher | --mines |
+| GParted | Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems | Executable `gparted` (needs root permissions) and desktop launcher | --GParted --gparted --GPARTED --Gparted |
+| Gvim | Vim with a built-in GUI | Executable `gvim` in the PATH and desktop launcher | --gvim --vim-gtk3 --Gvim --GVim |
+| Google Chrome | Cross-platform web browser | Executable `google-chrome` in the PATH and desktop launcher | --chrome --Chrome --google-chrome --Google-Chrome| 
+| GNUparallel | Command-line driven utility for Linux and other Unix-like operating systems which allows the user to execute shell scripts or commands in parallel | Executable `parallel` in the PATH | --parallel --gnu_parallel --GNUparallel --GNUParallel --gnu-parallel|
 | history optimization | Increased the size of bash history, store multiline commands in just one line, force append and not overwrite to history, ignore repeated commands when appending to history, deleted tracking history of some simple commands: `ls`, `cd`, `gitk`... | Add content to `~/.bashrc` in order to change the behaviour of every terminal session | |
-| Inkscape | Vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format | | --inkscape --ink-scape --Inkscape --InkScape |
-| intelliJ Community | Integrated development environment written in Java for developing computer software | Installs IntelliJ Community manually creating its own folder under `~/.bin`. Creates launcher of IntelliJ Community in the dashboard and in the current user desktop. Makes IntelliJ Community executable accessible with the command `ideac`. Associate IntelliJ Community to the mime type of `.java` files  Uninstalls IntelliJ Community by deleting its launchers, soft-links, defaults and the IntelliJ Community folder | --intellijcommunity --intelliJCommunity --intelliJ-Community --intellij-community | 
-| intelliJ Ultimate | Integrated development environment written in Java for developing computer software |  Installs IntelliJ Ultimate manually creating its own folder under `~/.bin`. Creates launcher of IntelliJ Ultimate in the dashboard and in the current user desktop. Makes IntelliJ Ultimate executable accessible with the command `ideau`. Associate IntelliJ Ultimate to the mime type of `.java` files |  Uninstalls IntelliJ Ultimate by deleting its launchers, soft-links, defaults and the IntelliJ Ultimate folder | --intellijultimate --intelliJUltimate --intelliJ-Ultimate --intellij-ultimate |
-| Java Development Kit 11 | Reference implementation of version 11 of the Java SE Platform | | --java --javadevelopmentkit --java-development-kit --java-development-kit-11 --java-development-kit11 --jdk --JDK --jdk11 --JDK11 
-| LaTeX | Software system for document preparation | | --latex --LaTeX --tex --TeX
-| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Installs MEGAsync and MEGAsync desktop integration via `dpkg -i` and creates launcher for MEGAsync in the current user desktop | Uninstalls MEGAsync and MEGAsyn desktop integrator via `dpkg -P` | --mega --Mega --MEGA --MegaSync --MEGAsync --MEGA-sync --megasync| 
+| Inkscape | Vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format | Executable in the PATH and desktop launcher | --inkscape --ink-scape --Inkscape --InkScape |
+| intelliJ Community | Integrated development environment written in Java for developing computer software | Installs IntelliJ Community manually creating its own folder under `~/.bin`. Creates launcher of IntelliJ Community in the dashboard and in the current user desktop. Makes IntelliJ Community executable accessible with the command `ideac`. Associate IntelliJ Community to the mime type of `.java` files | --intellijcommunity --intelliJCommunity --intelliJ-Community --intellij-community | 
+| intelliJ Ultimate | Integrated development environment written in Java for developing computer software |  Installs IntelliJ Ultimate manually creating its own folder under `~/.bin`. Creates launcher of IntelliJ Ultimate in the dashboard and in the current user desktop. Makes IntelliJ Ultimate executable accessible with the command `ideau`. Associate IntelliJ Ultimate to the mime type of `.java` files | --intellijultimate --intelliJUltimate --intelliJ-Ultimate --intellij-ultimate |
+| Java Development Kit 11 | Implementation of version 11 of the Java (programming language) SE Platform | Executables `java`, `javac`, `jar` and others in the PATH | --java --javadevelopmentkit --java-development-kit --java-development-kit-11 --java-development-kit11 --jdk --JDK --jdk11 --JDK11 
+| LaTeX | Software system for document preparation | Executable `tex` (LaTeX compiler) and `texmaker` (LaTeX IDE) in the PATH, desktop launchers for `texmaker` and `tex` documentation | --latex --LaTeX --tex --TeX
+| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Executable `megasync` in the PATH and desktop launcher | --mega --Mega --MEGA --MegaSync --MEGAsync --MEGA-sync --megasync|
+| GNOME Mahjongg | Implementation for GNU systems of the famous popular chinese game Mahjongg | Executable `gnome-mahjongg` in the PATH and desktop launcher | --mahjongg |
 | MendeleyDependencies |  | Installs Mendeley Desktop dependencies `gconf2`, `qt5-default`, `qt5-doc`, `qt5-doc-html`, `qtbase5-examples` and `qml-module-qtwebengine` via `apt-get` Uninstalls Mendeley Desktop dependencies `gconf2`, `qt5-default`, `qt5-doc`, `qt5-doc-html`, `qtbase5-examples` and `qml-module-qtwebengine` via `apt-get` | --MendeleyDependencies --mendeleydependencies --mendeleydesktopdependencies --mendeley-desktop-dependencies --Mendeley-Desktop-Dependencies |   
 | Mendeley |   It is most known for its reference manager which is used to manage and share research papers and generate bibliographies for scholarly articles| | --Mendeley --mendeley --mendeleyDesktop --mendeley-desktop --Mendeley-Desktop | 
-| nemo | File manager | | --nemo --nemo-desktop --Nemo-Desktop --Nemodesktop --nemodesktop --Nemo --Nemodesk --NemoDesktop |
-| Notepadqq | Text editor that is designed by developers for the developers. It supports more than 100 languages and useful to note down daily tasks | | --notepadqq --Notepadqq --notepadQQ --NotepadQQ --notepadQq --notepadQq --NotepadQq --NotepadqQ |
+| Nemo Desktop Manager | File and dekstop manager, usually with better options and less bug than nautilus | Executables `nemo` for the file manager, and `nemo-desktop` for the desktop manager service. Desktop launcher for the file manager | --nemo --nemo-desktop --Nemo-Desktop --Nemodesktop --nemodesktop --Nemo --Nemodesk --NemoDesktop |
+| Notepadqq | Text editor that is designed by developers for the developers. It supports more than 100 languages and useful to note down daily tasks | Executable `notepadqq` in the PATH and desktop launcher | --notepadqq --Notepadqq --notepadQQ --NotepadQQ --notepadQq --notepadQq --NotepadQq --NotepadqQ |
 | OpenOffice | Office productivity suite | | --office --Openoffice --OpenOffice --openOfice --open_office --Office |
 | OBS | Streaming and recording program | | --OBS --obs --obs-studio --obs_studio --obs_Studio --OBS_studio --obs-Studio --OBS_Studio --OBS-Studio |
 | Okular | PDF viewer | | --okular --Okular --okularpdf | 

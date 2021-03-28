@@ -53,6 +53,7 @@
 - [ ] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 - [ ] Add special func in uninstall (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
+- [ ] Test autorun of nemo desktop
 
 ## Coming features
 - [ ] Delete 
@@ -69,6 +70,7 @@
 - [ ] SublimeText-Markdown, & other plugins for programs...
 - [ ] Repair broken desktop icons (VLC...
 - [ ] Fonts
+- [ ] Codium does not work because of the folder . in the root
 
 
 

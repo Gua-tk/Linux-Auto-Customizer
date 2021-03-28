@@ -12,7 +12,7 @@
 # -Args: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens
 # (--pycharm, --gcc).
 # -Usage: Installs the features given by argument.
-# -License: 
+# -License:
 ########################################################################################################################
 
 
@@ -164,11 +164,6 @@ add_bash_function()
   fi
 }
 
-
-############################
-###### ROOT FUNCTIONS ######
-############################
-
 # Download a package temporarily in USR_BIN_FOLDER and install it using dpkg or other package manager.
 # Argument 1: Link to the package file to download
 download_and_install_package()
@@ -178,6 +173,10 @@ download_and_install_package()
   dpkg -i ${USR_BIN_FOLDER}/downloading_package
   rm -f ${USR_BIN_FOLDER}/downloading_package*
 }
+
+############################
+###### ROOT FUNCTIONS ######
+############################
 
 install_audacity()
 {
@@ -193,34 +192,25 @@ install_atom()
 
 install_caffeine()
 {
-  apt install -y caffeine
+  apt-get install -y caffeine
   copy_launcher caffeine-indicator.desktop
 }
 
 install_calibre()
 {
-  apt install -y calibre
+  apt-get install -y calibre
   copy_launcher calibre-gui.desktop
-}
-
-# there's a curl dependency to use cht.sh
-install_cheat()
-{
-  rm -f ${USR_BIN_FOLDER}/cheat.sh
-  (cd ${USR_BIN_FOLDER}; wget -O cheat.sh ${cheat_downloader})
-
-  create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
 }
 
 install_cheese()
 {
-  apt install -y cheese
+  apt-get install -y cheese
   copy_launcher org.gnome.Cheese.desktop
 }
 
 install_clementine()
 {
-  apt install -y clementine
+  apt-get install -y clementine
   copy_launcher clementine.desktop
 }
 
@@ -251,12 +241,6 @@ install_dropbox()
   copy_launcher dropbox.desktop
 }
 
-install_codium()
-{
-  download_and_decompress ${codium_downloader} "codium" "z" "bin/codium" "codium"
-  create_manual_launcher "${codium_launcher}" "codium"
-}
-
 install_copyq()
 {
   apt-get install -y copyq
@@ -277,18 +261,18 @@ install_f-irc()
 
 install_freecad()
 {
-  apt install -y freecad
+  apt-get install -y freecad
   copy_launcher "freecad.desktop"
 }
 
 install_gcc()
 {
-  apt install -y gcc
+  apt-get install -y gcc
 }
 
 install_geany()
 {
-  apt install -y geany
+  apt-get install -y geany
   copy_launcher geany.desktop
 }
 
@@ -318,7 +302,7 @@ install_parallel()
 
 install_gparted()
 {
-  apt install -y gparted
+  apt-get install -y gparted
   copy_launcher "gparted.desktop"
 }
 
@@ -333,26 +317,26 @@ install_google-chrome()
 
 install_gvim()
 {
-  apt -y install vim-gtk3
+  apt-get -y install vim-gtk3
   copy_launcher "gvim.desktop"
 }
 
 install_gpaint()
 {
-  apt -y install gpaint
+  apt-get -y install gpaint
   copy_launcher "gpaint.desktop"
   sed "s|Icon=gpaint.svg|Icon=${gpaint_icon_path}|" -i ${XDG_DESKTOP_DIR}/gpaint.desktop
 }
 
 install_inkscape()
 {
-  apt install -y inkscape
+  apt-get install -y inkscape
   copy_launcher "inkscape.desktop"
 }
 
 install_java()
 {
-  apt -y install default-jdk
+  apt-get -y install default-jdk
 }
 
 install_latex()
@@ -394,7 +378,8 @@ install_gnome-mines()
   copy_launcher "org.gnome.Mines.desktop"
 }
 
-# Automatic install + Creates desktop launcher in launcher and in desktop. 
+# Automatic install + Creates desktop launcher in launcher and in desktop.
+# Deprecated app, is not maintained by google anymore
 install_musicmanager()
 {
   download_and_install_package ${music_manager_downloader}
@@ -404,8 +389,8 @@ install_musicmanager()
 install_nemo()
 {
   # Delete Nautilus, the default desktop manager to avoid conflicts
-  apt purge -y nautilus gnome-shell-extension-desktop-icons
-  apt -y install nemo dconf-editor gnome-tweak-tool
+  apt-get purge -y nautilus gnome-shell-extension-desktop-icons
+  apt-get install -y nemo dconf-editor gnome-tweak-tool
   # Create special launcher to execute nemo daemon at system start
   echo -e "${nemo_desktop_launcher}" > /etc/xdg/autostart/nemo-autostart.desktop
   # nemo configuration
@@ -418,25 +403,25 @@ install_nemo()
 
 install_notepadqq()
 {
-  apt install -y notepadqq
+  apt-get install -y notepadqq
   copy_launcher notepadqq.desktop
 }
 
 install_openoffice()
 {
   # Delete old versions of openoffice to avoid conflicts
-  apt remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
-  apt autoremove -y
+  apt-get remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
+  apt-get autoremove -y
 
-  rm -f office*
+  rm -f ${USR_BIN_FOLDER}/office*
   (cd ${USR_BIN_FOLDER}; wget -O office ${openoffice_downloader})
 
-  rm -Rf en-US
+  rm -Rf ${USR_BIN_FOLDER}/en-US
   (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/office
-  rm -f office
+  rm -f ${USR_BIN_FOLDER}/office
 
-  $(cd en-US/DEBS/; dpkg -i *.deb; cd desktop-integration/; dpkg -i *.deb  )
-  rm -Rf en-US
+  $(cd ${USR_BIN_FOLDER}/en-US/DEBS/; dpkg -i "*.deb"; cd desktop-integration/; dpkg -i "*.deb" )
+  rm -Rf ${USR_BIN_FOLDER}/en-US
 
   copy_launcher "openoffice4-base.desktop"
   copy_launcher "openoffice4-calc.desktop"
@@ -624,6 +609,13 @@ install_clion()
   add_bash_function "${clion_alias}" "clion_alias.sh"
 }
 
+# Does not work because the root directory of the compressed is called ".". Wait until the developers change it
+install_codium()
+{
+  download_and_decompress ${codium_downloader} "codium" "z" "bin/codium" "codium"
+  create_manual_launcher "${codium_launcher}" "codium"
+}
+
 # discord desktop client
 # Permissions: user
 install_discord()
@@ -774,6 +766,14 @@ install_code()
 #######################################
 # Most (all) of them just use user permissions
 
+install_cheat()
+{
+  rm -f ${USR_BIN_FOLDER}/cheat.sh
+  (cd ${USR_BIN_FOLDER}; wget -O cheat.sh ${cheat_downloader})
+
+  create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
+}
+
 install_converters()
 {
   rm -Rf ${USR_BIN_FOLDER}/converters
@@ -905,7 +905,7 @@ execute_installation()
   space=" "
   for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
     for program in ${installation_data[@]}; do
-      # Installation bit processiong
+      # Installation bit processing
       installation_bit=$( echo ${program} | cut -d ";" -f1 )
       if [[ ${installation_bit} == ${i} ]]; then
         forceness_bit=$( echo ${program} | cut -d ";" -f2 )
@@ -917,7 +917,7 @@ execute_installation()
         program_name=$( echo ${program_function} | cut -d "_" -f2- )
         if [[ ${program_privileges} == 1 ]]; then
           if [[ ${EUID} -ne 0 ]]; then
-            output_proxy_executioner "echo WARNING: $program_name needs root permissions to be installed. Skipping." ${quietness_bit}
+            output_proxy_executioner "echo WARNING: ${program_name} needs root permissions to be installed. Skipping." ${quietness_bit}
           else
             execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
           fi
@@ -925,7 +925,7 @@ execute_installation()
           if [[ ${EUID} -ne 0 ]]; then
             execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
           else
-            output_proxy_executioner "echo WARNING: $program_name needs user permissions to be installed. Skipping." ${quietness_bit}
+            output_proxy_executioner "echo WARNING: ${program_name} needs user permissions to be installed. Skipping." ${quietness_bit}
           fi
         fi
       fi
@@ -1145,9 +1145,9 @@ main()
       --ffmpeg|--youtube-dl-dependencies)
         add_program install_ffmpeg
       ;;
-      --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
-        add_program install_musicmanager
-      ;;
+      #--google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
+      #  add_program install_musicmanager
+      #;;
       --gpaint|--paint|--Gpaint)
         add_program install_gpaint
       ;;
@@ -1220,7 +1220,7 @@ main()
       --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
         add_program install_notepadqq
       ;;
-      --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
+      --openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
         add_program install_openoffice
       ;;
       --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
