@@ -360,7 +360,7 @@ install_gnome-mahjongg()
 install_megasync()
 {
   # Dependencies
-  apt-get install -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
+  apt-get install -y nautilus libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 
   download_and_install_package ${megasync_downloader}
   download_and_install_package ${megasync_integrator_downloader}
@@ -391,7 +391,7 @@ install_musicmanager()
 install_nemo()
 {
   # Delete Nautilus, the default desktop manager to avoid conflicts
-  apt-get purge -y nautilus gnome-shell-extension-desktop-icons
+  #apt-get purge -y nautilus gnome-shell-extension-desktop-icons
   apt-get install -y nemo dconf-editor gnome-tweak-tool
   # Create special launcher to execute nemo daemon at system start
   echo -e "${nemo_desktop_launcher}" > /etc/xdg/autostart/nemo-autostart.desktop
@@ -413,12 +413,16 @@ install_openoffice()
 {
   # Delete old versions of openoffice to avoid conflicts
   apt-get remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
+  echo $?
 
   rm -f ${USR_BIN_FOLDER}/office*
-  (cd ${USR_BIN_FOLDER}; wget -Oq --show-progress office ${openoffice_downloader})
+  (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O office ${openoffice_downloader})
 
+  echo $?
   rm -Rf ${USR_BIN_FOLDER}/en-US
+  echo si
   (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/office
+  echo no
   rm -f ${USR_BIN_FOLDER}/office
 
   dpkg -i ${USR_BIN_FOLDER}/en-US/DEBS/*.deb
@@ -434,8 +438,7 @@ install_openoffice()
 
 install_obs()
 {
-  # Dependencies
-  apt-get install -y ffmpeg
+  install_ffmpeg
 
   apt-get install -y obs-studio
   create_manual_launcher "${obs_desktop_launcher}" obs-studio
@@ -946,6 +949,14 @@ add_program()
   done
 }
 
+add_programs()
+{
+  while [[ $# -gt 0 ]]; do
+    add_program "install_$1"
+    shift
+  done
+}
+
 ##################
 ###### MAIN ######
 ##################
@@ -1060,6 +1071,10 @@ main()
         exit 0
       ;;
 
+      ### WRAPPERS ###
+      --custom1)
+        add_programs "${custom1[@]}"
+      ;;
 
       ### INDIVIDUAL ARGUMENTS ###
       # Sorted alphabetically by function name:
