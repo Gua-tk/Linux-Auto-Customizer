@@ -1,30 +1,28 @@
 #!/usr/bin/env bash
-# A simple portable shell script to initialize and customize a Linux working environment. Needs root permission for some features.
-# Author: Aleix Mariné (aleix.marine@estudiants.urv.cat)
-# Created on 28/5/19
-# Last Update 11/3/2021
+########################################################################################################################
+# -Name:
+# -Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop
+# features... collected in a simple portable shell script to customize a Linux working environment.
+# -Creation Date: 28/5/19
+# -Last Modified: 28/5/21
+# -Author: Aleix Mariné-Tena
+# -Email: aleix.marine@estudiants.urv.cat
+# -Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when
+# logged as root)
+# -Args:
+# -Usage:
+# -License:
+########################################################################################################################
+
 #
-# //RF:
-# using .bash_functions for shell features: converters,
+# Author:
+# Created on
+# Last Update 11/3/2021
 
-# common //RF:
-# missing {} around var
-# wget not used with -O and in subshell to avoid cd
-# tar not used in a subshell to avoid cd
-# echo or err directly used instead of using output_proxy_executioner
-# desktop launchers created manually as user created ONLY in the desktop and not also in the user launchers folder
-# desktop launchers created manually as root created ONLY in the desktop and not in the all users launchers folder
-# Files or folders created as root that only change their permissions, and not also its group and owner, using chgrp and chown
-# using ~ or $HOME instead of HOME_FOLDER
-# console feature installed directly in bashrc instead of using the structure provided by the customizer using .bash_functions
-
-# other //RF:
-# unify the format of .desktop launchers
 
 ################################
 ###### AUXILIAR FUNCTIONS ######
 ################################
-
 
 create_folder_as_root()
 {
@@ -34,7 +32,6 @@ create_folder_as_root()
   chown ${SUDO_USER} $1
   chmod 775 $1
 }
-
 
 # Associate a file type (mime type) to a certain application using its desktop launcher.
 # Argument 1: File types. Example: application/x-shellscript
@@ -137,7 +134,6 @@ download_and_decompress()
   done
 }
 
-
 # Argument 1: Absolute path to the binary you want to be in the PATH
 # Argument 2: Name of the hard-link that will be created in the path
 # Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2
@@ -151,8 +147,6 @@ create_links_in_path()
   done
 }
 
-
-### AUXILIAR FUNCTIONS ###
 # Installs a new bash feature, installing its script into your environment using .bashrc, which uses .bash_functions
 # Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions
 # Argument 2: Name of the file.

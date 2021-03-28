@@ -461,7 +461,7 @@ pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz
 s_function="
 s()
 {
-  \$@ >/dev/null &
+  \"\$@\" &>/dev/null &
 }
 "
 
@@ -714,16 +714,16 @@ L()
 ### TEMPLATES ###
 
 c_file_template="########################################################################################################################
-# Name:
-# Description:
-# Creation Date:
-# Last Revision:
-# Author:
-# Email:
-# Permissions:
-# Args:
-# Usage:
-# License:
+# -Name:
+# -Description:
+# -Creation Date:
+# -Last Revision:
+# -Author:
+# -Email:
+# -Permissions:
+# -Args:
+# -Usage:
+# -License:
 ########################################################################################################################
 
 
@@ -764,16 +764,16 @@ clean :
 python_file_template="#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################################################################
-# Name:
-# Description:
-# Creation Date:
-# Last Revision:
-# Author:
-# Email:
-# Permissions:
-# Args:
-# Usage:
-# License:
+# -Name:
+# -Description:
+# -Creation Date:
+# -Last Revision:
+# -Author:
+# -Email:
+# -Permissions:
+# -Args:
+# -Usage:
+# -License:
 ########################################################################################################################
 
 
@@ -787,16 +787,16 @@ if __name__ == \"__main__\":
 bash_file_template="#!/usr/bin/env bash
 
 ########################################################################################################################
-# Name:
-# Description:
-# Creation Date:
-# Last Modified:
-# Author:
-# Email:
-# Permissions:
-# Args:
-# Usage:
-# License:
+# -Name:
+# -Description:
+# -Creation Date:
+# -Last Modified:
+# -Author:
+# -Email:
+# -Permissions:
+# -Args:
+# -Usage:
+# -License:
 ########################################################################################################################
 
 main()

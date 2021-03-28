@@ -70,6 +70,18 @@
 - [ ] Repair broken desktop icons (VLC...
 - [ ] Fonts
 
+
+
+# missing {} around var
+# wget not used with -O and in subshell to avoid cd
+# tar not used in a subshell to avoid cd
+# echo or err directly used instead of using output_proxy_executioner
+# desktop launchers created manually as user created ONLY in the desktop and not also in the user launchers folder
+# desktop launchers created manually as root created ONLY in the desktop and not in the all users launchers folder
+# Files or folders created as root that only change their permissions, and not also its group and owner, using chgrp and chown
+# using ~ or $HOME instead of HOME_FOLDER
+# console feature installed directly in bashrc instead of using the structure provided by the customizer using .bash_functions
+
 ## asjko
   #lsdisplay=$(ls -lhA | tr -s " ")
   #dudisplay=$(du -shxc .[!.]* * | sort -h | tr -s "\t" " ")
