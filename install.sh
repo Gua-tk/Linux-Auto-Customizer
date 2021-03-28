@@ -174,193 +174,6 @@ add_bash_function()
   fi
 }
 
-#############################################
-###### SOFTWARE INSTALLATION FUNCTIONS ######
-#############################################
-
-
-install_studio()
-{
-  download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
-
-  # Create launcher
-  create_manual_launcher "${android_studio_launcher}" "Android_Studio"
-
-  add_bash_function "${android_studio_alias}" "studio_alias.sh"
-}
-
-
-install_clion()
-{
-  download_and_decompress ${clion_downloader} "clion" "z" "bin/clion.sh" "clion"
-
-  # Create launcher for clion in the desktop and in the launcher menu
-  create_manual_launcher "${clion_launcher}" "clion"
-
-  # register file associations
-  register_file_associations "text/x-c++hdr" "clion.desktop"
-  register_file_associations "text/x-c++src" "clion.desktop"
-  register_file_associations "text/x-chdr" "clion.desktop"
-  register_file_associations "text/x-csrc" "clion.desktop"
-
-  add_bash_function "${clion_alias}" "clion_alias.sh"
-}
-
-
-# discord desktop client
-# Permissions: user
-install_discord()
-{
-  download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord"
-
-  # Create launchers in launcher and in desktop
-  create_manual_launcher "${discord_launcher}" "discord"
-}
-
-
-# Install IntelliJ Community
-install_ideac()
-{
-  download_and_decompress ${intellij_community_downloader} "idea-ic" "z" "bin/idea.sh" "ideac"
-
-  # Create desktop launcher entry for intelliJ community
-  create_manual_launcher "${intellij_community_launcher}" "ideac"
-
-  # register file associations
-  register_file_associations "text/x-java" "ideac.desktop"
-
-  add_bash_function "${ideac_alias}" "ideac_alias.sh"
-}
-
-
-# Install IntelliJ Ultimate
-install_ideau()
-{
-  download_and_decompress ${intellij_ultimate_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
-
-  # Create desktop launcher entry for intellij ultimate
-  create_manual_launcher "${intellij_ultimate_launcher}" "ideau"
-
-  # register file associations
-  register_file_associations "text/x-java" "ideau.desktop"
-
-  add_bash_function "${ideau_alias}" "ideau_alias.sh"
-}
-
-
-# Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
-install_mendeley()
-{
-  download_and_decompress ${mendeley_downloader} "mendeley" "j" "bin/idea.sh" "mendeley"
-
-  # Create Desktop launcher
-  cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
-  chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-  # Modify Icon line
-  sed -i s-Icon=.*-Icon=${HOME}/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png- ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-  # Modify exec line
-  sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-  # Copy to desktop  launchers of the current user
-  cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${PERSONAL_LAUNCHERS_DIR}
-}
-
-
-# Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
-install_pycharm()
-{
-  download_and_decompress ${pycharm_downloader} "pycharm-community" "z" "bin/pycharm.sh" "pycharm"
-
-  # Create launcher for pycharm in the desktop and in the launcher menu
-  create_manual_launcher "$pycharm_launcher" "pycharm"
-
-  # register file associations
-  register_file_associations "text/x-python" "pycharm.desktop"
-  register_file_associations "text/x-python3" "pycharm.desktop"
-  register_file_associations "text/x-sh" "pycharm.desktop"
-
-  add_bash_function "${pycharm_alias}" "pycharm_alias.sh"
-}
-
-
-# Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
-install_pycharmpro()
-{
-  download_and_decompress ${pycharm_professional_downloader} "pycharm-professional" "z" "bin/pycharm.sh" "pycharmpro"
-
-  # Create launcher for pycharm in the desktop and in the launcher menu
-  create_manual_launcher "$pycharm_professional_launcher" "pycharm-pro"
-
-  # register file associations
-  register_file_associations "text/x-sh" "pycharm-pro.desktop"
-  register_file_associations "text/x-python" "pycharm-pro.desktop"
-  register_file_associations "text/x-python3" "pycharm-pro.desktop"
-
-  add_bash_function "${pycharmpro_alias}" "pycharmpro_alias.sh"
-}
-
-
-# Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
-# Links it to the path
-install_pypy3()
-{
-  download_and_decompress ${pypy3_downloader} "pypy3" "J"
-
-  # Install modules using pip
-  ${USR_BIN_FOLDER}/pypy3/bin/pypy3 -m ensurepip
-
-  # Forces download of pip and of modules
-  ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 --no-cache-dir -q install --upgrade pip
-  ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 --no-cache-dir install cython numpy
-  # Currently not supported
-  # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
-
-  # Create links to the PATH
-  create_links_in_path "${USR_BIN_FOLDER}/pypy3/bin/pypy3" "pypy3" ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 pypy3-pip
-}
-
-
-# Install Sublime text 3
-install_sublime()
-{
-  download_and_decompress ${sublime_text_downloader} "sublime-text" "j" "sublime_text" "sublime"
-
-  # Create desktop launcher entry for sublime text
-  create_manual_launcher "${sublime_text_launcher}" "sublime"
-
-  # register file associations
-  register_file_associations "text/x-sh" "sublime-text.desktop"
-  register_file_associations "text/x-c++hdr" "sublime-text.desktop"
-  register_file_associations "text/x-c++src" "sublime-text.desktop"
-  register_file_associations "text/x-chdr" "sublime-text.desktop"
-  register_file_associations "text/x-csrc" "sublime-text.desktop"
-  register_file_associations "text/x-python" "sublime-text.desktop"
-  register_file_associations "text/x-python3" "sublime-text.desktop"
-
-  add_bash_function "${sublime_alias}" "sublime_alias.sh"
-}
-
-
-# Telegram installation
-install_telegram()
-{
-  download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
-
-  # Create desktop launcher entry for telegram
-  create_manual_launcher "${telegram_launcher}" "telegram"
-}
-
-
-# Microsoft Visual Studio Code
-install_code()
-{
-  download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
-
-  # Create desktop launcher entry
-  create_manual_launcher "${visualstudiocode_launcher}" "code"
-
-  add_bash_function "${code_alias}" "code_alias.sh"
-}
-
 
 ############################
 ###### ROOT FUNCTIONS ######
@@ -382,13 +195,11 @@ install_audacity()
   copy_launcher audacity.desktop
 }
 
-
 install_atom()
 {
   download_and_install_package ${atom_downloader}
   copy_launcher atom.desktop
 }
-
 
 install_caffeine()
 {
@@ -396,13 +207,11 @@ install_caffeine()
   copy_launcher caffeine-indicator.desktop
 }
 
-
 install_calibre()
 {
   apt install -y calibre
   copy_launcher calibre-gui.desktop
 }
-
 
 # there's a curl dependency to use cht.sh
 install_cheat()
@@ -413,13 +222,11 @@ install_cheat()
   create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
 }
 
-
 install_cheese()
 {
   apt install -y cheese
   copy_launcher org.gnome.Cheese.desktop
 }
-
 
 install_clementine()
 {
@@ -427,13 +234,11 @@ install_clementine()
   copy_launcher clementine.desktop
 }
 
-
 install_clonezilla()
 {
   apt-get install -y clonezilla
   create_manual_launcher "${clonezilla_launcher}" "clonezilla"
 }
-
 
 install_cmatrix()
 {
@@ -468,13 +273,11 @@ install_copyq()
   copy_launcher "com.github.hluk.copyq.desktop"
 }
 
-
 install_firefox()
 {
   apt-get install -y firefox
   copy_launcher "firefox.desktop"
 }
-
 
 install_f-irc()
 {
@@ -482,21 +285,16 @@ install_f-irc()
   create_manual_launcher "${firc_launcher}" f-irc
 }
 
-
 install_freecad()
 {
   apt install -y freecad
   copy_launcher "freecad.desktop"
 }
 
-
-# Install gcc (C compiler)
-# Needs root permission
 install_gcc()
 {
   apt install -y gcc
 }
-
 
 install_geany()
 {
@@ -504,23 +302,18 @@ install_geany()
   copy_launcher geany.desktop
 }
 
-
-# Install GIMP
 install_gimp()
 {
   apt install -y gimp
   copy_launcher "gimp.desktop"
 }
 
-
 # Install GIT and all its related utilities (gitk e.g.)
-# Needs root permission
 install_git()
 {
   apt install -y git-all
   apt-get install -y git-lfs
 }
-
 
 install_gnome-chess()
 {
@@ -528,24 +321,17 @@ install_gnome-chess()
   copy_launcher "org.gnome.Chess.desktop"
 }
 
-
-# Install GNU parallel
 install_parallel()
 {
   apt-get -y install parallel
 }
 
-
-# Install gparted
 install_gparted()
 {
   apt install -y gparted
   copy_launcher "gparted.desktop"
 }
 
-
-# Checks if Google Chrome is already installed and installs it and its dependencies
-# Needs root permission
 install_google-chrome()
 {
   # Dependencies
@@ -555,13 +341,11 @@ install_google-chrome()
   copy_launcher "google-chrome.desktop"
 }
 
-
 install_gvim()
 {
   apt -y install vim-gtk3
   copy_launcher "gvim.desktop"
 }
-
 
 install_gpaint()
 {
@@ -570,19 +354,16 @@ install_gpaint()
   sed "s|Icon=gpaint.svg|Icon=${gpaint_icon_path}|" -i ${XDG_DESKTOP_DIR}/gpaint.desktop
 }
 
-
 install_inkscape()
 {
   apt install -y inkscape
   copy_launcher "inkscape.desktop"
 }
 
-
 install_java()
 {
   apt -y install default-jdk
 }
-
 
 install_latex()
 {
@@ -593,13 +374,11 @@ install_latex()
   echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
 }
 
-
 install_gnome-mahjongg()
 {
   apt-get install -y gnome-mahjongg
   copy_launcher "org.gnome.Mahjongg.desktop"
 }
-
 
 # megasync + megasync nautilus.
 install_megasync()
@@ -612,7 +391,6 @@ install_megasync()
   copy_launcher megasync.desktop
 }
 
-
 # Mendeley Dependencies
 install_mendeley_dependencies()
 {
@@ -620,13 +398,11 @@ install_mendeley_dependencies()
   apt-get -y install gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
 }
 
-
 install_gnome-mines()
 {
   apt-get install -y gnome-mines
   copy_launcher "org.gnome.Mines.desktop"
 }
-
 
 # Automatic install + Creates desktop launcher in launcher and in desktop. 
 install_musicmanager()
@@ -634,7 +410,6 @@ install_musicmanager()
   download_and_install_package ${music_manager_downloader}
   copy_launcher "google-musicmanager.desktop"
 }
-
 
 install_nemo()
 {
@@ -651,13 +426,11 @@ install_nemo()
   copy_launcher "nemo.desktop"
 }
 
-
 install_notepadqq()
 {
   apt install -y notepadqq
   copy_launcher notepadqq.desktop
 }
-
 
 install_openoffice()
 {
@@ -682,7 +455,6 @@ install_openoffice()
   copy_launcher "openoffice4-writer.desktop"
 }
 
-
 install_obs-studio()
 {
   # Dependencies
@@ -692,12 +464,10 @@ install_obs-studio()
   create_manual_launcher "${obs_desktop_launcher}" obs-studio
 }
 
-
 install_okular()
 {
   apt-get -y install okular
 }
-
 
 install_pacman()
 {
@@ -705,19 +475,16 @@ install_pacman()
   copy_launcher "pacman.desktop"
 }
 
-
 install_pdfgrep()
 {
   apt-get -y install pdfgrep
 }
-
 
 install_pluma()
 {
   apt install -y pluma
   copy_launcher "pluma.desktop"
 }
-
 
 install_pypy3_dependencies()
 {
@@ -727,12 +494,10 @@ install_pypy3_dependencies()
   apt-get install -y -qq libffi-dev
 }
 
-
 install_python3()
 {
   apt install -y python3-dev python-dev python3-pip
 }
-
 
 install_shotcut()
 {
@@ -740,13 +505,11 @@ install_shotcut()
   create_manual_launcher "${shotcut_desktop_launcher}" shotcut
 }
 
-
 install_aisleriot()
 {
   apt-get install -y aisleriot
   copy_launcher sol.desktop
 }
-
 
 # steam ubuntu client
 install_steam()
@@ -755,13 +518,11 @@ install_steam()
   copy_launcher steam.desktop
 }
 
-
 install_gnome-sudoku()
 {
   apt-get install -y gnome-sudoku
   copy_launcher org.gnome.Sudoku.desktop
 }
-
 
 install_terminator()
 {
@@ -769,13 +530,11 @@ install_terminator()
   copy_launcher terminator.desktop
 }
 
-
 install_thunderbird()
 {
   apt-get install -y thunderbird
   copy_launcher thunderbird.desktop
 }
-
 
 install_tilix()
 {
@@ -783,13 +542,11 @@ install_tilix()
   copy_launcher tilix.desktop
 }
 
-
 install_tmux()
 {
   apt-get -y install tmux
   create_manual_launcher ${tmux_launcher} tmux
 }
-
 
 install_torbrowser()
 {
@@ -797,14 +554,12 @@ install_torbrowser()
   copy_launcher "torbrowser.desktop"
 }
 
-
 install_transmission()
 {
   apt-get install -y transmission
   copy_launcher "transmission-gtk.desktop"
   create_links_in_path $(which transmission-gtk) transmission
 }
-
 
 install_uget()
 {
@@ -814,14 +569,12 @@ install_uget()
   copy_launcher uget-gtk.desktop
 }
 
-
 # install VLC
 install_vlc()
 {
   apt-get -y install vlc
   copy_launcher "vlc.desktop"
 }
-
 
 # VirtualBox
 install_virtualbox()
@@ -833,11 +586,9 @@ install_virtualbox()
   copy_launcher "virtualbox.desktop"
 }
 
-
 install_youtube-dl()
 {
   # Dependencies
-  apt-get install -y ffmpeg
 
   wget ${youtubedl_downloader} -O ${USR_BIN_FOLDER}/youtube-dl
   chmod a+rx ${USR_BIN_FOLDER}/youtube-dl
@@ -847,12 +598,191 @@ install_youtube-dl()
   hash -r
 }
 
+install_ffmpeg()
+{
+  apt-get install -y ffmpeg
+}
 
-#############################
-###### SYSTEM FEATURES ######
-#############################
+
+#####################################
+###### USER SOFTWARE FUNCTIONS ######
+#####################################
+
+install_studio()
+{
+  download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
+
+  # Create launcher
+  create_manual_launcher "${android_studio_launcher}" "Android_Studio"
+
+  add_bash_function "${android_studio_alias}" "studio_alias.sh"
+}
+
+install_clion()
+{
+  download_and_decompress ${clion_downloader} "clion" "z" "bin/clion.sh" "clion"
+
+  # Create launcher for clion in the desktop and in the launcher menu
+  create_manual_launcher "${clion_launcher}" "clion"
+
+  # register file associations
+  register_file_associations "text/x-c++hdr" "clion.desktop"
+  register_file_associations "text/x-c++src" "clion.desktop"
+  register_file_associations "text/x-chdr" "clion.desktop"
+  register_file_associations "text/x-csrc" "clion.desktop"
+
+  add_bash_function "${clion_alias}" "clion_alias.sh"
+}
+
+# discord desktop client
+# Permissions: user
+install_discord()
+{
+  download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord"
+
+  # Create launchers in launcher and in desktop
+  create_manual_launcher "${discord_launcher}" "discord"
+}
+
+# Install IntelliJ Community
+install_ideac()
+{
+  download_and_decompress ${intellij_community_downloader} "idea-ic" "z" "bin/idea.sh" "ideac"
+
+  # Create desktop launcher entry for intelliJ community
+  create_manual_launcher "${intellij_community_launcher}" "ideac"
+
+  # register file associations
+  register_file_associations "text/x-java" "ideac.desktop"
+
+  add_bash_function "${ideac_alias}" "ideac_alias.sh"
+}
+
+# Install IntelliJ Ultimate
+install_ideau()
+{
+  download_and_decompress ${intellij_ultimate_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
+
+  # Create desktop launcher entry for intellij ultimate
+  create_manual_launcher "${intellij_ultimate_launcher}" "ideau"
+
+  # register file associations
+  register_file_associations "text/x-java" "ideau.desktop"
+
+  add_bash_function "${ideau_alias}" "ideau_alias.sh"
+}
+
+# Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
+install_mendeley()
+{
+  download_and_decompress ${mendeley_downloader} "mendeley" "j" "bin/idea.sh" "mendeley"
+
+  # Create Desktop launcher
+  cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
+  chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+  # Modify Icon line
+  sed -i s-Icon=.*-Icon=${HOME}/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png- ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+  # Modify exec line
+  sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+  # Copy to desktop  launchers of the current user
+  cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${PERSONAL_LAUNCHERS_DIR}
+}
+
+# Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
+install_pycharm()
+{
+  download_and_decompress ${pycharm_downloader} "pycharm-community" "z" "bin/pycharm.sh" "pycharm"
+
+  # Create launcher for pycharm in the desktop and in the launcher menu
+  create_manual_launcher "$pycharm_launcher" "pycharm"
+
+  # register file associations
+  register_file_associations "text/x-python" "pycharm.desktop"
+  register_file_associations "text/x-python3" "pycharm.desktop"
+  register_file_associations "text/x-sh" "pycharm.desktop"
+
+  add_bash_function "${pycharm_alias}" "pycharm_alias.sh"
+}
+
+# Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
+install_pycharmpro()
+{
+  download_and_decompress ${pycharm_professional_downloader} "pycharm-professional" "z" "bin/pycharm.sh" "pycharmpro"
+
+  # Create launcher for pycharm in the desktop and in the launcher menu
+  create_manual_launcher "$pycharm_professional_launcher" "pycharm-pro"
+
+  # register file associations
+  register_file_associations "text/x-sh" "pycharm-pro.desktop"
+  register_file_associations "text/x-python" "pycharm-pro.desktop"
+  register_file_associations "text/x-python3" "pycharm-pro.desktop"
+
+  add_bash_function "${pycharmpro_alias}" "pycharmpro_alias.sh"
+}
+
+# Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
+# Links it to the path
+install_pypy3()
+{
+  download_and_decompress ${pypy3_downloader} "pypy3" "J"
+
+  # Install modules using pip
+  ${USR_BIN_FOLDER}/pypy3/bin/pypy3 -m ensurepip
+
+  # Forces download of pip and of modules
+  ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 --no-cache-dir -q install --upgrade pip
+  ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 --no-cache-dir install cython numpy
+  # Currently not supported
+  # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
+
+  # Create links to the PATH
+  create_links_in_path "${USR_BIN_FOLDER}/pypy3/bin/pypy3" "pypy3" ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 pypy3-pip
+}
+
+# Install Sublime text 3
+install_sublime()
+{
+  download_and_decompress ${sublime_text_downloader} "sublime-text" "j" "sublime_text" "sublime"
+
+  # Create desktop launcher entry for sublime text
+  create_manual_launcher "${sublime_text_launcher}" "sublime"
+
+  # register file associations
+  register_file_associations "text/x-sh" "sublime-text.desktop"
+  register_file_associations "text/x-c++hdr" "sublime-text.desktop"
+  register_file_associations "text/x-c++src" "sublime-text.desktop"
+  register_file_associations "text/x-chdr" "sublime-text.desktop"
+  register_file_associations "text/x-csrc" "sublime-text.desktop"
+  register_file_associations "text/x-python" "sublime-text.desktop"
+  register_file_associations "text/x-python3" "sublime-text.desktop"
+
+  add_bash_function "${sublime_alias}" "sublime_alias.sh"
+}
+
+install_telegram()
+{
+  download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
+
+  # Create desktop launcher entry for telegram
+  create_manual_launcher "${telegram_launcher}" "telegram"
+}
+
+# Microsoft Visual Studio Code
+install_code()
+{
+  download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
+
+  # Create desktop launcher entry
+  create_manual_launcher "${visualstudiocode_launcher}" "code"
+
+  add_bash_function "${code_alias}" "code_alias.sh"
+}
+
+
+#######################################
+###### USER-ENVIRONMENT FEATURES ######
+#######################################
 # Most (all) of them just use user permissions
-
 
 install_converters()
 {
@@ -867,9 +797,7 @@ install_converters()
   add_bash_function "${converters_functions}" converters.sh
 }
 
-
 # Install templates (available files in the right click --> new --> ...)
-# Python3, bash shell scripts, latex documents
 install_templates()
 {
   echo -e "${bash_file_template}" > ${XDG_TEMPLATES_DIR}/shell_script.sh
@@ -882,29 +810,20 @@ install_templates()
   chmod 775 ${XDG_TEMPLATES_DIR}/*
 }
 
-
-# Forces l as alias for ls -lAh
 install_l()
 {
   add_bash_function "${l_function}" l.sh
 }
 
-
-# Defines a function to extract all types of compressed files
 install_extract()
 {
   add_bash_function "${extract_function}" extract.sh
 }
 
-
-# Increases file history size, size of the history and forces to append to history, never overwrite
-# Ignore repeated commands and simple commands
-# Store multiline comments in just one command
 install_history_optimization()
 {
   add_bash_function "${shell_history_optimization_function}" history.sh
 }
-
 
 install_git_aliases()
 {
@@ -913,12 +832,15 @@ install_git_aliases()
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
+install_s()
+{
+  add_bash_function "${s_function}" s.sh
+}
 
 install_shortcuts()
 {
   add_bash_function "${shortcut_aliases}" shortcuts.sh
 }
-
 
 install_prompt()
 {
@@ -1230,8 +1152,8 @@ main()
       --freecad|--FreeCAD|--freeCAD)
         add_program install_freecad
       ;;
-      --games|--Gaming|--Games)
-        add_program install_games
+      --ffmpeg|--youtube-dl-dependencies)
+        add_program install_ffmpeg
       ;;
       --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
         add_program install_musicmanager
@@ -1340,6 +1262,9 @@ main()
       ;;
       --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
         add_program install_pypy3_dependencies
+      ;;
+      --s|--s-function)
+        add_program install_s
       ;;
       --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
         add_program install_shotcut

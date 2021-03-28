@@ -16,7 +16,7 @@
 #### Syntax
 * All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
 * All variables must be protected by using "" to avoid resplitting because of spaces, despite, customizer is not emphasized to work with spaces in its variables. Spaces are *evil* and are not considered.
-* There is one blankline between functions in the same section. There is two blanklines between sections.
+* There is one blankline between functions in the same block. There is two blanklines between blocks.
 
 ## Developed features
 #### Aleix
@@ -35,18 +35,19 @@
 - [x] declare variables like DESK, GIT, etc
 - [x] Split multifeatures in one function into different functions
 - [x] Create source in bashrc with file bash_functions.sh with all sources calls
+- [x] Desktop wallpapers
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
 - [x] Refactor of data table in README.md
 - [x] Youtube-dl
+- [x] Create escape function, which returns an escaped sequence of characters
+
 
 ## Currently developing/refactoring features
 
 ## TO-DO
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
-- [ ] Desktop wallpapers
-- [ ] Create escape function, which returns an escaped sequence of characters
 - [ ] Refine extract function
 - [ ] Standarize fromat of all launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 - [ ] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed
@@ -89,3 +90,8 @@
   #alias c="clear"
   #alias h="history | grep $1"
   #du -shxc .[!.]* * | sort -h
+
+
+# Increases file history size, size of the history and forces to append to history, never overwrite
+# Ignore repeated commands and simple commands
+# Store multiline comments in just one command

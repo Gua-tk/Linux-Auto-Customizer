@@ -180,6 +180,7 @@ installation_data=(
 "0;0;0;0;1;install_aisleriot"
 "0;0;0;0;0;install_studio"
 "0;0;0;0;0;install_sublime"
+"0;0;0;0;0;install_s"
 "0;0;0;0;1;install_gnome-sudoku"
 "0;0;0;0;0;install_telegram"
 "0;0;0;0;0;install_templates"
@@ -195,7 +196,8 @@ installation_data=(
 "0;0;0;0;0;install_code"
 "0;0;0;0;1;install_vlc"
 "0;0;0;0;0;install_chwlppr"
-"0;0;0;0;1;install_youtube-dl"
+"0;0;0;0;0;install_youtube-dl"
+"0;0;0;0;0;install_ffmpeg"
 )
 
 
@@ -455,6 +457,13 @@ pycharmpro_alias="alias pycharmpro=\"pycharmpro . &>/dev/null &\""
 
 
 pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
+
+s_function="
+s()
+{
+  \$@ >/dev/null &
+}
+"
 
 shell_history_optimization_function="export HISTSIZE=10000
 export HISTFILESIZE=100000
