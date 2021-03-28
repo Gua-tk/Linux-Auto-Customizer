@@ -740,7 +740,7 @@ install_code()
 
 install_youtube-dl()
 {
-  wget ${youtubedl_downloader} -Oq --show-progress ${USR_BIN_FOLDER}/youtube-dl
+  wget ${youtubedl_downloader} -q --show-progress -O ${USR_BIN_FOLDER}/youtube-dl
   chmod a+rx ${USR_BIN_FOLDER}/youtube-dl
   create_links_in_path ${USR_BIN_FOLDER}/youtube-dl youtube-dl
   add_bash_function "${youtubewav_alias}" youtube-wav_alias.sh
@@ -757,7 +757,7 @@ install_youtube-dl()
 install_cheat()
 {
   rm -f ${USR_BIN_FOLDER}/cheat.sh
-  (cd ${USR_BIN_FOLDER}; wget -Oq --show-progress cheat.sh ${cheat_downloader})
+  (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O cheat.sh ${cheat_downloader})
 
   create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
 }
