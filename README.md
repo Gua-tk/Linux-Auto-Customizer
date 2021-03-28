@@ -82,13 +82,14 @@ The following features can be installed or uninstalled automatically and individ
 | Tilix | Advanced GTK3 tiling terminal emulator | Executable `tilix` in the PATH and desktop launcher | --Tilix --tilix |
 | Tmux | Terminal multiplexer for Unix-like operating systems | | --tmux --Tmux | 
 | Thunderbird | Email client, personal information manager, news client, RSS and chat client | Installs thunderbird email client via `apt-get` and creates its launcher in the current user desktop. Uninstalls thunderbird via `apt-get purge` and remove its launchers|  --thunderbird --mozillathunderbird --mozilla-thunderbird --Thunderbird --thunder-bird |
-| Tor browser | Software for enabling anonymous communication by directing Internet traffic through a free, worldwide, volunteer overlay network consisting of more than seven thousand relays in order to conceal a user's location and usage from anyone conducting network surveillance or traffic analysis. | Installs Tor web browser via `apt-get` and creates its launcher in the current user desktop. Uninstalls Tor browser via `apt-get purge` and remove its launchers|  --tor --torbrowser --tor_browser --TOR --TOR-browser --TOR-BROSWER --TORBROWSER --TOR_BROWSER --TOR_browser |
-| Transmission| A set of lightweight BitTorrent clients (in GUI, CLI and daemon form) | --transmission --transmission-gtk --Transmission | Installs Transmission torrent downloader via `apt-get` and creates its launcher in the current user desktop | Uninstalls transmission via `apt-get purge` and remove its launchers |
+| Tor browser | Software for enabling anonymous communication by directing Internet traffic. | Executable `tor` in the PATH and desktop launcher |  --tor --torbrowser --tor_browser --TOR --TOR-browser --TOR-BROSWER --TORBROWSER --TOR_BROWSER --TOR_browser |
+| Transmission | A set of lightweight BitTorrent clients (in GUI, CLI and daemon form) | Executable `transmission` in the PATH and desktop launcher | --transmission --transmission-gtk --Transmission |
+| uget | GUI utility to manage downloads | Executable `uget` in the PATH and desktop launcher | --uget |
 | variable DESK | user global variable pointing to `~/Desktop` | Append to `~/.bashrc` to add the variable in every console session ||
-| VirtualBox| Hosted hypervisor for x86 virtualization | | --virtualbox --virtual-box --VirtualBox --virtualBox --Virtual-Box --Virtualbox |
+| VirtualBox | Hosted hypervisor for x86 virtualization | Executable `virtualbox` in the PATH and desktop launcher | --virtualbox --virtual-box --VirtualBox --virtualBox --Virtual-Box --Virtualbox |
 | Visual Studio Code| Source-code editor | | --visualstudiocode --visual-studio-code --code --Code --visualstudio --visual-studio1 |
-| VLC | Media player software, and streaming media server | Installs VLC via `apt` and creates its own launcher in the current user desktop. Uninstalls VLC media player via `apt purge` and deletes its launchers. | --vlc --VLC --Vlc |
-| youtube-dl | download manager for video and audio from YouTube and over 1000 other video hosting websites. | | --youtube-dl|
+| VLC | Media player software, and streaming media server | Executable `vlc` in the PATH and desktop launcher | --vlc --VLC --Vlc |
+| youtube-dl | download manager for video and audio from YouTube and over 1000 other video hosting websites. | Executable `youtube-dl` in the PATH and alias `youtube-wav` to scratch a mp3 from youtube | --youtube-dl |
 
 ## Usage
 ### Download

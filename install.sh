@@ -112,9 +112,11 @@ download_and_decompress()
   # Delete downloaded files which will be no longer used
   rm -f ${USR_BIN_FOLDER}/downloading_program*
   # Clean older installation to avoid conflicts
-  rm -Rf "${USR_BIN_FOLDER}/$2"
-  # Rename folder for coherence
-  mv "${USR_BIN_FOLDER}/${program_folder_name}" "${USR_BIN_FOLDER}/$2"
+  if [[ "${program_folder_name}" != "$2" ]]; then
+    rm -Rf "${USR_BIN_FOLDER}/$2"
+    # Rename folder for coherence
+    mv "${USR_BIN_FOLDER}/${program_folder_name}" "${USR_BIN_FOLDER}/$2"
+  fi
   # Save the final name of the folder to regenerate the full path after the shifts
   program_folder_name="$2"
   # Shift the first 3 arguments to have only from 4th argument to the last in order to call create_links_in_path
@@ -524,7 +526,7 @@ install_tmux()
   create_manual_launcher "${tmux_launcher}" tmux
 }
 
-install_torbrowser()
+install_tor()
 {
   apt-get install -y torbrowser-launcher
   copy_launcher "torbrowser.desktop"
@@ -562,18 +564,6 @@ install_virtualbox()
   copy_launcher "virtualbox.desktop"
 }
 
-install_youtube-dl()
-{
-  # Dependencies
-
-  wget ${youtubedl_downloader} -Oq --show-progress ${USR_BIN_FOLDER}/youtube-dl
-  chmod a+rx ${USR_BIN_FOLDER}/youtube-dl
-  create_links_in_path ${USR_BIN_FOLDER}/youtube-dl youtube-dl
-  add_bash_function "${youtubewav_alias}" youtube-wav_alias.sh
-
-  hash -r
-}
-
 install_ffmpeg()
 {
   apt-get install -y ffmpeg
@@ -588,7 +578,6 @@ install_studio()
 {
   download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
 
-  # Create launcher
   create_manual_launcher "${android_studio_launcher}" "Android_Studio"
 
   add_bash_function "${android_studio_alias}" "studio_alias.sh"
@@ -598,10 +587,8 @@ install_clion()
 {
   download_and_decompress ${clion_downloader} "clion" "z" "bin/clion.sh" "clion"
 
-  # Create launcher for clion in the desktop and in the launcher menu
   create_manual_launcher "${clion_launcher}" "clion"
 
-  # register file associations
   register_file_associations "text/x-c++hdr" "clion.desktop"
   register_file_associations "text/x-c++src" "clion.desktop"
   register_file_associations "text/x-chdr" "clion.desktop"
@@ -623,7 +610,6 @@ install_discord()
 {
   download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord"
 
-  # Create launchers in launcher and in desktop
   create_manual_launcher "${discord_launcher}" "discord"
 }
 
@@ -632,10 +618,8 @@ install_ideac()
 {
   download_and_decompress ${intellij_community_downloader} "idea-ic" "z" "bin/idea.sh" "ideac"
 
-  # Create desktop launcher entry for intelliJ community
   create_manual_launcher "${intellij_community_launcher}" "ideac"
 
-  # register file associations
   register_file_associations "text/x-java" "ideac.desktop"
 
   add_bash_function "${ideac_alias}" "ideac_alias.sh"
@@ -646,10 +630,8 @@ install_ideau()
 {
   download_and_decompress ${intellij_ultimate_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
 
-  # Create desktop launcher entry for intellij ultimate
   create_manual_launcher "${intellij_ultimate_launcher}" "ideau"
 
-  # register file associations
   register_file_associations "text/x-java" "ideau.desktop"
 
   add_bash_function "${ideau_alias}" "ideau_alias.sh"
@@ -676,10 +658,8 @@ install_pycharm()
 {
   download_and_decompress ${pycharm_downloader} "pycharm-community" "z" "bin/pycharm.sh" "pycharm"
 
-  # Create launcher for pycharm in the desktop and in the launcher menu
   create_manual_launcher "$pycharm_launcher" "pycharm"
 
-  # register file associations
   register_file_associations "text/x-python" "pycharm.desktop"
   register_file_associations "text/x-python3" "pycharm.desktop"
   register_file_associations "text/x-sh" "pycharm.desktop"
@@ -692,10 +672,8 @@ install_pycharmpro()
 {
   download_and_decompress ${pycharm_professional_downloader} "pycharm-professional" "z" "bin/pycharm.sh" "pycharmpro"
 
-  # Create launcher for pycharm in the desktop and in the launcher menu
   create_manual_launcher "$pycharm_professional_launcher" "pycharm-pro"
 
-  # register file associations
   register_file_associations "text/x-sh" "pycharm-pro.desktop"
   register_file_associations "text/x-python" "pycharm-pro.desktop"
   register_file_associations "text/x-python3" "pycharm-pro.desktop"
@@ -718,7 +696,6 @@ install_pypy3()
   # Currently not supported
   # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
 
-  # Create links to the PATH
   create_links_in_path "${USR_BIN_FOLDER}/pypy3/bin/pypy3" "pypy3" ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 pypy3-pip
 }
 
@@ -727,7 +704,6 @@ install_sublime()
 {
   download_and_decompress ${sublime_text_downloader} "sublime-text" "j" "sublime_text" "sublime"
 
-  # Create desktop launcher entry for sublime text
   create_manual_launcher "${sublime_text_launcher}" "sublime"
 
   # register file associations
@@ -746,7 +722,6 @@ install_telegram()
 {
   download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
 
-  # Create desktop launcher entry for telegram
   create_manual_launcher "${telegram_launcher}" "telegram"
 }
 
@@ -755,10 +730,19 @@ install_code()
 {
   download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
 
-  # Create desktop launcher entry
   create_manual_launcher "${visualstudiocode_launcher}" "code"
 
   add_bash_function "${code_alias}" "code_alias.sh"
+}
+
+install_youtube-dl()
+{
+  wget ${youtubedl_downloader} -Oq --show-progress ${USR_BIN_FOLDER}/youtube-dl
+  chmod a+rx ${USR_BIN_FOLDER}/youtube-dl
+  create_links_in_path ${USR_BIN_FOLDER}/youtube-dl youtube-dl
+  add_bash_function "${youtubewav_alias}" youtube-wav_alias.sh
+
+  hash -r
 }
 
 
@@ -782,7 +766,7 @@ install_converters()
   git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
 
   for converter in $(ls ${USR_BIN_FOLDER}/converters/converters); do
-    create_links_in_path ${USR_BIN_FOLDER}/converters/converters/${converter} $(echo ${converter} | cut -d "." -f1)
+    create_links_in_path ${USR_BIN_FOLDER}/converters/converters/${converter} "$(echo ${converter} | cut -d "." -f1)"
   done
 
   add_bash_function "${converters_functions}" converters.sh
