@@ -411,7 +411,6 @@ install_openoffice()
 {
   # Delete old versions of openoffice to avoid conflicts
   apt-get remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
-  apt-get autoremove -y
 
   rm -f ${USR_BIN_FOLDER}/office*
   (cd ${USR_BIN_FOLDER}; wget -O office ${openoffice_downloader})
@@ -420,7 +419,8 @@ install_openoffice()
   (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/office
   rm -f ${USR_BIN_FOLDER}/office
 
-  $(cd ${USR_BIN_FOLDER}/en-US/DEBS/; dpkg -i "*.deb"; cd desktop-integration/; dpkg -i "*.deb" )
+  dpkg -i ${USR_BIN_FOLDER}/en-US/DEBS/*.deb
+  dpkg -i ${USR_BIN_FOLDER}/en-US/DEBS/desktop-integration/*.deb
   rm -Rf ${USR_BIN_FOLDER}/en-US
 
   copy_launcher "openoffice4-base.desktop"
