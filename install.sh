@@ -1087,6 +1087,9 @@ main()
       --custom1)
         add_programs "${custom1[@]}"
       ;;
+      --iochem)
+        add_programs "${iochem[@]}"
+      ;;
 
       ### INDIVIDUAL ARGUMENTS ###
       # Sorted alphabetically by function name:
