@@ -1266,7 +1266,7 @@ main()
       --pluma)
         add_program install_pluma
       ;;
-      --postgreSQL|--PostGreSQL|--postgresql|--postgre-sql|--postgre-SQL)
+      --postgreSQL|--PostGreSQL|--postgresql|--postgre-sql|--postgre-SQL|--psql|--pSQL|--p-SQL|--p-sql)
         add_program psql
       ;;
       --prompt)
