@@ -401,7 +401,7 @@ Name=IntelliJ IDEA Community Edition
 StartupWMClass=jetbrains-idea"
 ideac_alias="alias ideac=\"ideac . &>/dev/null &\""
 
-java_downloader="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html#license-lightbox"
+java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
 java_globalvar="EXPORT JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8/bin/java\""
 
 l_function="alias l=\"ls -lAh --color=auto\""

@@ -105,8 +105,9 @@ download_and_decompress()
   (cd ${USR_BIN_FOLDER}; wget -qO "downloading_program" --show-progress "$1")
   # Capture root folder name
   program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloading_program)
+  # Check that variable program_folder_name is set, if not abort
   # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -Rf "${USR_BIN_FOLDER}/${program_folder_name}"
+  rm -Rf "${USR_BIN_FOLDER}/${program_folder_name:?"ERROR: The name of the installed program could not been captured"}"
   # Decompress in a subshell to avoid changing the working directory in the current shell
   (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloading_program
   # Delete downloaded files which will be no longer used
