@@ -171,6 +171,7 @@ installation_data=(
 "0;0;0;0;1;install_pdfgrep"
 "0;0;0;0;1;install_pluma"
 "0;0;0;0;0;install_prompt"
+"0;0;0;0;1;install_psql"
 "0;0;0;0;0;install_pycharm"
 "0;0;0;0;0;install_pycharmpro"
 "0;0;0;0;1;install_python3"
