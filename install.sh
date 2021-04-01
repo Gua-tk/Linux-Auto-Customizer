@@ -647,7 +647,7 @@ install_java()
   add_bash_function "${java_globalvar}" "java_javahome.sh"
 }
 
-install_maven()
+install_mvn()
 {
   download_and_decompress ${maven_downloader} "maven" "z" "bin/mvn" "mvn"
 }
