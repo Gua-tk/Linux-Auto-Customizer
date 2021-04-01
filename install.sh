@@ -470,10 +470,7 @@ install_pluma()
 
 install_pypy3_dependencies()
 {
-  apt-get install -y -qq pkg-config
-  apt-get install -y -qq libfreetype6-dev
-  apt-get install -y -qq libpng-dev
-  apt-get install -y -qq libffi-dev
+  apt-get install -y -qq pkg-config libfreetype6-dev libpng-dev libffi-dev
 }
 
 install_python3()
