@@ -459,7 +459,7 @@ install_pdfgrep()
 
 install_psql()
 {
-  apt-get -y postgresql-client-12	postgresql-12	postgresql-contrib-9.x libpq-dev postgresql-server-dev-12	pgadmin4
+  apt-get install -y postgresql-client-12	postgresql-12 libpq-dev postgresql-server-dev-12
 }
 
 install_pluma()
@@ -1267,7 +1267,7 @@ main()
         add_program install_pluma
       ;;
       --postgreSQL|--PostGreSQL|--postgresql|--postgre-sql|--postgre-SQL|--psql|--pSQL|--p-SQL|--p-sql)
-        add_program psql
+        add_program install_psql
       ;;
       --prompt)
         add_program install_prompt
