@@ -336,11 +336,6 @@ install_inkscape()
   copy_launcher "inkscape.desktop"
 }
 
-install_java()
-{
-  apt-get -y install default-jdk
-}
-
 install_latex()
 {
   # Dependencies
@@ -577,6 +572,11 @@ install_ffmpeg()
 ###### USER SOFTWARE FUNCTIONS ######
 #####################################
 
+install_ant()
+{
+  download_and_decompress ${ant_downloader} "apache_ant" "z" "bin/ant" "ant"
+}
+
 install_studio()
 {
   download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
@@ -638,6 +638,17 @@ install_ideau()
   register_file_associations "text/x-java" "ideau.desktop"
 
   add_bash_function "${ideau_alias}" "ideau_alias.sh"
+}
+
+install_java()
+{
+  download_and_decompress ${java_downloader} "jdk8" "z" "bin/java" "java"
+  add_bash_function "${java_globalvar}" "java_javahome.sh"
+}
+
+install_maven()
+{
+  download_and_decompress ${maven_downloader} "maven" "z" "bin/mvn" "mvn"
 }
 
 # Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
@@ -1081,6 +1092,9 @@ main()
       --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
         add_program install_studio
       ;;
+      --ant|--apache_ant)
+        add_program install_ant
+      ;;
       --audacity|--Audacity)
         add_program install_audacity
       ;;
@@ -1200,6 +1214,9 @@ main()
       ;;
       --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
         add_program install_l
+      ;;
+      --maven|--mvn)
+        add_program install_mvn
       ;;
       --mahjongg|--Mahjongg|--gnome-mahjongg)
         add_program install_gnome-mahjongg

@@ -117,6 +117,7 @@ AUTOCLEAN=2
 # 6.- Function name
 # install_yes/no; forceness; quietness; overwrite; permissions; function_name
 installation_data=(
+"0;0;0;0;0;install_ant"
 "0;0;0;0;1;install_audacity"
 "0;0;0;0;1;install_atom"
 "0;0;0;0;0;install_discord"
@@ -153,10 +154,11 @@ installation_data=(
 "0;0;0;0;1;install_inkscape"
 "0;0;0;0;0;install_ideac"
 "0;0;0;0;0;install_ideau"
-"0;0;0;0;1;install_java"
+"0;0;0;0;0;install_java"
 "0;0;0;0;1;install_latex"
 "0;0;0;0;0;install_l"
 "0;0;0;0;1;install_gnome-mahjongg"
+"0;0;0;0;0;install_mvn"
 "0;0;0;0;1;install_megasync"
 "0;0;0;0;1;install_mendeley_dependencies"
 "0;0;0;0;1;install_gnome-mines"
@@ -198,7 +200,7 @@ installation_data=(
 "0;0;0;0;1;install_vlc"
 "0;0;0;0;0;install_chwlppr"
 "0;0;0;0;0;install_youtube-dl"
-"0;0;0;0;0;install_ffmpeg"
+"0;0;0;0;1;install_ffmpeg"
 )
 
 
@@ -278,6 +280,8 @@ Categories=Development;IDE;
 StartupNotify=true
 MimeType=
 Encoding=UTF-8"
+
+ant_downloader="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.9-bin.tar.gz"
 
 atom_downloader=https://atom.io/download/deb
 
@@ -397,7 +401,12 @@ Name=IntelliJ IDEA Community Edition
 StartupWMClass=jetbrains-idea"
 ideac_alias="alias ideac=\"ideac . &>/dev/null &\""
 
+java_downloader="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html#license-lightbox"
+java_globalvar="EXPORT JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8/bin/java\""
+
 l_function="alias l=\"ls -lAh --color=auto\""
+
+maven_downloader="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 
 megasync_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.3.8-1.1_amd64.deb
 megasync_integrator_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nautilus-megasync_3.6.6_amd64.deb
