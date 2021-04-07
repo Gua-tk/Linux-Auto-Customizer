@@ -160,6 +160,7 @@ installation_data=(
 "0;0;0;0;1;install_gnome-mahjongg"
 "0;0;0;0;0;install_mvn"
 "0;0;0;0;1;install_megasync"
+"0;0;0;0;0;install_mendeley"
 "0;0;0;0;1;install_mendeley_dependencies"
 "0;0;0;0;1;install_gnome-mines"
 "0;0;0;0;1;install_nemo"
