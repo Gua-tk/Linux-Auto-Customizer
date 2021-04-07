@@ -657,7 +657,7 @@ install_mvn()
 # Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
 install_mendeley()
 {
-  download_and_decompress ${mendeley_downloader} "mendeley" "j" "bin/idea.sh" "mendeley"
+  download_and_decompress ${mendeley_downloader} "mendeley" "j" "bin/mendeleydesktop" "mendeley"
 
   # Create Desktop launcher
   cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
