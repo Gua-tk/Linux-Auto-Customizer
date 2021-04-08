@@ -417,6 +417,8 @@ Icon=${USR_BIN_FOLDER}/iqmol/iqmol_icon.png
 Exec=iqmol
 Name=IQmol
 StartupWMClass=IQmol"
+iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
+
 
 java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
