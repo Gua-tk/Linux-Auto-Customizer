@@ -151,6 +151,7 @@ installation_data=(
 "0;0;0;0;1;install_gnome-chess"
 "0;0;0;0;1;install_parallel"
 "0;0;0;0;0;install_history_optimization"
+"0;0;0;0;1;install_iqmol"
 "0;0;0;0;1;install_inkscape"
 "0;0;0;0;0;install_ideac"
 "0;0;0;0;0;install_ideau"
@@ -403,6 +404,8 @@ Exec=ideac %f
 Name=IntelliJ IDEA Community Edition
 StartupWMClass=jetbrains-idea"
 ideac_alias="alias ideac=\"ideac . &>/dev/null &\""
+
+iqmol_downloader=http://www.iqmol.org/download.php?get=iqmol_2.14.deb
 
 java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""

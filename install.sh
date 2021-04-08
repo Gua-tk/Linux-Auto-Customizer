@@ -331,6 +331,12 @@ install_gpaint()
   sed "s|Icon=gpaint.svg|Icon=${gpaint_icon_path}|" -i ${XDG_DESKTOP_DIR}/gpaint.desktop
 }
 
+install_iqmol()
+{
+  download_and_install_package ${iqmol_downloader}
+  copy_launcher iqmol.desktop
+}
+
 install_inkscape()
 {
   apt-get install -y inkscape
@@ -1202,6 +1208,9 @@ main()
       ;;
       --chrome|--Chrome|--google-chrome|--Google-Chrome)
         add_program install_google-chrome
+      ;;
+      --iqmol|--IQmol)
+        add_program install_iqmol
       ;;
       --inkscape|--ink-scape|--Inkscape|--InkScape)
         add_program install_inkscape
