@@ -406,6 +406,17 @@ StartupWMClass=jetbrains-idea"
 ideac_alias="alias ideac=\"ideac . &>/dev/null &\""
 
 iqmol_downloader=http://www.iqmol.org/download.php?get=iqmol_2.14.deb
+iqmol_icon=http://www.iqmol.org/images/icon.png
+iqmol_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Comment=Molecule Visualizer
+Categories=Visualization;
+Icon=${USR_BIN_FOLDER}/iqmol/iqmol_icon.png
+Exec=iqmol
+Name=IQmol
+StartupWMClass=IQmol"
 
 java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""

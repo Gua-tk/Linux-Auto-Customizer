@@ -334,7 +334,10 @@ install_gpaint()
 install_iqmol()
 {
   download_and_install_package ${iqmol_downloader}
-  copy_launcher iqmol.desktop
+  create_folder_as_root ${USR_BIN_FOLDER}/iqmol
+  # Obtain icon for iqmol
+  (cd ${USR_BIN_FOLDER}/iqmol; wget -q -O iqmol_icon.png ${iqmol_icon})
+  create_manual_launcher ${iqmol_launcher} iqmol
 }
 
 install_inkscape()
