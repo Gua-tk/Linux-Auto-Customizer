@@ -10,7 +10,7 @@ output_proxy_executioner()
 {
   comm=$(echo "$1" | head -1 | cut -d " " -f1)
   if [[ "${comm}" == "echo" ]]; then
-    echo -en "\e[31m"  # Activate red colour
+    echo -en "\e[96m"  # Activate red colour
   fi 
   
   if [[ $2 == 0 ]]; then
