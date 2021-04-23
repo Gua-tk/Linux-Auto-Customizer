@@ -8,20 +8,28 @@
 # Argument 2: Quietness level [0, 1, 2].
 output_proxy_executioner()
 {
+  comm=$(echo "$1" | head -1 | cut -d " " -f1)
+  if [[ "${comm}" == "echo" ]]; then
+    echo -en "\e[31m"  # Activate red colour
+  fi 
+  
   if [[ $2 == 0 ]]; then
     $1
   elif [[ $2 == 1 ]]; then
-    comm=$(echo "$1" | head -1 | cut -d " " -f1)
     if [[ "${comm}" == "echo" ]]; then
       # If it is a echo command, delete trailing echo and echo formatting
-      rest=$(echo "$1" | sed '1 s@^echo @@')
-      echo "$rest"
+      rest=$(echo "$1" | sed '1 s@^echo @@')  # Delete echo at the beggining of the line
+      echo "${rest}"
     else
       $1 &>/dev/null
     fi
   else
     $1 &>/dev/null
   fi
+  
+  if [[ "${comm}" == "echo" ]]; then
+    echo -en "\e[0m"  # DeActivate colour
+  fi 
 }
 
 ############################
