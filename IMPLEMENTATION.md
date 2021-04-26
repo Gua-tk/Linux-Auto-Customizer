@@ -71,7 +71,9 @@
 - [ ] Repair broken desktop icons (VLC...
 - [ ] Fonts
 - [ ] Codium does not work because of the folder . in the root
-
+- [ ] Anydesk
+- [ ] Autofirma
+- [ ] Eclipse
 
 
 # missing {} around var
