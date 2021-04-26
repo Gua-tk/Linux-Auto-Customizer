@@ -8,20 +8,28 @@
 # Argument 2: Quietness level [0, 1, 2].
 output_proxy_executioner()
 {
+  comm=$(echo "$1" | head -1 | cut -d " " -f1)
+  if [[ "${comm}" == "echo" ]]; then
+    echo -en "\e[96m"  # Activate red colour
+  fi 
+  
   if [[ $2 == 0 ]]; then
     $1
   elif [[ $2 == 1 ]]; then
-    comm=$(echo "$1" | head -1 | cut -d " " -f1)
     if [[ "${comm}" == "echo" ]]; then
       # If it is a echo command, delete trailing echo and echo formatting
-      rest=$(echo "$1" | sed '1 s@^echo @@')
-      echo "$rest"
+      rest=$(echo "$1" | sed '1 s@^echo @@')  # Delete echo at the beggining of the line
+      echo "${rest}"
     else
       $1 &>/dev/null
     fi
   else
     $1 &>/dev/null
   fi
+  
+  if [[ "${comm}" == "echo" ]]; then
+    echo -en "\e[0m"  # DeActivate colour
+  fi 
 }
 
 ############################
@@ -957,4 +965,81 @@ November 2020
 
 "
 
+
+help_message="
+Customizer usage:
++[sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|[-e|--exit-on-error]]
++                       [[-f|--force]|[-o|--overwrite|--overwrite-if-present]|[-s|--skip|--skip-if-installed]]
++                       [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]
++                       [[-d|--dirty|--no-autoclean]|[-c|--clean]|[-C|-Clean]]
++                       [[-U|--Upgrade]|[-u|--upgrade]|[-k|-K|--keep-system-outdated]]
++                       [[-n|--not|-!]|[-y|--yes]]
++                       SELECTED_FEATURES_TO_INSTALL...
++
++Customizer install.sh performs the automatic configuration of a Linux environment by installing applications,
++adding bash functions, customizing terminal variables, declaring new useful global variables and aliases...
++
++Examples:
++    sudo bash install --dropbox --megasync         # Installs megasync and dropbox
++    bash install -v --pycharm                      # Installs Pycharm verbosely showing all the output
++    bash install -v --clion -Q --sublime           # Install Clion verbosely but install sublime_text silently
++    sudo bash install -o -i --nemo                 # Installs Nemo ignoring errors and overwriting previous installs
++    sudo bash install --all && bash install --all  # Installs all features, both root and user features
++
++
++Arguments:
++
++  -c, --clean                                Perform an apt-get autoremove at the end of installation if we are root
++  -C, --Clean                                Perform an apt-get autoremove and autoclean at the end of installation if
++                                             we are root
++  -d, --dirty, --no-autoclean                Do nothing at the end of installation
++
++
++  -i, --ignore, --ignore-errors              Default behaviour of bash, set +e
++  -e, --exit-on-error                        Exit the program if any command throws an error using set -e
++
++
++  -o, --overwrite, --overwrite-if-present    Overwrite if there are previous installation
++  -s, --skip, --skip-if-installed            Skip if the feature is detected in the system by using which
++
++
++  -v, --verbose                              Displays all the possible output
++  -q, --quiet                                Shows only install.sh basic informative output
++  -Q, --Quiet                                No output
++
++
++  -u, --update                               Performs an apt-get update before installation if we are root
++  -U, --upgrade, --Upgrade                   Performs an apt-get update and upgrade before installation if we are root
++  -k, --keep-system-outdated                 Do nothing before the installation
++
++
++  -n, --not                                  Do NOT install the selected features. Used to trim from wrappers
++  -y, --yes                                  Install the selected feature
++
++  Some install.sh arguments change the way in which each feature succeeding that argument is installed. This behaviour
++  is maintained until the end of the program, unless another argument changes this behaviour again.
++
++  For example, consider the following execution:
++      bash install -verbose --ignore-errors --overwrite-if-present --mendeley -Q --skip --discord
++
++  That will execute the script to install mendeley verbosely, ignoring errors and overwriting previous installations;
++  after that we install discord without output and skipping if it is present, but notice also we ignore errors too when
++  installing discord, because we activated the ignore errors behaviour before and it will be still on for the remaining
++  features.
++
++  By default, install.sh runs with the following implicit arguments:
++  --exit-on-error, --skip-if-installed, --quiet, -Clean, --Upgrade, --yes
++
++
++Features:
++
++install.sh has two types of selectable features: feature wrappers and individual features.
++  - Individual features are a certain installation, configuration or customization of a program or system module.
++  - Feature wrappers group many individual features with the same permissions related to the same topic: programming,
++    image edition, system cutomization...
++
++Available individual features:
++  --androidstudio --studio --android-studio      Android Studio
++
++"
 
