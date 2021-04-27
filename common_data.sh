@@ -1041,5 +1041,279 @@ Customizer usage:
 +Available individual features:
 +  --androidstudio --studio --android-studio      Android Studio
 +
-+"
++
+#### under construction ####
+## user features
+--android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
+        add_program install_studio
+      ;;
+      --ant|--apache_ant)
+        add_program install_ant
+      ;;
+      --audacity|--Audacity)
+        add_program install_audacity
+      ;;
+      --atom|--Atom)
+        add_program install_atom
+      ;;
+      --curl|--Curl)
+        add_program install_curl
+      ;;
+      --discord|--Discord|--disc)
+        add_program install_discord
+      ;;
+      --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
+        add_program install_dropbox
+      ;;
+      --gcc|--GCC)
+        add_program install_gcc
+      ;;
+      --caffeine|--Caffeine|--cafe|--coffee)
+        add_program install_caffeine
+      ;;
+      --calibre|--Calibre|--cali)
+        add_program install_calibre
+      ;;
+      --cheat|--cheat.sh|--Cheat.sh|--che)
+        add_program install_cheat
+      ;;
+      --cheese|--Cheese)
+        add_program install_cheese
+      ;;
+      --clementine|--Clementine)
+        add_program install_clementine
+      ;;
+      --clion|--Clion|--CLion)
+        add_program install_clion
+      ;;
+      --cmatrix|--Cmatrix)
+        add_program install_cmatrix
+      ;;
+      --converters|--Converters)
+        add_program install_converters
+      ;;
+      --clonezilla|--CloneZilla|--cloneZilla)
+        add_program install_clonezilla
+      ;;
+      --codium|--vscodium)
+        add_program install_codium
+      ;;
+      --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
+        add_program install_copyq
+      ;;
+      --extract-function|-extract_function)
+        add_program install_extract
+      ;;
+      --f-irc|--firc|--Firc|--irc)
+        add_program install_f-irc
+      ;;
+      --firefox|--Firefox)
+        add_program install_firefox
+      ;;
+      --freecad|--FreeCAD|--freeCAD)
+        add_program install_freecad
+      ;;
+      --ffmpeg|--youtube-dl-dependencies)
+        add_program install_ffmpeg
+      ;;
+      #--google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
+      #  add_program install_musicmanager
+      #;;
+      --gpaint|--paint|--Gpaint)
+        add_program install_gpaint
+      ;;
+      --geany|--Geany)
+        add_program install_geany
+      ;;
+      --git)
+        add_program install_git
+      ;;
+      --git-aliases|--git_aliases|--git-prompt)
+        add_program install_git_aliases
+      ;;
+      --GIMP|--gimp|--Gimp)
+        add_program install_gimp
+      ;;
+      --GNOME_Chess|--gnome_Chess|--gnomechess|--chess)
+        add_program install_gnome-chess
+      ;;
+      --GParted|--gparted|--GPARTED|--Gparted)
+        add_program install_gparted
+      ;;
+      --gvim|--vim-gtk3|--Gvim|--GVim)
+        add_program install_gvim
+      ;;
+      --history-optimization)
+        add_program install_history_optimization
+      ;;
+      --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
+        add_program install_parallel
+      ;;
+      --chrome|--Chrome|--google-chrome|--Google-Chrome)
+        add_program install_google-chrome
+      ;;
+      --iqmol|--IQmol)
+        add_program install_iqmol
+      ;;
+      --inkscape|--ink-scape|--Inkscape|--InkScape)
+        add_program install_inkscape
+      ;;
+      --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
+        add_program install_ideac
+      ;;
+      --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
+        add_program install_ideau
+      ;;
+      --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
+        add_program install_java
+      ;;
+      --latex|--LaTeX|--tex|--TeX)
+        add_program install_latex
+      ;;
+      --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
+        add_program install_l
+      ;;
+      --maven|--mvn)
+        add_program install_mvn
+      ;;
+      --mahjongg|--Mahjongg|--gnome-mahjongg)
+        add_program install_gnome-mahjongg
+      ;;
+      --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
+        add_program install_megasync
+      ;;
+      --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
+        add_program install_mendeley
+      ;;
+      --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
+        add_program install_mendeley_dependencies
+      ;;
+      --mines|--Mines|--GNU-mines|--gnome-mines|--gnomemines)
+        add_program install_gnome-mines
+      ;;
+      --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
+        add_program install_nemo
+      ;;
+      --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
+        add_program install_notepadqq
+      ;;
+      --openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
+        add_program install_openoffice
+      ;;
+      --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
+        add_program install_obs
+      ;;
+      --okular|--Okular|--okularpdf)
+        add_program install_okular
+      ;;
+      --pacman|--pac-man)
+        add_program install_pacman
+      ;;
+      --pdfgrep|--findpdf|--pdf)
+        add_program install_pdfgrep
+      ;;
+      --pluma)
+        add_program install_pluma
+      ;;
+      --postgreSQL|--PostGreSQL|--postgresql|--postgre-sql|--postgre-SQL|--psql|--pSQL|--p-SQL|--p-sql)
+        add_program install_psql
+      ;;
+      --prompt)
+        add_program install_prompt
+      ;;
+      --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
+        add_program install_pycharm
+      ;;
+      --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
+        add_program install_pycharmpro
+      ;;
+      -p|--python|--python3|--Python3|--Python)
+        add_program install_python3
+      ;;
+      --pypy|--pypy3|--PyPy3|--PyPy)
+        add_program install_pypy3
+      ;;
+      --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
+        add_program install_pypy3_dependencies
+      ;;
+      --s|--s-function)
+        add_program install_s
+      ;;
+      --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
+        add_program install_shotcut
+      ;;
+      --shortcuts)
+        add_program install_shortcuts
+      ;;
+      --sudoku|--Sudoku|--gnome-sudoku)
+        add_program install_gnome-sudoku
+      ;;
+      --solitaire|--Solitaire|--gnome-solitaire|--aisleriot)
+        add_program install_aisleriot
+      ;;
+      --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
+        add_program install_sublime
+      ;;
+      --sudoku|--Sudoku|--GNU-sudoku|--gnome-sudoku|--gnomesudoku)
+        add_program install_sudoku
+      ;;
+      --steam|--Steam|--STEAM)
+        add_program install_steam
+      ;;
+      --Telegram|--telegram)
+        add_program install_telegram
+      ;;
+      --templates)
+        add_program install_templates
+      ;;
+      --terminal-background|--terminal_background)
+        add_program install_terminal_background
+      ;;
+      --Terminator|--terminator)
+        add_program install_terminator
+      ;;
+      --Tilix|--tilix)
+        add_program install_tilix
+      ;;
+      --tmux|--Tmux)
+        add_program install_tmux
+      ;;
+      --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
+        add_program install_thunderbird
+      ;;
+      --tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser)
+        add_program install_torbrowser
+      ;;
+      --transmission|--transmission-gtk|--Transmission)
+        add_program install_transmission
+      ;;
+      --uget)
+        add_program install_uget
+      ;;
+      --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
+        add_program install_virtualbox
+      ;;
+      --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
+        add_program install_code
+      ;;
+      --vlc|--VLC|--Vlc)
+        add_program install_vlc
+      ;;
+      --Wallpapers|--wallpapers|--chwlppr)
+        add_program install_chwlppr
+      ;;
+      --youtube-dl)
+        add_program install_youtube-dl
+      ;;
+
+      ### WRAPPER ARGUMENTS ###
+      --user|--regular|--normal)
+        add_user_programs
+      ;;
+      --root|--superuser|--su)
+        add_root_programs
+      ;;
+      --ALL|--all|--All)
+        add_all_programs
+      ;;"
 
