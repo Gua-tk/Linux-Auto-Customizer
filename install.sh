@@ -1343,7 +1343,7 @@ main()
         add_program install_thunderbird
       ;;
       --tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser)
-        add_program install_torbrowser
+        add_program install_tor
       ;;
       --transmission|--transmission-gtk|--Transmission)
         add_program install_transmission
