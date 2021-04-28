@@ -17,7 +17,7 @@ The following features can be installed or uninstalled automatically and individ
 | Name | Feature description | Execution | Arguments | Testing |
 | :-------------- | :----------------------------| :-------------------------------------------|------------|---------|
 | Android Studio | Development environment for Google's Android operating system |  | --android --AndroidStudio --androidstudio --studio --android-studio --android_studio --Androidstudio | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| Alias l | Alias for `ls` | Alias `l` | --l-alias | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul>
+| Alias l | Alias for `ls` | Alias `l` | --l-alias | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Git aliases | Aliases and functions to work with git repositories | aliases and functions `dummycommit $1` and `gitk` | --git-aliases |
 | Audacity | Digital audio editor and recording | Executable `audacity` in the PATH and desktop icon | --audacity --Audacity |
 | Atom | Text and source code editor | Soft-linkExecutable `atom` in the PATH and desktop icon |--atom --Atom |
@@ -29,7 +29,7 @@ The following features can be installed or uninstalled automatically and individ
 | cheat.sh | Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages| | --cheat --cheat.sh --Cheat.sh --che |
 | Cheese | GNOME webcam application | Executable `cheese` in the PATH and desktop launcher |  --cheese  --Cheese | 
 | Clementine | Modern music player and library organizer | Executable `clementine` in the PATH and desktop launcher | --clementine --Clementine |
-| Clion | Cross-platform C/C++ IDE | Installs CLion manually creating its own folder under `~/.bin`. Creates launcher of CLion in the dashboard and in the current user desktop. Makes CLion executable accessible with the command `clion`. Associate CLion to the mime type of `.c`, `.h`, `.cpp` and `.hpp` files |  Uninstalls CLion by deleting its launchers, soft-links, defaults and the CLion folder | --clion --Clion --CLion | 
+| Clion | Cross-platform C/C++ IDE | Installs CLion manually creating its own folder under `~/.bin`. Creates launcher of CLion in the dashboard and in the current user desktop. Makes CLion executable accessible with the command `clion`. Associate CLion to the mime type of `.c`, `.h`, `.cpp` and `.hpp` files | --clion --Clion --CLion | 
 | Cmatrix | Screensaver from The Matrix | Executable `cmatrix` in the PATH and desktop launcher | --cmatrix --Cmatrix |
 | Converters | | | --converters --Converters | 
 | CloneZilla | Disk cloning, disk imaging, data recovery, and deployment | Executable `clonezilla` (needs root permissions) and desktop launcher | --clonezilla --CloneZilla --cloneZilla | 
@@ -67,7 +67,7 @@ The following features can be installed or uninstalled automatically and individ
 | Okular | PDF viewer | Executable `okular` in the PATH and desktop launcher | --okular --Okular --okularpdf |
 | Pac-man | Implementation of the classical arcade game | Executable `pacman` in the PATH and desktop launcher | --pacman |
 | pdfgrep | CLI utility that makes it possible to search for text in a PDF file without opening the file | Executable `pdfgrep` in the PATH | --pdfgrep --findpdf --pdf| 
-| Pycharm Pro | Integrated development environment used in computer programming | Installs PyCharm Pro manually creating its own folder under `~/.bin`. Creates launcher of Pycharm Pro in the dashboard and in the current user desktop. Makes Pycharm Pro executable accessible with the command `pycharm-pro` |  uninstalls PyCharm Pro by deleting its launchers, soft-links and the Pycharm Pro folder | --pycharmpro --pycharmPro --pycharm_pro --pycharm-pro --Pycharm-Pro --PyCharm-pro | 
+| Pycharm Pro | Integrated development environment used in computer programming | Installs PyCharm Pro manually creating its own folder under `~/.bin`. Creates launcher of Pycharm Pro in the dashboard and in the current user desktop. Makes Pycharm Pro executable accessible with the command `pycharm-pro` | --pycharmpro --pycharmPro --pycharm_pro --pycharm-pro --Pycharm-Pro --PyCharm-pro | 
 | Pycharm Community | Integrated development environment used in computer programming | Installs PyCharm Community manually creating its own folder under `~/.bin`. Creates launcher of PyCharm Community in the dashboard and in the current user desktop. Makes PyCharm Community executable accessible with the command `pycharm`. Associate PyCharm Community to the mime type of `.py` files  Uninstalls PyCharm Community by deleting its launchers, soft-links, defaults and the PyCharm Community folder | --pycharmcommunity --pycharmCommunity --pycharm_community --pycharm --pycharm-community | 
 | Python3 | Interpreted, high-level and general-purpose programming language | Executable `python3` and `pip3` in the PATH | --python --python3 --Python3 --Python | 
 | pypy3 | Faster interpreter for the Python3 programming language | Executables `pypy3` and `pypy3-pip` in the PATH | --dependencies --pypy3_dependencies --pypy3Dependencies --PyPy3Dependencies --pypy3dependencies --pypy3-dependencies | 
