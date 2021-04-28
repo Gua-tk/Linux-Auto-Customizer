@@ -14,13 +14,13 @@ All features are installed following a set of rules:
 
 The following features can be installed or uninstalled automatically and individually using one of the specified arguments:
 
-| Name | Feature description | Execution | Arguments |
-| :------------------------ | :-------------| :--------------|------------|
-| Android Studio | Development environment for Google's Android operating system |  | --android --AndroidStudio --androidstudio --studio --android-studio --android_studio --Androidstudio |
-| Alias l | Alias for `ls` | Alias `l` | --l-alias |
+| Name | Feature description | Execution | Arguments | Testing |
+| :-------------- | :----------------------------| :-------------------------------------------|------------|---------|
+| Android Studio | Development environment for Google's Android operating system |  | --android --AndroidStudio --androidstudio --studio --android-studio --android_studio --Androidstudio | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| Alias l | Alias for `ls` | Alias `l` | --l-alias | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul>
 | Git aliases | Aliases and functions to work with git repositories | aliases and functions `dummycommit $1` and `gitk` | --git-aliases |
 | Audacity | Digital audio editor and recording | Executable `audacity` in the PATH and desktop icon | --audacity --Audacity |
-| Atom | Text and source code editor | Executable `atom` in the PATH and desktop icon |--atom --Atom |
+| Atom | Text and source code editor | Soft-linkExecutable `atom` in the PATH and desktop icon |--atom --Atom |
 | Discord | VoIP, instant messaging and digital distribution | Installs Discord manually creating its own folder under `~/.bin`. Creates launcher of Discord in the dashboard and in the current user desktop. Makes Discord executable accessible with the command `discord`. Uninstalls Discord by deleting its launchers, soft-links and the Discord folder. | --discord --Discord --disc | 
 | Dropbox | File hosting service | Executable `dropbox` in the PATH and desktop launcher | --dropbox --Dropbox --DropBox --Drop-box --drop-box --Drop-Box |
 | GNU C Compiler| C compiler for GNU systems | Executable `gcc` in the PATH | --gcc | 
