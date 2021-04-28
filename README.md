@@ -16,7 +16,7 @@ All features available follow a common behaviour:
 The following features can be installed or uninstalled automatically and individually using one of the specified arguments:
 
 | Name | Feature description | Execution | Arguments | Permissions | Testing | 
-| :-------------- | :----------------------------| :-------------------------------------------|------------|---------|-------------|
+|-------------|-----------------------------------------|------------------------------------------------------|------------|---------|-------------|
 | Android Studio | Development environment for Google's Android operating system | Command `studio`, alias `studio` and desktop and dashboard launcher | --studio | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Alias `l` | Alias for `ls -lah` | Command `l` | --l | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Git aliases | Aliases and functions to work with git repositories | Function `dummycommit $1` and alias `gitk` | --git-aliases | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
