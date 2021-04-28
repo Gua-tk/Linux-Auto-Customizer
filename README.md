@@ -1,28 +1,29 @@
 # Auto-Customizer
 
-This software automatizes the installation and uninstallation of different features in an Ubuntu/Debian Linux environment. These features include GNU software and other utilities, programming languages, IDEs, text editors, media players, games, internet applications, file templates, wallpapers, environment aliases, environment functions... all installed in a clean, fancy and confortable way.   
+These `bash` scripts can automatize the installation and uninstallation of a batch of preset features in most Linux environments. These features include GNU software, programming languages, IDEs, text editors, media players, games, Internet applications, file templates, wallpapers, environment aliases, environment functions... All installations are cleaner, faster and fancier than a installation with the usual  .    
 
+## Usage
 The scripts `install.sh` and `uninstall.sh` have the same identical arguments, but behave in the opposite way: `install.sh` will install the features selected by the arguments while `uninstall.sh` will uninstall them, using the identical arguments. 
 
 ## Features
-All features are installed following a set of rules:
+All features available follow a common behaviour:
+* The permissions needed for the features to be installed are the minimum. As such, we have many installation available even if you do not have `root` permissions on your machine. 
 * Software and command-line utilities are intended to appear as a valid binary in your `PATH`, so you can directly call the program as you would do with `cd` or `ls`.
 * Software with GUI creates its own launcher in the desktop and in the dashboard.
 * Software that reads or recognizes files are configured to be the default application for their recognized file types. 
-* Most of the features need exclusively user permissions or root permissions, and will not be installed.
-  will change its behaviour (be able to install some features and not others) depending on the given privileges when executing the script.
+* The installation of a feature will be skipped if the current privileges does not match the needed privileges for that feature.
 
 The following features can be installed or uninstalled automatically and individually using one of the specified arguments:
 
-| Name | Feature description | Execution | Arguments | Testing |
-| :-------------- | :----------------------------| :-------------------------------------------|------------|---------|
-| Android Studio | Development environment for Google's Android operating system |  | --android --AndroidStudio --androidstudio --studio --android-studio --android_studio --Androidstudio | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| Alias l | Alias for `ls` | Alias `l` | --l-alias | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| Git aliases | Aliases and functions to work with git repositories | aliases and functions `dummycommit $1` and `gitk` | --git-aliases |
-| Audacity | Digital audio editor and recording | Executable `audacity` in the PATH and desktop icon | --audacity --Audacity |
-| Atom | Text and source code editor | Soft-linkExecutable `atom` in the PATH and desktop icon |--atom --Atom |
-| Discord | VoIP, instant messaging and digital distribution | Installs Discord manually creating its own folder under `~/.bin`. Creates launcher of Discord in the dashboard and in the current user desktop. Makes Discord executable accessible with the command `discord`. Uninstalls Discord by deleting its launchers, soft-links and the Discord folder. | --discord --Discord --disc | 
-| Dropbox | File hosting service | Executable `dropbox` in the PATH and desktop launcher | --dropbox --Dropbox --DropBox --Drop-box --drop-box --Drop-Box |
+| Name | Feature description | Execution | Arguments | Permissions | Testing | 
+| :-------------- | :----------------------------| :-------------------------------------------|------------|---------|-------------|
+| Android Studio | Development environment for Google's Android operating system | Command `studio`, alias `studio` and desktop and dashboard launcher | --studio | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| Alias `l` | Alias for `ls -lah` | Command `l` | --l | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| Git aliases | Aliases and functions to work with git repositories | Function `dummycommit $1` and alias `gitk` | --git-aliases | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| Audacity | Digital audio editor and recording | Command `audacity` and desktop and dashboard launcher | --audacity --Audacity | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| Atom | Text and source code editor | Command `atom` and desktop and dashboard launcher | --atom --Atom | <ul><li>- [ ] root</li><li>- [ ] user</li></ul> | <ul><li>- [ ] Ubuntu</li><li> |
+| Discord | VoIP, instant messaging and digital distribution | Command `discord` and desktop and dashboard launcher | --discord | <ul><li>- [ ] root</li><li>- [ ] user</li></ul> | <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| Dropbox | File hosting service | Command `dropbox` in the PATH and desktop launcher | --dropbox --Dropbox --DropBox --Drop-box --drop-box --Drop-Box | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [ ] Ubuntu :x: </li><li> |
 | GNU C Compiler| C compiler for GNU systems | Executable `gcc` in the PATH | --gcc | 
 | Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the “sleep” powersaving mode. | Commands `caffeine`, `caffeinate` and `caffeine-indicator` and desktop launcher for `caffeine` | --caffeine --Caffeine --cafe --coffee |
 | Calibre | e-book reader| | --calibre --Calibre --cali |
