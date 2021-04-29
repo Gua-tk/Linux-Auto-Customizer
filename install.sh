@@ -852,8 +852,10 @@ install_prompt()
 
 install_terminal_background()
 {
-  profile=$(dconf list /org/gnome/terminal/legacy/profiles:/)
-  dconf write /org/gnome/terminal/legacy/profiles:/${profile}/background-color "'rgb(0,0,0)'"
+  local -r profile_terminal=$(dconf list /org/gnome/terminal/legacy/profiles:/)
+  if [[ ! -z "${profile_terminal}" ]]; then
+    dconf write /org/gnome/terminal/legacy/profiles:/${profile}/background-color "'rgb(0,0,0)'"
+  fi
 }
 
 install_chwlppr()
