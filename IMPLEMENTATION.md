@@ -22,13 +22,13 @@
 #### Aleix
 - [x] Create argument (! or --not) for deselecting installed or uninstalled features.
 - [x] -v --verbose Verbose mode (make the software not verbose by default)
-- [x] Solve bug of `PATH` addition in shell features. (it works, but it appends the export many times)
+- [x] Solve a bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [x] To add more useful directory path variables in common_data.sh
 - [x] Make sure USR_BIN_FOLDER is present in any user roll
-- [x] Create file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`
+- [x] Create a file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`
 - [x] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
 - [x] try refactoring the point above by using type, which recognizes alias and functions too
-- [x] Add aliases topycharm, clion, etc
+- [x] Add aliases to pycharm, clion, etc
 - [x] Add argument to dummy commit
 - [x] refactor installation bit to be installation order, which contains an integer that if it is greater than 0 means selected for install, and the integer determines the installation order
 - [x] Installations must be done by argument order apparition (add another column to installation_data to sort an integer that determines the order)
@@ -36,6 +36,8 @@
 - [x] Split multifeatures in one function into different functions
 - [x] Create source in bashrc with file bash_functions.sh with all sources calls
 - [x] Desktop wallpapers
+- [x] Refactor old stuff from the README.md
+- [x] Add a new column for testing and permissions
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
