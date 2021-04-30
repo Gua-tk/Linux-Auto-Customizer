@@ -16,14 +16,14 @@ All features available follow a common behaviour:
 The following features can be installed or uninstalled automatically and individually using one of the specified arguments:
 
 | Name | Description | Execution | Arguments | Permissions | Testing | 
-|-------------|-----------------------------------------|------------------------------------------------------|------------|---------|-------------|
+|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|
 | Android Studio | Development environment for Google's Android operating system | Command `studio`, alias `studio` and desktop and dashboard launcher | --studio | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Alias `l` | Alias for `ls -lah` | Alias `l` | --l | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Git aliases | Aliases and functions to work with git repositories | Function `dummycommit $1` and alias `gitk` | --git-aliases | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Audacity | Digital audio editor and recording | Command `audacity` and desktop and dashboard launcher | --audacity --Audacity | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| Atom | Text and source code editor | Command `atom`, desktop and dashboard launcher | --atom --Atom | <ul><li>- [ ] root</li><li>- [ ] user</li></ul> | <ul><li>- [ ] Ubuntu</li><li> |
+| Atom | Text and source code editor | Command `atom`, desktop and dashboard launcher | --atom --Atom | <ul><li>- [ ] root</li><li>- [ ] user</li></ul> | <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Discord | VoIP, instant messaging and digital distribution | Command `discord` and desktop and dashboard launcher | --discord | <ul><li>- [ ] root</li><li>- [ ] user</li></ul> | <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| Dropbox | File hosting service | Command `dropbox`, desktop launcher and dashboard launcher | --dropbox --Dropbox --DropBox --Drop-box --drop-box --Drop-Box | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [ ] Ubuntu :x: </li><li> |
+| Dropbox | File hosting service | Command `dropbox`, desktop launcher and dashboard launcher | --dropbox --Dropbox --DropBox --Drop-box --drop-box --Drop-Box | <ul><li>- [ ] root</li><li>- [ ] user</li></ul> | <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | GNU C Compiler | C compiler for GNU systems | Command `gcc` |--gcc | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the “sleep” power saving mode. | Commands `caffeine`, `caffeinate` and `caffeine-indicator`, desktop launcher for `caffeine`, dashboard launcher for `caffeine` and `caffeine-indicator` | --caffeine | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Calibre | e-book reader| Commmand `calibre`, desktop launcher and dashboard launcher | --calibre --Calibre --cali | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
