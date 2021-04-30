@@ -435,8 +435,8 @@ l_function="alias l=\"ls -lAh --color=auto\""
 
 maven_downloader="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 
-megasync_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.3.8-1.1_amd64.deb
-megasync_integrator_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nautilus-megasync_3.6.6_amd64.deb
+megasync_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.4.0-1.1_amd64.deb
+megasync_integrator_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb
 
 mendeley_downloader=https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
 
@@ -547,13 +547,13 @@ Terminal=false
 Exec=sublime %F"
 sublime_alias="alias sublime=\"sublime . &>/dev/null &\""
 
-# Lost its icon because telegram does not include a png icon anymore
+telegram_icon=https://telegram.org/img/t_logo.svg?1
 telegram_downloader=https://telegram.org/dl/desktop/linux
 telegram_launcher="[Desktop Entry]
 Encoding=UTF-8
 Name=Telegram
 Exec=telegram -- %u
-Icon=${USR_BIN_FOLDER}/telegram/Telegram/telegram.png
+Icon=${USR_BIN_FOLDER}/telegram/telegram.svg
 Type=Application
 Categories=Network;
 MimeType=x-scheme-handler/tg;"
@@ -568,7 +568,7 @@ Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/carla_carla.png
 Type=Application
 Categories=Network;"
 
-virtualbox_downloader=https://download.virtualbox.org/virtualbox/6.1.12/virtualbox-6.1_6.1.12-139181~Ubuntu~eoan_amd64.deb
+virtualbox_downloader=https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb
 
 visualstudiocode_downloader="https://go.microsoft.com/fwlink/?LinkID=620884"
 visualstudiocode_launcher="[Desktop Entry]

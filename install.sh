@@ -749,6 +749,8 @@ install_telegram()
 {
   download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
 
+  wget ${telegram_icon} -q --show-progress -O ${USR_BIN_FOLDER}/telegram/telegram.svg
+
   create_manual_launcher "${telegram_launcher}" "telegram"
 }
 
