@@ -47,6 +47,7 @@
 ## Currently developing/refactoring features
 
 ## TO-DO
+- [ ] Make warning messages in red
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
 - [ ] Refine extract function
 - [ ] Standarize fromat of all launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
@@ -54,9 +55,14 @@
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 - [ ] Add special func in uninstall (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [ ] Test autorun of nemo desktop
+- [ ] Anydesk
+- [ ] Autofirma
+- [ ] Eclipse
+- [ ] Geogebra
 
 ## Coming features
 - [ ] Delete
+- [ ] L Function  
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ... 
 - [ ] make `customizer.sh` 
 - [ ] Automount available drives.*
@@ -71,9 +77,6 @@
 - [ ] Repair broken desktop icons (VLC...
 - [ ] Fonts
 - [ ] Codium does not work because of the folder . in the root
-- [ ] Anydesk
-- [ ] Autofirma
-- [ ] Eclipse
 
 
 # missing {} around var
