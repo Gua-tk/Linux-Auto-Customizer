@@ -967,7 +967,7 @@ November 2020
 
 
 help_message="
-Customizer usage:
++install.sh manual usage:
 +[sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|[-e|--exit-on-error]]
 +                       [[-f|--force]|[-o|--overwrite|--overwrite-if-present]|[-s|--skip|--skip-if-installed]]
 +                       [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]
@@ -1039,12 +1039,11 @@ Customizer usage:
 +    image edition, system cutomization...
 +
 +Available individual features:
-+  --androidstudio --studio --android-studio      Android Studio
++  --androidstudio --studio                    Android Studio
 +
 +
 #### under construction ####
-## user features
---android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
+      --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
       --ant|--apache_ant)
       --audacity|--Audacity)
       --atom|--Atom)
@@ -1131,7 +1130,7 @@ Customizer usage:
       --vlc|--VLC|--Vlc)
       --Wallpapers|--wallpapers|--chwlppr)
       --youtube-dl)
-      
+
       ### WRAPPER ARGUMENTS ###
       --user|--regular|--normal)
       --root|--superuser|--su)
