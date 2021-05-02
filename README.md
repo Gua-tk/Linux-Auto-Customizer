@@ -107,12 +107,37 @@ Navigate to the interior of the repository with cd:
 cd Linux-Auto-Customizer  
 ```
 Now that the current directory is the repository we can call the main scripts directly without specifying an absolute path. This will be the expected situation in the following explanations.
-
+We need to check if the program needs root or user permision, if it is needed use sudo at the start of the command.
 ### Installing individual features
-
+```
+bash install --name_of_feature
+```
 ### Installing sets of features
-
+```
+bash install --name_of_set_of_custom_features
+```
+Example:
+```
+bash install -v --discord
+```
 ### Behavioural arguments
+Verbose mode
+Examples:
+```
+bash install -v --telegram
+```
+Quiet mode
+```
+sudo bash install -q --firefox --gpaint
+```
+Alternation
+```
+sudo bash install -q --firefox -v --gpaint
+```
+Silent Desktop icons for apps of the system
+```
+sudo bash install -q -o --cheese
+```
 
 ### Full installation / uninstallation
 To install ALL the features available for the root user in the script you must type in a terminal:
@@ -133,8 +158,12 @@ To uninstall ALL the possible installed features you must type in a terminal:
 ```
 sudo bash uninstall.sh
 ```
-
-
+### Help
+Command for showing a helping menu -h
+with the list of programs we can install.
+```
+bash install.sh -h
+```
 ### 
 ## Progression and original idea
 This repository is a partial fork from my repo [TrigenicInteractionPredictor](https://github.com/AleixMT/TrigenicInteractionPredictor). 
