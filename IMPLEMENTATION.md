@@ -49,42 +49,54 @@
 - [x] Refactor of data table in README.md
 - [x] Youtube-dl
 - [x] Create escape function, which returns an escaped sequence of characters
-- [ ] nettools* 
+- [ ] nettools*
+- [ ] docker 
+- [ ] Wireshark
+- [ ] rar
+  
 - [ ] GnuCash, Rosegarden, Remmina, Freeciv, Shotwell, Handbrake, fslint, CMake, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...
 - [ ] LAMP stack web server, Wordpress
 - [ ] Rsync, Axel, GNOME Tweak, Wine 5.0, Picasa, Synaptic, Bacula, Docker, kubernetes, Agave, apache2, Moodle, Oracle SQL Developer, Mdadm, PuTTY, MySQL Server instance, glpi*, FOG Server*, Proxmox*, Nessus*, PLEX Media Server
 - [ ] nmap, gobuster, metasploit, Firewalld, sysmontask, sherlock, Hydra, Ghidra, THC Hydra, Zenmap, Snort, Hashcat, Pixiewps, Fern Wifi Cracker, gufw, WinFF, chkrootkit, rkhunter, Yersinia, Maltego, GNU MAC Changer, Burp Suite, BackTrack, John the Ripper, aircrack-ng
 - [ ] SublimeText-Markdown, & other plugins for programs...
 - [ ] Fonts
-- [ ] Automount available drives.*
 
 
 
 ## Currently developing/refactoring features
 
 ## TO-DO
+- [ ] Optimize history to be updated in reeal-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [ ] Update and construct readme and help message
+- [ ] Add final & to gitk so is always launched in background  
 - [ ] Refine extract function
 - [ ] Standarize fromat of all launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 - [ ] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
-- [ ] Test autorun of nemo desktop
+- [ ] Add special func in endpoint (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
+- [ ] On nemo desktop delete automatically nautilus
 - [ ] Anydesk
 - [ ] Autofirma
 - [ ] Eclipse
 - [ ] Geogebra
+- [ ] Zoom
+- [ ] Teams (?)  
 - [ ] Write date in all the messages that the customizer outputs (warning, info etc)
 - [ ] Red prompt for warning and error messages
+- [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 
 ## Coming features
 - [ ] L Function  
+- [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)  
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
-- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
-- [ ] Add special func in endpoint (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
+- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc. in this new endpoint
 - [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Codium does not work because of the folder . in the root
 - [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
+- [ ] Automount available drives.*
+- [ ] refactor extract function: more robustness and error handling. decompress in a folder
+- [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 
 
 # wget not used with -O and in subshell to avoid cd
