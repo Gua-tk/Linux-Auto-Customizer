@@ -677,7 +677,7 @@ dectoocto()
 }
 dectohex()
 {
-  ro \$1 10 16
+  to \$1 10 16
 }
 
 hextobin()
