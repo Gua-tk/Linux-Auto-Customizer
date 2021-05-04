@@ -1,22 +1,25 @@
 ### Business rules
 
-#### Environment
+#### Environmental
 * Both behaviors of the script use the file `~/.config/user-dirs.dirs` to set some language-independent environment variables (for example, to get an independent system-language path to the Desktop), so some functions of this script will fail if this file does not exist. The variables declared in this file that are used in the customizer are `XDG_DESKTOP_DIR=/home/username/Desktop`, `XDG_PICTURES_DIR=/home/username/Images`, `XDG_TEMPLATES_DIR=/home/username/Templates`.
 * Customizer must not rely ever on the working directory, that is why relative paths are completely avoided. In the same vein, files must not be downloaded in the working directory, they should be deleted in a controlled location. In most cases, this location is `USR_BIN_FOLDER`.
 
-#### Structures
+#### Structural
 * The software that is manually installed is put under `USR_BIN_FOLDER`, which by default points to `~/.bin`. `~/.bin` is always **present**.
 * Shell features are not installed directly into `~/.bashrc`, instead, there is always present the file `~/.bash_functions`, which is a file imported by `~/.bashrc`. In `~/.bash_functions`, you can write imports to individual scripts that provide a feature to the shell environment. Usually those scripts are stored under `~/.bin/bash_functions/`, which is a location always present. So the generic way to include new content to `~/.bashrc` is writing a script to `~/.bin/bash_functions` and including it in `~/.bash_functions/`.
 * Soft links to include a program in the path are created under `~/.local/bin` which is a directory that is assured to be in the PATH 
 
-#### Behaviour
+#### Behavioural
 * Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
-* No unprotected `cd` commands. `cd` must be avoided and never change the working directory given from the outside, that is why they must be called from the inside of a subshell if present.
+* Relative PATHs are forbidden. We must not use the given working directory  
+* No unprotected `cd` commands. `cd` must be avoided and never change the working directory given from the outside, that is why they must be called from the inside of a subshell if present. 
+* wget is always used with the `-O` flag, which is used to change the name of the file and / or select a destination for the download.
 
-#### Syntax
+#### Syntactical
 * All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
 * All variables must be protected by using "" to avoid resplitting because of spaces, despite, customizer is not emphasized to work with spaces in its variables. Spaces are *evil* and are not considered.
 * There is one blankline between functions in the same block. There is two blanklines between blocks.
+* Indent is always 2 spaces and never TAB. 
 
 ## Developed features
 #### Aleix
@@ -38,50 +41,52 @@
 - [x] Desktop wallpapers
 - [x] Refactor old stuff from the README.md
 - [x] Add a new column for testing and permissions
+- [x] Repair broken desktop icons (VLC, VScode, Telegram)
+
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
 - [x] Refactor of data table in README.md
 - [x] Youtube-dl
 - [x] Create escape function, which returns an escaped sequence of characters
-
-
-## Currently developing/refactoring features
-
-## TO-DO
-- [ ] Make warning messages in red
-- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
-- [ ] Refine extract function
-- [ ] Standarize fromat of all launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
-- [ ] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed
-- [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
-- [ ] Add special func in uninstall (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
-- [ ] Test autorun of nemo desktop
-- [ ] Anydesk
-- [ ] Autofirma
-- [ ] Eclipse
-- [ ] Geogebra
-
-## Coming features
-- [ ] Delete
-- [ ] L Function  
-- [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ... 
-- [ ] make `customizer.sh` 
-- [ ] Automount available drives.*
-- [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
-- [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] nettools* 
 - [ ] GnuCash, Rosegarden, Remmina, Freeciv, Shotwell, Handbrake, fslint, CMake, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...
 - [ ] LAMP stack web server, Wordpress
 - [ ] Rsync, Axel, GNOME Tweak, Wine 5.0, Picasa, Synaptic, Bacula, Docker, kubernetes, Agave, apache2, Moodle, Oracle SQL Developer, Mdadm, PuTTY, MySQL Server instance, glpi*, FOG Server*, Proxmox*, Nessus*, PLEX Media Server
 - [ ] nmap, gobuster, metasploit, Firewalld, sysmontask, sherlock, Hydra, Ghidra, THC Hydra, Zenmap, Snort, Hashcat, Pixiewps, Fern Wifi Cracker, gufw, WinFF, chkrootkit, rkhunter, Yersinia, Maltego, GNU MAC Changer, Burp Suite, BackTrack, John the Ripper, aircrack-ng
 - [ ] SublimeText-Markdown, & other plugins for programs...
-- [ ] Repair broken desktop icons (VLC...
 - [ ] Fonts
+- [ ] Automount available drives.*
+
+
+
+## Currently developing/refactoring features
+
+## TO-DO
+- [ ] Update and construct readme and help message
+- [ ] Refine extract function
+- [ ] Standarize fromat of all launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
+- [ ] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed
+- [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [ ] Test autorun of nemo desktop
+- [ ] Anydesk
+- [ ] Autofirma
+- [ ] Eclipse
+- [ ] Geogebra
+- [ ] Write date in all the messages that the customizer outputs (warning, info etc)
+- [ ] Red prompt for warning and error messages
+
+## Coming features
+- [ ] L Function  
+- [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
+- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc.
+- [ ] Add special func in endpoint (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
+- [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
+- [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Codium does not work because of the folder . in the root
+- [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
 
 
-# missing {} around var
 # wget not used with -O and in subshell to avoid cd
 # tar not used in a subshell to avoid cd
 # echo or err directly used instead of using output_proxy_executioner
