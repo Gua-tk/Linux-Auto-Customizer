@@ -402,7 +402,7 @@ install_musicmanager()
 install_nemo()
 {
   # Delete Nautilus, the default desktop manager to avoid conflicts
-  #apt-get purge -y nautilus gnome-shell-extension-desktop-icons
+  apt-get purge -y nautilus gnome-shell-extension-desktop-icons
   apt-get install -y nemo dconf-editor gnome-tweak-tool
   # Create special launcher to execute nemo daemon at system start
   echo -e "${nemo_desktop_launcher}" > /etc/xdg/autostart/nemo-autostart.desktop

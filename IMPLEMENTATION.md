@@ -19,7 +19,8 @@
 * All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
 * All variables must be protected by using "" to avoid resplitting because of spaces, despite, customizer is not emphasized to work with spaces in its variables. Spaces are *evil* and are not considered.
 * There is one blankline between functions in the same block. There is two blanklines between blocks.
-* Indent is always 2 spaces and never TAB. 
+* Indent is always 2 spaces and never TAB.
+* The used package manager by default is apt-get, which is actually the recommended way to use `apt` through scripts.
 
 ## Developed features
 #### Aleix
@@ -42,6 +43,10 @@
 - [x] Refactor old stuff from the README.md
 - [x] Add a new column for testing and permissions
 - [x] Repair broken desktop icons (VLC, VScode, Telegram)
+- [x] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed. this command is `s "command"`
+- [x] On nemo desktop delete automatically nautilus
+  
+- [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 
 
 #### Axel
@@ -68,19 +73,17 @@
 ## TO-DO
 - [ ] Optimize history to be updated in reeal-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [ ] Update and construct readme and help message
-- [ ] Add examples of a working environement after the customizer
-- [ ] Add final & to gitk so is always launched in background
+- [ ] Add examples (images) of a working environement after applying the customizer in Linux 
+- [ ] Add final & to alias of gitk  (git_aliases), pluma, VS code,  so is always launched in background
 - [ ] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
-- [ ] Refine extract function
-- [ ] Standarize fromat of all launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
-- [ ] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed
-- [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
-- [ ] Add special func in endpoint (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
-- [ ] On nemo desktop delete automatically nautilus
+- [ ] Refine extract function: extract dependencies in another extract function
+- [ ] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
+- [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [ ] Move all argument processing to the same data structure that we are using for storing info abaout the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README table
-- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt...)
+- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
 - [ ] Apply rule: no apt, the default way to install package in script is apt-get
-- [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)  
+- [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
+- [ ] Put Path declaration in common data, as a bash function  
 - [ ] Anydesk
 - [ ] Autofirma
 - [ ] Eclipse
