@@ -77,6 +77,10 @@
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 - [ ] Add special func in endpoint (--reset|-r) that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [ ] On nemo desktop delete automatically nautilus
+- [ ] Move all argument processing to the same data structure that we are using for storing info abaout the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README table
+- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt...)
+- [ ] Apply rule: no apt, the default way to install package in script is apt-get
+- [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)  
 - [ ] Anydesk
 - [ ] Autofirma
 - [ ] Eclipse
@@ -91,6 +95,7 @@
 - [ ] L Function  
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)  
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
+- [ ] When having this unique endopint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it  
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc. in this new endpoint
 - [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] Program function to unregister default opening applications on `uninstall.sh`

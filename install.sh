@@ -1126,7 +1126,7 @@ main()
       --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
         add_program install_studio
       ;;
-      --ant|--apache_ant)
+      --ant|--apache_ant|--apache-ant)
         add_program install_ant
       ;;
       --audacity|--Audacity)
