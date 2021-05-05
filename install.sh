@@ -1324,6 +1324,9 @@ main()
       --shortcuts)
         add_program install_shortcuts
       ;;
+      --slack|--Slack)
+        add_program install_slack
+      ;;
       --sudoku|--Sudoku|--gnome-sudoku)
         add_program install_gnome-sudoku
       ;;
@@ -1381,8 +1384,8 @@ main()
       --Wallpapers|--wallpapers|--chwlppr)
         add_program install_chwlppr
       ;;
-      --wireshark)
-        add_program wireshark
+      --wireshark|--Wireshark)
+        add_program install_wireshark
       ;;
       --youtube-dl)
         add_program install_youtube-dl
