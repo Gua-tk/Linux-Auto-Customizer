@@ -192,6 +192,7 @@ installation_data=(
 "0;0;0;0;1;install_shotcut"
 "0;0;0;0;0;install_shortcuts"
 "0;0;0;0;1;install_aisleriot"
+"0;0;0;0;1;install_slack"
 "0;0;0;0;0;install_studio"
 "0;0;0;0;0;install_sublime"
 "0;0;0;0;0;install_s"
@@ -212,6 +213,8 @@ installation_data=(
 "0;0;0;0;0;install_chwlppr"
 "0;0;0;0;0;install_youtube-dl"
 "0;0;0;0;1;install_ffmpeg"
+"0;0;0;0;1;install_wireshark"
+
 )
 
 
@@ -530,8 +533,7 @@ Comment= Open Source, cross-platform video editor
 Terminal=false
 "
 
-slack_repository=https://downloads.slack-edge.com/linux_releases/
-slack_version=slack-desktop-4.11.1-amd64.deb
+slack_repository=https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb
 
 steam_downloader=https://steamcdn-a.akamaihd.net/client/installer/steam.deb
 
