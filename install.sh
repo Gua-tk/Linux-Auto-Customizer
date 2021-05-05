@@ -250,6 +250,11 @@ install_copyq()
   copy_launcher "com.github.hluk.copyq.desktop"
 }
 
+install_ffmpeg()
+{
+  apt-get install -y ffmpeg
+}
+
 install_firefox()
 {
   apt-get install -y firefox
@@ -494,6 +499,12 @@ install_shotcut()
   create_manual_launcher "${shotcut_desktop_launcher}" shotcut
 }
 
+install_slack()
+{
+  download_and_install_package ${slack_repository}
+  copy_launcher "slack.desktop"
+}
+
 install_aisleriot()
 {
   apt-get install -y aisleriot
@@ -558,14 +569,12 @@ install_uget()
   copy_launcher uget-gtk.desktop
 }
 
-# install VLC
 install_vlc()
 {
   apt-get -y install vlc
   copy_launcher "vlc.desktop"
 }
 
-# VirtualBox
 install_virtualbox()
 {
   # Dependencies
@@ -575,10 +584,15 @@ install_virtualbox()
   copy_launcher "virtualbox.desktop"
 }
 
-install_ffmpeg()
+install_wireshark()
 {
-  apt-get install -y ffmpeg
+  echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
+  DEBIAN_FRONTEND=noninteractive
+  apt-get install -y wireshark
+  copy_launcher "wireshark.desktop"
+  sed -i 's-Icon=.*-Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg-' ${XDG_DESKTOP_DIR}/wireshark.desktop
 }
+
 
 
 #####################################
@@ -1112,7 +1126,7 @@ main()
       --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
         add_program install_studio
       ;;
-      --ant|--apache_ant)
+      --ant|--apache_ant|--apache-ant)
         add_program install_ant
       ;;
       --audacity|--Audacity)
@@ -1310,6 +1324,9 @@ main()
       --shortcuts)
         add_program install_shortcuts
       ;;
+      --slack|--Slack)
+        add_program install_slack
+      ;;
       --sudoku|--Sudoku|--gnome-sudoku)
         add_program install_gnome-sudoku
       ;;
@@ -1366,6 +1383,9 @@ main()
       ;;
       --Wallpapers|--wallpapers|--chwlppr)
         add_program install_chwlppr
+      ;;
+      --wireshark|--Wireshark)
+        add_program install_wireshark
       ;;
       --youtube-dl)
         add_program install_youtube-dl
