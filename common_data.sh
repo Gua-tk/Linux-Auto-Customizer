@@ -478,7 +478,7 @@ openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.m
 
 prompt_function="export PS1=\"\\[\\\e[1;37m\\]\\\\\\d \\\\\\\t \\[\\\e[0;32m\\]\\\\\u\[\\\e[4;35m\\]@\\[\\\e[0;36m\\]\\\\\\H\\[\\\e[0;33m\\] \\\\\\w\\[\\\e[0;32m\\] \\\\\\\$ \""
 
-pycharm_downloader=https://download.jetbrains.com/python/pycharm-community-2020.3.2.tar.gz
+pycharm_downloader=https://download.jetbrains.com/python/pycharm-professional-2020.3.5.tar.gz
 pycharm_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
