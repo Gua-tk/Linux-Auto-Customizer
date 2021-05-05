@@ -68,6 +68,7 @@
 ## TO-DO
 - [ ] Optimize history to be updated in reeal-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [ ] Update and construct readme and help message
+- [ ] Add examples of a working environement after the customizer
 - [ ] Add final & to gitk so is always launched in background
 - [ ] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
 - [ ] Refine extract function
