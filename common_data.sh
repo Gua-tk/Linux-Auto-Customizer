@@ -514,7 +514,9 @@ export HISTFILESIZE=100000
 shopt -s histappend
 HISTCONTROL=ignoredups
 HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
-shopt -s cmdhist"
+shopt -s cmdhist
+export PROMPT_COMMAND=\"history -a; history -r\"
+"
 
 shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}
 export USR_BIN_FOLDER=${USR_BIN_FOLDER}
