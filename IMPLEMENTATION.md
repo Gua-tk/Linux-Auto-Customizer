@@ -47,6 +47,9 @@
 - [x] On nemo desktop delete automatically nautilus
 - [x] Wireshark
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [x] Red prompt for warning and error messages
+- [x] Optimize history to be updated in real-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
+- [x] Anydesk
 
 
 #### Axel
@@ -70,7 +73,6 @@
 ## Currently developing/refactoring features
 
 ## TO-DO
-- [ ] Optimize history to be updated in reeal-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [ ] Update and construct readme and help message
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux 
 - [ ] Add final & to alias of gitk  (git_aliases), pluma, VS code,  so is always launched in background
@@ -83,14 +85,12 @@
 - [ ] Apply rule: no apt, the default way to install package in script is apt-get
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
 - [ ] Put Path declaration in common data, as a bash function  
-- [ ] Anydesk
 - [ ] Autofirma
 - [ ] Eclipse
 - [ ] Geogebra
 - [ ] Zoom
 - [ ] Teams (?)  
 - [ ] Write date in all the messages that the customizer outputs (warning, info etc)
-- [ ] Red prompt for warning and error messages
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 
 ## Coming features

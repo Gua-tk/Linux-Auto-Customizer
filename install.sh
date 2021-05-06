@@ -606,9 +606,15 @@ install_ant()
   download_and_decompress ${ant_downloader} "apache_ant" "z" "bin/ant" "ant"
 }
 
+install_libgtkglext1()
+{
+  apt-get install -y libgtkglext1
+}
+
 install_anydesk()
 {
   download_and_decompress ${anydesk_downloader} "anydesk" "z" "anydesk" "anydesk"
+  create_manual_launcher "${anydesk_launcher}" "anydesk"
 }
 
 install_studio()
@@ -1271,6 +1277,9 @@ main()
       ;;
       --latex|--LaTeX|--tex|--TeX)
         add_program install_latex
+      ;;
+      --libgtkglext1)
+        add_program install_libgtkglext1
       ;;
       --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
         add_program install_l

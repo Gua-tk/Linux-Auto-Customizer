@@ -10,8 +10,15 @@ output_proxy_executioner()
 {
   comm=$(echo "$1" | head -1 | cut -d " " -f1)
   if [[ "${comm}" == "echo" ]]; then
-    echo -en "\e[96m"  # Activate red colour
-  fi 
+      rest=$(echo "$1" | sed '1 s@^echo @@')
+      message_type="$(echo "${rest}" | cut -d ":" -f1)"
+      if [[ ${message_type} == "WARNING" ]]; then
+        echo -en "\e[31m"  # Activate red blue colour
+      elif [[ ${message_type} == "INFO" ]]; then
+        echo -en "\e[96m"  # Activate soft blue colour
+      fi
+      echo -n "$(date +%Y-%m-%d_%T) -- "
+  fi
   
   if [[ $2 == 0 ]]; then
     $1
@@ -168,6 +175,7 @@ installation_data=(
 "0;0;0;0;0;install_java"
 "0;0;0;0;1;install_latex"
 "0;0;0;0;0;install_l"
+"0;0;0;0;1;install_libgtkglext1"
 "0;0;0;0;1;install_gnome-mahjongg"
 "0;0;0;0;0;install_mvn"
 "0;0;0;0;1;install_megasync"
@@ -306,6 +314,15 @@ Encoding=UTF-8"
 ant_downloader="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.9-bin.tar.gz"
 
 anydesk_downloader="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
+anydesk_launcher="[Desktop Entry]
+Name=AnyDesk
+Comment=Remote control other PCs
+Icon=${USR_BIN_FOLDER}/anydesk/icons/hicolor/scalable/apps/anydesk.svg
+Exec=anydesk
+Terminal=false
+Type=Application"
+
+
 
 atom_downloader=https://atom.io/download/deb
 
@@ -327,7 +344,7 @@ clion_launcher="[Desktop Entry]
 Version=1.0
 Type=Application
 Name=CLion
-Icon=${HOME_FOLDER}/.bin/clion/bin/clion.png
+Icon=${USR_BIN_FOLDER}/clion/bin/clion.png
 Exec=clion %F
 Comment=C and C++ IDE for Professional Developers
 Terminal=false
