@@ -63,7 +63,8 @@
 - [x] Refactor of data table in README.md
 - [x] Youtube-dl
 - [x] Create escape function, which returns an escaped sequence of characters
-- [ ] nettools*
+- [x] net-tools
+- [x] Eclipse
 - [ ] docker 
 - [ ] rar
   
@@ -85,7 +86,6 @@
 - [ ] Move all argument processing to the same data structure that we are using for storing info abaout the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README table
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
 - [ ] Autofirma
-- [ ] Eclipse
 - [ ] Geogebra
 - [ ] Zoom
 - [ ] Teams (?)  
