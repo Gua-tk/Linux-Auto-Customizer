@@ -1011,7 +1011,7 @@ add_programs()
 ##################
 main()
 {
-  if [[ ${EUID} == 0 ]]; then
+  if [[ ${EUID} == 0 ]]; then  # root
     create_folder_as_root ${USR_BIN_FOLDER}
     create_folder_as_root ${BASH_FUNCTIONS_FOLDER}
     create_folder_as_root ${DIR_IN_PATH}
@@ -1023,11 +1023,11 @@ main()
       chown ${SUDO_USER} ${BASH_FUNCTIONS_PATH}
       chmod 775 ${BASH_FUNCTIONS_PATH}
       # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-      if [[ -z "$(echo "$PATH" | grep -Eo "(.*:.*)*${DIR_IN_PATH}" )" ]]; then
+      if [[ -z "$(echo "${PATH}" | grep -Eo "(.*:.*)*${DIR_IN_PATH}")" ]]; then  # If it is not in PATH, add to bash functions
         echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASH_FUNCTIONS_PATH}
       fi
     fi
-  else
+  else  # user
     mkdir -p ${USR_BIN_FOLDER}
     mkdir -p ${DIR_IN_PATH}
     mkdir -p ${PERSONAL_LAUNCHERS_DIR}
@@ -1042,7 +1042,7 @@ main()
     fi
 
     # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-    if [[ -z "$(echo "$PATH" | grep -Eo "(.*:.*)*${DIR_IN_PATH}" )" ]]; then
+    if [[ -z "$(echo "${PATH}" | grep -Eo "(.*:.*)*${DIR_IN_PATH}")" ]]; then  # If it is not in PATH, add to bash functions
       echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASH_FUNCTIONS_PATH}
     fi
   fi

@@ -55,7 +55,7 @@ else
 
   # Force inclusions of DIR_IN_PATH to the PATH of the root user in order to let bash find installed binaries in
   # DIR_IN_PATH when logged as root using which or type calls.
-  export PATH=${PATH}:${DIR_IN_PATH}
+  #export PATH=${PATH}:${DIR_IN_PATH}
 fi
 
 # Path pointing to a directory that is included in the PATH variable
@@ -311,7 +311,7 @@ source ${BASH_FUNCTIONS_PATH}
 "
 bash_functions_init="
 # If not running interactively, don't do anything
-case $- in
+case \$- in
     *i*) ;;
       *) return;;
 esac
@@ -400,7 +400,8 @@ alias gitk=\"gitk --all --date-order \"
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
-fi"
+fi
+"
 
 google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
@@ -508,7 +509,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n \"\$force_color_prompt\" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
