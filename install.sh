@@ -56,7 +56,7 @@ fi
 }
 
 # Creates a valid launcher for the normal user in the desktop using an
-# already created launcher from an automatic install (using apt or dpkg).
+# already created launcher from an automatic install (using apt-get or dpkg).
 # This function does not need to have root permissions for its instructions,
 # but is expected to be call as root since it uses the variable $SUDO_USER 
 # Argument 1: name of the desktop launcher in /usr/share/applications
@@ -288,14 +288,14 @@ install_geany()
 
 install_gimp()
 {
-  apt install -y gimp
+  apt-get install -y gimp
   copy_launcher "gimp.desktop"
 }
 
 # Install GIT and all its related utilities (gitk e.g.)
 install_git()
 {
-  apt install -y git-all
+  apt-get install -y git-all
   apt-get install -y git-lfs
 }
 
@@ -1131,8 +1131,13 @@ main()
         FLAG_INSTALL=${NUM_INSTALLATION}
       ;;
 
-      -h|--help)
-        output_proxy_executioner "echo ${help_message}" ${SILENT}
+      -h)
+        output_proxy_executioner "echo ${help_common}${help_simple}" ${SILENT}
+        exit 0
+      ;;
+
+      -H|--help)
+        output_proxy_executioner "echo ${help_common}${help_arguments}" ${SILENT}
         exit 0
       ;;
 

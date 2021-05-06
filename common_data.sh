@@ -416,7 +416,7 @@ git_aliases_function="dummycommit()
   git push
 }
 
-alias gitk=\"gitk --all --date-order \"
+alias gitk=\"gitk --all --date-order &\"
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
@@ -1087,175 +1087,259 @@ November 2020
 "
 
 
-help_message="
-+install.sh manual usage:
-+[sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|[-e|--exit-on-error]]
-+                       [[-f|--force]|[-o|--overwrite|--overwrite-if-present]|[-s|--skip|--skip-if-installed]]
-+                       [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]
-+                       [[-d|--dirty|--no-autoclean]|[-c|--clean]|[-C|-Clean]]
-+                       [[-U|--Upgrade]|[-u|--upgrade]|[-k|-K|--keep-system-outdated]]
-+                       [[-n|--not|-!]|[-y|--yes]]
-+                       SELECTED_FEATURES_TO_INSTALL...
-+
-+Customizer install.sh performs the automatic configuration of a Linux environment by installing applications,
-+adding bash functions, customizing terminal variables, declaring new useful global variables and aliases...
-+
-+Examples:
-+    sudo bash install --dropbox --megasync         # Installs megasync and dropbox
-+    bash install -v --pycharm                      # Installs Pycharm verbosely showing all the output
-+    bash install -v --clion -Q --sublime           # Install Clion verbosely but install sublime_text silently
-+    sudo bash install -o -i --nemo                 # Installs Nemo ignoring errors and overwriting previous installs
-+    sudo bash install --all && bash install --all  # Installs all features, both root and user features
-+
-+
-+Arguments:
-+
-+  -c, --clean                                Perform an apt-get autoremove at the end of installation if we are root
-+  -C, --Clean                                Perform an apt-get autoremove and autoclean at the end of installation if
-+                                             we are root
-+  -d, --dirty, --no-autoclean                Do nothing at the end of installation
-+
-+
-+  -i, --ignore, --ignore-errors              Default behaviour of bash, set +e
-+  -e, --exit-on-error                        Exit the program if any command throws an error using set -e
-+
-+
-+  -o, --overwrite, --overwrite-if-present    Overwrite if there are previous installation
-+  -s, --skip, --skip-if-installed            Skip if the feature is detected in the system by using which
-+
-+
-+  -v, --verbose                              Displays all the possible output
-+  -q, --quiet                                Shows only install.sh basic informative output
-+  -Q, --Quiet                                No output
-+
-+
-+  -u, --update                               Performs an apt-get update before installation if we are root
-+  -U, --upgrade, --Upgrade                   Performs an apt-get update and upgrade before installation if we are root
-+  -k, --keep-system-outdated                 Do nothing before the installation
-+
-+
-+  -n, --not                                  Do NOT install the selected features. Used to trim from wrappers
-+  -y, --yes                                  Install the selected feature
-+
-+  Some install.sh arguments change the way in which each feature succeeding that argument is installed. This behaviour
-+  is maintained until the end of the program, unless another argument changes this behaviour again.
-+
-+  For example, consider the following execution:
-+      bash install -verbose --ignore-errors --overwrite-if-present --mendeley -Q --skip --discord
-+
-+  That will execute the script to install mendeley verbosely, ignoring errors and overwriting previous installations;
-+  after that we install discord without output and skipping if it is present, but notice also we ignore errors too when
-+  installing discord, because we activated the ignore errors behaviour before and it will be still on for the remaining
-+  features.
-+
-+  By default, install.sh runs with the following implicit arguments:
-+  --exit-on-error, --skip-if-installed, --quiet, -Clean, --Upgrade, --yes
-+
-+
-+Features:
-+
-+install.sh has two types of selectable features: feature wrappers and individual features.
-+  - Individual features are a certain installation, configuration or customization of a program or system module.
-+  - Feature wrappers group many individual features with the same permissions related to the same topic: programming,
-+    image edition, system cutomization...
-+
-+Available individual features:
-+  --androidstudio --studio                    Android Studio
-+
-+
-#### under construction ####
-      --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
-      --ant|--apache_ant)
-      --audacity|--Audacity)
-      --atom|--Atom)
-      --curl|--Curl)
-      --discord|--Discord|--disc)
-      --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
-      --gcc|--GCC)
-      --caffeine|--Caffeine|--cafe|--coffee)
-      --calibre|--Calibre|--cali)
-      --cheat|--cheat.sh|--Cheat.sh|--che)
-      --cheese|--Cheese)
-      --clementine|--Clementine)
-      --clion|--Clion|--CLion)
-      --cmatrix|--Cmatrix)
-      --converters|--Converters)
-      --clonezilla|--CloneZilla|--cloneZilla)
-      --codium|--vscodium)
-      --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
-      --extract-function|-extract_function)
-      --f-irc|--firc|--Firc|--irc)
-      --firefox|--Firefox)
-      --freecad|--FreeCAD|--freeCAD)
-      --ffmpeg|--youtube-dl-dependencies)
-      #--google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
-      --gpaint|--paint|--Gpaint)
-      --geany|--Geany)
-      --git)
-      --git-aliases|--git_aliases|--git-prompt)
-      --GIMP|--gimp|--Gimp)
-      --GNOME_Chess|--gnome_Chess|--gnomechess|--chess)
-      --GParted|--gparted|--GPARTED|--Gparted)
-      --gvim|--vim-gtk3|--Gvim|--GVim)
-      --history-optimization)
-      --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
-      --chrome|--Chrome|--google-chrome|--Google-Chrome)
-      --iqmol|--IQmol)
-      --inkscape|--ink-scape|--Inkscape|--InkScape)
-      --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
-      --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
-      --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
-      --latex|--LaTeX|--tex|--TeX)
-      --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
-      --maven|--mvn)
-      --mahjongg|--Mahjongg|--gnome-mahjongg)
-      --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
-      --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
-      --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
-      --mines|--Mines|--GNU-mines|--gnome-mines|--gnomemines)
-      --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
-      --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
-      --openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
-      --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
-      --okular|--Okular|--okularpdf)
-      --pacman|--pac-man)
-      --pdfgrep|--findpdf|--pdf)
-      --pluma)
-      --postgreSQL|--PostGreSQL|--postgresql|--postgre-sql|--postgre-SQL|--psql|--pSQL|--p-SQL|--p-sql)
-      --prompt)
-      --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
-      --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
-      -p|--python|--python3|--Python3|--Python)
-      --pypy|--pypy3|--PyPy3|--PyPy)
-      --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
-      --s|--s-function)
-      --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
-      --shortcuts)
-      --sudoku|--Sudoku|--gnome-sudoku)
-      --solitaire|--Solitaire|--gnome-solitaire|--aisleriot)
-      --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
-      --sudoku|--Sudoku|--GNU-sudoku|--gnome-sudoku|--gnomesudoku)
-      --steam|--Steam|--STEAM)
-      --Telegram|--telegram)
-      --templates)
-      --terminal-background|--terminal_background)
-      --Terminator|--terminator)
-      --Tilix|--tilix)
-      --tmux|--Tmux)
-      --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
-      --tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser)
-      --transmission|--transmission-gtk|--Transmission)
-      --uget)
-      --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
-      --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
-      --vlc|--VLC|--Vlc)
-      --Wallpapers|--wallpapers|--chwlppr)
-      --youtube-dl)
+help_common="
 
-      ### WRAPPER ARGUMENTS ###
-      --user|--regular|--normal)
-      --root|--superuser|--su)
-      --ALL|--all|--All)
+12345678901234567890123456789012345678901234567890123456789012345678901234567890
+        10        20        30        40        50        60        70        80
+#### install.sh manual usage:
+[sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|
+                       [-e|--exit-on-error]]
+
+                       [[-f|--force]|[-o|--overwrite|--overwrite-if-present]|
+                       [-s|--skip|--skip-if-installed]]
+
+                       [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]
+
+                       [[-d|--dirty|--no-autoclean]|[-c|--clean]|[-C|-Clean]]
+
+                       [[-U|--Upgrade]|[-u|--upgrade]|
+                       [-k|-K|--keep-system-outdated]]
+
+                       [[-n|--not|-!]|[-y|--yes]]
+
+                       SELECTED_FEATURES_TO_INSTALL
+
+
+#### install.sh description:
+
+  - install.sh performs the automatic configuration of a Linux
+    environment by installing applications, adding bash functions, customizing
+    terminal variables, declaring new useful global variables and aliases...
+
+  - Each feature have specific privilege requirements: Some will need sudo when
+    running install.sh and others won't
+
+
+#### uninstall.sh description:
+
+  - uninstall.sh, on the opposite, have the same feature arguments to select
+    the features to be uninstalled.
+
+  - It always need root permissions by using sudo.
+
+
+#### Examples of usage:
+
+    # Installs Sublime Text
+    bash install.sh --sublime
+
+    # Installs megasync and dropbox
+    sudo bash install.sh --dropbox --megasync
+
+    # Installs Pycharm verbosely
+    bash install.sh -v --pycharm
+
+    # Install Clion verbosely but install sublime_text silently
+    bash install.sh -v --clion -Q --sublime
+
+    # Installs Nemo overwriting previous installs and ignoring errors
+    sudo bash install.sh -o -i --nemo
+
+    # Installs AnyDesk overwriting previous installs and ignoring errors
+    sudo bash install.sh -f --anydesk
+
+    # Installs python3 but only updating packages, not upgrading
+    sudo bash install.sh -u --python
+
+    # Installs GParted without updating and upgrading
+    sudo bash install.sh -k --gparted
+
+    # Installs gcc, git and chess without cleaning packages afterwards
+    sudo bash install.sh -d  --gcc --git --chess
+
+    # Install verbosely all the programs in wrapper custom1, which
+    contains the most stable and interesting features.
+    sudo bash install -v --custom1 && bash install -v --custom1
+
+    # Installs all features, both root and user features
+    sudo bash install.sh --all && bash install --all
+"
+
+help_simple="
+Some install.sh arguments change the way in which each feature succeeding that
+argument is installed. This behaviour is maintained until the end of the
+program, unless another argument changes this behaviour again.
+
+Use:
+
+    bash install.sh -H
+
+to refer to the complete help, where all behavioural arguments and feature
+arguments are listed and explained in detail.
+"
+
+
+help_arguments="
+#### Arguments:
+
+ -c, --clean          Perform an apt-get autoremove at the end of installation
+                      if we are root
+ -C, --Clean          (default) Perform an apt-get autoremove and autoclean at
+                      the end of installation if we are root
+ -d, --dirty          Do not clean at the end of installation
+
+
+ -i, --ignore-errors  Default behaviour of bash, set +e. Keep executing after
+                      error
+ -e, --exit-on-error  (default) Exit the program if any command throws an error*
+                      using set -e
+
+
+ -o, --overwrite      Overwrite if there are previous installation
+ -s, --skip           (default) Skip if the feature is detected in the system by
+                      using which
+
+
+ -v, --verbose        Displays all the possible output
+ -q, --quiet          (default) Shows only install.sh basic informative output
+ -Q, --Quiet          No output
+
+
+ -u, --update         Performs an apt-get update before installation if we are
+                      root
+ -U, --upgrade        (default) Performs an apt-get update and upgrade before
+                      installation if we are root
+ -k, --keep-outdated  Do nothing before the installation
+
+
+ -n, --not            Do NOT install the selected features. Used to trim from
+                      wrappers
+ -y, --yes            (default) Install the selected feature
+
+Some install.sh arguments change the way in which each feature succeeding that
+argument is installed. This behaviour is maintained until the end of the
+program, unless another argument changes this behaviour again.
+
+For example, consider the following execution:
+
+    bash install -v -i -o --mendeley -Q -s --discord
+
+That will execute the script to install mendeley verbosely, ignoring errors and
+overwriting previous installations; after that we install discord without
+output and skipping if it is present, but notice also we ignore errors too when
+installing discord, because we activated the ignore errors behaviour before and
+it will be still on for the remaining features.
+
+By default, install.sh runs with the following implicit arguments:
+--exit-on-error, --skip-if-installed, --quiet, -Clean, --Upgrade, --yes
+
+
+#### Feature arguments:
+
+This arguments are used to select which features we want to install or uninstall
+using install.sh or uninstall.sh respectively.
+There are two types of selectable features: feature wrappers and individual
+features.
+  - Individual features are a certain installation, configuration or
+  customization of a program or system module.
+  - Feature wrappers group many individual features with the same permissions
+  related to the same topic: programming, image edition, system cutomization...
+
+## Individual features:
+  --androidstudio --studio                    Android Studio
+  --ant|--apache_ant)
+  --audacity|--Audacity)
+  --atom|--Atom)
+  --curl|--Curl)
+  --discord|--Discord|--disc)
+  --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
+  --gcc|--GCC)
+  --caffeine|--Caffeine|--cafe|--coffee)
+  --calibre|--Calibre|--cali)
+  --cheat|--cheat.sh|--Cheat.sh|--che)
+  --cheese|--Cheese)
+  --clementine|--Clementine)
+  --clion|--Clion|--CLion)
+  --cmatrix|--Cmatrix)
+  --converters|--Converters)
+  --clonezilla|--CloneZilla|--cloneZilla)
+  --codium|--vscodium)
+  --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
+  --extract-function|-extract_function)
+  --f-irc|--firc|--Firc|--irc)
+  --firefox|--Firefox)
+  --freecad|--FreeCAD|--freeCAD)
+  --ffmpeg|--youtube-dl-dependencies)
+  #--google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
+  --gpaint|--paint|--Gpaint)
+  --geany|--Geany)
+  --git)
+  --git-aliases|--git_aliases|--git-prompt)
+  --GIMP|--gimp|--Gimp)
+  --GNOME_Chess|--gnome_Chess|--gnomechess|--chess)
+  --GParted|--gparted|--GPARTED|--Gparted)
+  --gvim|--vim-gtk3|--Gvim|--GVim)
+  --history-optimization)
+  --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
+  --chrome|--Chrome|--google-chrome|--Google-Chrome)
+  --iqmol|--IQmol)
+  --inkscape|--ink-scape|--Inkscape|--InkScape)
+  --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
+  --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
+  --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
+  --latex|--LaTeX|--tex|--TeX)
+  --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
+  --maven|--mvn)
+  --mahjongg|--Mahjongg|--gnome-mahjongg)
+  --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
+  --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
+  --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
+  --mines|--Mines|--GNU-mines|--gnome-mines|--gnomemines)
+  --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
+  --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
+  --openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
+  --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
+  --okular|--Okular|--okularpdf)
+  --pacman|--pac-man)
+  --pdfgrep|--findpdf|--pdf)
+  --pluma)
+  --postgreSQL|--PostGreSQL|--postgresql|--postgre-sql|--postgre-SQL|--psql|--pSQL|--p-SQL|--p-sql)
+  --prompt)
+  --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
+  --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
+  -p|--python|--python3|--Python3|--Python)
+  --pypy|--pypy3|--PyPy3|--PyPy)
+  --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
+  --s|--s-function)
+  --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
+  --shortcuts)
+  --sudoku|--Sudoku|--gnome-sudoku)
+  --solitaire|--Solitaire|--gnome-solitaire|--aisleriot)
+  --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
+  --sudoku|--Sudoku|--GNU-sudoku|--gnome-sudoku|--gnomesudoku)
+  --steam|--Steam|--STEAM)
+  --Telegram|--telegram)
+  --templates)
+  --terminal-background|--terminal_background)
+  --Terminator|--terminator)
+  --Tilix|--tilix)
+  --tmux|--Tmux)
+  --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
+  --tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser)
+  --transmission|--transmission-gtk|--Transmission)
+  --uget)
+  --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
+  --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
+  --vlc|--VLC|--Vlc)
+  --Wallpapers|--wallpapers|--chwlppr)
+  --youtube-dl)
+
+## Wrapper arguments
+  --user|--regular|--normal)
+  --root|--superuser|--su)
+  --ALL|--all|--All)
+  --custom1
+
 
 "
 

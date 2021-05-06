@@ -13,7 +13,8 @@
 * Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
 * Relative PATHs are forbidden. We must not use the given working directory  
 * No unprotected `cd` commands. `cd` must be avoided and never change the working directory given from the outside, that is why they must be called from the inside of a subshell if present. 
-* wget is always used with the `-O` flag, which is used to change the name of the file and / or select a destination for the download.
+* wget is always used with the `-O` flag, which is used to change the name of the file and / or select a destination for the download. 
+* no `apt`, the default way to install package in script is `apt-get`
 
 #### Syntactical
 * All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
@@ -50,6 +51,9 @@
 - [x] Red prompt for warning and error messages
 - [x] Optimize history to be updated in real-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [x] Anydesk
+- [x] Put Path declaration in common data, as a bash function  
+- [x] Add final & to alias of gitk  (git_aliases), pluma, VS code,  so is always launched in background
+- [x] Apply rule: no apt, the default way to install package in script is apt-get
 
 
 #### Axel
@@ -75,16 +79,12 @@
 ## TO-DO
 - [ ] Update and construct readme and help message
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux 
-- [ ] Add final & to alias of gitk  (git_aliases), pluma, VS code,  so is always launched in background
 - [ ] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
 - [ ] Refine extract function: extract dependencies in another extract function
 - [ ] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [ ] Move all argument processing to the same data structure that we are using for storing info abaout the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README table
-- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
-- [ ] Apply rule: no apt, the default way to install package in script is apt-get
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
-- [ ] Put Path declaration in common data, as a bash function  
 - [ ] Autofirma
 - [ ] Eclipse
 - [ ] Geogebra
@@ -97,8 +97,9 @@
 - [ ] L Function  
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)  
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
-- [ ] When having this unique endopint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it  
-- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "" etc. in this new endpoint
+- [ ] When having this unique endopint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it
+- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
+- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint
 - [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
 - [ ] Codium does not work because of the folder . in the root
