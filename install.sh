@@ -1022,6 +1022,10 @@ main()
       chgrp ${SUDO_USER} ${BASH_FUNCTIONS_PATH}
       chown ${SUDO_USER} ${BASH_FUNCTIONS_PATH}
       chmod 775 ${BASH_FUNCTIONS_PATH}
+      # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
+      if [[ -z "$(echo "$PATH" | grep -Eo "(.*:.*)*${DIR_IN_PATH}" )" ]]; then
+        echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASH_FUNCTIONS_PATH}
+      fi
     fi
   else
     mkdir -p ${USR_BIN_FOLDER}
@@ -1038,8 +1042,8 @@ main()
     fi
 
     # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-    if [[ -z "$(more ${BASHRC_PATH} | grep -Fo "${DIR_IN_PATH}" )" ]]; then
-      echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASHRC_PATH}
+    if [[ -z "$(echo "$PATH" | grep -Eo "(.*:.*)*${DIR_IN_PATH}" )" ]]; then
+      echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASH_FUNCTIONS_PATH}
     fi
   fi
 
