@@ -512,12 +512,21 @@ s()
 }
 "
 
-shell_history_optimization_function="export HISTSIZE=10000
-export HISTFILESIZE=100000
+shell_history_optimization_function="
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+export HISTSIZE=100000
+export HISTFILESIZE=1000000
+# append to the history file, don't overwrite it
 shopt -s histappend
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
 HISTCONTROL=ignoredups
+# Ignore simple commands in history
 HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
+# The cmdhist shell option, if enabled, causes the shell to attempt to save each line of a multi-line command in the
+# same history entry, adding semicolons where necessary to preserve syntactic correctness.
 shopt -s cmdhist
+# Save and reload from history before prompt appears
 export PROMPT_COMMAND=\"history -a; history -r\"
 "
 
