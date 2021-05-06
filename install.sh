@@ -147,6 +147,7 @@ create_links_in_path()
 }
 
 # Installs a new bash feature, installing its script into your environment using .bashrc, which uses .bash_functions
+# Can be called as root or as normal user with presumably with the same behaviour.
 # Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions
 # Argument 2: Name of the file.
 add_bash_function()
@@ -276,6 +277,7 @@ install_freecad()
 install_gcc()
 {
   apt-get install -y gcc
+  add_bash_function "${gcc_function}" "gcc_function.sh"
 }
 
 install_geany()
@@ -794,6 +796,11 @@ install_youtube-dl()
 #######################################
 # Most (all) of them just use user permissions
 
+install_alert()
+{
+  add_bash_function "${alert_alias}" alert.sh
+}
+
 install_cheat()
 {
   rm -f ${USR_BIN_FOLDER}/cheat.sh
@@ -1011,7 +1018,7 @@ main()
     create_folder_as_root ${PERSONAL_LAUNCHERS_DIR}
 
     if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
-      >${BASH_FUNCTIONS_PATH}
+      echo "${bash_functions_init}" > "${BASH_FUNCTIONS_PATH}"
       chgrp ${SUDO_USER} ${BASH_FUNCTIONS_PATH}
       chown ${SUDO_USER} ${BASH_FUNCTIONS_PATH}
       chmod 775 ${BASH_FUNCTIONS_PATH}
@@ -1022,8 +1029,9 @@ main()
     mkdir -p ${PERSONAL_LAUNCHERS_DIR}
     mkdir -p ${BASH_FUNCTIONS_FOLDER}
 
+    # If $BASH_FUNCTION_PATH does not exist, create the exit point when running not interactively.
     if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
-      >${BASH_FUNCTIONS_PATH}
+      echo "${bash_functions_init}" > "${BASH_FUNCTIONS_PATH}"
     else
       # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
       source ${BASH_FUNCTIONS_PATH}
@@ -1123,6 +1131,9 @@ main()
 
       ### INDIVIDUAL ARGUMENTS ###
       # Sorted alphabetically by function name:
+      --alert|--alert-alias|--alias-alert)
+        add_program install_alert
+      ;;
       --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
         add_program install_studio
       ;;

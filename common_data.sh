@@ -127,6 +127,7 @@ AUTOCLEAN=2
 installation_data=(
 "0;0;0;0;0;install_ant"
 "0;0;0;0;1;install_audacity"
+"0;0;0;0;0;install_alert"
 "0;0;0;0;1;install_atom"
 "0;0;0;0;0;install_discord"
 "0;0;0;0;1;install_dropbox"
@@ -277,6 +278,11 @@ add_all_programs()
 ##### SOFTWARE SPECIFIC VARIABLES #####
 #######################################
 
+alert_alias="
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i \"\$([ \$? = 0 ] && echo terminal || echo error)\" \"\$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\\'')\"'
+"
 # Variables used exclusively in the corresponding installation function. Alphabetically sorted.
 #Name, GenericName, Type, Comment, Version, StartupWMClass, Icon, Exec, Terminal, Categories=IDE;Programming;, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 android_studio_downloader=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz
@@ -302,6 +308,13 @@ atom_downloader=https://atom.io/download/deb
 
 bash_functions_import="
 source ${BASH_FUNCTIONS_PATH}
+"
+bash_functions_init="
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 "
 
 cheat_downloader=https://cht.sh/:cht.sh
@@ -370,6 +383,11 @@ Exec=f-irc
 Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.png
 Type=Application
 "
+
+gcc_function="# colored GCC warnings and errors
+export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01\"
+"
+
 
 git_aliases_function="dummycommit()
 {
@@ -504,7 +522,8 @@ if [ -n \"\$force_color_prompt\" ]; then
 fi
 
 if [ \"\$color_prompt\" = yes ]; then
-    PS1='\${debian_chroot:+(\$debian_chroot)}\[\\\033[01;32m\\]\u@\h\[\\\033[00m\]:\[\\\033[01;34m\]\w\[\\\033[00m\]\\$ '
+    # Colorful custom PS1
+    PS1=\"\\[\\\e[1;37m\\]\\\\\\d \\\\\\\t \\[\\\e[0;32m\\]\\\\\u\[\\\e[4;35m\\]@\\[\\\e[0;36m\\]\\\\\\H\\[\\\e[0;33m\\] \\\\\\w\\[\\\e[0;32m\\] \\\\\\\$ \"
 else
     PS1='\${debian_chroot:+(\$debian_chroot)}\u@\h:\w\\$ '
 fi
@@ -513,7 +532,7 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case \"\$TERM\" in
 xterm*|rxvt*)
-    PS1=\"\\[\\\e]0;\${debian_chroot:+(\$debian_chroot)}\u@\h: \w\\\a\]\"
+    PS1=\"\$PS1\\[\\\e]0;\${debian_chroot:+(\$debian_chroot)}\u@\h: \w\\\a\]\"
     ;;
 *)
     ;;
@@ -523,23 +542,25 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval \"\$(dircolors -b ~/.dircolors)\" || eval \"\$(dircolors -b)\"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
 
-# colored GCC warnings and errors
-export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01\"
 
-
-
-# Colorful PS1
-export PS1=\"\$PS1\\[\\\e[1;37m\\]\\\\\\d \\\\\\\t \\[\\\e[0;32m\\]\\\\\u\[\\\e[4;35m\\]@\\[\\\e[0;36m\\]\\\\\\H\\[\\\e[0;33m\\] \\\\\\w\\[\\\e[0;32m\\] \\\\\\\$ \"
-
-
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
 
 
 "
