@@ -373,6 +373,11 @@ install_latex()
   echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
 }
 
+install_libxcb-xtest0()
+{
+  apt-get install -y libxcb-xtest0
+}
+
 install_gnome-mahjongg()
 {
   apt-get install -y gnome-mahjongg
@@ -424,6 +429,11 @@ install_nemo()
   gsettings set org.nemo.desktop show-desktop-icons true
 
   copy_launcher "nemo.desktop"
+}
+
+install_net-tools()
+{
+  apt-get install -y net-tools
 }
 
 install_notepadqq()
@@ -666,6 +676,14 @@ install_discord()
   create_manual_launcher "${discord_launcher}" "discord"
 }
 
+# Install Eclipse IDE
+install_eclipse()
+{
+  download_and_decompress ${eclipse_downloader} "eclipse" "z" "eclipse" "eclipse"
+
+  create_manual_launcher "${eclipse_launcher}" "eclipse"
+}
+
 # Install IntelliJ Community
 install_ideac()
 {
@@ -811,6 +829,14 @@ install_youtube-dl()
   hash -r
 }
 
+install_zoom()
+{
+  download_and_decompress ${zoom_downloader} "zoom" "J" "zoom" "zoom" "ZoomLauncher" "ZoomLauncher"
+
+  create_manual_launcher "${zoom_launcher}" "zoom"
+
+  wget ${zoom_icon_downloader} -q --show-progress -O ${USR_BIN_FOLDER}/zoom/zoom_icon.ico
+}
 
 #######################################
 ###### USER-ENVIRONMENT FEATURES ######
@@ -1233,6 +1259,9 @@ main()
       --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
         add_program install_copyq
       ;;
+      --eclipse)
+        add_program install_eclipse
+      ;;
       --extract-function|-extract_function)
         add_program install_extract
       ;;
@@ -1308,6 +1337,9 @@ main()
       --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
         add_program install_l
       ;;
+      --libxcb-xtest0)
+        add_program install_libxcb-xtest0
+      ;;
       --maven|--mvn)
         add_program install_mvn
       ;;
@@ -1328,6 +1360,9 @@ main()
       ;;
       --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
         add_program install_nemo
+      ;;
+      --net-tools|--nettools)
+        add_program install_net-tools
       ;;
       --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
         add_program install_notepadqq
@@ -1445,6 +1480,9 @@ main()
       ;;
       --youtube-dl)
         add_program install_youtube-dl
+      ;;
+      --Zoom| --zoom)
+        add_program install_zoom
       ;;
 
       ### WRAPPER ARGUMENTS ###

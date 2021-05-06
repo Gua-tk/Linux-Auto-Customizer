@@ -153,6 +153,7 @@ installation_data=(
 "0;0;0;0;1;install_clonezilla"
 "0;0;0;0;1;install_copyq"
 "0;0;0;0;1;install_curl"
+"0;0;0;0;0;install_eclipse"
 "0;0;0;0;0;install_extract"
 "0;0;0;0;1;install_f-irc"
 "0;0;0;0;1;install_firefox"
@@ -177,6 +178,7 @@ installation_data=(
 "0;0;0;0;1;install_latex"
 "0;0;0;0;0;install_l"
 "0;0;0;0;1;install_libgtkglext1"
+"0;0;0;0;1;install_libxcb-xtest0"
 "0;0;0;0;1;install_gnome-mahjongg"
 "0;0;0;0;0;install_mvn"
 "0;0;0;0;1;install_megasync"
@@ -184,6 +186,7 @@ installation_data=(
 "0;0;0;0;1;install_mendeley_dependencies"
 "0;0;0;0;1;install_gnome-mines"
 "0;0;0;0;1;install_nemo"
+"0;0;0;0;1;install_net-tools"
 "0;0;0;0;1;install_notepadqq"
 "0;0;0;0;1;install_openoffice"
 "0;0;0;0;1;install_obs"
@@ -225,7 +228,7 @@ installation_data=(
 "0;0;0;0;0;install_youtube-dl"
 "0;0;0;0;1;install_ffmpeg"
 "0;0;0;0;1;install_wireshark"
-
+"0;0;0;0;0;install_zoom"
 )
 
 
@@ -396,6 +399,18 @@ Icon=${USR_BIN_FOLDER}/discord/discord.png
 Type=Application
 Categories=Network;InstantMessaging;"
 
+
+eclipse_downloader=http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz
+eclipse_launcher="[Desktop Entry]
+Version=4.2.2
+Type=Application
+Terminal=false
+Comment=Capable Multi-purpose IDE
+Categories=Development;IDE;
+Icon=${USR_BIN_FOLDER}/eclipse/icon.xpm
+Exec=eclipse
+Name=Eclipse IDE
+StartupWMClass=Eclipse"
 
 firc_launcher="[Desktop Entry]
 Name=F-irc
@@ -729,6 +744,21 @@ wallpapers_cronjob="*/5 * * * * ${USR_BIN_FOLDER}/wallpaper_changer.sh"
 youtubedl_downloader=https://yt-dl.org/downloads/latest/youtube-dl
 
 youtubewav_alias="alias youtubewav=\"youtube-dl --extract-audio --audio-format wav\""
+
+zoom_downloader=https://zoom.us/client/latest/zoom_x86_64.tar.xz
+zoom_icon_downloader=https://play-lh.googleusercontent.com/JgU6AIREDMsGLmrFSJ8OwLb-JJVw_jwqdwEZWUHemAj0V5Dl7i7GOpmranv2GsCKobM
+zoom_launcher="[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Zoom
+Icon=${USR_BIN_FOLDER}/zoom/zoom_icon.ico
+Exec=ZoomLauncher
+Comment=Live Video Streaming for Meetings
+Categories=Social, Communication
+Terminal=false
+StartupWMClass=zoom"
+
+
 ###########################
 ##### SYSTEM FEATURES #####
 ###########################
