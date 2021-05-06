@@ -589,7 +589,7 @@ fi
 
 "
 
-pycharm_downloader=https://download.jetbrains.com/python/pycharm-professional-2020.3.5.tar.gz
+pycharm_downloader=https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz
 pycharm_launcher="[Desktop Entry]
 Version=1.0
 Type=Application

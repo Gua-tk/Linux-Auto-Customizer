@@ -55,6 +55,7 @@
 - [x] Add final & to alias of gitk  (git_aliases), pluma, VS code,  so is always launched in background
 - [x] Apply rule: no apt, the default way to install package in script is apt-get
 - [x] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
+- [x] Write date in all the messages that the customizer outputs (warning, info etc)
 
 
 #### Axel
@@ -88,10 +89,8 @@
 - [ ] Geogebra
 - [ ] Zoom
 - [ ] Teams (?)  
-- [ ] Write date in all the messages that the customizer outputs (warning, info etc)
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 - [ ] Update and construct readme and 
-- [ ] help message: arguments refactor with format
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux 
 
 ## Coming features
@@ -103,7 +102,7 @@
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint
 - [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
-- [ ] Codium does not work because of the folder . in the root
+- [ ] help message: arguments refactor with format
 - [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
 - [ ] Automount available drives.*
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
