@@ -190,11 +190,14 @@ install_audacity()
 
 install_AutoFirma()
 {
+  apt-get install -y libnss3-tools
+
   rm -f ${USR_BIN_FOLDER}/downloading_package*
   (cd ${USR_BIN_FOLDER}; wget -qO downloading_package --show-progress "${autofirma_downloader}")
+  rm -Rf ${USR_BIN_FOLDER}/autOfirma
   (cd ${USR_BIN_FOLDER}; unzip downloading_package -d autOfirma)  # To avoid collisions
   rm -f ${USR_BIN_FOLDER}/downloading_package
-  dpkg -i ${USR_BIN_FOLDER}/AutoFirma*.deb
+  dpkg -i ${USR_BIN_FOLDER}/autOfirma/AutoFirma*.deb
   rm -Rf ${USR_BIN_FOLDER}/autOfirma
 }
 

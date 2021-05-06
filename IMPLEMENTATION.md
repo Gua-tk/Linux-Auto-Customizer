@@ -65,6 +65,7 @@
 - [x] Create escape function, which returns an escaped sequence of characters
 - [x] net-tools
 - [x] Eclipse
+- [x] Zoom
 - [ ] docker 
 - [ ] rar
   
@@ -87,7 +88,6 @@
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
 - [ ] Autofirma
 - [ ] Geogebra
-- [ ] Zoom
 - [ ] Teams (?)  
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 - [ ] Update and construct readme and 

@@ -330,7 +330,7 @@ Type=Application"
 
 atom_downloader=https://atom.io/download/deb
 
-autofirma_downloader=https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma64.zip
+autofirma_downloader=https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip
 
 bash_functions_import="
 source ${BASH_FUNCTIONS_PATH}
