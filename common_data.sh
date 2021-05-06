@@ -126,6 +126,7 @@ AUTOCLEAN=2
 # install_yes/no; forceness; quietness; overwrite; permissions; function_name
 installation_data=(
 "0;0;0;0;0;install_ant"
+"0;0;0;0;0;install_anydesk"
 "0;0;0;0;1;install_audacity"
 "0;0;0;0;0;install_alert"
 "0;0;0;0;1;install_atom"
@@ -303,6 +304,8 @@ MimeType=
 Encoding=UTF-8"
 
 ant_downloader="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.9-bin.tar.gz"
+
+anydesk_downloader="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
 
 atom_downloader=https://atom.io/download/deb
 

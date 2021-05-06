@@ -45,7 +45,7 @@
 - [x] Repair broken desktop icons (VLC, VScode, Telegram)
 - [x] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed. this command is `s "command"`
 - [x] On nemo desktop delete automatically nautilus
-  
+- [x] Wireshark
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 
 
@@ -56,7 +56,6 @@
 - [x] Create escape function, which returns an escaped sequence of characters
 - [ ] nettools*
 - [ ] docker 
-- [ ] Wireshark
 - [ ] rar
   
 - [ ] GnuCash, Rosegarden, Remmina, Freeciv, Shotwell, Handbrake, fslint, CMake, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...
@@ -143,4 +142,4 @@
 # Increases file history size, size of the history and forces to append to history, never overwrite
 # Ignore repeated commands and simple commands
 # Store multiline comments in just one command
-```
+``

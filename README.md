@@ -18,6 +18,7 @@ The following features can be installed or uninstalled automatically and individ
 | Name | Description | Execution | Arguments | Permissions | Testing | 
 |-------------|----------------------|------------------------------------------------------|------------|---------|-------------|
 | Android Studio | Development environment for Google's Android operating system | Command `studio`, alias `studio` and desktop and dashboard launcher | --studio | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| Anydesk | Software to remote control other computers | Command `anydesk` | --anydesk | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Apache Ant | Software tool for automating software build processes | Command `ant` | --ant | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Alias `l` | Alias for `ls -lah` | Alias `l` | --l | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Alias `alert` | Alias to show a notification at the end of a command | Alias `alert`. Use it at the end of long running commands like so: `sleep 10; alert` | --alert | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |

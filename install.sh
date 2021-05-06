@@ -606,6 +606,11 @@ install_ant()
   download_and_decompress ${ant_downloader} "apache_ant" "z" "bin/ant" "ant"
 }
 
+install_anydesk()
+{
+  download_and_decompress ${anydesk_downloader} "anydesk" "z" "anydesk" "anydesk"
+}
+
 install_studio()
 {
   download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
@@ -1143,6 +1148,9 @@ main()
       ;;
       --ant|--apache_ant|--apache-ant)
         add_program install_ant
+      ;;
+      --anydesk)
+        add_program install_anydesk
       ;;
       --audacity|--Audacity)
         add_program install_audacity
