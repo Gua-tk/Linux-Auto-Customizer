@@ -427,7 +427,17 @@ export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:qu
 "
 
 
-git_aliases_function="dummycommit()
+git_aliases_function="
+commit()
+{
+    message=\$*
+    if [ -z \"\$message\" ]; then
+      echo \"Add a message\"
+      read message
+    fi
+    git commit -am \"\$message\"
+}
+dummycommit()
 {
   git add -A
   git commit -am \"\$1\"
