@@ -188,6 +188,16 @@ install_audacity()
   copy_launcher audacity.desktop
 }
 
+install_AutoFirma()
+{
+  rm -f ${USR_BIN_FOLDER}/downloading_package*
+  (cd ${USR_BIN_FOLDER}; wget -qO downloading_package --show-progress "${autofirma_downloader}")
+  (cd ${USR_BIN_FOLDER}; unzip downloading_package -d autOfirma)  # To avoid collisions
+  rm -f ${USR_BIN_FOLDER}/downloading_package
+  dpkg -i ${USR_BIN_FOLDER}/AutoFirma*.deb
+  rm -Rf ${USR_BIN_FOLDER}/autOfirma
+}
+
 install_atom()
 {
   download_and_install_package ${atom_downloader}
@@ -907,10 +917,13 @@ install_chwlppr()
   rm -Rf ${XDG_PICTURES_DIR}/wallpapers
   mkdir -p ${XDG_PICTURES_DIR}/wallpapers
   git clone ${wallpapers_downloader} ${XDG_PICTURES_DIR}/wallpapers
-  cp ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz ${XDG_PICTURES_DIR}
-  rm -Rf ${XDG_PICTURES_DIR}/wallpapers
-  $(cd ${XDG_PICTURES_DIR}; tar -xzf *.tar.gz)
-  rm -f ${XDG_PICTURES_DIR}/*.tar.gz
+  #cp ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz ${XDG_PICTURES_DIR}
+  #rm -Rf ${XDG_PICTURES_DIR}/wallpapers
+  $(cd ${XDG_PICTURES_DIR}/wallpapers; tar -xzf *.tar.gz)
+  rm -f ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz
+
+  cp /usr/share/backgrounds/* ${XDG_PICTURES_DIR}/wallpapers
+
 }
 
 
@@ -1165,6 +1178,9 @@ main()
       ;;
       --audacity|--Audacity)
         add_program install_audacity
+      ;;
+      --autofirma)
+        add_program install_AutoFirma
       ;;
       --atom|--Atom)
         add_program install_atom

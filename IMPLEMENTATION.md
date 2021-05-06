@@ -77,8 +77,6 @@
 ## Currently developing/refactoring features
 
 ## TO-DO
-- [ ] Update and construct readme and help message
-- [ ] Add examples (images) of a working environement after applying the customizer in Linux 
 - [ ] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
 - [ ] Refine extract function: extract dependencies in another extract function
 - [ ] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
@@ -92,6 +90,9 @@
 - [ ] Teams (?)  
 - [ ] Write date in all the messages that the customizer outputs (warning, info etc)
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
+- [ ] Update and construct readme and 
+- [ ] help message: arguments refactor with format
+- [ ] Add examples (images) of a working environement after applying the customizer in Linux 
 
 ## Coming features
 - [ ] L Function  

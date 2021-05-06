@@ -135,6 +135,7 @@ installation_data=(
 "0;0;0;0;0;install_ant"
 "0;0;0;0;0;install_anydesk"
 "0;0;0;0;1;install_audacity"
+"0;0;0;0;1;install_AutoFirma"
 "0;0;0;0;0;install_alert"
 "0;0;0;0;1;install_atom"
 "0;0;0;0;0;install_discord"
@@ -325,6 +326,8 @@ Type=Application"
 
 
 atom_downloader=https://atom.io/download/deb
+
+autofirma_downloader=https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma64.zip
 
 bash_functions_import="
 source ${BASH_FUNCTIONS_PATH}
@@ -715,7 +718,7 @@ if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
   done
   export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
 fi
-DIR=\"${XDG_PICTURES_DIR}\"
+DIR=\"${XDG_PICTURES_DIR}/wallpapers\"
 PIC=\$(ls \${DIR} | shuf -n1)
 dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
 
@@ -1246,6 +1249,7 @@ features.
   related to the same topic: programming, image edition, system cutomization...
 
 ## Individual features:
+  --autofirma
   --androidstudio --studio                    Android Studio
   --ant|--apache_ant)
   --audacity|--Audacity)
