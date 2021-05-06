@@ -108,7 +108,7 @@
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 
-
+```
 # wget not used with -O and in subshell to avoid cd
 # tar not used in a subshell to avoid cd
 # echo or err directly used instead of using output_proxy_executioner
@@ -143,3 +143,4 @@
 # Increases file history size, size of the history and forces to append to history, never overwrite
 # Ignore repeated commands and simple commands
 # Store multiline comments in just one command
+```
