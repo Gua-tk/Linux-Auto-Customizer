@@ -54,6 +54,7 @@
 - [x] Put Path declaration in common data, as a bash function  
 - [x] Add final & to alias of gitk  (git_aliases), pluma, VS code,  so is always launched in background
 - [x] Apply rule: no apt, the default way to install package in script is apt-get
+- [x] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
 
 
 #### Axel
@@ -77,7 +78,6 @@
 ## Currently developing/refactoring features
 
 ## TO-DO
-- [ ] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
 - [ ] Refine extract function: extract dependencies in another extract function
 - [ ] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall

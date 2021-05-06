@@ -922,8 +922,11 @@ install_chwlppr()
   $(cd ${XDG_PICTURES_DIR}/wallpapers; tar -xzf *.tar.gz)
   rm -f ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz
 
-  cp /usr/share/backgrounds/* ${XDG_PICTURES_DIR}/wallpapers
-
+  for filename in $(ls); do
+    if [[ -f "${XDG_PICTURES_DIR}/wallpapers/${filename}" ]]; then
+      cp "/usr/share/backgrounds/${filename}" ${XDG_PICTURES_DIR}/wallpapers
+    fi
+  done
 }
 
 
