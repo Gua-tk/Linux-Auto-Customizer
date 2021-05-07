@@ -139,6 +139,7 @@ installation_data=(
 "0;0;0;0;0;install_alert"
 "0;0;0;0;1;install_atom"
 "0;0;0;0;0;install_discord"
+"0;0;0;0;1;install_docker"
 "0;0;0;0;1;install_dropbox"
 "0;0;0;0;1;install_gcc"
 "0;0;0;0;1;install_caffeine"
@@ -161,6 +162,7 @@ installation_data=(
 "0;0;0;0;1;install_musicmanager"
 "0;0;0;0;1;install_gpaint"
 "0;0;0;0;1;install_geany"
+"0;0;0;0;0;install_geogebra"
 "0;0;0;0;1;install_git"
 "0;0;0;0;0;install_git_aliases"
 "0;0;0;0;1;install_gimp"
@@ -399,6 +401,9 @@ Icon=${USR_BIN_FOLDER}/discord/discord.png
 Type=Application
 Categories=Network;InstantMessaging;"
 
+docker_downloader=https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_20.10.6~3-0~ubuntu-focal_amd64.deb
+#docker_downloader2=https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_20.10.6~3-0~ubuntu-focal_amd64.deb
+#docker_downloader3=https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/containerd.io_1.4.4-1_amd64.deb
 
 eclipse_downloader=http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz
 eclipse_launcher="[Desktop Entry]
@@ -426,6 +431,7 @@ gcc_function="# colored GCC warnings and errors
 export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01\"
 "
 
+geogebra_downloader=https://download.geogebra.org/package/linux-port6
 
 git_aliases_function="
 commit()

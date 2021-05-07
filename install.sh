@@ -679,6 +679,15 @@ install_discord()
   create_manual_launcher "${discord_launcher}" "discord"
 }
 
+install_docker()
+{
+  # Rf
+  echo "no tira"
+  #download_and_install_package ${docker_downloader}
+  #download_and_install_package ${docker_downloader2}
+  #download_and_install_package ${docker_downloader3}
+}
+
 # Install Eclipse IDE
 install_eclipse()
 {
@@ -686,6 +695,14 @@ install_eclipse()
 
   create_manual_launcher "${eclipse_launcher}" "eclipse"
 }
+
+install_geogebra()
+{
+  # Rf
+  download_and_install_package ${geogebra_downloader}
+  # Rf lacks icon
+}
+
 
 # Install IntelliJ Community
 install_ideac()
@@ -1223,6 +1240,9 @@ main()
       --discord|--Discord|--disc)
         add_program install_discord
       ;;
+      --docker|--Docker)
+        add_program install_docker
+      ;;
       --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
         add_program install_dropbox
       ;;
@@ -1288,6 +1308,8 @@ main()
       ;;
       --geany|--Geany)
         add_program install_geany
+      ;;--geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic)
+        add_program install_geogebra
       ;;
       --git)
         add_program install_git
