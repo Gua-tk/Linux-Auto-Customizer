@@ -401,9 +401,7 @@ Icon=${USR_BIN_FOLDER}/discord/discord.png
 Type=Application
 Categories=Network;InstantMessaging;"
 
-docker_downloader=https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_20.10.6~3-0~ubuntu-focal_amd64.deb
-#docker_downloader2=https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_20.10.6~3-0~ubuntu-focal_amd64.deb
-#docker_downloader3=https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/containerd.io_1.4.4-1_amd64.deb
+docker_downloader=https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz
 
 eclipse_downloader=http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz
 eclipse_launcher="[Desktop Entry]
