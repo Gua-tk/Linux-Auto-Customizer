@@ -105,11 +105,14 @@ download_and_decompress()
   (cd ${USR_BIN_FOLDER}; wget -qO "downloading_program" --show-progress "$1")
 
   if [[ "${3}" == "zip" ]]; then
-    program_folder_name=$( unzip -l "${USR_BIN_FOLDER}/downloading_program" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1 )
+    program_folder_name="$( unzip -l "${USR_BIN_FOLDER}/downloading_program" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1 )"
+    unzip -l "${USR_BIN_FOLDER}/downloading_program"
   else
     # Capture root folder name
     program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloading_program)
   fi
+
+
   # Check that variable program_folder_name is set, if not abort
   # Clean to avoid conflicts with previously installed software or aborted installation
   rm -Rf "${USR_BIN_FOLDER}/${program_folder_name:?"ERROR: The name of the installed program could not been captured"}"
@@ -705,7 +708,8 @@ install_geogebra()
 {
 
   download_and_decompress ${geogebra_downloader} "geogebra" "zip" "GeoGebra" "geogebra"
-  # Rf lacks icon
+  wget ${telegram_icon} -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+  create_manual_launcher "${geogebra_desktop}" "geogebra"
 }
 
 
@@ -878,8 +882,9 @@ install_cheat()
   # Rf
   rm -f ${USR_BIN_FOLDER}/cheat.sh
   (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O cheat.sh ${cheat_downloader})
-
+  chmod 755 ${USR_BIN_FOLDER}/cheat.sh
   create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
+
 }
 
 install_converters()

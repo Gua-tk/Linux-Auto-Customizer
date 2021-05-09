@@ -430,6 +430,16 @@ export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:qu
 "
 
 geogebra_downloader=https://download.geogebra.org/package/linux-port6
+geogebra_icon=https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg
+geogebra_desktop="[Desktop Entry]
+Version=4.2.2
+Type=Application
+Terminal=false
+Comment=GeoGebra
+Categories=Development;
+Icon=${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+Exec=geoegbra
+Name=GeoGebra 6"
 
 git_aliases_function="
 commit()
