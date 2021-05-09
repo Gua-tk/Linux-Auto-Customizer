@@ -105,7 +105,7 @@ download_and_decompress()
   (cd ${USR_BIN_FOLDER}; wget -qO "downloading_program" --show-progress "$1")
 
   if [[ "${3}" == "zip" ]]; then
-    program_folder_name=$( unzip -l "${USR_BIN_FOLDER}/downloading_package" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1 )
+    program_folder_name=$( unzip -l "${USR_BIN_FOLDER}/downloading_program" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1 )
   else
     # Capture root folder name
     program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloading_program)
@@ -114,7 +114,7 @@ download_and_decompress()
   # Clean to avoid conflicts with previously installed software or aborted installation
   rm -Rf "${USR_BIN_FOLDER}/${program_folder_name:?"ERROR: The name of the installed program could not been captured"}"
   if [[ "${3}" == "zip" ]]; then
-    (cd ${USR_BIN_FOLDER}; unzip "${USR_BIN_FOLDER}/downloading_package" )  # To avoid collisions
+    (cd ${USR_BIN_FOLDER}; unzip "${USR_BIN_FOLDER}/downloading_program" )  # To avoid collisions
   else
     # Decompress in a subshell to avoid changing the working directory in the current shell
     (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloading_program
