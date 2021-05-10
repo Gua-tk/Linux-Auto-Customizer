@@ -708,7 +708,7 @@ install_geogebra()
 {
 
   download_and_decompress ${geogebra_downloader} "geogebra" "zip" "GeoGebra" "geogebra"
-  wget ${telegram_icon} -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+  wget ${geogebra_icon} -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
   create_manual_launcher "${geogebra_desktop}" "geogebra"
 }
 
