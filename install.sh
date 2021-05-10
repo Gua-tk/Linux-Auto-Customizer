@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 ########################################################################################################################
-# -Name: Linux Auto-Customizer installation of features.
-# -Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop
-# features... collected in a simple portable shell script to customize a Linux working environment.
-# -Creation Date: 28/5/19
-# -Last Modified: 28/5/21
-# -Author: Aleix Mariné-Tena
-# -Email: aleix.marine@estudiants.urv.cat
-# -Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when
-# logged as root).
-# -Args: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens
-# (--pycharm, --gcc).
-# -Usage: Installs the features given by argument.
-# -License:
+# - Name: Linux Auto-Customizer installation of features.                                                              #
+# - Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop          #
+# features... collected in a simple portable shell script to customize a Linux working environment.                    #
+# - Creation Date: 28/5/19                                                                                             #
+# - Last Modified: 10/5/21                                                                                             #
+# - Author: Aleix Mariné-Tena                                                                                          #
+# - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
+# - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
+# logged as root) to install some of the features.                                                                     #
+# - Arguments: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens     #
+# (--pycharm, --gcc).                                                                                                  #
+# - Usage: Installs the features given by argument.                                                                    #
+# - License: GPL                                                                                                       #
 ########################################################################################################################
 
 
@@ -20,18 +20,26 @@
 ###### AUXILIAR FUNCTIONS ######
 ################################
 
+# - Description: Creates the necessary folders in order to make $1 a valid path. Afterwards, converts that dir to a
+# writable folder, now property of the $SUDO_USER user (instead of root), which is the user that ran the sudo command.
+# Note that by using mkdir -p we can pass a path that implies the creation of 2 or more directories without any
+# problem. For example create_folder_as_root /home/user/all/driectories/will/be/created
+# - Permissions: This functions is expected to be called as root, or it will throw an error, since $SUDO_USER is not
+# defined in the the scope of the normal user.
+# - Argument 1: Path to the directory that we want to create.
 create_folder_as_root()
 {
-  mkdir -p $1
+  mkdir -p "$1"
   # Convert folder to a SUDO_ROOT user
-  chgrp ${SUDO_USER} $1
-  chown ${SUDO_USER} $1
-  chmod 775 $1
+  chgrp ${SUDO_USER} "$1"
+  chown ${SUDO_USER} "$1"
+  chmod 775 "$1"
 }
 
-# Associate a file type (mime type) to a certain application using its desktop launcher.
-# Argument 1: File types. Example: application/x-shellscript
-# Argument 2: Application. Example: sublime_text.desktop
+# - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
+# - Permissions: Same behaviour being root or normal user.
+# - Argument 1: File types. Example: application/x-shellscript
+# - Argument 2: Application. Example: sublime_text.desktop
 register_file_associations()
 {
 # Check if mimeapps exists
@@ -55,47 +63,72 @@ if [[ -f ${HOME}/.config/mimeapps.list ]]; then
 fi
 }
 
-# Creates a valid launcher for the normal user in the desktop using an
-# already created launcher from an automatic install (using apt-get or dpkg).
-# This function does not need to have root permissions for its instructions,
-# but is expected to be call as root since it uses the variable $SUDO_USER 
-# Argument 1: name of the desktop launcher in /usr/share/applications
+# - Description: Creates a valid launcher for the normal user in the desktop using an already created launcher from an
+# automatic install (for example using apt-get or dpkg).
+# - Permissions: This function expects to be called as root since it uses the variable $SUDO_USER
+# - Argument 1: name of the desktop launcher in /usr/share/applications
 copy_launcher()
 {
-  if [[ -f ${ALL_USERS_LAUNCHERS_DIR}/$1 ]]; then
-    cp ${ALL_USERS_LAUNCHERS_DIR}/$1 ${XDG_DESKTOP_DIR}
-    chmod 775 ${XDG_DESKTOP_DIR}/$1
-    chgrp ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
-    chown ${SUDO_USER} ${XDG_DESKTOP_DIR}/$1
+  if [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]]; then
+    cp "${ALL_USERS_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}"
+    chmod 775 "${XDG_DESKTOP_DIR}/$1"
+    chgrp "${SUDO_USER}" "${XDG_DESKTOP_DIR}/$1"
+    chown "${SUDO_USER}" "${XDG_DESKTOP_DIR}/$1"
   fi
 }
 
-# This function creates a valid launcher in the desktop using a a given string with the given name
-# Argument 1: The string of the text of the desktop.
-# Argument 2: The name of the launcher.
+# - Description: This function creates a valid launcher in the desktop using a a given string with a given name
+# - Permissions: Can be called being root or normal user with same behaviour: when calling it as root, it will change
+# the owner and group of the created launcher to the one of the $SUDO_USER.
+# Argument 1: The string of the text representing the content of the desktop launcher that we want to create.
+# Argument 2: The name of the launcher. This argument can be any name with no consequences.
 create_manual_launcher()
 {
 # If user
 if [[ ${EUID} -ne 0 ]]; then
-  echo -e "$1" > ${PERSONAL_LAUNCHERS_DIR}/$2.desktop
-  chmod 775 ${PERSONAL_LAUNCHERS_DIR}/$2.desktop
-  cp -p ${PERSONAL_LAUNCHERS_DIR}/$2.desktop ${XDG_DESKTOP_DIR}
+  echo -e "$1" > "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
+  chmod 775 "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
+  cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
 else  # if root
-  echo -e "$1" > ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop
-  chmod 775 ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop
-  chgrp ${SUDO_USER} ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop
-  chown ${SUDO_USER} ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop
-  cp -p ${ALL_USERS_LAUNCHERS_DIR}/$2.desktop ${XDG_DESKTOP_DIR}
+  echo -e "$1" > "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop"
+  chmod 775 "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop"
+  chgrp "${SUDO_USER}" "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop"
+  chown "${SUDO_USER}" "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop"
+  cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
 fi
 }
 
-# Download and decompress a compressed file pointed by the provided link into USR_BIN_FOLDER.
-# We assume that this compressed file contains only one folder in the root.
-# Argument 1: link to the compressed file
-# Argument 2: Final name of the folder
-# Argument 3: Decompression options: [z, j, J, zip]
-# Argument 4: Relative path to the selected binary to create the links in the path from the just decompressed folder
-# Argument 5: Desired name for the hard-link that points to the previous binary
+# - Description: Downloads a compressed file pointed by the provided link in $1 into $USR_BIN_FOLDER.
+# We assume that this compressed file contains only one folder in the root. The name of this folder will be captured in
+# order to change its name to the desired one, contained in $2.
+# IF THE FORMAT OF THE COMPRESSED FILE DOES NOT HAVE A SINGLE DIRECTORY IN THE ROOT THIS FUNCTION WILL NOT WORK.
+# Afterwards, it will be decompressed in a way dependent of $3, which specifies the type of compression.
+# Then, all the remaining arguments are interpreted in pairs: the first one of the pair is a path to a file that we want
+# to add to our path relatively from the root folder of the downloaded compressed file, the second one in the pair is
+# the name that we are giving to that command in our environment.
+#
+# - Usage:
+# For example, we download pypy.tar.gz, containing the root folder pypy-3.4.5.67, which contains the binary file pypy
+# and the directory bin. The directory bin contains the binary pip:
+# - pypy.tar.gz
+#   - pypy-3.4.5.67
+#     - bin
+#       pip
+#     pypy
+#
+# If we want to create links in the path to pypy and pip, that are called pypy3 and pypy-pip in our environment,
+# we need to call this function like this:
+# download_and_decompress ${link_to_compressed_file} "pypy" "z" "bin/pip" "pypy-pip" "pypy" "pypy3"
+#
+# - MANDATORY ARGUMENTS:
+#   - Argument 1: link to the compressed file
+#   - Argument 2: Final name of the folder
+#   - Argument 3: Decompression options: [z, j, J, zip]
+# - OPTIONAL ARGUMENTS:
+# (if the first arguments of the pair is provided, then the second one is expected)
+#   - Argument 4: Relative path to the selected binary to create the links in the path from the just decompressed folder
+#   - Argument 5: Desired name for the link that points to the previous binary. This name will be the name for that
+#   command in our environment.
 # Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
 download_and_decompress()
 {
@@ -109,21 +142,20 @@ download_and_decompress()
     unzip -l "${USR_BIN_FOLDER}/downloading_program"
   else
     # Capture root folder name
-    program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloading_program)
+    program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < "${USR_BIN_FOLDER}/downloading_program")
   fi
-
 
   # Check that variable program_folder_name is set, if not abort
   # Clean to avoid conflicts with previously installed software or aborted installation
   rm -Rf "${USR_BIN_FOLDER}/${program_folder_name:?"ERROR: The name of the installed program could not been captured"}"
   if [[ "${3}" == "zip" ]]; then
-    (cd ${USR_BIN_FOLDER}; unzip "${USR_BIN_FOLDER}/downloading_program" )  # To avoid collisions
+    (cd "${USR_BIN_FOLDER}"; unzip "${USR_BIN_FOLDER}/downloading_program" )  # To avoid collisions
   else
     # Decompress in a subshell to avoid changing the working directory in the current shell
-    (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloading_program
+    (cd "${USR_BIN_FOLDER}"; tar -x$3f -) < "${USR_BIN_FOLDER}/downloading_program"
   fi
   # Delete downloaded files which will be no longer used
-  rm -f ${USR_BIN_FOLDER}/downloading_program*
+  rm -f "${USR_BIN_FOLDER}/downloading_program*"
   # Clean older installation to avoid conflicts
   if [[ "${program_folder_name}" != "$2" ]]; then
     rm -Rf "${USR_BIN_FOLDER}/$2"
@@ -139,15 +171,20 @@ download_and_decompress()
   # Create links in the PATH
   while [[ $# -gt 0 ]]; do
     # Clean to avoid collisions
-    create_links_in_path "${USR_BIN_FOLDER}/${program_folder_name}/$1" $2
+    create_links_in_path "${USR_BIN_FOLDER}/${program_folder_name}/$1" "$2"
     shift
     shift
   done
 }
 
-# Argument 1: Absolute path to the binary you want to be in the PATH
-# Argument 2: Name of the hard-link that will be created in the path
-# Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2
+# - Description: This function accepts an undefined number of pairs of arguments. The first of the pair is a path to a
+# binary that will be linked to our path. The second one is the name that it will have as a terminal command.
+# This function processes the last optional arguments of the function download_and_decompress, but can be
+# used as a manual way to add binaries to the PATH, in order to add new commands to your environment.
+#
+# - Argument 1: Absolute path to the binary you want to be in the PATH
+# - Argument 2: Name of the hard-link that will be created in the path
+# - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2
 create_links_in_path()
 {
   while [[ $# -gt 0 ]]; do
@@ -158,10 +195,11 @@ create_links_in_path()
   done
 }
 
-# Installs a new bash feature, installing its script into your environment using .bashrc, which uses .bash_functions
-# Can be called as root or as normal user with presumably with the same behaviour.
-# Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions
-# Argument 2: Name of the file.
+# - Description: Installs a new bash feature into $BASH_FUNCTIONS_PATH which sources the script that contains the code
+# for this new feature. $BASH_FUNCTIONS_PATH is imported to your environment via .bashrc.
+# - Permissions: Can be called as root or as normal user with presumably with the same behaviour.
+# - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions
+# - Argument 2: Name of the file.
 add_bash_function()
 {
   # Write code to bash functions folder with the name of the feature we want to install
@@ -180,8 +218,10 @@ add_bash_function()
   fi
 }
 
-# Download a package temporarily in USR_BIN_FOLDER and install it using dpkg or other package manager.
-# Argument 1: Link to the package file to download
+# - Description: Downloads a .deb package temporarily into USR_BIN_FOLDER from the provided link and installs it using
+# dpkg -i.
+# - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
+# - Argument 1: Link to the package file to download
 download_and_install_package()
 {
   rm -f ${USR_BIN_FOLDER}/downloading_package*
@@ -211,6 +251,8 @@ install_AutoFirma()
   rm -f ${USR_BIN_FOLDER}/downloading_package
   dpkg -i ${USR_BIN_FOLDER}/autOfirma/AutoFirma*.deb
   rm -Rf ${USR_BIN_FOLDER}/autOfirma
+
+  copy_launcher "afirma.desktop"
 }
 
 install_atom()
@@ -708,7 +750,9 @@ install_geogebra()
 {
 
   download_and_decompress ${geogebra_downloader} "geogebra" "zip" "GeoGebra" "geogebra"
-  wget ${geogebra_icon} -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+
+  wget "${geogebra_icon}" -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+
   create_manual_launcher "${geogebra_desktop}" "geogebra"
 }
 
@@ -1018,7 +1062,7 @@ execute_installation_wrapper_install_feature()
     if [[ $? != 0 ]]; then
       execute_installation_install_feature $2 $3 $4
     else
-      output_proxy_executioner "echo WARNING: $5 is already installed. Skipping..." $3
+      output_proxy_executioner "echo WARNING: $5 is already installed. Skipping... Use -o to overwrite this program" $3
     fi
   fi
 }
@@ -1319,7 +1363,8 @@ main()
       ;;
       --geany|--Geany)
         add_program install_geany
-      ;;--geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic)
+      ;;
+      --geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic)
         add_program install_geogebra
       ;;
       --git)
@@ -1582,6 +1627,9 @@ main()
       output_proxy_executioner "echo INFO: Finished." ${SILENT}
     fi
   fi
+
+  # Make the beel sound at the end
+  echo -en "\07"; echo -en "\07"; echo -en "\07"
 }
 
 
