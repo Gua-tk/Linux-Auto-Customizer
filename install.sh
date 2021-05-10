@@ -708,7 +708,7 @@ install_geogebra()
 {
 
   download_and_decompress ${geogebra_downloader} "geogebra" "zip" "GeoGebra" "geogebra"
-  wget ${telegram_icon} -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+  wget ${geogebra_icon} -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
   create_manual_launcher "${geogebra_desktop}" "geogebra"
 }
 
@@ -1319,7 +1319,8 @@ main()
       ;;
       --geany|--Geany)
         add_program install_geany
-      ;;--geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic)
+      ;;
+      --geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic)
         add_program install_geogebra
       ;;
       --git)

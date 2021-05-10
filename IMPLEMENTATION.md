@@ -99,7 +99,7 @@
 
 ## Currently developing/refactoring features
 
-## TO-DO
+#### TO-DO
 - [ ] Refine extract function: extract dependencies in another extract function
 - [ ] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
@@ -111,7 +111,7 @@
 - [ ] Update and construct readme and 
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux 
 
-## Coming features
+#### Coming features
 - [ ] L Function  
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)  
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
@@ -127,7 +127,7 @@
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 
 
-## Discarded for now
+#### Discarded for now
 - [ ] Accounting program: GNUCash
 - [ ] music edition: rosegarden, Ardour, LMMS
 - [ ] desktop access: Remmina, TeamViewer   
@@ -143,25 +143,27 @@
 - [ ] virtualization: Wine 5.0, kubernetes
 - [ ] Oracle SQL Developer: link not downloadable via wget thanks to Oracle (https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn/java/sqldeveloper/sqldeveloper-20.4.1.407.0006-no-jre.zip)
 - [ ] System administration: 
-  bacula (system network administrator), 
-  Mdadm (raid manager), PuTTY (ssh client), 
-  glpi (info organization), 
-  Hidra /Ghidra /THCHydra (logon cracker)
-  Snort
-  Hashcat
-  Pixiewps
-  Fern Wifi Cracker
-  gufw
-  WinFF
-  chkrootkit
-  rkhunter
-  Yersinia
-  Maltego
-  GNU MAC Changer
-  Burp Suite
-  BackTrack
-  John the Ripper
-  aircrack-ng
+  * bacula (system network administrator), 
+  * Mdadm (raid manager)
+  *  PuTTY (ssh client), 
+  * glpi (info organization), 
+  * Hidra /Ghidra /THCHydra (logon cracker)
+  * Snort
+  * Hashcat
+  * Pixiewps
+  * Fern Wifi Cracker
+  * gufw
+  * WinFF
+  * chkrootkit
+  * rkhunter
+  * Yersinia
+  * Maltego
+  * GNU MAC Changer
+  * Burp Suite
+  * BackTrack
+  * John the Ripper
+  * aircrack-ng
+The security apps must be the last to install because they are the less necessary ones, usually they have problems because it is software from the community and also this type of software is all included in Linux distros such as Kali Linux 
 
 # This is a docker run, not a customizer function
 Moodle
