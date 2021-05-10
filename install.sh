@@ -1661,7 +1661,13 @@ DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "${DIR}" ]]; then
   DIR="${PWD}"
 fi
-source "${DIR}/common_data.sh"
+if [[ -f "${DIR}/common_data.sh" ]]; then
+  source "${DIR}/common_data.sh"
+else
+  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: common_data.sh does not exist. Aborting..."
+  exit 1
+fi
+
 
 # Call main function
 main "$@"
