@@ -93,7 +93,7 @@ fi
 # We assume that this compressed file contains only one folder in the root.
 # Argument 1: link to the compressed file
 # Argument 2: Final name of the folder
-# Argument 3: Decompression options: [z, j, J]
+# Argument 3: Decompression options: [z, j, J, zip]
 # Argument 4: Relative path to the selected binary to create the links in the path from the just decompressed folder
 # Argument 5: Desired name for the hard-link that points to the previous binary
 # Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
@@ -103,13 +103,25 @@ download_and_decompress()
   rm -f ${USR_BIN_FOLDER}/downloading_program*
   # Download in a subshell to avoid changing the working directory in the current shell
   (cd ${USR_BIN_FOLDER}; wget -qO "downloading_program" --show-progress "$1")
-  # Capture root folder name
-  program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloading_program)
+
+  if [[ "${3}" == "zip" ]]; then
+    program_folder_name="$( unzip -l "${USR_BIN_FOLDER}/downloading_program" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1 )"
+    unzip -l "${USR_BIN_FOLDER}/downloading_program"
+  else
+    # Capture root folder name
+    program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < ${USR_BIN_FOLDER}/downloading_program)
+  fi
+
+
   # Check that variable program_folder_name is set, if not abort
   # Clean to avoid conflicts with previously installed software or aborted installation
   rm -Rf "${USR_BIN_FOLDER}/${program_folder_name:?"ERROR: The name of the installed program could not been captured"}"
-  # Decompress in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloading_program
+  if [[ "${3}" == "zip" ]]; then
+    (cd ${USR_BIN_FOLDER}; unzip "${USR_BIN_FOLDER}/downloading_program" )  # To avoid collisions
+  else
+    # Decompress in a subshell to avoid changing the working directory in the current shell
+    (cd ${USR_BIN_FOLDER}; tar -x$3f -) < ${USR_BIN_FOLDER}/downloading_program
+  fi
   # Delete downloaded files which will be no longer used
   rm -f ${USR_BIN_FOLDER}/downloading_program*
   # Clean older installation to avoid conflicts
@@ -679,6 +691,11 @@ install_discord()
   create_manual_launcher "${discord_launcher}" "discord"
 }
 
+install_docker()
+{
+  download_and_decompress ${docker_downloader} "docker" "z" "docker" "docker" "containerd" "containerd" "containerd-shim" "containerd-shim" "containerd-shim-runc-v2" "containerd-shim-runc-v2" "ctr" "ctr" "docker" "docker" "dockerd" "dockerd" "docker-init" "docker-init" "docker-proxy" "docker-proxy" "runc" "runc"
+}
+
 # Install Eclipse IDE
 install_eclipse()
 {
@@ -686,6 +703,15 @@ install_eclipse()
 
   create_manual_launcher "${eclipse_launcher}" "eclipse"
 }
+
+install_geogebra()
+{
+
+  download_and_decompress ${geogebra_downloader} "geogebra" "zip" "GeoGebra" "geogebra"
+  wget ${telegram_icon} -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+  create_manual_launcher "${geogebra_desktop}" "geogebra"
+}
+
 
 # Install IntelliJ Community
 install_ideac()
@@ -853,10 +879,12 @@ install_alert()
 
 install_cheat()
 {
+  # Rf
   rm -f ${USR_BIN_FOLDER}/cheat.sh
   (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O cheat.sh ${cheat_downloader})
-
+  chmod 755 ${USR_BIN_FOLDER}/cheat.sh
   create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
+
 }
 
 install_converters()
@@ -1223,6 +1251,9 @@ main()
       --discord|--Discord|--disc)
         add_program install_discord
       ;;
+      --docker|--Docker)
+        add_program install_docker
+      ;;
       --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
         add_program install_dropbox
       ;;
@@ -1288,6 +1319,8 @@ main()
       ;;
       --geany|--Geany)
         add_program install_geany
+      ;;--geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic)
+        add_program install_geogebra
       ;;
       --git)
         add_program install_git
