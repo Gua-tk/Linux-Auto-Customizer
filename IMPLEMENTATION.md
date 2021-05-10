@@ -65,7 +65,9 @@
 - [x] Apply rule: no apt, the default way to install package in script is apt-get
 - [x] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
 - [x] Write date in all the messages that the customizer outputs (warning, info etc)
-- [ ] Fusion create links in path with download and decompress
+- [x] Fusion create links in path with download and decompress
+- [x] Autofirma
+
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
@@ -75,8 +77,8 @@
 - [x] net-tools
 - [x] Eclipse
 - [x] Zoom
-- [ ] Geogebra
-- [ ] docker 
+- [x] Geogebra
+- [x] docker 
 - [ ] Spotify  
 - [ ] rar / unrar - zip / unzip (also integrate in extract func)
 - [ ] fslint (duplicate finder grpahical)
@@ -106,7 +108,6 @@
 - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [ ] Move all argument processing to the same data structure that we are using for storing info abaout the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README table
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
-- [ ] Autofirma
 - [ ] Teams (?)  
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 - [ ] Update and construct readme and 

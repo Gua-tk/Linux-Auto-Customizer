@@ -251,6 +251,8 @@ install_AutoFirma()
   rm -f ${USR_BIN_FOLDER}/downloading_package
   dpkg -i ${USR_BIN_FOLDER}/autOfirma/AutoFirma*.deb
   rm -Rf ${USR_BIN_FOLDER}/autOfirma
+
+  copy_launcher "afirma.desktop"
 }
 
 install_atom()
@@ -1058,7 +1060,7 @@ execute_installation_wrapper_install_feature()
     if [[ $? != 0 ]]; then
       execute_installation_install_feature $2 $3 $4
     else
-      output_proxy_executioner "echo WARNING: $5 is already installed. Skipping..." $3
+      output_proxy_executioner "echo WARNING: $5 is already installed. Skipping... Use -o to overwrite this program" $3
     fi
   fi
 }
@@ -1623,6 +1625,9 @@ main()
       output_proxy_executioner "echo INFO: Finished." ${SILENT}
     fi
   fi
+
+  # Make the beel sound at the end
+  echo -en "\07"; echo -en "\07"; echo -en "\07"
 }
 
 
