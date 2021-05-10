@@ -57,6 +57,7 @@
 - [x] On nemo desktop delete automatically nautilus
 - [x] Wireshark
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
 - [x] Red prompt for warning and error messages
 - [x] Optimize history to be updated in real-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [x] Anydesk

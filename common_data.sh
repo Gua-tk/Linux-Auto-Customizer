@@ -13,9 +13,11 @@ output_proxy_executioner()
       rest=$(echo "$1" | sed '1 s@^echo @@')
       message_type="$(echo "${rest}" | cut -d ":" -f1)"
       if [[ ${message_type} == "WARNING" ]]; then
-        echo -en "\e[31m"  # Activate red blue colour
+        echo -en "\e[33m"  # Activate yellow colour
       elif [[ ${message_type} == "INFO" ]]; then
-        echo -en "\e[96m"  # Activate soft blue colour
+        echo -en "\e[36m"  # Activate cyan colour
+      elif [[ ${message_type} == "ERROR" ]]; then
+        echo -en "\e[91m"  # Activate red colour
       fi
       echo -n "$(date +%Y-%m-%d_%T) -- "
   fi

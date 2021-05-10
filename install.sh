@@ -20,12 +20,15 @@
 ###### AUXILIAR FUNCTIONS ######
 ################################
 
+# - Description: Add new program launcher to the task bar given its desktop launcher filename
+# - Permissions: This functions expects to be called as a non-privileged user
+# - Argument 1: Name of the .desktop launcher file of the program we want to add to the task bar
 add_to_favorites()
 {
-  if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1" ]] && [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]]; then
+  if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]] || [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]]; then
     gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
   else
-    output_proxy_executioner "echo ERROR: $1 cannot be added to favorites because it does not exist installed. Skipping..." 0
+    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." 0
   fi
 }
 
@@ -569,6 +572,7 @@ install_pluma()
 {
   apt-get install -y pluma
   copy_launcher "pluma.desktop"
+  add_to_favorites "pluma"
 }
 
 install_pypy3_dependencies()
@@ -877,15 +881,16 @@ install_sublime()
   create_manual_launcher "${sublime_text_launcher}" "sublime"
 
   # register file associations
-  register_file_associations "text/x-sh" "sublime-text.desktop"
-  register_file_associations "text/x-c++hdr" "sublime-text.desktop"
-  register_file_associations "text/x-c++src" "sublime-text.desktop"
-  register_file_associations "text/x-chdr" "sublime-text.desktop"
-  register_file_associations "text/x-csrc" "sublime-text.desktop"
-  register_file_associations "text/x-python" "sublime-text.desktop"
-  register_file_associations "text/x-python3" "sublime-text.desktop"
+  register_file_associations "text/x-sh" "sublime.desktop"
+  register_file_associations "text/x-c++hdr" "sublime.desktop"
+  register_file_associations "text/x-c++src" "sublime.desktop"
+  register_file_associations "text/x-chdr" "sublime.desktop"
+  register_file_associations "text/x-csrc" "sublime.desktop"
+  register_file_associations "text/x-python" "sublime.desktop"
+  register_file_associations "text/x-python3" "sublime.desktop"
 
   add_bash_function "${sublime_alias}" "sublime_alias.sh"
+  add_to_favorites "sublime"
 }
 
 install_telegram()
