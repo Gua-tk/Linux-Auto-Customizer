@@ -10,6 +10,7 @@
 * Soft links to include a program in the path are created under `~/.local/bin` which is a directory that is assured to be in the PATH 
 * Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using chgrp and chown
 * console features are not installed directly in bashrc; instead use the structure provided by the customizer using .bash_functions
+* Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links.
 
 #### Behavioural
 * Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
@@ -21,7 +22,7 @@
 * Only in special cases use echo directly to print to stdout. In most cases you need to use `output_proxy_executioner`
 * desktop launchers created manually have to be created in the desktop and also in the user launchers folder
 * desktop launchers created manually as root have to be in the desktop and also in the all users launchers folder
-
+* All `ln`s are created with the option -f, to avoid collision problems.
 #### Syntactical
 * All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
 * All variables must be protected by using "" to avoid resplitting because of spaces, despite, customizer is not emphasized to work with spaces in its variables. Spaces are *evil* and are not considered.
@@ -64,7 +65,7 @@
 - [x] Apply rule: no apt, the default way to install package in script is apt-get
 - [x] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
 - [x] Write date in all the messages that the customizer outputs (warning, info etc)
-
+- [ ] Fusion create links in path with download and decompress
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter 
