@@ -20,6 +20,15 @@
 ###### AUXILIAR FUNCTIONS ######
 ################################
 
+add_to_favorites()
+{
+  if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1" ]] && [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]]; then
+    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
+  else
+    output_proxy_executioner "echo ERROR: $1 cannot be added to favorites because it does not exist installed. Skipping..." 0
+  fi
+}
+
 # - Description: Creates the necessary folders in order to make $1 a valid path. Afterwards, converts that dir to a
 # writable folder, now property of the $SUDO_USER user (instead of root), which is the user that ran the sudo command.
 # Note that by using mkdir -p we can pass a path that implies the creation of 2 or more directories without any
@@ -582,6 +591,12 @@ install_slack()
 {
   download_and_install_package ${slack_repository}
   copy_launcher "slack.desktop"
+}
+
+install_spotify()
+{
+  download_and_install_package ${spotify_downloader}
+  copy_launcher "spotify.desktop"
 }
 
 install_aisleriot()
@@ -1510,6 +1525,9 @@ main()
       ;;
       --sudoku|--Sudoku|--GNU-sudoku|--gnome-sudoku|--gnomesudoku)
         add_program install_sudoku
+      ;;
+      --spotify|--Spotify)
+        add_program install_spotify
       ;;
       --steam|--Steam|--STEAM)
         add_program install_steam

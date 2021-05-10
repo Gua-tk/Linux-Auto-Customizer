@@ -212,6 +212,7 @@ installation_data=(
 "0;0;0;0;0;install_studio"
 "0;0;0;0;0;install_sublime"
 "0;0;0;0;0;install_s"
+"0;0;0;0;1;install_spotify"
 "0;0;0;0;1;install_gnome-sudoku"
 "0;0;0;0;0;install_telegram"
 "0;0;0;0;0;install_templates"
@@ -289,6 +290,7 @@ add_all_programs()
   done
 }
 
+
 #######################################
 ##### SOFTWARE SPECIFIC VARIABLES #####
 #######################################
@@ -303,19 +305,22 @@ alias alert='notify-send --urgency=low -i \"\$([ \$? = 0 ] && echo terminal || e
 android_studio_downloader=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz
 android_studio_alias="alias studio=\"studio . &>/dev/null &\""
 android_studio_launcher="[Desktop Entry]
-Name=Android Studio
-GenericName=studio
-Type=Application
-Comment=IDE for developing android applications
-Version=1.0
-StartupWMClass=jetbrains-android-studio
-Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
-Exec=studio %F
-Terminal=false
 Categories=Development;IDE;
-StartupNotify=true
+Comment=IDE for developing android applications
+Encoding=UTF-8
+Exec=studio %F
+GenericName=studio
+Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
+Keywords=IDE;programming;android;studio;dev;
 MimeType=
-Encoding=UTF-8"
+Name=Android Studio
+StartupNotify=true
+StartupWMClass=jetbrains-android-studio
+Terminal=false
+TryExec=studio
+Type=Application
+Version=1.0
+"
 
 ant_downloader="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.9-bin.tar.gz"
 
@@ -630,6 +635,7 @@ fi
 
 pycharm_downloader=https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz
 pycharm_launcher="[Desktop Entry]
+Actions=NewWindow;
 Version=1.0
 Type=Application
 Name=PyCharm 
@@ -637,7 +643,14 @@ Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png
 Exec=pycharm %F
 Comment=Python IDE for Professional Developers
 Terminal=false
-StartupWMClass=jetbrains-pycharm"
+StartupWMClass=jetbrains-pycharm
+
+[Desktop Action NewWindow]
+Name=Pycharm New Window
+Exec=pycharm
+Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png
+"
+
 pycharm_alias="alias pycharm=\"pycharm . &>/dev/null &\""
 
 pycharm_professional_downloader=https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz
@@ -710,6 +723,8 @@ Terminal=false
 Exec=sublime %F"
 sublime_alias="alias sublime=\"sublime . &>/dev/null &\""
 
+
+spotify_downloader=http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb
 telegram_icon=https://telegram.org/img/t_logo.svg?1
 telegram_downloader=https://telegram.org/dl/desktop/linux
 telegram_launcher="[Desktop Entry]
