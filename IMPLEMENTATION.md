@@ -79,7 +79,7 @@
 - [x] Zoom
 - [x] Geogebra
 - [x] docker 
-- [ ] Spotify  
+- [ ] Spotify  ~~~~
 - [ ] rar / unrar - zip / unzip (also integrate in extract func)
 - [ ] fslint (duplicate finder grpahical)
 - [ ] fdups  (duplicate finder CLI)
