@@ -438,7 +438,7 @@ Terminal=false
 Comment=GeoGebra
 Categories=Development;
 Icon=${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
-Exec=geoegbra
+Exec=geogebra
 Name=GeoGebra 6"
 
 git_aliases_function="
