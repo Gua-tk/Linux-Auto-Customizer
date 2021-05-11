@@ -58,6 +58,7 @@
 - [x] Wireshark
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
+- [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [x] Red prompt for warning and error messages
 - [x] Optimize history to be updated in real-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [x] Anydesk
@@ -71,7 +72,8 @@
 
 
 #### Axel
-- [x] Delete / rearrange arguments of one letter 
+- [x] Delete / rearrange arguments of one letter
+- [x] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 - [x] Refactor of data table in README.md
 - [x] Youtube-dl
 - [x] Create escape function, which returns an escaped sequence of characters
@@ -105,8 +107,6 @@
 
 #### TO-DO
 - [ ] Refine extract function: extract dependencies in another extract function
-- [ ] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
-- [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [ ] Move all argument processing to the same data structure that we are using for storing info abaout the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README table
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
 - [ ] Teams (?)  

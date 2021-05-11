@@ -26,6 +26,17 @@
 add_to_favorites()
 {
   if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]] || [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]]; then
+    # This code search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
+    if [ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]; then
+      user=$(whoami)
+      fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
+      while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]
+      do
+        fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
+      done
+      export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
+    fi
+
     gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
   else
     output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." 0
@@ -86,6 +97,8 @@ copy_launcher()
     chmod 775 "${XDG_DESKTOP_DIR}/$1"
     chgrp "${SUDO_USER}" "${XDG_DESKTOP_DIR}/$1"
     chown "${SUDO_USER}" "${XDG_DESKTOP_DIR}/$1"
+  else
+    output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." ${FLAG_QUIETNESS}
   fi
 }
 
@@ -589,6 +602,12 @@ install_shotcut()
 {
   apt-get install -y shotcut
   create_manual_launcher "${shotcut_desktop_launcher}" shotcut
+}
+
+install_skype()
+{
+  download_and_install_package ${skype_downloader}
+  copy_launcher "skype.desktop"
 }
 
 install_slack()
@@ -1515,6 +1534,9 @@ main()
       ;;
       --shortcuts)
         add_program install_shortcuts
+      ;;
+      --skype|--Skype)
+        add_program install_skype
       ;;
       --slack|--Slack)
         add_program install_slack
