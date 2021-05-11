@@ -223,6 +223,7 @@ installation_data=(
 "0;0;0;0;1;install_terminator"
 "0;0;0;0;1;install_tilix"
 "0;0;0;0;1;install_tmux"
+"0;0;0;0;1;install_teams"
 "0;0;0;0;1;install_uget"
 "0;0;0;0;1;install_thunderbird"
 "0;0;0;0;1;install_tor"
@@ -866,7 +867,7 @@ TryExec=telegram -- %u
 Type=Application
 Version=1.0"
 
-
+teams_downloader="https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES"
 tmux_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Terminal Multiplexer

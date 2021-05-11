@@ -607,7 +607,7 @@ install_shotcut()
 install_skype()
 {
   download_and_install_package ${skype_downloader}
-  copy_launcher "skype.desktop"
+  copy_launcher "skypeforlinux.desktop"
 }
 
 install_slack()
@@ -639,6 +639,12 @@ install_gnome-sudoku()
 {
   apt-get install -y gnome-sudoku
   copy_launcher org.gnome.Sudoku.desktop
+}
+
+install_teams()
+{
+  download_and_install_package ${teams_downloader}
+  copy_launcher "teams.desktop"
 }
 
 install_terminator()
@@ -1573,6 +1579,9 @@ main()
       ;;
       --Tilix|--tilix)
         add_program install_tilix
+      ;;
+      --teams|--Teams|--MicrosoftTeams)
+        add_program install_teams
       ;;
       --tmux|--Tmux)
         add_program install_tmux
