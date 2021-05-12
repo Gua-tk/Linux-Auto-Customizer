@@ -396,7 +396,7 @@ Name=CloneZilla
 StartupNotify=true
 StartupWMClass=CloneZilla
 Terminal=true
-TryExec=sudo clonezilla
+TryExec=clonezilla
 Type=Application
 Version=1.0"
 
@@ -560,7 +560,7 @@ Name=IntelliJ IDEA Ultimate Edition
 StartupNotify=true
 StartupWMClass=jetbrains-idea
 Terminal=false
-TryExec=ideau %f
+TryExec=ideau
 Type=Application
 Version=1.0"
 ideau_alias="alias ideau=\"ideau . &>/dev/null &\""
@@ -581,7 +581,7 @@ Name=IntelliJ IDEA Community Edition
 StartupNotify=true
 StartupWMClass=jetbrains-idea
 Terminal=false
-TryExec=ideac %f
+TryExec=ideac
 Type=Application
 Version=13.0"
 ideac_alias="alias ideac=\"ideac . &>/dev/null &\""
@@ -726,7 +726,7 @@ Name=PyCharm
 StartupNotify=true
 StartupWMClass=jetbrains-pycharm
 Terminal=false
-TryExec=pycharm %F
+TryExec=pycharm
 Type=Application
 Version=1.0
 
@@ -752,7 +752,7 @@ Name=PyCharm Professional
 StartupNotify=true
 StartupWMClass=jetbrains-pycharm
 Terminal=false
-TryExec=pycharm-pro %F
+TryExec=pycharm-pro
 Type=Application
 Version=1.0"
 
@@ -826,7 +826,7 @@ Name=Sublime Text
 StartupNotify=true
 StartupWMClass=Sublime
 Terminal=false
-TryExec=sublime %F
+TryExec=sublime
 Type=Application
 Version=1.0"
 
@@ -846,7 +846,7 @@ Name=Telegram
 StartupNotify=true
 StartupWMClass=Telegram
 Terminal=false
-TryExec=telegram -- %u
+TryExec=telegram
 Type=Application
 Version=1.0"
 
@@ -885,7 +885,7 @@ Name=Visual Studio Code
 StartupNotify=true
 StartupWMClass=visual-studio-code
 Terminal=false
-TryExec=code %f
+TryExec=code
 Type=Application
 Version=1.0"
 
