@@ -71,6 +71,8 @@
 - [x] Fusion create links in path with download and decompress
 - [x] Autofirma
 - [x] AutoUpdate and construct README
+- [x] L Function
+
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -85,6 +87,8 @@
 - [x] docker 
 - [x] Spotify
 - [x] Teams
+- [x] Create variable in shortcut functions that tells out public IP
+- [x] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
 - [ ] rar / unrar - zip / unzip (also integrate in extract func)
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
@@ -93,13 +97,9 @@
 - [ ] evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)  
 - [ ] Rsync and grsync (graphical)
 - [ ] GNOME Tweak tools
-- [ ] Synaptics  
-- [ ] nmap   zenmap (nmap gui)
-- [ ] gobuster
-- [ ] metasploit (https://apt.metasploit.com/)
+- [ ] Synaptics
 - [ ] sysmontask
 - [ ] sherlock
-- [ ] aircrack-ng
 - [ ] SublimeText-Markdown, & other plugins for programs...
 - [ ] Fonts
 
@@ -110,12 +110,10 @@
 - [ ] Autoinstall nvidia drivers
 - [ ] Internet shortcut launchers: Gapps
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
-- [ ] Create variable in shortcut functions that tells out public IP
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux 
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 
 #### Coming features
-- [ ] L Function  
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)  
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
 - [ ] When having this unique endopint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it
@@ -127,9 +125,8 @@
 - [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
 - [ ] Automount available drives.*
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
-- [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder. 
-- [ ] OnCloud
-
+- [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
+- [ ] Python Script to store and auto-generate all user's static data
 
 #### Discarded for now
 - [ ] Accounting program: GNUCash
@@ -142,7 +139,6 @@
 - [ ] cd/dvd burning: brasero
 - [ ] iso customization: Remastersys, UNetbootin
 - [ ] image edition: Blender3D, Agave (sudo apt-get instal agave)
-- [ ] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
 - [ ] download manager: Axel
 - [ ] virtualization: Wine 5.0, kubernetes
 - [ ] Oracle SQL Developer: link not downloadable via wget thanks to Oracle (https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn/java/sqldeveloper/sqldeveloper-20.4.1.407.0006-no-jre.zip)
@@ -154,7 +150,6 @@
   * samba (windows-linux file sharing)
   * Dbeaver (database manager)
   * HardInfo (Benchmark tool)
-  * top (htop)
   * Hidra /Ghidra /THCHydra (logon cracker)
   * Snort
   * Hashcat
@@ -171,6 +166,10 @@
   * BackTrack
   * John the Ripper
   * aircrack-ng
+  * nmap   zenmap (nmap gui)
+  * gobuster
+  * metasploit (https://apt.metasploit.com/)
+  * aircrack-ng
 The security apps must be the last to install because they are the less necessary ones, usually they have problems because it is software from the community and also this type of software is all included in Linux distros such as Kali Linux 
 
 # This is a docker run, not a customizer function
@@ -185,6 +184,7 @@ ProxMox
 Nessus
 PLEX Media Server
 OCSInventory
+OnCloud
 Odoo
 
 

@@ -161,6 +161,7 @@ installation_data=(
 "0;0;0;0;1;install_f-irc"
 "0;0;0;0;1;install_firefox"
 "0;0;0;0;1;install_freecad"
+"0;0;0;0;0;install_ipe"
 "0;0;0;0;1;install_musicmanager"
 "0;0;0;0;1;install_gpaint"
 "0;0;0;0;1;install_geany"
@@ -1023,6 +1024,13 @@ hextodec()
 {
   to \$1 16 10
 }"
+
+ipe_function="
+ipe()
+{
+  dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print \$2 }';
+}
+"
 
 extract_function="
 

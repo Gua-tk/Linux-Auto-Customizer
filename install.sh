@@ -968,93 +968,6 @@ install_alert()
   add_bash_function "${alert_alias}" alert.sh
 }
 
-install_cheat()
-{
-  # Rf
-  rm -f ${USR_BIN_FOLDER}/cheat.sh
-  (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O cheat.sh ${cheat_downloader})
-  chmod 755 ${USR_BIN_FOLDER}/cheat.sh
-  create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
-
-}
-
-install_converters()
-{
-  rm -Rf ${USR_BIN_FOLDER}/converters
-  mkdir -p ${USR_BIN_FOLDER}/converters
-  git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
-
-  for converter in $(ls ${USR_BIN_FOLDER}/converters/converters); do
-    create_links_in_path ${USR_BIN_FOLDER}/converters/converters/${converter} "$(echo ${converter} | cut -d "." -f1)"
-  done
-
-  add_bash_function "${converters_functions}" converters.sh
-}
-
-# Install templates (available files in the right click --> new --> ...)
-install_templates()
-{
-  echo -e "${bash_file_template}" > ${XDG_TEMPLATES_DIR}/shell_script.sh
-  echo -e "${python_file_template}" > ${XDG_TEMPLATES_DIR}/python3_script.py
-  echo -e "${latex_file_template}" > ${XDG_TEMPLATES_DIR}/latex_document.tex
-  echo -e "${makefile_file_template}" > ${XDG_TEMPLATES_DIR}/makefile
-  echo "${c_file_template}" > ${XDG_TEMPLATES_DIR}/c_script.c
-  echo "${c_header_file_template}" > ${XDG_TEMPLATES_DIR}/c_script_header.h
-  > ${XDG_TEMPLATES_DIR}/empty_text_file.txt
-  chmod 775 ${XDG_TEMPLATES_DIR}/*
-}
-
-install_l()
-{
-  add_bash_function "${l_function}" l.sh
-}
-
-install_L()
-{
-  add_bash_function "${L_function}" L.sh
-}
-
-install_extract()
-{
-  add_bash_function "${extract_function}" extract.sh
-}
-
-install_history_optimization()
-{
-  add_bash_function "${shell_history_optimization_function}" history.sh
-}
-
-install_git_aliases()
-{
-  add_bash_function "${git_aliases_function}" git_aliases.sh
-  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
-  git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
-}
-
-install_s()
-{
-  add_bash_function "${s_function}" s.sh
-}
-
-install_shortcuts()
-{
-  add_bash_function "${shortcut_aliases}" shortcuts.sh
-}
-
-install_prompt()
-{
-  add_bash_function "${prompt_function}" prompt.sh
-}
-
-
-install_terminal_background()
-{
-  local -r profile_terminal=$(dconf list /org/gnome/terminal/legacy/profiles:/)
-  if [[ ! -z "${profile_terminal}" ]]; then
-    dconf write /org/gnome/terminal/legacy/profiles:/${profile}/background-color "'rgb(0,0,0)'"
-  fi
-}
-
 install_chwlppr()
 {
   # Install script changer to be executed manually or with crontab automatically
@@ -1075,11 +988,101 @@ install_chwlppr()
   $(cd ${XDG_PICTURES_DIR}/wallpapers; tar -xzf *.tar.gz)
   rm -f ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz
 
-  for filename in $(ls); do
-    if [[ -f "${XDG_PICTURES_DIR}/wallpapers/${filename}" ]]; then
-      cp "/usr/share/backgrounds/${filename}" ${XDG_PICTURES_DIR}/wallpapers
+  for filename in $(ls /usr/share/backgrounds); do
+    if [[ -f "/usr/share/backgrounds/${filename}" ]]; then
+      cp "/usr/share/backgrounds/${filename}" "${XDG_PICTURES_DIR}/wallpapers"
     fi
   done
+}
+
+install_cheat()
+{
+  # Rf
+  rm -f ${USR_BIN_FOLDER}/cheat.sh
+  (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O cheat.sh ${cheat_downloader})
+  chmod 755 ${USR_BIN_FOLDER}/cheat.sh
+  create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
+}
+
+install_converters()
+{
+  rm -Rf ${USR_BIN_FOLDER}/converters
+  mkdir -p ${USR_BIN_FOLDER}/converters
+  git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
+
+  for converter in $(ls ${USR_BIN_FOLDER}/converters/converters); do
+    create_links_in_path ${USR_BIN_FOLDER}/converters/converters/${converter} "$(echo ${converter} | cut -d "." -f1)"
+  done
+
+  add_bash_function "${converters_functions}" converters.sh
+}
+
+install_extract()
+{
+  add_bash_function "${extract_function}" extract.sh
+}
+
+install_git_aliases()
+{
+  add_bash_function "${git_aliases_function}" git_aliases.sh
+  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
+  git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
+}
+
+install_history_optimization()
+{
+  add_bash_function "${shell_history_optimization_function}" history.sh
+}
+
+install_ipe()
+{
+  add_bash_function "${ipe_function}" ipe.sh
+}
+
+install_l()
+{
+  add_bash_function "${l_function}" l.sh
+}
+
+install_L()
+{
+  add_bash_function "${L_function}" L.sh
+}
+
+install_prompt()
+{
+  add_bash_function "${prompt_function}" prompt.sh
+}
+
+install_s()
+{
+  add_bash_function "${s_function}" s.sh
+}
+
+install_shortcuts()
+{
+  add_bash_function "${shortcut_aliases}" shortcuts.sh
+}
+
+# Install templates (available files in the right click --> new --> ...)
+install_templates()
+{
+  echo -e "${bash_file_template}" > ${XDG_TEMPLATES_DIR}/shell_script.sh
+  echo -e "${python_file_template}" > ${XDG_TEMPLATES_DIR}/python3_script.py
+  echo -e "${latex_file_template}" > ${XDG_TEMPLATES_DIR}/latex_document.tex
+  echo -e "${makefile_file_template}" > ${XDG_TEMPLATES_DIR}/makefile
+  echo "${c_file_template}" > ${XDG_TEMPLATES_DIR}/c_script.c
+  echo "${c_header_file_template}" > ${XDG_TEMPLATES_DIR}/c_script_header.h
+  > ${XDG_TEMPLATES_DIR}/empty_text_file.txt
+  chmod 775 ${XDG_TEMPLATES_DIR}/*
+}
+
+install_terminal_background()
+{
+  local -r profile_terminal=$(dconf list /org/gnome/terminal/legacy/profiles:/)
+  if [[ ! -z "${profile_terminal}" ]]; then
+    dconf write /org/gnome/terminal/legacy/profiles:/${profile}/background-color "'rgb(0,0,0)'"
+  fi
 }
 
 
@@ -1457,6 +1460,9 @@ main()
       ;;
       --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
         add_program install_ideau
+      ;;
+      --ipe-function|--ipe)
+        add_program install_ipe
       ;;
       --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
         add_program install_java
