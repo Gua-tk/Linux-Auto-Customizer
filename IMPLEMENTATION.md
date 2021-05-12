@@ -127,7 +127,8 @@
 - [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
 - [ ] Automount available drives.*
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
-- [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
+- [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder. 
+- [ ] OnCloud
 
 
 #### Discarded for now
@@ -149,7 +150,11 @@
   * bacula (system network administrator), 
   * Mdadm (raid manager)
   *  PuTTY (ssh client), 
-  * glpi (info organization), 
+  * glpi (info organization) uses LAMP
+  * samba (windows-linux file sharing)
+  * Dbeaver (database manager)
+  * HardInfo (Benchmark tool)
+  * top (htop)
   * Hidra /Ghidra /THCHydra (logon cracker)
   * Snort
   * Hashcat
@@ -172,6 +177,8 @@ The security apps must be the last to install because they are the less necessar
 Moodle
 Wordpress
 LAMP stack web server
+LDAP, LDAP Account Manager, PHPLDAPADMIN (sudo apt-get -y install phpldapadmin)
+Apache Directory Studio
 MySQL Server instance
 FOG Server
 ProxMox
