@@ -127,6 +127,7 @@
 - [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
 - [ ] Automount available drives.*
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
+- [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder. 
 - [ ] OnCloud
 
 
