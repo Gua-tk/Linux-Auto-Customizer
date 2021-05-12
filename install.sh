@@ -709,8 +709,10 @@ install_virtualbox()
 
 install_wireshark()
 {
+  # Used to install wireshark without prompt
   echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
   DEBIAN_FRONTEND=noninteractive
+
   apt-get install -y wireshark
   copy_launcher "wireshark.desktop"
   sed -i 's-Icon=.*-Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg-' ${XDG_DESKTOP_DIR}/wireshark.desktop
@@ -1005,6 +1007,11 @@ install_templates()
 install_l()
 {
   add_bash_function "${l_function}" l.sh
+}
+
+install_L()
+{
+  add_bash_function "${L_function}" L.sh
 }
 
 install_extract()
@@ -1453,6 +1460,9 @@ main()
       ;;
       --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
         add_program install_java
+      ;;
+      --L|--L-function)
+        add_program install_L
       ;;
       --latex|--LaTeX|--tex|--TeX)
         add_program install_latex

@@ -181,6 +181,7 @@ installation_data=(
 "0;0;0;0;0;install_java"
 "0;0;0;0;1;install_latex"
 "0;0;0;0;0;install_l"
+"0;0;0;0;0;install_L"
 "0;0;0;0;1;install_libgtkglext1"
 "0;0;0;0;1;install_libxcb-xtest0"
 "0;0;0;0;1;install_gnome-mahjongg"
