@@ -8,20 +8,29 @@
 * The software that is manually installed is put under `USR_BIN_FOLDER`, which by default points to `~/.bin`. `~/.bin` is always **present**.
 * Shell features are not installed directly into `~/.bashrc`, instead, there is always present the file `~/.bash_functions`, which is a file imported by `~/.bashrc`. In `~/.bash_functions`, you can write imports to individual scripts that provide a feature to the shell environment. Usually those scripts are stored under `~/.bin/bash_functions/`, which is a location always present. So the generic way to include new content to `~/.bashrc` is writing a script to `~/.bin/bash_functions` and including it in `~/.bash_functions/`.
 * Soft links to include a program in the path are created under `~/.local/bin` which is a directory that is assured to be in the PATH 
+* Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using chgrp and chown
+* console features are not installed directly in bashrc; instead use the structure provided by the customizer using .bash_functions
+* Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links.
 
 #### Behavioural
 * Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
 * Relative PATHs are forbidden. We must not use the given working directory  
 * No unprotected `cd` commands. `cd` must be avoided and never change the working directory given from the outside, that is why they must be called from the inside of a subshell if present. 
-* wget is always used with the `-O` flag, which is used to change the name of the file and / or select a destination for the download. 
+* wget is always used with the `-O` flag, which is used to change the name of the file and / or select a destination for the download.
+* tar is always used in a subshell, cd'ing into an empty directory before the tar, so the pwd givento the script is not changed
 * no `apt`, the default way to install package in script is `apt-get`
-
+* Only in special cases use echo directly to print to stdout. In most cases you need to use `output_proxy_executioner`
+* desktop launchers created manually have to be created in the desktop and also in the user launchers folder
+* desktop launchers created manually as root have to be in the desktop and also in the all users launchers folder
+* All `ln`s are created with the option -f, to avoid collision problems.
 #### Syntactical
 * All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
 * All variables must be protected by using "" to avoid resplitting because of spaces, despite, customizer is not emphasized to work with spaces in its variables. Spaces are *evil* and are not considered.
 * There is one blankline between functions in the same block. There is two blanklines between blocks.
 * Indent is always 2 spaces and never TAB.
 * The used package manager by default is apt-get, which is actually the recommended way to use `apt` through scripts.
+* using ~ or $HOME instead of HOME_FOLDER
+
 
 ## Developed features
 #### Aleix
@@ -48,6 +57,7 @@
 - [x] On nemo desktop delete automatically nautilus
 - [x] Wireshark
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
 - [x] Red prompt for warning and error messages
 - [x] Optimize history to be updated in real-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [x] Anydesk
@@ -56,6 +66,8 @@
 - [x] Apply rule: no apt, the default way to install package in script is apt-get
 - [x] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
 - [x] Write date in all the messages that the customizer outputs (warning, info etc)
+- [x] Fusion create links in path with download and decompress
+- [x] Autofirma
 
 
 #### Axel
@@ -66,13 +78,24 @@
 - [x] net-tools
 - [x] Eclipse
 - [x] Zoom
-- [ ] docker 
-- [ ] rar
-  
-- [ ] GnuCash, Rosegarden, Remmina, Freeciv, Shotwell, Handbrake, fslint, CMake, unrar, rar, evolution, guake, Brasero, Remastersys, UNetbootin, Blender3D, Skype, Ardour, Spotify, TeamViewer, Remmina, WireShark, PacketTracer, LMMS...
-- [ ] LAMP stack web server, Wordpress
-- [ ] Rsync, Axel, GNOME Tweak, Wine 5.0, Picasa, Synaptic, Bacula, Docker, kubernetes, Agave, apache2, Moodle, Oracle SQL Developer, Mdadm, PuTTY, MySQL Server instance, glpi*, FOG Server*, Proxmox*, Nessus*, PLEX Media Server
-- [ ] nmap, gobuster, metasploit, Firewalld, sysmontask, sherlock, Hydra, Ghidra, THC Hydra, Zenmap, Snort, Hashcat, Pixiewps, Fern Wifi Cracker, gufw, WinFF, chkrootkit, rkhunter, Yersinia, Maltego, GNU MAC Changer, Burp Suite, BackTrack, John the Ripper, aircrack-ng
+- [x] Geogebra
+- [x] docker 
+- [x] Spotify
+- [ ] rar / unrar - zip / unzip (also integrate in extract func)
+- [ ] fslint (duplicate finder grpahical)
+- [ ] fdups  (duplicate finder CLI)
+- [ ] PacketTracer  
+- [ ] CMake
+- [ ] evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)  
+- [ ] Rsync and grsync (grpahical)
+- [ ] GNOME Tweak tools
+- [ ] Synaptics  
+- [ ] nmap   zenmap (nmap gui)
+- [ ] gobuster
+- [ ] metasploit (https://apt.metasploit.com/)
+- [ ] sysmontask
+- [ ] sherlock
+- [ ] aircrack-ng
 - [ ] SublimeText-Markdown, & other plugins for programs...
 - [ ] Fonts
 
@@ -80,20 +103,18 @@
 
 ## Currently developing/refactoring features
 
-## TO-DO
+#### TO-DO
 - [ ] Refine extract function: extract dependencies in another extract function
 - [ ] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
 - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [ ] Move all argument processing to the same data structure that we are using for storing info abaout the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README table
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
-- [ ] Autofirma
-- [ ] Geogebra
 - [ ] Teams (?)  
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 - [ ] Update and construct readme and 
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux 
 
-## Coming features
+#### Coming features
 - [ ] L Function  
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)  
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
@@ -108,17 +129,58 @@
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 
-```
-# wget not used with -O and in subshell to avoid cd
-# tar not used in a subshell to avoid cd
-# echo or err directly used instead of using output_proxy_executioner
-# desktop launchers created manually as user created ONLY in the desktop and not also in the user launchers folder
-# desktop launchers created manually as root created ONLY in the desktop and not in the all users launchers folder
-# Files or folders created as root that only change their permissions, and not also its group and owner, using chgrp and chown
-# using ~ or $HOME instead of HOME_FOLDER
-# console feature installed directly in bashrc instead of using the structure provided by the customizer using .bash_functions
 
-## asjko
+#### Discarded for now
+- [ ] Accounting program: GNUCash
+- [ ] music edition: rosegarden, Ardour, LMMS
+- [ ] desktop access: Remmina, TeamViewer   
+- [ ] Games: Freeciv
+- [ ] Photo organizer: Shotwell  
+- [ ] handbreak: format editing tool  
+- [ ] terminal: guake
+- [ ] cd/dvd burning: brasero
+- [ ] iso customization: Remastersys, UNetbootin
+- [ ] image edition: Blender3D, Agave (sudo apt-get instal agave)
+- [ ] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
+- [ ] download manager: Axel
+- [ ] virtualization: Wine 5.0, kubernetes
+- [ ] Oracle SQL Developer: link not downloadable via wget thanks to Oracle (https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn/java/sqldeveloper/sqldeveloper-20.4.1.407.0006-no-jre.zip)
+- [ ] System administration: 
+  * bacula (system network administrator), 
+  * Mdadm (raid manager)
+  *  PuTTY (ssh client), 
+  * glpi (info organization), 
+  * Hidra /Ghidra /THCHydra (logon cracker)
+  * Snort
+  * Hashcat
+  * Pixiewps
+  * Fern Wifi Cracker
+  * gufw
+  * WinFF
+  * chkrootkit
+  * rkhunter
+  * Yersinia
+  * Maltego
+  * GNU MAC Changer
+  * Burp Suite
+  * BackTrack
+  * John the Ripper
+  * aircrack-ng
+The security apps must be the last to install because they are the less necessary ones, usually they have problems because it is software from the community and also this type of software is all included in Linux distros such as Kali Linux 
+
+# This is a docker run, not a customizer function
+Moodle
+Wordpress
+LAMP stack web server
+MySQL Server instance
+FOG Server
+ProxMox
+Nessus
+PLEX Media Server
+
+```
+
+## Original L function. Needs refactor
   #lsdisplay=$(ls -lhA | tr -s " ")
   #dudisplay=$(du -shxc .[!.]* * | sort -h | tr -s "\t" " ")
   #IFS=$'\n'
@@ -134,13 +196,4 @@
   #  fi
   #done
 
-  #alias a="echo '---------------Alias----------------';alias"
-  #alias c="clear"
-  #alias h="history | grep $1"
-  #du -shxc .[!.]* * | sort -h
-
-
-# Increases file history size, size of the history and forces to append to history, never overwrite
-# Ignore repeated commands and simple commands
-# Store multiline comments in just one command
-``
+```
