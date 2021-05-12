@@ -210,6 +210,7 @@ installation_data=(
 "0;0;0;0;1;install_shotcut"
 "0;0;0;0;0;install_shortcuts"
 "0;0;0;0;1;install_aisleriot"
+"0;0;0;0;1;install_skype"
 "0;0;0;0;1;install_slack"
 "0;0;0;0;0;install_studio"
 "0;0;0;0;0;install_sublime"
@@ -222,6 +223,7 @@ installation_data=(
 "0;0;0;0;1;install_terminator"
 "0;0;0;0;1;install_tilix"
 "0;0;0;0;1;install_tmux"
+"0;0;0;0;1;install_teams"
 "0;0;0;0;1;install_uget"
 "0;0;0;0;1;install_thunderbird"
 "0;0;0;0;1;install_tor"
@@ -328,13 +330,21 @@ ant_downloader="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.9-bin.
 
 anydesk_downloader="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
 anydesk_launcher="[Desktop Entry]
-Name=AnyDesk
+Categories=Remote;control;other;
 Comment=Remote control other PCs
-Icon=${USR_BIN_FOLDER}/anydesk/icons/hicolor/scalable/apps/anydesk.svg
+Encoding=UTF-8
 Exec=anydesk
+GenericName=Remote computer control
+Icon=${USR_BIN_FOLDER}/anydesk/icons/hicolor/scalable/apps/anydesk.svg
+Keywords=IDE;programming;android;studio;dev;
+MimeType=
+Name=AnyDesk
+StartupNotify=true
+StartupWMClass=anydesk
 Terminal=false
-Type=Application"
-
+TryExec=anydesk
+Type=Application
+Version=1.0"
 
 
 atom_downloader=https://atom.io/download/deb
@@ -356,81 +366,132 @@ cheat_downloader=https://cht.sh/:cht.sh
 
 clion_downloader=https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz
 clion_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=CLion
-Icon=${USR_BIN_FOLDER}/clion/bin/clion.png
-Exec=clion %F
+Categories=Development;IDE;
 Comment=C and C++ IDE for Professional Developers
+Encoding=UTF-8
+Exec=clion %F
+GenericName=C Programing IDE
+Icon=${USR_BIN_FOLDER}/clion/bin/clion.png
+Keywords=IDE;programming;android;studio;dev;
+MimeType=
+Name=CLion
+StartupNotify=true
+StartupWMClass=jetbrains-clion
 Terminal=false
-StartupWMClass=jetbrains-clion"
+TryExec=clion
+Type=Application
+Version=1.0"
 clion_alias="alias clion=\"clion . &>/dev/null &\""
 
 clonezilla_launcher="[Desktop Entry]
-Name=CloneZilla
+Categories=backup;images;restoration;boot;
 Comment=Create bootable clonezilla images
-Icon=/usr/share/gdm/themes/drbl-gdm/clonezilla/ocslogo-1.png
+Encoding=UTF-8
 Exec=sudo clonezilla
+GenericName=Disk image utility
+Icon=/usr/share/gdm/themes/drbl-gdm/clonezilla/ocslogo-1.png
+Keywords=clonezilla;CloneZilla;iso
+MimeType=
+Name=CloneZilla
+StartupNotify=true
+StartupWMClass=CloneZilla
 Terminal=true
-Type=Application"
+TryExec=sudo clonezilla
+Type=Application
+Version=1.0"
 
 cmatrix_launcher="[Desktop Entry]
-Name=CMatrix
-StartupWMClass=cmatrix
+Categories=matrix;
 Comment=Matrix
-Terminal=true
+Encoding=UTF-8
 Exec=cmatrix
+GenericName=cmatrix
 Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/bless_bless-48x48.png
-Type=Application"
+Keywords=cmatrix;matrix;
+MimeType=
+Name=CMatrix
+StartupNotify=true
+StartupWMClass=cmatrix
+Terminal=true
+TryExec=cmatrix
+Type=Application
+Version=1.0"
+
 
 codium_downloader=https://github.com/VSCodium/vscodium/releases/download/1.54.3/VSCodium-linux-x64-1.54.3.tar.gz
 codium_launcher="[Desktop Entry]
-Name=VSCodium
-StartupWMClass=codium
+Categories=IDE;programming;
 Comment=Community-driven distribution of Microsoft’s editor VSCode.
-GenericName=codium
+Encoding=UTF-8
 Exec=codium
+GenericName=IDE for programming
 Icon=${USR_BIN_FOLDER}/codium/resources/app/resources/linux/code.png
+Keywords=programming;dev;
+MimeType=
+Name=VSCodium
+StartupNotify=true
+StartupWMClass=
+Terminal=false
+TryExec=codium
 Type=Application
-Categories=IDE;Programming;
-"
+Version=1.0"
 
 dropbox_downloader=https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb
 
 discord_downloader="https://discord.com/api/download?platform=linux&format=tar.gz"
 discord_launcher="[Desktop Entry]
-Name=Discord
-StartupWMClass=discord
+Categories=Network;InstantMessaging;
 Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
-GenericName=Internet Messenger
+Encoding=UTF-8
 Exec=discord
+GenericName=Internet Messenger
 Icon=${USR_BIN_FOLDER}/discord/discord.png
+Keywords=VoiceChat;Messaging;Social;
+MimeType=
+Name=Discord
+StartupNotify=true
+StartupWMClass=discord
+Terminal=false
+TryExec=discord
 Type=Application
-Categories=Network;InstantMessaging;"
+Version=1.0"
 
 docker_downloader=https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz
 
 eclipse_downloader=http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz
 eclipse_launcher="[Desktop Entry]
-Version=4.2.2
-Type=Application
-Terminal=false
-Comment=Capable Multi-purpose IDE
 Categories=Development;IDE;
-Icon=${USR_BIN_FOLDER}/eclipse/icon.xpm
+Comment=Capable Multi-purpose IDE
+Encoding=UTF-8
 Exec=eclipse
+GenericName=IDE
+Icon=${USR_BIN_FOLDER}/eclipse/icon.xpm
+Keywords=IDE;programming;
+MimeType=
 Name=Eclipse IDE
-StartupWMClass=Eclipse"
+StartupNotify=true
+StartupWMClass=Eclipse
+Terminal=false
+TryExec=eclipse
+Type=Application
+Version=4.2.2"
 
 firc_launcher="[Desktop Entry]
-Name=F-irc
-StartupWMClass=f-irc
-Comment=IRC Simple chat
-Terminal=true
+Categories=InstantMessaging;Communication;
+Comment=irc relay chat for terminal (easy to use)
+Encoding=UTF-8
 Exec=f-irc
+GenericName=IRC client
 Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.png
+Keywords=InstantMessaging;irc;
+MimeType=
+Name=F-irc
+StartupNotify=true
+StartupWMClass=f-irc
+Terminal=true
+TryExec=f-irc
 Type=Application
-"
+Version=1.0"
 
 gcc_function="# colored GCC warnings and errors
 export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01\"
@@ -438,15 +499,24 @@ export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:qu
 
 geogebra_downloader=https://download.geogebra.org/package/linux-port6
 geogebra_icon=https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg
+
 geogebra_desktop="[Desktop Entry]
-Version=4.2.2
-Type=Application
-Terminal=false
+Categories=geometry;
 Comment=GeoGebra
-Categories=Development;
-Icon=${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+Encoding=UTF-8
 Exec=geogebra
-Name=GeoGebra 6"
+GenericName=Geometry visualization plotter
+Icon=${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+Keywords=GeoGebra;geogebra;
+MimeType=
+Name=GeoGebra
+StartupNotify=true
+StartupWMClass=geogebra
+Terminal=false
+TryExec=geogebra
+Type=Application
+Version=4.2.2"
+
 
 git_aliases_function="
 commit()
@@ -476,48 +546,66 @@ google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable
 
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 
-
 intellij_ultimate_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
 intellij_ultimate_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=IntelliJ IDEA Ultimate Edition
-Icon=${HOME_FOLDER}/.bin/idea-iu/bin/idea.png
-Exec=ideau %f
-Comment=Capable and Ergonomic IDE for JVM
 Categories=Development;IDE;
+Comment=Capable and Ergonomic IDE for JVM
+Encoding=UTF-8
+Exec=ideau %f
+GenericName=Java programing IDE
+Icon=${HOME_FOLDER}/.bin/idea-iu/bin/idea.png
+Keywords=IDE;programming;java;dev;
+MimeType=
+Name=IntelliJ IDEA Ultimate Edition
+StartupNotify=true
+StartupWMClass=jetbrains-idea
 Terminal=false
-StartupWMClass=jetbrains-idea"
+TryExec=ideau %f
+Type=Application
+Version=1.0"
 ideau_alias="alias ideau=\"ideau . &>/dev/null &\""
 
 
 intellij_community_downloader="https://download.jetbrains.com/idea/ideaIC-2020.3.1.tar.gz"
+
 intellij_community_launcher="[Desktop Entry]
-Version=13.0
-Type=Application
-Terminal=false
-Comment=Capable and Ergonomic IDE for JVM
 Categories=Development;IDE;
-Icon=${HOME_FOLDER}/.bin/idea-ic/bin/idea.png
+Comment=Capable and Ergonomic IDE for JVM
+Encoding=UTF-8
 Exec=ideac %f
+GenericName=Java programming IDE
+Icon=${HOME_FOLDER}/.bin/idea-ic/bin/idea.png
+Keywords=IDE;programming;java;dev;
+MimeType=
 Name=IntelliJ IDEA Community Edition
-StartupWMClass=jetbrains-idea"
+StartupNotify=true
+StartupWMClass=jetbrains-idea
+Terminal=false
+TryExec=ideac %f
+Type=Application
+Version=13.0"
 ideac_alias="alias ideac=\"ideac . &>/dev/null &\""
 
 iqmol_downloader=http://www.iqmol.org/download.php?get=iqmol_2.14.deb
 iqmol_icon=http://www.iqmol.org/images/icon.png
-iqmol_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Terminal=false
-Comment=Molecule Visualizer
-Categories=Visualization;
-Icon=${USR_BIN_FOLDER}/iqmol/iqmol_icon.png
-Exec=iqmol
-Name=IQmol
-StartupWMClass=IQmol"
-iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
 
+iqmol_launcher="[Desktop Entry]
+Categories=Visualization;
+Comment=Molecule Visualizer
+Encoding=UTF-8
+Exec=iqmol
+GenericName=Molecule visualizer
+Icon=${USR_BIN_FOLDER}/iqmol/iqmol_icon.png
+Keywords=molecules;chemistry;3d;
+MimeType=
+Name=IQmol
+StartupNotify=true
+StartupWMClass=IQmol
+Terminal=false
+TryExec=iqmol
+Type=Application
+Version=1.0"
+iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
 
 java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
@@ -542,25 +630,13 @@ nemo_conf=("xdg-mime default nemo.desktop inode/directory application/x-gnome-sa
 "gsettings set org.gnome.desktop.background show-desktop-icons false"
 "gsettings set org.nemo.desktop show-desktop-icons true"
 )
+
 nemo_desktop_launcher="[Desktop Entry]
 Type=Application
 Name=Files
 Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
-
-#obs_desktop_launcher="[Desktop Entry]
-#StartupWMClass=obs
-#Version=1.0
-#Name=OBS
-#GenericName=Streaming/Recording Software
-#Comment=Free and Open Source Streaming/Recording Software
-#Exec=obs
-#Icon=/usr/share/icons/hicolor/256x256/apps/com.obsproject.Studio.png
-#Terminal=false
-#Type=Application
-#Categories=AudioVideo;Recorder;
-#StartupNotify=true"
 
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 
@@ -638,35 +714,47 @@ fi
 pycharm_downloader=https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz
 pycharm_launcher="[Desktop Entry]
 Actions=NewWindow;
-Version=1.0
-Type=Application
-Name=PyCharm 
-Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png
+Categories=programming;dev;
+Comment=Python IDE Community
+Encoding=UTF-8
 Exec=pycharm %F
-Comment=Python IDE for Professional Developers
-Terminal=false
+GenericName=Pycharm
+Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png
+Keywords=dev;programming;python;
+MimeType=
+Name=PyCharm
+StartupNotify=true
 StartupWMClass=jetbrains-pycharm
+Terminal=false
+TryExec=pycharm %F
+Type=Application
+Version=1.0
 
 [Desktop Action NewWindow]
 Name=Pycharm New Window
 Exec=pycharm
-Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png
-"
+Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png"
 
 pycharm_alias="alias pycharm=\"pycharm . &>/dev/null &\""
 
 pycharm_professional_downloader=https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz
-pycharm_professional_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=PyCharm Professional
-Icon=${HOME_FOLDER}/.bin/pycharm-professional/bin/pycharm.png
-Exec=pycharm-pro %F
-Comment=Python IDE for Professional Developers
-Terminal=false
-StartupWMClass=jetbrains-pycharm"
-pycharmpro_alias="alias pycharmpro=\"pycharmpro . &>/dev/null &\""
 
+pycharm_professional_launcher="[Desktop Entry]
+Categories=programming;dev;
+Comment=Python IDE for Professional Developers
+Encoding=UTF-8
+Exec=pycharm-pro %F
+GenericName=Pycharm
+Icon=${HOME_FOLDER}/.bin/pycharm-professional/bin/pycharm.png
+Keywords=dev;programming;python;
+MimeType=
+Name=PyCharm Professional
+StartupNotify=true
+StartupWMClass=jetbrains-pycharm
+Terminal=false
+TryExec=pycharm-pro %F
+Type=Application
+Version=1.0"
 
 pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
 
@@ -700,68 +788,106 @@ export USR_BIN_FOLDER=${USR_BIN_FOLDER}
 "
 
 shotcut_desktop_launcher="[Desktop Entry]
-Type=Application
-Name=Shotcut
+Categories=video;
+Comment= Open Source, cross-platform video editor
+Encoding=UTF-8
+Exec=shotcut
 GenericName=shotcut
 Icon=/usr/share/icons/hicolor/64x64/apps/org.shotcut.Shotcut.png
-Exec=shotcut
-Comment= Open Source, cross-platform video editor
+Keywords=video;editing;editor;VideoEdit;
+MimeType=
+Name=Shotcut
+StartupNotify=true
+StartupWMClass=ShotCut
 Terminal=false
-"
+TryExec=shotcut
+Type=Application
+Version=1.0"
+
+skype_downloader=https://go.skype.com/skypeforlinux-64.deb
 
 slack_repository=https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb
 
 steam_downloader=https://steamcdn-a.akamaihd.net/client/installer/steam.deb
 
 sublime_text_downloader=https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2
-sublime_text_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Sublime Text
-GenericName=Text Editor
-Icon=$HOME/.bin/sublime-text/Icon/256x256/sublime-text.png
-Comment=General Purpose Programming Text Editor
-Terminal=false
-Exec=sublime %F"
-sublime_alias="alias sublime=\"sublime . &>/dev/null &\""
 
+sublime_alias="alias sublime=\"sublime . &>/dev/null &\""
+sublime_text_launcher="[Desktop Entry]
+Categories=;
+Comment=General Purpose Programming Text Editor
+Encoding=UTF-8
+Exec=sublime %F
+GenericName=Text Editor, programming...
+Icon=$HOME/.bin/sublime-text/Icon/256x256/sublime-text.png
+Keywords=subl;sublime;
+MimeType=
+Name=Sublime Text
+StartupNotify=true
+StartupWMClass=Sublime
+Terminal=false
+TryExec=sublime %F
+Type=Application
+Version=1.0"
 
 spotify_downloader=http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb
 telegram_icon=https://telegram.org/img/t_logo.svg?1
 telegram_downloader=https://telegram.org/dl/desktop/linux
 telegram_launcher="[Desktop Entry]
-Encoding=UTF-8
-Name=Telegram
-Exec=telegram -- %u
-Icon=${USR_BIN_FOLDER}/telegram/telegram.svg
-Type=Application
 Categories=Network;
-MimeType=x-scheme-handler/tg;"
-
-tmux_launcher="[Desktop Entry]
-Name=tmux
-StartupWMClass=tmux
-Comment=Terminal Multiplexer
-Exec=tmux
-Terminal=true
-Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/carla_carla.png
+Comment=Instant messaging cross platform
+Encoding=UTF-8
+Exec=telegram -- %u
+GenericName=Telegram
+Icon=${USR_BIN_FOLDER}/telegram/telegram.svg
+Keywords=telegram;
+MimeType=x-scheme-handler/tg;
+Name=Telegram
+StartupNotify=true
+StartupWMClass=Telegram
+Terminal=false
+TryExec=telegram -- %u
 Type=Application
-Categories=Network;"
+Version=1.0"
+
+teams_downloader="https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES"
+tmux_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Terminal Multiplexer
+Encoding=UTF-8
+Exec=tmux
+GenericName=Terminal multiplexor with special mnemo-rules 'Ctrl+a'
+Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/carla_carla.png
+Keywords=tmux;
+MimeType=
+Name=tmux
+StartupNotify=true
+StartupWMClass=tmux
+Terminal=true
+TryExec=tmux
+Type=Application
+Version=1.0"
 
 virtualbox_downloader=https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb
 
 visualstudiocode_downloader="https://go.microsoft.com/fwlink/?LinkID=620884"
-visualstudiocode_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Visual Studio Code
-Icon=${HOME}/.bin/visual-studio/resources/app/resources/linux/code.png
-Exec=code %f
-Comment=Develop with pleasure!
-Categories=Development;IDE;
-Terminal=false
-StartupWMClass=visual-studio-code"
 code_alias="alias code=\"code . &>/dev/null &\""
+visualstudiocode_launcher="[Desktop Entry]
+Categories=Development;IDE;
+Comment=Develop with pleasure!
+Encoding=UTF-8
+Exec=code %f
+GenericName=IDE for programming
+Icon=${HOME}/.bin/visual-studio/resources/app/resources/linux/code.png
+Keywords=code;
+MimeType=
+Name=Visual Studio Code
+StartupNotify=true
+StartupWMClass=visual-studio-code
+Terminal=false
+TryExec=code %f
+Type=Application
+Version=1.0"
 
 wallpapers_downloader=https://github.com/AleixMT/wallpapers
 wallpapers_changer_script="#!/bin/bash
@@ -789,16 +915,21 @@ youtubewav_alias="alias youtubewav=\"youtube-dl --extract-audio --audio-format w
 zoom_downloader=https://zoom.us/client/latest/zoom_x86_64.tar.xz
 zoom_icon_downloader=https://play-lh.googleusercontent.com/JgU6AIREDMsGLmrFSJ8OwLb-JJVw_jwqdwEZWUHemAj0V5Dl7i7GOpmranv2GsCKobM
 zoom_launcher="[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Zoom
-Icon=${USR_BIN_FOLDER}/zoom/zoom_icon.ico
-Exec=ZoomLauncher
+Categories=Social;Communication;
 Comment=Live Video Streaming for Meetings
-Categories=Social, Communication
+Encoding=UTF-8
+Exec=ZoomLauncher
+GenericName=Video multiple calls
+Icon=${USR_BIN_FOLDER}/zoom/zoom_icon.ico
+Keywords=Social;VideoCalls;
+MimeType=
+Name=Zoom
+StartupNotify=true
+StartupWMClass=zoom
 Terminal=false
-StartupWMClass=zoom"
-
+TryExec=ZoomLauncher
+Type=Application
+Version=1.0"
 
 ###########################
 ##### SYSTEM FEATURES #####
