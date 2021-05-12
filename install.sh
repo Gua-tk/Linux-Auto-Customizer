@@ -472,12 +472,12 @@ install_openoffice()
   copy_launcher "openoffice4-writer.desktop"
 }
 
-install_obs()
+install_obs-studio()
 {
   install_ffmpeg
 
   apt-get install -y obs-studio
-  create_manual_launcher "${obs_desktop_launcher}" obs-studio
+  copy_launcher com.obsproject.Studio.desktop
 }
 
 install_okular()
@@ -1374,7 +1374,7 @@ main()
         add_program install_openoffice
       ;;
       --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
-        add_program install_obs
+        add_program install_obs-studio
       ;;
       --okular|--Okular|--okularpdf)
         add_program install_okular
