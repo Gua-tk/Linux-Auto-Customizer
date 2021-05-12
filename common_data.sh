@@ -193,7 +193,7 @@ installation_data=(
 "0;0;0;0;1;install_net-tools"
 "0;0;0;0;1;install_notepadqq"
 "0;0;0;0;1;install_openoffice"
-"0;0;0;0;1;install_obs"
+"0;0;0;0;1;install_obs-studio"
 "0;0;0;0;1;install_okular"
 "0;0;0;0;1;install_pacman"
 "0;0;0;0;1;install_pdfgrep"
@@ -637,23 +637,6 @@ Name=Files
 Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
-
-obs_desktop_launcher="[Desktop Entry]
-Categories=AudioVideo;Recorder;
-Comment=Free and Open Source Streaming/Recording Software
-Encoding=UTF-8
-Exec=obs
-GenericName=Streaming/Recording Software
-Icon=/usr/share/icons/hicolor/256x256/apps/com.obsproject.Studio.png
-Keywords=video;LiveVideo;streaming;VideoStreaming;Audio;
-MimeType=
-Name=OBS Studio
-StartupNotify=true
-StartupWMClass=obs
-Terminal=false
-TryExec=obs
-Type=Application
-Version=1.0"
 
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 
