@@ -192,6 +192,7 @@ installation_data=(
 "0;0;0;0;1;install_mendeley_dependencies"
 "0;0;0;0;1;install_gnome-mines"
 "0;0;0;0;1;install_nemo"
+"0;0;0;0;1;install_netflix"
 "0;0;0;0;1;install_net-tools"
 "0;0;0;0;1;install_notepadqq"
 "0;0;0;0;1;install_openoffice"
@@ -543,9 +544,44 @@ if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
 fi
 "
+netflix_icon=https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg
+netflix_alias="alias netflix=\"xdg-open https://www.netflix.com\""
+netflix_launcher="[Desktop Entry]
+Categories=Network;VideoStreaming;Film;
+Comment=Desktop app to reproduce Netflix from Chrome
+Encoding=UTF-8
+Exec=xdg-open https://www.netflix.com
+GenericName=Netflix
+Icon=${USR_BIN_FOLDER}/netflix/netflix/netflix_icon.svg
+Keywords=netflix;
+MimeType=x-scheme-handler/tg;
+Name=Netflix
+StartupNotify=true
+StartupWMClass=Netflix
+Terminal=false
+#TryExec=xdg-open https://www.netflix.com
+Type=Application
+Version=1.0"
 
 google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-
+gmail_icon=https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg
+gmail_alias="alias gmail=\"google-chrome https://mail.google.com/\""
+gmail_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to instant e-mail messaging from Chrome
+Encoding=UTF-8
+Exec=google-chrome https://mail.google.com/
+GenericName=Gmail
+Icon=${USR_BIN_FOLDER}/google-chrome/google-chrome/gmail_icon.svg
+Keywords=gmail;
+MimeType=x-scheme-handler/tg;
+Name=Gmail
+StartupNotify=true
+StartupWMClass=Gmail
+Terminal=false
+#TryExec=google-chrome https://mail.google.com/
+Type=Application
+Version=1.0"
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 
 intellij_ultimate_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
@@ -782,7 +818,7 @@ HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
 # same history entry, adding semicolons where necessary to preserve syntactic correctness.
 shopt -s cmdhist
 # Save and reload from history before prompt appears
-export PROMPT_COMMAND=\"history -a; history -r; ${PROMPT_COMMAND}\"
+export PROMPT_COMMAND=\"history -a; history -r; \${PROMPT_COMMAND}\"
 "
 
 shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}

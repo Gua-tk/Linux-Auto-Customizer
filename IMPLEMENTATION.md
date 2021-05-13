@@ -58,7 +58,7 @@
 - [x] Wireshark
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
-- [ ] Move all argument processing to the same data structure that we are using for storing info abaout the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README table
+- [ ] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
 - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [x] Red prompt for warning and error messages
 - [x] Optimize history to be updated in real-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
@@ -89,6 +89,7 @@
 - [x] Teams
 - [x] Create variable in shortcut functions that tells out public IP
 - [x] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
+- [ ] Add folder google-chrome to Google Chrome to store icons for .desktop files
 - [ ] rar / unrar - zip / unzip (also integrate in extract func)
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
@@ -111,7 +112,6 @@
 - [ ] Internet shortcut launchers: Gapps
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux 
-- [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 
 #### Coming features
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)  
@@ -127,11 +127,12 @@
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] Python Script to store and auto-generate all user's static data
+- [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 
 #### Discarded for now
 - [ ] Accounting program: GNUCash
 - [ ] music edition: rosegarden, Ardour, LMMS
-- [ ] desktop access: Remmina, TeamViewer   
+- [ ] desktop access: Remmina, TeamViewer
 - [ ] Games: Freeciv
 - [ ] Photo organizer: Shotwell  
 - [ ] handbreak: format editing tool  
@@ -145,7 +146,7 @@
 - [ ] System administration: 
   * bacula (system network administrator), 
   * Mdadm (raid manager)
-  *  PuTTY (ssh client), 
+  * PuTTY (ssh client), 
   * glpi (info organization) uses LAMP
   * samba (windows-linux file sharing)
   * Dbeaver (database manager)
@@ -186,7 +187,7 @@ PLEX Media Server
 OCSInventory
 OnCloud
 Odoo
-
+VNCServer
 
 
 ```

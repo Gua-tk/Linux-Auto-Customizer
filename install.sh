@@ -407,7 +407,14 @@ install_gparted()
   apt-get install -y gparted
   copy_launcher "gparted.desktop"
 }
-
+install_netflix()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/netflix/netflix
+  # Obtain icon for netflix
+  (cd ${USR_BIN_FOLDER}/netflix/netflix; wget -q -O netflix_icon.svg ${netflix_icon})
+  create_manual_launcher "${netflix_launcher}" netflix
+  add_bash_function "${netflix_alias}" "netflix_alias.sh"
+}
 install_google-chrome()
 {
   # Dependencies
@@ -415,6 +422,12 @@ install_google-chrome()
 
   download_and_install_package ${google_chrome_downloader}
   copy_launcher "google-chrome.desktop"
+
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome/google-chrome
+  # Obtain icon for gmail
+  (cd ${USR_BIN_FOLDER}/google-chrome/google-chrome; wget -q -O gmail_icon.svg ${gmail_icon})
+  create_manual_launcher "${gmail_launcher}" gmail
+  add_bash_function "${gmail_alias}" "gmail_alias.sh"
 }
 
 install_gvim()
@@ -983,8 +996,7 @@ install_chwlppr()
   rm -Rf ${XDG_PICTURES_DIR}/wallpapers
   mkdir -p ${XDG_PICTURES_DIR}/wallpapers
   git clone ${wallpapers_downloader} ${XDG_PICTURES_DIR}/wallpapers
-  #cp ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz ${XDG_PICTURES_DIR}
-  #rm -Rf ${XDG_PICTURES_DIR}/wallpapers
+
   $(cd ${XDG_PICTURES_DIR}/wallpapers; tar -xzf *.tar.gz)
   rm -f ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz
 
@@ -1505,6 +1517,9 @@ main()
       ;;
       --net-tools|--nettools)
         add_program install_net-tools
+      ;;
+      --netflix|--Netflix)
+        add_program install_netflix
       ;;
       --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
         add_program install_notepadqq
