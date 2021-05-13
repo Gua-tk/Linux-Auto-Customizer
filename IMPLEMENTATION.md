@@ -89,8 +89,9 @@
 - [x] Teams
 - [x] Create variable in shortcut functions that tells out public IP
 - [x] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
+- [ ] Add desktop internet shortcuts for https://amazon.com, https://twitch.tv/, https://facebook.com/, https://twitter.com/, https://instagram.com/, https://discord.com/channels/, Telegram Web (https://web.telegram.org/, version X, version Z), https://open.spotify.com/ ...
 - [ ] Add folder google-chrome to Google Chrome to store icons for .desktop files
-- [ ] Screenshots Key
+- [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s)
 - [ ] rar / unrar - zip / unzip (also integrate in extract func)
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
