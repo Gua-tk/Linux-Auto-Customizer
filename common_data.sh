@@ -554,7 +554,7 @@ Name=Gmail
 StartupNotify=true
 StartupWMClass=Gmail
 Terminal=false
-TryExec=/usr/bin/google-chrome
+TryExec=google-chrome
 Type=Application
 Version=1.0"
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
@@ -666,7 +666,7 @@ Name=Netflix
 StartupNotify=true
 StartupWMClass=Netflix
 Terminal=false
-TryExec=/usr/bin/google-chrome
+TryExec=google-chrome
 Type=Application
 Version=1.0"
 
