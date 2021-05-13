@@ -608,7 +608,7 @@ Version=1.0"
 
 github_icon="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
 github_url=https://github.com/
-github_alias="alias overleaf=\"google-chrome ${github_url} &>/dev/null &\""
+github_alias="alias github=\"google-chrome ${github_url} &>/dev/null &\""
 github_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Github from Chrome
