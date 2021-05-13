@@ -139,7 +139,7 @@ installation_data=(
   "0;0;0;0;0;install_discord"
   "0;0;0;0;1;install_docker"
   "0;0;0;0;1;install_dropbox"
-  "0;0;0;0;1;install_drive"
+  "0;0;0;0;0;install_drive"
   "0;0;0;0;1;install_gcc"
   "0;0;0;0;1;install_caffeine"
   "0;0;0;0;1;install_calibre"
@@ -153,12 +153,12 @@ installation_data=(
   "0;0;0;0;1;install_clonezilla"
   "0;0;0;0;1;install_copyq"
   "0;0;0;0;1;install_curl"
-  "0;0;0;0;1;install_document"
+  "0;0;0;0;0;install_document"
   "0;0;0;0;0;install_eclipse"
   "0;0;0;0;0;install_extract"
   "0;0;0;0;1;install_f-irc"
   "0;0;0;0;1;install_firefox"
-  "0;0;0;0;1;install_forms"
+  "0;0;0;0;0;install_forms"
   "0;0;0;0;1;install_freecad"
   "0;0;0;0;0;install_ipe"
   "0;0;0;0;1;install_musicmanager"
@@ -166,14 +166,14 @@ installation_data=(
   "0;0;0;0;1;install_geany"
   "0;0;0;0;0;install_geogebra"
   "0;0;0;0;1;install_git"
-  "0;0;0;0;1;install_github"
+  "0;0;0;0;0;install_github"
   "0;0;0;0;0;install_git_aliases"
   "0;0;0;0;1;install_gimp"
-  "0;0;0;0;1;install_gmail"
+  "0;0;0;0;0;install_gmail"
   "0;0;0;0;1;install_gparted"
   "0;0;0;0;1;install_gvim"
   "0;0;0;0;1;install_google-chrome"
-  "0;0;0;0;1;install_google-calendar"
+  "0;0;0;0;0;install_google-calendar"
   "0;0;0;0;1;install_gnome-chess"
   "0;0;0;0;1;install_parallel"
   "0;0;0;0;0;install_history_optimization"
@@ -182,7 +182,7 @@ installation_data=(
   "0;0;0;0;0;install_ideac"
   "0;0;0;0;0;install_ideau"
   "0;0;0;0;0;install_java"
-  "0;0;0;0;1;install_keep"
+  "0;0;0;0;0;install_keep"
   "0;0;0;0;1;install_latex"
   "0;0;0;0;0;install_l"
   "0;0;0;0;0;install_L"
@@ -195,19 +195,19 @@ installation_data=(
   "0;0;0;0;1;install_mendeley_dependencies"
   "0;0;0;0;1;install_gnome-mines"
   "0;0;0;0;1;install_nemo"
-  "0;0;0;0;1;install_netflix"
+  "0;0;0;0;0;install_netflix"
   "0;0;0;0;1;install_net-tools"
   "0;0;0;0;1;install_notepadqq"
-  "0;0;0;0;1;install_onedrive"
-  "0;0;0;0;1;install_outlook"
+  "0;0;0;0;0;install_onedrive"
+  "0;0;0;0;0;install_outlook"
   "0;0;0;0;1;install_openoffice"
   "0;0;0;0;1;install_obs-studio"
   "0;0;0;0;1;install_okular"
-  "0;0;0;0;1;install_overleaf"
+  "0;0;0;0;0;install_overleaf"
   "0;0;0;0;1;install_pacman"
   "0;0;0;0;1;install_pdfgrep"
   "0;0;0;0;1;install_pluma"
-  "0;0;0;0;1;install_presentation"
+  "0;0;0;0;0;install_presentation"
   "0;0;0;0;0;install_prompt"
   "0;0;0;0;1;install_psql"
   "0;0;0;0;0;install_pycharm"
@@ -217,7 +217,7 @@ installation_data=(
   "0;0;0;0;1;install_pypy3_dependencies"
   "0;0;0;0;0;install_environment_aliases"
   "0;0;0;0;1;install_steam"
-  "0;0;0;0;1;install_screenshots"
+  "0;0;0;0;0;install_screenshots"
   "0;0;0;0;1;install_shotcut"
   "0;0;0;0;0;install_shortcuts"
   "0;0;0;0;1;install_aisleriot"
@@ -227,7 +227,7 @@ installation_data=(
   "0;0;0;0;0;install_sublime"
   "0;0;0;0;0;install_s"
   "0;0;0;0;1;install_spotify"
-  "0;0;0;0;1;install_spreadsheets"
+  "0;0;0;0;0;install_spreadsheets"
   "0;0;0;0;1;install_gnome-sudoku"
   "0;0;0;0;0;install_telegram"
   "0;0;0;0;0;install_templates"
@@ -246,10 +246,10 @@ installation_data=(
   "0;0;0;0;0;install_chwlppr"
   "0;0;0;0;0;install_youtube-dl"
   "0;0;0;0;1;install_ffmpeg"
-  "0;0;0;0;1;install_whatsapp"
+  "0;0;0;0;0;install_whatsapp"
   "0;0;0;0;1;install_wireshark"
-  "0;0;0;0;1;install_youtube"
-  "0;0;0;0;1;install_youtubemusic"
+  "0;0;0;0;0;install_youtube"
+  "0;0;0;0;0;install_youtubemusic"
   "0;0;0;0;0;install_zoom"
 )
 
@@ -554,12 +554,12 @@ fi
 
 forms_url=https://docs.google.com/forms/
 forms_icon="https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg"
-forms_alias="alias forms=\"google-chrome ${forms_url} &>/dev/null &\""
+forms_alias="alias forms=\"xdg-open ${forms_url} &>/dev/null &\""
 forms_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Forms from Chrome
 Encoding=UTF-8
-Exec=google-chrome ${forms_url}
+Exec=xdg-open ${forms_url}
 GenericName=Document
 Icon=${USR_BIN_FOLDER}/google-chrome/forms_icon.svg
 Keywords=forms;
@@ -1054,11 +1054,11 @@ s()
 }
 "
 
-screenshot_full="gnome-screenshot -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
-
-screenshot_window="gnome-screenshot -w -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
-
-screenshot_area="gnome-screenshot -a -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
+screenshots_function="
+alias screenshot-full=\"gnome-screenshot -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
+alias screenshot-window=\"gnome-screenshot -w -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
+alias screenshot-area=\"gnome-screenshot -a -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
+"
 
 shell_history_optimization_function="
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)

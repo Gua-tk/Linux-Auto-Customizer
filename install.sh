@@ -255,6 +255,27 @@ download_and_install_package()
   rm -f ${USR_BIN_FOLDER}/downloading_package*
 }
 
+# - Description: Create .desktop with custom url to open a link in favorite internet navigator
+# - Permissions: This functions needs to be executed as user
+# - Argument 1: Name of the program
+# - Argument 2: Link of the icon of the program
+add_internet_shortcut()
+{
+  # Perform indirect variable expansion
+  icon=$1_icon
+  launcher=$1_launcher
+  alias=$1_alias
+  url=$1_url
+
+  # Obtain icon for program
+  mkdir -p "${USR_BIN_FOLDER}/$1"
+  (cd ${USR_BIN_FOLDER}/$1; wget -q -O $1_icon.svg ${!url})
+
+  create_manual_launcher "${!launcher}" $1
+
+  add_bash_function "${!alias}" "$1.sh"
+}
+
 ############################
 ###### ROOT FUNCTIONS ######
 ############################
@@ -416,140 +437,7 @@ install_google-chrome()
   download_and_install_package ${google_chrome_downloader}
   copy_launcher "google-chrome.desktop"
 }
-install_google-calendar()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for google-calendar
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O google-calendar_icon.svg ${googlecalendar_icon})
-  create_manual_launcher "${googlecalendar_launcher}" google-calendar
-  add_bash_function "${googlecalendar_alias}" "google-calendar_alias.sh"
-}
 
-install_keep()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for keep
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O keep_icon.svg ${keep_icon})
-  create_manual_launcher "${keep_launcher}" keep
-  add_bash_function "${keep_alias}" "keep_alias.sh"
-}
-
-install_onedrive()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for onedrive
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O onedrive_icon.svg ${onedrive_icon})
-  create_manual_launcher "${onedrive_launcher}" onedrive
-  add_bash_function "${onedrive_alias}" "onedrive_alias.sh"
-}
-
-install_outlook()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for outlook
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O outlook_icon.svg ${outlook_icon})
-  create_manual_launcher "${outlook_launcher}" outlook
-  add_bash_function "${outlook_alias}" "outlook_alias.sh"
-}
-
-install_overleaf()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for outlook
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O overleaf_icon.svg ${overleaf_icon})
-  create_manual_launcher "${overleaf_launcher}" overleaf
-  add_bash_function "${overleaf_alias}" "overleaf_alias.sh"
-}
-
-install_github()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for outlook
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O github_icon.svg ${github_icon})
-  create_manual_launcher "${github_launcher}" github
-  add_bash_function "${github_alias}" "github_alias.sh"
-}
-
-install_gmail()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for gmail
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O gmail_icon.svg ${gmail_icon})
-  create_manual_launcher "${gmail_launcher}" gmail
-  add_bash_function "${gmail_alias}" "gmail_alias.sh"
-}
-
-install_spreadsheets()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for Google Spreadsheets
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O spreadsheets_icon.svg ${spreadsheets_icon})
-  create_manual_launcher "${spreadsheets_launcher}" spreadsheets
-  add_bash_function "${spreadsheets_alias}" "spreadsheets_alias.sh"
-}
-
-install_document()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for Google Document
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O document_icon.svg ${document_icon})
-  create_manual_launcher "${document_launcher}" document
-  add_bash_function "${document_alias}" "document_alias.sh"
-}
-
-install_presentation()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for Google Presentation
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O presentation_icon.svg ${presentation_icon})
-  create_manual_launcher "${presentation_launcher}" presentation
-  add_bash_function "${presentation_alias}" "presentation_alias.sh"
-}
-
-install_forms()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for Google Forms
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O forms_icon.svg ${forms_icon})
-  create_manual_launcher "${forms_launcher}" forms
-  add_bash_function "${forms_alias}" "forms_alias.sh"
-}
-
-install_whatsapp()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for Whatsapp Web
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O whatsapp_icon.svg ${whatsapp_icon})
-  create_manual_launcher "${whatsapp_launcher}" whatsapp
-  add_bash_function "${whatsapp_alias}" "whatsapp_alias.sh"
-}
-
-install_youtube()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for YouTube
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O youtube_icon.svg ${youtube_icon})
-  create_manual_launcher "${youtube_launcher}" youtube
-  add_bash_function "${youtube_alias}" "youtube_alias.sh"
-}
-
-install_youtubemusic()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for YouTube Music
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O youtubemusic_icon.svg ${youtubemusic_icon})
-  create_manual_launcher "${youtubemusic_launcher}" youtubemusic
-  add_bash_function "${youtubemusic_alias}" "youtubemusic_alias.sh"
-}
-
-install_drive()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for drive
-  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O drive_icon.svg ${drive_icon})
-  create_manual_launcher "${drive_launcher}" drive
-  add_bash_function "${drive_alias}" "drive_alias.sh"
-}
 install_gvim()
 {
   apt-get -y install vim-gtk3
@@ -644,15 +532,6 @@ install_nemo()
   gsettings set org.nemo.desktop show-desktop-icons true
 
   copy_launcher "nemo.desktop"
-}
-
-install_netflix()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/netflix
-  # Obtain icon for netflix
-  (cd ${USR_BIN_FOLDER}/netflix; wget -q -O netflix_icon.svg ${netflix_icon})
-  create_manual_launcher "${netflix_launcher}" netflix
-  add_bash_function "${netflix_alias}" "netflix_alias.sh"
 }
 
 install_net-tools()
@@ -1064,29 +943,8 @@ install_sublime()
 
 install_screenshots()
 {
-  create_folder_as_root ${XDG_PICTURES_DIR}/screenshots
-  #gsettings set org.gnome.gnome-screenshot auto-save-directory "file://${XDG_PICTURES_DIR}/screenshots"
-  chmod u+x ${XDG_PICTURES_DIR}/screenshots
-   # Write code to bash functions folder with the name of the feature we want to install
-  echo -e "${screenshot_full}" > ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh
-  echo -e "${screenshot_window}" > ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh
-  echo -e "${screenshot_area}" > ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh
-  if [[ ${EUID} == 0 ]]; then
-    chgrp ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh
-    chown ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh
-    chmod 755 ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh
-
-    chgrp ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh
-    chown ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh
-    chmod 755 ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh
-
-    chgrp ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh
-    chown ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh
-    chmod 755 ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh
-  fi
-  create_links_in_path ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh screenshot-full
-  create_links_in_path ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh screenshot-window
-  create_links_in_path ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh screenshot-area
+  mkdir -p ${XDG_PICTURES_DIR}/screenshots
+  add_bash_function "${screenshots_function}" "screenshots.sh"
 }
 
 install_telegram()
@@ -1131,6 +989,10 @@ install_zoom()
 ###### USER-ENVIRONMENT FEATURES ######
 #######################################
 # Most (all) of them just use user permissions
+
+
+
+
 
 install_alert()
 {
@@ -1185,9 +1047,25 @@ install_converters()
   add_bash_function "${converters_functions}" converters.sh
 }
 
+install_document()
+{
+  add_internet_shortcut document
+}
+
+install_drive()
+{
+  add_internet_shortcut drive
+}
+
+
 install_extract()
 {
   add_bash_function "${extract_function}" extract.sh
+}
+
+install_forms()
+{
+  add_internet_shortcut forms
 }
 
 install_git_aliases()
@@ -1195,6 +1073,22 @@ install_git_aliases()
   add_bash_function "${git_aliases_function}" git_aliases.sh
   rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
+}
+
+
+install_github()
+{
+  add_internet_shortcut github
+}
+
+install_gmail()
+{
+  add_internet_shortcut gmail
+}
+
+install_google-calendar()
+{
+  add_internet_shortcut google-calendar
 }
 
 install_history_optimization()
@@ -1207,6 +1101,11 @@ install_ipe()
   add_bash_function "${ipe_function}" ipe.sh
 }
 
+install_keep()
+{
+  add_internet_shortcut keep
+}
+
 install_l()
 {
   add_bash_function "${l_function}" l.sh
@@ -1217,6 +1116,31 @@ install_L()
   add_bash_function "${L_function}" L.sh
 }
 
+install_onedrive()
+{
+  add_internet_shortcut onedrive
+}
+
+install_outlook()
+{
+  add_internet_shortcut outlook
+}
+
+install_overleaf()
+{
+  add_internet_shortcut overleaf
+}
+
+install_netflix()
+{
+  add_internet_shortcut netflix
+}
+
+install_presentation()
+{
+  add_internet_shortcut presentation
+}
+
 install_prompt()
 {
   add_bash_function "${prompt_function}" prompt.sh
@@ -1225,6 +1149,11 @@ install_prompt()
 install_s()
 {
   add_bash_function "${s_function}" s.sh
+}
+
+install_spreadsheets()
+{
+  add_internet_shortcut spreadsheets
 }
 
 install_shortcuts()
@@ -1251,6 +1180,21 @@ install_terminal_background()
   if [[ ! -z "${profile_terminal}" ]]; then
     dconf write /org/gnome/terminal/legacy/profiles:/${profile}/background-color "'rgb(0,0,0)'"
   fi
+}
+
+install_whatsapp()
+{
+  add_internet_shortcut whatsapp
+}
+
+install_youtube()
+{
+  add_internet_shortcut youtube
+}
+
+install_youtubemusic()
+{
+  add_internet_shortcut youtubemusic
 }
 
 

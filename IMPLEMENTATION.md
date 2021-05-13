@@ -57,9 +57,13 @@
 - [x] On nemo desktop delete automatically nautilus
 - [x] Wireshark
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [ ] Program function in `uninstall.sh` to remove bash functions
 - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
 - [ ] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
 - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
+- [ ] Program function to unregister default opening applications on `uninstall.sh`
+- [ ] Call add_program matching against table in `common_data.sh` --> move all arguments to `common_data.sh` table and ensure there's no collision with separators.
+- [ ] 
 - [x] Red prompt for warning and error messages
 - [x] Optimize history to be updated in real-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [x] Anydesk
@@ -72,7 +76,7 @@
 - [x] Autofirma
 - [x] AutoUpdate and construct README
 - [x] L Function
-
+- [x] Add folder to store icons for .desktop files --> `created add_internet_shortcut`
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -89,9 +93,11 @@
 - [x] Teams
 - [x] Create variable in shortcut functions that tells out public IP
 - [x] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
-- [ ] Add desktop internet shortcuts for https://amazon.com, https://twitch.tv/, https://facebook.com/, https://twitter.com/, https://instagram.com/, https://discord.com/channels/, Telegram Web (https://web.telegram.org/, version X, version Z), https://open.spotify.com/ ...
-- [ ] Add folder google-chrome to Google Chrome to store icons for .desktop files
+- [x] Change default Screenshots folder to /home/user/Images/screenshots/
+- [x] Internet shortcut launchers: Gapps, Netflix, OneDrive, Outlook, GitHub, Overleaf...
+- [ ] Add desktop internet shortcuts for https://twitch.tv/, https://facebook.com/, https://twitter.com/, https://instagram.com/, https://discord.com/channels/, Telegram Web (https://web.telegram.org/, version X, version Z), https://open.spotify.com/ ...
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s)
+- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
 - [ ] rar / unrar - zip / unzip (also integrate in extract func)
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
@@ -111,29 +117,26 @@
 
 #### TO-DO
 - [ ] Autoinstall nvidia drivers
-- [ ] Internet shortcut launchers: Gapps
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux
-- [ ] Change default Screenshots folder to /home/user/Images/screenshots/ 
+- [ ] help message: arguments refactor with format
+
 
 #### Coming features
-- [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)  
+- [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
 - [ ] When having this unique endopint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it
-- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
 - [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint
 - [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
-- [ ] Program function to unregister default opening applications on `uninstall.sh`
-- [ ] help message: arguments refactor with format
 - [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
-- [ ] Automount available drives.*
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] Python Script to store and auto-generate all user's static data
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 
-
 #### Discarded for now
+- [ ] Automount available drives.
+- [ ] Automatic Backup Recovery
 - [ ] Accounting program: GNUCash
 - [ ] music edition: rosegarden, Ardour, LMMS
 - [ ] desktop access: Remmina, TeamViewer
