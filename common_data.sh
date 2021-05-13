@@ -536,7 +536,7 @@ fi
 
 google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 gmail_icon=https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg
-gmail_alias="alias gmail=\"google-chrome https://mail.google.com/\""
+gmail_alias="alias gmail=\"google-chrome https://mail.google.com/ &>/dev/null &\""
 gmail_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to instant e-mail messaging from Chrome
@@ -647,7 +647,7 @@ OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
 
 netflix_icon=https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg
-netflix_alias="alias netflix=\"google-chrome https://www.netflix.com\""
+netflix_alias="alias netflix=\"google-chrome https://www.netflix.com &>/dev/null &\""
 netflix_launcher="[Desktop Entry]
 Categories=Network;VideoStreaming;Film;
 Comment=Desktop app to reproduce Netflix from Chrome
