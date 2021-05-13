@@ -962,6 +962,33 @@ install_sublime()
   add_to_favorites "sublime"
 }
 
+install_screenshots()
+{
+  create_folder_as_root ${XDG_PICTURES_DIR}/screenshots
+  #gsettings set org.gnome.gnome-screenshot auto-save-directory "file://${XDG_PICTURES_DIR}/screenshots"
+  chmod u+x ${XDG_PICTURES_DIR}/screenshots
+   # Write code to bash functions folder with the name of the feature we want to install
+  echo -e "${screenshot_full}" > ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh
+  echo -e "${screenshot_window}" > ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh
+  echo -e "${screenshot_area}" > ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh
+  if [[ ${EUID} == 0 ]]; then
+    chgrp ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh
+    chown ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh
+    chmod 755 ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh
+
+    chgrp ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh
+    chown ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh
+    chmod 755 ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh
+
+    chgrp ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh
+    chown ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh
+    chmod 755 ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh
+  fi
+  create_links_in_path ${BASH_FUNCTIONS_FOLDER}/screenshot_full.sh screenshot-full
+  create_links_in_path ${BASH_FUNCTIONS_FOLDER}/screenshot_window.sh screenshot-window
+  create_links_in_path ${BASH_FUNCTIONS_FOLDER}/screenshot_area.sh screenshot-area
+}
+
 install_telegram()
 {
   download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
@@ -1606,6 +1633,9 @@ main()
       ;;
       --s|--s-function)
         add_program install_s
+      ;;
+      --screenshots|--Screenshots)
+        add_program install_screenshots
       ;;
       --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
         add_program install_shotcut

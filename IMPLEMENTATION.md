@@ -90,6 +90,7 @@
 - [x] Create variable in shortcut functions that tells out public IP
 - [x] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
 - [ ] Add folder google-chrome to Google Chrome to store icons for .desktop files
+- [ ] Screenshots Key
 - [ ] rar / unrar - zip / unzip (also integrate in extract func)
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
@@ -111,7 +112,8 @@
 - [ ] Autoinstall nvidia drivers
 - [ ] Internet shortcut launchers: Gapps
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
-- [ ] Add examples (images) of a working environement after applying the customizer in Linux 
+- [ ] Add examples (images) of a working environement after applying the customizer in Linux
+- [ ] Change default Screenshots folder to /home/user/Images/Screenshots/ 
 
 #### Coming features
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)  
@@ -128,6 +130,7 @@
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] Python Script to store and auto-generate all user's static data
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
+
 
 #### Discarded for now
 - [ ] Accounting program: GNUCash

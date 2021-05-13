@@ -210,6 +210,7 @@ installation_data=(
   "0;0;0;0;1;install_pypy3_dependencies"
   "0;0;0;0;0;install_environment_aliases"
   "0;0;0;0;1;install_steam"
+  "0;0;0;0;1;install_screenshots"
   "0;0;0;0;1;install_shotcut"
   "0;0;0;0;0;install_shortcuts"
   "0;0;0;0;1;install_aisleriot"
@@ -860,6 +861,12 @@ s()
   \"\$@\" &>/dev/null &
 }
 "
+
+screenshot_full="gnome-screenshot -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
+
+screenshot_window="gnome-screenshot -w -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
+
+screenshot_area="gnome-screenshot -a -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
 
 shell_history_optimization_function="
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
