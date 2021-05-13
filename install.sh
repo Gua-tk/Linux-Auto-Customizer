@@ -434,6 +434,42 @@ install_keep()
   add_bash_function "${keep_alias}" "keep_alias.sh"
 }
 
+install_onedrive()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for onedrive
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O onedrive_icon.svg ${onedrive_icon})
+  create_manual_launcher "${onedrive_launcher}" onedrive
+  add_bash_function "${onedrive_alias}" "onedrive_alias.sh"
+}
+
+install_outlook()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for outlook
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O outlook_icon.svg ${outlook_icon})
+  create_manual_launcher "${outlook_launcher}" outlook
+  add_bash_function "${outlook_alias}" "outlook_alias.sh"
+}
+
+install_overleaf()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for outlook
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O overleaf_icon.svg ${overleaf_icon})
+  create_manual_launcher "${overleaf_launcher}" overleaf
+  add_bash_function "${overleaf_alias}" "overleaf_alias.sh"
+}
+
+install_github()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for outlook
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O github_icon.svg ${github_icon})
+  create_manual_launcher "${github_launcher}" github
+  add_bash_function "${github_alias}" "github_alias.sh"
+}
+
 install_gmail()
 {
   create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
@@ -1484,6 +1520,9 @@ main()
       #--google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
       #  add_program install_musicmanager
       #;;
+      --github|--Github|--GitHub)
+        add_program install_github
+      ;;
       --gpaint|--paint|--Gpaint)
         add_program install_gpaint
       ;;
@@ -1592,6 +1631,12 @@ main()
       --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
         add_program install_notepadqq
       ;;
+      --onedrive|--OneDrive|--one-drive|--One-Drive)
+        add_program install_onedrive
+      ;;
+      --outlook|--Outlook)
+        add_program install_outlook
+      ;;
       --openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
         add_program install_openoffice
       ;;
@@ -1600,6 +1645,9 @@ main()
       ;;
       --okular|--Okular|--okularpdf)
         add_program install_okular
+      ;;
+      --overleaf|--Overleaf)
+        add_program install_overleaf
       ;;
       --pacman|--pac-man)
         add_program install_pacman

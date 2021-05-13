@@ -164,6 +164,7 @@ installation_data=(
   "0;0;0;0;1;install_geany"
   "0;0;0;0;0;install_geogebra"
   "0;0;0;0;1;install_git"
+  "0;0;0;0;1;install_github"
   "0;0;0;0;0;install_git_aliases"
   "0;0;0;0;1;install_gimp"
   "0;0;0;0;1;install_gmail"
@@ -195,9 +196,12 @@ installation_data=(
   "0;0;0;0;1;install_netflix"
   "0;0;0;0;1;install_net-tools"
   "0;0;0;0;1;install_notepadqq"
+  "0;0;0;0;1;install_onedrive"
+  "0;0;0;0;1;install_outlook"
   "0;0;0;0;1;install_openoffice"
   "0;0;0;0;1;install_obs-studio"
   "0;0;0;0;1;install_okular"
+  "0;0;0;0;1;install_overleaf"
   "0;0;0;0;1;install_pacman"
   "0;0;0;0;1;install_pdfgrep"
   "0;0;0;0;1;install_pluma"
@@ -577,6 +581,87 @@ MimeType=x-scheme-handler/tg;
 Name=Google Drive
 StartupNotify=true
 StartupWMClass=Google Drive
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+overleaf_icon="https://upload.wikimedia.org/wikipedia/commons/b/b1/Cib-overleaf_%28CoreUI_Icons_v1.0.0%29.svg"
+overleaf_url=https://www.overleaf.com/
+overleaf_alias="alias overleaf=\"google-chrome ${overleaf_url} &>/dev/null &\""
+overleaf_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Overleaf online LaTeX editor from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${overleaf_url}
+GenericName=Overleaf
+Icon=${USR_BIN_FOLDER}/google-chrome/overleaf_icon.svg
+Keywords=overleaf;
+MimeType=x-scheme-handler/tg;
+Name=Overleaf
+StartupNotify=true
+StartupWMClass=Overleaf
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+github_icon="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+github_url=https://github.com/
+github_alias="alias overleaf=\"google-chrome ${github_url} &>/dev/null &\""
+github_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Github from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${github_url}
+GenericName=GitHub
+Icon=${USR_BIN_FOLDER}/google-chrome/github_icon.svg
+Keywords=github;
+MimeType=x-scheme-handler/tg;
+Name=GitHub
+StartupNotify=true
+StartupWMClass=GitHub
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+outlook_icon="https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg"
+outlook_url=https://outlook.live.com
+outlook_alias="alias outlook=\"google-chrome ${outlook_url} &>/dev/null &\""
+outlook_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to Microsoft Outlook from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${outlook_url}
+GenericName=Outlook
+Icon=${USR_BIN_FOLDER}/google-chrome/outlook_icon.svg
+Keywords=outlook;
+MimeType=x-scheme-handler/tg;
+Name=Outlook
+StartupNotify=true
+StartupWMClass=Outlook
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+
+onedrive_icon="https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg"
+onedrive_url=https://onedrive.live.com/
+onedrive_alias="alias onedrive=\"google-chrome ${onedrive_url} &>/dev/null &\""
+onedrive_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to Microsoft OneDrive from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${onedrive_url}
+GenericName=OneDrive
+Icon=${USR_BIN_FOLDER}/google-chrome/onedrive_icon.svg
+Keywords=onedrive;
+MimeType=x-scheme-handler/tg;
+Name=OneDrive
+StartupNotify=true
+StartupWMClass=OneDrive
 Terminal=false
 TryExec=google-chrome
 Type=Application
