@@ -416,6 +416,23 @@ install_google-chrome()
   download_and_install_package ${google_chrome_downloader}
   copy_launcher "google-chrome.desktop"
 }
+install_google-calendar()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for google-calendar
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O google-calendar_icon.svg ${googlecalendar_icon})
+  create_manual_launcher "${googlecalendar_launcher}" google-calendar
+  add_bash_function "${googlecalendar_alias}" "google-calendar_alias.sh"
+}
+
+install_keep()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for keep
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O keep_icon.svg ${keep_icon})
+  create_manual_launcher "${keep_launcher}" keep
+  add_bash_function "${keep_alias}" "keep_alias.sh"
+}
 
 install_gmail()
 {
@@ -425,7 +442,14 @@ install_gmail()
   create_manual_launcher "${gmail_launcher}" gmail
   add_bash_function "${gmail_alias}" "gmail_alias.sh"
 }
-
+install_drive()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for drive
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O drive_icon.svg ${drive_icon})
+  create_manual_launcher "${drive_launcher}" drive
+  add_bash_function "${drive_alias}" "drive_alias.sh"
+}
 install_gvim()
 {
   apt-get -y install vim-gtk3
@@ -1370,6 +1394,9 @@ main()
       --docker|--Docker)
         add_program install_docker
       ;;
+      --drive|--GoogleDrive|--Drive|--google-drive|--Google-Drive)
+        add_program install_drive
+      ;;
       --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
         add_program install_dropbox
       ;;
@@ -1469,6 +1496,9 @@ main()
       --chrome|--Chrome|--google-chrome|--Google-Chrome)
         add_program install_google-chrome
       ;;
+      --google-calendar|--Google-Calendar|--googlecalendar)
+        add_program install_google-calendar
+      ;;
       --iqmol|--IQmol)
         add_program install_iqmol
       ;;
@@ -1486,6 +1516,9 @@ main()
       ;;
       --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
         add_program install_java
+      ;;
+      --keep|--google-keep|--Keep|--Google-Keep|--googlekeep)
+        add_program install_keep
       ;;
       --L|--L-function)
         add_program install_L

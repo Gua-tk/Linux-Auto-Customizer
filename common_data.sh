@@ -139,6 +139,7 @@ installation_data=(
   "0;0;0;0;0;install_discord"
   "0;0;0;0;1;install_docker"
   "0;0;0;0;1;install_dropbox"
+  "0;0;0;0;1;install_drive"
   "0;0;0;0;1;install_gcc"
   "0;0;0;0;1;install_caffeine"
   "0;0;0;0;1;install_calibre"
@@ -169,6 +170,7 @@ installation_data=(
   "0;0;0;0;1;install_gparted"
   "0;0;0;0;1;install_gvim"
   "0;0;0;0;1;install_google-chrome"
+  "0;0;0;0;1;install_google-calendar"
   "0;0;0;0;1;install_gnome-chess"
   "0;0;0;0;1;install_parallel"
   "0;0;0;0;0;install_history_optimization"
@@ -177,6 +179,7 @@ installation_data=(
   "0;0;0;0;0;install_ideac"
   "0;0;0;0;0;install_ideau"
   "0;0;0;0;0;install_java"
+  "0;0;0;0;1;install_keep"
   "0;0;0;0;1;install_latex"
   "0;0;0;0;0;install_l"
   "0;0;0;0;0;install_L"
@@ -557,6 +560,67 @@ Terminal=false
 TryExec=google-chrome
 Type=Application
 Version=1.0"
+
+drive_url=https://drive.google.com/
+drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
+drive_alias="alias drive=\"google-chrome ${drive_url} &>/dev/null &\""
+drive_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to instant e-mail messaging from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${drive_url}
+GenericName=Gmail
+Icon=${USR_BIN_FOLDER}/google-chrome/drive_icon.svg
+Keywords=drive;
+MimeType=x-scheme-handler/tg;
+Name=Google Drive
+StartupNotify=true
+StartupWMClass=Google Drive
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+googlecalendar_url="https://calendar.google.com/"
+googlecalendar_icon="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg"
+googlecalendar_alias="alias google-calendar=\"google-chrome ${googlecalendar_url} &>/dev/null &\""
+googlecalendar_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to Google Calendar from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${googlecalendar_url}
+GenericName=Google Calendar
+Icon=${USR_BIN_FOLDER}/google-chrome/googlecalendar_icon.svg
+Keywords=google-calendar;
+MimeType=x-scheme-handler/tg;
+Name=Google Calendar
+StartupNotify=true
+StartupWMClass=Google Calendar
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+keep_url="https://keep.google.com/"
+keep_icon="https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg"
+keep_alias="alias google-keep=\"google-chrome ${keep_url} &>/dev/null &\""
+keep_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to Google Keep from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${keep_url}
+GenericName=Google Calendar
+Icon=${USR_BIN_FOLDER}/google-chrome/keep_icon.svg
+Keywords=google-keep;keep;
+MimeType=x-scheme-handler/tg;
+Name=Google Keep
+StartupNotify=true
+StartupWMClass=Google Keep
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 
 intellij_ultimate_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
