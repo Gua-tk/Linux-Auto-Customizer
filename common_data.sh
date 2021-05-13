@@ -263,7 +263,8 @@ standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezill
 custom1=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "chwlppr" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
 iochem=("psql" "gcc" "java" "ant" "mvn")
 
-add_root_programs() {
+add_root_programs()
+{
   for program in ${installation_data[@]}; do
     permissions=$(echo ${program} | cut -d ";" -f5)
     if [[ ${permissions} != 0 ]]; then
@@ -273,7 +274,8 @@ add_root_programs() {
   done
 }
 
-add_user_programs() {
+add_user_programs()
+{
   for program in ${installation_data[@]}; do
     permissions=$(echo ${program} | cut -d ";" -f5)
     if [[ ${permissions} != 1 ]]; then
@@ -283,7 +285,8 @@ add_user_programs() {
   done
 }
 
-add_all_programs() {
+add_all_programs()
+{
   for program in ${installation_data[@]}; do
     name=$(echo ${program} | cut -d ";" -f6)
     add_program $name
@@ -535,13 +538,14 @@ fi
 "
 
 google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+gmail_url=https://mail.google.com/
 gmail_icon=https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg
-gmail_alias="alias gmail=\"google-chrome https://mail.google.com/ &>/dev/null &\""
+gmail_alias="alias gmail=\"google-chrome ${gmail_url} &>/dev/null &\""
 gmail_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to instant e-mail messaging from Chrome
 Encoding=UTF-8
-Exec=google-chrome https://mail.google.com/
+Exec=google-chrome ${gmail_url}
 GenericName=Gmail
 Icon=${USR_BIN_FOLDER}/google-chrome/gmail_icon.svg
 Keywords=gmail;
@@ -550,7 +554,7 @@ Name=Gmail
 StartupNotify=true
 StartupWMClass=Gmail
 Terminal=false
-#TryExec=usr/bin/google-chrome
+TryExec=/usr/bin/google-chrome
 Type=Application
 Version=1.0"
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
@@ -646,13 +650,14 @@ Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
 
+netflix_url=https://www.netflix.com
 netflix_icon=https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg
-netflix_alias="alias netflix=\"google-chrome https://www.netflix.com &>/dev/null &\""
+netflix_alias="alias netflix=\"google-chrome ${netflix_url} &>/dev/null &\""
 netflix_launcher="[Desktop Entry]
 Categories=Network;VideoStreaming;Film;
 Comment=Desktop app to reproduce Netflix from Chrome
 Encoding=UTF-8
-Exec=google-chrome https://www.netflix.com
+Exec=google-chrome ${netflix_url}
 GenericName=Netflix
 Icon=${USR_BIN_FOLDER}/netflix/netflix_icon.svg
 Keywords=netflix;
@@ -661,7 +666,7 @@ Name=Netflix
 StartupNotify=true
 StartupWMClass=Netflix
 Terminal=false
-#TryExec=usr/bin/google-chrome
+TryExec=/usr/bin/google-chrome
 Type=Application
 Version=1.0"
 
