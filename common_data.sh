@@ -693,7 +693,7 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-overleaf_icon="https://upload.wikimedia.org/wikipedia/commons/b/b1/Cib-overleaf_%28CoreUI_Icons_v1.0.0%29.svg"
+overleaf_icon="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg"
 overleaf_url=https://www.overleaf.com/
 overleaf_alias="alias overleaf=\"google-chrome ${overleaf_url} &>/dev/null &\""
 overleaf_launcher="[Desktop Entry]
@@ -708,7 +708,7 @@ MimeType=x-scheme-handler/tg;
 Name=Overleaf
 StartupNotify=true
 StartupWMClass=Overleaf
-Terminal=false
+#Terminal=false
 TryExec=google-chrome
 Type=Application
 Version=1.0"
