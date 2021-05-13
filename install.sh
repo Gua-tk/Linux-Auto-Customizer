@@ -407,14 +407,7 @@ install_gparted()
   apt-get install -y gparted
   copy_launcher "gparted.desktop"
 }
-install_netflix()
-{
-  create_folder_as_root ${USR_BIN_FOLDER}/netflix/netflix
-  # Obtain icon for netflix
-  (cd ${USR_BIN_FOLDER}/netflix/netflix; wget -q -O netflix_icon.svg ${netflix_icon})
-  create_manual_launcher "${netflix_launcher}" netflix
-  add_bash_function "${netflix_alias}" "netflix_alias.sh"
-}
+
 install_google-chrome()
 {
   # Dependencies
@@ -425,7 +418,7 @@ install_google-chrome()
 
   create_folder_as_root ${USR_BIN_FOLDER}/google-chrome/google-chrome
   # Obtain icon for gmail
-  (cd ${USR_BIN_FOLDER}/google-chrome/google-chrome; wget -q -O gmail_icon.svg ${gmail_icon})
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O gmail_icon.svg ${gmail_icon})
   create_manual_launcher "${gmail_launcher}" gmail
   add_bash_function "${gmail_alias}" "gmail_alias.sh"
 }
@@ -524,6 +517,15 @@ install_nemo()
   gsettings set org.nemo.desktop show-desktop-icons true
 
   copy_launcher "nemo.desktop"
+}
+
+install_netflix()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/netflix/netflix
+  # Obtain icon for netflix
+  (cd ${USR_BIN_FOLDER}/netflix; wget -q -O netflix_icon.svg ${netflix_icon})
+  create_manual_launcher "${netflix_launcher}" netflix
+  add_bash_function "${netflix_alias}" "netflix_alias.sh"
 }
 
 install_net-tools()
