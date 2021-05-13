@@ -153,10 +153,12 @@ installation_data=(
   "0;0;0;0;1;install_clonezilla"
   "0;0;0;0;1;install_copyq"
   "0;0;0;0;1;install_curl"
+  "0;0;0;0;1;install_document"
   "0;0;0;0;0;install_eclipse"
   "0;0;0;0;0;install_extract"
   "0;0;0;0;1;install_f-irc"
   "0;0;0;0;1;install_firefox"
+  "0;0;0;0;1;install_forms"
   "0;0;0;0;1;install_freecad"
   "0;0;0;0;0;install_ipe"
   "0;0;0;0;1;install_musicmanager"
@@ -205,6 +207,7 @@ installation_data=(
   "0;0;0;0;1;install_pacman"
   "0;0;0;0;1;install_pdfgrep"
   "0;0;0;0;1;install_pluma"
+  "0;0;0;0;1;install_presentation"
   "0;0;0;0;0;install_prompt"
   "0;0;0;0;1;install_psql"
   "0;0;0;0;0;install_pycharm"
@@ -224,6 +227,7 @@ installation_data=(
   "0;0;0;0;0;install_sublime"
   "0;0;0;0;0;install_s"
   "0;0;0;0;1;install_spotify"
+  "0;0;0;0;1;install_spreadsheets"
   "0;0;0;0;1;install_gnome-sudoku"
   "0;0;0;0;0;install_telegram"
   "0;0;0;0;0;install_templates"
@@ -545,6 +549,86 @@ if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
 fi
 "
 
+forms_url=https://docs.google.com/forms/
+forms_icon="https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg"
+forms_alias="alias forms=\"google-chrome ${forms_url} &>/dev/null &\""
+forms_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Google Forms from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${forms_url}
+GenericName=Document
+Icon=${USR_BIN_FOLDER}/google-chrome/forms_icon.svg
+Keywords=forms;
+MimeType=x-scheme-handler/tg;
+Name=Google Forms
+StartupNotify=true
+StartupWMClass=Google Forms
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+presentation_url=https://docs.google.com/presentation/
+presentation_icon="https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg"
+presentation_alias="alias presentation=\"google-chrome ${presentation_url} &>/dev/null &\""
+presentation_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Google Presentation from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${presentation_url}
+GenericName=Document
+Icon=${USR_BIN_FOLDER}/google-chrome/presentation_icon.svg
+Keywords=presentations;
+MimeType=x-scheme-handler/tg;
+Name=Google Presentation
+StartupNotify=true
+StartupWMClass=Google Presentation
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+document_url=https://docs.google.com/document/
+document_icon="https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg"
+document_alias="alias document=\"google-chrome ${document_url} &>/dev/null &\""
+document_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Google Documents from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${document_url}
+GenericName=Document
+Icon=${USR_BIN_FOLDER}/google-chrome/document_icon.svg
+Keywords=documents;
+MimeType=x-scheme-handler/tg;
+Name=Google Document
+StartupNotify=true
+StartupWMClass=Google Document
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+spreadsheets_url=https://docs.google.com/spreadsheets/
+spreadsheets_icon="https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg"
+spreadsheets_alias="alias spreadsheets=\"google-chrome ${spreadsheets_url} &>/dev/null &\""
+spreadsheets_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Google Spreadsheets from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${spreadsheets_url}
+GenericName=Spreadsheets
+Icon=${USR_BIN_FOLDER}/google-chrome/spreadsheets_icon.svg
+Keywords=spreadsheets;
+MimeType=x-scheme-handler/tg;
+Name=Google Spreadsheets
+StartupNotify=true
+StartupWMClass=Google Spreadsheets
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
 google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 gmail_url=https://mail.google.com/
 gmail_icon=https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg
@@ -561,6 +645,26 @@ MimeType=x-scheme-handler/tg;
 Name=Gmail
 StartupNotify=true
 StartupWMClass=Gmail
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+drive_url=https://drive.google.com/
+drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
+drive_alias="alias drive=\"google-chrome ${drive_url} &>/dev/null &\""
+drive_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to instant e-mail messaging from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${drive_url}
+GenericName=Gmail
+Icon=${USR_BIN_FOLDER}/google-chrome/drive_icon.svg
+Keywords=drive;
+MimeType=x-scheme-handler/tg;
+Name=Google Drive
+StartupNotify=true
+StartupWMClass=Google Drive
 Terminal=false
 TryExec=google-chrome
 Type=Application

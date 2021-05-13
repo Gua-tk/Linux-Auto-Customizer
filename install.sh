@@ -478,6 +478,44 @@ install_gmail()
   create_manual_launcher "${gmail_launcher}" gmail
   add_bash_function "${gmail_alias}" "gmail_alias.sh"
 }
+
+install_spreadsheets()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for Google Spreadsheets
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O spreadsheets_icon.svg ${spreadsheets_icon})
+  create_manual_launcher "${spreadsheets_launcher}" spreadsheets
+  add_bash_function "${spreadsheets_alias}" "spreadsheets_alias.sh"
+}
+
+install_document()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for Google Document
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O document_icon.svg ${document_icon})
+  create_manual_launcher "${document_launcher}" document
+  add_bash_function "${document_alias}" "document_alias.sh"
+}
+
+install_presentation()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for Google Presentation
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O presentation_icon.svg ${presentation_icon})
+  create_manual_launcher "${presentation_launcher}" presentation
+  add_bash_function "${presentation_alias}" "presentation_alias.sh"
+}
+
+install_forms()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for Google Document
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O forms_icon.svg ${forms_icon})
+  create_manual_launcher "${forms_launcher}" forms
+  add_bash_function "${forms_alias}" "forms_alias.sh"
+}
+
+
 install_drive()
 {
   create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
@@ -1457,6 +1495,9 @@ main()
       --docker|--Docker)
         add_program install_docker
       ;;
+      --document|--google-document)
+        add_program install_document
+      ;;
       --drive|--GoogleDrive|--Drive|--google-drive|--Google-Drive)
         add_program install_drive
       ;;
@@ -1510,6 +1551,9 @@ main()
       ;;
       --firefox|--Firefox)
         add_program install_firefox
+      ;;
+      --forms|--google-forms)
+        add_program install_forms
       ;;
       --freecad|--FreeCAD|--freeCAD)
         add_program install_freecad
@@ -1661,6 +1705,9 @@ main()
       --postgreSQL|--PostGreSQL|--postgresql|--postgre-sql|--postgre-SQL|--psql|--pSQL|--p-SQL|--p-sql)
         add_program install_psql
       ;;
+      --presentation|--google-presentation)
+        add_program install_presentation
+      ;;
       --prompt)
         add_program install_prompt
       ;;
@@ -1696,6 +1743,9 @@ main()
       ;;
       --slack|--Slack)
         add_program install_slack
+      ;;
+      --spreadsheets|--google-spreadsheets)
+        add_program install_spreadsheets
       ;;
       --sudoku|--Sudoku|--gnome-sudoku)
         add_program install_gnome-sudoku
