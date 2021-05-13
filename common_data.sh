@@ -603,7 +603,7 @@ Version=1.0"
 
 keep_url="https://keep.google.com/"
 keep_icon="https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg"
-keep_alias="alias google-keep=\"google-chrome ${keep_url} &>/dev/null &\""
+keep_alias="alias keep=\"google-chrome ${keep_url} &>/dev/null &\""
 keep_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Google Keep from Chrome
