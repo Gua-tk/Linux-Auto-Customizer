@@ -415,8 +415,11 @@ install_google-chrome()
 
   download_and_install_package ${google_chrome_downloader}
   copy_launcher "google-chrome.desktop"
+}
 
-  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome/google-chrome
+install_gmail()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
   # Obtain icon for gmail
   (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O gmail_icon.svg ${gmail_icon})
   create_manual_launcher "${gmail_launcher}" gmail
@@ -521,7 +524,7 @@ install_nemo()
 
 install_netflix()
 {
-  create_folder_as_root ${USR_BIN_FOLDER}/netflix/netflix
+  create_folder_as_root ${USR_BIN_FOLDER}/netflix
   # Obtain icon for netflix
   (cd ${USR_BIN_FOLDER}/netflix; wget -q -O netflix_icon.svg ${netflix_icon})
   create_manual_launcher "${netflix_launcher}" netflix
@@ -1444,6 +1447,9 @@ main()
       ;;
       --GIMP|--gimp|--Gimp)
         add_program install_gimp
+      ;;
+      --gmail|--Gmail)
+        add_program install_gmail
       ;;
       --GNOME_Chess|--gnome_Chess|--gnomechess|--chess)
         add_program install_gnome-chess

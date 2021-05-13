@@ -6,28 +6,27 @@
 # Execute the command received in the first argument and redirect the output depending on the quietness level
 # Argument 1: Bash command to execute.
 # Argument 2: Quietness level [0, 1, 2].
-output_proxy_executioner()
-{
+output_proxy_executioner() {
   comm=$(echo "$1" | head -1 | cut -d " " -f1)
   if [[ "${comm}" == "echo" ]]; then
-      rest=$(echo "$1" | sed '1 s@^echo @@')
-      message_type="$(echo "${rest}" | cut -d ":" -f1)"
-      if [[ ${message_type} == "WARNING" ]]; then
-        echo -en "\e[33m"  # Activate yellow colour
-      elif [[ ${message_type} == "INFO" ]]; then
-        echo -en "\e[36m"  # Activate cyan colour
-      elif [[ ${message_type} == "ERROR" ]]; then
-        echo -en "\e[91m"  # Activate red colour
-      fi
-      echo -n "$(date +%Y-%m-%d_%T) -- "
+    rest=$(echo "$1" | sed '1 s@^echo @@')
+    message_type="$(echo "${rest}" | cut -d ":" -f1)"
+    if [[ ${message_type} == "WARNING" ]]; then
+      echo -en "\e[33m" # Activate yellow colour
+    elif [[ ${message_type} == "INFO" ]]; then
+      echo -en "\e[36m" # Activate cyan colour
+    elif [[ ${message_type} == "ERROR" ]]; then
+      echo -en "\e[91m" # Activate red colour
+    fi
+    echo -n "$(date +%Y-%m-%d_%T) -- "
   fi
-  
+
   if [[ $2 == 0 ]]; then
     $1
   elif [[ $2 == 1 ]]; then
     if [[ "${comm}" == "echo" ]]; then
       # If it is a echo command, delete trailing echo and echo formatting
-      rest=$(echo "$1" | sed '1 s@^echo @@')  # Delete echo at the beggining of the line
+      rest=$(echo "$1" | sed '1 s@^echo @@') # Delete echo at the beggining of the line
       echo "${rest}"
     else
       $1 &>/dev/null
@@ -35,10 +34,10 @@ output_proxy_executioner()
   else
     $1 &>/dev/null
   fi
-  
+
   if [[ "${comm}" == "echo" ]]; then
-    echo -en "\e[0m"  # DeActivate colour
-  fi 
+    echo -en "\e[0m" # DeActivate colour
+  fi
 }
 
 ############################
@@ -90,18 +89,16 @@ ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
-FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
-FLAG_INSTALL=1  # 1 or more --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
+FLAG_OVERWRITE=0     # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
+FLAG_INSTALL=1       # 1 or more --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
 # Also, flag_install is the number used to determine the installation order
-FLAG_QUIETNESS=1  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
-FLAG_IGNORE_ERRORS=0  # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
+FLAG_QUIETNESS=1     # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
+FLAG_IGNORE_ERRORS=0 # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
 
 NUM_INSTALLATION=1
 SILENT=1
 UPGRADE=2
 AUTOCLEAN=2
-
-
 
 ### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
 
@@ -120,7 +117,6 @@ AUTOCLEAN=2
 # XDG_PICTURES_DIR: /home/username/Images
 # XDG_TEMPLATES_DIR: /home/username/Templates
 
-
 ### FEATURE_DATA ###
 
 # This pseudo-matrix contains different information for every feature available in this project.
@@ -134,113 +130,113 @@ AUTOCLEAN=2
 # 6.- Function name
 # install_yes/no; forceness; quietness; overwrite; permissions; function_name
 installation_data=(
-"0;0;0;0;0;install_ant"
-"0;0;0;0;0;install_anydesk"
-"0;0;0;0;1;install_audacity"
-"0;0;0;0;1;install_AutoFirma"
-"0;0;0;0;0;install_alert"
-"0;0;0;0;1;install_atom"
-"0;0;0;0;0;install_discord"
-"0;0;0;0;1;install_docker"
-"0;0;0;0;1;install_dropbox"
-"0;0;0;0;1;install_gcc"
-"0;0;0;0;1;install_caffeine"
-"0;0;0;0;1;install_calibre"
-"0;0;0;0;1;install_clementine"
-"0;0;0;0;0;install_clion"
-"0;0;0;0;0;install_cheat"
-"0;0;0;0;1;install_cheese"
-"0;0;0;0;1;install_cmatrix"
-"0;1;0;0;0;install_codium"
-"0;0;0;0;0;install_converters"
-"0;0;0;0;1;install_clonezilla"
-"0;0;0;0;1;install_copyq"
-"0;0;0;0;1;install_curl"
-"0;0;0;0;0;install_eclipse"
-"0;0;0;0;0;install_extract"
-"0;0;0;0;1;install_f-irc"
-"0;0;0;0;1;install_firefox"
-"0;0;0;0;1;install_freecad"
-"0;0;0;0;0;install_ipe"
-"0;0;0;0;1;install_musicmanager"
-"0;0;0;0;1;install_gpaint"
-"0;0;0;0;1;install_geany"
-"0;0;0;0;0;install_geogebra"
-"0;0;0;0;1;install_git"
-"0;0;0;0;0;install_git_aliases"
-"0;0;0;0;1;install_gimp"
-"0;0;0;0;1;install_gparted"
-"0;0;0;0;1;install_gvim"
-"0;0;0;0;1;install_google-chrome"
-"0;0;0;0;1;install_gnome-chess"
-"0;0;0;0;1;install_parallel"
-"0;0;0;0;0;install_history_optimization"
-"0;0;0;0;1;install_iqmol"
-"0;0;0;0;1;install_inkscape"
-"0;0;0;0;0;install_ideac"
-"0;0;0;0;0;install_ideau"
-"0;0;0;0;0;install_java"
-"0;0;0;0;1;install_latex"
-"0;0;0;0;0;install_l"
-"0;0;0;0;0;install_L"
-"0;0;0;0;1;install_libgtkglext1"
-"0;0;0;0;1;install_libxcb-xtest0"
-"0;0;0;0;1;install_gnome-mahjongg"
-"0;0;0;0;0;install_mvn"
-"0;0;0;0;1;install_megasync"
-"0;0;0;0;0;install_mendeley"
-"0;0;0;0;1;install_mendeley_dependencies"
-"0;0;0;0;1;install_gnome-mines"
-"0;0;0;0;1;install_nemo"
-"0;0;0;0;1;install_netflix"
-"0;0;0;0;1;install_net-tools"
-"0;0;0;0;1;install_notepadqq"
-"0;0;0;0;1;install_openoffice"
-"0;0;0;0;1;install_obs-studio"
-"0;0;0;0;1;install_okular"
-"0;0;0;0;1;install_pacman"
-"0;0;0;0;1;install_pdfgrep"
-"0;0;0;0;1;install_pluma"
-"0;0;0;0;0;install_prompt"
-"0;0;0;0;1;install_psql"
-"0;0;0;0;0;install_pycharm"
-"0;0;0;0;0;install_pycharmpro"
-"0;0;0;0;1;install_python3"
-"0;0;0;0;0;install_pypy3"
-"0;0;0;0;1;install_pypy3_dependencies"
-"0;0;0;0;0;install_environment_aliases"
-"0;0;0;0;1;install_steam"
-"0;0;0;0;1;install_shotcut"
-"0;0;0;0;0;install_shortcuts"
-"0;0;0;0;1;install_aisleriot"
-"0;0;0;0;1;install_skype"
-"0;0;0;0;1;install_slack"
-"0;0;0;0;0;install_studio"
-"0;0;0;0;0;install_sublime"
-"0;0;0;0;0;install_s"
-"0;0;0;0;1;install_spotify"
-"0;0;0;0;1;install_gnome-sudoku"
-"0;0;0;0;0;install_telegram"
-"0;0;0;0;0;install_templates"
-"0;0;0;0;0;install_terminal_background"
-"0;0;0;0;1;install_terminator"
-"0;0;0;0;1;install_tilix"
-"0;0;0;0;1;install_tmux"
-"0;0;0;0;1;install_teams"
-"0;0;0;0;1;install_uget"
-"0;0;0;0;1;install_thunderbird"
-"0;0;0;0;1;install_tor"
-"0;0;0;0;1;install_transmission"
-"0;0;0;0;1;install_virtualbox"
-"0;0;0;0;0;install_code"
-"0;0;0;0;1;install_vlc"
-"0;0;0;0;0;install_chwlppr"
-"0;0;0;0;0;install_youtube-dl"
-"0;0;0;0;1;install_ffmpeg"
-"0;0;0;0;1;install_wireshark"
-"0;0;0;0;0;install_zoom"
+  "0;0;0;0;0;install_ant"
+  "0;0;0;0;0;install_anydesk"
+  "0;0;0;0;1;install_audacity"
+  "0;0;0;0;1;install_AutoFirma"
+  "0;0;0;0;0;install_alert"
+  "0;0;0;0;1;install_atom"
+  "0;0;0;0;0;install_discord"
+  "0;0;0;0;1;install_docker"
+  "0;0;0;0;1;install_dropbox"
+  "0;0;0;0;1;install_gcc"
+  "0;0;0;0;1;install_caffeine"
+  "0;0;0;0;1;install_calibre"
+  "0;0;0;0;1;install_clementine"
+  "0;0;0;0;0;install_clion"
+  "0;0;0;0;0;install_cheat"
+  "0;0;0;0;1;install_cheese"
+  "0;0;0;0;1;install_cmatrix"
+  "0;1;0;0;0;install_codium"
+  "0;0;0;0;0;install_converters"
+  "0;0;0;0;1;install_clonezilla"
+  "0;0;0;0;1;install_copyq"
+  "0;0;0;0;1;install_curl"
+  "0;0;0;0;0;install_eclipse"
+  "0;0;0;0;0;install_extract"
+  "0;0;0;0;1;install_f-irc"
+  "0;0;0;0;1;install_firefox"
+  "0;0;0;0;1;install_freecad"
+  "0;0;0;0;0;install_ipe"
+  "0;0;0;0;1;install_musicmanager"
+  "0;0;0;0;1;install_gpaint"
+  "0;0;0;0;1;install_geany"
+  "0;0;0;0;0;install_geogebra"
+  "0;0;0;0;1;install_git"
+  "0;0;0;0;0;install_git_aliases"
+  "0;0;0;0;1;install_gimp"
+  "0;0;0;0;1;install_gmail"
+  "0;0;0;0;1;install_gparted"
+  "0;0;0;0;1;install_gvim"
+  "0;0;0;0;1;install_google-chrome"
+  "0;0;0;0;1;install_gnome-chess"
+  "0;0;0;0;1;install_parallel"
+  "0;0;0;0;0;install_history_optimization"
+  "0;0;0;0;1;install_iqmol"
+  "0;0;0;0;1;install_inkscape"
+  "0;0;0;0;0;install_ideac"
+  "0;0;0;0;0;install_ideau"
+  "0;0;0;0;0;install_java"
+  "0;0;0;0;1;install_latex"
+  "0;0;0;0;0;install_l"
+  "0;0;0;0;0;install_L"
+  "0;0;0;0;1;install_libgtkglext1"
+  "0;0;0;0;1;install_libxcb-xtest0"
+  "0;0;0;0;1;install_gnome-mahjongg"
+  "0;0;0;0;0;install_mvn"
+  "0;0;0;0;1;install_megasync"
+  "0;0;0;0;0;install_mendeley"
+  "0;0;0;0;1;install_mendeley_dependencies"
+  "0;0;0;0;1;install_gnome-mines"
+  "0;0;0;0;1;install_nemo"
+  "0;0;0;0;1;install_netflix"
+  "0;0;0;0;1;install_net-tools"
+  "0;0;0;0;1;install_notepadqq"
+  "0;0;0;0;1;install_openoffice"
+  "0;0;0;0;1;install_obs-studio"
+  "0;0;0;0;1;install_okular"
+  "0;0;0;0;1;install_pacman"
+  "0;0;0;0;1;install_pdfgrep"
+  "0;0;0;0;1;install_pluma"
+  "0;0;0;0;0;install_prompt"
+  "0;0;0;0;1;install_psql"
+  "0;0;0;0;0;install_pycharm"
+  "0;0;0;0;0;install_pycharmpro"
+  "0;0;0;0;1;install_python3"
+  "0;0;0;0;0;install_pypy3"
+  "0;0;0;0;1;install_pypy3_dependencies"
+  "0;0;0;0;0;install_environment_aliases"
+  "0;0;0;0;1;install_steam"
+  "0;0;0;0;1;install_shotcut"
+  "0;0;0;0;0;install_shortcuts"
+  "0;0;0;0;1;install_aisleriot"
+  "0;0;0;0;1;install_skype"
+  "0;0;0;0;1;install_slack"
+  "0;0;0;0;0;install_studio"
+  "0;0;0;0;0;install_sublime"
+  "0;0;0;0;0;install_s"
+  "0;0;0;0;1;install_spotify"
+  "0;0;0;0;1;install_gnome-sudoku"
+  "0;0;0;0;0;install_telegram"
+  "0;0;0;0;0;install_templates"
+  "0;0;0;0;0;install_terminal_background"
+  "0;0;0;0;1;install_terminator"
+  "0;0;0;0;1;install_tilix"
+  "0;0;0;0;1;install_tmux"
+  "0;0;0;0;1;install_teams"
+  "0;0;0;0;1;install_uget"
+  "0;0;0;0;1;install_thunderbird"
+  "0;0;0;0;1;install_tor"
+  "0;0;0;0;1;install_transmission"
+  "0;0;0;0;1;install_virtualbox"
+  "0;0;0;0;0;install_code"
+  "0;0;0;0;1;install_vlc"
+  "0;0;0;0;0;install_chwlppr"
+  "0;0;0;0;0;install_youtube-dl"
+  "0;0;0;0;1;install_ffmpeg"
+  "0;0;0;0;1;install_wireshark"
+  "0;0;0;0;0;install_zoom"
 )
-
 
 ####################
 ##### WRAPPERS #####
@@ -248,16 +244,16 @@ installation_data=(
 
 # Associates lists representing a wrapper containing a set of related features
 
-programming_core=( "python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies" )
-programming_ide=( "android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion" )
-programming_pro=( "intellij_ultimate" "pycharm_professional" "clion" )
-text_editor_core=( "atom" "openoffice" "latex" "geany" "notepadqq" "gvim" )
-media_core=( "vlc" "gpaint" "okular" "clementine" )
-system_core=( "virtualbox" "gparted" "clonezilla" )
-internet_core=( "transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat" )
-art_core=( "audacity" "shotcut" "gimp" "obs" "inkscape" )
-games_install=( "games" "steam" "cmatrix" )
-standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" )
+programming_core=("python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies")
+programming_ide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
+programming_pro=("intellij_ultimate" "pycharm_professional" "clion")
+text_editor_core=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
+media_core=("vlc" "gpaint" "okular" "clementine")
+system_core=("virtualbox" "gparted" "clonezilla")
+internet_core=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
+art_core=("audacity" "shotcut" "gimp" "obs" "inkscape")
+games_install=("games" "steam" "cmatrix")
+standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
 
 # custom
 #custom1_system=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "chwlppr")
@@ -267,8 +263,7 @@ standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezill
 custom1=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "chwlppr" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
 iochem=("psql" "gcc" "java" "ant" "mvn")
 
-add_root_programs()
-{
+add_root_programs() {
   for program in ${installation_data[@]}; do
     permissions=$(echo ${program} | cut -d ";" -f5)
     if [[ ${permissions} != 0 ]]; then
@@ -278,8 +273,7 @@ add_root_programs()
   done
 }
 
-add_user_programs()
-{
+add_user_programs() {
   for program in ${installation_data[@]}; do
     permissions=$(echo ${program} | cut -d ";" -f5)
     if [[ ${permissions} != 1 ]]; then
@@ -289,14 +283,12 @@ add_user_programs()
   done
 }
 
-add_all_programs()
-{
+add_all_programs() {
   for program in ${installation_data[@]}; do
     name=$(echo ${program} | cut -d ";" -f6)
     add_program $name
   done
 }
-
 
 #######################################
 ##### SOFTWARE SPECIFIC VARIABLES #####
@@ -348,7 +340,6 @@ Terminal=false
 TryExec=anydesk
 Type=Application
 Version=1.0"
-
 
 atom_downloader=https://atom.io/download/deb
 
@@ -419,7 +410,6 @@ Terminal=true
 TryExec=cmatrix
 Type=Application
 Version=1.0"
-
 
 codium_downloader=https://github.com/VSCodium/vscodium/releases/download/1.54.3/VSCodium-linux-x64-1.54.3.tar.gz
 codium_launcher="[Desktop Entry]
@@ -520,7 +510,6 @@ TryExec=geogebra
 Type=Application
 Version=4.2.2"
 
-
 git_aliases_function="
 commit()
 {
@@ -544,24 +533,6 @@ if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
 fi
 "
-netflix_icon=https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg
-netflix_alias="alias netflix=\"xdg-open https://www.netflix.com\""
-netflix_launcher="[Desktop Entry]
-Categories=Network;VideoStreaming;Film;
-Comment=Desktop app to reproduce Netflix from Chrome
-Encoding=UTF-8
-Exec=xdg-open https://www.netflix.com
-GenericName=Netflix
-Icon=${USR_BIN_FOLDER}/netflix/netflix_icon.svg
-Keywords=netflix;
-MimeType=x-scheme-handler/tg;
-Name=Netflix
-StartupNotify=true
-StartupWMClass=Netflix
-Terminal=false
-#TryExec=xdg-open https://www.netflix.com
-Type=Application
-Version=1.0"
 
 google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 gmail_icon=https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg
@@ -579,7 +550,7 @@ Name=Gmail
 StartupNotify=true
 StartupWMClass=Gmail
 Terminal=false
-#TryExec=google-chrome https://mail.google.com/
+#TryExec=usr/bin/google-chrome
 Type=Application
 Version=1.0"
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
@@ -602,7 +573,6 @@ TryExec=ideau
 Type=Application
 Version=1.0"
 ideau_alias="alias ideau=\"ideau . &>/dev/null &\""
-
 
 intellij_community_downloader="https://download.jetbrains.com/idea/ideaIC-2020.3.1.tar.gz"
 
@@ -660,13 +630,13 @@ mendeley_downloader=https://www.mendeley.com/autoupdates/installer/Linux-x64/sta
 music_manager_downloader=https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
 
 nautilus_conf=("xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
-"gsettings set org.gnome.desktop.background show-desktop-icons true"
-"xdg-mime default org.gnome.Nautilus.desktop inode/directory"
+  "gsettings set org.gnome.desktop.background show-desktop-icons true"
+  "xdg-mime default org.gnome.Nautilus.desktop inode/directory"
 )
 
 nemo_conf=("xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search"
-"gsettings set org.gnome.desktop.background show-desktop-icons false"
-"gsettings set org.nemo.desktop show-desktop-icons true"
+  "gsettings set org.gnome.desktop.background show-desktop-icons false"
+  "gsettings set org.nemo.desktop show-desktop-icons true"
 )
 
 nemo_desktop_launcher="[Desktop Entry]
@@ -675,6 +645,25 @@ Name=Files
 Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
+
+netflix_icon=https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg
+netflix_alias="alias netflix=\"google-chrome https://www.netflix.com\""
+netflix_launcher="[Desktop Entry]
+Categories=Network;VideoStreaming;Film;
+Comment=Desktop app to reproduce Netflix from Chrome
+Encoding=UTF-8
+Exec=google-chrome https://www.netflix.com
+GenericName=Netflix
+Icon=${USR_BIN_FOLDER}/netflix/netflix_icon.svg
+Keywords=netflix;
+MimeType=x-scheme-handler/tg;
+Name=Netflix
+StartupNotify=true
+StartupWMClass=Netflix
+Terminal=false
+#TryExec=usr/bin/google-chrome
+Type=Application
+Version=1.0"
 
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 
@@ -1092,7 +1081,6 @@ extract_function="
     fi
   }"
 
-
 L_function="
 
 L()
@@ -1125,8 +1113,6 @@ L()
 }
 "
 
-
-
 ### TEMPLATES ###
 
 c_file_template="########################################################################################################################
@@ -1152,13 +1138,11 @@ int main(int nargs, char* args[])
 }
 "
 
-
 c_header_file_template="// Includes
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 "
-
 
 makefile_file_template="CC = gcc
 CFLAGS = -O3 -Wall
@@ -1175,7 +1159,6 @@ run : c_script
 clean :
 	rm -f c_script
 "
-
 
 python_file_template="#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
@@ -1197,8 +1180,6 @@ if __name__ == \"__main__\":
     print(\"HELLO WORLD!\")
     exit(0)
 "
-
-
 
 bash_file_template="#!/usr/bin/env bash
 
@@ -1223,7 +1204,6 @@ main()
 
 set -e
 main \"\$@\""
-
 
 latex_file_template="%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -1336,7 +1316,6 @@ November 2020
 
 "
 
-
 help_common="
 
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -1427,7 +1406,6 @@ Use:
 to refer to the complete help, where all behavioural arguments and feature
 arguments are listed and explained in detail.
 "
-
 
 help_arguments="
 #### Arguments:
@@ -1593,4 +1571,3 @@ features.
 
 
 "
-
