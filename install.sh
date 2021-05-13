@@ -1236,11 +1236,12 @@ execute_installation_wrapper_install_feature()
 
 execute_installation()
 {
-  space=" "
+  # Double for to perform the installation in same order as the arguments
   for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
     for program in ${installation_data[@]}; do
       # Installation bit processing
       installation_bit=$( echo ${program} | cut -d ";" -f1 )
+
       if [[ ${installation_bit} == ${i} ]]; then
         forceness_bit=$( echo ${program} | cut -d ";" -f2 )
         quietness_bit=$( echo ${program} | cut -d ";" -f3 )
@@ -1274,11 +1275,11 @@ add_program()
   while [[ $# -gt 0 ]]; do
     total=${#installation_data[*]}
     for (( i=0; i<$(( ${total} )); i++ )); do
-      program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev )
+      program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev)
 
       if [[ "$1" == "${program_name}" ]]; then
         # Cut static bits
-        rest=$(echo "${installation_data[$i]}" | cut -d ";" -f5- )
+        rest=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1,2 | rev)
         # Append static bits to the state of the flags
         new="${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
         installation_data[$i]=${new}
@@ -1354,6 +1355,8 @@ main()
     key="$1"
 
     case ${key} in
+
+
       ### BEHAVIOURAL ARGUMENTS ###
       -v|--verbose)
         FLAG_QUIETNESS=0
@@ -1425,381 +1428,13 @@ main()
         exit 0
       ;;
 
-      ### WRAPPERS ###
+      ### WRAPPER ARGUMENTS ###
       --custom1)
         add_programs "${custom1[@]}"
       ;;
       --iochem)
         add_programs "${iochem[@]}"
       ;;
-
-      ### INDIVIDUAL ARGUMENTS ###
-      # Sorted alphabetically by function name:
-      --alert|--alert-alias|--alias-alert)
-        add_program install_alert
-      ;;
-      --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
-        add_program install_studio
-      ;;
-      --ant|--apache_ant|--apache-ant)
-        add_program install_ant
-      ;;
-      --anydesk)
-        add_program install_anydesk
-      ;;
-      --audacity|--Audacity)
-        add_program install_audacity
-      ;;
-      --autofirma)
-        add_program install_AutoFirma
-      ;;
-      --atom|--Atom)
-        add_program install_atom
-      ;;
-      --curl|--Curl)
-        add_program install_curl
-      ;;
-      --discord|--Discord|--disc)
-        add_program install_discord
-      ;;
-      --docker|--Docker)
-        add_program install_docker
-      ;;
-      --document|--google-document)
-        add_program install_document
-      ;;
-      --drive|--GoogleDrive|--Drive|--google-drive|--Google-Drive)
-        add_program install_drive
-      ;;
-      --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
-        add_program install_dropbox
-      ;;
-      --gcc|--GCC)
-        add_program install_gcc
-      ;;
-      --caffeine|--Caffeine|--cafe|--coffee)
-        add_program install_caffeine
-      ;;
-      --calibre|--Calibre|--cali)
-        add_program install_calibre
-      ;;
-      --cheat|--cheat.sh|--Cheat.sh|--che)
-        add_program install_cheat
-      ;;
-      --cheese|--Cheese)
-        add_program install_cheese
-      ;;
-      --clementine|--Clementine)
-        add_program install_clementine
-      ;;
-      --clion|--Clion|--CLion)
-        add_program install_clion
-      ;;
-      --cmatrix|--Cmatrix)
-        add_program install_cmatrix
-      ;;
-      --converters|--Converters)
-        add_program install_converters
-      ;;
-      --clonezilla|--CloneZilla|--cloneZilla)
-        add_program install_clonezilla
-      ;;
-      --codium|--vscodium)
-        add_program install_codium
-      ;;
-      --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
-        add_program install_copyq
-      ;;
-      --eclipse)
-        add_program install_eclipse
-      ;;
-      --extract-function|-extract_function)
-        add_program install_extract
-      ;;
-      --f-irc|--firc|--Firc|--irc)
-        add_program install_f-irc
-      ;;
-      --firefox|--Firefox)
-        add_program install_firefox
-      ;;
-      --forms|--google-forms)
-        add_program install_forms
-      ;;
-      --freecad|--FreeCAD|--freeCAD)
-        add_program install_freecad
-      ;;
-      --ffmpeg|--youtube-dl-dependencies)
-        add_program install_ffmpeg
-      ;;
-      #--google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
-      #  add_program install_musicmanager
-      #;;
-      --github|--Github|--GitHub)
-        add_program install_github
-      ;;
-      --gpaint|--paint|--Gpaint)
-        add_program install_gpaint
-      ;;
-      --geany|--Geany)
-        add_program install_geany
-      ;;
-      --geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic)
-        add_program install_geogebra
-      ;;
-      --git)
-        add_program install_git
-      ;;
-      --git-aliases|--git_aliases|--git-prompt)
-        add_program install_git_aliases
-      ;;
-      --GIMP|--gimp|--Gimp)
-        add_program install_gimp
-      ;;
-      --gmail|--Gmail)
-        add_program install_gmail
-      ;;
-      --GNOME_Chess|--gnome_Chess|--gnomechess|--chess)
-        add_program install_gnome-chess
-      ;;
-      --GParted|--gparted|--GPARTED|--Gparted)
-        add_program install_gparted
-      ;;
-      --gvim|--vim-gtk3|--Gvim|--GVim)
-        add_program install_gvim
-      ;;
-      --history-optimization)
-        add_program install_history_optimization
-      ;;
-      --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
-        add_program install_parallel
-      ;;
-      --chrome|--Chrome|--google-chrome|--Google-Chrome)
-        add_program install_google-chrome
-      ;;
-      --google-calendar|--Google-Calendar|--googlecalendar)
-        add_program install_google-calendar
-      ;;
-      --iqmol|--IQmol)
-        add_program install_iqmol
-      ;;
-      --inkscape|--ink-scape|--Inkscape|--InkScape)
-        add_program install_inkscape
-      ;;
-      --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
-        add_program install_ideac
-      ;;
-      --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
-        add_program install_ideau
-      ;;
-      --ipe-function|--ipe)
-        add_program install_ipe
-      ;;
-      --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
-        add_program install_java
-      ;;
-      --keep|--google-keep|--Keep|--Google-Keep|--googlekeep)
-        add_program install_keep
-      ;;
-      --L|--L-function)
-        add_program install_L
-      ;;
-      --latex|--LaTeX|--tex|--TeX)
-        add_program install_latex
-      ;;
-      --libgtkglext1)
-        add_program install_libgtkglext1
-      ;;
-      --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
-        add_program install_l
-      ;;
-      --libxcb-xtest0)
-        add_program install_libxcb-xtest0
-      ;;
-      --maven|--mvn)
-        add_program install_mvn
-      ;;
-      --mahjongg|--Mahjongg|--gnome-mahjongg)
-        add_program install_gnome-mahjongg
-      ;;
-      --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
-        add_program install_megasync
-      ;;
-      --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
-        add_program install_mendeley
-      ;;
-      --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
-        add_program install_mendeley_dependencies
-      ;;
-      --mines|--Mines|--GNU-mines|--gnome-mines|--gnomemines)
-        add_program install_gnome-mines
-      ;;
-      --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
-        add_program install_nemo
-      ;;
-      --net-tools|--nettools)
-        add_program install_net-tools
-      ;;
-      --netflix|--Netflix)
-        add_program install_netflix
-      ;;
-      --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
-        add_program install_notepadqq
-      ;;
-      --onedrive|--OneDrive|--one-drive|--One-Drive)
-        add_program install_onedrive
-      ;;
-      --outlook|--Outlook)
-        add_program install_outlook
-      ;;
-      --openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
-        add_program install_openoffice
-      ;;
-      --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
-        add_program install_obs-studio
-      ;;
-      --okular|--Okular|--okularpdf)
-        add_program install_okular
-      ;;
-      --overleaf|--Overleaf)
-        add_program install_overleaf
-      ;;
-      --pacman|--pac-man)
-        add_program install_pacman
-      ;;
-      --pdfgrep|--findpdf|--pdf)
-        add_program install_pdfgrep
-      ;;
-      --pluma)
-        add_program install_pluma
-      ;;
-      --postgreSQL|--PostGreSQL|--postgresql|--postgre-sql|--postgre-SQL|--psql|--pSQL|--p-SQL|--p-sql)
-        add_program install_psql
-      ;;
-      --presentation|--google-presentation)
-        add_program install_presentation
-      ;;
-      --prompt)
-        add_program install_prompt
-      ;;
-      --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
-        add_program install_pycharm
-      ;;
-      --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
-        add_program install_pycharmpro
-      ;;
-      -p|--python|--python3|--Python3|--Python)
-        add_program install_python3
-      ;;
-      --pypy|--pypy3|--PyPy3|--PyPy)
-        add_program install_pypy3
-      ;;
-      --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
-        add_program install_pypy3_dependencies
-      ;;
-      --s|--s-function)
-        add_program install_s
-      ;;
-      --screenshots|--Screenshots)
-        add_program install_screenshots
-      ;;
-      --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
-        add_program install_shotcut
-      ;;
-      --shortcuts)
-        add_program install_shortcuts
-      ;;
-      --skype|--Skype)
-        add_program install_skype
-      ;;
-      --slack|--Slack)
-        add_program install_slack
-      ;;
-      --spreadsheets|--google-spreadsheets)
-        add_program install_spreadsheets
-      ;;
-      --sudoku|--Sudoku|--gnome-sudoku)
-        add_program install_gnome-sudoku
-      ;;
-      --solitaire|--Solitaire|--gnome-solitaire|--aisleriot)
-        add_program install_aisleriot
-      ;;
-      --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
-        add_program install_sublime
-      ;;
-      --sudoku|--Sudoku|--GNU-sudoku|--gnome-sudoku|--gnomesudoku)
-        add_program install_sudoku
-      ;;
-      --spotify|--Spotify)
-        add_program install_spotify
-      ;;
-      --steam|--Steam|--STEAM)
-        add_program install_steam
-      ;;
-      --Telegram|--telegram)
-        add_program install_telegram
-      ;;
-      --templates)
-        add_program install_templates
-      ;;
-      --terminal-background|--terminal_background)
-        add_program install_terminal_background
-      ;;
-      --Terminator|--terminator)
-        add_program install_terminator
-      ;;
-      --Tilix|--tilix)
-        add_program install_tilix
-      ;;
-      --teams|--Teams|--MicrosoftTeams)
-        add_program install_teams
-      ;;
-      --tmux|--Tmux)
-        add_program install_tmux
-      ;;
-      --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
-        add_program install_thunderbird
-      ;;
-      --tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser)
-        add_program install_tor
-      ;;
-      --transmission|--transmission-gtk|--Transmission)
-        add_program install_transmission
-      ;;
-      --uget)
-        add_program install_uget
-      ;;
-      --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
-        add_program install_virtualbox
-      ;;
-      --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
-        add_program install_code
-      ;;
-      --vlc|--VLC|--Vlc)
-        add_program install_vlc
-      ;;
-      --Wallpapers|--wallpapers|--chwlppr)
-        add_program install_chwlppr
-      ;;
-      --whatsapp|--Whatsapp)
-        add_program install_whatsapp
-      ;;
-      --wireshark|--Wireshark)
-        add_program install_wireshark
-      ;;
-      --youtube|--Youtube|--YouTube)
-        add_program install_youtube
-      ;;
-      --youtubemusic|--YouTubeMusic|--YouTube-Music|--Youtube-Music|--youtube-music)
-        add_program install_youtubemusic
-      ;;
-      --youtube-dl)
-        add_program install_youtube-dl
-      ;;
-      --Zoom| --zoom)
-        add_program install_zoom
-      ;;
-
-      ### WRAPPER ARGUMENTS ###
       --user|--regular|--normal)
         add_user_programs
       ;;
@@ -1809,8 +1444,24 @@ main()
       --ALL|--all|--All)
         add_all_programs
       ;;
-      *)    # unknown option
-        output_proxy_executioner "echo ERROR: ${key} is not a recognized command. Skipping this argument." ${SILENT}
+
+      *)  # Individual argument
+        found=0
+        for program in "${installation_data[@]}"; do
+          program_arguments=$(echo ${program} | cut -d ";" -f1)
+          numargs=$(echo ${program_arguments} | tr "|" " " | wc -w)
+          for (( i=0; i<${numargs}; i++ )); do
+            arg_i=$(echo ${program_arguments} | cut -d "|" -f$((i+1)) )
+            if [[ ${arg_i} == ${key} ]]; then
+              function_name=$(echo ${program} | rev | cut -d ";" -f1 | rev)
+              add_program ${function_name}
+              found=1
+            fi
+          done
+        done
+        if [[ ${found} == 0 ]]; then
+          output_proxy_executioner "echo ERROR: ${key} is not a recognized command. Skipping this argument." ${SILENT}
+        fi
       ;;
     esac
     shift
