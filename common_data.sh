@@ -246,7 +246,10 @@ installation_data=(
   "0;0;0;0;0;install_chwlppr"
   "0;0;0;0;0;install_youtube-dl"
   "0;0;0;0;1;install_ffmpeg"
+  "0;0;0;0;1;install_whatsapp"
   "0;0;0;0;1;install_wireshark"
+  "0;0;0;0;1;install_youtube"
+  "0;0;0;0;1;install_youtubemusic"
   "0;0;0;0;0;install_zoom"
 )
 
@@ -1199,6 +1202,66 @@ dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${P
 #gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
 "
 wallpapers_cronjob="*/5 * * * * ${USR_BIN_FOLDER}/wallpaper_changer.sh"
+
+whatsapp_url=https://web.whatsapp.com/
+whatsapp_icon="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+whatsapp_alias="alias whatsapp=\"google-chrome ${whatsapp_url} &>/dev/null &\""
+whatsapp_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Whatsapp Web from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${whatsapp_url}
+GenericName=WhatsApp Web
+Icon=${USR_BIN_FOLDER}/google-chrome/whatsapp_icon.svg
+Keywords=forms;
+MimeType=x-scheme-handler/tg;
+Name=WhatsApp Web
+StartupNotify=true
+StartupWMClass=WhatsApp
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+youtube_url=https://youtube.com/
+youtube_icon="https://upload.wikimedia.org/wikipedia/commons/4/4f/YouTube_social_white_squircle.svg"
+youtube_alias="alias youtube=\"google-chrome ${youtube_url} &>/dev/null &\""
+youtube_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open YouTube from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${youtube_url}
+GenericName=YouTube
+Icon=${USR_BIN_FOLDER}/google-chrome/youtube_icon.svg
+Keywords=forms;
+MimeType=x-scheme-handler/tg;
+Name=YouTube
+StartupNotify=true
+StartupWMClass=YouTube
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+youtubemusic_url=https://music.youtube.com
+youtubemusic_icon="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg"
+youtubemusic_alias="alias youtubemusic=\"google-chrome ${youtubemusic_url} &>/dev/null &\""
+youtubemusic_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open YouTube Music from Chrome
+Encoding=UTF-8
+Exec=google-chrome ${youtubemusic_url}
+GenericName=YouTube Music
+Icon=${USR_BIN_FOLDER}/google-chrome/youtubemusic_icon.svg
+Keywords=forms;
+MimeType=x-scheme-handler/tg;
+Name=YouTube Music
+StartupNotify=true
+StartupWMClass=YouTube Music
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
 
 youtubedl_downloader=https://yt-dl.org/downloads/latest/youtube-dl
 

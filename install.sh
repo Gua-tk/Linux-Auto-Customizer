@@ -509,12 +509,38 @@ install_presentation()
 install_forms()
 {
   create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
-  # Obtain icon for Google Document
+  # Obtain icon for Google Forms
   (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O forms_icon.svg ${forms_icon})
   create_manual_launcher "${forms_launcher}" forms
   add_bash_function "${forms_alias}" "forms_alias.sh"
 }
 
+install_whatsapp()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for Whatsapp Web
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O whatsapp_icon.svg ${whatsapp_icon})
+  create_manual_launcher "${whatsapp_launcher}" whatsapp
+  add_bash_function "${whatsapp_alias}" "whatsapp_alias.sh"
+}
+
+install_youtube()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for YouTube
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O youtube_icon.svg ${youtube_icon})
+  create_manual_launcher "${youtube_launcher}" youtube
+  add_bash_function "${youtube_alias}" "youtube_alias.sh"
+}
+
+install_youtubemusic()
+{
+  create_folder_as_root ${USR_BIN_FOLDER}/google-chrome
+  # Obtain icon for YouTube Music
+  (cd ${USR_BIN_FOLDER}/google-chrome; wget -q -O youtubemusic_icon.svg ${youtubemusic_icon})
+  create_manual_launcher "${youtubemusic_launcher}" youtubemusic
+  add_bash_function "${youtubemusic_alias}" "youtubemusic_alias.sh"
+}
 
 install_drive()
 {
@@ -1810,8 +1836,17 @@ main()
       --Wallpapers|--wallpapers|--chwlppr)
         add_program install_chwlppr
       ;;
+      --whatsapp|--Whatsapp)
+        add_program install_whatsapp
+      ;;
       --wireshark|--Wireshark)
         add_program install_wireshark
+      ;;
+      --youtube|--Youtube|--YouTube)
+        add_program install_youtube
+      ;;
+      --youtubemusic|--YouTubeMusic|--YouTube-Music|--Youtube-Music|--youtube-music)
+        add_program install_youtubemusic
       ;;
       --youtube-dl)
         add_program install_youtube-dl
