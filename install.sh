@@ -1244,8 +1244,10 @@ execute_installation_wrapper_install_feature()
 
 execute_installation()
 {
-  # Double for to perform the installation in same order as the arguments
+  # Double for to perform the installation in same order a
+  # s the arguments
   for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
+    # Loop through all the elements in the common data table
     for program in ${installation_data[@]}; do
       # Installation bit processing
       installation_bit=$( echo ${program} | cut -d ";" -f1 )
@@ -1270,7 +1272,7 @@ execute_installation()
           else
             output_proxy_executioner "echo WARNING: ${program_name} needs user permissions to be installed. Skipping." ${quietness_bit}
           fi
-        else  # This func does not care about permissions, ${program_privileges} == 2
+        else  # This feature does not care about permissions, ${program_privileges} == 2
           execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
         fi
       fi
