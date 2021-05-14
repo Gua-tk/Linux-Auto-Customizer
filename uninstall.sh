@@ -532,73 +532,6 @@ uninstall_youtube-dl()
 }
 
 
-# Uninstall all functions
-uninstall_all()
-{
-  uninstall_android_studio
-  uninstall_audacity
-  uninstall_atom
-  uninstall_caffeine
-  uninstall_calibre
-  uninstall_cheat
-  unistall_cheese
-  uninstall_gnome-chess
-  uninstall_clion
-  uninstall_clonezilla
-  uninstall_cmatrix
-  uninstall_converters
-  uninstall_discord
-  uninstall_dropbox
-  uninstall_firefox
-  uninstall_f-irc
-  uninstall_games
-  uninstall_gcc
-  uninstall_geany
-  uninstall_gimp
-  uninstall_git
-  uninstall_GNU_parallel
-  uninstall_google_chrome
-  uninstall_gparted
-  uninstall_gvim
-  uninstall_gpaint
-  uninstall_inkscape
-  uninstall_intellij_community
-  uninstall_intellij_ultimate
-  uninstall_jdk11
-  uninstall_latex
-  uninstall_megasync
-  uninstall_mendeley
-  uninstall_mendeley_dependencies
-  uninstall_musicmanager
-  uninstall_nemo
-  uninstall_obs-studio
-  uninstall_openoffice
-  uninstall_pdfgrep
-  uninstall_pycharm_professional
-  uninstall_pycharm_community
-  uninstall_pypy3
-  uninstall_pypy3_dependencies
-  uninstall_python3
-  uninstall_shell_customization
-  uninstall_shotcut
-  uninstall_slack
-  uninstall_steam
-  uninstall_sublime_text
-  uninstall_telegram
-  uninstall_templates
-  uninstall_terminator
-  uninstall_thunderbird
-  uninstall_tilix
-  uninstall_tmux
-  uninstall_torbrowser
-  uninstall_transmission
-  uninstall_virtualbox
-  uninstall_visualstudiocode
-  uninstall_vlc
-  uninstall_wireshark
-  uninstall_youtube-dl
-}
-
 ##################
 ###### MAIN ######
 ##################
@@ -606,7 +539,8 @@ main()
 {
   FLAG_MODE=0
   if [[ "$(whoami)" != "root" ]]; then
-  	err "Exiting. You are not root"
+    output_proxy_executioner "echo ERROR: uninstall.sh needs root permissions." ${FLAG_QUIETNESS}
+    exit 1
   fi
 
   ###### ARGUMENT PROCESSING ######
