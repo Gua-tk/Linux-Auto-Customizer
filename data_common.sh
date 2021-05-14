@@ -211,7 +211,7 @@ installation_data=(
   "--latex|--LaTeX|--tex|--TeX;1;install_latex"
   "--alias-l|--alias-ls|--l-alias|--ls-alias|--l;0;install_l"
   "--L|--L-function;0;install_L"
-  "--libgtkglext1;1;install_libgtkglext1"
+  "--libgtkglext1|--anydesk-dependencies;1;install_libgtkglext1"
   "--libxcb-xtest0;1;install_libxcb-xtest0"
   "--mahjongg|--Mahjongg|--gnome-mahjongg;1;install_gnome-mahjongg"
   "--maven|--mvn;0;install_mvn"
@@ -499,7 +499,6 @@ features.
   --firefox|--Firefox)
   --freecad|--FreeCAD|--freeCAD)
   --ffmpeg|--youtube-dl-dependencies)
-  #--google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--Playmusic|--google-music)
   --gpaint|--paint|--Gpaint)
   --geany|--Geany)
   --git)

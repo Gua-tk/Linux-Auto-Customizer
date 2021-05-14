@@ -123,6 +123,7 @@
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux
 - [ ] help message: arguments refactor with format
+- [ ] customizer.sh help, customizer install, customizer uninstall, customizer parallell [install| uninstall]
 
 
 #### Coming features

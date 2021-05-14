@@ -43,6 +43,17 @@ add_to_favorites()
   fi
 }
 
+# - Description: Apply standard permissions and set owner and group to the user who
+# called root
+# - Permissions: This functions is expected to be called as root
+# Argument 1: Path to the file or directory whose permissions are changed
+apply_permissions()
+{
+  chgrp ${SUDO_USER} "$1"
+  chown ${SUDO_USER} "$1"
+  chmod 775 "$1"
+}
+
 # - Description: Creates the necessary folders in order to make $1 a valid path. Afterwards, converts that dir to a
 # writable folder, now property of the $SUDO_USER user (instead of root), which is the user that ran the sudo command.
 # Note that by using mkdir -p we can pass a path that implies the creation of 2 or more directories without any
@@ -53,12 +64,31 @@ add_to_favorites()
 create_folder_as_root()
 {
   mkdir -p "$1"
-  # Convert folder to a SUDO_ROOT user
-  chgrp ${SUDO_USER} "$1"
-  chown ${SUDO_USER} "$1"
-  chmod 775 "$1"
+  apply_permissions  "$1"
 }
 
+# - Description: Creates the file with $1 specifying location. Afterwards, converts that file to a
+# writable folder, now property of the $SUDO_USER user (instead of root), which is the user that ran the sudo command.
+# - Permissions: This functions is expected to be called as root, or it will throw an error, since $SUDO_USER is not
+# defined in the the scope of the normal user.
+# - Argument 1: Path to the directory that we want to create.
+# - Argument 2(Optional): Content of the file we want to create
+create_file_as_root()
+{
+  local -r folder=$(echo "$1" | rev | cut -d "/" -f2- | rev)
+  local -r filename=$(echo "$1" | rev | cut -d "/" -f1 | rev)
+  if [[ -d ${folder} ]]; then
+    if [[ -n "${filename}" ]]; then
+      echo "$2" > "$1"
+      apply_permissions "$1"
+    else
+      output_proxy_executioner "echo ERROR: The name ${filename} is not a valid filename" ${FLAG_QUIETNESS}
+    fi
+  else
+    output_proxy_executioner "echo ERROR: Can't find ${folder} in create_file_as_root" ${FLAG_QUIETNESS}
+  fi
+
+}
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
 # - Permissions: Same behaviour being root or normal user.
 # - Argument 1: File types. Example: application/x-shellscript
@@ -93,10 +123,7 @@ fi
 copy_launcher()
 {
   if [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]]; then
-    cp "${ALL_USERS_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}"
-    chmod 775 "${XDG_DESKTOP_DIR}/$1"
-    chgrp "${SUDO_USER}" "${XDG_DESKTOP_DIR}/$1"
-    chown "${SUDO_USER}" "${XDG_DESKTOP_DIR}/$1"
+    create_file_as_root "${XDG_DESKTOP_DIR}/$1" "$(cat "${ALL_USERS_LAUNCHERS_DIR}/$1")"
   else
     output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." ${FLAG_QUIETNESS}
   fi
@@ -109,18 +136,15 @@ copy_launcher()
 # Argument 2: The name of the launcher. This argument can be any name with no consequences.
 create_manual_launcher()
 {
-# If user
-if [[ ${EUID} -ne 0 ]]; then
-  echo -e "$1" > "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
-  chmod 775 "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
-  cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
-else  # if root
-  echo -e "$1" > "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop"
-  chmod 775 "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop"
-  chgrp "${SUDO_USER}" "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop"
-  chown "${SUDO_USER}" "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop"
-  cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
-fi
+  # If user
+  if [[ ${EUID} -ne 0 ]]; then
+    echo -e "$1" > "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
+    chmod 775 "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
+    cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
+  else  # if root
+    create_file_as_root "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
+    cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
+  fi
 }
 
 # - Description: Downloads a compressed file pointed by the provided link in $1 into $USR_BIN_FOLDER.
@@ -158,7 +182,7 @@ fi
 download_and_decompress()
 {
   # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -f ${USR_BIN_FOLDER}/downloading_program*
+  rm -f ${USR_BIN_FOLDER}/downloading_program
   # Download in a subshell to avoid changing the working directory in the current shell
   (cd ${USR_BIN_FOLDER}; wget -qO "downloading_program" --show-progress "$1")
 
@@ -180,7 +204,7 @@ download_and_decompress()
     (cd "${USR_BIN_FOLDER}"; tar -x$3f -) < "${USR_BIN_FOLDER}/downloading_program"
   fi
   # Delete downloaded files which will be no longer used
-  rm -f "${USR_BIN_FOLDER}/downloading_program*"
+  rm -f "${USR_BIN_FOLDER}/downloading_program"
   # Clean older installation to avoid conflicts
   if [[ "${program_folder_name}" != "$2" ]]; then
     rm -Rf "${USR_BIN_FOLDER}/$2"
@@ -231,9 +255,7 @@ add_bash_function()
   echo -e "$1" > ${BASH_FUNCTIONS_FOLDER}/$2
 
   if [[ ${EUID} == 0 ]]; then
-    chgrp ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/$2
-    chown ${SUDO_USER} ${BASH_FUNCTIONS_FOLDER}/$2
-    chmod 775 ${BASH_FUNCTIONS_FOLDER}/$2
+    apply_permissions "${BASH_FUNCTIONS_FOLDER}/$2"
   fi
 
   import_line="source ${BASH_FUNCTIONS_FOLDER}/$2"
@@ -249,10 +271,10 @@ add_bash_function()
 # - Argument 1: Link to the package file to download
 download_and_install_package()
 {
-  rm -f ${USR_BIN_FOLDER}/downloading_package*
+  rm -f ${USR_BIN_FOLDER}/downloading_package
   (cd ${USR_BIN_FOLDER}; wget -qO downloading_package --show-progress $1)
   dpkg -i ${USR_BIN_FOLDER}/downloading_package
-  rm -f ${USR_BIN_FOLDER}/downloading_package*
+  rm -f ${USR_BIN_FOLDER}/downloading_package
 }
 
 # - Description: Create .desktop with custom url to open a link in favorite internet navigator
@@ -557,16 +579,12 @@ install_openoffice()
 {
   # Delete old versions of openoffice to avoid conflicts
   apt-get remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
-  echo $?
 
   rm -f ${USR_BIN_FOLDER}/office*
   (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O office ${openoffice_downloader})
 
-  echo $?
   rm -Rf ${USR_BIN_FOLDER}/en-US
-  echo si
   (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/office
-  echo no
   rm -f ${USR_BIN_FOLDER}/office
 
   dpkg -i ${USR_BIN_FOLDER}/en-US/DEBS/*.deb
@@ -717,6 +735,7 @@ install_uget()
 {
   # Dependencies
   apt-get install -y aria2
+
   apt-get install -y uget
   copy_launcher uget-gtk.desktop
 }
@@ -1292,10 +1311,7 @@ main()
     create_folder_as_root ${PERSONAL_LAUNCHERS_DIR}
 
     if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
-      echo "${bash_functions_init}" > "${BASH_FUNCTIONS_PATH}"
-      chgrp ${SUDO_USER} ${BASH_FUNCTIONS_PATH}
-      chown ${SUDO_USER} ${BASH_FUNCTIONS_PATH}
-      chmod 775 ${BASH_FUNCTIONS_PATH}
+      create_file_as_root "${BASH_FUNCTIONS_PATH}" "${bash_functions_init}"
       # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
       if [[ -z "$(echo "${PATH}" | grep -Eo "(.*:.*)*${DIR_IN_PATH}")" ]]; then  # If it is not in PATH, add to bash functions
         echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASH_FUNCTIONS_PATH}
