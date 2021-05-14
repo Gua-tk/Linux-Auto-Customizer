@@ -70,6 +70,8 @@
 - [x] AutoUpdate and construct README
 - [x] L Function
 - [x] Add folder to store icons for .desktop files --> `created add_internet_shortcut`
+- [x] Internet shortcut icons are broken because are downloaded into google-chrome folder --> Parametrized using indirect variable expansion, and adding parametrized line of Icon and exec in the launcher
+- [x] Change `google-chrome` for `xdg-open`  on internet shortcut. Delete `${program_name}_url` and put it hardcoded inside of each desktop launcher
 - [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 - [ ] Program function in `uninstall.sh` to remove bash functions
 - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
@@ -95,7 +97,8 @@
 - [x] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
 - [x] Change default Screenshots folder to /home/user/Images/screenshots/
 - [x] Internet shortcut launchers: Gapps, Netflix, OneDrive, Outlook, GitHub, Overleaf...
-- [ ] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc...  
+- [x] INTERNET SHORTCUT BUG: delete lines of Exec and Icon in all launchers of internet desktop launchers  
+- [ ] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc...
 - [ ] Add desktop internet shortcuts for https://twitch.tv/, https://facebook.com/, https://twitter.com/, https://instagram.com/, https://discord.com/channels/, Telegram Web (https://web.telegram.org/, version X, version Z), https://open.spotify.com/ ...
 - [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
 - [ ] sysmontask

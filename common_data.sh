@@ -130,11 +130,9 @@ FLAG_INSTALL=1       # 1 or more --> Install the feature provided to add_program
 # Also, flag_install is the number used to determine the installation order
 FLAG_QUIETNESS=1     # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
 FLAG_IGNORE_ERRORS=0 # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
-
-# Used to perform the (un)installation in the same order that we are receiving arguments
-NUM_INSTALLATION=1
-UPGRADE=2
-AUTOCLEAN=2
+NUM_INSTALLATION=1  # Used to perform the (un)installation in the same order that we are receiving arguments
+FLAG_UPGRADE=1  # 0 --> no update, no upgrade; 1 --> update, no upgrade; 2 --> update and upgrade
+FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perform autoremove; 2 --> perform autoremove and autoclean
 
 ### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
 
@@ -613,9 +611,7 @@ presentation_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Presentation from Chrome
 Encoding=UTF-8
-Exec=google-chrome ${presentation_url}
 GenericName=Document
-Icon=${USR_BIN_FOLDER}/google-chrome/presentation_icon.svg
 Keywords=presentations;
 MimeType=x-scheme-handler/tg;
 Name=Google Presentation

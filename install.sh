@@ -262,17 +262,25 @@ download_and_install_package()
 add_internet_shortcut()
 {
   # Perform indirect variable expansion
-  icon=$1_icon
-  launcher=$1_launcher
-  alias=$1_alias
-  url=$1_url
+  local -r icon=$1_icon
+  local -r launcher=$1_launcher
+  local -r alias=$1_alias
+  local -r url=$1_url
 
   # Obtain icon for program
   mkdir -p "${USR_BIN_FOLDER}/$1"
-  (cd ${USR_BIN_FOLDER}/$1; wget -q -O $1_icon.svg ${!url})
+  (cd ${USR_BIN_FOLDER}/$1; wget -qO $1_icon.svg --show-progress ${!icon})
 
-  create_manual_launcher "${!launcher}" $1
+  # Parametrize the exec and icon line of the desktop launcher
+  local -r icon_exec_launcher_line="
+  Exec=xdg-open ${!url}
+  Icon=${USR_BIN_FOLDER}/$1/$1_icon.svg
+  "
+  # add the icon and exec lines to desktop launcher
+  local -r launcher_complete="${!launcher}${icon_exec_launcher_line}"
+  create_manual_launcher "${launcher_complete}" $1
 
+  # Add the corresponding alias
   add_bash_function "${!alias}" "$1.sh"
 }
 
@@ -1355,23 +1363,23 @@ main()
       ;;
 
       -d|--dirty|--no-autoclean)
-        AUTOCLEAN=0
+        FLAG_AUTOCLEAN=0
       ;;
       -c|--clean)
-        AUTOCLEAN=1
+        FLAG_AUTOCLEAN=1
       ;;
       -C|--Clean)
-        AUTOCLEAN=2
+        FLAG_AUTOCLEAN=2
       ;;
 
       -U|--upgrade|--Upgrade)
-        UPGRADE=2
+        FLAG_UPGRADE=2
       ;;
       -u|--update)
-        UPGRADE=1
+        FLAG_UPGRADE=1
       ;;
       -k|--keep-system-outdated)
-        UPGRADE=0
+        FLAG_UPGRADE=0
       ;;
 
       -n|--not|-!)
@@ -1442,12 +1450,12 @@ main()
   ### PRE-INSTALLATION UPDATE ###
 
   if [[ ${EUID} == 0 ]]; then
-    if [[ ${UPGRADE} -gt 0 ]]; then
+    if [[ ${FLAG_UPGRADE} -gt 0 ]]; then
       output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y update" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: System updated." ${FLAG_QUIETNESS}
     fi
-    if [[ ${UPGRADE} == 2 ]]; then
+    if [[ ${FLAG_UPGRADE} == 2 ]]; then
       output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y upgrade" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: System upgraded." ${FLAG_QUIETNESS}
@@ -1463,12 +1471,12 @@ main()
   ### POST-INSTALLATION CLEAN ###
 
   if [[ ${EUID} == 0 ]]; then
-    if [[ ${AUTOCLEAN} -gt 0 ]]; then
+    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
       output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
     fi
-    if [[ ${AUTOCLEAN} == 2 ]]; then
+    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
       output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
