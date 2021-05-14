@@ -1409,13 +1409,13 @@ main()
         add_programs "${iochem[@]}"
       ;;
       --user|--regular|--normal)
-        add_user_programs
+        add_programs_with_x_permissions 0
       ;;
       --root|--superuser|--su)
-        add_root_programs
+        add_programs_with_x_permissions 1
       ;;
       --ALL|--all|--All)
-        add_all_programs
+        add_programs_with_x_permissions 2
       ;;
 
       *)  # Individual argument

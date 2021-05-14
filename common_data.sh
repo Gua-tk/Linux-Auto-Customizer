@@ -49,7 +49,6 @@ add_program()
     total=${#installation_data[*]}
     for (( i=0; i<$(( ${total} )); i++ )); do
       program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev)
-
       if [[ "$1" == "${program_name}" ]]; then
         # Cut static bits
         rest=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1,2 | rev)
@@ -104,25 +103,18 @@ fi
 
 # Path pointing to a directory that is included in the PATH variable
 DIR_IN_PATH=${HOME_FOLDER}/.local/bin
-
 # Path pointing to a folder that contains the desktop launchers for the unity application launcher of the current user
 PERSONAL_LAUNCHERS_DIR=${HOME_FOLDER}/.local/share/applications
-
 # Path pointing to .bashrc file of the user
 BASHRC_PATH=${HOME_FOLDER}/.bashrc
-
 # Folder where all the software will be installed
 USR_BIN_FOLDER=${HOME_FOLDER}/.bin
-
 # Path pointing to .bash_functions, which is the file used to control the installed features of the customizer
 BASH_FUNCTIONS_PATH=${HOME_FOLDER}/.bash_functions
-
 # Path pointing to the folder containing all the scripts of the bash functions
 BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
-
 # Path pointing to a folder that contains the desktop launchers of all users
 ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
-
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
 FLAG_OVERWRITE=0     # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
@@ -130,7 +122,7 @@ FLAG_INSTALL=1       # 1 or more --> Install the feature provided to add_program
 # Also, flag_install is the number used to determine the installation order
 FLAG_QUIETNESS=1     # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
 FLAG_IGNORE_ERRORS=0 # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
-NUM_INSTALLATION=1  # Used to perform the (un)installation in the same order that we are receiving arguments
+NUM_INSTALLATION=1  # Used to perform the (un)installation in the same order that we are receiving arguments. Also, keeps the order even if we use --no, because we need a temporal
 FLAG_UPGRADE=1  # 0 --> no update, no upgrade; 1 --> update, no upgrade; 2 --> update and upgrade
 FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perform autoremove; 2 --> perform autoremove and autoclean
 
@@ -310,33 +302,17 @@ standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezill
 custom1=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "chwlppr" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
 iochem=("psql" "gcc" "java" "ant" "mvn")
 
-add_root_programs()
+# - Description: Adds all the programs with specific privileges to the installation data
+# - Permissions: This function can be called as root or as user with same behaviour.
+# - Argument 1: Type of permissions of the selected program: 0 for user, 1 for root, 2 for everything
+add_programs_with_x_permissions()
 {
   for program in ${installation_data[@]}; do
-    permissions=$(echo ${program} | cut -d ";" -f5)
-    if [[ ${permissions} != 0 ]]; then
-      name=$(echo ${program} | cut -d ";" -f6)
+    permissions=$(echo ${program} | rev | cut -d ";" -f2 | rev)
+    name=$(echo ${program} | rev | cut -d ";" -f1 | rev)
+    if [[ ${permissions} == $1 ]]; then
       add_program ${name}
     fi
-  done
-}
-
-add_user_programs()
-{
-  for program in ${installation_data[@]}; do
-    permissions=$(echo ${program} | cut -d ";" -f5)
-    if [[ ${permissions} != 1 ]]; then
-      name=$(echo ${program} | cut -d ";" -f6)
-      add_program ${name}
-    fi
-  done
-}
-
-add_all_programs()
-{
-  for program in ${installation_data[@]}; do
-    name=$(echo ${program} | cut -d ";" -f6)
-    add_program $name
   done
 }
 
