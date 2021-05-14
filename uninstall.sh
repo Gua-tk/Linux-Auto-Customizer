@@ -605,6 +605,7 @@ uninstall_all()
 ##################
 main()
 {
+  FLAG_MODE=0
   if [[ "$(whoami)" != "root" ]]; then
   	err "Exiting. You are not root"
   fi
@@ -895,9 +896,9 @@ main()
         ;;
         
         
-        *)    # unknown option
-          err "$1 is not a recognized command"
-          ;;
+        *)  # Individual arguments
+          process_argument ${key}
+        ;;
       esac
       shift
     done
