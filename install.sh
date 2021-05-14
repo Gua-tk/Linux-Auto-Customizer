@@ -1344,11 +1344,11 @@ main()
         FLAG_QUIETNESS=2
       ;;
 
-      -o|--overwrite|--overwrite-if-present)
-        FLAG_OVERWRITE=1
-      ;;
       -s|--skip|--skip-if-installed)
         FLAG_OVERWRITE=0
+      ;;
+      -o|--overwrite|--overwrite-if-present)
+        FLAG_OVERWRITE=1
       ;;
 
       -i|--ignore|--ignore-errors)

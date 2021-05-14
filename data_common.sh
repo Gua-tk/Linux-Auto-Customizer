@@ -110,7 +110,7 @@ BASHRC_PATH=${HOME_FOLDER}/.bashrc
 # Folder where all the software will be installed
 USR_BIN_FOLDER=${HOME_FOLDER}/.bin
 # Path pointing to .bash_functions, which is the file used to control the installed features of the customizer
-BASH_FUNCTIONS_PATH=${HOME_FOLDER}/.bash_functions
+BASH_FUNCTIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_functions
 # Path pointing to the folder containing all the scripts of the bash functions
 BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 # Path pointing to a folder that contains the desktop launchers of all users
