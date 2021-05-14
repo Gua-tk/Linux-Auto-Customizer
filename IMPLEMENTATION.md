@@ -56,14 +56,7 @@
 - [x] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed. this command is `s "command"`
 - [x] On nemo desktop delete automatically nautilus
 - [x] Wireshark
-- [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
-- [ ] Program function in `uninstall.sh` to remove bash functions
-- [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
-- [ ] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
-- [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
-- [ ] Program function to unregister default opening applications on `uninstall.sh`
-- [ ] Call add_program matching against table in `common_data.sh` --> move all arguments to `common_data.sh` table and ensure there's no collision with separators.
-- [ ] 
+- [X] rar / unrar - zip / unzip (also integrate in extract func)
 - [x] Red prompt for warning and error messages
 - [x] Optimize history to be updated in real-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
 - [x] Anydesk
@@ -77,6 +70,13 @@
 - [x] AutoUpdate and construct README
 - [x] L Function
 - [x] Add folder to store icons for .desktop files --> `created add_internet_shortcut`
+- [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [ ] Program function in `uninstall.sh` to remove bash functions
+- [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
+- [ ] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
+- [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
+- [ ] Program function to unregister default opening applications on `uninstall.sh`
+- [ ] Call add_program matching against table in `common_data.sh` --> move all arguments to `common_data.sh` table and ensure there's no collision with separators.
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -95,10 +95,11 @@
 - [x] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
 - [x] Change default Screenshots folder to /home/user/Images/screenshots/
 - [x] Internet shortcut launchers: Gapps, Netflix, OneDrive, Outlook, GitHub, Overleaf...
+- [ ] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc.  
 - [ ] Add desktop internet shortcuts for https://twitch.tv/, https://facebook.com/, https://twitter.com/, https://instagram.com/, https://discord.com/channels/, Telegram Web (https://web.telegram.org/, version X, version Z), https://open.spotify.com/ ...
-- [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s)
 - [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
-- [ ] rar / unrar - zip / unzip (also integrate in extract func)
+- [ ] sysmontask
+- [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s)
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
 - [ ] PacketTracer  
@@ -107,7 +108,6 @@
 - [ ] Rsync and grsync (graphical)
 - [ ] GNOME Tweak tools
 - [ ] Synaptics
-- [ ] sysmontask
 - [ ] sherlock
 - [ ] SublimeText-Markdown, & other plugins for programs...
 - [ ] Fonts

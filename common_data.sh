@@ -40,6 +40,41 @@ output_proxy_executioner() {
   fi
 }
 
+
+# Receives a list of feature function name (install_pycharm, install_vlc...) and applies the current flags to it,
+# modifying the corresponding line of installation_data
+add_program()
+{
+  while [[ $# -gt 0 ]]; do
+    total=${#installation_data[*]}
+    for (( i=0; i<$(( ${total} )); i++ )); do
+      program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev)
+
+      if [[ "$1" == "${program_name}" ]]; then
+        # Cut static bits
+        rest=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1,2 | rev)
+        # Append static bits to the state of the flags
+        new="${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
+        installation_data[$i]=${new}
+        # Update flags and program counter
+        if [[ ${FLAG_INSTALL} -gt 0 ]]; then
+          NUM_INSTALLATION=$(( ${NUM_INSTALLATION} + 1 ))
+          FLAG_INSTALL=${NUM_INSTALLATION}
+        fi
+      fi
+    done
+    shift
+  done
+}
+
+add_programs()
+{
+  while [[ $# -gt 0 ]]; do
+    add_program "install_$1"
+    shift
+  done
+}
+
 ############################
 ##### COMMON VARIABLES #####
 ############################
