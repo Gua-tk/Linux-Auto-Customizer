@@ -1270,6 +1270,8 @@ execute_installation()
           else
             output_proxy_executioner "echo WARNING: ${program_name} needs user permissions to be installed. Skipping." ${quietness_bit}
           fi
+        else  # This func does not care about permissions, ${program_privileges} == 2
+          execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
         fi
       fi
     done
@@ -1329,8 +1331,6 @@ main()
     key="$1"
 
     case ${key} in
-
-
       ### BEHAVIOURAL ARGUMENTS ###
       -v|--verbose)
         FLAG_QUIETNESS=0
@@ -1467,8 +1467,9 @@ main()
 
   execute_installation
 
-
+  ###############################
   ### POST-INSTALLATION CLEAN ###
+  ###############################
 
   if [[ ${EUID} == 0 ]]; then
     if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
@@ -1483,7 +1484,7 @@ main()
     fi
   fi
 
-  # Make the beel sound at the end
+  # Make the bell sound at the end
   echo -en "\07"; echo -en "\07"; echo -en "\07"
 }
 
@@ -1501,7 +1502,6 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: common_data.sh does not exist. Aborting..."
   exit 1
 fi
-
 
 # Call main function
 main "$@"

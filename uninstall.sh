@@ -619,6 +619,73 @@ main()
       key="$1"
 
       case ${key} in
+        ### BEHAVIOURAL ARGUMENTS ###
+      -v|--verbose)
+        FLAG_QUIETNESS=0
+      ;;
+      -q|--quiet)
+        FLAG_QUIETNESS=1
+      ;;
+      -Q|--Quiet)
+        FLAG_QUIETNESS=2
+      ;;
+
+      -o|--overwrite|--overwrite-if-present)
+        FLAG_OVERWRITE=1
+      ;;
+      -s|--skip|--skip-if-installed)
+        FLAG_OVERWRITE=0
+      ;;
+
+      -i|--ignore|--ignore-errors)
+        FLAG_IGNORE_ERRORS=1
+      ;;
+      -e|--exit|--exit-on-error)
+        FLAG_IGNORE_ERRORS=0
+      ;;
+
+      # Force is the two previous active behaviours in one
+      -f|--force)
+        FLAG_IGNORE_ERRORS=1
+        FLAG_OVERWRITE=1
+      ;;
+
+      -d|--dirty|--no-autoclean)
+        FLAG_AUTOCLEAN=0
+      ;;
+      -c|--clean)
+        FLAG_AUTOCLEAN=1
+      ;;
+      -C|--Clean)
+        FLAG_AUTOCLEAN=2
+      ;;
+
+      -U|--upgrade|--Upgrade)
+        FLAG_UPGRADE=2
+      ;;
+      -u|--update)
+        FLAG_UPGRADE=1
+      ;;
+      -k|--keep-system-outdated)
+        FLAG_UPGRADE=0
+      ;;
+
+      -n|--not|-!)
+        FLAG_INSTALL=0
+      ;;
+      -y|--yes)
+        FLAG_INSTALL=${NUM_INSTALLATION}
+      ;;
+
+      -h)
+        output_proxy_executioner "echo ${help_common}${help_simple}" ${FLAG_QUIETNESS}
+        exit 0
+      ;;
+
+      -H|--help)
+        output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
+        exit 0
+      ;;
 
         ### INDIVIDUAL ARGUMENTS ###
         # Sorted alphabetically by function name:
@@ -835,12 +902,26 @@ main()
     done
   fi
 
-  # Clean 
-  apt -y -qq autoremove
-  apt -y -qq autoclean
 
-  return 0
-}
+  ###############################
+  ### POST-INSTALLATION CLEAN ###
+  ###############################
+
+  if [[ ${EUID} == 0 ]]; then
+    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+    fi
+    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+    fi
+  fi
+
+  # Make the bell sound at the end
+  echo -en "\07"; echo -en "\07"; echo -en "\07"}
 
 
 # Import file of common variables in a relative way, so customizer can be called system-wide
