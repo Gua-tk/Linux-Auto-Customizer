@@ -843,12 +843,19 @@ main()
 }
 
 
-# Import file of common variables
+# Import file of common variables in a relative way, so customizer can be called system-wide
+# RF, duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "${DIR}" ]]; then
   DIR="${PWD}"
 fi
-source "${DIR}/common_data.sh"
+if [[ -f "${DIR}/common_data.sh" ]]; then
+  source "${DIR}/common_data.sh"
+else
+  # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
+  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: common_data.sh does not exist. Aborting..."
+  exit 1
+fi
 
 # Call main function
 main "$@"

@@ -75,6 +75,7 @@ add_programs()
   done
 }
 
+
 ############################
 ##### COMMON VARIABLES #####
 ############################
@@ -130,6 +131,7 @@ FLAG_INSTALL=1       # 1 or more --> Install the feature provided to add_program
 FLAG_QUIETNESS=1     # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
 FLAG_IGNORE_ERRORS=0 # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
 
+# Used to perform the (un)installation in the same order that we are receiving arguments
 NUM_INSTALLATION=1
 SILENT=1
 UPGRADE=2
