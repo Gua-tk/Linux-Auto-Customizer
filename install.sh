@@ -1274,6 +1274,7 @@ execute_installation()
         else  # This feature does not care about permissions, ${program_privileges} == 2
           execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
         fi
+        break
       fi
     done
   done
