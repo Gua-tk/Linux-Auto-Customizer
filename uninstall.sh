@@ -424,13 +424,12 @@ uninstall_slack()
 
 uninstall_steam()
 {
-  apt-get purge -y curl
   dpkg -P steam-launcher
   rm -f ${XDG_DESKTOP_DIR}/steam.desktop
 }
 
 
-uninstall_sublime_text()
+uninstall_sublime()
 {
   rm -Rf ${USR_BIN_FOLDER}/sublime-text
   rm -f ${XDG_DESKTOP_DIR}/sublime-text.desktop
@@ -688,221 +687,26 @@ main()
         output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
         exit 0
       ;;
-
-        ### INDIVIDUAL ARGUMENTS ###
-        # Sorted alphabetically by function name:
-        --android|--AndroidStudio|--androidstudio|--studio|--android-studio|--android_studio|--Androidstudio)
-          uninstall_android_studio
-        ;;
-        --audacity|--Audacity)
-          uninstall_audacity
-        ;;
-        --atom|--Atom)
-          uninstall_atom
-        ;;
-        --caffeine|--Caffeine|--cafe|--coffee)
-          uninstall_caffeine
-        ;;
-        --calibre|--Calibre|--cali)
-          uninstall_calibre
-        ;;
-        --cheat|--cheat.sh|--Cheat.sh|--che)
-          uninstall_cheat
-        ;;
-        --cheese|--Cheese)
-          unistall_cheese
-        ;;
-        --GNOME_Chess|--gnome_Chess|--gnomechess|--chess)
-          uninstall_gnome-chess
-        ;;
-        --clementine|--Clementine)
-          uninstall_clementine
-        ;;
-        --clion|--Clion|--CLion)
-          uninstall_clion
-        ;;
-        --cmatrix|--Cmatrix)
-          uninstall_cmatrix
-        ;;
-        --clonezilla|--CloneZilla|--cloneZilla)
-          uninstall_clonezilla
-        ;;
-        --converters|--Converters)
-          uninstall_converters
-        ;;
-        --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
-          uninstall_copyq
-        ;;
-        --discord|--Discord|--disc)
-          uninstall_discord
-        ;;
-        --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
-          uninstall_dropbox
-        ;;
-        -c|--gcc)
-          uninstall_gcc
-        ;;
-        --f-irc|--firc|--Firc|--irc)
-          uninstall_f-irc
-        ;;
-        --firefox|--Firefox)
-          uninstall_firefox
-        ;;
-        --games|--Gaming|--Games)
-          uninstall_games
-        ;;
-        --geany|--Geany)
-          uninstall_geany
-        ;;
-        --git)
-          uninstall_git
-        ;;
-        --GIMP|--gimp|--Gimp)
-          uninstall_gimp
-        ;;
-        --google-play-music|--musicmanager|--music-manager|--MusicManager|--playmusic|--GooglePlayMusic|--play-music|--google-playmusic|--playmusic|--google-music)
-          uninstall_musicmanager
-        ;;
-        --gpaint|--paint|--Gpaint)
-          uninstall_gpaint
-        ;;
-        --GParted|--gparted|--GPARTED|--Gparted)
-          uninstall_gparted
-        ;;
-        --gvim|--vim-gtk3|--Gvim|--GVim)
-          uninstall_gvim
-        ;;
-        --inkscape|--ink-scape|--Inkscape|--InkScape)
-          uninstall_inkscape
-        ;;
-        --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
-          uninstall_GNU_parallel
-        ;;
-        --chrome|--Chrome|--google-chrome|--Google-Chrome)
-          uninstall_google_chrome
-        ;;
-        --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
-          uninstall_intellij_community
-        ;;
-        --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
-          uninstall_intellij_ultimate
-        ;;
-        --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11)
-          uninstall_jdk11
-        ;;
-        --latex|--LaTeX|--tex|--TeX)
-          uninstall_latex
-        ;;
-        --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
-          uninstall_megasync
-        ;;
-        --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
-          uninstall_mendeley
-        ;;
-        --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
-          uninstall_mendeley_dependencies
-        ;;
-         --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
-          uninstall_nemo
-        ;;
-        --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadqQ|--NotepadQq|--NotepadqQ|--NotePadQQ|NotePadqq)
-          uninstall_notepadqq
-        ;;
-        --pdfgrep|--findpdf|--pdf)
-          uninstall_pdfgrep
-        ;;
-        --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
-          uninstall_pycharm_community
-        ;;
-        --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
-          uninstall_pycharm_professional
-        ;;
-        --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
-          uninstall_obs-studio
-        ;;
-        --office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
-          uninstall_openoffice
-        ;;
-        --okular|--Okular|--okularpdf)
-          install_okular
-        ;;
-        -p|--python|--python3|--Python3|--Python)
-          uninstall_python3
-        ;;
-        --pypy|--pypy3|--PyPy3|--PyPy)
-          uninstall_pypy3
-        ;;
-        --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
-          uninstall_pypy3_dependencies
-        ;;
-        --shell|--shellCustomization|--shellOptimization|--environment|--environmentaliases|--environment_aliases|--environmentAliases|--alias|--Aliases)  # Considered "shell" in order
-          uninstall_shell_customization
-        ;;
-        --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
-          uninstall_shotcut
-        ;;
-        --slack|--Slack)
-          uninstall_slack
-        ;;
-        --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
-          uninstall_sublime_text
-        ;;
-        --steam|--Steam|--STEAM)
-          uninstall_steam
-        ;;
-        --Telegram|--telegram)
-          uninstall_telegram
-        ;;
-        --templates)
-          uninstall_templates
-        ;;
-        --Terminator|--terminator)
-          uninstall_terminator
-        ;;
-        --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
-          uninstall_thunderbird
-        ;;
-        --tilix|--tilix)
-          uninstall_tilix
-        ;;
-        --tmux|--Tmux)
-          uninstall_tmux
-        ;;
-        --tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser)
-          uninstall_torbrowser
-        ;;
-        --transmission|--transmission-gtk|--Transmission)
-          uninstall_transmission
-        ;;
-        --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
-          uninstall_virtualbox
-        ;;
-        --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
-          uninstall_visualstudiocode
-        ;;
-        --vlc|--VLC|--Vlc)
-          uninstall_vlc
-        ;;
-        --wireshark|--Wireshark)
-          uninstall_wireshark
-        ;;
-        --youtube|--youtube-dl)
-          uninstall_youtube-dl
-        ;;
         
         ### WRAPPER ARGUMENT(S) ###
-        -|--all)
-          uninstall_all
-        ;;
-        
-        
-        *)  # Individual arguments
-          process_argument ${key}
-        ;;
+      -|--all)
+        uninstall_all
+      ;;
+
+
+      *)  # Individual arguments
+        process_argument ${key}
+      ;;
       esac
-      shift
-    done
-  fi
+    shift
+  done
+fi
+
+  ####################
+  ### INSTALLATION ###
+  ####################
+
+  execute_installation
 
 
   ###############################
@@ -924,7 +728,7 @@ main()
 
   # Make the bell sound at the end
   echo -en "\07"; echo -en "\07"; echo -en "\07"}
-
+}
 
 # Import file of common variables in a relative way, so customizer can be called system-wide
 # RF, duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh
@@ -932,8 +736,8 @@ DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "${DIR}" ]]; then
   DIR="${PWD}"
 fi
-if [[ -f "${DIR}/common_data.sh" ]]; then
-  source "${DIR}/common_data.sh"
+if [[ -f "${DIR}/data_common.sh" ]]; then
+  source "${DIR}/data_common.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: common_data.sh does not exist. Aborting..."

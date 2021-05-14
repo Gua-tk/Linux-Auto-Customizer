@@ -115,7 +115,6 @@ execute_installation()
     for program in ${installation_data[@]}; do
       # Installation bit processing
       installation_bit=$( echo ${program} | cut -d ";" -f1 )
-
       if [[ ${installation_bit} == ${i} ]]; then
         forceness_bit=$( echo ${program} | cut -d ";" -f2 )
         quietness_bit=$( echo ${program} | cut -d ";" -f3 )
@@ -123,10 +122,14 @@ execute_installation()
         program_function=$( echo ${program} | cut -d ";" -f6 )
         program_privileges=$( echo ${program} | cut -d ";" -f5 )
 
-        # If we are on uninstall always activate -o FLAG_OVERWRITE and change program function name
+        # If we are on uninstall:
+        # activate -o FLAG_OVERWRITE
+        # change program function name to un${function_name_in_installation_data}
+        # Set permissions always to root
         if [[ ${FLAG_MODE} == 0 ]]; then
           overwrite_bit=1
           program_function=un${program_function}
+          program_privileges=1
         fi
 
         program_name=$( echo ${program_function} | cut -d "_" -f2- )

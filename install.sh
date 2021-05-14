@@ -1188,7 +1188,6 @@ install_shortcuts()
   add_bash_function "${shortcut_aliases}" shortcuts.sh
 }
 
-# Install templates (available files in the right click --> new --> ...)
 install_templates()
 {
   echo -e "${bash_file_template}" > ${XDG_TEMPLATES_DIR}/shell_script.sh
@@ -1223,11 +1222,6 @@ install_youtubemusic()
 {
   add_internet_shortcut youtubemusic
 }
-
-
-################################
-###### AUXILIAR FUNCTIONS ######
-################################
 
 
 ##################
@@ -1299,12 +1293,13 @@ main()
         FLAG_OVERWRITE=1
       ;;
 
-      -i|--ignore|--ignore-errors)
-        FLAG_IGNORE_ERRORS=1
-      ;;
       -e|--exit|--exit-on-error)
         FLAG_IGNORE_ERRORS=0
       ;;
+      -i|--ignore|--ignore-errors)
+        FLAG_IGNORE_ERRORS=1
+      ;;
+
 
       # Force is the two previous active behaviours in one
       -f|--force)
@@ -1322,14 +1317,14 @@ main()
         FLAG_AUTOCLEAN=2
       ;;
 
-      -U|--upgrade|--Upgrade)
-        FLAG_UPGRADE=2
+      -k|--keep-system-outdated)
+        FLAG_UPGRADE=0
       ;;
       -u|--update)
         FLAG_UPGRADE=1
       ;;
-      -k|--keep-system-outdated)
-        FLAG_UPGRADE=0
+      -U|--upgrade|--Upgrade)
+        FLAG_UPGRADE=2
       ;;
 
       -n|--not|-!)
@@ -1399,9 +1394,12 @@ main()
   fi
 
 
+  ####################
   ### INSTALLATION ###
+  ####################
 
   execute_installation
+
 
   ###############################
   ### POST-INSTALLATION CLEAN ###
