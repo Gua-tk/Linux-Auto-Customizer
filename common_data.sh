@@ -133,7 +133,6 @@ FLAG_IGNORE_ERRORS=0 # 1 --> the script will continue its execution even if an e
 
 # Used to perform the (un)installation in the same order that we are receiving arguments
 NUM_INSTALLATION=1
-SILENT=1
 UPGRADE=2
 AUTOCLEAN=2
 

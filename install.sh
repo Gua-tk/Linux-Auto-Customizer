@@ -1326,15 +1326,12 @@ main()
       ### BEHAVIOURAL ARGUMENTS ###
       -v|--verbose)
         FLAG_QUIETNESS=0
-        SILENT=0
       ;;
       -q|--quiet)
         FLAG_QUIETNESS=1
-        SILENT=1
       ;;
       -Q|--Quiet)
         FLAG_QUIETNESS=2
-        SILENT=2
       ;;
 
       -o|--overwrite|--overwrite-if-present)
@@ -1385,12 +1382,12 @@ main()
       ;;
 
       -h)
-        output_proxy_executioner "echo ${help_common}${help_simple}" ${SILENT}
+        output_proxy_executioner "echo ${help_common}${help_simple}" ${FLAG_QUIETNESS}
         exit 0
       ;;
 
       -H|--help)
-        output_proxy_executioner "echo ${help_common}${help_arguments}" ${SILENT}
+        output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
         exit 0
       ;;
 
@@ -1426,7 +1423,7 @@ main()
           done
         done
         if [[ ${found} == 0 ]]; then
-          output_proxy_executioner "echo WARNING: ${key} is not a recognized command. Skipping this argument." ${SILENT}
+          output_proxy_executioner "echo WARNING: ${key} is not a recognized command. Skipping this argument." ${FLAG_QUIETNESS}
         fi
       ;;
     esac
@@ -1435,8 +1432,8 @@ main()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [[ ${NUM_INSTALLATION} == 0 ]]; then
-    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${SILENT}
-    output_proxy_executioner "echo ${help_message}" ${SILENT}
+    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo ${help_message}" ${FLAG_QUIETNESS}
     exit 0
   fi
 
@@ -1446,14 +1443,14 @@ main()
 
   if [[ ${EUID} == 0 ]]; then
     if [[ ${UPGRADE} -gt 0 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${SILENT}
-      output_proxy_executioner "apt-get -y update" ${SILENT}
-      output_proxy_executioner "echo INFO: System updated." ${SILENT}
+      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y update" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: System updated." ${FLAG_QUIETNESS}
     fi
     if [[ ${UPGRADE} == 2 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${SILENT}
-      output_proxy_executioner "apt-get -y upgrade" ${SILENT}
-      output_proxy_executioner "echo INFO: System upgraded." ${SILENT}
+      output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y upgrade" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: System upgraded." ${FLAG_QUIETNESS}
     fi
   fi
 
@@ -1467,14 +1464,14 @@ main()
 
   if [[ ${EUID} == 0 ]]; then
     if [[ ${AUTOCLEAN} -gt 0 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${SILENT}
-      output_proxy_executioner "apt-get -y autoremove" ${SILENT}
-      output_proxy_executioner "echo INFO: Finished." ${SILENT}
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
     fi
     if [[ ${AUTOCLEAN} == 2 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${SILENT}
-      output_proxy_executioner "apt-get -y autoclean" ${SILENT}
-      output_proxy_executioner "echo INFO: Finished." ${SILENT}
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
     fi
   fi
 
