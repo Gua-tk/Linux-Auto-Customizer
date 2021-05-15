@@ -96,13 +96,11 @@ uninstall_cheat()
   rm -f /home/${SUDO_USER}/.local/bin/cheat
 }
 
-
 unistall_cheese()
 {
   apt purge -y cheese
   rm -f ${XDG_DESKTOP_DIR}/org.gnome.Cheese.desktop.desktop
 }
-
 
 uninstall_gnome-chess()
 {
@@ -123,7 +121,6 @@ uninstall_clementine()
   rm -f ${XDG_DESKTOP_DIR}/clementine.desktop
 }
 
-
 uninstall_clion()
 {
   rm -Rf ${USR_BIN_FOLDER}/clion
@@ -131,7 +128,6 @@ uninstall_clion()
   rm -f /home/${SUDO_USER}/.local/bin/clion
   rm -f /home/${SUDO_USER}/.local/share/applications/clion.desktop
 }
-
 
 uninstall_clonezilla()
 {
