@@ -529,7 +529,7 @@ install_megasync()
 }
 
 # Mendeley Dependencies
-install_mendeley_dependencies()
+install_mendeley-dependencies()
 {
   # Mendeley dependencies
   apt-get install -y gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
@@ -635,7 +635,7 @@ install_pluma()
   add_to_favorites "pluma"
 }
 
-install_pypy3_dependencies()
+install_pypy3-dependencies()
 {
   apt-get install -y -qq pkg-config libfreetype6-dev libpng-dev libffi-dev
 }
@@ -1200,7 +1200,7 @@ install_templates()
   chmod 775 ${XDG_TEMPLATES_DIR}/*
 }
 
-install_terminal_background()
+install_terminal-background()
 {
   local -r profile_terminal=$(dconf list /org/gnome/terminal/legacy/profiles:/)
   if [[ ! -z "${profile_terminal}" ]]; then
