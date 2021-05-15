@@ -40,7 +40,6 @@ output_proxy_executioner() {
   fi
 }
 
-
 # Receives a list of feature function name (install_pycharm, install_vlc...) and applies the current flags to it,
 # modifying the corresponding line of installation_data
 add_program()
@@ -154,7 +153,6 @@ execute_installation()
   done
 }
 
-
 process_argument()
 {
   found=0
@@ -179,7 +177,24 @@ process_argument()
 ##### COMMON VARIABLES #####
 ############################
 
-### DECLARATION ###
+### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
+
+# PERSONAL_LAUNCHERS_DIR: /home/username/.local/share/applications
+# ALL_USERS_LAUNCHERS_DIR: /usr/share/applications
+# HOME_FOLDER: /home/username
+# USR_BIN_FOLDER: /home/username/.bin
+# BASHRC_PATH: /home/username/.bashrc
+# DIR_IN_PATH: /home/username/.local/bin
+# HOME_FOLDER: /home/username
+# BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions
+# BASH_FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions
+
+# Imported from ${HOME}/.config/user-dirs.dirs
+# XDG_DESKTOP_DIR: /home/username/Desktop
+# XDG_PICTURES_DIR: /home/username/Images
+# XDG_TEMPLATES_DIR: /home/username/Templates
+
+### VARIABLE DECLARATION ###
 
 if [[ "$(whoami)" != "root" ]]; then
   # Path pointing to $HOME
@@ -215,6 +230,8 @@ BASH_FUNCTIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_functions
 BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 # Path pointing to a folder that contains the desktop launchers of all users
 ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
+
+
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
 FLAG_OVERWRITE=0     # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
@@ -226,22 +243,7 @@ NUM_INSTALLATION=1  # Used to perform the (un)installation in the same order tha
 FLAG_UPGRADE=1  # 0 --> no update, no upgrade; 1 --> update, no upgrade; 2 --> update and upgrade
 FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perform autoremove; 2 --> perform autoremove and autoclean
 FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1 or 0, respectively
-### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
 
-# PERSONAL_LAUNCHERS_DIR: /home/username/.local/share/applications
-# ALL_USERS_LAUNCHERS_DIR: /usr/share/applications
-# HOME_FOLDER: /home/username
-# USR_BIN_FOLDER: /home/username/.bin
-# BASHRC_PATH: /home/username/.bashrc
-# DIR_IN_PATH: /home/username/.local/bin
-# HOME_FOLDER: /home/username
-# BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions
-# BASH_FUNCTIONS_PATH: /home/username/.bash_functions
-
-# Imported from ${HOME}/.config/user-dirs.dirs
-# XDG_DESKTOP_DIR: /home/username/Desktop
-# XDG_PICTURES_DIR: /home/username/Images
-# XDG_TEMPLATES_DIR: /home/username/Templates
 
 ### FEATURE_DATA ###
 

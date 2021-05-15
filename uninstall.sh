@@ -23,12 +23,46 @@
 # - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 purge_all_features()
 {
+  # Remove the contents of USR_BIN_FOLDER
   rm -Rf "${USR_BIN_FOLDER}"
   # Remove links in path
-  
+  for filename in ${ls "${DIR_IN_PATH}"}; do
+    if [[ ! -e "${DIR_IN_PATH}/filename" ]]; then
+      rm -f "${DIR_IN_PATH}/filename"
+    fi
+  done
 }
+
 # - [ ] Program function in `uninstall.sh` to remove bash functions
+# - Argument 1: Name of the filename sourced by own .bash_functions of customizer
+remove_bash_function()
+{
+  sed "s@source ${BASH_FUNCTIONS_FOLDER}/$1\$@@g" -i ${BASH_FUNCTIONS_PATH}
+  rm -f "${BASH_FUNCTIONS_FOLDER}/$1"
+}
+
 # - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
+remove_from_favorites()
+{
+  if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]] || [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]]; then
+    # This code search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
+    if [ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]; then
+      user=$(whoami)
+      fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
+      while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]
+      do
+        fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
+      done
+      export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
+    fi
+
+    gsettings get org.gnome.shell favorite-apps
+    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
+  else
+    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." 0
+  fi
+}
+
 # - [ ] Program function to unregister default opening applications on `uninstall.sh`
 
 

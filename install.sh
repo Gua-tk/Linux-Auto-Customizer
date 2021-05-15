@@ -27,20 +27,25 @@
 add_to_favorites()
 {
   if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]] || [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]]; then
+    # If root
+    if [[ ${EUID} -eq 0 ]]; then
     # This code search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
-    if [ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]; then
-      user=$(whoami)
-      fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
-      while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]
-      do
-        fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
-      done
-      export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
+      if [[ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]]; then
+        user=$(whoami)
+        fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
+        while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]; do
+          fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
+        done
+        export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
+      fi
     fi
-
-    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
+    if [[ -z $(echo "$(gsettings get org.gnome.shell favorite-apps)" | grep -Fo "$1.desktop") ]]; then
+      gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
+    else
+      output_proxy_executioner "echo WARNING: $1 is already added to favourites. Skipping..." ${FLAG_QUIETNESS}
+    fi
   else
-    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." 0
+    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." ${FLAG_QUIETNESS}
   fi
 }
 
