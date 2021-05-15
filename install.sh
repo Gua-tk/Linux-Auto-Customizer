@@ -310,6 +310,18 @@ add_internet_shortcut()
 ###### ROOT FUNCTIONS ######
 ############################
 
+install_aisleriot()
+{
+  apt-get install -y aisleriot
+  copy_launcher sol.desktop
+}
+
+install_atom()
+{
+  download_and_install_package ${atom_downloader}
+  copy_launcher atom.desktop
+}
+
 install_audacity()
 {
   apt-get install -y audacity
@@ -329,12 +341,6 @@ install_AutoFirma()
   rm -Rf ${USR_BIN_FOLDER}/autOfirma
 
   copy_launcher "afirma.desktop"
-}
-
-install_atom()
-{
-  download_and_install_package ${atom_downloader}
-  copy_launcher atom.desktop
 }
 
 install_caffeine()
@@ -373,6 +379,12 @@ install_cmatrix()
   create_manual_launcher "${cmatrix_launcher}" "cmatrix"
 }
 
+install_copyq()
+{
+  apt-get install -y copyq
+  copy_launcher "com.github.hluk.copyq.desktop"
+}
+
 install_curl()
 {
   apt-get install -y curl
@@ -388,10 +400,10 @@ install_dropbox()
   copy_launcher dropbox.desktop
 }
 
-install_copyq()
+install_f-irc()
 {
-  apt-get install -y copyq
-  copy_launcher "com.github.hluk.copyq.desktop"
+  apt-get install -y f-irc
+  create_manual_launcher "${firc_launcher}" f-irc
 }
 
 install_ffmpeg()
@@ -403,12 +415,6 @@ install_firefox()
 {
   apt-get install -y firefox
   copy_launcher "firefox.desktop"
-}
-
-install_f-irc()
-{
-  apt-get install -y f-irc
-  create_manual_launcher "${firc_launcher}" f-irc
 }
 
 install_freecad()
@@ -448,15 +454,22 @@ install_gnome-chess()
   copy_launcher "org.gnome.Chess.desktop"
 }
 
-install_parallel()
+install_gnome-mahjongg()
 {
-  apt-get -y install parallel
+  apt-get install -y gnome-mahjongg
+  copy_launcher "org.gnome.Mahjongg.desktop"
 }
 
-install_gparted()
+install_gnome-mines()
 {
-  apt-get install -y gparted
-  copy_launcher "gparted.desktop"
+  apt-get install -y gnome-mines
+  copy_launcher "org.gnome.Mines.desktop"
+}
+
+install_gnome-sudoku()
+{
+  apt-get install -y gnome-sudoku
+  copy_launcher org.gnome.Sudoku.desktop
 }
 
 install_google-chrome()
@@ -468,17 +481,29 @@ install_google-chrome()
   copy_launcher "google-chrome.desktop"
 }
 
+install_gpaint()
+{
+  apt-get -y install gpaint
+  copy_launcher "gpaint.desktop"
+  sed "s|Icon=gpaint.svg|Icon=${gpaint_icon_path}|" -i ${XDG_DESKTOP_DIR}/gpaint.desktop
+}
+
+install_gparted()
+{
+  apt-get install -y gparted
+  copy_launcher "gparted.desktop"
+}
+
 install_gvim()
 {
   apt-get -y install vim-gtk3
   copy_launcher "gvim.desktop"
 }
 
-install_gpaint()
+install_inkscape()
 {
-  apt-get -y install gpaint
-  copy_launcher "gpaint.desktop"
-  sed "s|Icon=gpaint.svg|Icon=${gpaint_icon_path}|" -i ${XDG_DESKTOP_DIR}/gpaint.desktop
+  apt-get install -y inkscape
+  copy_launcher "inkscape.desktop"
 }
 
 install_iqmol()
@@ -491,12 +516,6 @@ install_iqmol()
   add_bash_function "${iqmol_alias}" "iqmol_alias.sh"
 }
 
-install_inkscape()
-{
-  apt-get install -y inkscape
-  copy_launcher "inkscape.desktop"
-}
-
 install_latex()
 {
   # Dependencies
@@ -506,15 +525,19 @@ install_latex()
   echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
 }
 
+install_parallel()
+{
+  apt-get -y install parallel
+}
+
+install_libgtkglext1()
+{
+  apt-get install -y libgtkglext1
+}
+
 install_libxcb-xtest0()
 {
   apt-get install -y libxcb-xtest0
-}
-
-install_gnome-mahjongg()
-{
-  apt-get install -y gnome-mahjongg
-  copy_launcher "org.gnome.Mahjongg.desktop"
 }
 
 # megasync + megasync nautilus.
@@ -533,20 +556,6 @@ install_mendeley-dependencies()
 {
   # Mendeley dependencies
   apt-get install -y gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
-}
-
-install_gnome-mines()
-{
-  apt-get install -y gnome-mines
-  copy_launcher "org.gnome.Mines.desktop"
-}
-
-# Automatic install + Creates desktop launcher in launcher and in desktop.
-# Deprecated app, is not maintained by google anymore
-install_musicmanager()
-{
-  download_and_install_package ${music_manager_downloader}
-  copy_launcher "google-musicmanager.desktop"
 }
 
 install_nemo()
@@ -575,6 +584,20 @@ install_notepadqq()
   copy_launcher notepadqq.desktop
 }
 
+install_obs-studio()
+{
+  install_ffmpeg
+
+  apt-get install -y obs-studio
+  copy_launcher com.obsproject.Studio.desktop
+}
+
+install_okular()
+{
+  apt-get -y install okular
+  copy_launcher "org.kde.okular.desktop"
+}
+
 install_openoffice()
 {
   # Delete old versions of openoffice to avoid conflicts
@@ -598,20 +621,6 @@ install_openoffice()
   copy_launcher "openoffice4-writer.desktop"
 }
 
-install_obs-studio()
-{
-  install_ffmpeg
-
-  apt-get install -y obs-studio
-  copy_launcher com.obsproject.Studio.desktop
-}
-
-install_okular()
-{
-  apt-get -y install okular
-  copy_launcher "org.kde.okular.desktop"
-}
-
 install_pacman()
 {
   apt-get install -y pacman
@@ -628,13 +637,6 @@ install_psql()
   apt-get install -y postgresql-client-12	postgresql-12 libpq-dev postgresql-server-dev-12
 }
 
-install_pluma()
-{
-  apt-get install -y pluma
-  copy_launcher "pluma.desktop"
-  add_to_favorites "pluma"
-}
-
 install_pypy3-dependencies()
 {
   apt-get install -y -qq pkg-config libfreetype6-dev libpng-dev libffi-dev
@@ -643,6 +645,14 @@ install_pypy3-dependencies()
 install_python3()
 {
   apt-get install -y python3-dev python-dev python3-pip
+}
+
+
+install_pluma()
+{
+  apt-get install -y pluma
+  copy_launcher "pluma.desktop"
+  add_to_favorites "pluma"
 }
 
 install_shotcut()
@@ -669,23 +679,11 @@ install_spotify()
   copy_launcher "spotify.desktop"
 }
 
-install_aisleriot()
-{
-  apt-get install -y aisleriot
-  copy_launcher sol.desktop
-}
-
 # steam ubuntu client
 install_steam()
 {
   download_and_install_package ${steam_downloader}
   copy_launcher steam.desktop
-}
-
-install_gnome-sudoku()
-{
-  apt-get install -y gnome-sudoku
-  copy_launcher org.gnome.Sudoku.desktop
 }
 
 install_teams()
@@ -740,19 +738,19 @@ install_uget()
   copy_launcher uget-gtk.desktop
 }
 
-install_vlc()
-{
-  apt-get -y install vlc
-  copy_launcher "vlc.desktop"
-}
-
 install_virtualbox()
 {
   # Dependencies
   apt-get install -y libqt5opengl5
-  
+
   download_and_install_package ${virtualbox_downloader}
   copy_launcher "virtualbox.desktop"
+}
+
+install_vlc()
+{
+  apt-get -y install vlc
+  copy_launcher "vlc.desktop"
 }
 
 install_wireshark()
@@ -777,24 +775,10 @@ install_ant()
   download_and_decompress ${ant_downloader} "apache_ant" "z" "bin/ant" "ant"
 }
 
-install_libgtkglext1()
-{
-  apt-get install -y libgtkglext1
-}
-
 install_anydesk()
 {
   download_and_decompress ${anydesk_downloader} "anydesk" "z" "anydesk" "anydesk"
   create_manual_launcher "${anydesk_launcher}" "anydesk"
-}
-
-install_studio()
-{
-  download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
-
-  create_manual_launcher "${android_studio_launcher}" "Android_Studio"
-
-  add_bash_function "${android_studio_alias}" "studio_alias.sh"
 }
 
 install_clion()
@@ -811,6 +795,16 @@ install_clion()
   add_bash_function "${clion_alias}" "clion_alias.sh"
 }
 
+# Microsoft Visual Studio Code
+install_code()
+{
+  download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
+
+  create_manual_launcher "${visualstudiocode_launcher}" "code"
+
+  add_bash_function "${code_alias}" "code_alias.sh"
+}
+
 # Does not work because the root directory of the compressed is called ".". Wait until the developers change it
 install_codium()
 {
@@ -818,8 +812,6 @@ install_codium()
   create_manual_launcher "${codium_launcher}" "codium"
 }
 
-# discord desktop client
-# Permissions: user
 install_discord()
 {
   download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord"
@@ -832,7 +824,6 @@ install_docker()
     download_and_decompress ${docker_downloader} "docker" "z" "docker" "docker" "containerd" "containerd" "containerd-shim" "containerd-shim" "containerd-shim-runc-v2" "containerd-shim-runc-v2" "ctr" "ctr" "dockerd" "dockerd" "docker-init" "docker-init" "docker-proxy" "docker-proxy" "runc" "runc"
 }
 
-# Install Eclipse IDE
 install_eclipse()
 {
   download_and_decompress ${eclipse_downloader} "eclipse" "z" "eclipse" "eclipse"
@@ -850,8 +841,6 @@ install_geogebra()
   create_manual_launcher "${geogebra_desktop}" "geogebra"
 }
 
-
-# Install IntelliJ Community
 install_ideac()
 {
   download_and_decompress ${intellij_community_downloader} "idea-ic" "z" "bin/idea.sh" "ideac"
@@ -863,7 +852,6 @@ install_ideac()
   add_bash_function "${ideac_alias}" "ideac_alias.sh"
 }
 
-# Install IntelliJ Ultimate
 install_ideau()
 {
   download_and_decompress ${intellij_ultimate_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
@@ -881,12 +869,6 @@ install_java()
   add_bash_function "${java_globalvar}" "java_javahome.sh"
 }
 
-install_mvn()
-{
-  download_and_decompress ${maven_downloader} "maven" "z" "bin/mvn" "mvn"
-}
-
-# Manual install, creating launcher in the launcher and in desktop. Modifies .desktop file provided by the software
 install_mendeley()
 {
   download_and_decompress ${mendeley_downloader} "mendeley" "j" "bin/mendeleydesktop" "mendeley"
@@ -902,7 +884,20 @@ install_mendeley()
   cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${PERSONAL_LAUNCHERS_DIR}
 }
 
-# Installs pycharm, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
+install_mvn()
+{
+  download_and_decompress ${maven_downloader} "maven" "z" "bin/mvn" "mvn"
+}
+
+install_studio()
+{
+  download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
+
+  create_manual_launcher "${android_studio_launcher}" "Android_Studio"
+
+  add_bash_function "${android_studio_alias}" "studio_alias.sh"
+}
+
 install_pycharm()
 {
   download_and_decompress ${pycharm_downloader} "pycharm-community" "z" "bin/pycharm.sh" "pycharm"
@@ -916,7 +911,6 @@ install_pycharm()
   add_bash_function "${pycharm_alias}" "pycharm_alias.sh"
 }
 
-# Installs pycharm professional, links it to the PATH and creates a launcher for it in the desktop and in the apps folder
 install_pycharmpro()
 {
   download_and_decompress ${pycharm_professional_downloader} "pycharm-professional" "z" "bin/pycharm.sh" "pycharmpro"
@@ -931,7 +925,6 @@ install_pycharmpro()
 }
 
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
-# Links it to the path
 install_pypy3()
 {
   download_and_decompress ${pypy3_downloader} "pypy3" "J"
@@ -948,7 +941,6 @@ install_pypy3()
   create_links_in_path "${USR_BIN_FOLDER}/pypy3/bin/pypy3" "pypy3" ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 pypy3-pip
 }
 
-# Install Sublime text 3
 install_sublime()
 {
   download_and_decompress ${sublime_text_downloader} "sublime-text" "j" "sublime_text" "sublime"
@@ -968,12 +960,6 @@ install_sublime()
   add_to_favorites "sublime"
 }
 
-install_screenshots()
-{
-  mkdir -p ${XDG_PICTURES_DIR}/screenshots
-  add_bash_function "${screenshots_function}" "screenshots.sh"
-}
-
 install_telegram()
 {
   download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
@@ -981,16 +967,6 @@ install_telegram()
   wget ${telegram_icon} -q --show-progress -O ${USR_BIN_FOLDER}/telegram/telegram.svg
 
   create_manual_launcher "${telegram_launcher}" "telegram"
-}
-
-# Microsoft Visual Studio Code
-install_code()
-{
-  download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
-
-  create_manual_launcher "${visualstudiocode_launcher}" "code"
-
-  add_bash_function "${code_alias}" "code_alias.sh"
 }
 
 install_youtube-dl()
@@ -1012,30 +988,26 @@ install_zoom()
   wget ${zoom_icon_downloader} -q --show-progress -O ${USR_BIN_FOLDER}/zoom/zoom_icon.ico
 }
 
+
 #######################################
 ###### USER-ENVIRONMENT FEATURES ######
 #######################################
 # Most (all) of them just use user permissions
-
-
-
-
 
 install_alert()
 {
   add_bash_function "${alert_alias}" alert.sh
 }
 
-install_chwlppr()
+install_change-bg()
 {
   # Install script changer to be executed manually or with crontab automatically
   echo "${wallpapers_changer_script}" > ${USR_BIN_FOLDER}/wallpaper_changer.sh
   chmod 775 ${USR_BIN_FOLDER}/wallpaper_changer.sh
-  ln -sf ${USR_BIN_FOLDER}/wallpaper_changer.sh ${DIR_IN_PATH}/chwlppr
+  ln -sf ${USR_BIN_FOLDER}/wallpaper_changer.sh ${DIR_IN_PATH}/change-bg
 
   echo "${wallpapers_cronjob}" > ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
   crontab ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
-
 
   # Download and install wallpaper
   rm -Rf ${XDG_PICTURES_DIR}/wallpapers
@@ -1084,7 +1056,6 @@ install_drive()
   add_internet_shortcut drive
 }
 
-
 install_extract()
 {
   add_bash_function "${extract_function}" extract.sh
@@ -1101,7 +1072,6 @@ install_git_aliases()
   rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
-
 
 install_github()
 {
@@ -1133,14 +1103,19 @@ install_keep()
   add_internet_shortcut keep
 }
 
+install_L()
+{
+  add_bash_function "${L_function}" L.sh
+}
+
 install_l()
 {
   add_bash_function "${l_function}" l.sh
 }
 
-install_L()
+install_netflix()
 {
-  add_bash_function "${L_function}" L.sh
+  add_internet_shortcut netflix
 }
 
 install_onedrive()
@@ -1158,11 +1133,6 @@ install_overleaf()
   add_internet_shortcut overleaf
 }
 
-install_netflix()
-{
-  add_internet_shortcut netflix
-}
-
 install_presentation()
 {
   add_internet_shortcut presentation
@@ -1178,14 +1148,20 @@ install_s()
   add_bash_function "${s_function}" s.sh
 }
 
-install_spreadsheets()
+install_screenshots()
 {
-  add_internet_shortcut spreadsheets
+  mkdir -p ${XDG_PICTURES_DIR}/screenshots
+  add_bash_function "${screenshots_function}" "screenshots.sh"
 }
 
 install_shortcuts()
 {
   add_bash_function "${shortcut_aliases}" shortcuts.sh
+}
+
+install_spreadsheets()
+{
+  add_internet_shortcut spreadsheets
 }
 
 install_templates()
