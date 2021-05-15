@@ -72,12 +72,12 @@
 - [x] Add folder to store icons for .desktop files --> `created add_internet_shortcut`
 - [x] Internet shortcut icons are broken because are downloaded into google-chrome folder --> Parametrized using indirect variable expansion, and adding parametrized line of Icon and exec in the launcher
 - [x] Change `google-chrome` for `xdg-open`  on internet shortcut. Delete `${program_name}_url` and put it hardcoded inside of each desktop launcher
-- [ ] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [~] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [ ] Program function in `uninstall.sh` to remove bash functions
 - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
-- [ ] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
-- [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [ ] Program function to unregister default opening applications on `uninstall.sh`
+- [ ] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
 - [ ] Call add_program matching against table in `common_data.sh` --> move all arguments to `common_data.sh` table and ensure there's no collision with separators.
 
 #### Axel
@@ -124,7 +124,7 @@
 - [ ] Add examples (images) of a working environement after applying the customizer in Linux
 - [ ] help message: arguments refactor with format
 - [ ] customizer.sh help, customizer install, customizer uninstall, customizer parallell [install| uninstall]
-
+- [ ] Let uninstall run as normal user for the right features
 
 #### Coming features
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)

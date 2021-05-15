@@ -1,12 +1,36 @@
 #!/usr/bin/env bash
+########################################################################################################################
+# - Name: Linux Auto-Customizer uninstallation of features.                                                            #
+# - Description: Portable script to remove all installation features installed by install.sh                           #
+# - Creation Date: 28/5/19                                                                                             #
+# - Last Modified: 16/5/21                                                                                             #
+# - Author & Maintainer: Aleix Mariné-Tena                                                                             #
+# - Tester: Axel Fernández Curros                                                                                      #
+# - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
+# - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
+# logged as root) to install some of the features.                                                                     #
+# - Arguments: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature to uninstall with two hyphens  #
+# (--pycharm, --gcc).                                                                                                  #
+# - Usage: Uninstalls the features given by argument.                                                                  #
+# - License: GPL v2.0                                                                                                  #
+########################################################################################################################
 
+
+################################
 ###### AUXILIAR FUNCTIONS ######
+################################
 
-# Prints the given arguments to the stderr
-err()
+# - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
+purge_all_features()
 {
-  echo "$*" >&2
+  rm -Rf "${USR_BIN_FOLDER}"
+  # Remove links in path
+  
 }
+# - [ ] Program function in `uninstall.sh` to remove bash functions
+# - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
+# - [ ] Program function to unregister default opening applications on `uninstall.sh`
+
 
 
 uninstall_converters()
