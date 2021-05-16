@@ -676,7 +676,6 @@ install_pluma()
 {
   apt-get install -y pluma
   copy_launcher "pluma.desktop"
-  add_to_favorites "pluma"
 }
 
 install_shotcut()

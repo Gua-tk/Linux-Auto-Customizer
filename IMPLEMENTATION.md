@@ -100,6 +100,7 @@
 - [x] INTERNET SHORTCUT BUG: delete lines of Exec and Icon in all launchers of internet desktop launchers
 - [x] Add desktop internet shortcuts for twitch, trello, twitter, tumblr, duckduckgo...
 - [ ] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc...
+- [ ] Commit functions must set automatic "" evolving the message not worrying about spaces (Refactor needed)
 - [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
 - [ ] sysmontask
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s)
@@ -128,8 +129,10 @@
 - [ ] Show warning in uninstall when activating -o flag 
 - [ ] Github and Gitlab are not internet launchers, install program instead
 - [ ] Implement function that only uses as parameter its own name and relies on the data
-- [ ] Write contents of README.md in the table in data_common.sh
-- [ ] 
+- [ ] Write contents of `README.md` in the table in data_common.sh
+- [ ] Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
+- [ ] Sort `README.md` table, `uninstall.sh`on same sections as install and the sort table in data_common.sh`.
+
 #### Coming features
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)
 - [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...

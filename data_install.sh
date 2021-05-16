@@ -267,7 +267,7 @@ Comment=Desktop app to open Google Forms from Chrome
 Encoding=UTF-8
 GenericName=Document
 Keywords=forms;
-MimeType=x-scheme-handler/tg;
+MimeType=ç
 Name=Google Forms
 StartupNotify=true
 StartupWMClass=Google Forms
@@ -279,14 +279,14 @@ Version=1.0"
 github_downloader="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
 github_icon="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
 github_url=https://github.com/
-github_alias="alias github=\"google-chrome ${github_url} &>/dev/null &\""
+github_alias="alias github=\"xdg-open ${github_url} &>/dev/null &\""
 github_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Github from Chrome
 Encoding=UTF-8
 GenericName=GitHub
 Keywords=github;
-MimeType=x-scheme-handler/tg;
+MimeType=ç
 Name=GitHub
 StartupNotify=true
 StartupWMClass=GitHub
@@ -305,7 +305,7 @@ Comment=Desktop app to open Gitlab from Chrome
 Encoding=UTF-8
 GenericName=Code repository online
 Keywords=forms;
-MimeType=x-scheme-handler/tg;
+Mimeç
 Name=GitLab Desktop
 StartupNotify=true
 StartupWMClass=GitLab
@@ -316,14 +316,14 @@ Version=1.0"
 
 presentation_url=https://docs.google.com/presentation/
 presentation_icon="https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg"
-presentation_alias="alias presentation=\"google-chrome ${presentation_url} &>/dev/null &\""
+presentation_alias="alias presentation=\"xdg-open ${presentation_url} &>/dev/null &\""
 presentation_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Presentation from Chrome
 Encoding=UTF-8
 GenericName=Document
 Keywords=presentations;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Google Presentation
 StartupNotify=true
 StartupWMClass=Google Presentation
@@ -334,14 +334,14 @@ Version=1.0"
 
 document_url=https://docs.google.com/document/
 document_icon="https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg"
-document_alias="alias document=\"google-chrome ${document_url} &>/dev/null &\""
+document_alias="alias document=\"xdg-open ${document_url} &>/dev/null &\""
 document_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Documents from Chrome
 Encoding=UTF-8
 GenericName=Document
 Keywords=documents;
-MimeType=x-scheme-handler/tg;
+MimeType=x-
 Name=Google Document
 StartupNotify=true
 StartupWMClass=Google Document
@@ -352,14 +352,14 @@ Version=1.0"
 
 spreadsheets_url=https://docs.google.com/spreadsheets/
 spreadsheets_icon="https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg"
-spreadsheets_alias="alias spreadsheets=\"google-chrome ${spreadsheets_url} &>/dev/null &\""
+spreadsheets_alias="alias spreadsheets=\"xdg-open ${spreadsheets_url} &>/dev/null &\""
 spreadsheets_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Spreadsheets from Chrome
 Encoding=UTF-8
 GenericName=Spreadsheets
 Keywords=spreadsheets;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Google Spreadsheets
 StartupNotify=true
 StartupWMClass=Google Spreadsheets
@@ -371,7 +371,7 @@ Version=1.0"
 google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 gmail_url=https://mail.google.com/
 gmail_icon=https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg
-gmail_alias="alias gmail=\"google-chrome ${gmail_url} &>/dev/null &\""
+gmail_alias="alias gmail=\"xdg-open ${gmail_url} &>/dev/null &\""
 gmail_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to instant e-mail messaging from Chrome
@@ -389,14 +389,14 @@ Version=1.0"
 
 drive_url=https://drive.google.com/
 drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
-drive_alias="alias drive=\"google-chrome ${drive_url} &>/dev/null &\""
+drive_alias="alias drive=\"xdg-open ${drive_url} &>/dev/null &\""
 drive_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to instant e-mail messaging from Chrome
 Encoding=UTF-8
 GenericName=Gmail
 Keywords=drive;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Google Drive
 StartupNotify=true
 StartupWMClass=Google Drive
@@ -407,14 +407,14 @@ Version=1.0"
 
 drive_url=https://drive.google.com/
 drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
-drive_alias="alias drive=\"google-chrome ${drive_url} &>/dev/null &\""
+drive_alias="alias drive=\"xdg-open ${drive_url} &>/dev/null &\""
 drive_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to instant e-mail messaging from Chrome
 Encoding=UTF-8
 GenericName=Gmail
 Keywords=drive;
-MimeType=x-scheme-handler/tg;
+MimeType=x-
 Name=Google Drive
 StartupNotify=true
 StartupWMClass=Google Drive
@@ -425,14 +425,14 @@ Version=1.0"
 
 overleaf_icon="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg"
 overleaf_url=https://www.overleaf.com/
-overleaf_alias="alias overleaf=\"google-chrome ${overleaf_url} &>/dev/null &\""
+overleaf_alias="alias overleaf=\"xdg-open ${overleaf_url} &>/dev/null &\""
 overleaf_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Overleaf online LaTeX editor from Chrome
 Encoding=UTF-8
 GenericName=Overleaf
 Keywords=overleaf;
-MimeType=x-scheme-handler/tg;
+MimeType=x-
 Name=Overleaf
 StartupNotify=true
 StartupWMClass=Overleaf
@@ -443,14 +443,14 @@ Version=1.0"
 
 outlook_icon="https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg"
 outlook_url=https://outlook.live.com
-outlook_alias="alias outlook=\"google-chrome ${outlook_url} &>/dev/null &\""
+outlook_alias="alias outlook=\"xdg-open ${outlook_url} &>/dev/null &\""
 outlook_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Microsoft Outlook from Chrome
 Encoding=UTF-8
 GenericName=Outlook
 Keywords=outlook;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Outlook
 StartupNotify=true
 StartupWMClass=Outlook
@@ -462,14 +462,14 @@ Version=1.0"
 
 onedrive_icon="https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg"
 onedrive_url=https://onedrive.live.com/
-onedrive_alias="alias onedrive=\"google-chrome ${onedrive_url} &>/dev/null &\""
+onedrive_alias="alias onedrive=\"xdg-open${onedrive_url} &>/dev/null &\""
 onedrive_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Microsoft OneDrive from Chrome
 Encoding=UTF-8
 GenericName=OneDrive
 Keywords=onedrive;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=OneDrive
 StartupNotify=true
 StartupWMClass=OneDrive
@@ -480,7 +480,7 @@ Version=1.0"
 
 googlecalendar_url=https://calendar.google.com/
 googlecalendar_icon="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg"
-googlecalendar_alias="alias googlecalendar=\"google-chrome ${google-calendar_url} &>/dev/null &\""
+googlecalendar_alias="alias googlecalendar=\"xdg-open ${google-calendar_url} &>/dev/null &\""
 googlecalendar_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Google Calendar from Chrome
@@ -498,7 +498,7 @@ Version=1.0"
 
 trello_url="https://trello.com"
 trello_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png"
-trello_alias="alias trello=\"google-chrome ${trello_url} &>/dev/null &\""
+trello_alias="alias trello=\"gxdg-open ${trello_url} &>/dev/null &\""
 trello_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Trello from Chrome
@@ -516,14 +516,14 @@ Version=1.0"
 
 twitch_url="https://twitch.tv/"
 twitch_icon="http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png"
-twitch_alias="alias twitch=\"google-chrome ${twitch_url} &>/dev/null &\""
+twitch_alias="alias twitch=\"xdg-open ${twitch_url} &>/dev/null &\""
 twitch_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Twitch from Chrome
 Encoding=UTF-8
 GenericName=Twitch.tv
 Keywords=twitch;Twitch;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Twitch
 StartupNotify=true
 StartupWMClass=Twitch
@@ -534,14 +534,14 @@ Version=1.0"
 
 facebook_url="https://facebook.com/"
 facebook_icon="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-facebook_alias="alias facebook=\"google-chrome ${facebook_url} &>/dev/null &\""
+facebook_alias="alias facebook=\"xdg-open ${facebook_url} &>/dev/null &\""
 facebook_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to facebook from Chrome
 Encoding=UTF-8
 GenericName=Facebook
 Keywords=facebook;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Facebook
 StartupNotify=true
 StartupWMClass=Facebook
@@ -552,7 +552,7 @@ Version=1.0"
 
 twitter_url="https://twitter.com/"
 twitter_icon="https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg"
-twitter_alias="alias twitter=\"google-chrome ${twitter_url} &>/dev/null &\""
+twitter_alias="alias twitter=\"xdg-open ${twitter_url} &>/dev/null &\""
 twitter_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Twitter from Chrome
@@ -570,14 +570,14 @@ Version=1.0"
 
 instagram_url="https://instagram.com"
 instagram_icon="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg"
-instagram_alias="alias instagram=\"google-chrome ${instagram_url} &>/dev/null &\""
+instagram_alias="alias instagram=\"xdg-open ${instagram_url} &>/dev/null &\""
 instagram_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Twitter from Chrome
 Encoding=UTF-8
 GenericName=instagram
 Keywords=instagram
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Instagram
 StartupNotify=true
 StartupWMClass=Instagram
@@ -588,7 +588,7 @@ Version=1.0"
 
 reddit_url="https://www.reddit.com/"
 reddit_icon="https://duckduckgo.com/i/b6b8ccc2.png"
-reddit_alias="alias reddit=\"google-chrome ${reddit_url} &>/dev/null &\""
+reddit_alias="alias reddit=\"xdg-open ${reddit_url} &>/dev/null &\""
 reddit_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Reddit from Chrome
@@ -605,7 +605,7 @@ Version=1.0"
 
 tumblr_url="https://www.tumblr.com/"
 tumblr_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png"
-tumblr_alias="alias tumblr=\"google-chrome ${tumblr_url} &>/dev/null &\""
+tumblr_alias="alias tumblr=\"xdg-open ${tumblr_url} &>/dev/null &\""
 tumblr_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Tumblr from Chrome
@@ -622,7 +622,7 @@ Version=1.0"
 
 wikipedia_url="https://www.wikipedia.org/"
 wikipedia_icon="https://upload.wikimedia.org/wikipedia/commons/2/20/Wikipedia-logo-simple.svg"
-wikipedia_alias="alias wikipedia=\"google-chrome ${wikipedia_url} &>/dev/null &\""
+wikipedia_alias="alias wikipedia=\"xdg-open ${wikipedia_url} &>/dev/null &\""
 wikipedia_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Reddit from Chrome
@@ -639,7 +639,7 @@ Version=1.0"
 
 duckduckgo_url="https://duckduckgo.com/"
 duckduckgo_icon="https://iconape.com/wp-content/png_logo_vector/cib-duckduckgo.png"
-duckduckgo_alias="alias duckduckgo=\"google-chrome ${duckduckgo_url} &>/dev/null &\""
+duckduckgo_alias="alias duckduckgo=\"xdg-open ${duckduckgo_url} &>/dev/null &\""
 duckduckgo_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open DuckDuckGo from Chrome
@@ -656,7 +656,7 @@ Version=1.0"
 
 keep_url="https://keep.google.com/"
 keep_icon="https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg"
-keep_alias="alias keep=\"google-chrome ${keep_url} &>/dev/null &\""
+keep_alias="alias keep=\"xdg-open ${keep_url} &>/dev/null &\""
 keep_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Google Keep from Chrome
@@ -674,7 +674,7 @@ Version=1.0"
 
 netflix_url=https://www.netflix.com
 netflix_icon="https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg"
-netflix_alias="alias netflix=\"google-chrome ${netflix_url} &>/dev/null &\""
+netflix_alias="alias netflix=\"xdg-open ${netflix_url} &>/dev/null &\""
 netflix_launcher="[Desktop Entry]
 Categories=Network;VideoStreaming;Film;
 Comment=Desktop app to reproduce Netflix from Chrome
