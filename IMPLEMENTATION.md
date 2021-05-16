@@ -125,8 +125,10 @@
 - [ ] help message: arguments refactor with format
 - [ ] customizer.sh help, customizer install, customizer uninstall, customizer parallell [install| uninstall]
 - [ ] Let uninstall run as normal user for the right features
-- [ ] Show warnin in uninstall when activating -o flag 
+- [ ] Show warning in uninstall when activating -o flag 
 - [ ] Github and Gitlab are not internet launchers, install program instead
+- [ ] Implement function that only uses as parameter its own name and relies on the data
+- [ ] Write contents of README.md in the table in data_common.sh
 
 #### Coming features
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)

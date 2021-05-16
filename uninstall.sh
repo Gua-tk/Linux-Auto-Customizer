@@ -107,7 +107,6 @@ uninstall_atom()
 
 uninstall_audacity()
 {
-{
   apt-get purge -y audacity audacity-data
   rm -f ${XDG_DESKTOP_DIR}/audacity.desktop
 }
@@ -277,7 +276,7 @@ uninstall_inkscape()
 
 uninstall_iqmol()
 {
-  echo
+  echo "oo"
 }
 
 uninstall_latex()
@@ -405,7 +404,7 @@ uninstall_shotcut()
 
 uninstall_skype()
 {
-  echo
+  echo "ooo"
   dpkg -P skype
   rm -f ${XDG_DESKTOP_DIR}/skype.desktop
 }
@@ -418,7 +417,7 @@ uninstall_slack()
 
 uninstall_spotify()
 {
-  echo
+  echo "oo"
   dpkg -P spotify-desktop
   rm -f ${XDG_DESKTOP_DIR}/spotify.desktop
 }
@@ -431,7 +430,7 @@ uninstall_steam()
 
 uninstall_teams()
 {
-  echo
+  echo "o"
   dpkg -P teams
   rm -f ${XDG_DESKTOP_DIR}/teams.desktop
 }
@@ -477,7 +476,7 @@ uninstall_uget()
 {
   apt-get purge -y aria2
   apt-get purge -y uget
-  rm -f ${XDG_DESKTOP_DIR}/uget.desktop
+  rm -f ${XDG_DESKTOP_DIR}/uget-gtk.desktop
 }
 
 uninstall_virtualbox()
@@ -517,6 +516,7 @@ uninstall_anydesk()
 uninstall_clion()
 {
   remove_manual_feature clion
+}
 
 uninstall_code()
 {
@@ -622,7 +622,6 @@ uninstall_pypy3()
 
 uninstall_sublime()
 {
-{
   rm -Rf ${USR_BIN_FOLDER}/sublime
   rm -f ${XDG_DESKTOP_DIR}/sublime.desktop
   rm -f /home/${SUDO_USER}/.local/bin/sublime
@@ -644,7 +643,7 @@ uninstall_youtube-dl()
 
 uninstall_zoom()
 {
-  echo
+  echo "zoom"
 }
 
 #######################################
