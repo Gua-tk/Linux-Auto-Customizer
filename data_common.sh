@@ -34,7 +34,6 @@ output_proxy_executioner() {
   else
     $1 &>/dev/null
   fi
-
   if [[ "${comm}" == "echo" ]]; then
     echo -en "\e[0m" # DeActivate colour
   fi
@@ -282,9 +281,11 @@ installation_data=(
   "--document|--google-document;0;install_document"
   "--drive|--GoogleDrive|--Drive|--google-drive|--Google-Drive;0;install_drive"
   "--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box;1;install_dropbox"
+  "--duckduckgo|--DuckDuckGo;0;install_duckduckgo"
   "--eclipse|--Eclipse;0;install_eclipse"
   "--extract|--extract-function|--extract_function;0;install_extract"
   "--f-irc|--firc|--Firc|--irc;1;install_f-irc"
+  "--facebook|--Facebook;0;install_facebook"
   "--ffmpeg|--youtube-dl-dependencies;1;install_ffmpeg"
   "--firefox|--Firefox;1;install_firefox"
   "--forms|--google-forms;0;install_forms"
@@ -296,6 +297,7 @@ installation_data=(
   "--git-aliases|--git_aliases|--git-prompt;0;install_git_aliases"
   "--git;1;install_git"
   "--github|--Github|--GitHub;0;install_github"
+  "--gitlab|--GitLab|--git-lab;0;install_gitlab"
   "--gmail|--Gmail;0;install_gmail"
   "--gnome-chess|--GNOME_Chess|--gnomechess|--chess;1;install_gnome-chess"
   "--gnome-mahjongg|--mahjongg|--Mahjongg;1;install_gnome-mahjongg"
@@ -310,6 +312,7 @@ installation_data=(
   "--ideac|--intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community;0;install_ideac"
   "--ideau--intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate;0;install_ideau"
   "--inkscape|--ink-scape|--Inkscape|--InkScape;1;install_inkscape"
+  "--instagram|--Instagram;0;install_instagram"
   "--ipe|--ipe-function;0;install_ipe"
   "--iqmol|--IQmol;1;install_iqmol"
   "--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11;0;install_java"
@@ -345,6 +348,7 @@ installation_data=(
   "--pypy3-dependencies|--dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies;1;install_pypy3-dependencies"
   "--pypy3|--pypy|--PyPy3|--PyPy;0;install_pypy3"
   "--python3|--python|--Python3|--Python;1;install_python3"
+  "--reddit|--Reddit;0;install_reddit"
   "--s|--s-function;0;install_s"
   "--screenshots|--Screenshots;0;install_screenshots"
   "--shortcuts;0;install_shortcuts"
@@ -366,10 +370,15 @@ installation_data=(
   "--tmux|--Tmux;1;install_tmux"
   "--tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser;1;install_tor"
   "--transmission|--transmission-gtk|--Transmission;1;install_transmission"
+  "--trello|--Trello;0;install_trello"
+  "--tumblr|--Tumblr;0;install_tumblr"
+  "--twitch|--Twitch|--twitchtv;0;install_twitch"
+  "--twitter|--Twitter;0;install_twitter"
   "--uget;1;install_uget"
   "--virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox;1;install_virtualbox"
   "--vlc|--VLC|--Vlc;1;install_vlc"
   "--whatsapp|--Whatsapp;0;install_whatsapp"
+  "--wikipedia|--Wikipedia;0;install_wikipedia"
   "--wireshark|--Wireshark;1;install_wireshark"
   "--youtube-dl;0;install_youtube-dl"
   "--youtubemusic|--YouTubeMusic|--YouTube-Music|--Youtube-Music|--youtube-music;0;install_youtubemusic"

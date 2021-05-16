@@ -1057,9 +1057,18 @@ install_drive()
   add_internet_shortcut drive
 }
 
+install_duckduckgo()
+{
+  add_internet_shortcut duckduckgo
+}
 install_extract()
 {
   add_bash_function "${extract_function}" extract.sh
+}
+
+install_facebook()
+{
+  add_internet_shortcut facebook
 }
 
 install_forms()
@@ -1097,6 +1106,11 @@ install_history_optimization()
 install_ipe()
 {
   add_bash_function "${ipe_function}" ipe.sh
+}
+
+install_instagram()
+{
+  add_internet_shortcut instagram
 }
 
 install_keep()
@@ -1144,6 +1158,11 @@ install_prompt()
   add_bash_function "${prompt_function}" prompt.sh
 }
 
+install_reddit()
+{
+  add_internet_shortcut reddit
+}
+
 install_s()
 {
   add_bash_function "${s_function}" s.sh
@@ -1185,9 +1204,34 @@ install_terminal-background()
   fi
 }
 
+install_trello()
+{
+  add_internet_shortcut trello
+}
+
+install_tumblr()
+{
+  add_internet_shortcut tumblr
+}
+
+install_twitch()
+{
+  add_internet_shortcut twitch
+}
+
+install_twitter()
+{
+  add_internet_shortcut twitter
+}
+
 install_whatsapp()
 {
   add_internet_shortcut whatsapp
+}
+
+install_wikipedia()
+{
+  add_internet_shortcut wikipedia
 }
 
 install_youtube()
@@ -1200,6 +1244,10 @@ install_youtubemusic()
   add_internet_shortcut youtubemusic
 }
 
+install_gitlab()
+{
+  add_internet_shortcut gitlab
+}
 
 ##################
 ###### MAIN ######
