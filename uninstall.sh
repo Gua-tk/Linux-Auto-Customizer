@@ -89,7 +89,63 @@ remove_manual_feature()
 }
 
 
+############################
+###### ROOT FUNCTIONS ######
+############################
 
+uninstall_aisleriot()
+{
+  apt-get purge -y aisleriot
+  rm -f ${XDG_DESKTOP_DIR}/sol.desktop
+}
+
+uninstall_atom()
+{
+  apt purge -y atom
+  rm -f ${XDG_DESKTOP_DIR}/atom.desktop
+}
+
+uninstall_audacity()
+{
+{
+  apt-get purge -y audacity audacity-data
+  rm -f ${XDG_DESKTOP_DIR}/audacity.desktop
+}
+
+uninstall_AutoFirma()
+{
+  apt-get purge -y libnss3-tools
+  dpkg -P AutoFirma
+  rm -f ${XDG_DESKTOP_DIR}/afirma.desktop
+}
+
+uninstall_caffeine()
+{
+  apt purge -y caffeine
+}
+
+uninstall_calibre()
+{
+  apt purge -y calibre
+  rm -f ${XDG_DESKTOP_DIR}/calibre.desktop
+}
+
+unistall_cheese()
+{
+  apt purge -y cheese
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Cheese.desktop.desktop
+}
+
+#####################################
+###### USER SOFTWARE FUNCTIONS ######
+#####################################
+
+#
+
+#######################################
+###### USER-ENVIRONMENT FEATURES ######
+#######################################
+# Most (all) of them just use user permissions
 
 uninstall_converters()
 {
@@ -120,45 +176,12 @@ uninstall_android_studio()
   rm -f "/home/${SUDO_USER}/.local/share/applications/Android Studio.desktop"
 }
 
-
-uninstall_audacity()
-{
-  apt-get purge -y audacity audacity-data
-  rm -f ${XDG_DESKTOP_DIR}/audacity.desktop
-}
-
-
-uninstall_atom()
-{
-  apt purge -y atom
-  rm -f ${XDG_DESKTOP_DIR}/atom.desktop
-}
-
-
-uninstall_caffeine()
-{
-  apt purge -y caffeine
-  rm -f ${XDG_DESKTOP_DIR}/caffeine-indicator.desktop
-}
-
-uninstall_calibre()
-{
-  apt purge -y calibre
-  rm -f ${XDG_DESKTOP_DIR}/calibre.desktop
-}
-
 uninstall_cheat()
 {
   #there's a curl dependency for cht.sh
   apt-get purge -y curl
   rm -f ${USR_BIN_FOLDER}/cht.sh
   rm -f /home/${SUDO_USER}/.local/bin/cheat
-}
-
-unistall_cheese()
-{
-  apt purge -y cheese
-  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Cheese.desktop.desktop
 }
 
 uninstall_gnome-chess()
@@ -233,8 +256,7 @@ uninstall_games()
   rm -f ${XDG_DESKTOP_DIR}/pacman.desktop
   apt-get purge -y gnome-mines
   rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mines.desktop
-  apt-get purge -y aisleriot
-  rm -f ${XDG_DESKTOP_DIR}/sol.desktop
+
   apt-get purge -y gnome-mahjongg
   rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mahjongg.desktop
   apt-get purge -y gnome-sudoku
