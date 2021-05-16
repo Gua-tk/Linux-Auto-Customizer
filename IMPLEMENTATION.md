@@ -97,9 +97,9 @@
 - [x] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
 - [x] Change default Screenshots folder to /home/user/Images/screenshots/
 - [x] Internet shortcut launchers: Gapps, Netflix, OneDrive, Outlook, GitHub, Overleaf...
-- [x] INTERNET SHORTCUT BUG: delete lines of Exec and Icon in all launchers of internet desktop launchers  
+- [x] INTERNET SHORTCUT BUG: delete lines of Exec and Icon in all launchers of internet desktop launchers
+- [x] Add desktop internet shortcuts for twitch, trello, twitter, tumblr, duckduckgo...
 - [ ] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc...
-- [ ] Add desktop internet shortcuts for https://twitch.tv/, https://facebook.com/, https://twitter.com/, https://instagram.com 
 - [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
 - [ ] sysmontask
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s)
