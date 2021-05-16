@@ -230,7 +230,8 @@ BASH_FUNCTIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_functions
 BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 # Path pointing to a folder that contains the desktop launchers of all users
 ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
-
+# File that contains the association of mime types with .desktop files
+MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
 
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument

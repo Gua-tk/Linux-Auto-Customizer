@@ -46,7 +46,7 @@ remove_from_favorites()
 {
   if [[ ${EUID} -eq 0 ]]; then
     # This code search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
-    if [ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]; then
+    if [[ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]]; then
       user=$(whoami)
       fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
       while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]
@@ -64,7 +64,17 @@ remove_from_favorites()
 }
 
 # - [ ] Program function to unregister default opening applications on `uninstall.sh`
-
+# First argument: name of the .desktop whose associations will be removed
+remove_file_associations()
+{
+  if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
+    if [[ ! -z "${MIME_ASSOCIATION_PATH}" ]]; then
+      sed "s@^.*=$1@@g" -i "${MIME_ASSOCIATION_PATH}"
+    fi
+  else
+    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $1 cannot be removed from favourites. Skipping..." ${FLAG_QUIETNESS}
+  fi
+}
 
 
 uninstall_converters()

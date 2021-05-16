@@ -102,23 +102,25 @@ create_file_as_root()
 register_file_associations()
 {
 # Check if mimeapps exists
-if [[ -f ${HOME}/.config/mimeapps.list ]]; then
+if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
   # Check if the association between a mime type and desktop launcher is already existent
-  if [[ -z "$(more ${HOME_FOLDER}/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
+  if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*$2" )" ]]; then
     # If mime type is not even present we can add the hole line
-    if [[ -z "$(more ${HOME_FOLDER}/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
+    if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Fo "$1=" )" ]]; then
       sed -i "/\[Added Associations\]/a $1=$2;" ${HOME_FOLDER}/.config/mimeapps.list
     else
       # If not, mime type is already registered. We need to register another application for it
-      if [[ -z "$(more ${HOME_FOLDER}/.config/mimeapps.list | grep -Eo "$1=.*;$" )" ]]; then
+      if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*;$" )" ]]; then
         # File type(s) is registered without comma. Add the program at the end of the line with comma
-        sed -i "s|$1=.*$|&;$2;|g" ${HOME_FOLDER}/.config/mimeapps.list
+        sed -i "s|$1=.*$|&;$2;|g" "${MIME_ASSOCIATION_PATH}"
       else
         # File type is registered with comma at the end. Just add program at end of line
-        sed -i "s|$1=.*;$|&$2;|g" ${HOME_FOLDER}/.config/mimeapps.list
+        sed -i "s|$1=.*;$|&$2;|g" "${MIME_ASSOCIATION_PATH}"
       fi
     fi
   fi
+else
+  output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." ${FLAG_QUIETNESS}
 fi
 }
 
