@@ -696,13 +696,14 @@ Version=1.0"
 
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 
-intellij_ultimate_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
-intellij_ultimate_launcher="[Desktop Entry]
+ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
+ideau_launcher="[Desktop Entry]
 Categories=Development;IDE;
 Comment=Capable and Ergonomic IDE for JVM
 Encoding=UTF-8
 Exec=ideau %f
 GenericName=Java programing IDE
+Icon=${HOME_FOLDER}/.bin/idea-iu/bin/idea.png
 Keywords=IDE;programming;java;dev;
 MimeType=
 Name=IntelliJ IDEA Ultimate Edition
@@ -714,9 +715,8 @@ Type=Application
 Version=1.0"
 ideau_alias="alias ideau=\"ideau . &>/dev/null &\""
 
-intellij_community_downloader="https://download.jetbrains.com/idea/ideaIC-2020.3.1.tar.gz"
-
-intellij_community_launcher="[Desktop Entry]
+ideac_downloader="https://download.jetbrains.com/idea/ideaIC-2020.3.1.tar.gz"
+ideac_launcher="[Desktop Entry]
 Categories=Development;IDE;
 Comment=Capable and Ergonomic IDE for JVM
 Encoding=UTF-8

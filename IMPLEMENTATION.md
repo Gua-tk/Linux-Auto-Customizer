@@ -72,13 +72,15 @@
 - [x] Add folder to store icons for .desktop files --> `created add_internet_shortcut`
 - [x] Internet shortcut icons are broken because are downloaded into google-chrome folder --> Parametrized using indirect variable expansion, and adding parametrized line of Icon and exec in the launcher
 - [x] Change `google-chrome` for `xdg-open`  on internet shortcut. Delete `${program_name}_url` and put it hardcoded inside of each desktop launcher
-- [~] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
-- [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
-- [ ] Program function in `uninstall.sh` to remove bash functions
-- [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
-- [ ] Program function to unregister default opening applications on `uninstall.sh`
-- [ ] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
-- [ ] Call add_program matching against table in `common_data.sh` --> move all arguments to `common_data.sh` table and ensure there's no collision with separators.
+- [x] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [x] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
+- [x] Program function in `uninstall.sh` to remove bash functions
+- [x] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
+- [x] Program function to unregister default opening applications on `uninstall.sh`
+- [x] Call add_program matching against table in `common_data.sh` --> move all arguments to `common_data.sh` table and ensure there's no collision with separators.
+- [x] Let uninstall run as normal user for the right features
+- [x] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
+
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -100,10 +102,6 @@
 - [x] INTERNET SHORTCUT BUG: delete lines of Exec and Icon in all launchers of internet desktop launchers
 - [x] Add desktop internet shortcuts for twitch, trello, twitter, tumblr, duckduckgo...
 - [x] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc...
-- [ ] Commit functions must set automatic "" evolving the message not worrying about spaces (Refactor needed)
-- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
-- [ ] sysmontask
-- [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s)
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
 - [ ] PacketTracer  
@@ -116,34 +114,69 @@
 - [ ] SublimeText-Markdown, & other plugins for programs...
 - [ ] Fonts
 
-
 ## Currently developing/refactoring features
 
-#### TO-DO
+
+### TO-DO v1.0
+#### NEW FEATURES
+
+###### `install.sh`
 - [ ] Autoinstall nvidia drivers
-- [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
-- [ ] Add examples (images) of a working environement after applying the customizer in Linux
-- [ ] help message: arguments refactor with format
-- [ ] customizer.sh help, customizer install, customizer uninstall, customizer parallell [install| uninstall]
-- [ ] Let uninstall run as normal user for the right features
-- [ ] Show warning in uninstall when activating -o flag 
-- [ ] Github and Gitlab are not internet launchers, install program instead
 - [ ] Implement function that only uses as parameter its own name and relies on the data
+- [ ] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
+- [ ] refactor extract function: more robustness and error handling. decompress in a folder
+- [ ] sysmontask
+- [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
+
+
+###### `uninstall.sh`
+
+- [ ] 
+
+###### `customizer.sh`:
+- [ ] package installation manager will try to install with different (apt-get, yum, pacman, pkg...) if finds luck maybe perform easy installation customizer controlls calls to package manager tries to finds out which system runs customizer
+- [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
+- [ ] When having this unique endopint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
+- [ ] Move high-level wrappers from `install.sh` for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint
+- [ ] customizer.sh help, customizer install, customizer uninstall, customizer parallell [install| uninstall]
+
+
+#### MAINTENANCE & UPDATES
+- [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
+- [ ] Create headers in all files
+- [ ] Create headers and comments in auxiliary functions
+- [ ] 
+
+###### `README.md`
+- [ ] Add examples (images) of a working environment after applying the customizer in Linux
+- [ ] Sort `README.md` table, `uninstall.sh` on same sections as `install.sh` and the sort table in `data_common.sh`.
 - [ ] Write contents of `README.md` in the table in data_common.sh
-- [ ] Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
-- [ ] Sort `README.md` table, `uninstall.sh`on same sections as install and the sort table in data_common.sh`.
+
+###### `install.sh`
+- [ ] help message: arguments refactor with format
+- [ ] Apply data standard to `data_install.sh` in order to perform automatic installation of features by using indirect variable expansion
+- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
+- [ ] Commit functions must set automatic "" evolving the message not worrying about spaces (Refactor needed)
+- [ ] Create high level functions that perform variable indirect expansion to install different types of program. --> add another key to `data_common.sh` table to detect kind of instalation (portable (download_and_decompress()), linux package (download_and_install()), system repositories (apt-get install -y))
+
+###### `uninstall.sh`
+- [ ] Show warning in uninstall when activating -o flag
+- [ ] Rewrite `uninstall.sh` functions using the new auxiliary functions, structures, variables
+- [ ] Re-order functions in `uninstall.sh` to have the same order as in `install.sh
+
+###### `customizer.sh`:
+- [ ] 
+
+#### KNOWN BUGS AND FIXES
+- [ ] Gitlab needs install program
 
 #### Coming features
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)
-- [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
-- [ ] When having this unique endopint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it
-- [ ] Create high-level wrappers for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint
 - [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
-- [ ] refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
-- [ ] Python Script to store and auto-generate all user's static data
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
+- [ ] jupyter notebook
 
 #### Discarded for now
 - [ ] Automount available drives.
@@ -206,6 +239,7 @@ OCSInventory
 OnCloud
 Odoo
 VNCServer
+jupyter lab
 
 
 ```

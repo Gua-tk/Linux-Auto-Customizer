@@ -472,6 +472,12 @@ install_gitlab()
   copy_launcher "gitlab-ce.desktop"
 }
 
+install_gnome-calculator()
+{
+  apt-get install -y gnome-calculator
+  copy_launcher "org.gnome.Calculator.desktop"
+}
+
 install_gnome-chess()
 {
   apt-get install -y gnome-chess
@@ -858,9 +864,9 @@ install_geogebra()
 
 install_ideac()
 {
-  download_and_decompress ${intellij_community_downloader} "idea-ic" "z" "bin/idea.sh" "ideac"
+  download_and_decompress ${ideac_downloader} "idea-ic" "z" "bin/idea.sh" "ideac"
 
-  create_manual_launcher "${intellij_community_launcher}" "ideac"
+  create_manual_launcher "${ideac_launcher}" "ideac"
 
   register_file_associations "text/x-java" "ideac.desktop"
 
@@ -869,9 +875,10 @@ install_ideac()
 
 install_ideau()
 {
-  download_and_decompress ${intellij_ultimate_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
+  echo "troleots"
+  download_and_decompress ${ideau_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
 
-  create_manual_launcher "${intellij_ultimate_launcher}" "ideau"
+  create_manual_launcher "${ideau_launcher}" "ideau"
 
   register_file_associations "text/x-java" "ideau.desktop"
 
