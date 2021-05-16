@@ -76,6 +76,20 @@ remove_file_associations()
   fi
 }
 
+# - Argument 1: program unified name
+remove_manual_feature()
+{
+  rm -Rf "${USR_BIN_FOLDER}/$1"
+  rm -f "${DIR_IN_PATH}/$1"
+  rm -f "${XDG_DESKTOP_DIR}/$1.desktop"
+  rm -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop"
+  rm -f "${BASH_FUNCTIONS_FOLDER}/$1.sh"
+
+  remove_bash_function "$1"
+}
+
+
+
 
 uninstall_converters()
 {
@@ -91,6 +105,7 @@ uninstall_converters()
   sed "s-${converters_bashrc_call}--" -i ${BASHRC_PATH}
   rm -f /home/${SUDO_USER}/.bash_functions
 }
+
 uninstall_copyq()
 {
   apt-get purge -y copyq
