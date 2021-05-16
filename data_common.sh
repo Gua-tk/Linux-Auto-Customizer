@@ -54,7 +54,7 @@ add_program()
         # Append static bits to the state of the flags
         new="${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
         installation_data[$i]=${new}
-        # Update flags and program counter
+        # Update flags and program counter if we are installing
         if [[ ${FLAG_INSTALL} -gt 0 ]]; then
           NUM_INSTALLATION=$(( ${NUM_INSTALLATION} + 1 ))
           FLAG_INSTALL=${NUM_INSTALLATION}
@@ -71,6 +71,22 @@ add_programs()
     add_program "install_$1"
     shift
   done
+}
+
+post_install_clean()
+{
+  if [[ ${EUID} == 0 ]]; then
+    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+    fi
+    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+    fi
+  fi
 }
 
 # Common piece of code in the execute_installation function
@@ -126,9 +142,8 @@ execute_installation()
         # change program function name to un${function_name_in_installation_data}
         # Set permissions always to root
         if [[ ${FLAG_MODE} == 0 ]]; then
-          overwrite_bit=1
           program_function=un${program_function}
-          program_privileges=1
+          #program_privileges=1  #RF test
         fi
 
         program_name=$( echo ${program_function} | cut -d "_" -f2- )
@@ -153,6 +168,24 @@ execute_installation()
   done
 }
 
+# - Description: Adds all the programs with specific privileges to the installation data
+# - Permissions: This function can be called as root or as user with same behaviour.
+# - Argument 1: Type of permissions of the selected program: 0 for user, 1 for root, 2 for everything
+add_programs_with_x_permissions()
+{
+  for program in "${installation_data[@]}"; do
+    permissions=$(echo ${program} | rev | cut -d ";" -f2 | rev)
+    name=$(echo ${program} | rev | cut -d ";" -f1 | rev)
+    if [[ 2 == $1 ]]; then
+      add_program ${name}
+      continue
+    fi
+    if [[ ${permissions} == $1 ]]; then
+      add_program ${name}
+    fi
+  done
+}
+
 process_argument()
 {
   found=0
@@ -171,6 +204,14 @@ process_argument()
   if [[ ${found} == 0 ]]; then
     output_proxy_executioner "echo WARNING: ${key} is not a recognized command. Skipping this argument." ${FLAG_QUIETNESS}
   fi
+}
+
+# Make the bell sound at the end
+bell_sound()
+{
+  echo -en "\07"
+  echo -en "\07"
+  echo -en "\07"
 }
 
 ############################
@@ -405,19 +446,7 @@ standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezill
 custom1=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "chwlppr" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
 iochem=("psql" "gcc" "java" "ant" "mvn")
 
-# - Description: Adds all the programs with specific privileges to the installation data
-# - Permissions: This function can be called as root or as user with same behaviour.
-# - Argument 1: Type of permissions of the selected program: 0 for user, 1 for root, 2 for everything
-add_programs_with_x_permissions()
-{
-  for program in ${installation_data[@]}; do
-    permissions=$(echo ${program} | rev | cut -d ";" -f2 | rev)
-    name=$(echo ${program} | rev | cut -d ";" -f1 | rev)
-    if [[ ${permissions} == $1 ]]; then
-      add_program ${name}
-    fi
-  done
-}
+
 
 help_common="
 

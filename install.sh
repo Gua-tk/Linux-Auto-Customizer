@@ -314,6 +314,7 @@ add_internet_shortcut()
   add_bash_function "${!alias}" "$1.sh"
 }
 
+
 ############################
 ###### ROOT FUNCTIONS ######
 ############################
@@ -1213,7 +1214,11 @@ install_youtubemusic()
 ##################
 main()
 {
-  FLAG_MODE=1
+  ################################
+  ### DATA AND FILE STRUCTURES ###
+  ################################
+
+  FLAG_MODE=1  # Install mode
   if [[ ${EUID} == 0 ]]; then  # root
     create_folder_as_root ${USR_BIN_FOLDER}
     create_folder_as_root ${BASH_FUNCTIONS_FOLDER}
@@ -1253,7 +1258,9 @@ main()
   fi
 
 
+  #################################
   ###### ARGUMENT PROCESSING ######
+  #################################
 
   while [[ $# -gt 0 ]]; do
     key="$1"
@@ -1360,9 +1367,9 @@ main()
     exit 0
   fi
 
-  ####### EXECUTION #######
-
+  ###############################
   ### PRE-INSTALLATION UPDATE ###
+  ###############################
 
   if [[ ${EUID} == 0 ]]; then
     if [[ ${FLAG_UPGRADE} -gt 0 ]]; then
@@ -1389,32 +1396,18 @@ main()
   ### POST-INSTALLATION CLEAN ###
   ###############################
 
-  if [[ ${EUID} == 0 ]]; then
-    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
-    fi
-    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
-    fi
-  fi
+  post_install_clean
 
-  # Make the bell sound at the end
-  echo -en "\07"; echo -en "\07"; echo -en "\07"
+  bell_sound
 }
 
 
 # Import file of common variables in a relative way, so customizer can be called system-wide
-# RF, duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh
+# RF, necessary duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "${DIR}" ]]; then
   DIR="${PWD}"
 fi
-
-
 
 if [[ -f "${DIR}/data_install.sh" ]]; then
   source "${DIR}/data_install.sh"
@@ -1423,5 +1416,6 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: data_install.sh not found. Aborting..."
   exit 1
 fi
+
 # Call main function
 main "$@"
