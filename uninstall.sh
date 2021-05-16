@@ -44,7 +44,7 @@ remove_bash_function()
 # - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
 remove_from_favorites()
 {
-  if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]] || [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]]; then
+  if [[ ${EUID} -eq 0 ]]; then
     # This code search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
     if [ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]; then
       user=$(whoami)
@@ -55,11 +55,11 @@ remove_from_favorites()
       done
       export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
     fi
-
-    gsettings get org.gnome.shell favorite-apps
-    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
+  fi
+  if [[ -z $(echo "$(gsettings get org.gnome.shell favorite-apps)" | grep -Fo "$1.desktop") ]]; then
+    output_proxy_executioner "echo WARNING: $1 is not in favourites, so cannot be removed. Skipping..." ${FLAG_QUIETNESS}
   else
-    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." 0
+    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed "s@'google-chrome.desktop'@@g" | sed "s@, ,@,@g" | sed "s@\[, @[@g" | sed "s@, \]@]@g" | sed "s@@@g"sed "s@, \]@]@g")"
   fi
 }
 
