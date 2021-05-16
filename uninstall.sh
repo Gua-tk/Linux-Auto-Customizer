@@ -136,79 +136,10 @@ unistall_cheese()
   rm -f ${XDG_DESKTOP_DIR}/org.gnome.Cheese.desktop.desktop
 }
 
-#####################################
-###### USER SOFTWARE FUNCTIONS ######
-#####################################
-
-#
-
-#######################################
-###### USER-ENVIRONMENT FEATURES ######
-#######################################
-# Most (all) of them just use user permissions
-
-uninstall_converters()
-{
-  rm -f /home/${SUDO_USER}/.local/bin/dectohex
-  rm -f /home/${SUDO_USER}/.local/bin/hextodec
-  rm -f /home/${SUDO_USER}/.local/bin/bintodec
-  rm -f /home/${SUDO_USER}/.local/bin/dectobin
-  rm -f /home/${SUDO_USER}/.local/bin/dectoutf
-  rm -f /home/${SUDO_USER}/.local/bin/dectooct
-  rm -f /home/${SUDO_USER}/.local/bin/utftodec
-  echo "attempting to delete converters functions from bashrc"
-  # //RF
-  sed "s-${converters_bashrc_call}--" -i ${BASHRC_PATH}
-  rm -f /home/${SUDO_USER}/.bash_functions
-}
-
-uninstall_copyq()
-{
-  apt-get purge -y copyq
-  rm -f "${XDG_DESKTOP_DIR}/com.github.hluk.copyq.desktop"
-}
-
-uninstall_android_studio()
-{
-  rm -Rf ${USR_BIN_FOLDER}/android-studio
-  rm -f /home/${SUDO_USER}/.local/bin/studio
-  rm -f "${XDG_DESKTOP_DIR}/Android Studio.desktop"
-  rm -f "/home/${SUDO_USER}/.local/share/applications/Android Studio.desktop"
-}
-
-uninstall_cheat()
-{
-  #there's a curl dependency for cht.sh
-  apt-get purge -y curl
-  rm -f ${USR_BIN_FOLDER}/cht.sh
-  rm -f /home/${SUDO_USER}/.local/bin/cheat
-}
-
-uninstall_gnome-chess()
-{
-  apt-get purge -y gnome-chess
-  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Chess.desktop
-}
-
-uninstall_cmatrix()
-{
-  apt-get purge -y cmatrix
-  rm -f ${XDG_DESKTOP_DIR}/cmatrix.desktop
-}
-
-
 uninstall_clementine()
 {
   apt purge -y clementine
   rm -f ${XDG_DESKTOP_DIR}/clementine.desktop
-}
-
-uninstall_clion()
-{
-  rm -Rf ${USR_BIN_FOLDER}/clion
-  rm -f ${XDG_DESKTOP_DIR}/clion.desktop
-  rm -f /home/${SUDO_USER}/.local/bin/clion
-  rm -f /home/${SUDO_USER}/.local/share/applications/clion.desktop
 }
 
 uninstall_clonezilla()
@@ -219,15 +150,22 @@ uninstall_clonezilla()
   rm -f /home/${SUDO_USER}/.local/share/applications/clonezilla.desktop
 }
 
-
-uninstall_discord()
+uninstall_cmatrix()
 {
-  rm -f /home/${SUDO_USER}/.local/bin/discord
-  rm -f ${XDG_DESKTOP_DIR}/discord.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/discord.desktop
-  rm -Rf ${USR_BIN_FOLDER}/discord
+  apt-get purge -y cmatrix
+  rm -f ${XDG_DESKTOP_DIR}/cmatrix.desktop
 }
 
+uninstall_copyq()
+{
+  apt-get purge -y copyq
+  rm -f "${XDG_DESKTOP_DIR}/com.github.hluk.copyq.desktop"
+}
+
+uninstall_curl()
+{
+  apt-get purge -y copyq
+}
 
 uninstall_dropbox()
 {
@@ -235,6 +173,11 @@ uninstall_dropbox()
   rm -f ${XDG_DESKTOP_DIR}/dropbox.desktop
 }
 
+uninstall_f-irc()
+{
+  apt-get purge -y f-irc
+  rm -f ${XDG_DESKTOP_DIR}/f-irc.desktop
+}
 
 uninstall_firefox()
 {
@@ -242,33 +185,21 @@ uninstall_firefox()
   rm -f ${XDG_DESKTOP_DIR}/firefox.desktop
 }
 
-
-uninstall_f-irc()
+uninstall_freecad()
 {
-  apt-get purge -y f-irc
-  rm -f ${XDG_DESKTOP_DIR}/f-irc.desktop
+  apt-get purge -y freecad
+  rm -f ${XDG_DESKTOP_DIR}/freecad.desktop
 }
 
-
-uninstall_games()
+uninstall_ffmpeg()
 {
-  apt-get purge -y pacman
-  rm -f ${XDG_DESKTOP_DIR}/pacman.desktop
-  apt-get purge -y gnome-mines
-  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mines.desktop
-
-  apt-get purge -y gnome-mahjongg
-  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mahjongg.desktop
-  apt-get purge -y gnome-sudoku
-  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Sudoku.desktop
+  apt purge -y ffmpeg
 }
-
 
 uninstall_gcc()
 {
   apt-get purge -y gcc
 }
-
 
 uninstall_geany()
 {
@@ -276,13 +207,11 @@ uninstall_geany()
   rm -f ${XDG_DESKTOP_DIR}/geany.desktop
 }
 
-
 uninstall_gimp()
 {
   apt purge -y gimp
   rm -f ${XDG_DESKTOP_DIR}/gimp.desktop
 }
-
 
 uninstall_git()
 {
@@ -290,14 +219,31 @@ uninstall_git()
   apt-get purge -y git-lfs
 }
 
-
-uninstall_GNU_parallel()
+uninstall_gnome-chess()
 {
-  apt-get purge -y parallel
+  apt-get purge -y gnome-chess
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Chess.desktop
 }
 
+uninstall_gnome-mahjongg()
+{
+  apt-get purge -y gnome-mahjongg
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mahjongg.desktop
+}
 
-uninstall_google_chrome()
+uninstall_gnome-mines()
+{
+  apt-get purge -y gnome-mines
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Mines.desktop
+}
+
+uninstall_gnome-sudoku()
+{
+  apt-get purge -y gnome-sudoku
+  rm -f ${XDG_DESKTOP_DIR}/org.gnome.Sudoku.desktop
+}
+
+uninstall_google-chrome()
 {
   apt-get purge -y google-chrome-stable
   rm -f ${XDG_DESKTOP_DIR}/google-chrome.desktop
@@ -305,6 +251,11 @@ uninstall_google_chrome()
   rm -f /home/${SUDO_USER}/.local/share/applications/chrome*.desktop
 }
 
+uninstall_gpaint()
+{
+  apt purge -y gpaint
+  rm -f ${XDG_DESKTOP_DIR}/gpaint.desktop
+}
 
 uninstall_gparted()
 {
@@ -312,20 +263,11 @@ uninstall_gparted()
   rm -f ${XDG_DESKTOP_DIR}/gparted.desktop
 }
 
-
 uninstall_gvim()
 {
   apt purge -y vim-gtk3
   rm -f ${XDG_DESKTOP_DIR}/gvim.desktop
 }
-
-
-uninstall_gpaint()
-{
-  apt purge -y gpaint
-  rm -f ${XDG_DESKTOP_DIR}/gpaint.desktop
-}
-
 
 uninstall_inkscape()
 {
@@ -333,30 +275,10 @@ uninstall_inkscape()
   rm -f ${XDG_DESKTOP_DIR}/inkscape.desktop
 }
 
-
-uninstall_intellij_ultimate()
+uninstall_iqmol()
 {
-  rm -Rf ${USR_BIN_FOLDER}/idea-IU
-  rm -f /home/${SUDO_USER}/.local/bin/ideau
-  rm -f ${XDG_DESKTOP_DIR}/ideau.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/ideau.desktop
+  echo
 }
-
-
-uninstall_intellij_community()
-{
-  rm -Rf ${USR_BIN_FOLDER}/idea-IC
-  rm -f /home/${SUDO_USER}/.local/bin/ideac
-  rm -f ${XDG_DESKTOP_DIR}/ideac.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/ideac.desktop
-}
-
-
-uninstall_jdk11()
-{
-  apt -y purge default-jdk
-}
-
 
 uninstall_latex()
 {
@@ -365,6 +287,20 @@ uninstall_latex()
   rm -f ${XDG_DESKTOP_DIR}/texmaker.desktop
 }
 
+uninstall_parallel()
+{
+  apt-get purge -y parallel
+}
+
+uninstall_libgtkglext1()
+{
+  apt-get purge -y libgtkglext1
+}
+
+uninstall_libxcb-xtest0()
+{
+  apt-get purge -y libxcb-xtest0
+}
 
 uninstall_megasync()
 {
@@ -374,29 +310,10 @@ uninstall_megasync()
   apt-get purge -y libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
 }
 
-
-uninstall_mendeley()
-{
-  rm -Rf ${USR_BIN_FOLDER}/mendeley
-  rm -f /home/${SUDO_USER}/.local/bin/mendeley
-  rm -f ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/mendeleydesktop.desktop
-}
-
-
 uninstall_mendeley_dependencies()
 {
   apt-get -y purge gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
 }
-
-
-uninstall_musicmanager()
-{
-  apt-get purge -y google-musicmanager google-musicmanager-beta
-  rm -f ${XDG_DESKTOP_DIR}/google-musicmanager.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/google-musicmanager.desktop
-}
-
 
 uninstall_nemo()
 {
@@ -414,6 +331,10 @@ uninstall_nemo()
   echo "WARNING: If Nemo has been uninstalled restart Ubuntu to update the desktop back to Nautilus"
 }
 
+uninstall_net-tools()
+{
+  apt-get purge -y net-tools
+}
 
 uninstall_notepadqq()
 {
@@ -421,16 +342,17 @@ uninstall_notepadqq()
   rm -f ${XDG_DESKTOP_DIR}/notepadqq.desktop
 }
 
-
 uninstall_obs-studio()
 {
-  # Remove dependency
-  apt purge -y ffmpeg
-  # Uninstall OBS Studio
   apt purge -y obs-studio
   rm -f ${XDG_DESKTOP_DIR}/obs-studio.desktop
 }
 
+install_okular()
+{
+  apt purge -y okular
+  rm -f ${XDG_DESKTOP_DIR}/okular.desktop
+}
 
 uninstall_openoffice()
 {
@@ -442,30 +364,240 @@ uninstall_openoffice()
   rm -f ${XDG_DESKTOP_DIR}/openoffice4-writer.desktop
 }
 
-
-install_okular()
+uninstall_pacman()
 {
-  apt purge -y okular
-  rm -f ${XDG_DESKTOP_DIR}/okular.desktop
+  apt-get purge -y pacman
+  rm -f ${XDG_DESKTOP_DIR}/pacman.desktop
 }
-
 
 uninstall_pdfgrep()
 {
   apt-get purge -y pdfgrep
 }
 
-
-uninstall_pycharm_professional()
+uninstall_psql()
 {
-  rm -Rf ${USR_BIN_FOLDER}/pycharm-pro
-  rm -f ${XDG_DESKTOP_DIR}/pycharm-pro.desktop
-  rm -f /home/${SUDO_USER}/.local/bin/pycharm-pro
-  rm -f /home/${SUDO_USER}/.local/share/applications/pycharm-pro.desktop
+  apt-get purge -y postgresql-client-12	postgresql-12 libpq-dev postgresql-server-dev-12
+}
+
+uninstall_pypy3_dependencies()
+{
+  apt-get purge -y pkg-config libfreetype6-dev libpng-dev libffi-dev
+}
+
+uninstall_python3()
+{
+  apt-get purge -y python3-dev
+  apt-get purge -y python-dev
+}
+
+uninstall_pluma()
+{
+  apt-get purge -y uninstall_pluma
+  #Remove from favorites (?)
+}
+
+uninstall_shotcut()
+{
+  apt-get purge -y shotcut
+  rm -f ${XDG_DESKTOP_DIR}/shotcut.desktop
+}
+
+uninstall_skype()
+{
+  echo
+  dpkg -P skype
+  rm -f ${XDG_DESKTOP_DIR}/skype.desktop
+}
+
+uninstall_slack()
+{
+  dpkg -P slack-desktop
+  rm -f ${XDG_DESKTOP_DIR}/slack.desktop
+}
+
+uninstall_spotify()
+{
+  echo
+  dpkg -P spotify-desktop
+  rm -f ${XDG_DESKTOP_DIR}/spotify.desktop
+}
+
+uninstall_steam()
+{
+  dpkg -P steam-launcher
+  rm -f ${XDG_DESKTOP_DIR}/steam.desktop
+}
+
+uninstall_teams()
+{
+  echo
+  dpkg -P teams
+  rm -f ${XDG_DESKTOP_DIR}/teams.desktop
+}
+
+uninstall_terminator()
+{
+  apt-get purge -y terminator
+  rm -f ${XDG_DESKTOP_DIR}/terminator.desktop
+}
+
+uninstall_thunderbird()
+{
+  apt-get purge -y thunderbird
+  rm -f ${XDG_DESKTOP_DIR}/thunderbird.desktop
+}
+
+uninstall_tilix()
+{
+  apt-get purge -y tilix
+  rm -f ${XDG_DESKTOP_DIR}/tilix.desktop
+}
+
+uninstall_tmux()
+{
+  apt purge -y tmux
+  rm -f ${XDG_DESKTOP_DIR}/tmux.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/tmux.desktop
+}
+
+uninstall_tor()
+{
+  apt-get purge -y transmission
+  rm -f ${XDG_DESKTOP_DIR}/torbrowser.desktop
+}
+
+uninstall_transmission()
+{
+  apt-get purge -y transmission
+  rm -f ${XDG_DESKTOP_DIR}/transmission-gtk.desktop
+}
+
+uninstall_uget()
+{
+  apt-get purge -y aria2
+  apt-get purge -y uget
+  rm -f ${XDG_DESKTOP_DIR}/uget.desktop
+}
+
+uninstall_virtualbox()
+{
+  dpkg -P virtualbox-6.1
+  rm -f ${XDG_DESKTOP_DIR}/virtualbox.desktop
+}
+
+uninstall_vlc()
+{
+  apt-get purge -y vlc
+  rm -f ${XDG_DESKTOP_DIR}/vlc.desktop
+}
+
+uninstall_wireshark()
+{
+  rm -f ${XDG_DESKTOP_DIR}/wireshark.desktop
+  apt-get purge -y wireshark
+  apt-get autoremove -y --purge wireshark
 }
 
 
-uninstall_pycharm_community()
+#####################################
+###### USER SOFTWARE FUNCTIONS ######
+#####################################
+
+uninstall_ant()
+{
+  remove_manual_feature ant
+}
+
+uninstall_anydesk()
+{
+  remove_manual_feature anydesk
+}
+
+uninstall_clion()
+{
+  remove_manual_feature clion
+
+uninstall_code()
+{
+  remove_manual_feature code
+}
+
+uninstall_codium()
+{
+  remove_manual_feature codium
+}
+
+uninstall_discord()
+{
+  remove_manual_feature discord
+}
+
+uninstall_docker()
+{
+  remove_manual_feature docker
+}
+
+uninstall_eclipse()
+{
+  remove_manual_feature eclipse
+}
+
+uninstall_geogebra()
+{
+  remove_manual_feature geogebra
+}
+
+uninstall_github()
+{
+  remove_manual_feature github
+}
+
+uninstall_gitlab()
+{
+  remove_manual_feature gitlab
+}
+
+uninstall_ideac()
+{
+  rm -Rf ${USR_BIN_FOLDER}/idea-IC
+  rm -f /home/${SUDO_USER}/.local/bin/ideac
+  rm -f ${XDG_DESKTOP_DIR}/ideac.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/ideac.desktop
+}
+
+uninstall_ideau()
+{
+  rm -Rf ${USR_BIN_FOLDER}/idea-IU
+  rm -f /home/${SUDO_USER}/.local/bin/ideau
+  rm -f ${XDG_DESKTOP_DIR}/ideau.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/ideau.desktop
+}
+
+uninstall_java()
+{
+  apt -y purge default-jdk
+}
+
+uninstall_mendeley()
+{
+  rm -Rf ${USR_BIN_FOLDER}/mendeley
+  rm -f /home/${SUDO_USER}/.local/bin/mendeley
+  rm -f ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/mendeleydesktop.desktop
+}
+
+uninstall_mvn()
+{
+  remove_manual_feature mvn
+}
+
+uninstall_studio()
+{
+  remove_manual_feature studio
+}
+
+uninstall_pycharm()
 {
   rm -Rf ${USR_BIN_FOLDER}/pycharm-community
   rm -f ${XDG_DESKTOP_DIR}/pycharm.desktop
@@ -473,6 +605,13 @@ uninstall_pycharm_community()
   rm -f /home/${SUDO_USER}/.local/share/applications/pycharm.desktop
 }
 
+uninstall_pycharmpro()
+{
+  rm -Rf ${USR_BIN_FOLDER}/pycharm-pro
+  rm -f ${XDG_DESKTOP_DIR}/pycharm-pro.desktop
+  rm -f /home/${SUDO_USER}/.local/bin/pycharm-pro
+  rm -f /home/${SUDO_USER}/.local/share/applications/pycharm-pro.desktop
+}
 
 uninstall_pypy3()
 {
@@ -481,19 +620,60 @@ uninstall_pypy3()
   rm -f /home/${SUDO_USER}/.local/bin/pypy3-pip
 }
 
-
-uninstall_python3()
+uninstall_sublime()
 {
-  apt-get purge -y python3-dev
-  apt-get purge -y python-dev
+{
+  rm -Rf ${USR_BIN_FOLDER}/sublime
+  rm -f ${XDG_DESKTOP_DIR}/sublime.desktop
+  rm -f /home/${SUDO_USER}/.local/bin/sublime
+  rm -f /home/${SUDO_USER}/.local/share/applications/sublime.desktop
 }
 
-
-uninstall_pypy3_dependencies()
+uninstall_telegram()
 {
-  apt-get purge -y pkg-config libfreetype6-dev libpng-dev libffi-dev
+  rm -Rf ${USR_BIN_FOLDER}/telegram
+  rm -f /home/${SUDO_USER}/.local/bin/telegram
+  rm -f ${XDG_DESKTOP_DIR}/telegram.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
 }
 
+uninstall_youtube-dl()
+{
+  rm -f ${USR_BIN_FOLDER}/youtube-dl
+}
+
+uninstall_zoom()
+{
+  echo
+}
+
+#######################################
+###### USER-ENVIRONMENT FEATURES ######
+#######################################
+# Most (all) of them just use user permissions RF #RF
+
+uninstall_converters()
+{
+  rm -f /home/${SUDO_USER}/.local/bin/dectohex
+  rm -f /home/${SUDO_USER}/.local/bin/hextodec
+  rm -f /home/${SUDO_USER}/.local/bin/bintodec
+  rm -f /home/${SUDO_USER}/.local/bin/dectobin
+  rm -f /home/${SUDO_USER}/.local/bin/dectoutf
+  rm -f /home/${SUDO_USER}/.local/bin/dectooct
+  rm -f /home/${SUDO_USER}/.local/bin/utftodec
+  echo "attempting to delete converters functions from bashrc"
+  # //RF
+  sed "s-${converters_bashrc_call}--" -i ${BASHRC_PATH}
+  rm -f /home/${SUDO_USER}/.bash_functions
+}
+
+uninstall_cheat()
+{
+  #there's a curl dependency for cht.sh
+  apt-get purge -y curl
+  rm -f ${USR_BIN_FOLDER}/cht.sh
+  rm -f /home/${SUDO_USER}/.local/bin/cheat
+}
 
 uninstall_shell_customization()
 {
@@ -509,129 +689,10 @@ uninstall_shell_customization()
 }
 
 
-uninstall_shotcut()
-{
-  apt purge -y shotcut
-  rm -f ${XDG_DESKTOP_DIR}/shotcut.desktop
-}
-
-
-uninstall_slack()
-{
-  dpkg -P slack-desktop
-  rm -f ${XDG_DESKTOP_DIR}/slack.desktop
-}
-
-
-uninstall_steam()
-{
-  dpkg -P steam-launcher
-  rm -f ${XDG_DESKTOP_DIR}/steam.desktop
-}
-
-
-uninstall_sublime()
-{
-  rm -Rf ${USR_BIN_FOLDER}/sublime
-  rm -f ${XDG_DESKTOP_DIR}/sublime.desktop
-  rm -f /home/${SUDO_USER}/.local/bin/sublime
-  rm -f /home/${SUDO_USER}/.local/share/applications/sublime.desktop
-}
-
-
-uninstall_telegram()
-{
-  rm -Rf ${USR_BIN_FOLDER}/telegram
-  rm -f /home/${SUDO_USER}/.local/bin/telegram
-  rm -f ${XDG_DESKTOP_DIR}/telegram.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
-}
-
-
 uninstall_templates()
 {
   rm -f ${XDG_TEMPLATES_DIR}/*
 }
-
-
-uninstall_thunderbird()
-{
-  apt-get purge -y thunderbird
-  rm -f ${XDG_DESKTOP_DIR}/thunderbird.desktop
-}
-
-
-uninstall_terminator()
-{
-  apt-get purge -y terminator
-  rm -f ${XDG_DESKTOP_DIR}/terminator.desktop
-}
-
-
-uninstall_tilix()
-{
-  apt-get purge -y tilix
-  rm -f ${XDG_DESKTOP_DIR}/tilix.desktop
-}
-
-
-uninstall_tmux()
-{
-  apt purge -y tmux
-  rm -f ${XDG_DESKTOP_DIR}/tmux.desktop
-  rm -f /home/${SUDO_USER}/.local/share/applications/tmux.desktop
-}
-
-uninstall_torbrowser()
-{
-  apt-get purge -y transmission
-  rm -f ${XDG_DESKTOP_DIR}/torbrowser.desktop
-
-}
-uninstall_transmission()
-{
-  apt-get purge -y transmission
-  rm -f ${XDG_DESKTOP_DIR}/transmission-gtk.desktop
-}
-
-
-uninstall_virtualbox()
-{
-  dpkg -P virtualbox-6.1
-  rm -f ${XDG_DESKTOP_DIR}/virtualbox.desktop
-}
-
-
-uninstall_visualstudiocode()
-{
-  rm -Rf ${USR_BIN_FOLDER}/visual-studio-code
-  rm -f /home/${SUDO_USER}/.local/share/applications/visual-studio-code.desktop
-  rm -f /home/${SUDO_USER}/.local/bin/code
-  rm -f ${XDG_DESKTOP_DIR}/visual-studio-code.desktop
-}
-
-
-uninstall_vlc()
-{
-  apt-get purge -y vlc
-  rm -f ${XDG_DESKTOP_DIR}/vlc.desktop
-}
-
-
-uninstall_wireshark()
-{
-  rm -f ${XDG_DESKTOP_DIR}/wireshark.desktop
-  apt-get purge -y wireshark
-  apt-get autoremove -y --purge wireshark
-}
-
-uninstall_youtube-dl()
-{
-
-  rm -f ${USR_BIN_FOLDER}/youtube-dl
-
-}
-
 
 ##################
 ###### MAIN ######

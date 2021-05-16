@@ -656,7 +656,6 @@ install_python3()
   apt-get install -y python3-dev python-dev python3-pip
 }
 
-
 install_pluma()
 {
   apt-get install -y pluma
@@ -824,7 +823,6 @@ install_codium()
 install_discord()
 {
   download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord"
-
   create_manual_launcher "${discord_launcher}" "discord"
 }
 
@@ -848,6 +846,20 @@ install_geogebra()
   wget "${geogebra_icon}" -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
 
   create_manual_launcher "${geogebra_desktop}" "geogebra"
+}
+
+install_github()
+{
+  #Lacks to be tested
+  download_and_install_package "${github_downloader}"
+  copy_launcher "github-desktop.desktop"
+}
+
+install_gitlab()
+{
+    #Lacks to be tested
+    download_and_install_package "${gitlab_downloader}"
+    copy_launcher "gitlab-ce.desktop"
 }
 
 install_ideac()
@@ -1091,10 +1103,6 @@ install_git_aliases()
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
-install_github()
-{
-  add_internet_shortcut github
-}
 
 install_gmail()
 {
@@ -1252,10 +1260,7 @@ install_youtubemusic()
   add_internet_shortcut youtubemusic
 }
 
-install_gitlab()
-{
-  add_internet_shortcut gitlab
-}
+
 
 ##################
 ###### MAIN ######

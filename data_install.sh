@@ -294,6 +294,26 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
+github_downloader="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
+github_icon="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+github_url=https://github.com/
+github_alias="alias github=\"google-chrome ${github_url} &>/dev/null &\""
+github_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Github from Chrome
+Encoding=UTF-8
+GenericName=GitHub
+Keywords=github;
+MimeType=x-scheme-handler/tg;
+Name=GitHub
+StartupNotify=true
+StartupWMClass=GitHub
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+gitlab_downloader="https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/focal/gitlab-ce_13.11.4-ce.0_amd64.deb"
 gitlab_url=https://gitlab.com/
 gitlab_icon="https://upload.wikimedia.org/wikipedia/commons/1/18/GitLab_Logo.svg"
 gitlab_alias="alias gitlab=\"xdg-open ${gitlab_url} &>/dev/null &\""
@@ -435,24 +455,6 @@ Name=Overleaf
 StartupNotify=true
 StartupWMClass=Overleaf
 #Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-github_icon="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
-github_url=https://github.com/
-github_alias="alias github=\"google-chrome ${github_url} &>/dev/null &\""
-github_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Github from Chrome
-Encoding=UTF-8
-GenericName=GitHub
-Keywords=github;
-MimeType=x-scheme-handler/tg;
-Name=GitHub
-StartupNotify=true
-StartupWMClass=GitHub
-Terminal=false
 TryExec=google-chrome
 Type=Application
 Version=1.0"
