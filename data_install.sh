@@ -256,7 +256,11 @@ if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
 fi
+alias status=\"git status\"
+alias fetch=\"git fetch\"
+
 "
+
 
 forms_url=https://docs.google.com/forms/
 forms_icon="https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg"
