@@ -27,20 +27,25 @@
 add_to_favorites()
 {
   if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]] || [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]]; then
+    # If root
+    if [[ ${EUID} -eq 0 ]]; then
     # This code search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
-    if [ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]; then
-      user=$(whoami)
-      fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
-      while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]
-      do
-        fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
-      done
-      export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
+      if [[ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]]; then
+        user=$(whoami)
+        fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
+        while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]; do
+          fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
+        done
+        export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
+      fi
     fi
-
-    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
+    if [[ -z $(echo "$(gsettings get org.gnome.shell favorite-apps)" | grep -Fo "$1.desktop") ]]; then
+      gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
+    else
+      output_proxy_executioner "echo WARNING: $1 is already added to favourites. Skipping..." ${FLAG_QUIETNESS}
+    fi
   else
-    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." 0
+    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." ${FLAG_QUIETNESS}
   fi
 }
 
@@ -97,23 +102,25 @@ create_file_as_root()
 register_file_associations()
 {
 # Check if mimeapps exists
-if [[ -f ${HOME}/.config/mimeapps.list ]]; then
+if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
   # Check if the association between a mime type and desktop launcher is already existent
-  if [[ -z "$(more ${HOME_FOLDER}/.config/mimeapps.list | grep -Eo "$1=.*$2" )" ]]; then
+  if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*$2" )" ]]; then
     # If mime type is not even present we can add the hole line
-    if [[ -z "$(more ${HOME_FOLDER}/.config/mimeapps.list | grep -Fo "$1=" )" ]]; then
+    if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Fo "$1=" )" ]]; then
       sed -i "/\[Added Associations\]/a $1=$2;" ${HOME_FOLDER}/.config/mimeapps.list
     else
       # If not, mime type is already registered. We need to register another application for it
-      if [[ -z "$(more ${HOME_FOLDER}/.config/mimeapps.list | grep -Eo "$1=.*;$" )" ]]; then
+      if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*;$" )" ]]; then
         # File type(s) is registered without comma. Add the program at the end of the line with comma
-        sed -i "s|$1=.*$|&;$2;|g" ${HOME_FOLDER}/.config/mimeapps.list
+        sed -i "s|$1=.*$|&;$2;|g" "${MIME_ASSOCIATION_PATH}"
       else
         # File type is registered with comma at the end. Just add program at end of line
-        sed -i "s|$1=.*;$|&$2;|g" ${HOME_FOLDER}/.config/mimeapps.list
+        sed -i "s|$1=.*;$|&$2;|g" "${MIME_ASSOCIATION_PATH}"
       fi
     fi
   fi
+else
+  output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." ${FLAG_QUIETNESS}
 fi
 }
 
@@ -306,6 +313,7 @@ add_internet_shortcut()
   # Add the corresponding alias
   add_bash_function "${!alias}" "$1.sh"
 }
+
 
 ############################
 ###### ROOT FUNCTIONS ######
@@ -1254,7 +1262,11 @@ install_gitlab()
 ##################
 main()
 {
-  FLAG_MODE=1
+  ################################
+  ### DATA AND FILE STRUCTURES ###
+  ################################
+
+  FLAG_MODE=1  # Install mode
   if [[ ${EUID} == 0 ]]; then  # root
     create_folder_as_root ${USR_BIN_FOLDER}
     create_folder_as_root ${BASH_FUNCTIONS_FOLDER}
@@ -1294,7 +1306,9 @@ main()
   fi
 
 
+  #################################
   ###### ARGUMENT PROCESSING ######
+  #################################
 
   while [[ $# -gt 0 ]]; do
     key="$1"
@@ -1401,9 +1415,9 @@ main()
     exit 0
   fi
 
-  ####### EXECUTION #######
-
+  ###############################
   ### PRE-INSTALLATION UPDATE ###
+  ###############################
 
   if [[ ${EUID} == 0 ]]; then
     if [[ ${FLAG_UPGRADE} -gt 0 ]]; then
@@ -1430,32 +1444,18 @@ main()
   ### POST-INSTALLATION CLEAN ###
   ###############################
 
-  if [[ ${EUID} == 0 ]]; then
-    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
-    fi
-    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
-    fi
-  fi
+  post_install_clean
 
-  # Make the bell sound at the end
-  echo -en "\07"; echo -en "\07"; echo -en "\07"
+  bell_sound
 }
 
 
 # Import file of common variables in a relative way, so customizer can be called system-wide
-# RF, duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh
+# RF, necessary duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "${DIR}" ]]; then
   DIR="${PWD}"
 fi
-
-
 
 if [[ -f "${DIR}/data_install.sh" ]]; then
   source "${DIR}/data_install.sh"
@@ -1464,5 +1464,6 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: data_install.sh not found. Aborting..."
   exit 1
 fi
+
 # Call main function
 main "$@"

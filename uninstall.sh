@@ -23,14 +23,58 @@
 # - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 purge_all_features()
 {
+  # Remove the contents of USR_BIN_FOLDER
   rm -Rf "${USR_BIN_FOLDER}"
   # Remove links in path
-  
+  for filename in ${ls "${DIR_IN_PATH}"}; do
+    if [[ ! -e "${DIR_IN_PATH}/filename" ]]; then
+      rm -f "${DIR_IN_PATH}/filename"
+    fi
+  done
 }
-# - [ ] Program function in `uninstall.sh` to remove bash functions
-# - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
-# - [ ] Program function to unregister default opening applications on `uninstall.sh`
 
+# - [ ] Program function in `uninstall.sh` to remove bash functions
+# - Argument 1: Name of the filename sourced by own .bash_functions of customizer
+remove_bash_function()
+{
+  sed "s@source ${BASH_FUNCTIONS_FOLDER}/$1\$@@g" -i ${BASH_FUNCTIONS_PATH}
+  rm -f "${BASH_FUNCTIONS_FOLDER}/$1"
+}
+
+# - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
+remove_from_favorites()
+{
+  if [[ ${EUID} -eq 0 ]]; then
+    # This code search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
+    if [[ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]]; then
+      user=$(whoami)
+      fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
+      while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]
+      do
+        fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
+      done
+      export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
+    fi
+  fi
+  if [[ -z $(echo "$(gsettings get org.gnome.shell favorite-apps)" | grep -Fo "$1.desktop") ]]; then
+    output_proxy_executioner "echo WARNING: $1 is not in favourites, so cannot be removed. Skipping..." ${FLAG_QUIETNESS}
+  else
+    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed "s@'google-chrome.desktop'@@g" | sed "s@, ,@,@g" | sed "s@\[, @[@g" | sed "s@, \]@]@g" | sed "s@@@g"sed "s@, \]@]@g")"
+  fi
+}
+
+# - [ ] Program function to unregister default opening applications on `uninstall.sh`
+# First argument: name of the .desktop whose associations will be removed
+remove_file_associations()
+{
+  if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
+    if [[ ! -z "${MIME_ASSOCIATION_PATH}" ]]; then
+      sed "s@^.*=$1@@g" -i "${MIME_ASSOCIATION_PATH}"
+    fi
+  else
+    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $1 cannot be removed from favourites. Skipping..." ${FLAG_QUIETNESS}
+  fi
+}
 
 
 uninstall_converters()
@@ -451,10 +495,10 @@ uninstall_steam()
 
 uninstall_sublime()
 {
-  rm -Rf ${USR_BIN_FOLDER}/sublime-text
-  rm -f ${XDG_DESKTOP_DIR}/sublime-text.desktop
+  rm -Rf ${USR_BIN_FOLDER}/sublime
+  rm -f ${XDG_DESKTOP_DIR}/sublime.desktop
   rm -f /home/${SUDO_USER}/.local/bin/sublime
-  rm -f /home/${SUDO_USER}/.local/share/applications/sublime-text.desktop
+  rm -f /home/${SUDO_USER}/.local/share/applications/sublime.desktop
 }
 
 
@@ -557,13 +601,17 @@ uninstall_youtube-dl()
 ##################
 main()
 {
-  FLAG_MODE=0
-  if [[ "$(whoami)" != "root" ]]; then
-    output_proxy_executioner "echo ERROR: uninstall.sh needs root permissions." ${FLAG_QUIETNESS}
-    exit 1
-  fi
+  ################################
+  ### DATA AND FILE STRUCTURES ###
+  ################################
 
+  FLAG_MODE=0  # Uninstall mode
+  FLAG_OVERWRITE=1  # Set in uninstall always to true or it skips the program if it is installed
+
+
+  #################################
   ###### ARGUMENT PROCESSING ######
+  #################################
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [[ -z "$@" ]]; then
@@ -584,10 +632,10 @@ main()
         FLAG_QUIETNESS=2
       ;;
 
-      -s|--skip|--skip-if-installed)
+      -f|--fear|--fearlessly)
         FLAG_OVERWRITE=0
       ;;
-      -o|--overwrite|--overwrite-if-present)
+      -u|--uninstall)
         FLAG_OVERWRITE=1
       ;;
 
@@ -598,11 +646,6 @@ main()
         FLAG_IGNORE_ERRORS=1
       ;;
 
-      # Force is the two previous active behaviours in one
-      -f|--force)
-        FLAG_IGNORE_ERRORS=1
-        FLAG_OVERWRITE=1
-      ;;
 
       -d|--dirty|--no-autoclean)
         FLAG_AUTOCLEAN=0
@@ -612,16 +655,6 @@ main()
       ;;
       -C|--Clean)
         FLAG_AUTOCLEAN=2
-      ;;
-
-      -k|--keep-system-outdated)
-        FLAG_UPGRADE=0
-      ;;
-      -u|--update)
-        FLAG_UPGRADE=1
-      ;;
-      -U|--upgrade|--Upgrade)
-        FLAG_UPGRADE=2
       ;;
 
       -n|--not|-!)
@@ -644,7 +677,7 @@ main()
         
         ### WRAPPER ARGUMENT(S) ###
       -|--all)
-        uninstall_all
+        add_programs_with_x_permissions 2
       ;;
 
 
@@ -667,21 +700,9 @@ fi
   ### POST-INSTALLATION CLEAN ###
   ###############################
 
-  if [[ ${EUID} == 0 ]]; then
-    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
-    fi
-    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
-    fi
-  fi
+  post_install_clean
 
-  # Make the bell sound at the end
-  echo -en "\07"; echo -en "\07"; echo -en "\07"}
+  bell_sound
 }
 
 # Import file of common variables in a relative way, so customizer can be called system-wide

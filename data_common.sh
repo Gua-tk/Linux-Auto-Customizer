@@ -39,7 +39,6 @@ output_proxy_executioner() {
   fi
 }
 
-
 # Receives a list of feature function name (install_pycharm, install_vlc...) and applies the current flags to it,
 # modifying the corresponding line of installation_data
 add_program()
@@ -54,7 +53,7 @@ add_program()
         # Append static bits to the state of the flags
         new="${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
         installation_data[$i]=${new}
-        # Update flags and program counter
+        # Update flags and program counter if we are installing
         if [[ ${FLAG_INSTALL} -gt 0 ]]; then
           NUM_INSTALLATION=$(( ${NUM_INSTALLATION} + 1 ))
           FLAG_INSTALL=${NUM_INSTALLATION}
@@ -71,6 +70,22 @@ add_programs()
     add_program "install_$1"
     shift
   done
+}
+
+post_install_clean()
+{
+  if [[ ${EUID} == 0 ]]; then
+    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+    fi
+    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+    fi
+  fi
 }
 
 # Common piece of code in the execute_installation function
@@ -126,9 +141,8 @@ execute_installation()
         # change program function name to un${function_name_in_installation_data}
         # Set permissions always to root
         if [[ ${FLAG_MODE} == 0 ]]; then
-          overwrite_bit=1
           program_function=un${program_function}
-          program_privileges=1
+          #program_privileges=1  #RF test
         fi
 
         program_name=$( echo ${program_function} | cut -d "_" -f2- )
@@ -153,6 +167,23 @@ execute_installation()
   done
 }
 
+# - Description: Adds all the programs with specific privileges to the installation data
+# - Permissions: This function can be called as root or as user with same behaviour.
+# - Argument 1: Type of permissions of the selected program: 0 for user, 1 for root, 2 for everything
+add_programs_with_x_permissions()
+{
+  for program in "${installation_data[@]}"; do
+    permissions=$(echo ${program} | rev | cut -d ";" -f2 | rev)
+    name=$(echo ${program} | rev | cut -d ";" -f1 | rev)
+    if [[ 2 == $1 ]]; then
+      add_program ${name}
+      continue
+    fi
+    if [[ ${permissions} == $1 ]]; then
+      add_program ${name}
+    fi
+  done
+}
 
 process_argument()
 {
@@ -174,11 +205,36 @@ process_argument()
   fi
 }
 
+# Make the bell sound at the end
+bell_sound()
+{
+  echo -en "\07"
+  echo -en "\07"
+  echo -en "\07"
+}
+
 ############################
 ##### COMMON VARIABLES #####
 ############################
 
-### DECLARATION ###
+### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
+
+# PERSONAL_LAUNCHERS_DIR: /home/username/.local/share/applications
+# ALL_USERS_LAUNCHERS_DIR: /usr/share/applications
+# HOME_FOLDER: /home/username
+# USR_BIN_FOLDER: /home/username/.bin
+# BASHRC_PATH: /home/username/.bashrc
+# DIR_IN_PATH: /home/username/.local/bin
+# HOME_FOLDER: /home/username
+# BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions
+# BASH_FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions
+
+# Imported from ${HOME}/.config/user-dirs.dirs
+# XDG_DESKTOP_DIR: /home/username/Desktop
+# XDG_PICTURES_DIR: /home/username/Images
+# XDG_TEMPLATES_DIR: /home/username/Templates
+
+### VARIABLE DECLARATION ###
 
 if [[ "$(whoami)" != "root" ]]; then
   # Path pointing to $HOME
@@ -214,6 +270,9 @@ BASH_FUNCTIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_functions
 BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 # Path pointing to a folder that contains the desktop launchers of all users
 ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
+# File that contains the association of mime types with .desktop files
+MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
+
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
 FLAG_OVERWRITE=0     # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
@@ -225,22 +284,7 @@ NUM_INSTALLATION=1  # Used to perform the (un)installation in the same order tha
 FLAG_UPGRADE=1  # 0 --> no update, no upgrade; 1 --> update, no upgrade; 2 --> update and upgrade
 FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perform autoremove; 2 --> perform autoremove and autoclean
 FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1 or 0, respectively
-### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
 
-# PERSONAL_LAUNCHERS_DIR: /home/username/.local/share/applications
-# ALL_USERS_LAUNCHERS_DIR: /usr/share/applications
-# HOME_FOLDER: /home/username
-# USR_BIN_FOLDER: /home/username/.bin
-# BASHRC_PATH: /home/username/.bashrc
-# DIR_IN_PATH: /home/username/.local/bin
-# HOME_FOLDER: /home/username
-# BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions
-# BASH_FUNCTIONS_PATH: /home/username/.bash_functions
-
-# Imported from ${HOME}/.config/user-dirs.dirs
-# XDG_DESKTOP_DIR: /home/username/Desktop
-# XDG_PICTURES_DIR: /home/username/Images
-# XDG_TEMPLATES_DIR: /home/username/Templates
 
 ### FEATURE_DATA ###
 
@@ -411,19 +455,7 @@ standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezill
 custom1=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "chwlppr" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
 iochem=("psql" "gcc" "java" "ant" "mvn")
 
-# - Description: Adds all the programs with specific privileges to the installation data
-# - Permissions: This function can be called as root or as user with same behaviour.
-# - Argument 1: Type of permissions of the selected program: 0 for user, 1 for root, 2 for everything
-add_programs_with_x_permissions()
-{
-  for program in ${installation_data[@]}; do
-    permissions=$(echo ${program} | rev | cut -d ";" -f2 | rev)
-    name=$(echo ${program} | rev | cut -d ";" -f1 | rev)
-    if [[ ${permissions} == $1 ]]; then
-      add_program ${name}
-    fi
-  done
-}
+
 
 help_common="
 
