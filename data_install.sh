@@ -153,24 +153,6 @@ TryExec=cmatrix
 Type=Application
 Version=1.0"
 
-codium_downloader=https://github.com/VSCodium/vscodium/releases/download/1.54.3/VSCodium-linux-x64-1.54.3.tar.gz
-codium_launcher="[Desktop Entry]
-Categories=IDE;programming;
-Comment=Community-driven distribution of Microsoft’s editor VSCode.
-Encoding=UTF-8
-Exec=codium
-GenericName=IDE for programming
-Icon=${USR_BIN_FOLDER}/codium/resources/app/resources/linux/code.png
-Keywords=programming;dev;
-MimeType=
-Name=VSCodium
-StartupNotify=true
-StartupWMClass=
-Terminal=false
-TryExec=codium
-Type=Application
-Version=1.0"
-
 dropbox_downloader=https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb
 
 discord_downloader="https://discord.com/api/download?platform=linux&format=tar.gz"
@@ -313,7 +295,7 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-gitlab_downloader="https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/focal/gitlab-ce_13.11.4-ce.0_amd64.deb"
+gitlab_downloader="https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/focal/gitlab-ce_13.11.4-ce.0_amd64.deb/download.deb"
 gitlab_url=https://gitlab.com/
 gitlab_icon="https://upload.wikimedia.org/wikipedia/commons/1/18/GitLab_Logo.svg"
 gitlab_alias="alias gitlab=\"xdg-open ${gitlab_url} &>/dev/null &\""
@@ -324,7 +306,7 @@ Encoding=UTF-8
 GenericName=Code repository online
 Keywords=forms;
 MimeType=x-scheme-handler/tg;
-Name=GitLab
+Name=GitLab Desktop
 StartupNotify=true
 StartupWMClass=GitLab
 Terminal=false
@@ -496,16 +478,16 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-googlecalendar_url="https://calendar.google.com/"
+googlecalendar_url=https://calendar.google.com/
 googlecalendar_icon="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg"
-googlecalendar_alias="alias google-calendar=\"google-chrome ${googlecalendar_url} &>/dev/null &\""
+googlecalendar_alias="alias googlecalendar=\"google-chrome ${google-calendar_url} &>/dev/null &\""
 googlecalendar_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Google Calendar from Chrome
 Encoding=UTF-8
 GenericName=Google Calendar
 Keywords=google-calendar;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Google Calendar
 StartupNotify=true
 StartupWMClass=Google Calendar
@@ -681,7 +663,7 @@ Comment=Desktop app to Google Keep from Chrome
 Encoding=UTF-8
 GenericName=Google Calendar
 Keywords=google-keep;keep;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Google Keep
 StartupNotify=true
 StartupWMClass=Google Keep
@@ -691,7 +673,7 @@ Type=Application
 Version=1.0"
 
 netflix_url=https://www.netflix.com
-netflix_icon=https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg
+netflix_icon="https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg"
 netflix_alias="alias netflix=\"google-chrome ${netflix_url} &>/dev/null &\""
 netflix_launcher="[Desktop Entry]
 Categories=Network;VideoStreaming;Film;
@@ -699,7 +681,7 @@ Comment=Desktop app to reproduce Netflix from Chrome
 Encoding=UTF-8
 GenericName=Netflix
 Keywords=netflix;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Netflix
 StartupNotify=true
 StartupWMClass=Netflix
@@ -1141,12 +1123,11 @@ youtubedl_downloader=https://yt-dl.org/downloads/latest/youtube-dl
 youtubewav_alias="alias youtubewav=\"youtube-dl --extract-audio --audio-format wav\""
 
 zoom_downloader=https://zoom.us/client/latest/zoom_x86_64.tar.xz
-zoom_icon_downloader=https://play-lh.googleusercontent.com/JgU6AIREDMsGLmrFSJ8OwLb-JJVw_jwqdwEZWUHemAj0V5Dl7i7GOpmranv2GsCKobM
+zoom_icon_downloader="https://play-lh.googleusercontent.com/JgU6AIREDMsGLmrFSJ8OwLb-JJVw_jwqdwEZWUHemAj0V5Dl7i7GOpmranv2GsCKobM"
 zoom_launcher="[Desktop Entry]
 Categories=Social;Communication;
 Comment=Live Video Streaming for Meetings
 Encoding=UTF-8
-Exec=ZoomLauncher
 GenericName=Video multiple calls
 Icon=${USR_BIN_FOLDER}/zoom/zoom_icon.ico
 Keywords=Social;VideoCalls;

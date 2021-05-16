@@ -316,7 +316,6 @@ installation_data=(
   "--clonezilla|--CloneZilla|--cloneZilla;1;install_clonezilla"
   "--cmatrix|--Cmatrix;1;install_cmatrix"
   "--code|--visualstudiocode|--visual-studio-code|--Code|--visualstudio|--visual-studio;0;install_code"
-  "--codium|--vscodium;0;install_codium"
   "--converters|--Converters;0;install_converters"
   "--copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q;1;install_copyq"
   "--curl|--Curl;1;install_curl"
@@ -340,14 +339,14 @@ installation_data=(
   "--gimp|--GIMP|--Gimp;1;install_gimp"
   "--git-aliases|--git_aliases|--git-prompt;0;install_git_aliases"
   "--git;1;install_git"
-  "--github|--Github|--GitHub;0;install_github"
-  "--gitlab|--GitLab|--git-lab;0;install_gitlab"
+  "--github|--Github|--GitHub;1;install_github"
+  "--gitlab|--GitLab|--git-lab;1;install_gitlab"
   "--gmail|--Gmail;0;install_gmail"
   "--gnome-chess|--GNOME_Chess|--gnomechess|--chess;1;install_gnome-chess"
   "--gnome-mahjongg|--mahjongg|--Mahjongg;1;install_gnome-mahjongg"
   "--gnome-mines|--mines|--Mines|--GNU-mines|--gnomemines;1;install_gnome-mines"
   "--gnome-sudoku|--sudoku|--Sudoku;1;install_gnome-sudoku"
-  "--google-calendar|--Google-Calendar|--googlecalendar;0;install_google-calendar"
+  "--googlecalendar|--Google-Calendar|--googlecalendar;0;install_googlecalendar"
   "--google-chrome|--chrome|--Chrome|--Google-Chrome;1;install_google-chrome"
   "--gpaint|--paint|--Gpaint;1;install_gpaint"
   "--gparted|--GParted|--GPARTED|--Gparted;1;install_gparted"
@@ -633,7 +632,6 @@ features.
   --cmatrix|--Cmatrix)
   --converters|--Converters)
   --clonezilla|--CloneZilla|--cloneZilla)
-  --codium|--vscodium)
   --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
   --extract-function|-extract_function)
   --f-irc|--firc|--Firc|--irc)

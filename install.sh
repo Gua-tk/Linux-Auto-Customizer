@@ -457,6 +457,21 @@ install_git()
   apt-get install -y git-lfs
 }
 
+install_github()
+{
+  #Lacks to be tested
+  download_and_install_package "${github_downloader}"
+  copy_launcher "github-desktop.desktop"
+}
+
+install_gitlab()
+{
+  #Lacks to be tested
+  apt-get install -y ncurses-term openssh-server openssh-sftp-server ssh-import-id
+  download_and_install_package "${gitlab_downloader}"
+  copy_launcher "gitlab-ce.desktop"
+}
+
 install_gnome-chess()
 {
   apt-get install -y gnome-chess
@@ -643,6 +658,7 @@ install_pdfgrep()
 
 install_psql()
 {
+  apt-get install -y libc6-i386 lib32stdc++6 libc6=2.31-0ubuntu9.2
   apt-get install -y postgresql-client-12	postgresql-12 libpq-dev postgresql-server-dev-12
 }
 
@@ -813,13 +829,6 @@ install_code()
   add_bash_function "${code_alias}" "code_alias.sh"
 }
 
-# Does not work because the root directory of the compressed is called ".". Wait until the developers change it
-install_codium()
-{
-  download_and_decompress ${codium_downloader} "codium" "z" "bin/codium" "codium"
-  create_manual_launcher "${codium_launcher}" "codium"
-}
-
 install_discord()
 {
   download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord"
@@ -846,20 +855,6 @@ install_geogebra()
   wget "${geogebra_icon}" -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
 
   create_manual_launcher "${geogebra_desktop}" "geogebra"
-}
-
-install_github()
-{
-  #Lacks to be tested
-  download_and_install_package "${github_downloader}"
-  copy_launcher "github-desktop.desktop"
-}
-
-install_gitlab()
-{
-    #Lacks to be tested
-    download_and_install_package "${gitlab_downloader}"
-    copy_launcher "gitlab-ce.desktop"
 }
 
 install_ideac()
@@ -948,7 +943,7 @@ install_pycharmpro()
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 install_pypy3()
 {
-  download_and_decompress ${pypy3_downloader} "pypy3" "J"
+  download_and_decompress ${pypy3_downloader} "pypy3" "j"
 
   # Install modules using pip
   ${USR_BIN_FOLDER}/pypy3/bin/pypy3 -m ensurepip
@@ -1109,9 +1104,9 @@ install_gmail()
   add_internet_shortcut gmail
 }
 
-install_google-calendar()
+install_googlecalendar()
 {
-  add_internet_shortcut google-calendar
+  add_internet_shortcut googlecalendar
 }
 
 install_history_optimization()
