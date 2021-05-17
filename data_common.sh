@@ -39,54 +39,62 @@ output_proxy_executioner() {
   fi
 }
 
-# Receives a list of feature function name (install_pycharm, install_vlc...) and applies the current flags to it,
+# Receives a list of arguments selecting features (--pycharm, --vlc...) and applies the current flags to it,
 # modifying the corresponding line of installation_data
 add_program()
 {
+  # Process all arguments
   while [[ $# -gt 0 ]]; do
+
+    found=0  # To check for a valid argument
+    # Process each argument to write down the flags for each installation in installation_data
     total=${#installation_data[*]}
-    for (( i=0; i<$(( ${total} )); i++ )); do
-      program_name=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1 | rev)
-      if [[ "$1" == "${program_name}" ]]; then
-        # Cut static bits
-        rest=$(echo "${installation_data[$i]}" | rev | cut -d ";" -f1,2 | rev)
-        # Append static bits to the state of the flags
-        new="${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${rest}"
-        installation_data[$i]=${new}
-        # Update flags and program counter if we are installing
-        if [[ ${FLAG_INSTALL} -gt 0 ]]; then
-          NUM_INSTALLATION=$(( ${NUM_INSTALLATION} + 1 ))
-          FLAG_INSTALL=${NUM_INSTALLATION}
+    for (( i=0; i<$(( ${total} )); i++ )); do  # Check all the entries in installation_data
+      # Cut first program name argument (with two -- at the beginning) from the first argument
+      # We will generate the program function name with it
+      program_arguments=$(echo "${installation_data[$i]}" | cut -d ";" -f1)
+      for argument in $(echo ${program_arguments} | tr "|" " "); do
+
+        if [[ "$1" == "${argument}" ]]; then
+
+          # Set that the argument is valid
+          found=1
+          # Cut static bit of permission
+          flag_permissions=$(echo "${installation_data[$i]}" | cut -d ";" -f2)
+          # Generate name of the function depending on the mode from the first argument
+          program_name="${FLAG_MODE}_$(echo ${program_arguments} | cut -d "|" -f1 | cut -d "-" -f3-)"
+          # Append static bits to the state of the flags
+          new="${program_arguments};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${program_name}"
+          installation_data[$i]=${new}
+          # Update flags and program counter if we are installing
+          if [[ ${FLAG_INSTALL} -gt 0 ]]; then
+            NUM_INSTALLATION=$(( ${NUM_INSTALLATION} + 1 ))
+            FLAG_INSTALL=${NUM_INSTALLATION}
+          fi
+          break  # Argument matched, so we can stop searching
         fi
+      done
+      # Propagate the inner break, and continue to next argument
+      if [[ ${found} == 1 ]]; then
+        break
       fi
+
     done
+    if [[ ${found} == 0 ]]; then
+        output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument." ${FLAG_QUIETNESS}
+    fi
     shift
   done
 }
 
-add_programs()
+add_wrapper()
 {
   while [[ $# -gt 0 ]]; do
-    add_program "install_$1"
+    add_program "--$1"
     shift
   done
 }
 
-post_install_clean()
-{
-  if [[ ${EUID} == 0 ]]; then
-    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
-    fi
-    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
-    fi
-  fi
-}
 
 # Common piece of code in the execute_installation function
 # Argument 1: forceness_bit
@@ -123,28 +131,26 @@ execute_installation_wrapper_install_feature()
 
 execute_installation()
 {
+            new="${program_arguments};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${program_name}"
+
   # Double for to perform the installation in same order as the arguments
   for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
     # Loop through all the elements in the common data table
-    for program in ${installation_data[@]}; do
+    for program in "${installation_data[@]}"; do
+      # Check the number of elements, if there are less than 3 do not process, that program has not been added
+      num_elements=$(echo ${program} | tr ";" " " | wc -w)
+      if [[ ${num_elements} -lt 3 ]]; then
+        continue
+      fi
       # Installation bit processing
-      installation_bit=$( echo ${program} | cut -d ";" -f1 )
+      installation_bit=$( echo ${program} | cut -d ";" -f3 )
       if [[ ${installation_bit} == ${i} ]]; then
-        forceness_bit=$( echo ${program} | cut -d ";" -f2 )
-        quietness_bit=$( echo ${program} | cut -d ";" -f3 )
-        overwrite_bit=$( echo ${program} | cut -d ";" -f4 )
-        program_function=$( echo ${program} | cut -d ";" -f6 )
-        program_privileges=$( echo ${program} | cut -d ";" -f5 )
-
-        # If we are on uninstall:
-        # activate -o FLAG_OVERWRITE
-        # change program function name to un${function_name_in_installation_data}
-        # Set permissions always to root
-        if [[ ${FLAG_MODE} == 0 ]]; then
-          program_function=un${program_function}
-          #program_privileges=1  #RF test
-        fi
-
+        program_privileges=$( echo ${program} | cut -d ";" -f2)
+        forceness_bit=$( echo ${program} | cut -d ";" -f3 )
+        quietness_bit=$( echo ${program} | cut -d ";" -f4 )
+        overwrite_bit=$( echo ${program} | cut -d ";" -f5 )
+        program_privileges=$( echo ${program} | cut -d ";" -f6 )
+        program_function=$( echo ${program} | cut -d ";" -f7 )
         program_name=$( echo ${program_function} | cut -d "_" -f2- )
         if [[ ${program_privileges} == 1 ]]; then
           if [[ ${EUID} -ne 0 ]]; then
@@ -173,8 +179,8 @@ execute_installation()
 add_programs_with_x_permissions()
 {
   for program in "${installation_data[@]}"; do
-    permissions=$(echo ${program} | rev | cut -d ";" -f2 | rev)
-    name=$(echo ${program} | rev | cut -d ";" -f1 | rev)
+    permissions=$(echo ${program} | cut -d ";" -f2)
+    name=$(echo ${program} | cut -d ";" -f1 | cut -d "|" -f1)
     if [[ 2 == $1 ]]; then
       add_program ${name}
       continue
@@ -185,25 +191,23 @@ add_programs_with_x_permissions()
   done
 }
 
-process_argument()
+post_install_clean()
 {
-  found=0
-  for program in "${installation_data[@]}"; do
-    program_arguments=$(echo ${program} | cut -d ";" -f1)
-    numargs=$(echo ${program_arguments} | tr "|" " " | wc -w)
-    for (( i=0; i<${numargs}; i++ )); do
-      arg_i=$(echo ${program_arguments} | cut -d "|" -f$((i+1)) )
-      if [[ ${arg_i} == "$1" ]]; then
-        function_name=$(echo ${program} | rev | cut -d ";" -f1 | rev)
-        add_program ${function_name}
-        found=1
-      fi
-    done
-  done
-  if [[ ${found} == 0 ]]; then
-    output_proxy_executioner "echo WARNING: ${key} is not a recognized command. Skipping this argument." ${FLAG_QUIETNESS}
+  if [[ ${EUID} == 0 ]]; then
+    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+    fi
+    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+    fi
   fi
 }
+
+
 
 # Make the bell sound at the end
 bell_sound()
