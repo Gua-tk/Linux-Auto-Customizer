@@ -404,6 +404,7 @@ installation_data=(
   "--steam|--Steam|--STEAM;1;install_steam"
   "--studio|--android|--AndroidStudio|--androidstudio|--android-studio|--android_studio|--Androidstudio;0;install_studio"
   "--sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text;0;install_sublime"
+  "--sysmontask|--SysMonTask;1;install_sysmontask"
   "--teams|--Teams|--MicrosoftTeams;1;install_teams"
   "--telegram|--Telegram;0;install_telegram"
   "--templates;0;install_templates"

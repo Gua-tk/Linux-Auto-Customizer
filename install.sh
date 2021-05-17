@@ -982,6 +982,19 @@ install_sublime()
   add_to_favorites "sublime"
 }
 
+install_sysmontask()
+{
+  rm -Rf ${USR_BIN_FOLDER}/SysMonTask
+  create_folder_as_root ${USR_BIN_FOLDER}/SysMonTask
+  git clone ${sysmontask_downloader} ${USR_BIN_FOLDER}/SysMonTask
+  #chgrp -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
+  #chown -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
+  #chmod -R 755 ${USR_BIN_FOLDER}/SysMonTask
+  $(cd ${USR_BIN_FOLDER}/SysMonTask && python3 setup.py install &>/dev/null)
+  #python3 ${USR_BIN_FOLDER}/SysMonTask/setup.py install
+  copy_launcher "SysMonTask.desktop"
+}
+
 install_telegram()
 {
   download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
@@ -1103,7 +1116,6 @@ install_git_aliases()
   rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
-
 
 install_gmail()
 {

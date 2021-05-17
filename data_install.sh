@@ -1004,6 +1004,8 @@ TryExec=telegram
 Type=Application
 Version=1.0"
 
+sysmontask_downloader=https://github.com/KrispyCamel4u/SysMonTask.git
+
 teams_downloader="https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES"
 tmux_launcher="[Desktop Entry]
 Categories=Network;

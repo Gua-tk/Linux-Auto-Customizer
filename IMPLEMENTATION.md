@@ -167,7 +167,7 @@
 - [ ] 
 
 #### KNOWN BUGS AND FIXES
-- [ ] Gitlab needs install program
+- [ ] gitlab-ce needs to be installed as source program
 
 #### Coming features
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)
