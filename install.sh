@@ -124,6 +124,43 @@ else
 fi
 }
 
+# - Description: Installs a program that uses package manager relying on declared variables
+# - Permissions: This functions expects to be called as root
+# - Argument 1: Name of the feature to install
+packagemanager_installation_type()
+{
+  local -r packagedependencies=$1_packagedependencies
+  local -r packagename=$1_packagename
+  local -r launchername=$1_launchername
+
+  if [[ ! -z "${!packagedependencies}" ]]; then
+    apt-get install -y "${!packagedependencies}"
+  fi
+  apt-get install -y "${!packagename}"
+  if [[ ! -z "${!launchername}" ]]; then
+    copy_launcher "${!launchername}.desktop"
+  fi
+}
+
+# - Description:
+# - Permissions:
+# - Argument 1:
+packageinstall_installation_type()
+{
+  local -r packagedependencies=$1_packagedependencies
+  local -r packageurl=$1_packageurl
+  local -r launchername=$1_launchername
+
+  if [[ ! -z "${!packagedependencies}" ]]; then
+    apt-get install -y "${!packagedependencies}"
+  fi
+  download_and_install_package "${!packageurl}"
+  if [[ ! -z "${!launchername}" ]]; then
+    copy_launcher "${!launchername}.desktop"
+  fi
+}
+
+
 # - Description: Creates a valid launcher for the normal user in the desktop using an already created launcher from an
 # automatic install (for example using apt-get or dpkg).
 # - Permissions: This function expects to be called as root since it uses the variable $SUDO_USER
@@ -313,7 +350,28 @@ add_internet_shortcut()
   # Add the corresponding alias
   add_bash_function "${!alias}" "$1.sh"
 }
+# - Description: Expands installation type and executes the corresponding function
+# - Permissions:
+# - Argument 1:
+generic_install()
+{
+  local -r installationtype=$1_installationtype
+  if [[ ! -z "${!installationtype}" ]]; then
+    case ${!installationtype} in
+      packagemanager)
+        packagemanager_installation_type $1
+      ;;
+      packageinstall)
+        packageinstall_installation_type $1
+      ;;
+      *)
+        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
+        exit 1
+      ;;
+    esac
+  fi
 
+}
 
 ############################
 ###### ROOT FUNCTIONS ######
@@ -327,14 +385,12 @@ install_aisleriot()
 
 install_atom()
 {
-  download_and_install_package ${atom_downloader}
-  copy_launcher atom.desktop
+  generic_install atom
 }
 
 install_audacity()
 {
-  apt-get install -y audacity
-  copy_launcher audacity.desktop
+  generic_install audacity
 }
 
 install_AutoFirma()
@@ -354,26 +410,22 @@ install_AutoFirma()
 
 install_caffeine()
 {
-  apt-get install -y caffeine
-  copy_launcher caffeine-indicator.desktop
+  generic_install caffeine
 }
 
 install_calibre()
 {
-  apt-get install -y calibre
-  copy_launcher calibre-gui.desktop
+  generic_install calibre
 }
 
 install_cheese()
 {
-  apt-get install -y cheese
-  copy_launcher org.gnome.Cheese.desktop
+  generic_install cheese
 }
 
 install_clementine()
 {
-  apt-get install -y clementine
-  copy_launcher clementine.desktop
+  generic_install clementine
 }
 
 install_clonezilla()
@@ -390,13 +442,12 @@ install_cmatrix()
 
 install_copyq()
 {
-  apt-get install -y copyq
-  copy_launcher "com.github.hluk.copyq.desktop"
+  generic_install copyq
 }
 
 install_curl()
 {
-  apt-get install -y curl
+  generic_install curl
 }
 
 # Dropbox desktop client and integration

@@ -94,11 +94,33 @@ TryExec=anydesk
 Type=Application
 Version=1.0"
 
-atom_downloader=https://atom.io/download/deb
+atom_installationtype="packageinstall"
+atom_packageurl=("https://atom.io/download/deb")
+atom_launchername=("atom")
+
+audacity_installationtype="packagemanager"
+audacity_launchername=("audacity")
+audacity_packagename=("audacity")
 
 autofirma_downloader=https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip
 
+caffeine_installationtype="packagemanager"
+caffeine_launchername=("caffeine-indicator")
+caffeine_packagename=("caffeine")
+
+calibre_installationtype="packagemanager"
+calibre_launchername=("calibre-gui")
+calibre_packagename=("calibre")
+
 cheat_downloader=https://cht.sh/:cht.sh
+
+cheese_installationtype="packagemanager"
+cheese_launchername=("org.gnome.Cheese")
+cheese_packagename=("cheese")
+
+clementine_installationtype="packagemanager"
+clementine_launchername=("clementine")
+clementine_packagename=("clementine")
 
 clion_downloader=https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz
 clion_launcher="[Desktop Entry]
@@ -152,6 +174,13 @@ Terminal=true
 TryExec=cmatrix
 Type=Application
 Version=1.0"
+
+copyq_installationtype="packagemanager"
+copyq_packagename="copyq"
+copyq_launchername="com.github.hluk.copyq"
+
+curl_installationtype="packagemanager"
+curl_packagename=("curl")
 
 dropbox_downloader=https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb
 
