@@ -103,7 +103,7 @@
 - [x] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc...
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
-- [ ] PacketTracer  
+- [ ] PacketTracer (diferent versions 7...)
 - [ ] CMake
 - [ ] evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)  
 - [ ] Rsync and grsync (graphical)
@@ -126,6 +126,7 @@
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] sysmontask
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
+- [ ] When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
 
 
 ###### `uninstall.sh`
@@ -134,8 +135,7 @@
 
 ###### `customizer.sh`:
 - [ ] package installation manager will try to install with different (apt-get, yum, pacman, pkg...) if finds luck maybe perform easy installation customizer controlls calls to package manager tries to finds out which system runs customizer
-- [ ] create a unique endpoint for all the code in customizer customizer.sh which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
-- [ ] When having this unique endopint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
+- [ ] create a unique endpoint for all the code in customizer `customizer.sh` which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
 - [ ] Move high-level wrappers from `install.sh` for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint
 - [ ] customizer.sh help, customizer install, customizer uninstall, customizer parallell [install| uninstall]
 
