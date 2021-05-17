@@ -176,8 +176,8 @@ Type=Application
 Version=1.0"
 
 copyq_installationtype="packagemanager"
-copyq_packagename="copyq"
-copyq_launchername="com.github.hluk.copyq"
+copyq_packagename=("copyq")
+copyq_launchername=("com.github.hluk.copyq")
 
 curl_installationtype="packagemanager"
 curl_packagename=("curl")
@@ -240,23 +240,23 @@ Type=Application
 Version=1.0"
 
 ffmpeg_installationtype="packagemanager"
-ffmpeg_packagename="ffmpeg"
+ffmpeg_packagename=("ffmpeg")
 
 firefox_installationtype="packagemanager"
-firefox_packagename="firefox"
-firefox_launchername="firefox"
+firefox_packagename=("firefox")
+firefox_launchername=("firefox")
 
 freecad_installationtype="packagemanager"
-freecad_packagename="freecad"
-freecad_launchername="freecad"
+freecad_packagename=("freecad")
+freecad_launchername=("freecad")
 
 gcc_function="# colored GCC warnings and errors
 export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01\"
 "
 
 geany_installationtype="packagemanager"
-geany_packagename="geany"
-geany_launchername="geany"
+geany_packagename=("geany")
+geany_launchername=("geany")
 
 geogebra_downloader=https://download.geogebra.org/package/linux-port6
 geogebra_icon=https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg
@@ -279,8 +279,8 @@ Type=Application
 Version=4.2.2"
 
 gimp_installationtype="packagemanager"
-gimp_packagename="gimp"
-gimp_launchername="gimp"
+gimp_packagename=("gimp")
+gimp_launchername=("gimp")
 
 git_aliases_function="
 commit()
@@ -310,8 +310,9 @@ alias fetch=\"git fetch\"
 "
 
 github_installationtype="packageinstall"
-github_packagename="github"
-github_launchername="github-desktop.desktop"
+github_packageurl="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
+github_packagename=("github")
+github_launchername=("github-desktop.desktop")
 
 #The following triggers errors in data_install.sh invalid variable name
 #gnome-calculator_installationtype="packagemanager"
@@ -356,7 +357,6 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-github_downloader="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
 github_icon="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
 github_url=https://github.com/
 github_alias="alias github=\"xdg-open ${github_url} &>/dev/null &\""
@@ -814,7 +814,6 @@ inkscape_installationtype="packagemanager"
 inkscape_packagename=("inkscape")
 inkscape_launchername=("inkscape")
 
-
 iqmol_downloader=http://www.iqmol.org/download.php?get=iqmol_2.14.deb
 iqmol_icon=http://www.iqmol.org/images/icon.png
 iqmol_launcher="[Desktop Entry]
@@ -902,7 +901,6 @@ pdfgrep_packagename=("pdfgrep")
 pluma_installationtype="packagemanager"
 pluma_packagename=("pluma")
 pluma_launchername=("pluma")
-
 
 prompt_function="
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -1109,7 +1107,7 @@ TryExec=sublime
 Type=Application
 Version=1.0"
 
-sysmontask_downloader=https://github.com/KrispyCamel4u/SysMonTask.git
+sysmontask_downloader="https://github.com/KrispyCamel4u/SysMonTask.git"
 
 teams_installationtype="packageinstall"
 teams_packageurl=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")
@@ -1195,8 +1193,6 @@ Version=1.0"
 vlc_installationtype="packagemanager"
 vlc_packagename=("vlc")
 vlc_launchername=("vlc")
-
-
 
 wallpapers_downloader=https://github.com/AleixMT/wallpapers
 wallpapers_changer_script="#!/bin/bash
@@ -1298,6 +1294,7 @@ Terminal=false
 TryExec=ZoomLauncher
 Type=Application
 Version=1.0"
+
 
 ###########################
 ##### SYSTEM FEATURES #####
