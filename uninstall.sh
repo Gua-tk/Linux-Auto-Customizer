@@ -57,7 +57,7 @@ remove_from_favorites()
     fi
   fi
   if [[ -z $(echo "$(gsettings get org.gnome.shell favorite-apps)" | grep -Fo "$1.desktop") ]]; then
-    output_proxy_executioner "echo WARNING: $1 is not in favourites, so cannot be removed. Skipping..." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo WARNING: $1 is not in favourites of the task-bar, so cannot be removed. Skipping..." ${FLAG_QUIETNESS}
   else
     gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed "s@'google-chrome.desktop'@@g" | sed "s@, ,@,@g" | sed "s@\[, @[@g" | sed "s@, \]@]@g" | sed "s@@@g"sed "s@, \]@]@g")"
   fi
@@ -702,7 +702,7 @@ main()
   ### DATA AND FILE STRUCTURES ###
   ################################
 
-  FLAG_MODE=0  # Uninstall mode
+  FLAG_MODE=uninstall  # Uninstall mode
   FLAG_OVERWRITE=1  # Set in uninstall always to true or it skips the program if it is installed
 
 
@@ -779,7 +779,7 @@ main()
 
 
       *)  # Individual arguments
-        process_argument ${key}
+        add_program ${key}
       ;;
       esac
     shift

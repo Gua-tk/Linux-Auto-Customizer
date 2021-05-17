@@ -1272,7 +1272,7 @@ main()
   ### DATA AND FILE STRUCTURES ###
   ################################
 
-  FLAG_MODE=1  # Install mode
+  FLAG_MODE=install  # Install mode
   if [[ ${EUID} == 0 ]]; then  # root
     create_folder_as_root ${USR_BIN_FOLDER}
     create_folder_as_root ${BASH_FUNCTIONS_FOLDER}
@@ -1391,10 +1391,10 @@ main()
 
       ### WRAPPER ARGUMENTS ###
       --custom1)
-        add_programs "${custom1[@]}"
+        add_wrapper "${custom1[@]}"
       ;;
       --iochem)
-        add_programs "${iochem[@]}"
+        add_wrapper "${iochem[@]}"
       ;;
       --user|--regular|--normal)
         add_programs_with_x_permissions 0
@@ -1406,9 +1406,8 @@ main()
         add_programs_with_x_permissions 2
       ;;
 
-
       *)  # Individual argument
-        process_argument ${key}
+        add_program ${key}
       ;;
     esac
     shift
