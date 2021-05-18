@@ -124,6 +124,43 @@ else
 fi
 }
 
+# - Description: Installs a program that uses package manager relying on declared variables
+# - Permissions: This functions expects to be called as root
+# - Argument 1: Name of the feature to install
+packagemanager_installation_type()
+{
+  local -r packagedependencies=$1_packagedependencies
+  local -r packagename=$1_packagename
+  local -r launchername=$1_launchername
+
+  if [[ ! -z "${!packagedependencies}" ]]; then
+    apt-get install -y "${!packagedependencies}"
+  fi
+  apt-get install -y "${!packagename}"
+  if [[ ! -z "${!launchername}" ]]; then
+    copy_launcher "${!launchername}.desktop"
+  fi
+}
+
+# - Description:
+# - Permissions:
+# - Argument 1:
+packageinstall_installation_type()
+{
+  local -r packagedependencies=$1_packagedependencies
+  local -r packageurl=$1_packageurl
+  local -r launchername=$1_launchername
+
+  if [[ ! -z "${!packagedependencies}" ]]; then
+    apt-get install -y "${!packagedependencies}"
+  fi
+  download_and_install_package "${!packageurl}"
+  if [[ ! -z "${!launchername}" ]]; then
+    copy_launcher "${!launchername}.desktop"
+  fi
+}
+
+
 # - Description: Creates a valid launcher for the normal user in the desktop using an already created launcher from an
 # automatic install (for example using apt-get or dpkg).
 # - Permissions: This function expects to be called as root since it uses the variable $SUDO_USER
@@ -367,15 +404,26 @@ add_internet_shortcut()
   # Add the corresponding alias
   add_bash_function "${!alias}" "$1.sh"
 }
-
-packages_install()
+# - Description: Expands installation type and executes the corresponding function
+# - Permissions:
+# - Argument 1:
+generic_install()
 {
-  while [[ $# -gt 0 ]]; do
-    apt-get install -y $1
-    shift
-  done
-}
-
+  local -r installationtype=$1_installationtype
+  if [[ ! -z "${!installationtype}" ]]; then
+    case ${!installationtype} in
+      packagemanager)
+        packagemanager_installation_type $1
+      ;;
+      packageinstall)
+        packageinstall_installation_type $1
+      ;;
+      *)
+        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
+        exit 1
+      ;;
+    esac
+  fi
 
 
 ############################
@@ -390,14 +438,12 @@ install_aisleriot()
 
 install_atom()
 {
-  download_and_install_package ${atom_downloader}
-  copy_launcher atom.desktop
+  generic_install atom
 }
 
 install_audacity()
 {
-  apt-get install -y audacity
-  copy_launcher audacity.desktop
+  generic_install audacity
 }
 
 install_AutoFirma()
@@ -417,26 +463,22 @@ install_AutoFirma()
 
 install_caffeine()
 {
-  apt-get install -y caffeine
-  copy_launcher caffeine-indicator.desktop
+  generic_install caffeine
 }
 
 install_calibre()
 {
-  apt-get install -y calibre
-  copy_launcher calibre-gui.desktop
+  generic_install calibre
 }
 
 install_cheese()
 {
-  apt-get install -y cheese
-  copy_launcher org.gnome.Cheese.desktop
+  generic_install cheese
 }
 
 install_clementine()
 {
-  apt-get install -y clementine
-  copy_launcher clementine.desktop
+  generic_install clementine
 }
 
 install_clonezilla()
@@ -453,13 +495,12 @@ install_cmatrix()
 
 install_copyq()
 {
-  apt-get install -y copyq
-  copy_launcher "com.github.hluk.copyq.desktop"
+  generic_install copyq
 }
 
 install_curl()
 {
-  apt-get install -y curl
+  generic_install curl
 }
 
 # Dropbox desktop client and integration
@@ -480,19 +521,18 @@ install_f-irc()
 
 install_ffmpeg()
 {
-  apt-get install -y ffmpeg
+  generic_install ffmpeg
 }
 
 install_firefox()
 {
-  apt-get install -y firefox
-  copy_launcher "firefox.desktop"
+  generic_install firefox
+
 }
 
 install_freecad()
 {
-  apt-get install -y freecad
-  copy_launcher "freecad.desktop"
+  generic_install freecad
 }
 
 install_gcc()
@@ -503,14 +543,12 @@ install_gcc()
 
 install_geany()
 {
-  apt-get install -y geany
-  copy_launcher geany.desktop
+  generic_install geany
 }
 
 install_gimp()
 {
-  apt-get install -y gimp
-  copy_launcher "gimp.desktop"
+  generic_install gimp
 }
 
 # Install GIT and all its related utilities (gitk e.g.)
@@ -522,9 +560,7 @@ install_git()
 
 install_github()
 {
-  #Lacks to be tested
-  download_and_install_package "${github_downloader}"
-  copy_launcher "github-desktop.desktop"
+  generic_install github
 }
 
 install_gitlab()
@@ -583,8 +619,7 @@ install_gpaint()
 
 install_gparted()
 {
-  apt-get install -y gparted
-  copy_launcher "gparted.desktop"
+  generic_install gparted
 }
 
 install_gvim()
@@ -595,8 +630,7 @@ install_gvim()
 
 install_inkscape()
 {
-  apt-get install -y inkscape
-  copy_launcher "inkscape.desktop"
+  generic_install inkscape
 }
 
 install_iqmol()
@@ -620,12 +654,12 @@ install_latex()
 
 install_parallel()
 {
-  apt-get -y install parallel
+  generic_install parallel
 }
 
 install_libgtkglext1()
 {
-  apt-get install -y libgtkglext1
+  generic_install libgtkglext1
 }
 
 install_libxcb-xtest0()
@@ -673,8 +707,7 @@ install_net-tools()
 
 install_notepadqq()
 {
-  apt-get install -y notepadqq
-  copy_launcher notepadqq.desktop
+  generic_install notepadqq
 }
 
 install_obs-studio()
@@ -687,8 +720,7 @@ install_obs-studio()
 
 install_okular()
 {
-  apt-get -y install okular
-  copy_launcher "org.kde.okular.desktop"
+  generic_install okular
 }
 
 install_openoffice()
@@ -716,13 +748,12 @@ install_openoffice()
 
 install_pacman()
 {
-  apt-get install -y pacman
-  copy_launcher "pacman.desktop"
+  generic_install pacman
 }
 
 install_pdfgrep()
 {
-  apt-get install -y pdfgrep
+  generic_install pdfgrep
 }
 
 install_psql()
@@ -743,8 +774,8 @@ install_python3()
 
 install_pluma()
 {
-  apt-get install -y pluma
-  copy_launcher "pluma.desktop"
+  generic_install pluma
+  # Add to favorites
 }
 
 install_shotcut()
@@ -755,51 +786,42 @@ install_shotcut()
 
 install_skype()
 {
-  download_and_install_package ${skype_downloader}
-  copy_launcher "skypeforlinux.desktop"
+  generic_install skype
 }
 
 install_slack()
 {
-  download_and_install_package ${slack_repository}
-  copy_launcher "slack.desktop"
+  generic_install slack
 }
 
 install_spotify()
 {
-  download_and_install_package ${spotify_downloader}
-  copy_launcher "spotify.desktop"
+  generic_install spotify
 }
 
-# steam ubuntu client
 install_steam()
 {
-  download_and_install_package ${steam_downloader}
-  copy_launcher steam.desktop
+  generic_install steam
 }
 
 install_teams()
 {
-  download_and_install_package ${teams_downloader}
-  copy_launcher "teams.desktop"
+  generic_install teams
 }
 
 install_terminator()
 {
-  apt-get -y install terminator
-  copy_launcher terminator.desktop
+  generic_install terminator
 }
 
 install_thunderbird()
 {
-  apt-get install -y thunderbird
-  copy_launcher thunderbird.desktop
+  generic_install thunderbird
 }
 
 install_tilix()
 {
-  apt-get install -y tilix
-  copy_launcher com.gexperts.Tilix.desktop
+  generic_install tilix
 }
 
 install_tmux()
@@ -816,9 +838,7 @@ install_tor()
 
 install_transmission()
 {
-  apt-get install -y transmission
-  copy_launcher "transmission-gtk.desktop"
-  create_links_in_path "$(which transmission-gtk)" transmission
+  generic_install transmission
 }
 
 install_uget()
@@ -841,8 +861,7 @@ install_virtualbox()
 
 install_vlc()
 {
-  apt-get -y install vlc
-  copy_launcher "vlc.desktop"
+  generic_install vlc
 }
 
 install_wireshark()
@@ -1045,6 +1064,19 @@ install_sublime()
   add_to_favorites "sublime"
 }
 
+install_sysmontask()
+{
+  rm -Rf ${USR_BIN_FOLDER}/SysMonTask
+  create_folder_as_root ${USR_BIN_FOLDER}/SysMonTask
+  git clone ${sysmontask_downloader} ${USR_BIN_FOLDER}/SysMonTask
+  #chgrp -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
+  #chown -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
+  #chmod -R 755 ${USR_BIN_FOLDER}/SysMonTask
+  $(cd ${USR_BIN_FOLDER}/SysMonTask && python3 setup.py install &>/dev/null)
+  #python3 ${USR_BIN_FOLDER}/SysMonTask/setup.py install
+  copy_launcher "SysMonTask.desktop"
+}
+
 install_telegram()
 {
   download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
@@ -1166,7 +1198,6 @@ install_git_aliases()
   rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
-
 
 install_gmail()
 {

@@ -98,11 +98,33 @@ TryExec=anydesk
 Type=Application
 Version=1.0"
 
-atom_downloader=https://atom.io/download/deb
+atom_installationtype="packageinstall"
+atom_packageurl=("https://atom.io/download/deb")
+atom_launchername=("atom")
+
+audacity_installationtype="packagemanager"
+audacity_launchername=("audacity")
+audacity_packagename=("audacity")
 
 autofirma_downloader=https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip
 
+caffeine_installationtype="packagemanager"
+caffeine_launchername=("caffeine-indicator")
+caffeine_packagename=("caffeine")
+
+calibre_installationtype="packagemanager"
+calibre_launchername=("calibre-gui")
+calibre_packagename=("calibre")
+
 cheat_downloader=https://cht.sh/:cht.sh
+
+cheese_installationtype="packagemanager"
+cheese_launchername=("org.gnome.Cheese")
+cheese_packagename=("cheese")
+
+clementine_installationtype="packagemanager"
+clementine_launchername=("clementine")
+clementine_packagename=("clementine")
 
 clion_downloader=https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz
 clion_launcher="[Desktop Entry]
@@ -156,6 +178,13 @@ Terminal=true
 TryExec=cmatrix
 Type=Application
 Version=1.0"
+
+copyq_installationtype="packagemanager"
+copyq_packagename=("copyq")
+copyq_launchername=("com.github.hluk.copyq")
+
+curl_installationtype="packagemanager"
+curl_packagename=("curl")
 
 dropbox_downloader=https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb
 
@@ -214,9 +243,24 @@ TryExec=f-irc
 Type=Application
 Version=1.0"
 
+ffmpeg_installationtype="packagemanager"
+ffmpeg_packagename=("ffmpeg")
+
+firefox_installationtype="packagemanager"
+firefox_packagename=("firefox")
+firefox_launchername=("firefox")
+
+freecad_installationtype="packagemanager"
+freecad_packagename=("freecad")
+freecad_launchername=("freecad")
+
 gcc_function="# colored GCC warnings and errors
 export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01\"
 "
+
+geany_installationtype="packagemanager"
+geany_packagename=("geany")
+geany_launchername=("geany")
 
 geogebra_downloader=https://download.geogebra.org/package/linux-port6
 geogebra_icon=https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg
@@ -237,6 +281,10 @@ Terminal=false
 TryExec=geogebra
 Type=Application
 Version=4.2.2"
+
+gimp_installationtype="packagemanager"
+gimp_packagename=("gimp")
+gimp_launchername=("gimp")
 
 git_aliases_function="
 commit()
@@ -265,6 +313,35 @@ alias fetch=\"git fetch\"
 
 "
 
+github_installationtype="packageinstall"
+github_packageurl="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
+github_packagename=("github")
+github_launchername=("github-desktop.desktop")
+
+#The following triggers errors in data_install.sh invalid variable name
+#gnome-calculator_installationtype="packagemanager"
+#gnome_calculator_packagename=("gnome-calculator")
+#gnome-calculator_launchername=("org.gnome.Calculator")
+
+#gnome-chess_installationtype="packagemanager"
+#gnome_chess_packagename=("gnome-chess")
+#gnome-chess_launchername=("org.gnome.Chess")
+
+#gnome-mahjongg_installationtype="packagemanager"
+#gnome_mahjongg_packagename=("gnome-mahjongg")
+#gnome-mahjongg_launchername=("org.gnome.Mahjongg")
+
+#gnome-mines_installationtype="packagemanager"
+#gnome_mines_packagename=("gnome-mines")
+#gnome-mines_launchername=("org.gnome.Mines")
+
+#gnome-sudoku_installationtype="packagemanager"
+#gnome_sudoku_packagename=("gnome-sudoku")
+#gnome-sudoku_launchername=("org.gnome.Sudoku")
+
+gparted_installationtype="packagemanager"
+gparted_packagename=("gparted")
+gparted_launchername=("gparted")
 
 forms_url=https://docs.google.com/forms/
 forms_icon="https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg"
@@ -284,7 +361,6 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-github_downloader="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
 github_icon="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
 github_url=https://github.com/
 github_alias="alias github=\"xdg-open ${github_url} &>/dev/null &\""
@@ -738,9 +814,12 @@ Type=Application
 Version=13.0"
 ideac_alias="alias ideac=\"ideac . &>/dev/null &\""
 
+inkscape_installationtype="packagemanager"
+inkscape_packagename=("inkscape")
+inkscape_launchername=("inkscape")
+
 iqmol_downloader=http://www.iqmol.org/download.php?get=iqmol_2.14.deb
 iqmol_icon=http://www.iqmol.org/images/icon.png
-
 iqmol_launcher="[Desktop Entry]
 Categories=Visualization;
 Comment=Molecule Visualizer
@@ -763,6 +842,12 @@ java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b0
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
 
 l_function="alias l=\"ls -lAh --color=auto\""
+
+libgtkglext1_installationtype="packagemanager"
+libgtkglext1_packagename=("libgtkglext1")
+
+#libxcb-xtest0_installationtype="packagemanager"
+#libxcb-xtest0_packagename=("libxcb-xtest0")
 
 maven_downloader="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 
@@ -790,7 +875,36 @@ Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
 
+#net-tools_installationtype="packagemanager"
+#net-tools_packagename=("net-tools")
+
+notepadqq_installationtype="packagemanager"
+notepadqq_packagename=("notepadqq")
+notepadqq_launchername=("notepadqq")
+
+#obs-studio_installationtype="packagemanager"
+#obs-studio_packagename=("obs-studio")
+#obs-studio_launchername=("com.obsproject.Studio")
+
+okular_installationtype="packagemanager"
+okular_packagename=("okular")
+okular_launchername=("org.kde.okular")
+
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
+
+pacman_installationtype="packagemanager"
+pacman_packagename=("pacman")
+pacman_launchername=("pacman")
+
+parallel_instalationtype="packagemanager"
+parallel_packagename=("parallel")
+
+pdfgrep_installationtype="packagemanager"
+pdfgrep_packagename=("pdfgrep")
+
+pluma_installationtype="packagemanager"
+pluma_packagename=("pluma")
+pluma_launchername=("pluma")
 
 prompt_function="
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -962,14 +1076,23 @@ TryExec=shotcut
 Type=Application
 Version=1.0"
 
-skype_downloader=https://go.skype.com/skypeforlinux-64.deb
+skype_installationtype="packageinstall"
+skype_packageurl=("https://go.skype.com/skypeforlinux-64.deb")
+skype_launchername=("skypeforlinux")
 
-slack_repository=https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb
+slack_installationtype="packageinstall"
+slack_repository=("https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb")
+slack_launchername=("slack")
 
-steam_downloader=https://steamcdn-a.akamaihd.net/client/installer/steam.deb
+spotify_installationtype="packageinstall"
+spotify_packageurl=("http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb")
+spotify_launchername=("spotify")
+
+steam_installationtype="packageinstall"
+steam_packageurl=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
+steam_launchername=("steam")
 
 sublime_text_downloader=https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2
-
 sublime_alias="alias sublime=\"sublime . &>/dev/null &\""
 sublime_text_launcher="[Desktop Entry]
 Categories=;
@@ -988,7 +1111,12 @@ TryExec=sublime
 Type=Application
 Version=1.0"
 
-spotify_downloader=http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb
+sysmontask_downloader="https://github.com/KrispyCamel4u/SysMonTask.git"
+
+teams_installationtype="packageinstall"
+teams_packageurl=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")
+teams_launchername=("teams")
+
 telegram_icon=https://telegram.org/img/t_logo.svg?1
 telegram_downloader=https://telegram.org/dl/desktop/linux
 telegram_launcher="[Desktop Entry]
@@ -1008,7 +1136,18 @@ TryExec=telegram
 Type=Application
 Version=1.0"
 
-teams_downloader="https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES"
+terminator_installationtype="packagemanager"
+terminator_packagename=("terminator")
+terminator_launchername=("terminator")
+
+thunderbird_installationtype="packagemanager"
+thunderbird_packagename=("thunderbird")
+thunderbird_launchername=("thunderbird")
+
+tilix_installationtype="packagemanager"
+tilix_packagename=("tilix")
+tilix_launchername=("com.gexperts.Tilix")
+
 tmux_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Terminal Multiplexer
@@ -1025,6 +1164,14 @@ Terminal=true
 TryExec=tmux
 Type=Application
 Version=1.0"
+
+#torbrowser-launcher_installationtype="packagemanager"
+#torbrowser-launcher_packagename=("torbrowser-launcher")
+#torbrowser-launcher_launchername=("torbrowser")
+
+transmission_installationtype="packagemanager"
+transmission_packagename=("transmission")
+transmission_launchername=("transmission-gtk")
 
 virtualbox_downloader=https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb
 
@@ -1046,6 +1193,10 @@ Terminal=false
 TryExec=code
 Type=Application
 Version=1.0"
+
+vlc_installationtype="packagemanager"
+vlc_packagename=("vlc")
+vlc_launchername=("vlc")
 
 wallpapers_downloader=https://github.com/AleixMT/wallpapers
 wallpapers_changer_script="#!/bin/bash
@@ -1147,6 +1298,7 @@ Terminal=false
 TryExec=ZoomLauncher
 Type=Application
 Version=1.0"
+
 
 ###########################
 ##### SYSTEM FEATURES #####
