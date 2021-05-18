@@ -155,6 +155,55 @@ create_manual_launcher()
   fi
 }
 
+# Argument 1: link to download into usr bin folder
+# Argument 2 (optional): final name for the file
+download()
+{
+  # Check if a name is specified
+  if [[ -z "$2" ]]; then
+    local -r temporalname=downloading_program
+  else
+    local -r temporalname="$2"
+  fi
+  # Clean to avoid conflicts with previously installed software or aborted installation
+  rm -f "${USR_BIN_FOLDER}/${temporalname}"
+  # Download in a subshell to avoid changing the working directory in the current shell
+  (cd ${USR_BIN_FOLDER}; wget -qO "${temporalname}" --show-progress "$1")
+}
+
+# Argument 1: Type of decompression
+# Argument 2: If present ssume that there is a unique folder inside the compressed file. Capture folder name and
+# rename it to the third argument
+#
+decompress()
+{
+  if [[ "${3}" == "zip" ]]; then
+    program_folder_name="$( unzip -l "${USR_BIN_FOLDER}/downloading_program" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1 )"
+    unzip -l "${USR_BIN_FOLDER}/downloading_program"
+  else
+    # Capture root folder name
+    program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < "${USR_BIN_FOLDER}/downloading_program")
+  fi
+
+  # Check that variable program_folder_name is set, if not abort
+  # Clean to avoid conflicts with previously installed software or aborted installation
+  rm -Rf "${USR_BIN_FOLDER}/${program_folder_name:?"ERROR: The name of the installed program could not been captured"}"
+  if [[ "${3}" == "zip" ]]; then
+    (cd "${USR_BIN_FOLDER}"; unzip "${USR_BIN_FOLDER}/downloading_program" )  # To avoid collisions
+  else
+    # Decompress in a subshell to avoid changing the working directory in the current shell
+    (cd "${USR_BIN_FOLDER}"; tar -x$3f -) < "${USR_BIN_FOLDER}/downloading_program"
+  fi
+  # Delete downloaded files which will be no longer used
+  rm -f "${USR_BIN_FOLDER}/downloading_program"
+  # Clean older installation to avoid conflicts
+  if [[ "${program_folder_name}" != "$2" ]]; then
+    rm -Rf "${USR_BIN_FOLDER}/$2"
+    # Rename folder for coherence
+    mv "${USR_BIN_FOLDER}/${program_folder_name}" "${USR_BIN_FOLDER}/$2"
+  fi
+}
+
 # - Description: Downloads a compressed file pointed by the provided link in $1 into $USR_BIN_FOLDER.
 # We assume that this compressed file contains only one folder in the root. The name of this folder will be captured in
 # order to change its name to the desired one, contained in $2.
@@ -194,6 +243,8 @@ download_and_decompress()
   # Download in a subshell to avoid changing the working directory in the current shell
   (cd ${USR_BIN_FOLDER}; wget -qO "downloading_program" --show-progress "$1")
 
+
+
   if [[ "${3}" == "zip" ]]; then
     program_folder_name="$( unzip -l "${USR_BIN_FOLDER}/downloading_program" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1 )"
     unzip -l "${USR_BIN_FOLDER}/downloading_program"
@@ -219,6 +270,9 @@ download_and_decompress()
     # Rename folder for coherence
     mv "${USR_BIN_FOLDER}/${program_folder_name}" "${USR_BIN_FOLDER}/$2"
   fi
+
+
+
   # Save the final name of the folder to regenerate the full path after the shifts
   program_folder_name="$2"
   # Shift the first 3 arguments to have only from 4th argument to the last in order to call create_links_in_path
@@ -313,6 +367,15 @@ add_internet_shortcut()
   # Add the corresponding alias
   add_bash_function "${!alias}" "$1.sh"
 }
+
+packages_install()
+{
+  while [[ $# -gt 0 ]]; do
+    apt-get install -y $1
+    shift
+  done
+}
+
 
 
 ############################

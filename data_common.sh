@@ -131,8 +131,6 @@ execute_installation_wrapper_install_feature()
 
 execute_installation()
 {
-            new="${program_arguments};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${program_name}"
-
   # Double for to perform the installation in same order as the arguments
   for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
     # Loop through all the elements in the common data table

@@ -11,6 +11,7 @@
 * Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using chgrp and chown
 * console features are not installed directly in bashrc; instead use the structure provided by the customizer using .bash_functions
 * Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links
+
 #### Behavioural
 * Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
 * Relative PATHs are forbidden. We must not use the given working directory  
