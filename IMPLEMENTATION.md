@@ -129,7 +129,6 @@
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
 
-
 ###### `uninstall.sh`
 
 - [ ] 
@@ -138,14 +137,18 @@
 - [ ] package installation manager will try to install with different (apt-get, yum, pacman, pkg...) if finds luck maybe perform easy installation customizer controlls calls to package manager tries to finds out which system runs customizer
 - [ ] create a unique endpoint for all the code in customizer `customizer.sh` which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
 - [ ] Move high-level wrappers from `install.sh` for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint
-- [ ] customizer.sh help, customizer install, customizer uninstall, customizer parallell [install| uninstall]
+- [ ] customizer.sh help, customizer install, customizer uninstall, customizer parallel [install| uninstall]
 
 
 #### MAINTENANCE & UPDATES
 - [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
 - [ ] Create headers in all files
 - [ ] Create headers and comments in auxiliary functions
-- [ ] 
+- [ ] Refactor functions of root to use the generic_install function. This programs CAN NOT be parametrized using this func (all the programs not listed here must be refactored):
+  * AutoFirma
+  * clonezilla
+  * cmatrix
+  * f-irc
 
 ###### `README.md`
 - [ ] Add examples (images) of a working environment after applying the customizer in Linux

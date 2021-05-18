@@ -1,3 +1,21 @@
+########################################################################################################################
+# - Name: Linux Auto-Customizer data of features.                                                                      #
+# - Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop          #
+# features... collected in a simple portable shell script to customize a Linux working environment.                    #
+# - Creation Date: 28/5/19                                                                                             #
+# - Last Modified: 16/5/21                                                                                             #
+# - Author & Maintainer: Aleix Mariné-Tena                                                                             #
+# - Tester: Axel Fernández Curros                                                                                      #
+# - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
+# - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
+# logged as root) to install some of the features.                                                                     #
+# - Arguments: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens     #
+# (--pycharm, --gcc).                                                                                                  #
+# - Usage: Installs the features given by argument.                                                                    #
+# - License: GPL v2.0                                                                                                  #
+########################################################################################################################
+
+
 # Here are the definition of most long strings, that are used in installation
 # functions. All the variables follow the same name convention:
 # 1 .- the first word is the name in the path, variable, function of the software
@@ -318,26 +336,26 @@ github_packageurl="https://github.com/shiftkey/desktop/releases/download/release
 github_packagename=("github")
 github_launchername=("github-desktop.desktop")
 
-#The following triggers errors in data_install.sh invalid variable name
-#gnome-calculator_installationtype="packagemanager"
-#gnome_calculator_packagename=("gnome-calculator")
-#gnome-calculator_launchername=("org.gnome.Calculator")
+#The following triggers errors in data_features.sh invalid variable name
+gnome_calculator_installationtype="packagemanager"
+gnome_calculator_packagename=("gnome-calculator")
+gnome_calculator_launchername=("org.gnome.Calculator")
 
-#gnome-chess_installationtype="packagemanager"
-#gnome_chess_packagename=("gnome-chess")
-#gnome-chess_launchername=("org.gnome.Chess")
+gnome_chess_installationtype="packagemanager"
+gnome_chess_packagename=("gnome-chess")
+gnome_chess_launchername=("org.gnome.Chess")
 
-#gnome-mahjongg_installationtype="packagemanager"
-#gnome_mahjongg_packagename=("gnome-mahjongg")
-#gnome-mahjongg_launchername=("org.gnome.Mahjongg")
+gnome_mahjongg_installationtype="packagemanager"
+gnome_mahjongg_packagename=("gnome-mahjongg")
+gnome_mahjongg_launchername=("org.gnome.Mahjongg")
 
-#gnome-mines_installationtype="packagemanager"
-#gnome_mines_packagename=("gnome-mines")
-#gnome-mines_launchername=("org.gnome.Mines")
+gnome_mines_installationtype="packagemanager"
+gnome_mines_packagename=("gnome-mines")
+gnome_mines_launchername=("org.gnome.Mines")
 
-#gnome-sudoku_installationtype="packagemanager"
-#gnome_sudoku_packagename=("gnome-sudoku")
-#gnome-sudoku_launchername=("org.gnome.Sudoku")
+gnome_sudoku_installationtype="packagemanager"
+gnome_sudoku_packagename=("gnome-sudoku")
+gnome_sudoku_launchername=("org.gnome.Sudoku")
 
 gparted_installationtype="packagemanager"
 gparted_packagename=("gparted")

@@ -158,6 +158,10 @@ packageinstall_installation_type()
   if [[ ! -z "${!launchername}" ]]; then
     copy_launcher "${!launchername}.desktop"
   fi
+  if [[ ! -z "${!launchername}" ]]; then
+    copy_launcher "${!launchername}.desktop"
+  fi
+
 }
 
 
@@ -404,19 +408,23 @@ add_internet_shortcut()
   # Add the corresponding alias
   add_bash_function "${!alias}" "$1.sh"
 }
+
 # - Description: Expands installation type and executes the corresponding function
 # - Permissions:
 # - Argument 1:
 generic_install()
 {
-  local -r installationtype=$1_installationtype
+  # Substitute dashes for underscores. Dashes are not allowed in variable names
+  local -r featurename=$(echo "$1" | sed "s@-@_@g")
+
+  local -r installationtype=$featurename_installationtype
   if [[ ! -z "${!installationtype}" ]]; then
     case ${!installationtype} in
       packagemanager)
-        packagemanager_installation_type $1
+        packagemanager_installation_type "${featurename}"
       ;;
       packageinstall)
-        packageinstall_installation_type $1
+        packageinstall_installation_type "${featurename}"
       ;;
       *)
         output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
@@ -424,7 +432,7 @@ generic_install()
       ;;
     esac
   fi
-
+}
 
 ############################
 ###### ROOT FUNCTIONS ######
@@ -1556,11 +1564,11 @@ if [[ ! -d "${DIR}" ]]; then
   DIR="${PWD}"
 fi
 
-if [[ -f "${DIR}/data_install.sh" ]]; then
-  source "${DIR}/data_install.sh"
+if [[ -f "${DIR}/functions_install.sh" ]]; then
+  source "${DIR}/functions_install.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
-  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: data_install.sh not found. Aborting..."
+  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_install.sh not found. Aborting..."
   exit 1
 fi
 
