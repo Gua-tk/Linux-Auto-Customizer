@@ -1,35 +1,37 @@
 ### Business rules
 
 #### Environmental
-* Both behaviors of the script use the file `~/.config/user-dirs.dirs` to set some language-independent environment variables (for example, to get an independent system-language path to the Desktop), so some functions of this script will fail if this file does not exist. The variables declared in this file that are used in the customizer are `XDG_DESKTOP_DIR=/home/username/Desktop`, `XDG_PICTURES_DIR=/home/username/Images`, `XDG_TEMPLATES_DIR=/home/username/Templates`.
-* Customizer must not rely ever on the working directory, that is why relative paths are completely avoided (only allowed in necessary cases in . In the same vein, files must not be downloaded in the working directory, they should be deleted in a controlled location. In most cases, this location is `USR_BIN_FOLDER`.
+- [ ] Both behaviors of the script use the file `~/.config/user-dirs.dirs` to set some language-independent environment variables (for example, to get an independent system-language path to the Desktop), so some functions of this script will fail if this file does not exist. The variables declared in this file that are used in the customizer are `XDG_DESKTOP_DIR=/home/username/Desktop`, `XDG_PICTURES_DIR=/home/username/Images`, `XDG_TEMPLATES_DIR=/home/username/Templates`.
+- [ ] Customizer must not rely ever on the working directory, that is why relative paths are completely avoided (only allowed in necessary cases in . In the same vein, files must not be downloaded in the working directory, they should be deleted in a controlled location. In most cases, this location is `USR_BIN_FOLDER`.
+- [ ] All variables should be declared with the needed scope and its write/read permissions (local-r)
 
 #### Structural
-* The software that is manually installed is put under `USR_BIN_FOLDER`, which by default points to `~/.bin`. `~/.bin` and is always **present** during the execution of `install.sh`.
-* Shell features are not installed directly into `~/.bashrc`, instead, there is always present during the runtime of `install sh` the file `$USR_BIN_FOLDER/bash_functions/.bash_functions`, which is a file imported by `~/.bashrc`. In `~/.bash_functions`, you can write imports to individual scripts that provide a feature to the shell environment. Usually those scripts are stored under `~/.bin/bash_functions/`, which is a location always present. So the generic way to include new content to `~/.bashrc` is writing a script to `~/.bin/bash_functions` and including it in `~/.bash_functions/`.
-* Soft links to include a program in the PATH are created under `~/.local/bin` which is a directory that is usually already in the PATH. If not, `install.sh` will add it at the beginning of the installation
-* Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using chgrp and chown
-* console features are not installed directly in bashrc; instead use the structure provided by the customizer using .bash_functions
-* Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links
+- [ ] The software that is manually installed is put under `USR_BIN_FOLDER`, which by default points to `~/.bin`. `~/.bin` and is always **present** during the execution of `install.sh`.
+- [ ] Shell features are not installed directly into `~/.bashrc`, instead, there is always present during the runtime of `install sh` the file `$USR_BIN_FOLDER/bash_functions/.bash_functions`, which is a file imported by `~/.bashrc`. In `~/.bash_functions`, you can write imports to individual scripts that provide a feature to the shell environment. Usually those scripts are stored under `~/.bin/bash_functions/`, which is a location always present. So the generic way to include new content to `~/.bashrc` is writing a script to `~/.bin/bash_functions` and including it in `~/.bash_functions/`.
+- [ ] Soft links to include a program in the PATH are created under `~/.local/bin` which is a directory that is usually already in the PATH. If not, `install.sh` will add it at the beginning of the installation
+- [ ] Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using chgrp and chown
+- [ ] console features are not installed directly in bashrc; instead use the structure provided by the customizer using .bash_functions
+- [ ] Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links
 
 #### Behavioural
-* Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
-* Relative PATHs are forbidden. We must not use the given working directory  
-* No unprotected `cd` commands. `cd` must be avoided and never change the working directory given from the outside, that is why they must be called from the inside of a subshell if present. 
-* wget is always used with the `-O` flag, which is used to change the name of the file and / or select a destination for the download.
-* tar is always used in a subshell, cd'ing into an empty directory before the tar, so the pwd givento the script is not changed
-* no `apt`, the default way to install package in script is `apt-get`
-* Only in special cases use echo directly to print to stdout. In most cases you need to use `output_proxy_executioner`
-* desktop launchers created manually have to be created in the desktop and also in the user launchers folder
-* desktop launchers created manually as root have to be in the desktop and also in the all users launchers folder
-* All `ln`s are created with the option -f, to avoid collision problems.
+- [ ] Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
+- [ ] Relative PATHs are forbidden. We must not use the given working directory  
+- [ ] No unprotected `cd` commands. `cd` must be avoided and never change the working directory given from the outside, that is why they must be called from the inside of a subshell if present. 
+- [ ] wget is always used with the `-O` flag, which is used to change the name of the file and / or select a destination for the download.
+- [ ] tar is always used in a subshell, cd'ing into an empty directory before the tar, so the pwd givento the script is not changed
+- [ ] no `apt`, the default way to install package in script is `apt-get`
+- [ ] Only in special cases use echo directly to print to stdout. In most cases you need to use `output_proxy_executioner`
+- [ ] desktop launchers created manually have to be created in the desktop and also in the user launchers folder
+- [ ] desktop launchers created manually as root have to be in the desktop and also in the all users launchers folder
+- [ ] All `ln`s are created with the option -f, to avoid collision problems.
+
 #### Syntactical
-* All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
-* All variables must be protected by using "" to avoid resplitting because of spaces, despite, customizer is not emphasized to work with spaces in its variables. Spaces are *evil* and are not considered.
-* There is one blankline between functions in the same block. There is two blanklines between blocks.
-* Indent is always 2 spaces and never TAB.
-* The used package manager by default is apt-get, which is actually the recommended way to use `apt` through scripts.
-* using ~ or $HOME instead of HOME_FOLDER
+- [ ] All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
+- [ ] All variables must be protected by using "" to avoid resplitting because of spaces, despite, customizer is not emphasized to work with spaces in its variables. Spaces are *evil* in some paths are not considered.
+- [ ] There is one blankline between functions in the same block. There is two blanklines between blocks.
+- [ ] Indent is always 2 spaces and never TAB.
+- [ ] The used package manager by default is apt-get, which is actually the recommended way to use `apt` through scripts.
+- [ ] using ~ or $HOME instead of HOME_FOLDER
 
 
 ## Developed features
@@ -141,7 +143,6 @@
 
 
 #### MAINTENANCE & UPDATES
-- [ ] Apply rule: all variables should be declared with the needed scope and its write/read permissions (local -r)
 - [ ] Create headers in all files
 - [ ] Create headers and comments in auxiliary functions
 - [ ] Refactor functions of root to use the generic_install function. This programs CAN NOT be parametrized using this func (all the programs not listed here must be refactored):

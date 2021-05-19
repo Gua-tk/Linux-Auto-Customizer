@@ -1,38 +1,34 @@
 ########################################################################################################################
-# - Name: Linux Auto-Customizer data of features.                                                                      #
-# - Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop          #
-# features... collected in a simple portable shell script to customize a Linux working environment.                    #
+# - Name: Linux Auto-Customizer exclusive functions of install.sh                                                      #
+# - Description: Set of functions used exclusively in install.sh. Most of these functions are combined into other      #
+# higher-order functions to provide the generic installation of a feature.                                             #
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 16/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
 # - Tester: Axel Fernández Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
-# - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
-# logged as root) to install some of the features.                                                                     #
-# - Arguments: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens     #
-# (--pycharm, --gcc).                                                                                                  #
-# - Usage: Installs the features given by argument.                                                                    #
+# - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
+# imports. See the header of each function to see its privilege requirements.                                          #
+# - Arguments: No arguments                                                                                            #
+# - Usage: Sourced from install.sh                                                                                     #
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
 
-################################
-###### AUXILIAR FUNCTIONS ######
-################################
-
-# - Description: Add new program launcher to the task bar given its desktop launcher filename
-# - Permissions: This functions expects to be called as a non-privileged user
-# - Argument 1: Name of the .desktop launcher file of the program we want to add to the task bar
+# - Description: Add new program launcher to the task bar given its desktop launcher filename.
+# - Permissions: This functions expects to be called as a non-privileged user.
+# - Argument 1: Name of the .desktop launcher file (without the .desktop extension) of the program we want to add to the
+# task bar, apparently using .desktop files from ALL_USERS_LAUNCHERS_DIR and PERSONAL_LAUNCHERS_DIR.
 add_to_favorites()
 {
   if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]] || [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]]; then
-    # If root
+    # If we are root
     if [[ ${EUID} -eq 0 ]]; then
-    # This code search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
+    # We need to search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
       if [[ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]]; then
-        user=$(whoami)
+        user=$(SUDO_USER)
         fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
-        while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]; do
+        while [ -z "$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' )" ]; do
           fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
         done
         export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
@@ -41,21 +37,20 @@ add_to_favorites()
     if [[ -z $(echo "$(gsettings get org.gnome.shell favorite-apps)" | grep -Fo "$1.desktop") ]]; then
       gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
     else
-      output_proxy_executioner "echo WARNING: $1 is already added to favourites. Skipping..." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo WARNING: $1 is already added to favourites. Skipping..." "${FLAG_QUIETNESS}"
     fi
   else
-    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." "${FLAG_QUIETNESS}"
   fi
 }
 
-# - Description: Apply standard permissions and set owner and group to the user who
-# called root
+# - Description: Apply standard permissions and set owner and group to the user who called root
 # - Permissions: This functions is expected to be called as root
-# Argument 1: Path to the file or directory whose permissions are changed
+# Argument 1: Path to the file or directory whose permissions are changed.
 apply_permissions()
 {
-  chgrp ${SUDO_USER} "$1"
-  chown ${SUDO_USER} "$1"
+  chgrp "${SUDO_USER}" "$1"
+  chown "${SUDO_USER}" "$1"
   chmod 775 "$1"
 }
 
@@ -87,10 +82,10 @@ create_file_as_root()
       echo "$2" > "$1"
       apply_permissions "$1"
     else
-      output_proxy_executioner "echo ERROR: The name ${filename} is not a valid filename" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo ERROR: The name ${filename} is not a valid filename" "${FLAG_QUIETNESS}"
     fi
   else
-    output_proxy_executioner "echo ERROR: Can't find ${folder} in create_file_as_root" ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo ERROR: Can't find ${folder} in create_file_as_root" "${FLAG_QUIETNESS}"
   fi
 
 }
@@ -106,7 +101,7 @@ if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
   if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*$2" )" ]]; then
     # If mime type is not even present we can add the hole line
     if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Fo "$1=" )" ]]; then
-      sed -i "/\[Added Associations\]/a $1=$2;" ${HOME_FOLDER}/.config/mimeapps.list
+      sed -i "/\[Added Associations\]/a $1=$2;" "${HOME_FOLDER}/.config/mimeapps.list"
     else
       # If not, mime type is already registered. We need to register another application for it
       if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*;$" )" ]]; then
@@ -119,7 +114,7 @@ if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
     fi
   fi
 else
-  output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." ${FLAG_QUIETNESS}
+  output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "${FLAG_QUIETNESS}"
 fi
 }
 
@@ -152,6 +147,7 @@ packageinstall_installation_type()
   local -r launchername=$1_launchername
 
   if [[ ! -z "${!packagedependencies}" ]]; then
+
     apt-get install -y "${!packagedependencies}"
   fi
   download_and_install_package "${!packageurl}"

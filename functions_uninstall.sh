@@ -1,24 +1,19 @@
 ########################################################################################################################
-# - Name: Linux Auto-Customizer data of features.                                                                      #
-# - Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop          #
-# features... collected in a simple portable shell script to customize a Linux working environment.                    #
+# - Name: Linux Auto-Customizer exclusive functions of uninstall.sh.                                                   #
+# - Description: Set of functions used exclusively in uninstall.sh. Most of these functions are combined into other    #
+# higher-order functions to provide the generic uninstallation of a feature.                                           #
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 16/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
 # - Tester: Axel Fernández Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
-# - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
-# logged as root) to install some of the features.                                                                     #
-# - Arguments: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens     #
-# (--pycharm, --gcc).                                                                                                  #
-# - Usage: Installs the features given by argument.                                                                    #
+# - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
+# imports. See the header of each function to see its privilege requirements                                           #
+# - Arguments: No arguments                                                                                            #
+# - Usage: Sourced from install.sh                                                                                     #
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
-
-################################
-###### AUXILIAR FUNCTIONS ######
-################################
 
 # - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 purge_all_features()

@@ -1,24 +1,20 @@
 ########################################################################################################################
-# - Name: Linux Auto-Customizer data of features.                                                                      #
-# - Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop          #
-# features... collected in a simple portable shell script to customize a Linux working environment.                    #
+# - Name: Linux Auto-Customizer common functions between install.sh and uninstall.sh.                                  #
+# - Description: Set of functions used both in install.sh and uninstall.sh. Most of these functions are used to        #
+# manipulate and interpret the common data structures. Others are here to avoid code duplications between install.sh   #
+# and uninstall.sh.                                                                                                    #
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 16/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
 # - Tester: Axel Fernández Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
-# - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
-# logged as root) to install some of the features.                                                                     #
-# - Arguments: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens     #
-# (--pycharm, --gcc).                                                                                                  #
-# - Usage: Installs the features given by argument.                                                                    #
+# - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
+# imports. See the header of each function to see its privilege requirements                                           #
+# - Arguments: No arguments                                                                                            #
+# - Usage: Sourced from install.sh                                                                                     #
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
-
-######################################
-##### COMMON AUXILIARY FUNCTIONS #####
-######################################
 
 # Execute the command received in the first argument and redirect the output depending on the quietness level
 # Argument 1: Bash command to execute.

@@ -1,20 +1,19 @@
 ########################################################################################################################
-# - Name: Linux Auto-Customizer data of features.                                                                      #
-# - Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop          #
-# features... collected in a simple portable shell script to customize a Linux working environment.                    #
+# - Name: Linux Auto-Customizer exclusive functions of install.sh.                                                     #
+# - Description: Contains the different pieces of data used to install and uninstall all features that can be generic.
+# Here we have all the data relating to each feature: desktop launchers, icon URLs, aliases, bash_functions, paths to
+# the binaries of each program, etc
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 16/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
 # - Tester: Axel Fernández Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
-# - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
-# logged as root) to install some of the features.                                                                     #
-# - Arguments: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens     #
-# (--pycharm, --gcc).                                                                                                  #
-# - Usage: Installs the features given by argument.                                                                    #
+# - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
+# imports. See the header of each function to see its privilege requirements                                           #
+# - Arguments: No arguments                                                                                            #
+# - Usage: Sourced from install.sh                                                                                     #
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
-
 
 # Here are the definition of most long strings, that are used in installation
 # functions. All the variables follow the same name convention:

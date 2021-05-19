@@ -3,12 +3,13 @@
 # - Name: Linux Auto-Customizer uninstallation of features.                                                            #
 # - Description: Portable script to remove all installation features installed by install.sh                           #
 # - Creation Date: 28/5/19                                                                                             #
-# - Last Modified: 16/5/21                                                                                             #
+# - Last Modified: 19/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
 # - Tester: Axel Fernández Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
-# logged as root) to install some of the features.                                                                     #
+# logged as root) to uninstall some of the features. The features that need to be installed as privileged user also    #
+# need to be uninstalled as privileged user.                                                                           #
 # - Arguments: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature to uninstall with two hyphens  #
 # (--pycharm, --gcc).                                                                                                  #
 # - Usage: Uninstalls the features given by argument.                                                                  #
