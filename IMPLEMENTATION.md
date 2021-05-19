@@ -12,13 +12,14 @@
 - [ ] Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using chgrp and chown
 - [ ] console features are not installed directly in bashrc; instead use the structure provided by the customizer using .bash_functions
 - [ ] Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links
+- [ ] The tests used in the conditional ifs must be with [ ] instead of [[ ]] when possible. The last one is a bash exclusive feature that we can not find in other shells.
 
 #### Behavioural
-- [ ] Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
-- [ ] Relative PATHs are forbidden. We must not use the given working directory  
+- [x] Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
+- [ ] Relative PATHs are forbidden. We must not rely or modify the working directory of the environment of the script. `cd` can be used safely inside a subshell: `$(cd ${USR_BIN_FOLDER} && echo thing`  
 - [ ] No unprotected `cd` commands. `cd` must be avoided and never change the working directory given from the outside, that is why they must be called from the inside of a subshell if present. 
 - [ ] wget is always used with the `-O` flag, which is used to change the name of the file and / or select a destination for the download.
-- [ ] tar is always used in a subshell, cd'ing into an empty directory before the tar, so the pwd givento the script is not changed
+- [ ] tar is always used in a subshell, cd'ing into an empty directory before the tar, so the working directory of the script is never filled with temporary files.
 - [ ] no `apt`, the default way to install package in script is `apt-get`
 - [ ] Only in special cases use echo directly to print to stdout. In most cases you need to use `output_proxy_executioner`
 - [ ] desktop launchers created manually have to be created in the desktop and also in the user launchers folder
