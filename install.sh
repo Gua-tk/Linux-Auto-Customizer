@@ -23,8 +23,7 @@
 
 install_aisleriot()
 {
-  apt-get install -y aisleriot
-  copy_launcher sol.desktop
+  generic_install aisleriot
 }
 
 install_atom()
@@ -92,7 +91,6 @@ install_curl()
   generic_install curl
 }
 
-# Dropbox desktop client and integration
 install_dropbox()
 {
   generic_install dropbox
@@ -100,8 +98,7 @@ install_dropbox()
 
 install_f-irc()
 {
-  apt-get install -y f-irc
-  create_manual_launcher "${firc_launcher}" f-irc
+  generic_install f-irc
 }
 
 install_ffmpeg()
@@ -122,8 +119,7 @@ install_freecad()
 
 install_gcc()
 {
-  apt-get install -y gcc
-  add_bash_function "${gcc_function}" "gcc_function.sh"
+  generic_install gcc
 }
 
 install_geany()
@@ -139,8 +135,7 @@ install_gimp()
 # Install GIT and all its related utilities (gitk e.g.)
 install_git()
 {
-  apt-get install -y git-all
-  apt-get install -y git-lfs
+  generic_install git
 }
 
 install_github()
@@ -148,9 +143,10 @@ install_github()
   generic_install github
 }
 
+#has to be named as gitlab-ce
 install_gitlab()
 {
-  #Lacks to be tested
+  #Change it to internet launcher
   apt-get install -y ncurses-term openssh-server openssh-sftp-server ssh-import-id
   download_and_install_package "${gitlab_downloader}"
   copy_launcher "gitlab-ce.desktop"
@@ -158,47 +154,38 @@ install_gitlab()
 
 install_gnome-calculator()
 {
-  apt-get install -y gnome-calculator
-  copy_launcher "org.gnome.Calculator.desktop"
+  generic_install gnome-calculator
 }
 
 install_gnome-chess()
 {
-  apt-get install -y gnome-chess
-  copy_launcher "org.gnome.Chess.desktop"
+  generic_install gnome-chess
 }
 
 install_gnome-mahjongg()
 {
-  apt-get install -y gnome-mahjongg
-  copy_launcher "org.gnome.Mahjongg.desktop"
+  generic_install gnome-mahjongg
 }
 
 install_gnome-mines()
 {
-  apt-get install -y gnome-mines
-  copy_launcher "org.gnome.Mines.desktop"
+  generic_install gnome-mines
 }
 
 install_gnome-sudoku()
 {
-  apt-get install -y gnome-sudoku
-  copy_launcher org.gnome.Sudoku.desktop
+  generic_install gnome-sudoku
 }
 
 install_google-chrome()
 {
-  # Dependencies
-  apt-get install -y libxss1 libappindicator1 libindicator7
-
-  download_and_install_package ${google_chrome_downloader}
-  copy_launcher "google-chrome.desktop"
+  generic_install google-chrome
 }
 
 install_gpaint()
 {
-  apt-get -y install gpaint
-  copy_launcher "gpaint.desktop"
+  generic_install gpaint
+
   sed "s|Icon=gpaint.svg|Icon=${gpaint_icon_path}|" -i ${XDG_DESKTOP_DIR}/gpaint.desktop
 }
 
@@ -209,8 +196,7 @@ install_gparted()
 
 install_gvim()
 {
-  apt-get -y install vim-gtk3
-  copy_launcher "gvim.desktop"
+  generic_install gvim
 }
 
 install_inkscape()
@@ -230,10 +216,7 @@ install_iqmol()
 
 install_latex()
 {
-  # Dependencies
-  apt-get install -y perl-tk texlive-latex-extra texmaker
-  copy_launcher "texmaker.desktop"
-  copy_launcher "texdoctk.desktop"
+  generic_install latex
   echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
 }
 
@@ -249,25 +232,17 @@ install_libgtkglext1()
 
 install_libxcb-xtest0()
 {
-  apt-get install -y libxcb-xtest0
+  generic_install libxcb-xtest0
 }
 
-# megasync + megasync nautilus.
 install_megasync()
 {
-  # Dependencies
-  apt-get install -y nautilus libc-ares2 libmediainfo0v5 libqt5x11extras5 libzen0v5
-
-  download_and_install_package ${megasync_downloader}
-  download_and_install_package ${megasync_integrator_downloader}
-  copy_launcher megasync.desktop
+  generic_install megasync
 }
 
-# Mendeley Dependencies
 install_mendeley-dependencies()
 {
-  # Mendeley dependencies
-  apt-get install -y gconf2 qt5-default qt5-doc qt5-doc-html qtbase5-examples qml-module-qtwebengine
+  generic_install mendeley-dependencies
 }
 
 install_nemo()
@@ -287,7 +262,7 @@ install_nemo()
 
 install_net-tools()
 {
-  apt-get install -y net-tools
+  generic_install net-tools
 }
 
 install_notepadqq()
@@ -297,10 +272,7 @@ install_notepadqq()
 
 install_obs-studio()
 {
-  install_ffmpeg
-
-  apt-get install -y obs-studio
-  copy_launcher com.obsproject.Studio.desktop
+  generic_install obs-studio
 }
 
 install_okular()
@@ -343,30 +315,27 @@ install_pdfgrep()
 
 install_psql()
 {
-  apt-get install -y libc6-i386 lib32stdc++6 libc6=2.31-0ubuntu9.2
-  apt-get install -y postgresql-client-12	postgresql-12 libpq-dev postgresql-server-dev-12
+  generic_install psql
 }
 
 install_pypy3-dependencies()
 {
-  apt-get install -y -qq pkg-config libfreetype6-dev libpng-dev libffi-dev
+  generic_install pypy3-dependencies
 }
 
 install_python3()
 {
-  apt-get install -y python3-dev python-dev python3-pip
+  generic_install python3
 }
 
 install_pluma()
 {
   generic_install pluma
-  # Add to favorites
 }
 
 install_shotcut()
 {
-  apt-get install -y shotcut
-  create_manual_launcher "${shotcut_desktop_launcher}" shotcut
+  generic_install shotcut
 }
 
 install_skype()
@@ -411,14 +380,12 @@ install_tilix()
 
 install_tmux()
 {
-  apt-get install -y tmux
-  create_manual_launcher "${tmux_launcher}" tmux
+  generic_install tmux
 }
 
 install_tor()
 {
-  apt-get install -y torbrowser-launcher
-  copy_launcher "torbrowser.desktop"
+  generic_install tor
 }
 
 install_transmission()
@@ -428,20 +395,12 @@ install_transmission()
 
 install_uget()
 {
-  # Dependencies
-  apt-get install -y aria2
-
-  apt-get install -y uget
-  copy_launcher uget-gtk.desktop
+  generic_install uget
 }
 
 install_virtualbox()
 {
-  # Dependencies
-  apt-get install -y libqt5opengl5
-
-  download_and_install_package ${virtualbox_downloader}
-  copy_launcher "virtualbox.desktop"
+  generic_install virtualbox
 }
 
 install_vlc()

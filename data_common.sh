@@ -170,7 +170,7 @@ installation_data=(
   "--libxcb-xtest0;1"
   "--L|--L-function;0"
   "--l|--alias-l|--alias-ls|--l-alias|--ls-alias;0"
-  "--mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync;1"
+  "--megasync|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--mega;1"
   "--mendeley-dependencies|--MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies;1"
   "--mendeley|--Mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop;0"
   "--mvn|--maven;0"

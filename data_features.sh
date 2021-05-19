@@ -63,10 +63,9 @@ esac
 ###########################################
 ##### INSTALLATION SPECIFIC VARIABLES #####
 ###########################################
-aisleriot_mode=packagemanager
-aisleriot_dependencies=
-aisleriot_packages="aisleriot"
-aisleriot_launchernames="sol"
+aisleriot_installationtype=packagemanager
+aisleriot_packagenames=("aisleriot")
+aisleriot_launchernames=("sol")
 
 alert_alias="
 # Add an alert alias for long running commands.  Use like so:
@@ -248,7 +247,9 @@ TryExec=eclipse
 Type=Application
 Version=4.2.2"
 
-firc_launcher="[Desktop Entry]
+f_irc_installationtype="packagemanager"
+f_irc_packagenames=("f-irc")
+f_irc_launchercontents=("[Desktop Entry]
 Categories=InstantMessaging;Communication;
 Comment=irc relay chat for terminal (easy to use)
 Encoding=UTF-8
@@ -263,7 +264,7 @@ StartupWMClass=f-irc
 Terminal=true
 TryExec=f-irc
 Type=Application
-Version=1.0"
+Version=1.0")
 
 ffmpeg_installationtype="packagemanager"
 ffmpeg_packagenames=("ffmpeg")
@@ -276,9 +277,11 @@ freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
 
-gcc_function="# colored GCC warnings and errors
+gcc_installationtype="packagemanager"
+gcc_packagenames=("gcc")
+gcc_bashfunctions=("# colored GCC warnings and errors
 export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01\"
-"
+")
 
 geany_installationtype="packagemanager"
 geany_packagenames=("geany")
@@ -307,6 +310,9 @@ Version=4.2.2"
 gimp_installationtype="packagemanager"
 gimp_packagenames=("gimp")
 gimp_launchernames=("gimp")
+
+git_installationtype="packagemanager"
+git_packagenames=("git-all" "git-lfs")
 
 git_aliases_function="
 commit()
@@ -360,9 +366,19 @@ gnome_sudoku_installationtype="packagemanager"
 gnome_sudoku_packagenames=("gnome-sudoku")
 gnome_sudoku_launchernames=("org.gnome.Sudoku")
 
+gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
+gpaint_installationtype="packagemanager"
+gpaint_packagenames=("gpaint")
+gpaint_launchernames=("gpaint")
+
 gparted_installationtype="packagemanager"
 gparted_packagenames=("gparted")
 gparted_launchernames=("gparted")
+
+gvim_installationtype="packagemanager"
+gvim_packagenames=("vim-gtk3")
+gvim_launchernames=("gvim")
+
 
 forms_url=https://docs.google.com/forms/
 forms_icon="https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg"
@@ -410,7 +426,7 @@ Comment=Desktop app to open Gitlab from Chrome
 Encoding=UTF-8
 GenericName=Code repository online
 Keywords=forms;
-Mimeç
+MimeType=
 Name=GitLab Desktop
 StartupNotify=true
 StartupWMClass=GitLab
@@ -418,6 +434,13 @@ Terminal=false
 TryExec=google-chrome
 Type=Application
 Version=1.0"
+
+google_chrome_installationtype="packageinstall"
+google_chrome_dependencies=("libxss1" "libappindicator1" "libindicator7")
+google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
+google_chrome_launchernames=("google-chrome")
+
+
 
 presentation_url=https://docs.google.com/presentation/
 presentation_icon="https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg"
@@ -473,7 +496,6 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-google_chrome_downloader=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 gmail_url=https://mail.google.com/
 gmail_icon=https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg
 gmail_alias="alias gmail=\"xdg-open ${gmail_url} &>/dev/null &\""
@@ -795,7 +817,7 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
+
 
 ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
 ideau_launcher="[Desktop Entry]
@@ -862,19 +884,27 @@ iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
 java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
 
+latex_installationtype="packagemanager"
+latex_launchernames=("texmaker" "texdoctk")
+latex_dependencies=("perl-tk" )
+lastex_packagenames=("texlive-latex-extra" "texmaker")
+
 l_function="alias l=\"ls -lAh --color=auto\""
 
 libgtkglext1_installationtype="packagemanager"
 libgtkglext1_packagenames=("libgtkglext1")
 
-#libxcb-xtest0_installationtype="packagemanager"
-#libxcb-xtest0_packagenames=("libxcb-xtest0")
+libxcb_xtest0_installationtype="packagemanager"
+libxcb_xtest0_packagenames=("libxcb-xtest0")
 
 maven_downloader="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 
-megasync_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.4.0-1.1_amd64.deb
-megasync_integrator_downloader=https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb
+megasync_installationtype="packageinstall"
+megasync_dependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
+megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.4.0-1.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb")
+megasync_launchernames=("megasync")
 
+mendeley_dependencies_packagedependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
 mendeley_downloader=https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
 
 music_manager_downloader=https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
@@ -896,16 +926,17 @@ Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
 
-#net-tools_installationtype="packagemanager"
-#net-tools_packagenames=("net-tools")
+net_tools_installationtype="packagemanager"
+net_tools_packagenames=("net-tools")
 
 notepadqq_installationtype="packagemanager"
 notepadqq_packagenames=("notepadqq")
 notepadqq_launchernames=("notepadqq")
 
-#obs-studio_installationtype="packagemanager"
-#obs-studio_packagenames=("obs-studio")
-#obs-studio_launchernames=("com.obsproject.Studio")
+obs_studio_installationtype="packagemanager"
+obs_studio_packagenames=("obs-studio")
+obs_studio_launchernames=("com.obsproject.Studio")
+obs_studio_packagedependencies=("ffmpeg")
 
 okular_installationtype="packagemanager"
 okular_packagenames=("okular")
@@ -919,6 +950,11 @@ pacman_launchernames=("pacman")
 
 parallel_instalationtype="packagemanager"
 parallel_packagenames=("parallel")
+
+psql_installationtype="packagemanager"
+psql_packagedependencies=("libc6-i386" "lib32stdc++6" "libc6=2.31-0ubuntu9.2")
+psql_packagenames=("postgresql-client-12" "postgresql-12" "libpq-dev" "postgresql-server-dev-12")
+
 
 pdfgrep_installationtype="packagemanager"
 pdfgrep_packagenames=("pdfgrep")
@@ -1043,7 +1079,14 @@ TryExec=pycharm-pro
 Type=Application
 Version=1.0"
 
-pypy3_downloader=https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2
+
+pypy3_downloader="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
+
+pypy3_dependencies_installationtype="packagemanager"
+pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
+
+python3_installationtype="packagemanager"
+python3_packagenames=("python3-dev" "python-dev" "python3-pip")
 
 s_function="
 s()
@@ -1080,7 +1123,9 @@ shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}
 export USR_BIN_FOLDER=${USR_BIN_FOLDER}
 "
 
-shotcut_desktop_launcher="[Desktop Entry]
+shotcut_installationtype="packagemanager"
+shotcut_packagenames=("shotcut")
+shotcut_launchercontents=("[Desktop Entry]
 Categories=video;
 Comment= Open Source, cross-platform video editor
 Encoding=UTF-8
@@ -1095,7 +1140,7 @@ StartupWMClass=ShotCut
 Terminal=false
 TryExec=shotcut
 Type=Application
-Version=1.0"
+Version=1.0")
 
 skype_installationtype="packageinstall"
 skype_packageurls=("https://go.skype.com/skypeforlinux-64.deb")
@@ -1169,7 +1214,9 @@ tilix_installationtype="packagemanager"
 tilix_packagenames=("tilix")
 tilix_launchernames=("com.gexperts.Tilix")
 
-tmux_launcher="[Desktop Entry]
+tmux_installationtype="packagemanager"
+tmux_packagenames=("tmux")
+tmux_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Terminal Multiplexer
 Encoding=UTF-8
@@ -1184,17 +1231,25 @@ StartupWMClass=tmux
 Terminal=true
 TryExec=tmux
 Type=Application
-Version=1.0"
+Version=1.0")
 
-#torbrowser-launcher_installationtype="packagemanager"
-#torbrowser-launcher_packagenames=("torbrowser-launcher")
-#torbrowser-launcher_launchernames=("torbrowser")
+tor_installationtype="packagemanager"
+tor_packagenames=("torbrowser-launcher")
+tor_launchernames=("torbrowser")
 
 transmission_installationtype="packagemanager"
 transmission_packagenames=("transmission")
 transmission_launchernames=("transmission-gtk")
 
-virtualbox_downloader=https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb
+uget_installationtype="packagemanager"
+uget_packagedependencies=("aria2")
+uget_packagenames=("uget")
+uget_launchernames=("uget-gtk")
+
+virtualbox_installationtype="packageinstall"
+virtuabox_packagedependencies=("libqt5opengl5")
+virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb")
+virtualbox_launchernames=("virtualbox")
 
 visualstudiocode_downloader="https://go.microsoft.com/fwlink/?LinkID=620884"
 code_alias="alias code=\"code . &>/dev/null &\""

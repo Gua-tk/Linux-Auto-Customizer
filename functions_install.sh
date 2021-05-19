@@ -78,7 +78,7 @@ add_to_favorites()
     if [[ ${EUID} -eq 0 ]]; then
     # We need to search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
       if [[ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]]; then
-        user=$(SUDO_USER)
+        user="${SUDO_USER}"
         fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
         while [ -z "$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' )" ]; do
           fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
@@ -376,6 +376,7 @@ rootgeneric_installation_type()
   local -r packagenames="$1_packagenames[@]"
   local -r packageurls="$1_packageurls[@]"
   local -r launchercontents="$1_launchercontents[@]"
+  local -r bashfunctions="$1_bashfunctions[@]"
 
   # Install dependency packages
   if [[ ! -z "${!packagedependencies}" ]]; then
@@ -409,6 +410,15 @@ rootgeneric_installation_type()
   if [[ ! -z "${!launchercontents}" ]]; then
     for launchercontent in "${!launchercontents}"; do
       create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
+      name_suffix_anticollision="${name_suffix_anticollision}_"
+    done
+  fi
+
+  # Install function related with the program (usually has an alias)
+  name_suffix_anticollision=""
+  if [[ ! -z "${!bashfunctions}" ]]; then
+    for bashfunction in "${!bashfunctions}"; do
+      add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
       name_suffix_anticollision="${name_suffix_anticollision}_"
     done
   fi

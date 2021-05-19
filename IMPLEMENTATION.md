@@ -128,7 +128,8 @@
 - [ ] Implement function that only uses as parameter its own name and relies on the data
 - [ ] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
-- [ ] sysmontask
+- [x] sysmontask
+- [ ] Reconvert Gitlab to internet desktop launcher
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
 
@@ -148,9 +149,12 @@
 - [ ] Create headers and comments in auxiliary functions
 - [ ] Refactor functions of root to use the generic_install function. This programs CAN NOT be parametrized using this func (all the programs not listed here must be refactored):
   * AutoFirma
-  * clonezilla
-  * cmatrix
-  * f-irc
+  * OpenOffice
+  * nemo
+  * WireShark
+  * gpaint
+  * iqmol
+  * Gitlab
 
 ###### `README.md`
 - [ ] Add examples (images) of a working environment after applying the customizer in Linux
