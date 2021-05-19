@@ -74,14 +74,12 @@ install_clementine()
 
 install_clonezilla()
 {
-  apt-get install -y clonezilla
-  create_manual_launcher "${clonezilla_launcher}" "clonezilla"
+  generic_install clonezilla
 }
 
 install_cmatrix()
 {
-  apt-get install -y cmatrix
-  create_manual_launcher "${cmatrix_launcher}" "cmatrix"
+  generic_install cmatrix
 }
 
 install_copyq()
@@ -97,11 +95,7 @@ install_curl()
 # Dropbox desktop client and integration
 install_dropbox()
 {
-  # Dependency
-  apt-get -y install python3-gpg
-
-  download_and_install_package ${dropbox_downloader}
-  copy_launcher dropbox.desktop
+  generic_install dropbox
 }
 
 install_f-irc()

@@ -16,23 +16,25 @@
 
 
 # - Description: Installs a new bash feature into $BASH_FUNCTIONS_PATH which sources the script that contains the code
-# for this new feature. $BASH_FUNCTIONS_PATH is imported to your environment via .bashrc.
-# - Permissions: Can be called as root or as normal user with presumably with the same behaviour.
-# - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions
+# for this new feature. $BASH_FUNCTIONS_PATH is imported to your environment via .bashrc before entering any
+# installation function.
+# - Permissions: Can be called as root or as normal user presumably with the same behaviour.
+# - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
 # - Argument 2: Name of the file.
 add_bash_function()
 {
   # Write code to bash functions folder with the name of the feature we want to install
-  echo -e "$1" > ${BASH_FUNCTIONS_FOLDER}/$2
+  echo -e "$1" > "${BASH_FUNCTIONS_FOLDER}/$2"
 
+  # If we are root apply permission to the file
   if [[ ${EUID} == 0 ]]; then
     apply_permissions "${BASH_FUNCTIONS_FOLDER}/$2"
   fi
 
   import_line="source ${BASH_FUNCTIONS_FOLDER}/$2"
   # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
-  if [[ -z $(cat ${BASH_FUNCTIONS_PATH} | grep -Fo "${import_line}") ]]; then
-    echo ${import_line} >> ${BASH_FUNCTIONS_PATH}
+  if [[ -z $(cat "${BASH_FUNCTIONS_PATH}" | grep -Fo "${import_line}") ]]; then
+    echo "${import_line}" >> "${BASH_FUNCTIONS_PATH}"
   fi
 }
 
@@ -104,25 +106,27 @@ apply_permissions()
   chmod 775 "$1"
 }
 
-# - Description: Creates the file with $1 specifying location. Afterwards, converts that file to a
-# writable folder, now property of the $SUDO_USER user (instead of root), which is the user that ran the sudo command.
+# - Description: Creates the file with $1 specifying location and name of the file. Afterwards, apply permissions to it,
+# to make it property of the $SUDO_USER user (instead of root), which is the user that originally ran the sudo command
+# to run this script.
 # - Permissions: This functions is expected to be called as root, or it will throw an error, since $SUDO_USER is not
 # defined in the the scope of the normal user.
 # - Argument 1: Path to the directory that we want to create.
 # - Argument 2(Optional): Content of the file we want to create
 create_file_as_root()
 {
-  local -r folder=$(echo "$1" | rev | cut -d "/" -f2- | rev)
-  local -r filename=$(echo "$1" | rev | cut -d "/" -f1 | rev)
-  if [[ -d ${folder} ]]; then
+  if [[ ! -z "${SUDO_USER}" ]]; then
+    local -r folder=$(echo "$1" | rev | cut -d "/" -f2- | rev)
+    local -r filename=$(echo "$1" | rev | cut -d "/" -f1 | rev)
     if [[ -n "${filename}" ]]; then
+      mkdir -p "${folder}"
       echo "$2" > "$1"
       apply_permissions "$1"
     else
-      output_proxy_executioner "echo ERROR: The name ${filename} is not a valid filename" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file_as_root. The file will not be created." "${FLAG_QUIETNESS}"
     fi
   else
-    output_proxy_executioner "echo ERROR: Can't find ${folder} in create_file_as_root" "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo WARNING: The function create_file_as_root can not be run as normal user. The file will not be created." "${FLAG_QUIETNESS}"
   fi
 
 }
@@ -139,7 +143,6 @@ create_folder_as_root()
   mkdir -p "$1"
   apply_permissions  "$1"
 }
-
 
 # - Description: Creates a valid launcher for the normal user in the desktop using an already created launcher from an
 # automatic install (for example using apt-get or dpkg).
@@ -160,7 +163,7 @@ copy_launcher()
 # used as a manual way to add binaries to the PATH, in order to add new commands to your environment.
 #
 # - Argument 1: Absolute path to the binary you want to be in the PATH
-# - Argument 2: Name of the hard-link that will be created in the path
+# - Argument 2: Name of the command that will be added to your environment to execute the previous binary
 # - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2
 create_links_in_path()
 {
@@ -190,8 +193,9 @@ create_manual_launcher()
   fi
 }
 
+#
 # Argument 1: Type of decompression
-# Argument 2: If present ssume that there is a unique folder inside the compressed file. Capture folder name and
+# Argument 2: If present assume that there is a unique folder inside the compressed file. Capture folder name and
 # rename it to the third argument
 #
 decompress()
@@ -234,7 +238,7 @@ download()
     local -r temporalname="$2"
   fi
   # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -f "${USR_BIN_FOLDER}/${temporalname}"
+  rm -Rf "${USR_BIN_FOLDER}/${temporalname}"
   # Download in a subshell to avoid changing the working directory in the current shell
   (cd ${USR_BIN_FOLDER}; wget -qO "${temporalname}" --show-progress "$1")
 }
@@ -345,10 +349,10 @@ generic_install()
   if [[ ! -z "${!installationtype}" ]]; then
     case ${!installationtype} in
       packagemanager)
-        packagemanager_installation_type "${featurename}"
+        rootgeneric_installation_type "${featurename}" packagemanager
       ;;
       packageinstall)
-        packageinstall_installation_type "${featurename}"
+        rootgeneric_installation_type "${featurename}" packageinstall
       ;;
       *)
         output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
@@ -357,6 +361,59 @@ generic_install()
     esac
   fi
 }
+
+# - Description: Installs packages using apt-get or download + dpkg and also installs additional features such as
+# aliases, related functions, desktop launchers including its icon and links in the path.
+# - Permissions: Needs root permissions, but is expected to be called always as root by install.sh logic
+# - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
+# installation data.
+# - Argument 2: Selects the type of installation between [packagemanager|packageinstall]
+rootgeneric_installation_type()
+{
+  # Declare name of variables for indirect expansion
+  local -r launchernames="$1_launchernames[@]"
+  local -r packagedependencies="$1_packagedependencies[@]"
+  local -r packagenames="$1_packagenames[@]"
+  local -r packageurls="$1_packageurls[@]"
+  local -r launchercontents="$1_launchercontents[@]"
+
+  # Install dependency packages
+  if [[ ! -z "${!packagedependencies}" ]]; then
+    for packagedependency in "${!packagedependencies}"; do
+      apt-get install -y "${packagedependency}"
+    done
+  fi
+
+  # Select between arguments
+  if [[ "$2" == packageinstall ]]; then
+    # Download package and install using manual package manager
+    for packageurl in "${!packageurls}"; do
+      download_and_install_package "${packageurl}"
+    done
+  else
+    # Install default packages
+    for packagename in "${!packagenames}"; do
+      apt-get install -y "${packagename}"
+    done
+  fi
+
+  # Copy launchers if defined
+  if [[ ! -z "${!launchernames}" ]]; then
+    for launchername in "${!launchernames}"; do
+      copy_launcher "${launchername}.desktop"
+    done
+  fi
+
+  # Create new manual launchers
+  local name_suffix_anticollision=""
+  if [[ ! -z "${!launchercontents}" ]]; then
+    for launchercontent in "${!launchercontents}"; do
+      create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
+      name_suffix_anticollision="${name_suffix_anticollision}_"
+    done
+  fi
+}
+
 
 # - Description:
 # - Permissions:
@@ -387,9 +444,9 @@ packageinstall_installation_type()
 packagemanager_installation_type()
 {
   # Declare name of variables for indirect expansion
-  local -r packagedependencies=$1_packagedependencies
-  local -r packagenames=$1_packagenames[@]
-  local -r launchernames=$1_launchernames[@]
+  local -r packagedependencies="$1_packagedependencies[@]"
+  local -r packagenames="$1_packagenames[@]"
+  local -r launchernames="$1_launchernames[@]"
 
   # Install dependency packages
   if [[ ! -z "${!packagedependencies}" ]]; then

@@ -116,7 +116,7 @@ Type=Application
 Version=1.0"
 
 atom_installationtype="packageinstall"
-atom_packageurl=("https://atom.io/download/deb")
+atom_packageurls=("https://atom.io/download/deb")
 atom_launchernames=("atom")
 
 audacity_installationtype="packagemanager"
@@ -179,7 +179,9 @@ TryExec=clonezilla
 Type=Application
 Version=1.0"
 
-cmatrix_launcher="[Desktop Entry]
+cmatrix_installationtype="packagemanager"
+cmatrix_packagenames=("cmatrix")
+cmatrix_launchercontents=("[Desktop Entry]
 Categories=matrix;
 Comment=Matrix
 Encoding=UTF-8
@@ -194,16 +196,19 @@ StartupWMClass=cmatrix
 Terminal=true
 TryExec=cmatrix
 Type=Application
-Version=1.0"
+Version=1.0")
 
 copyq_installationtype="packagemanager"
-copyq_packagenames=("copyq")
 copyq_launchernames=("com.github.hluk.copyq")
+copyq_packagenames=("copyq")
 
 curl_installationtype="packagemanager"
 curl_packagenames=("curl")
 
-dropbox_downloader=https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb
+dropbox_dependencies=("python3-gpg")
+dropbox_installationtype="packageinstall"
+dropbox_launchernames=("dropbox")
+dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
 
 discord_downloader="https://discord.com/api/download?platform=linux&format=tar.gz"
 discord_launcher="[Desktop Entry]
@@ -331,11 +336,10 @@ alias fetch=\"git fetch\"
 "
 
 github_installationtype="packageinstall"
-github_packageurl="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
+github_packageurls="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
 github_packagenames=("github")
-github_launchernames=("github-desktop.desktop")
+github_launchernames=("github-desktop")
 
-#The following triggers errors in data_features.sh invalid variable name
 gnome_calculator_installationtype="packagemanager"
 gnome_calculator_packagenames=("gnome-calculator")
 gnome_calculator_launchernames=("org.gnome.Calculator")
@@ -1094,7 +1098,7 @@ Type=Application
 Version=1.0"
 
 skype_installationtype="packageinstall"
-skype_packageurl=("https://go.skype.com/skypeforlinux-64.deb")
+skype_packageurls=("https://go.skype.com/skypeforlinux-64.deb")
 skype_launchernames=("skypeforlinux")
 
 slack_installationtype="packageinstall"
@@ -1102,11 +1106,11 @@ slack_repository=("https://downloads.slack-edge.com/linux_releases/slack-desktop
 slack_launchernames=("slack")
 
 spotify_installationtype="packageinstall"
-spotify_packageurl=("http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb")
+spotify_packageurls=("http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb")
 spotify_launchernames=("spotify")
 
 steam_installationtype="packageinstall"
-steam_packageurl=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
+steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_launchernames=("steam")
 
 sublime_text_downloader=https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2
@@ -1131,7 +1135,7 @@ Version=1.0"
 sysmontask_downloader="https://github.com/KrispyCamel4u/SysMonTask.git"
 
 teams_installationtype="packageinstall"
-teams_packageurl=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")
+teams_packageurls=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")
 teams_launchernames=("teams")
 
 telegram_icon=https://telegram.org/img/t_logo.svg?1
