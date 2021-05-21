@@ -501,7 +501,6 @@ install_ideac()
 
 install_ideau()
 {
-  echo "troleots"
   download_and_decompress ${ideau_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
 
   create_manual_launcher "${ideau_launcher}" "ideau"
@@ -636,8 +635,6 @@ install_youtube-dl()
   chmod a+rx ${USR_BIN_FOLDER}/youtube-dl
   create_links_in_path ${USR_BIN_FOLDER}/youtube-dl youtube-dl
   add_bash_function "${youtubewav_alias}" youtube-wav_alias.sh
-
-  hash -r
 }
 
 install_zoom()

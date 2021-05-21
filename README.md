@@ -140,7 +140,7 @@ The following features can be installed or uninstalled automatically and individ
 | Whatsapp Web | Whatsapp web opens in Chrome | Command `whatsapp`, desktop launcher and dashboard launcher | --whatsapp --Whatsapp | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Wikipedia | Wikipedia web opens in Chrome | Command `wikipedia`, desktop launcher and dashboard launcher | --wikipedia --Wikipedia | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Wireshark | Net sniffer | Command `wireshark`, desktop launcher and dashboard launcher | --wireshark | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| Zoom | Net sniffer | Command `wireshark`, desktop launcher and dashboard launcher | --wireshark | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| Zoom | Video Stram Calls | Command `zoom`, desktop launcher and dashboard launcher | --wireshark | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 
 
 ## Usage
