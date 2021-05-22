@@ -13,6 +13,7 @@ All features available follow a common behaviour:
 * Software that reads or recognizes files are configured to be the default application for their recognized file types. 
 * The installation of a feature will be skipped if the current privileges does not match the needed privileges for that feature.
 
+![alt text](https://i.imgur.com/53QkidL.png)
 The following features can be installed or uninstalled automatically and individually using one of the specified arguments:
 
 | Name | Description | Execution | Arguments | Permissions | Testing | 

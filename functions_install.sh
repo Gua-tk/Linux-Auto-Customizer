@@ -44,7 +44,7 @@ add_bash_function()
 add_font()
 {
   # ~/.local/share/fonts directory for fonts to be installed
-  
+  echo tontoo
 
 }
 # - Description: Create .desktop with custom url to open a link in favorite internet navigator

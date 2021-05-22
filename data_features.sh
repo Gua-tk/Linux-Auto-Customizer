@@ -317,13 +317,14 @@ git_packagenames=("git-all" "git-lfs")
 git_aliases_function="
 commit()
 {
-    message=\$*
+    message=\"\$*\"
     if [ -z \"\$message\" ]; then
       echo \"Add a message\"
       read message
     fi
     git commit -am \"\$message\"
 }
+
 dummycommit()
 {
   git add -A
@@ -332,6 +333,7 @@ dummycommit()
 }
 
 alias gitk=\"gitk --all --date-order &\"
+alias k=\"gitk\"
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
