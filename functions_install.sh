@@ -236,20 +236,25 @@ decompress()
   fi
 }
 
-# Argument 1: link to download into usr bin folder
-# Argument 2 (optional): final name for the file
+
+# - Description: Downloads a file with the location and name specified in $2, from the link provided in $1.
+# - Permissions: Can be called as root or normal user. If called as root changes the permissions and owner to the
+#   $SUDO_USER user, otherwise, needs permissions to create the file $2.
+# - Argument 1: link to download into usr bin folder
+# - Argument 2 (optional): Path to the created file, allowing to download in any location and use a different filename
 download()
 {
   # Check if a name is specified
   if [[ -z "$2" ]]; then
-    local -r temporalname=downloading_program
+    local -r dir_name="${USR_BIN_FOLDER}"
+    local -r file_name=downloading_program
   else
-    local -r temporalname="$2"
+    local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+    local -r file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
   fi
-  # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -Rf "${USR_BIN_FOLDER}/${temporalname}"
+
   # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -qO "${temporalname}" --show-progress "$1")
+  wget --show-progress -qO "${dir_name}/${file_name}" "$1"
 }
 
 # - Description: Downloads a compressed file pointed by the provided link in $1 into $USR_BIN_FOLDER.
