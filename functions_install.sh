@@ -47,6 +47,7 @@ add_font()
   echo tontoo
 
 }
+
 # - Description: Create .desktop with custom url to open a link in favorite internet navigator
 # - Permissions: This functions needs to be executed as user
 # - Argument 1: Name of the program
@@ -202,38 +203,48 @@ create_manual_launcher()
   fi
 }
 
-#
-# Argument 1: Type of decompression
-# Argument 2: If present assume that there is a unique folder inside the compressed file. Capture folder name and
-# rename it to the third argument
-#
+# - Description:
+# Argument 1: Type of decompression [zip, J, j, z].
+# Argument 2: Absolute path to the file that is going to be decompressed in place. It will be deleted after the compres-
+# sion.
+# Argument 3 (optional): If argument 3 is set, it will try to get the name of a directory that is in the root of the
+# compressed file. Then, after the decompressing, it will rename that directory to $3
 decompress()
 {
-  if [[ "${3}" == "zip" ]]; then
-    program_folder_name="$( unzip -l "${USR_BIN_FOLDER}/downloading_program" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1 )"
-    unzip -l "${USR_BIN_FOLDER}/downloading_program"
-  else
-    # Capture root folder name
-    program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < "${USR_BIN_FOLDER}/downloading_program")
+  if [ -n "$3" ]; then
+    if [ "$1" == "zip" ]; then
+      local -r internal_folder_name="$(unzip -l "$2" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1)"
+    else
+      # Capture root folder name
+      local -r internal_folder_name=$( (tar -t"$1"f - | head -1 | cut -d "/" -f1) < "$2")
+    fi
+    # Check that variable program_folder_name is set, if not abort
+    # Clean to avoid conflicts with previously installed software or aborted installation
+    rm -Rf "${USR_BIN_FOLDER}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
+    # if captured, return it via standard output
+    echo "${internal_folder_name}"
   fi
 
-  # Check that variable program_folder_name is set, if not abort
-  # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -Rf "${USR_BIN_FOLDER}/${program_folder_name:?"ERROR: The name of the installed program could not been captured"}"
-  if [[ "${3}" == "zip" ]]; then
-    (cd "${USR_BIN_FOLDER}"; unzip "${USR_BIN_FOLDER}/downloading_program" )  # To avoid collisions
+  local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+  if [ -f "$2" ]; then
+    if [[ "$1" == "zip" ]]; then
+      (cd "${dir_name}"; unzip "$2" )
+    else
+      # Decompress in a subshell to avoid changing the working directory in the current shell
+      (cd "${dir_name}"; tar -x"$3"f -) < "$2"
+    fi
   else
-    # Decompress in a subshell to avoid changing the working directory in the current shell
-    (cd "${USR_BIN_FOLDER}"; tar -x$3f -) < "${USR_BIN_FOLDER}/downloading_program"
+    output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name} does not exist." "${FLAG_QUIETNESS}"
+    exit 1
   fi
+
   # Delete downloaded files which will be no longer used
-  rm -f "${USR_BIN_FOLDER}/downloading_program"
-  # Clean older installation to avoid conflicts
-  if [[ "${program_folder_name}" != "$2" ]]; then
-    rm -Rf "${USR_BIN_FOLDER}/$2"
-    # Rename folder for coherence
-    mv "${USR_BIN_FOLDER}/${program_folder_name}" "${USR_BIN_FOLDER}/$2"
+  rm -f "$2"
+  # Rename folder to $3 if the argument is set
+  if [ -n "$3" ]; then
+    mv "${dir_name}/${internal_folder_name}" "${dir_name}/$3"
   fi
+
 }
 
 
@@ -255,6 +266,11 @@ download()
 
   # Download in a subshell to avoid changing the working directory in the current shell
   wget --show-progress -qO "${dir_name}/${file_name}" "$1"
+
+  # If we are root
+  if [[ ${EUID} == 0 ]]; then
+    apply_permissions "${dir_name}/${file_name}"
+  fi
 }
 
 # - Description: Downloads a compressed file pointed by the provided link in $1 into $USR_BIN_FOLDER.
@@ -305,10 +321,10 @@ download_and_decompress()
     # Capture root folder name
     program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < "${USR_BIN_FOLDER}/downloading_program")
   fi
-
   # Check that variable program_folder_name is set, if not abort
   # Clean to avoid conflicts with previously installed software or aborted installation
   rm -Rf "${USR_BIN_FOLDER}/${program_folder_name:?"ERROR: The name of the installed program could not been captured"}"
+
   if [[ "${3}" == "zip" ]]; then
     (cd "${USR_BIN_FOLDER}"; unzip "${USR_BIN_FOLDER}/downloading_program" )  # To avoid collisions
   else

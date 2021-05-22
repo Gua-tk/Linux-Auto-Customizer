@@ -54,10 +54,6 @@ else
   # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
   # for /home/$SUDO_USER to be interpreted correctly as a root user.
   declare $(cat ${HOME_FOLDER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
-
-  # Force inclusions of DIR_IN_PATH to the PATH of the root user in order to let bash find installed binaries in
-  # DIR_IN_PATH when logged as root using which or type calls.
-  #export PATH=${PATH}:${DIR_IN_PATH}
 fi
 
 # Path pointing to a directory that is included in the PATH variable
