@@ -733,7 +733,7 @@ install_forms()
   add_internet_shortcut forms
 }
 
-install_git_aliases()
+install_git-aliases()
 {
   add_bash_function "${git_aliases_function}" git_aliases.sh
   rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
@@ -783,6 +783,11 @@ install_l()
 install_netflix()
 {
   add_internet_shortcut netflix
+}
+
+install_nvidia-drivers()
+{
+  ubuntu-druvers autoinstall
 }
 
 install_onedrive()
