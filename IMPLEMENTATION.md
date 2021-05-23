@@ -127,7 +127,7 @@
 #### NEW FEATURES
 
 ###### `install.sh`
-- [ ] Set up gnome-terminal font as Hermit
+- [ ] Set up gnome-terminal custom font
 - [ ] Implement function that only uses as parameter its own name and relies on the data
 - [ ] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder

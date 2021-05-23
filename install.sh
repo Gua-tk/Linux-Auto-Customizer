@@ -91,6 +91,11 @@ install_curl()
   generic_install curl
 }
 
+install_dconf-editor()
+{
+  generic_install dconf-editor
+}
+
 install_dropbox()
 {
   generic_install dropbox
@@ -139,6 +144,11 @@ install_fonts-roboto()
 install_freecad()
 {
   generic_install freecad
+}
+
+install_fslint()
+{
+  generic_install fslint
 }
 
 install_gcc()
@@ -694,6 +704,16 @@ install_alert()
   add_bash_function "${alert_alias}" alert.sh
 }
 
+install_b()
+{
+  add_bash_function "${b_alias}" b.sh
+}
+
+install_c()
+{
+  add_bash_function "${c_function}" c.sh
+}
+
 install_change-bg()
 {
   # Install script changer to be executed manually or with crontab automatically
@@ -830,6 +850,11 @@ install_l()
 install_netflix()
 {
   add_internet_shortcut netflix
+}
+
+install_o()
+{
+  add_bash_function "${o_function}" o.sh
 }
 
 install_onedrive()
