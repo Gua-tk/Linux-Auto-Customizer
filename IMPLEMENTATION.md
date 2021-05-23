@@ -11,7 +11,8 @@
 - [ ] Soft links to include a program in the PATH are created under `DIR_IN_PATH` which by default points to `~/.local/bin` a directory that is usually already in the PATH. If not, `install.sh` will add it at the beginning of the installation
 - [ ] Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using chgrp and chown
 - [ ] console features are not installed directly in bashrc; instead use the structure provided by the customizer using .bash_functions
-- [ ] Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links
+- [ ] Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links.
+- [ ] help lines in 80 characters.
 - [ ] The tests used in the conditional ifs must be with [ ] instead of [[ ]] when possible. The last one is a bash exclusive feature that we can not find in other shells.
 
 ###### Behavioural
@@ -134,6 +135,20 @@
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] Allow the modification of the Icon or Exec line of the desktop launchers using sed in the root generic install
+- [ ] create user generic install
+* First it will create a directory with the name of the currently installing feature in USR_BIN_FOLDER if directory_final_names is not defined. If creating the directory, then downloads from $NAME_compressedpackagenames inside that directory if we created it. If we do not create the folder it will downloaded in USR_BIN_FOLDER
+* After that check the optional variable $NAME_clonableurls to clone inside it. Throw an error if there is more than one clone in this case. If not CD to USR_BIN_FOLDER and clone all there.
+* Then it will download in the just created directory if directory_final_names not defined
+* After downloading it will decompress depending on $NAME_decompressionoptions.
+* If directoryfinalnames is defined try to detect a root folder and rename that root folder to direcotryfilenames
+* Create links in pairs by using relative paths selecting the binary (from the folder that we just decompressed and renamed) or absolute paths from the variable $NAME_pairpathtobinaries
+* Call add bash functions to add aliases or other code to badge using another variable $NAME_bashfunctions
+* Create manual launchers calling create manual launchers and using  $NAME_launchercontents
+* Also use an array of pair of values to indicate the location and destination of files to copy. They can be absolute or from the relative paths from the folder we just created.
+* optional Manual manipulation of icon or Exec line of a launcher
+* Register file associations
+* Add to favourites\*
+
 
 ###### `customizer.sh`
 - [ ] When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
