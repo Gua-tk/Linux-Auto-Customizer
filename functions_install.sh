@@ -38,16 +38,6 @@ add_bash_function()
   fi
 }
 
-# - Description: Add the font to ~/.local/share/fonts
-# - Permissions: This functions needs to be executed as user
-# - Argument 1: url or path to the font to be copied to our desired folder
-add_font()
-{
-  # ~/.local/share/fonts directory for fonts to be installed
-  echo tontoo
-
-}
-
 # - Description: Create .desktop with custom url to open a link in favorite internet navigator
 # - Permissions: This functions needs to be executed as user
 # - Argument 1: Name of the program

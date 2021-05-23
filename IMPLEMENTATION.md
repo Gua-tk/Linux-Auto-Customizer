@@ -105,17 +105,20 @@
 - [x] INTERNET SHORTCUT BUG: delete lines of Exec and Icon in all launchers of internet desktop launchers
 - [x] Add desktop internet shortcuts for twitch, trello, twitter, tumblr, duckduckgo...
 - [x] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc...
+- [x] Autoinstall nvidia drivers
+- [x] commit function must set `""` for ` commit`
+- [x] Fonts
+- [x] GNOME Tweak tools
+- [x] Reconvert Gitlab to internet desktop launcher
+- [x] Synaptic  
+- [x] Rsync and grsync (graphical)  
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
 - [ ] PacketTracer (diferent versions 7...)
 - [ ] CMake
-- [ ] evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)  
-- [ ] Rsync and grsync (graphical)
-- [ ] GNOME Tweak tools
-- [ ] Synaptics
 - [ ] sherlock
 - [ ] SublimeText-Markdown, & other plugins for programs...
-- [ ] Fonts
+-
 
 ## Currently developing/refactoring features
 
@@ -124,11 +127,10 @@
 #### NEW FEATURES
 
 ###### `install.sh`
-- [ ] Autoinstall nvidia drivers
+- [ ] Set up gnome-terminal font as Hermit
 - [ ] Implement function that only uses as parameter its own name and relies on the data
 - [ ] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
-- [ ] Reconvert Gitlab to internet desktop launcher
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
 
@@ -164,7 +166,6 @@
 - [ ] help message: arguments refactor with format
 - [ ] Apply data standard to `data_install.sh` in order to perform automatic installation of features by using indirect variable expansion
 - [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
-- [ ] Commit functions must set automatic "" evolving the message not worrying about spaces (Refactor needed)
 - [ ] Create high level functions that perform variable indirect expansion to install different types of program. --> add another key to `data_common.sh` table to detect kind of instalation (portable (download_and_decompress()), linux package (download_and_install()), system repositories (apt-get install -y))
 
 ###### `uninstall.sh`
@@ -202,7 +203,9 @@
 - [ ] download manager: Axel
 - [ ] virtualization: Wine 5.0, kubernetes
 - [ ] Oracle SQL Developer: link not downloadable via wget thanks to Oracle (https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn/java/sqldeveloper/sqldeveloper-20.4.1.407.0006-no-jre.zip)
-- [ ] System administration: 
+- [ ] System administration:
+- [~] evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)  
+  
   * bacula (system network administrator), 
   * Mdadm (raid manager)
   * PuTTY (ssh client), 

@@ -96,6 +96,11 @@ install_dropbox()
   generic_install dropbox
 }
 
+install_evolution()
+{
+  generic_install evolution
+}
+
 install_f-irc()
 {
   generic_install f-irc
@@ -110,6 +115,26 @@ install_firefox()
 {
   generic_install firefox
 
+}
+
+install_fonts-firacode()
+{
+  generic_install fonts-firacode
+}
+
+install_fonts-hack()
+{
+  generic_install fonts-hack
+}
+
+install_fonts-hermit()
+{
+  generic_install fonts-hermit
+}
+
+install_fonts-roboto()
+{
+  generic_install fonts-roboto
 }
 
 install_freecad()
@@ -143,15 +168,6 @@ install_github()
   generic_install github
 }
 
-#has to be named as gitlab-ce
-install_gitlab()
-{
-  #Change it to internet launcher
-  apt-get install -y ncurses-term openssh-server openssh-sftp-server ssh-import-id
-  download_and_install_package "${gitlab_downloader}"
-  copy_launcher "gitlab-ce.desktop"
-}
-
 install_gnome-calculator()
 {
   generic_install gnome-calculator
@@ -175,6 +191,11 @@ install_gnome-mines()
 install_gnome-sudoku()
 {
   generic_install gnome-sudoku
+}
+
+install_gnome-tweak-tool()
+{
+  generic_install gnome-tweak-tool
 }
 
 install_google-chrome()
@@ -270,6 +291,11 @@ install_notepadqq()
   generic_install notepadqq
 }
 
+install_nvidia-drivers()
+{
+  ubuntu-drivers autoinstall
+}
+
 install_obs-studio()
 {
   generic_install obs-studio
@@ -333,6 +359,11 @@ install_pluma()
   generic_install pluma
 }
 
+install_rsync()
+{
+  generic_install rsync
+}
+
 install_shotcut()
 {
   generic_install shotcut
@@ -356,6 +387,13 @@ install_spotify()
 install_steam()
 {
   generic_install steam
+}
+
+install_synaptic()
+{
+  generic_install synaptic
+  sed -i "s@Exec=synaptic-pkexec@Exec=synaptic@g" "${XDG_DESKTOP_DIR}/synaptic.desktop"
+  # Add to favorites
 }
 
 install_teams()
@@ -740,6 +778,16 @@ install_git-aliases()
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
+#has to be named as gitlab-ce
+install_gitlab()
+{
+  #Change it to internet launcher
+  #apt-get install -y ncurses-term openssh-server openssh-sftp-server ssh-import-id
+  #download_and_install_package "${gitlab_downloader}"
+  #copy_launcher "gitlab-ce.desktop"
+  add_internet_shortcut gitlab
+}
+
 install_gmail()
 {
   add_internet_shortcut gmail
@@ -783,11 +831,6 @@ install_l()
 install_netflix()
 {
   add_internet_shortcut netflix
-}
-
-install_nvidia-drivers()
-{
-  ubuntu-druvers autoinstall
 }
 
 install_onedrive()
