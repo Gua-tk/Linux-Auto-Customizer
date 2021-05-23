@@ -247,6 +247,10 @@ TryExec=eclipse
 Type=Application
 Version=4.2.2"
 
+evolution_installationtype="packagemanager"
+evolution_packagenames=("evolution")
+evolution_launchernames=("evolution-calendar")
+
 f_irc_installationtype="packagemanager"
 f_irc_packagenames=("f-irc")
 f_irc_launchercontents=("[Desktop Entry]
@@ -272,6 +276,18 @@ ffmpeg_packagenames=("ffmpeg")
 firefox_installationtype="packagemanager"
 firefox_packagenames=("firefox")
 firefox_launchernames=("firefox")
+
+fonts_firacode_installationtype="packagemanager"
+fonts_firacode_packagenames=("fonts-firacode")
+
+fonts_hack_installationtype="packagemanager"
+fonts_hack_packagenames=("fonts-hack")
+
+fonts_hermit_installationtype="packagemanager"
+fonts_hermit_packagenames=("fonts-hermit")
+
+fonts_roboto_installationtype="packagemanager"
+fonts_roboto_packagenames=("fonts-roboto")
 
 freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
@@ -368,6 +384,10 @@ gnome_sudoku_installationtype="packagemanager"
 gnome_sudoku_packagenames=("gnome-sudoku")
 gnome_sudoku_launchernames=("org.gnome.Sudoku")
 
+gnome_tweak_tool_installationtype="packagemanager"
+gnome_tweak_tool_packagenames=("gnome-tweak-tool")
+gnome_tweak_tool_launchernames=("org.gnome.tweaks")
+
 gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
 gpaint_installationtype="packagemanager"
 gpaint_packagenames=("gpaint")
@@ -418,7 +438,7 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-gitlab_downloader="https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/focal/gitlab-ce_13.11.4-ce.0_amd64.deb/download.deb"
+#gitlab_downloader="https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/focal/gitlab-ce_13.11.4-ce.0_amd64.deb/download.deb"
 gitlab_url=https://gitlab.com/
 gitlab_icon="https://upload.wikimedia.org/wikipedia/commons/1/18/GitLab_Logo.svg"
 gitlab_alias="alias gitlab=\"xdg-open ${gitlab_url} &>/dev/null &\""
@@ -429,7 +449,7 @@ Encoding=UTF-8
 GenericName=Code repository online
 Keywords=forms;
 MimeType=
-Name=GitLab Desktop
+Name=GitLab
 StartupNotify=true
 StartupWMClass=GitLab
 Terminal=false
@@ -1090,6 +1110,11 @@ pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "l
 python3_installationtype="packagemanager"
 python3_packagenames=("python3-dev" "python-dev" "python3-pip")
 
+rsync_installationtype="packagemanager"
+rsync_dependencies_packagenames=("canberra-gtk-module")
+rsync_packagenames=("rsync" "grsync")
+rsync_launchernames=("grsync")
+
 s_function="
 s()
 {
@@ -1178,6 +1203,10 @@ Terminal=false
 TryExec=sublime
 Type=Application
 Version=1.0"
+
+synaptic_installationtype="packagemanager"
+synaptic_packagenames=("synaptic")
+synaptic_launchernames=("synaptic")
 
 sysmontask_downloader="https://github.com/KrispyCamel4u/SysMonTask.git"
 
