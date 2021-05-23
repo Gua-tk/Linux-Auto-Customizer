@@ -114,7 +114,6 @@ install_ffmpeg()
 install_firefox()
 {
   generic_install firefox
-
 }
 
 install_fonts-firacode()

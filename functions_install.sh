@@ -416,7 +416,18 @@ rootgeneric_installation_type()
 
 userprogram_installationtype()
 {
-  echo "test"
+  # Declare name of variables for indirect expansion
+  local -r compressedfileurls="$1_packageurls[@]"
+  local -r compressedfiledownloadlocations="$1_compressedfiledownloadlocations"
+  local -r compressedfiletypes="$1_compressedfiletypes[@]"
+  local -r pathaddedbinaries="$1_pathaddedbinaries"
+
+  local -r renamecompressedfiles="$1_renamecompressedfiles[@]"
+  local -r bashfunctions="$1_bashfunctions[@]"
+
+  local -r recognizedfiletypes="$1_recognizedfiletypes"
+
+
 }
 
 
