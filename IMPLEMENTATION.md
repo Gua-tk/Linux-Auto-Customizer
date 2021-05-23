@@ -155,7 +155,6 @@
   * WireShark
   * gpaint
   * iqmol
-  * Gitlab
 
 ###### `README.md`
 - [ ] Add examples (images) of a working environment after applying the customizer in Linux
