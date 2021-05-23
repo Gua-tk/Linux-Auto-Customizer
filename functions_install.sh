@@ -213,6 +213,7 @@ decompress()
 {
   if [ -n "$3" ]; then
     if [ "$1" == "zip" ]; then
+      # Return this variable via making it global
       local -r internal_folder_name="$(unzip -l "$2" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1)"
     else
       # Capture root folder name
@@ -221,8 +222,6 @@ decompress()
     # Check that variable program_folder_name is set, if not abort
     # Clean to avoid conflicts with previously installed software or aborted installation
     rm -Rf "${USR_BIN_FOLDER}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
-    # if captured, return it via standard output
-    echo "${internal_folder_name}"
   fi
 
   local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
@@ -231,7 +230,7 @@ decompress()
       (cd "${dir_name}"; unzip "$2" )
     else
       # Decompress in a subshell to avoid changing the working directory in the current shell
-      (cd "${dir_name}"; tar -x"$3"f -) < "$2"
+      (cd "${dir_name}"; tar -x"$1"f -) < "$2"
     fi
   else
     output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name} does not exist." "${FLAG_QUIETNESS}"
@@ -307,38 +306,10 @@ download()
 # Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
 download_and_decompress()
 {
-  # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -f ${USR_BIN_FOLDER}/downloading_program
-  # Download in a subshell to avoid changing the working directory in the current shell
-  (cd ${USR_BIN_FOLDER}; wget -qO "downloading_program" --show-progress "$1")
+  download "$1" "${USR_BIN_FOLDER}/downloading_program"
 
 
-
-  if [[ "${3}" == "zip" ]]; then
-    program_folder_name="$( unzip -l "${USR_BIN_FOLDER}/downloading_program" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1 )"
-    unzip -l "${USR_BIN_FOLDER}/downloading_program"
-  else
-    # Capture root folder name
-    program_folder_name=$( (tar -t$3f - | head -1 | cut -d "/" -f1) < "${USR_BIN_FOLDER}/downloading_program")
-  fi
-  # Check that variable program_folder_name is set, if not abort
-  # Clean to avoid conflicts with previously installed software or aborted installation
-  rm -Rf "${USR_BIN_FOLDER}/${program_folder_name:?"ERROR: The name of the installed program could not been captured"}"
-
-  if [[ "${3}" == "zip" ]]; then
-    (cd "${USR_BIN_FOLDER}"; unzip "${USR_BIN_FOLDER}/downloading_program" )  # To avoid collisions
-  else
-    # Decompress in a subshell to avoid changing the working directory in the current shell
-    (cd "${USR_BIN_FOLDER}"; tar -x$3f -) < "${USR_BIN_FOLDER}/downloading_program"
-  fi
-  # Delete downloaded files which will be no longer used
-  rm -f "${USR_BIN_FOLDER}/downloading_program"
-  # Clean older installation to avoid conflicts
-  if [[ "${program_folder_name}" != "$2" ]]; then
-    rm -Rf "${USR_BIN_FOLDER}/$2"
-    # Rename folder for coherence
-    mv "${USR_BIN_FOLDER}/${program_folder_name}" "${USR_BIN_FOLDER}/$2"
-  fi
+  decompress "$3" "${USR_BIN_FOLDER}/downloading_program" "$2"
 
   # Save the final name of the folder to regenerate the full path after the shifts
   program_folder_name="$2"
