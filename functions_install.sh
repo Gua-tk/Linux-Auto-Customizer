@@ -308,7 +308,6 @@ download_and_decompress()
 {
   download "$1" "${USR_BIN_FOLDER}/downloading_program"
 
-
   decompress "$3" "${USR_BIN_FOLDER}/downloading_program" "$2"
 
   # Save the final name of the folder to regenerate the full path after the shifts
@@ -317,8 +316,8 @@ download_and_decompress()
   shift
   shift
   shift
-  # Create links in the PATH
-  while [[ $# -gt 0 ]]; do
+  # Create links in the PATH. Greater that 1 to avoid the case where there are impair name of arguments
+  while [[ $# -gt 1 ]]; do
     # Clean to avoid collisions
     create_links_in_path "${USR_BIN_FOLDER}/${program_folder_name}/$1" "$2"
     shift
@@ -423,6 +422,11 @@ rootgeneric_installation_type()
       name_suffix_anticollision="${name_suffix_anticollision}_"
     done
   fi
+}
+
+userprogram_installationtype()
+{
+  echo "test"
 }
 
 
