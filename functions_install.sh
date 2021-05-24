@@ -69,31 +69,10 @@ add_internet_shortcut()
 
 # - Description: Add new program launcher to the task bar given its desktop launcher filename.
 # - Permissions: This functions expects to be called as a non-privileged user.
-# - Argument 1: Name of the .desktop launcher file (without the .desktop extension) of the program we want to add to the
-# task bar, apparently using .desktop files from ALL_USERS_LAUNCHERS_DIR and PERSONAL_LAUNCHERS_DIR.
+# - Argument 1: Name of the .desktop launcher including .desktop extension written in file in PROGRAM_FAVORITES_PATH
 add_to_favorites()
 {
-  if [[ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]] || [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]]; then
-    # If we are root
-    if [[ ${EUID} -eq 0 ]]; then
-    # We need to search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
-      if [[ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]]; then
-        user="${SUDO_USER}"
-        fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
-        while [ -z "$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' )" ]; do
-          fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
-        done
-        export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
-      fi
-    fi
-    if [[ -z $(echo "$(gsettings get org.gnome.shell favorite-apps)" | grep -Fo "$1.desktop") ]]; then
-      gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '$1.desktop']"
-    else
-      output_proxy_executioner "echo WARNING: $1 is already added to favourites. Skipping..." "${FLAG_QUIETNESS}"
-    fi
-  else
-    output_proxy_executioner "echo WARNING: $1 cannot be added to favorites because it does not exist installed. Skipping..." "${FLAG_QUIETNESS}"
-  fi
+  echo $1 >> "${PROGRAM_FAVORITES_PATH}"
 }
 
 # - Description: Apply standard permissions and set owner and group to the user who called root
@@ -523,3 +502,21 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_common.sh not found. Aborting..."
   exit 1
 fi
+
+favorites_function="
+if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
+  IFS=\$'\\\n'
+  for line in \$(cat ${PROGRAM_FAVORITES_PATH}); do
+    favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
+    if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]]; then
+      if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"[]\")\" ]]; then
+        # List with at least an element
+        gsettings set org.gnome.shell favorite-apps \"\$(echo \"\$favorite_apps\" | sed s/.\$//), '\$line']\"
+      else
+        # List empty
+        gsettings set org.gnome.shell favorite-apps \"['\$line']\"
+      fi
+    fi
+  done
+fi
+"

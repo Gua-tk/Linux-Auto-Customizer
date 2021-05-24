@@ -87,6 +87,8 @@
 - [x] create download function and decompress function
 - [x] refactored download and decompress to use download, decompress and create links in path
 - [x] parametrize the path to the fonts folder and to the background folders
+- [x] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
+
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -114,14 +116,17 @@
 - [x] GNOME Tweak tools
 - [x] Reconvert Gitlab to internet desktop launcher
 - [x] Synaptic  
-- [x] Rsync and grsync (graphical)  
+- [x] Rsync and grsync (graphical)
+- [x] gitlab-ce no needs to be installed as source program either as internet launcher
+- [x] gnome-terminal 
+- [x] c, e, o 
+- [x] b alias (`bash`)
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
 - [ ] PacketTracer (diferent versions 7...)
 - [ ] CMake
 - [ ] sherlock
 - [ ] SublimeText-Markdown, & other plugins for programs...
-- [ ] gitlab-ce no needs to be installed as source program either as internet launcher
 - [ ] nautilus (with uninstall please)
 
 ## Currently developing/refactoring features
@@ -129,9 +134,10 @@
 #### NEW FEATURES
 
 ###### `install.sh`
-- [ ] Set up gnome-terminal font as Hermit
+- [ ] Keyboard shortcuts function for screenshots, pycharm,  
+- [ ] Set up typography for interface text as `Roboto Medium` `11`, document as `Fira Code Retina` `12`, monospaced text as `Hack Regular` `11`, inherited windows as `Hermit Bold` `9`.
+- [ ] Create new argument to set installation as favorite and add to the system sidebar
 - [ ] Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
-- [ ] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] Allow the modification of the Icon or Exec line of the desktop launchers using sed in the root generic install
@@ -147,7 +153,6 @@
 * Also use an array of pair of values to indicate the location and destination of files to copy. They can be absolute or from the relative paths from the folder we just created.
 * optional Manual manipulation of icon or Exec line of a launcher
 * Register file associations
-* Add to favourites\*
 
 
 ###### `customizer.sh`
@@ -191,10 +196,6 @@
 - [ ] 
 
 
-
-
-
-
 #### Coming features
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)
 - [ ] Create or integrate loc function bash feature which displays the lines of code of a script  
@@ -202,10 +203,6 @@
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 - [ ] jupyter notebook
-
-
-
-
 
 #### Discarded for now
 - [ ] Automount available drives.

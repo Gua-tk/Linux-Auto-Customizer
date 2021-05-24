@@ -72,8 +72,8 @@ BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 # File that contains the association of mime types with .desktop files
 MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
-# Default favourites list, data to set favourites
-PROGRAM_FAVOURITES_PATH=${BASH_FUNCTIONS_FOLDER}/favourites.txt
+# Default favorites list, data to set favorites
+PROGRAM_FAVORITES_PATH=${BASH_FUNCTIONS_FOLDER}/favorites.txt
 
 
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
@@ -159,6 +159,7 @@ installation_data=(
   "--gnome-mahjongg|--mahjongg|--Mahjongg;1"
   "--gnome-mines|--mines|--Mines|--GNU-mines|--gnomemines;1"
   "--gnome-sudoku|--sudoku|--Sudoku;1"
+  "--gnome-terminal|--terminal|--Terminal;1"
   "--gnome-tweak-tool|--gnome-tweaks|--gnome-tweak|--gnome-tweak-tools|--tweaks;1"
   "--googlecalendar|--Google-Calendar|--googlecalendar;0"
   "--google-chrome|--chrome|--Chrome|--Google-Chrome;1"

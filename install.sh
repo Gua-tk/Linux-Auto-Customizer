@@ -17,6 +17,8 @@
 ########################################################################################################################
 
 
+
+
 ############################
 ###### ROOT FUNCTIONS ######
 ############################
@@ -202,6 +204,12 @@ install_gnome-sudoku()
   generic_install gnome-sudoku
 }
 
+install_gnome-terminal()
+{
+  generic_install gnome-terminal
+  add_to_favorites "org.gnome.Terminal.desktop"
+}
+
 install_gnome-tweak-tool()
 {
   generic_install gnome-tweak-tool
@@ -210,6 +218,7 @@ install_gnome-tweak-tool()
 install_google-chrome()
 {
   generic_install google-chrome
+  add_to_favorites "google-chrome.desktop"
 }
 
 install_gpaint()
@@ -288,6 +297,7 @@ install_nemo()
   gsettings set org.nemo.desktop show-desktop-icons true
 
   copy_launcher "nemo.desktop"
+  add_to_favorites "nemo.desktop"
 }
 
 install_net-tools()
@@ -418,6 +428,7 @@ install_terminator()
 install_thunderbird()
 {
   generic_install thunderbird
+  add_to_favorites "thunderbird.desktop"
 }
 
 install_tilix()
@@ -438,6 +449,7 @@ install_tor()
 install_transmission()
 {
   generic_install transmission
+  add_to_favorites "transmission.desktop"
 }
 
 install_uget()
@@ -651,7 +663,7 @@ install_sublime()
   register_file_associations "text/x-python3" "sublime.desktop"
 
   add_bash_function "${sublime_alias}" "sublime_alias.sh"
-  add_to_favorites "sublime"
+  add_to_favorites "sublime.desktop"
 }
 
 install_sysmontask()
@@ -797,13 +809,8 @@ install_git-aliases()
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
-#has to be named as gitlab-ce
 install_gitlab()
 {
-  #Change it to internet launcher
-  #apt-get install -y ncurses-term openssh-server openssh-sftp-server ssh-import-id
-  #download_and_install_package "${gitlab_downloader}"
-  #copy_launcher "gitlab-ce.desktop"
   add_internet_shortcut gitlab
 }
 
@@ -835,6 +842,7 @@ install_instagram()
 install_keep()
 {
   add_internet_shortcut keep
+  add_to_favorites "keep.desktop"
 }
 
 install_L()
@@ -850,6 +858,7 @@ install_l()
 install_netflix()
 {
   add_internet_shortcut netflix
+  add_to_favorites "netflix.desktop"
 }
 
 install_o()
@@ -1017,7 +1026,7 @@ main()
   if [[ -z "$(cat ${BASHRC_PATH} | grep -Fo "source ${BASH_FUNCTIONS_PATH}" )" ]]; then  # .bash_functions not added
     echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
   fi
-  add_bash_function "${favourites_function}" "favourites.sh"
+  add_bash_function "${favorites_function}" "favorites.sh"
 
   #################################
   ###### ARGUMENT PROCESSING ######

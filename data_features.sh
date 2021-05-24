@@ -388,6 +388,10 @@ gnome_sudoku_installationtype="packagemanager"
 gnome_sudoku_packagenames=("gnome-sudoku")
 gnome_sudoku_launchernames=("org.gnome.Sudoku")
 
+gnome_terminal_installationtype="packagemanager"
+gnome_terminal_packagenames=("gnome-terminal")
+gnome_terminal_launchernames=("org.gnome.Terminal")
+
 gnome_tweak_tool_installationtype="packagemanager"
 gnome_tweak_tool_packagenames=("gnome-tweak-tool")
 gnome_tweak_tool_launchernames=("org.gnome.tweaks")
