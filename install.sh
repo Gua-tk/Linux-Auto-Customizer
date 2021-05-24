@@ -817,7 +817,7 @@ install_googlecalendar()
   add_internet_shortcut googlecalendar
 }
 
-install_history_optimization()
+install_history-optimization()
 {
   add_bash_function "${shell_history_optimization_function}" history.sh
 }
