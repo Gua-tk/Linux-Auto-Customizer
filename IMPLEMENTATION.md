@@ -1,20 +1,21 @@
-### Business rules
+## Business rules
 
-#### Environmental
+###### Environmental
 - [x] Both behaviors of the script use the file `~/.config/user-dirs.dirs` to set some language-independent environment variables (for example, to get an independent system-language path to the Desktop), so some functions of this script will fail if this file does not exist. The variables declared in this file that are used in the customizer are `XDG_DESKTOP_DIR=/home/username/Desktop`, `XDG_PICTURES_DIR=/home/username/Images`, `XDG_TEMPLATES_DIR=/home/username/Templates`.
 - [x] Customizer must not rely ever on the working directory, that is why relative paths are completely avoided (only allowed in necessary cases in . In the same vein, files must not be downloaded in the working directory, they should be deleted in a controlled location. In most cases, this location is `USR_BIN_FOLDER`.
 - [ ] All variables should be declared with the needed scope and its write/read permissions (local-r)
 
-#### Structural
+###### Structural
 - [x] The software that is manually installed is put under `USR_BIN_FOLDER`, which by default points to `~/.bin`. `~/.bin` and is always **present** during the execution of `install.sh`.
 - [x] Shell features are not installed directly into `~/.bashrc`, instead, there is always present during the runtime of `install sh` the file `$USR_BIN_FOLDER/bash_functions/.bash_functions`, which is a file imported by `~/.bashrc`. In `~/.bash_functions`, you can write imports to individual scripts that provide a feature to the shell environment. Usually those scripts are stored under `~/.bin/bash_functions/`, which is a location always present. So the generic way to include new content to `~/.bashrc` is writing a script to `~/.bin/bash_functions` and including it in `~/.bash_functions/`.
 - [ ] Soft links to include a program in the PATH are created under `DIR_IN_PATH` which by default points to `~/.local/bin` a directory that is usually already in the PATH. If not, `install.sh` will add it at the beginning of the installation
 - [ ] Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using chgrp and chown
 - [ ] console features are not installed directly in bashrc; instead use the structure provided by the customizer using .bash_functions
-- [ ] Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links
+- [ ] Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links.
+- [ ] help lines in 80 characters.
 - [ ] The tests used in the conditional ifs must be with [ ] instead of [[ ]] when possible. The last one is a bash exclusive feature that we can not find in other shells.
 
-#### Behavioural
+###### Behavioural
 - [x] Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
 - [x] No unprotected `cd` commands. `cd` must be avoided and never change the working directory given from the outside, that is why they must be called from the inside of a subshell if present.
 - [x] Relative PATHs are forbidden. We must not rely or modify the working directory of the environment of the script. `cd` can be used safely inside a subshell: `$(cd ${USR_BIN_FOLDER} && echo thing`  
@@ -26,7 +27,7 @@
 - [ ] wget is always used with the `-O` flag, which is used to change the name of the file and / or select a destination for the download.
 - [ ] tar is always used in a subshell, cd'ing into an empty directory before the tar, so the working directory of the script is never filled with temporary files.
 
-#### Syntactical
+###### Syntactical
 - [ ] All variables must be expanded by using `${VAR_NAME}` (include the brackets) except for the special ones, like `$#`, `$@`, `$!`, `$?`, etc.
 - [ ] There is one blankline between functions in the same block. There is two blanklines between blocks.
 - [ ] using ~ or $HOME instead of HOME_FOLDER
@@ -34,7 +35,7 @@
 - [ ] Indent is always 2 spaces and never TAB.
 
 
-## Developed features
+## Assigned features
 #### Aleix
 - [x] Create argument (! or --not) for deselecting installed or uninstalled features.
 - [x] -v --verbose Verbose mode (make the software not verbose by default)
@@ -83,7 +84,9 @@
 - [x] Let uninstall run as normal user for the right features
 - [x] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
 - [x] sysmontask
-
+- [x] create download function and decompress function
+- [x] refactored download and decompress to use download, decompress and create links in path
+- [x] parametrize the path to the fonts folder and to the background folders
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -118,30 +121,40 @@
 - [ ] CMake
 - [ ] sherlock
 - [ ] SublimeText-Markdown, & other plugins for programs...
--
+- [ ] gitlab-ce no needs to be installed as source program either as internet launcher
+- [ ] nautilus (with uninstall please)
 
 ## Currently developing/refactoring features
-
-
 ### TO-DO v1.0
 #### NEW FEATURES
 
 ###### `install.sh`
-- [ ] Set up gnome-terminal custom font
-- [ ] Implement function that only uses as parameter its own name and relies on the data
+- [ ] Set up gnome-terminal font as Hermit
+- [ ] Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
 - [ ] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
+- [ ] Allow the modification of the Icon or Exec line of the desktop launchers using sed in the root generic install
+- [ ] create user generic install
+* First it will create a directory with the name of the currently installing feature in USR_BIN_FOLDER if directory_final_names is not defined. If creating the directory, then downloads from $NAME_compressedpackagenames inside that directory if we created it. If we do not create the folder it will downloaded in USR_BIN_FOLDER
+* After that check the optional variable $NAME_clonableurls to clone inside it. Throw an error if there is more than one clone in this case. If not CD to USR_BIN_FOLDER and clone all there.
+* Then it will download in the just created directory if directory_final_names not defined
+* After downloading it will decompress depending on $NAME_decompressionoptions.
+* If directoryfinalnames is defined try to detect a root folder and rename that root folder to direcotryfilenames
+* Create links in pairs by using relative paths selecting the binary (from the folder that we just decompressed and renamed) or absolute paths from the variable $NAME_pairpathtobinaries
+* Call add bash functions to add aliases or other code to badge using another variable $NAME_bashfunctions
+* Create manual launchers calling create manual launchers and using  $NAME_launchercontents
+* Also use an array of pair of values to indicate the location and destination of files to copy. They can be absolute or from the relative paths from the folder we just created.
+* optional Manual manipulation of icon or Exec line of a launcher
+* Register file associations
+* Add to favourites\*
+
+
+###### `customizer.sh`
 - [ ] When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
-
-###### `uninstall.sh`
-
-- [ ] 
-
-###### `customizer.sh`:
 - [ ] package installation manager will try to install with different (apt-get, yum, pacman, pkg...) if finds luck maybe perform easy installation customizer controlls calls to package manager tries to finds out which system runs customizer
 - [ ] create a unique endpoint for all the code in customizer `customizer.sh` which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
-- [ ] Move high-level wrappers from `install.sh` for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint
+- [ ] Move high-level wrappers from `install.sh` for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint associate all the features that are needed such as sudo install Nemo and sudo uninstall nautilus
 - [ ] customizer.sh help, customizer install, customizer uninstall, customizer parallel [install| uninstall]
 
 
@@ -158,8 +171,10 @@
 
 ###### `README.md`
 - [ ] Add examples (images) of a working environment after applying the customizer in Linux
-- [ ] Sort `README.md` table, `uninstall.sh` on same sections as `install.sh` and the sort table in `data_common.sh`.
-- [ ] Write contents of `README.md` in the table in data_common.sh
+- [ ] Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
+- [ ] Write contents of `README.md` in the table in data_common.sh, after the permissions bit. Then create a function to autogenerated the readme table
+- [ ] Add badges using codecov or another code analysis service.
+- [ ] change name of implementation.md to code of conduct.md
 
 ###### `install.sh`
 - [ ] help message: arguments refactor with format
@@ -175,8 +190,10 @@
 ###### `customizer.sh`:
 - [ ] 
 
-#### KNOWN BUGS AND FIXES
-- [ ] gitlab-ce no needs to be installed as source program either as internet launcher
+
+
+
+
 
 #### Coming features
 - [ ] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)
@@ -185,6 +202,10 @@
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 - [ ] jupyter notebook
+
+
+
+
 
 #### Discarded for now
 - [ ] Automount available drives.
