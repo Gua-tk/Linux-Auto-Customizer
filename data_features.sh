@@ -1147,7 +1147,12 @@ HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
 # same history entry, adding semicolons where necessary to preserve syntactic correctness.
 shopt -s cmdhist
 # Save and reload from history before prompt appears
-export PROMPT_COMMAND=\"history -a; history -r; \${PROMPT_COMMAND}\"
+if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a\")\" ]]; then
+  export PROMPT_COMMAND=\"history -a; \${PROMPT_COMMAND}\"
+fi
+if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -r\")\" ]]; then
+  export PROMPT_COMMAND=\"history -r; \${PROMPT_COMMAND}\"
+fi
 "
 
 shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}
