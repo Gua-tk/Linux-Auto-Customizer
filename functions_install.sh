@@ -327,6 +327,11 @@ download_and_install_package()
   rm -f ${USR_BIN_FOLDER}/downloading_package
 }
 
+favourites_function=
+"
+
+"
+
 # - Description: Expands installation type and executes the corresponding function
 # - Permissions:
 # - Argument 1:

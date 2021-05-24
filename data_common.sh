@@ -72,6 +72,9 @@ BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 # File that contains the association of mime types with .desktop files
 MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
+# Default favourites list, data to set favourites
+PROGRAM_FAVOURITES_PATH=${BASH_FUNCTIONS_FOLDER}/favourites.txt
+
 
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
