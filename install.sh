@@ -487,7 +487,6 @@ install_clion()
   add_bash_function "${clion_alias}" "clion_alias.sh"
 }
 
-# Microsoft Visual Studio Code
 install_code()
 {
   download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
@@ -777,13 +776,8 @@ install_git-aliases()
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
-#has to be named as gitlab-ce
 install_gitlab()
 {
-  #Change it to internet launcher
-  #apt-get install -y ncurses-term openssh-server openssh-sftp-server ssh-import-id
-  #download_and_install_package "${gitlab_downloader}"
-  #copy_launcher "gitlab-ce.desktop"
   add_internet_shortcut gitlab
 }
 
