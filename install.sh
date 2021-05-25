@@ -509,7 +509,6 @@ install_clion()
   add_bash_function "${clion_alias}" "clion_alias.sh"
 }
 
-# Microsoft Visual Studio Code
 install_code()
 {
   download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"

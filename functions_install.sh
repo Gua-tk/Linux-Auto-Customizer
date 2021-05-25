@@ -174,8 +174,8 @@ create_manual_launcher()
 
 # - Description:
 # Argument 1: Type of decompression [zip, J, j, z].
-# Argument 2: Absolute path to the file that is going to be decompressed in place. It will be deleted after the compres-
-# sion.
+# Argument 2: Absolute path to the file that is going to be decompressed in place. It will be deleted after the
+# decompression.
 # Argument 3 (optional): If argument 3 is set, it will try to get the name of a directory that is in the root of the
 # compressed file. Then, after the decompressing, it will rename that directory to $3
 decompress()
@@ -195,7 +195,7 @@ decompress()
 
   local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
   if [ -f "$2" ]; then
-    if [[ "$1" == "zip" ]]; then
+    if [ "$1" == "zip" ]; then
       (cd "${dir_name}"; unzip "$2" )
     else
       # Decompress in a subshell to avoid changing the working directory in the current shell
@@ -216,15 +216,17 @@ decompress()
 }
 
 
-# - Description: Downloads a file with the location and name specified in $2, from the link provided in $1.
+# - Description: Downloads a file from the link provided in $1 and, if specified, with the location and name specified
+#   in $2. If $2 is not defined, download into ${USR_BIN_FOLDER}/downloading_program
 # - Permissions: Can be called as root or normal user. If called as root changes the permissions and owner to the
 #   $SUDO_USER user, otherwise, needs permissions to create the file $2.
-# - Argument 1: link to download into usr bin folder
-# - Argument 2 (optional): Path to the created file, allowing to download in any location and use a different filename
+# - Argument 1: link to the file to download
+# - Argument 2 (optional): Path to the created file, allowing to download in any location and use a different filename.
+#   By default the name of the file is downloading file and the PATH where is being downloaded is USR_BIN_FOLDER
 download()
 {
   # Check if a name is specified
-  if [[ -z "$2" ]]; then
+  if [ -z "$2" ]; then
     local -r dir_name="${USR_BIN_FOLDER}"
     local -r file_name=downloading_program
   else
@@ -236,7 +238,7 @@ download()
   wget --show-progress -qO "${dir_name}/${file_name}" "$1"
 
   # If we are root
-  if [[ ${EUID} == 0 ]]; then
+  if [ ${EUID} == 0 ]; then
     apply_permissions "${dir_name}/${file_name}"
   fi
 }
@@ -333,7 +335,7 @@ generic_install()
   fi
 }
 
-# - Description: Installs packages using apt-get or download + dpkg and also installs additional features such as
+# - Description: Installs packages using apt-get or ) + dpkg and also installs additional features such as
 # aliases, related functions, desktop launchers including its icon and links in the path.
 # - Permissions: Needs root permissions, but is expected to be called always as root by install.sh logic
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
@@ -342,11 +344,18 @@ generic_install()
 rootgeneric_installation_type()
 {
   # Declare name of variables for indirect expansion
+
+  # Name of the launchers to be used by copy_launcher
   local -r launchernames="$1_launchernames[@]"
+  # Other dependencies to install with the package manager before the main package of software if present
   local -r packagedependencies="$1_packagedependencies[@]"
+  # Name of the package names to be installed with the package manager if present
   local -r packagenames="$1_packagenames[@]"
+  # Used to download .deb and install it if present
   local -r packageurls="$1_packageurls[@]"
+  # Used to call add manual launcher and create a launcher in the path and in the desktop
   local -r launchercontents="$1_launchercontents[@]"
+  # Add code to be executed by bashrc
   local -r bashfunctions="$1_bashfunctions[@]"
 
   # Install dependency packages
@@ -395,19 +404,98 @@ rootgeneric_installation_type()
   fi
 }
 
-userprogram_installationtype()
+
+#* First it will create a directory with the name of the currently installing feature in USR_BIN_FOLDER if directory_final_names is not defined.
+# If creating the directory, then downloads from $NAME_compressedpackagenames inside that directory if we created it. If we do not create the folder it will downloaded in USR_BIN_FOLDER
+
+#* After that check the optional variable $NAME_clonableurls to clone inside it. Throw an error if there is more than one clone in this case.
+# If not CD to USR_BIN_FOLDER and clone all there.
+
+#* Then it will download in the just created directory if directory_final_names not defined
+#* After downloading it will decompress depending on $NAME_decompressionoptions.
+#* If directoryfinalnames is defined try to detect a root folder and rename that root folder to direcotryfilenames
+#* Create links in pairs by using relative paths selecting the binary (from the folder that we just decompressed and renamed) or absolute paths from the variable $NAME_pairpathtobinaries
+#* Call add bash functions to add aliases or other code to badge using another variable $NAME_bashfunctions
+#* Create manual launchers calling create manual launchers and using  $NAME_launchercontents
+#* Also use an array of pair of values to indicate the location and destination of files to copy. They can be absolute or from the relative paths from the folder we just created.
+#* optional Manual manipulation of icon or Exec line of a launcher
+#* Register file associations
+#* Add to favourites\*
+usergeneric_installationtype()
 {
   # Declare name of variables for indirect expansion
-  local -r compressedfileurls="$1_packageurls[@]"
-  local -r compressedfiledownloadlocations="$1_compressedfiledownloadlocations"
+
+  # Relative paths are from USR_BIN_FOLDER!
+
+  # If this variable has a value in the first position and there is a compressed files in the first position present
+  # (in compressedfileurls): this function will assume that there is a directory in the root of this compressed file,
+  # which will be renamed to the contents of this variable and will be the default folder to put downloaded files and
+  # temporals during the installation of this feature.
+  # If there are no compressed files defined but the this variable is present in the first position, it will create
+  # as many directory as many paths are present in this variable with those names, being the first one the default
+  # directory to put files in this feature.
+  # If this variable is not present the default place to put files will be USR_BIN_FOLDER
+  # Summarizing: The first position of this array is special, and will set the default folder. This folder will be
+  # the final name of the folder inside the compressed file, assuming there is such structure.
+  # To skip this feature define the data of the arrays from the second position, leaving the first one blank
+  # Also note that paths to directories can be relative from USR_BIN_FOLDER or be absolute.
+  local -r directorynames="$1_directorynames[@]"
+
+  # Files to be downloaded that have to be decompressed
+  local -r compressedfileurls="$1_compressedfileurls[@]"
+  # Folders where compressed files have to be downloaded and decompressed. Relative from USR_BIN_FOLDER or absolute.
+  local -r compressedfiledownloadlocations="$1_compressedfiledownloadlocations[@]"
+  # All decompression type options for each compressed file defined
   local -r compressedfiletypes="$1_compressedfiletypes[@]"
-  local -r pathaddedbinaries="$1_pathaddedbinaries"
 
-  local -r renamecompressedfiles="$1_renamecompressedfiles[@]"
+  # Path to the binaries to be added, with a ; with the desired name in the path
+  local -r pathaddedbinaries="$1_pathaddedbinaries[@]"
+
+  # Code to be added to bashrc as a bash-function feature. Its name will be $1+anticollision_mark
   local -r bashfunctions="$1_bashfunctions[@]"
+  # Launchers added using add_manual_launchers function. Its name will be $1+anticollision_mark
+  local -r launchercontents="$1_launchercontents[@]"
+  # Recognized file types, used to register application to use a certain mime type
+  local -r recognizedfiletypes="$1_recognizedfiletypes[@]"
 
-  local -r recognizedfiletypes="$1_recognizedfiletypes"
 
+  local -r firstcompressedfileurl="$1_compressedfileurls[0]"
+  local -r firstcompressedfiletype="$1_compressedfiletypes[0]"
+  local -r firstcompressedfiledownloadlocation="$1_compressedfiledownloadlocations[0]"
+  local -r firstdirectoryname="$1_directorynames[0]"
+  local default_directory=""
+
+  local compressed_i=0
+  if [ -z "${!firstdirectoryname}" ]; then
+    default_directory="${USR_BIN_FOLDER}"
+  else
+    if [ -n "${!firstcompressedfiledownloadlocation}" ]; then
+      # Mark that the first compressed file is processed
+      compressed_i=1
+      if [ -n "${firstcompressedfileurl}" ]; then
+        # Set the default directory to the directory that comes from decompressing the file
+        download "${firstcompressedfileurl}" "${USR_BIN_FOLDER}/$1_downloading"
+        decompress "${firstcompressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "${firstcompressedfiletype}"
+        default_directory="${USR_BIN_FOLDER}/${firstcompressedfiletype}"
+      else
+        output_proxy_executioner "echo ERROR: In program $1 First location of compressed file ${firstcompressedfiledownloadlocation} set but not an url. Exiting..." "${FLAG_QUIETNESS}"
+        exit 1
+      fi
+    else
+      # Set the default directory if we do not have to inherit
+      mkdir -p "${!firstdirectoryname}"
+      default_directory="${!firstdirectoryname}"
+    fi
+  fi
+
+  # Create directories, assuming we are normal user
+  if [[ -n "${!directorynames}" ]]; then
+    local -r total=${#installation_data[*]}
+    for (( i=0; i<$(( total )); i++ )); do  # Check all the entries in installation_data
+      rm -Rf "${directoryname}"
+      mkdir -p "${directoryname}"
+    done
+  fi
 
 }
 

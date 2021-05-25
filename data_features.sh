@@ -142,6 +142,7 @@ clementine_installationtype="packagemanager"
 clementine_launchernames=("clementine")
 clementine_packagenames=("clementine")
 
+# Testing
 clion_downloader=https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz
 clion_launcher="[Desktop Entry]
 Categories=Development;IDE;
@@ -1139,7 +1140,7 @@ alias screenshot-area=\"gnome-screenshot -a -f ${XDG_PICTURES_DIR}/screenshots/S
 shell_history_optimization_function="
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=100000
-export HISTFILESIZE=1000000
+export HISTFILESIZE=10000000
 # append to the history file, don't overwrite it
 shopt -s histappend
 # don't put duplicate lines or lines starting with space in the history.
@@ -1151,11 +1152,8 @@ HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
 # same history entry, adding semicolons where necessary to preserve syntactic correctness.
 shopt -s cmdhist
 # Save and reload from history before prompt appears
-if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a\")\" ]]; then
-  export PROMPT_COMMAND=\"history -a; \${PROMPT_COMMAND}\"
-fi
-if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -r\")\" ]]; then
-  export PROMPT_COMMAND=\"history -r; \${PROMPT_COMMAND}\"
+if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a; history -r; \")\" ]]; then
+  export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; history -a; history -r\"
 fi
 "
 
