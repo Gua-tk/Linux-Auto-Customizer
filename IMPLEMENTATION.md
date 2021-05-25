@@ -134,6 +134,8 @@
 #### NEW FEATURES
 
 ###### `install.sh`
+- [ ] move add to favorites to `.bash_profile`
+- [ ] 
 - [ ] Keyboard shortcuts function for screenshots, pycharm,  
 - [ ] Set up typography for interface text as `Roboto Medium` `11`, document as `Fira Code Retina` `12`, monospaced text as `Hack Regular` `11`, inherited windows as `Hermit Bold` `9`.
 - [ ] Create new argument to set installation as favorite and add to the system sidebar

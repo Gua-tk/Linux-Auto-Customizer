@@ -948,7 +948,7 @@ nemo_conf=("xdg-mime default nemo.desktop inode/directory application/x-gnome-sa
   "gsettings set org.gnome.desktop.background show-desktop-icons false"
   "gsettings set org.nemo.desktop show-desktop-icons true"
 )
-
+nemo_alias="alias nemo=\"nemo . &>/dev/null &\""
 nemo_desktop_launcher="[Desktop Entry]
 Type=Application
 Name=Files
