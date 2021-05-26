@@ -1511,9 +1511,53 @@ hextodec()
 }"
 
 ipe_function="
+
 ipe()
 {
   dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print \$2 }';
+}
+"
+
+e_function="
+
+e()
+{
+  if [[ -z \"\$1\" ]]; then
+    gedit new_text_file &
+  else
+    if [[ -f \"\$1\" ]]; then
+      if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
+  			local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
+				cd \"\${dir_name}\"
+			fi
+			gedit \"\$1\" &
+		else
+			if [[ -d \"\$1\" ]]; then
+				cd \"\$1\"
+				if [[ -d \".git\" ]]; then
+				  git fetch
+					gitk --all --date-order &
+          pycharm &>/dev/null &
+				else
+					nemo \"\$1\" &
+				fi
+			else
+        #Inexistent route or new file
+        if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
+          local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
+          if [[ -d \"\${dir_name}\" ]]; then
+            cd \"\${dir_name}\"
+          else
+            mkdir -p \"\${dir_name}\"
+            cd \"\${dir_name}\"
+          fi
+          gedit \"\$(echo \$1 | rev | cut -d '/' -f1 | rev)\" &
+        else
+          gedit \"\$1\" &
+        fi
+			fi
+		fi
+	fi
 }
 "
 

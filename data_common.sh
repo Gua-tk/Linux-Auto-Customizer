@@ -131,6 +131,7 @@ installation_data=(
   "--drive|--GoogleDrive|--Drive|--google-drive|--Google-Drive;0"
   "--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box;1"
   "--duckduckgo|--DuckDuckGo;0"
+  "--e;0"
   "--eclipse|--Eclipse;0"
   "--extract|--extract-function|--extract_function;0"
   "--evolution|--Evolution;1"

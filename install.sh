@@ -786,6 +786,12 @@ install_duckduckgo()
 {
   add_internet_shortcut duckduckgo
 }
+
+install_e()
+{
+  add_bash_function "${e_function}" e.sh
+}
+
 install_extract()
 {
   add_bash_function "${extract_function}" extract.sh
