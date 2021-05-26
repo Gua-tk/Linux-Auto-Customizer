@@ -464,6 +464,7 @@ usergeneric_installationtype()
 
   # Files to be downloaded that have to be decompressed
   local -r compressedfileurls="$1_compressedfileurls[@]"
+  local -r compressedfileurls_num="$1_compressedfileurls[*]"
   # Folders where compressed files have to be downloaded and decompressed. Relative from USR_BIN_FOLDER or absolute.
   local -r compressedfiledownloadlocations="$1_compressedfiledownloadlocations[@]"
   # All decompression type options for each compressed file defined
@@ -471,50 +472,90 @@ usergeneric_installationtype()
 
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r pathaddedbinaries="$1_pathaddedbinaries[@]"
+  local -r pathaddedbinaries_num="$1_pathaddedbinaries[*]"
 
   # Code to be added to bashrc as a bash-function feature. Its name will be $1+anticollision_mark
   local -r bashfunctions="$1_bashfunctions[@]"
+  local -r bashfunctions_num="$1_bashfunctions[*]"
+
   # Launchers added using add_manual_launchers function. Its name will be $1+anticollision_mark
   local -r launchercontents="$1_launchercontents[@]"
+  local -r launchercontents_num="$1_launchercontents[*]"
+
   # Recognized file types, used to register application to use a certain mime type
   local -r recognizedfiletypes="$1_recognizedfiletypes[@]"
+  local -r recognizedfiletypes_num="$1_recognizedfiletypes[*]"
 
+  # Generic downloads
+  local -r fileurls="$1_fileurls[@]"
+  local -r filedownloadlocations="$1_filedownloadlocations[@]"
 
+  # First elements of necessary arrays to perform the algorithm of inherit the directory of decompressed files.
   local -r firstcompressedfileurl="$1_compressedfileurls[0]"
   local -r firstcompressedfiletype="$1_compressedfiletypes[0]"
   local -r firstcompressedfiledownloadlocation="$1_compressedfiledownloadlocations[0]"
   local -r firstdirectoryname="$1_directorynames[0]"
+
   local default_directory=""
 
   local compressed_i=0
   if [ -z "${!firstdirectoryname}" ]; then
+    # There is no default directory, so use USR_BIN_FOLDER
     default_directory="${USR_BIN_FOLDER}"
   else
+    # There is a file in the first position and also a default directory. We need to inherit the folder extracted.
     if [ -n "${!firstcompressedfiledownloadlocation}" ]; then
       # Mark that the first compressed file is processed
       compressed_i=1
       if [ -n "${firstcompressedfileurl}" ]; then
         # Set the default directory to the directory that comes from decompressing the file
-        download "${firstcompressedfileurl}" "${USR_BIN_FOLDER}/$1_downloading"
-        decompress "${firstcompressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "${firstcompressedfiletype}"
-        default_directory="${USR_BIN_FOLDER}/${firstcompressedfiletype}"
-      else
-        output_proxy_executioner "echo ERROR: In program $1 First location of compressed file ${firstcompressedfiledownloadlocation} set but not an url. Exiting..." "${FLAG_QUIETNESS}"
-        exit 1
+        if [ -z "$(echo "${firstcompressedfiledownloadlocation}" | grep -Eo "^/")" ]; then
+          download "${firstcompressedfileurl}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadlocation}"
+          decompress "${firstcompressedfiletype}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadlocation}" "${firstdirectoryname}"
+          default_directory="${USR_BIN_FOLDER}/${firstcompressedfiledownloadlocation}"
+        else
+          download "${firstcompressedfileurl}" "${firstcompressedfiledownloadlocation}"
+          decompress "${firstcompressedfiletype}" "${firstcompressedfiledownloadlocation}" "${firstdirectoryname}"
+          default_directory="${firstcompressedfiledownloadlocation}"
+        fi
       fi
     else
       # Set the default directory if we do not have to inherit
-      mkdir -p "${!firstdirectoryname}"
-      default_directory="${!firstdirectoryname}"
+      mkdir -p "${USR_BIN_FOLDER}/${firstdirectoryname}"
+      default_directory="${USR_BIN_FOLDER}/${firstdirectoryname}"
     fi
   fi
 
-  # Create directories, assuming we are normal user
-  if [[ -n "${!directorynames}" ]]; then
-    local -r total=${#installation_data[*]}
-    for (( i=0; i<$(( total )); i++ )); do  # Check all the entries in installation_data
-      rm -Rf "${directoryname}"
-      mkdir -p "${directoryname}"
+  # Beginning with normal installation
+
+  # Create directories, using USR_BIN_FOLDER as relative path if no absolute path is given
+  if [ -n "${!directorynames}" ]; then
+    for directoryname in "${!directorynames}"; do
+      if [ -n "${directoryname}" ]; then
+        if [ -n "$(echo "${directoryname}" | grep -Eo "^/")" ]; then
+          rm -Rf "${directoryname}"
+          mkdir -p "${directoryname}"
+        else
+          rm -Rf "${USR_BIN_FOLDER}/${directoryname:?}"
+          mkdir -p "${USR_BIN_FOLDER}/${directoryname}"
+        fi
+      fi
+    done
+  fi
+
+  # Download and decompress
+  if [ -n "${!compressedfileurls}" ]; then
+    for compressedfileurls in "${!compressedfileurls}"; do
+      if [ "${compressed_i}" == "0" ]
+        if [ -n "${compressedfileurls}" ]; then
+          if [ -z "$(echo "${firstcompressedfiledownloadlocation}" | grep -Eo "^/")" ]; then
+            
+
+          fi
+        fi
+      else
+        compressed_i=0
+      fi
     done
   fi
 
