@@ -809,7 +809,7 @@ install_facebook()
 
 install_fonts-alegreya-sans()
 {
-  add_font ${alegreya_sans_compressedfileurls} zip alegreya_sans
+  add_font ${alegreya_sans_compressedfileurls} zip alegreya-sans
 }
 
 install_fonts-oxygen()
@@ -829,7 +829,7 @@ install_fonts-oswald()
 
 install_fonts-noto-sans()
 {
-  add_font ${noto_sans_compressedfileurls} zip noto_sans
+  add_font ${noto_sans_compressedfileurls} zip noto-sans
 }
 
 install_system_fonts()
