@@ -251,7 +251,7 @@ download() {
     # Absolute path
     if [ -n "$(echo "$2" | grep -Eo "^/")" ]; then
       local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
-      local -r file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+      local file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
       if [ -z "${file_name}" ]; then
         file_name=downloading_program
       fi
@@ -260,13 +260,13 @@ download() {
       if [ -n "$(echo $2 | grep -Eo "/")" ]; then
         # Relative path that contains folders
         local -r dir_name="${USR_BIN_FOLDER}/$(echo $2 | rev | cut -d "/" -f2- | rev)"
-        local -r file_name="$(echo $2 | rev | cut -d "/" -f1 | rev)"
+        local file_name="$(echo $2 | rev | cut -d "/" -f1 | rev)"
         if [ -z file_name ]; then
           file_name=downloading_program
         fi
       else
         local -r dir_name="${USR_BIN_FOLDER}"
-        local -r file_name="$2"
+        local file_name="$2"
         if [ -z "${file_name}" ]; then
           file_name=downloading_program
         fi

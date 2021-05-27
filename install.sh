@@ -807,7 +807,7 @@ install_facebook()
   add_internet_shortcut facebook
 }
 
-install_font_alegreya_sans()
+install_alegreya_sans()
 {
   add_font ${alegreya_sans_compressedfileurls} zip alegreya_sans
 }

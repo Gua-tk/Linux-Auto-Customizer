@@ -300,14 +300,14 @@ alegreya_sans_compressedfileurls=("https://fonts.google.com/download?family=Aleg
 oxygen_installationtype="userprogram"
 oxygen_compressedfileurls=("https://fonts.google.com/download?family=Oxygen")
 
-lato_Sans_installationtype="userprogram"
-lato_Sans_compressedfileurls=("https://fonts.google.com/download?family=Lato")
+lato_sans_installationtype="userprogram"
+lato_sans_compressedfileurls=("https://fonts.google.com/download?family=Lato")
 
 oswald_installationtype="userprogram"
 oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswald")
 
-noto_Sans_installationtype="userprogram"
-noto_Sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
+noto_sans_installationtype="userprogram"
+noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
 
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_packagenames=("msttcorefonts")
