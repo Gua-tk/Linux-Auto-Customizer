@@ -381,7 +381,7 @@ alias status=\"git status\"
 alias fetch=\"git fetch\"
 
 GIT=${XDG_DESKTOP_DIR}/git
-if [ ! -d \$GIT ]
+if [ ! -d \$GIT ]; then
   mkdir -p \$GIT
 fi
 "
