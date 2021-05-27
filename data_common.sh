@@ -220,7 +220,7 @@ installation_data=(
   "--rsync|--Rsync|--grsync;1"
   "--s|--s-function;0"
   "--screenshots|--Screenshots;0"
-  "--system_fonts;0"
+  "--system-fonts;0"
   "--shortcuts;0"
   "--shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut;1"
   "--skype|--Skype;1"

@@ -832,14 +832,14 @@ install_fonts-noto-sans()
   add_font ${fonts_noto_sans_compressedfileurls} zip noto_sans
 }
 
-install_system_fonts()
+install_system-fonts()
 {
   # Interface text
-  gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 10'
+  gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 11'
   # Document text //RF
   gsettings set org.gnome.desktop.interface document-font-name 'Fira Code weight=453 10'
   # Monospaced text
-  gsettings set org.gnome.desktop.interface monospace-font-name 'Hack Regular 11'
+  gsettings set org.gnome.desktop.interface monospace-font-name 'Hack Regular 12'
   # Inherited window titles
   gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
 }
