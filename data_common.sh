@@ -105,7 +105,7 @@ FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1
 # install_yes/no; forceness; quietness; overwrite; permissions; function_name
 installation_data=(
   "--aisleriot|--solitaire|--Solitaire|--gnome-solitaire;1"
-  "--alegreya_sans|--Alegreya-Sans;0"
+  "--alegreya_sans|--alegreya-sans;0"
   "--alert|--alert-alias|--alias-alert;0"
   "--ant|--apache_ant|--apache-ant;0"
   "--anydesk;0"
@@ -194,7 +194,7 @@ installation_data=(
   "--netflix|--Netflix;0"
   "--nvidia-drivers|--ubuntu-drivers|--autoinstall;1"
   "--notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ;1"
-  "--noto_sans|--Noto-Sans;0"
+  "--noto_sans|--noto-sans;0"
   "--obs-studio|--OBS|--obs|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio;1"
   "--o;0"
   "--okular|--Okular|--okularpdf;1"
