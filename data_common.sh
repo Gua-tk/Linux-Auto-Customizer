@@ -245,7 +245,7 @@ installation_data=(
   "--wikipedia|--Wikipedia;0"
   "--wireshark|--Wireshark;1"
   "--youtube-dl;0"
-  "--youtube-music|--youtubemusic|--YouTubeMusic|--YouTube-Music|--Youtube-Music|--youtube-music;0"
+  "--youtubemusic|--youtube-music|--YouTubeMusic|--YouTube-Music|--Youtube-Music|--youtube-music;0"
   "--youtube|--Youtube|--YouTube;0"
   "--zoom|--Zoom;0"
 )
