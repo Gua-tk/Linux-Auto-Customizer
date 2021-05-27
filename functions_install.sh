@@ -193,7 +193,10 @@ decompress()
     rm -Rf "${USR_BIN_FOLDER}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
   fi
 
+  # capture directory where we have to decompress
   local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+  # Delete folder that we are going to extract to avoid collision
+  rm -Rf "${dir_name:?}/${internal_folder_name:?}"
   if [ -f "$2" ]; then
     if [ "$1" == "zip" ]; then
       (cd "${dir_name}"; unzip "$2" )
@@ -208,6 +211,8 @@ decompress()
 
   # Delete downloaded files which will be no longer used
   rm -f "$2"
+  # Delete the folder that we are going to move to avoid collisions
+  rm -Rf "${dir_name:?}/$3"
   # Rename folder to $3 if the argument is set
   if [ -n "$3" ]; then
     mv "${dir_name}/${internal_folder_name}" "${dir_name}/$3"
