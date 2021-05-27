@@ -143,6 +143,11 @@ install_fonts-roboto()
   generic_install fonts-roboto
 }
 
+install_msttcorefonts()
+{
+  generic_install msttcorefonts
+}
+
 install_freecad()
 {
   generic_install freecad
@@ -802,6 +807,43 @@ install_facebook()
   add_internet_shortcut facebook
 }
 
+install_Alegreya_Sans()
+{
+  add_font ${Alegreya_Sans_compressedfileurls} zip Alegreya_Sans
+}
+
+install_Oxygen()
+{
+  add_font ${Oxygen_compressedfileurls} zip Oxygen
+}
+
+install_Lato()
+{
+  add_font ${Lato_Sans_compressedfileurls} zip Lato
+}
+
+install_Oswald()
+{
+  add_font ${Oswald_compressedfileurls} zip Oswald
+}
+
+install_Noto_Sans()
+{
+  add_font ${Noto_Sans_compressedfileurls} zip Noto_Sans
+}
+
+install_system_fonts()
+{
+  # Interface text
+  gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 10'
+  # Document text //RF
+  gsettings set org.gnome.desktop.interface document-font-name 'Fira Code weight=453 10'
+  # Monospaced text
+  gsettings set org.gnome.desktop.interface monospace-font-name 'Hack Regular 11'
+  # Inherited window titles
+  gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
+}
+
 install_forms()
 {
   add_internet_shortcut forms
@@ -999,6 +1041,7 @@ main()
     create_folder_as_root ${BASH_FUNCTIONS_FOLDER}
     create_folder_as_root ${DIR_IN_PATH}
     create_folder_as_root ${PERSONAL_LAUNCHERS_DIR}
+    create_folder_as_root ${FONTS_FOLDER}
 
     if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
       create_file_as_root "${BASH_FUNCTIONS_PATH}" "${bash_functions_init}"
@@ -1012,7 +1055,7 @@ main()
     mkdir -p ${DIR_IN_PATH}
     mkdir -p ${PERSONAL_LAUNCHERS_DIR}
     mkdir -p ${BASH_FUNCTIONS_FOLDER}
-
+    mkdir -p ${FONTS_FOLDER}
     # If $BASH_FUNCTION_PATH does not exist, create the exit point when running not interactively.
     if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
       echo "${bash_functions_init}" > "${BASH_FUNCTIONS_PATH}"

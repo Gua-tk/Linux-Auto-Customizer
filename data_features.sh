@@ -295,6 +295,24 @@ fonts_hermit_packagenames=("fonts-hermit")
 fonts_roboto_installationtype="packagemanager"
 fonts_roboto_packagenames=("fonts-roboto")
 
+Alegreya_Sans_installationtype="userprogram"
+Alegreya_Sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
+
+Oxygen_installationtype="userprogram"
+Oxygen_compressedfileurls=("https://fonts.google.com/download?family=Oxygen")
+
+Lato_Sans_installationtype="userprogram"
+Lato_Sans_compressedfileurls=("https://fonts.google.com/download?family=Lato")
+
+Oswald_installationtype="userprogram"
+Oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswald")
+
+Noto_Sans_installationtype="userprogram"
+Noto_Sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
+
+msttcorefonts_installationtype="packagemanager"
+msttcorefonts_packagenames=("msttcorefonts")
+
 freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
@@ -363,6 +381,10 @@ fi
 alias status=\"git status\"
 alias fetch=\"git fetch\"
 
+GIT=${XDG_DESKTOP_DIR}/git
+if [ ! -d \$GIT ]; then
+  mkdir -p \$GIT
+fi
 "
 
 github_installationtype="packageinstall"
@@ -421,7 +443,7 @@ Comment=Desktop app to open Google Forms from Chrome
 Encoding=UTF-8
 GenericName=Document
 Keywords=forms;
-MimeType=ç
+MimeType=
 Name=Google Forms
 StartupNotify=true
 StartupWMClass=Google Forms
@@ -439,7 +461,7 @@ Comment=Desktop app to open Github from Chrome
 Encoding=UTF-8
 GenericName=GitHub
 Keywords=github;
-MimeType=ç
+MimeType=
 Name=GitHub
 StartupNotify=true
 StartupWMClass=GitHub
@@ -501,7 +523,7 @@ Comment=Desktop app to open Google Documents from Chrome
 Encoding=UTF-8
 GenericName=Document
 Keywords=documents;
-MimeType=x-
+MimeType=
 Name=Google Document
 StartupNotify=true
 StartupWMClass=Google Document
@@ -537,7 +559,7 @@ Comment=Desktop app to instant e-mail messaging from Chrome
 Encoding=UTF-8
 GenericName=Gmail
 Keywords=gmail;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=Gmail
 StartupNotify=true
 StartupWMClass=Gmail
@@ -573,7 +595,7 @@ Comment=Desktop app to instant e-mail messaging from Chrome
 Encoding=UTF-8
 GenericName=Gmail
 Keywords=drive;
-MimeType=x-
+MimeType=
 Name=Google Drive
 StartupNotify=true
 StartupWMClass=Google Drive
@@ -591,7 +613,7 @@ Comment=Desktop app to open Overleaf online LaTeX editor from Chrome
 Encoding=UTF-8
 GenericName=Overleaf
 Keywords=overleaf;
-MimeType=x-
+MimeType=
 Name=Overleaf
 StartupNotify=true
 StartupWMClass=Overleaf
@@ -657,7 +679,7 @@ Version=1.0"
 
 trello_url="https://trello.com"
 trello_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png"
-trello_alias="alias trello=\"gxdg-open ${trello_url} &>/dev/null &\""
+trello_alias="alias trello=\"xdg-open ${trello_url} &>/dev/null &\""
 trello_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Trello from Chrome
@@ -718,6 +740,7 @@ Comment=Desktop app to open Twitter from Chrome
 Encoding=UTF-8
 GenericName=Twitter
 Keywords=twitter
+MimeType=
 Name=Twitter
 StartupNotify=true
 StartupWMClass=Twitter
@@ -754,6 +777,7 @@ Comment=Desktop app to open Reddit from Chrome
 Encoding=UTF-8
 GenericName=reddit
 Keywords=reddit
+MimeType=
 Name=Reddit
 StartupNotify=true
 StartupWMClass=Reddit
@@ -771,6 +795,7 @@ Comment=Desktop app to open Tumblr from Chrome
 Encoding=UTF-8
 GenericName=tumblr
 Keywords=tumblr
+MimeType=
 Name=Tumblr
 StartupNotify=true
 StartupWMClass=Tumblr
@@ -788,6 +813,7 @@ Comment=Desktop app to open Reddit from Chrome
 Encoding=UTF-8
 GenericName=reddit
 Keywords=wikipedia
+MimeType=
 Name=Wikipedia
 StartupNotify=true
 StartupWMClass=Wikipedia
@@ -1158,8 +1184,20 @@ if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a; history -r; \")\"
 fi
 "
 
-shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}
-export USR_BIN_FOLDER=${USR_BIN_FOLDER}
+shortcut_aliases="DESK=${XDG_DESKTOP_DIR}
+FONTS=${FONTS_FOLDER}
+DOWNLOAD=${XDG_DOWNLOAD_DIR}
+DOCUMENTS=${XDG_DOCUMENTS_DIR}
+BIN=${USR_BIN_FOLDER}
+LAUNCHERS=${ALL_USERS_LAUNCHERS_DIR}
+PERSONAL_LAUNCHERS=${PERSONAL_LAUNCHERS_DIR}
+FUNCTIONSD=${BASH_FUNCTIONS_FOLDER}
+FUNCTIONS=${BASH_FUNCTIONS_PATH}
+PICTURES=${XDG_PICTURES_DIR}
+TEMPLATES=${XDG_TEMPLATES_DIR}
+MUSIC=${XDG_MUSIC_DIR}
+CUSTOMIZER=${DIR}
+VIDEOS=${XDG_VIDEOS_DIR}
 "
 
 shotcut_installationtype="packagemanager"
@@ -1338,16 +1376,14 @@ wallpapers_cronjob="*/5 * * * * ${USR_BIN_FOLDER}/wallpaper_changer.sh"
 
 whatsapp_url=https://web.whatsapp.com/
 whatsapp_icon="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-whatsapp_alias="alias whatsapp=\"google-chrome ${whatsapp_url} &>/dev/null &\""
+whatsapp_alias="alias whatsapp=\"xdg-open ${whatsapp_url} &>/dev/null &\""
 whatsapp_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Whatsapp Web from Chrome
 Encoding=UTF-8
-Exec=google-chrome ${whatsapp_url}
 GenericName=WhatsApp Web
-Icon=${USR_BIN_FOLDER}/google-chrome/whatsapp_icon.svg
 Keywords=forms;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=WhatsApp Web
 StartupNotify=true
 StartupWMClass=WhatsApp
@@ -1358,16 +1394,14 @@ Version=1.0"
 
 youtube_url=https://youtube.com/
 youtube_icon="https://upload.wikimedia.org/wikipedia/commons/4/4f/YouTube_social_white_squircle.svg"
-youtube_alias="alias youtube=\"google-chrome ${youtube_url} &>/dev/null &\""
+youtube_alias="alias youtube=\"xdg-open ${youtube_url} &>/dev/null &\""
 youtube_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open YouTube from Chrome
 Encoding=UTF-8
-Exec=google-chrome ${youtube_url}
 GenericName=YouTube
-Icon=${USR_BIN_FOLDER}/google-chrome/youtube_icon.svg
 Keywords=forms;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=YouTube
 StartupNotify=true
 StartupWMClass=YouTube
@@ -1378,16 +1412,14 @@ Version=1.0"
 
 youtubemusic_url=https://music.youtube.com
 youtubemusic_icon="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg"
-youtubemusic_alias="alias youtubemusic=\"google-chrome ${youtubemusic_url} &>/dev/null &\""
+youtubemusic_alias="alias youtubemusic=\"xdg-open ${youtubemusic_url} &>/dev/null &\""
 youtubemusic_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open YouTube Music from Chrome
 Encoding=UTF-8
-Exec=google-chrome ${youtubemusic_url}
 GenericName=YouTube Music
-Icon=${USR_BIN_FOLDER}/google-chrome/youtubemusic_icon.svg
 Keywords=forms;
-MimeType=x-scheme-handler/tg;
+MimeType=
 Name=YouTube Music
 StartupNotify=true
 StartupWMClass=YouTube Music
