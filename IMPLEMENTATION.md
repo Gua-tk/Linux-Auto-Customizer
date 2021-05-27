@@ -101,6 +101,8 @@
 - [ ] move add to favorites to `.bash_profile`
 - [ ] Create new argument to set installation as favorite and add to the system sidebar
 
+- [ ] Add debug mode, with a simple eval
+
 #### Axel
 - [x] Delete / rearrange arguments of one letter
 - [x] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8

@@ -215,6 +215,7 @@ dropbox_launchernames=("dropbox")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
 
 discord_downloader="https://discord.com/api/download?platform=linux&format=tar.gz"
+
 discord_launcher="[Desktop Entry]
 Categories=Network;InstantMessaging;
 Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
