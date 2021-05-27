@@ -525,11 +525,11 @@ usergeneric_installationtype()
   # Download and decompress
   if [ -n "${!compressedfileurls}" ]; then
     for compressedfileurls in "${!compressedfileurls}"; do
-      if [ "${compressed_i}" == "0" ]
+      if [ "${compressed_i}" == "0" ]; then
         if [ -n "${compressedfileurls}" ]; then
           if [ -z "$(echo "${firstcompressedfiledownloadlocation}" | grep -Eo "^/")" ]; then
             
-
+            echo temps
           fi
         fi
       else
