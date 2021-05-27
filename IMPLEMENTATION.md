@@ -74,7 +74,6 @@
 - [x] L Function
 - [x] Add folder to store icons for .desktop files --> `created add_internet_shortcut`
 - [x] Internet shortcut icons are broken because are downloaded into google-chrome folder --> Parametrized using indirect variable expansion, and adding parametrized line of Icon and exec in the launcher
-- [x] Change `google-chrome` for `xdg-open`  on internet shortcut. Delete `${program_name}_url` and put it hardcoded inside of each desktop launcher
 - [x] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
 - [x] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 - [x] Program function in `uninstall.sh` to remove bash functions
@@ -87,6 +86,20 @@
 - [x] create download function and decompress function
 - [x] refactored download and decompress to use download, decompress and create links in path
 - [x] parametrize the path to the fonts folder and to the background folders
+- [x] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
+- [ ] Create headers in all files
+- [ ] Move favourites strutcure to `~/.profile`
+- [~] create user generic install
+- Make download() and decompress() handle relative paths as paths from USR_BIN_FOLDER. if not absolute   
+- [ ] Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
+- [ ] Allow the modification of the Icon or Exec line of the desktop launchers using sed in the root generic install or hardcoding the full launcher. Maybe the second
+
+
+- [ ] Implement more robustness in function terminal-background  
+
+  
+- [ ] move add to favorites to `.bash_profile`
+- [ ] Create new argument to set installation as favorite and add to the system sidebar
 
 #### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -114,14 +127,40 @@
 - [x] GNOME Tweak tools
 - [x] Reconvert Gitlab to internet desktop launcher
 - [x] Synaptic  
-- [x] Rsync and grsync (graphical)  
+- [x] Rsync and grsync (graphical)
+- [x] gitlab-ce no needs to be installed as source program either as internet launcher
+- [x] gnome-terminal 
+- [x] c, e, o 
+- [x] b alias (`bash`)
+- [x] Add examples (images) of a working environment after applying the customizer in Linux
+
+# no markis TO-DOs si no estan aacabats al 100 %
+- [x] Change `google-chrome` for `xdg-open`  on internet shortcut. Delete `${program_name}_url` and put it hardcoded inside of each desktop launcher (falta, youyube, youtube-music, whatsapp ). test it afterwards
+
+  
+- [ ] Complete shortcut function to add more environment vars XDG_PICTURES_DIR, GIT, BACKGROUNDS, in general variables that are in common data that can be useful, etc
+
+- [ ] change name of implementation.md to code of conduct.md
+  
+- [ ] Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
+  
+- [ ] Set up typography for interface text as `Roboto Medium` `11`, document as `Fira Code Retina` `12`, monospaced text as `Hack Regular` `11`, inherited windows as `Hermit Bold` `9`. (coamndas random per a fer aixo segurament, cal contrastar)gsettings set org.gnome.desktop.interface document-font-name 'Sans 10' gsettings set org.gnome.desktop.interface font-name 'Ubuntu 10' gsettings set org.gnome.desktop.interface monospace-font-name 'Ubuntu Mono 11'
+
+- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
+
+
+- [ ] Write contents of `README.md` in the table in data_common.sh, after the permissions bit. 
+- [ ] Create a function to autogenerate the readme table from the `common_data.sh` table
+- [ ] Add badges `README.md` using codecov or another code analysis service.
+
+  
+- [ ] Manually add Keyboard shortcuts function for pycharm. Describe to Aleix The exact process, in order to paramtrize and create a func nthat does it for any program
+- [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
+
 - [ ] fslint (duplicate finder graphical)
 - [ ] fdups  (duplicate finder CLI)
-- [ ] PacketTracer (diferent versions 7...)
-- [ ] CMake
+- [ ] CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
 - [ ] sherlock
-- [ ] SublimeText-Markdown, & other plugins for programs...
-- [ ] gitlab-ce no needs to be installed as source program either as internet launcher
 - [ ] nautilus (with uninstall please)
 
 ## Currently developing/refactoring features
@@ -130,27 +169,7 @@
 
 ###### `install.sh`
 - [ ] jupyter notebook or jupyter-lab pip install --user jupyterlab (pip install --user notebook). Posible the creation of an venv? bash support
-- [ ] Set up gnome-terminal font as Hermit
-- [ ] Complete shortcut function to add more environment vars XDG_PICTURES_DIR, etc 
-- [ ] Implement more robustness in function terminal-background  
-- [ ] Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
-- [ ] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
-- [ ] Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
-- [ ] Allow the modification of the Icon or Exec line of the desktop launchers using sed in the root generic install
-- [ ] create user generic install
-* First it will create a directory with the name of the currently installing feature in USR_BIN_FOLDER if directory_final_names is not defined. If creating the directory, then downloads from $NAME_compressedpackagenames inside that directory if we created it. If we do not create the folder it will downloaded in USR_BIN_FOLDER
-* After that check the optional variable $NAME_clonableurls to clone inside it. Throw an error if there is more than one clone in this case. If not CD to USR_BIN_FOLDER and clone all there.
-* Then it will download in the just created directory if directory_final_names not defined
-* After downloading it will decompress depending on $NAME_decompressionoptions.
-* If directoryfinalnames is defined try to detect a root folder and rename that root folder to direcotryfilenames
-* Create links in pairs by using relative paths selecting the binary (from the folder that we just decompressed and renamed) or absolute paths from the variable $NAME_pairpathtobinaries
-* Call add bash functions to add aliases or other code to badge using another variable $NAME_bashfunctions
-* Create manual launchers calling create manual launchers and using  $NAME_launchercontents
-* Also use an array of pair of values to indicate the location and destination of files to copy. They can be absolute or from the relative paths from the folder we just created.
-* optional Manual manipulation of icon or Exec line of a launcher
-* Register file associations
-* Add to favourites\*
 
 
 ###### `customizer.sh`
@@ -162,7 +181,6 @@
 
 
 #### MAINTENANCE & UPDATES
-- [ ] Create headers in all files
 - [ ] Create headers and comments in auxiliary functions
 - [ ] Refactor functions of root to use the generic_install function. This programs CAN NOT be parametrized using this func (all the programs not listed here must be refactored):
   * AutoFirma
@@ -171,30 +189,16 @@
   * WireShark
   * gpaint
   * iqmol
-
-###### `README.md`
-- [ ] Add examples (images) of a working environment after applying the customizer in Linux
-- [ ] Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
-- [ ] Write contents of `README.md` in the table in data_common.sh, after the permissions bit. Then create a function to autogenerated the readme table
-- [ ] Add badges using codecov or another code analysis service.
-- [ ] change name of implementation.md to code of conduct.md
-
+  
 ###### `install.sh`
 - [ ] help message: arguments refactor with format
 - [ ] Apply data standard to `data_install.sh` in order to perform automatic installation of features by using indirect variable expansion
-- [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
 - [ ] Create high level functions that perform variable indirect expansion to install different types of program. --> add another key to `data_common.sh` table to detect kind of instalation (portable (download_and_decompress()), linux package (download_and_install()), system repositories (apt-get install -y))
 
 ###### `uninstall.sh`
 - [ ] Show warning in uninstall when activating -o flag
 - [ ] Rewrite `uninstall.sh` functions using the new auxiliary functions, structures, variables
 - [ ] Re-order functions in `uninstall.sh` to have the same order as in `install.sh
-
-###### `customizer.sh`:
-- [ ] 
-
-
-
 
 
 
@@ -204,10 +208,8 @@
 - [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
-
-
-
-
+- [ ] SublimeText-Markdown, & other plugins for programs...
+- [ ] PacketTracer (diferent versions 7...)
 
 #### Discarded for now
 - [ ] Automount available drives.

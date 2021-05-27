@@ -205,6 +205,10 @@ copyq_packagenames=("copyq")
 curl_installationtype="packagemanager"
 curl_packagenames=("curl")
 
+dconf_editor_installationtype="packagemanager"
+dconf_editor_packagenames=("dconf-editor")
+dconf_editor_launchernames=("ca.desrt.dconf-editor")
+
 dropbox_dependencies=("python3-gpg")
 dropbox_installationtype="packageinstall"
 dropbox_launchernames=("dropbox")
@@ -384,6 +388,10 @@ gnome_mines_launchernames=("org.gnome.Mines")
 gnome_sudoku_installationtype="packagemanager"
 gnome_sudoku_packagenames=("gnome-sudoku")
 gnome_sudoku_launchernames=("org.gnome.Sudoku")
+
+gnome_terminal_installationtype="packagemanager"
+gnome_terminal_packagenames=("gnome-terminal")
+gnome_terminal_launchernames=("org.gnome.Terminal")
 
 gnome_tweak_tool_installationtype="packagemanager"
 gnome_tweak_tool_packagenames=("gnome-tweak-tool")
@@ -941,7 +949,7 @@ nemo_conf=("xdg-mime default nemo.desktop inode/directory application/x-gnome-sa
   "gsettings set org.gnome.desktop.background show-desktop-icons false"
   "gsettings set org.nemo.desktop show-desktop-icons true"
 )
-
+nemo_alias="alias nemo=\"nemo . &>/dev/null &\""
 nemo_desktop_launcher="[Desktop Entry]
 Type=Application
 Name=Files
@@ -1503,9 +1511,53 @@ hextodec()
 }"
 
 ipe_function="
+
 ipe()
 {
   dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print \$2 }';
+}
+"
+
+e_function="
+
+e()
+{
+  if [[ -z \"\$1\" ]]; then
+    gedit new_text_file &
+  else
+    if [[ -f \"\$1\" ]]; then
+      if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
+  			local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
+				cd \"\${dir_name}\"
+			fi
+			gedit \"\$1\" &
+		else
+			if [[ -d \"\$1\" ]]; then
+				cd \"\$1\"
+				if [[ -d \".git\" ]]; then
+				  git fetch
+					gitk --all --date-order &
+          pycharm &>/dev/null &
+				else
+					nemo \"\$1\" &
+				fi
+			else
+        #Inexistent route or new file
+        if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
+          local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
+          if [[ -d \"\${dir_name}\" ]]; then
+            cd \"\${dir_name}\"
+          else
+            mkdir -p \"\${dir_name}\"
+            cd \"\${dir_name}\"
+          fi
+          gedit \"\$(echo \$1 | rev | cut -d '/' -f1 | rev)\" &
+        else
+          gedit \"\$1\" &
+        fi
+			fi
+		fi
+	fi
 }
 "
 
@@ -1562,6 +1614,76 @@ L()
   done
   finaldisplay=\"\${finaldisplay}\$NEW_LINE\$NEW_LINE\"
   printf \"\$finaldisplay\"
+}
+"
+
+c_function="
+
+c()
+{
+  clear
+	if [[ -d \"\$1\" ]]; then
+		cd \$1
+	elif [[ -f \"\$1\" ]]; then
+		cat \$1
+	fi
+}
+"
+
+b_alias="alias b=\"bash\""
+
+e_function="
+
+e()
+{
+  if [[ -z \"\$1\" ]]; then
+    gedit new_text_file &
+  else
+    if [[ -f \"\$1\" ]]; then
+      if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
+				local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
+				cd \"\${dir_name}\"
+			fi
+			gedit \"\$1\" &
+		else
+			if [[ -d \"\$1\" ]]; then
+				cd \"\$1\"
+				if [[ -d \".git\" ]]; then
+				  git fetch
+					gitk --all --date-order &
+          pycharm &>/dev/null &
+				else
+					nemo \"\$1\" &
+				fi
+			else
+        #Inexistent route or new file
+        if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
+          local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
+          if [[ -d \"\${dir_name}\" ]]; then
+            cd \"\${dir_name}\"
+          else
+            mkdir -p \"\${dir_name}\"
+            cd \"\${dir_name}\"
+          fi
+          gedit \"\$(echo \$1 | rev | cut -d '/' -f1 | rev)\" &
+        else
+          gedit \"\$1\" &
+        fi
+			fi
+		fi
+	fi
+}
+"
+
+o_function="
+
+o()
+{
+	if [[ -z \"\$1\" ]]; then
+		nemo \"\$(pwd)\" &
+	else
+		nemo \"\$1\"
+	fi
 }
 "
 

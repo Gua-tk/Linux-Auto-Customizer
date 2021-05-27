@@ -72,8 +72,8 @@ BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 # File that contains the association of mime types with .desktop files
 MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
-# Default favourites list, data to set favourites
-PROGRAM_FAVOURITES_PATH=${BASH_FUNCTIONS_FOLDER}/favourites.txt
+# Default favorites list, data to set favorites
+PROGRAM_FAVORITES_PATH=${BASH_FUNCTIONS_FOLDER}/favorites.txt
 
 
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
@@ -109,6 +109,8 @@ installation_data=(
   "--atom|--Atom;1"
   "--audacity|--Audacity;1"
   "--AutoFirma|--autofirma;1"
+  "--b;0"
+  "--c;0"
   "--caffeine|--Caffeine|--cafe|--coffee;1"
   "--calibre|--Calibre|--cali;1"
   "--change-bg|--wallpapers|--Wallpapers;0"
@@ -122,12 +124,14 @@ installation_data=(
   "--converters|--Converters;0"
   "--copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q;1"
   "--curl|--Curl;1"
+  "--dconf-editor;1"
   "--discord|--Discord|--disc;0"
   "--docker|--Docker;0"
   "--document|--google-document;0"
   "--drive|--GoogleDrive|--Drive|--google-drive|--Google-Drive;0"
   "--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box;1"
   "--duckduckgo|--DuckDuckGo;0"
+  "--e;0"
   "--eclipse|--Eclipse;0"
   "--extract|--extract-function|--extract_function;0"
   "--evolution|--Evolution;1"
@@ -141,6 +145,7 @@ installation_data=(
   "--fonts-roboto|--fonts-roboto;1"
   "--forms|--google-forms;0"
   "--freecad|--FreeCAD|--freeCAD;1"
+  "--fslint;1"
   "--gcc|--GCC;1"
   "--geany|--Geany;1"
   "--geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic;0"
@@ -155,6 +160,7 @@ installation_data=(
   "--gnome-mahjongg|--mahjongg|--Mahjongg;1"
   "--gnome-mines|--mines|--Mines|--GNU-mines|--gnomemines;1"
   "--gnome-sudoku|--sudoku|--Sudoku;1"
+  "--gnome-terminal|--terminal|--Terminal;1"
   "--gnome-tweak-tool|--gnome-tweaks|--gnome-tweak|--gnome-tweak-tools|--tweaks;1"
   "--googlecalendar|--Google-Calendar|--googlecalendar;0"
   "--google-chrome|--chrome|--Chrome|--Google-Chrome;1"
@@ -185,6 +191,7 @@ installation_data=(
   "--nvidia-drivers|--ubuntu-drivers|--autoinstall;1"
   "--notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ;1"
   "--obs-studio|--OBS|--obs|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio;1"
+  "--o;0"
   "--okular|--Okular|--okularpdf;1"
   "--onedrive|--OneDrive|--one-drive|--One-Drive;0"
   "--openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office;1"
