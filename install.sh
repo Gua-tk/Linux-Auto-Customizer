@@ -809,27 +809,27 @@ install_facebook()
 
 install_fonts-alegreya-sans()
 {
-  add_font ${alegreya_sans_compressedfileurls} zip alegreya-sans
+  add_font ${fonts_alegreya_sans_compressedfileurls} zip alegreya_sans
 }
 
 install_fonts-oxygen()
 {
-  add_font ${oxygen_compressedfileurls} zip oxygen
+  add_font ${fonts_oxygen_compressedfileurls} zip oxygen
 }
 
 install_fonts-lato()
 {
-  add_font ${lato_sans_compressedfileurls} zip lato
+  add_font ${fonts_lato_sans_compressedfileurls} zip lato
 }
 
 install_fonts-oswald()
 {
-  add_font ${oswald_compressedfileurls} zip oswald
+  add_font ${fonts_oswald_compressedfileurls} zip oswald
 }
 
 install_fonts-noto-sans()
 {
-  add_font ${noto_sans_compressedfileurls} zip noto-sans
+  add_font ${fonts_noto_sans_compressedfileurls} zip noto_sans
 }
 
 install_system_fonts()
