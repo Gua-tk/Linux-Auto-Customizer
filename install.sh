@@ -819,7 +819,7 @@ install_fonts-oxygen()
 
 install_fonts-lato()
 {
-  add_font ${fonts_lato_sans_compressedfileurls} zip lato
+  add_font ${fonts_lato_compressedfileurls} zip lato
 }
 
 install_fonts-oswald()
