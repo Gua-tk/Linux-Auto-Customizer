@@ -295,20 +295,20 @@ fonts_hermit_packagenames=("fonts-hermit")
 fonts_roboto_installationtype="packagemanager"
 fonts_roboto_packagenames=("fonts-roboto")
 
-alegreya_sans_installationtype="userprogram"
-alegreya_sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
+fonts_alegreya_sans_installationtype="userprogram"
+fonts_alegreya_sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
 
-oxygen_installationtype="userprogram"
-oxygen_compressedfileurls=("https://fonts.google.com/download?family=Oxygen")
+fonts_oxygen_installationtype="userprogram"
+fonts_oxygen_compressedfileurls=("https://fonts.google.com/download?family=Oxygen")
 
-lato_sans_installationtype="userprogram"
-lato_sans_compressedfileurls=("https://fonts.google.com/download?family=Lato")
+fonts_lato_installationtype="userprogram"
+fonts_lato_compressedfileurls=("https://fonts.google.com/download?family=Lato")
 
-oswald_installationtype="userprogram"
-oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswald")
+fonts_oswald_installationtype="userprogram"
+fonts_oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswald")
 
-noto_sans_installationtype="userprogram"
-noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
+fonts_noto_sans_installationtype="userprogram"
+fonts_noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
 
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_packagenames=("msttcorefonts")

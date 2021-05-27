@@ -55,11 +55,11 @@ The following features can be installed or uninstalled automatically and individ
 | fonts-hack | Installs font | Install hack font | --font-hack --fonts-hack | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | fonts-hermit | Installs font | Install hermit font | --font-hermit --fonts-hermit | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | fonts-roboto | Installs font| Install roboto font | --font-roboto --fonts-roboto | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| font-alegreya_sans | Installs font | Install alegreya font | --alegreya_sans --alegreya-sans | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| font-oxygen( | Installs font | Install oxygen font | --oxygen | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| font-lato | Installs font | Install lato font | --lato | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| font-oswald | Installs font| Install oswald font | --oswald | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
-| font-noto_sans | Installs font| Install noto_sans font | --noto_sans --noto-sans | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| fonts-alegreya_sans | Installs font | Install alegreya font | --alegreya_sans --alegreya-sans | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| fonts-oxygen( | Installs font | Install oxygen font | --oxygen | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| fonts-lato | Installs font | Install lato font | --lato | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| fonts-oswald | Installs font| Install oswald font | --oswald | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| fonts-noto_sans | Installs font| Install noto_sans font | --noto_sans --noto-sans | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Forms | Google Forms opening in Chrome | Command `forms`, desktop launcher, dashboard launcher | --forms --google-forms | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | FreeCAD | General-purpose parametric 3D computer-aided design modeler and a building information modeling | Command `freecad`, desktop launcher and dashboard launcher | --freecad --FreeCAD --freeCAD | <ul><li>- [x] root</li><li>- [ ] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | 
 | Function `--change-bg` | Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes | Function `--change-bg` | --wallpapers | <ul><li>- [ ] root</li><li>- [x] user</li></ul> | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |

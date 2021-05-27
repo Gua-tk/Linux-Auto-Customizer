@@ -807,27 +807,27 @@ install_facebook()
   add_internet_shortcut facebook
 }
 
-install_alegreya_sans()
+install_fonts-alegreya-sans()
 {
   add_font ${alegreya_sans_compressedfileurls} zip alegreya_sans
 }
 
-install_oxygen()
+install_fonts-oxygen()
 {
   add_font ${oxygen_compressedfileurls} zip oxygen
 }
 
-install_lato()
+install_fonts-lato()
 {
   add_font ${lato_sans_compressedfileurls} zip lato
 }
 
-install_oswald()
+install_fonts-oswald()
 {
   add_font ${oswald_compressedfileurls} zip oswald
 }
 
-install_noto_sans()
+install_fonts-noto-sans()
 {
   add_font ${noto_sans_compressedfileurls} zip noto_sans
 }
