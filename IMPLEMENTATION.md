@@ -129,7 +129,10 @@
 #### NEW FEATURES
 
 ###### `install.sh`
+- [ ] jupyter notebook or jupyter-lab pip install --user jupyterlab (pip install --user notebook). Posible the creation of an venv? bash support
 - [ ] Set up gnome-terminal font as Hermit
+- [ ] Complete shortcut function to add more environment vars XDG_PICTURES_DIR, etc 
+- [ ] Implement more robustness in function terminal-background  
 - [ ] Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
 - [ ] Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar
 - [ ] refactor extract function: more robustness and error handling. decompress in a folder
@@ -201,7 +204,6 @@
 - [ ] Create cloud-init file to run customizer with a certain wrapper for a VM automatic customization (thanks to José Ángel Morena for the idea)
 - [ ] Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
-- [ ] jupyter notebook
 
 
 
