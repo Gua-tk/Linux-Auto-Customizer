@@ -173,6 +173,7 @@
 
 
 ###### `customizer.sh`
+- [ ] Tab, tab...
 - [ ] When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
 - [ ] package installation manager will try to install with different (apt-get, yum, pacman, pkg...) if finds luck maybe perform easy installation customizer controlls calls to package manager tries to finds out which system runs customizer
 - [ ] create a unique endpoint for all the code in customizer `customizer.sh` which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
