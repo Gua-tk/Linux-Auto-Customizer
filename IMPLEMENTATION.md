@@ -123,7 +123,7 @@
 - [x] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc...
 - [x] Autoinstall nvidia drivers
 - [x] commit function must set `""` for ` commit`
-- [x] Fonts
+- [x] Fonts (`apt-get` installs fonts msttcorefonts, firacode, hack, hermit, roboto)
 - [x] GNOME Tweak tools
 - [x] Reconvert Gitlab to internet desktop launcher
 - [x] Synaptic  
@@ -133,24 +133,22 @@
 - [x] c, e, o 
 - [x] b alias (`bash`)
 - [x] Add examples (images) of a working environment after applying the customizer in Linux
+- [x] Change `google-chrome` for `xdg-open`  on internet shortcut. Delete `${program_name}_url` and put it hardcoded inside of each desktop launcher
+- [ ] Complete shortcut function to add more environment vars XDG_PICTURES_DIR, GIT, BACKGROUNDS, SCREENSHOTS in general variables that are in common data that can be useful, etc
 
-# no markis TO-DOs si no estan aacabats al 100 %
-- [x] Change `google-chrome` for `xdg-open`  on internet shortcut. Delete `${program_name}_url` and put it hardcoded inside of each desktop launcher (falta, youyube, youtube-music, whatsapp ). test it afterwards
-
-  
-- [ ] Complete shortcut function to add more environment vars XDG_PICTURES_DIR, GIT, BACKGROUNDS, in general variables that are in common data that can be useful, etc
-
-- [ ] change name of implementation.md to code of conduct.md
+- [ ] change name of `IMPLEMENTATION.md` to `code_of_conduct.md`
   
 - [ ] Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
   
-- [ ] Set up typography for interface text as `Roboto Medium` `11`, document as `Fira Code Retina` `12`, monospaced text as `Hack Regular` `11`, inherited windows as `Hermit Bold` `9`. (coamndas random per a fer aixo segurament, cal contrastar)gsettings set org.gnome.desktop.interface document-font-name 'Sans 10' gsettings set org.gnome.desktop.interface font-name 'Ubuntu 10' gsettings set org.gnome.desktop.interface monospace-font-name 'Ubuntu Mono 11'
+- [ ] Set up typography for interface text as `Roboto Medium` `11`, document as `Fira Code Retina` `12`, monospaced text as `Hack Regular` `11`, inherited windows as `Hermit Bold` `9`. 
+  (coamndas random per a fer aixo segurament, cal contrastar)
+
 
 - [ ] Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
 
 
 - [ ] Write contents of `README.md` in the table in data_common.sh, after the permissions bit. 
-- [ ] Create a function to autogenerate the readme table from the `common_data.sh` table
+- [ ] Create a function to autogenerate the `README.md` table from the `common_data.sh` table
 - [ ] Add badges `README.md` using codecov or another code analysis service.
 
   
@@ -191,6 +189,7 @@
   * iqmol
   
 ###### `install.sh`
+- [ ] Install fonts manually
 - [ ] help message: arguments refactor with format
 - [ ] Apply data standard to `data_install.sh` in order to perform automatic installation of features by using indirect variable expansion
 - [ ] Create high level functions that perform variable indirect expansion to install different types of program. --> add another key to `data_common.sh` table to detect kind of instalation (portable (download_and_decompress()), linux package (download_and_install()), system repositories (apt-get install -y))

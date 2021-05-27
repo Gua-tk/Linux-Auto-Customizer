@@ -14,17 +14,15 @@
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
-
 # - Description: Installs a new bash feature into $BASH_FUNCTIONS_PATH which sources the script that contains the code
 # for this new feature. $BASH_FUNCTIONS_PATH is imported to your environment via .bashrc before entering any
 # installation function.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
 # - Argument 2: Name of the file.
-add_bash_function()
-{
+add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
-  echo -e "$1" > "${BASH_FUNCTIONS_FOLDER}/$2"
+  echo -e "$1" >"${BASH_FUNCTIONS_FOLDER}/$2"
 
   # If we are root apply permission to the file
   if [[ ${EUID} == 0 ]]; then
@@ -34,16 +32,28 @@ add_bash_function()
   import_line="source ${BASH_FUNCTIONS_FOLDER}/$2"
   # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
   if [[ -z $(cat "${BASH_FUNCTIONS_PATH}" | grep -Fo "${import_line}") ]]; then
-    echo "${import_line}" >> "${BASH_FUNCTIONS_PATH}"
+    echo "${import_line}" >>"${BASH_FUNCTIONS_PATH}"
   fi
+}
+
+# - Description: Download and install a fonts into ~/.fonts directory
+# - Permissions:
+# - Argument 1: Link to the font to be downloaded
+# - Argument 2: Extension of the file
+# - Argument 3: Name of the file
+add_font() {
+  rm -Rf ${FONTS_FOLDER}/$3_font
+  mkdir -p ${FONTS_FOLDER}/$3_font
+  download "$1" "${FONTS_FOLDER}/$3_font/$3"
+  decompress $2 "${FONTS_FOLDER}/$3_font/$3"
+  fc-cache -f -v
 }
 
 # - Description: Create .desktop with custom url to open a link in favorite internet navigator
 # - Permissions: This functions needs to be executed as user
 # - Argument 1: Name of the program
 # - Argument 2: Link of the icon of the program
-add_internet_shortcut()
-{
+add_internet_shortcut() {
   # Perform indirect variable expansion
   local -r icon=$1_icon
   local -r launcher=$1_launcher
@@ -52,7 +62,10 @@ add_internet_shortcut()
 
   # Obtain icon for program
   mkdir -p "${USR_BIN_FOLDER}/$1"
-  (cd ${USR_BIN_FOLDER}/$1; wget -qO $1_icon.svg --show-progress ${!icon})
+  (
+    cd ${USR_BIN_FOLDER}/$1
+    wget -qO $1_icon.svg --show-progress ${!icon}
+  )
 
   # Parametrize the exec and icon line of the desktop launcher
   local -r icon_exec_launcher_line="
@@ -70,16 +83,14 @@ add_internet_shortcut()
 # - Description: Add new program launcher to the task bar given its desktop launcher filename.
 # - Permissions: This functions expects to be called as a non-privileged user.
 # - Argument 1: Name of the .desktop launcher including .desktop extension written in file in PROGRAM_FAVORITES_PATH
-add_to_favorites()
-{
-  echo $1 >> "${PROGRAM_FAVORITES_PATH}"
+add_to_favorites() {
+  echo $1 >>"${PROGRAM_FAVORITES_PATH}"
 }
 
 # - Description: Apply standard permissions and set owner and group to the user who called root
 # - Permissions: This functions is expected to be called as root
 # Argument 1: Path to the file or directory whose permissions are changed.
-apply_permissions()
-{
+apply_permissions() {
   chgrp "${SUDO_USER}" "$1"
   chown "${SUDO_USER}" "$1"
   chmod 775 "$1"
@@ -92,14 +103,13 @@ apply_permissions()
 # defined in the the scope of the normal user.
 # - Argument 1: Path to the directory that we want to create.
 # - Argument 2(Optional): Content of the file we want to create
-create_file_as_root()
-{
+create_file_as_root() {
   if [[ ! -z "${SUDO_USER}" ]]; then
     local -r folder=$(echo "$1" | rev | cut -d "/" -f2- | rev)
     local -r filename=$(echo "$1" | rev | cut -d "/" -f1 | rev)
     if [[ -n "${filename}" ]]; then
       mkdir -p "${folder}"
-      echo "$2" > "$1"
+      echo "$2" >"$1"
       apply_permissions "$1"
     else
       output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file_as_root. The file will not be created." "${FLAG_QUIETNESS}"
@@ -117,18 +127,16 @@ create_file_as_root()
 # - Permissions: This functions is expected to be called as root, or it will throw an error, since $SUDO_USER is not
 # defined in the the scope of the normal user.
 # - Argument 1: Path to the directory that we want to create.
-create_folder_as_root()
-{
+create_folder_as_root() {
   mkdir -p "$1"
-  apply_permissions  "$1"
+  apply_permissions "$1"
 }
 
 # - Description: Creates a valid launcher for the normal user in the desktop using an already created launcher from an
 # automatic install (for example using apt-get or dpkg).
 # - Permissions: This function expects to be called as root since it uses the variable $SUDO_USER
 # - Argument 1: name of the desktop launcher in /usr/share/applications
-copy_launcher()
-{
+copy_launcher() {
   if [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]]; then
     create_file_as_root "${XDG_DESKTOP_DIR}/$1" "$(cat "${ALL_USERS_LAUNCHERS_DIR}/$1")"
   else
@@ -144,8 +152,7 @@ copy_launcher()
 # - Argument 1: Absolute path to the binary you want to be in the PATH
 # - Argument 2: Name of the command that will be added to your environment to execute the previous binary
 # - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2
-create_links_in_path()
-{
+create_links_in_path() {
   while [[ $# -gt 0 ]]; do
     # Clean to avoid collisions
     ln -sf "$1" ${DIR_IN_PATH}/$2
@@ -159,14 +166,13 @@ create_links_in_path()
 # the owner and group of the created launcher to the one of the $SUDO_USER.
 # Argument 1: The string of the text representing the content of the desktop launcher that we want to create.
 # Argument 2: The name of the launcher. This argument can be any name with no consequences.
-create_manual_launcher()
-{
+create_manual_launcher() {
   # If user
   if [[ ${EUID} -ne 0 ]]; then
-    echo -e "$1" > "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
+    echo -e "$1" >"${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
     chmod 775 "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
     cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
-  else  # if root
+  else # if root
     create_file_as_root "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
     cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
   fi
@@ -178,48 +184,54 @@ create_manual_launcher()
 # decompression.
 # Argument 3 (optional): If argument 3 is set, it will try to get the name of a directory that is in the root of the
 # compressed file. Then, after the decompressing, it will rename that directory to $3
-decompress()
-{
+decompress() {
+  # capture directory where we have to decompress
+  if [ -n "$(echo $2 | grep -Eo "^/")" ]; then
+    local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+    local -r file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+  else
+    local -r dir_name="${USR_BIN_FOLDER}"
+    local -r file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+  fi
   if [ -n "$3" ]; then
     if [ "$1" == "zip" ]; then
       # Return this variable via making it global
       local -r internal_folder_name="$(unzip -l "$2" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1)"
     else
       # Capture root folder name
-      local -r internal_folder_name=$( (tar -t"$1"f - | head -1 | cut -d "/" -f1) < "$2")
+      local -r internal_folder_name=$( (tar -t"$1"f - | head -1 | cut -d "/" -f1) <"$2")
     fi
     # Check that variable program_folder_name is set, if not abort
     # Clean to avoid conflicts with previously installed software or aborted installation
-    rm -Rf "${USR_BIN_FOLDER}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
+    rm -Rf "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
   fi
-
-  # capture directory where we have to decompress
-  local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
-  # Delete folder that we are going to extract to avoid collision
-  rm -Rf "${dir_name:?}/${internal_folder_name:?}"
-  if [ -f "$2" ]; then
+  if [ -f "${dir_name}/${file_name}" ]; then
     if [ "$1" == "zip" ]; then
-      (cd "${dir_name}"; unzip "$2" )
+      (
+        cd "${dir_name}"
+        unzip "${file_name}"
+      )
     else
       # Decompress in a subshell to avoid changing the working directory in the current shell
-      (cd "${dir_name}"; tar -x"$1"f -) < "$2"
+      (
+        cd "${dir_name}"
+        tar -x"$1"f -
+      ) <"${dir_name}/${file_name}"
     fi
   else
-    output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name} does not exist." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist." "${FLAG_QUIETNESS}"
     exit 1
   fi
 
   # Delete downloaded files which will be no longer used
-  rm -f "$2"
-  # Delete the folder that we are going to move to avoid collisions
-  rm -Rf "${dir_name:?}/$3"
+  rm -f "${dir_name:?}/${file_name}"
   # Rename folder to $3 if the argument is set
   if [ -n "$3" ]; then
+    # Delete the folder that we are going to move to avoid collisions
+    rm -Rf "${dir_name:?}/$3"
     mv "${dir_name}/${internal_folder_name}" "${dir_name}/$3"
   fi
-
 }
-
 
 # - Description: Downloads a file from the link provided in $1 and, if specified, with the location and name specified
 #   in $2. If $2 is not defined, download into ${USR_BIN_FOLDER}/downloading_program
@@ -228,15 +240,38 @@ decompress()
 # - Argument 1: link to the file to download
 # - Argument 2 (optional): Path to the created file, allowing to download in any location and use a different filename.
 #   By default the name of the file is downloading file and the PATH where is being downloaded is USR_BIN_FOLDER
-download()
-{
-  # Check if a name is specified
+download() {
+  # Check if a relativepath is specified
   if [ -z "$2" ]; then
+    # default options
     local -r dir_name="${USR_BIN_FOLDER}"
     local -r file_name=downloading_program
   else
-    local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
-    local -r file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+    # Custom file or folder to download
+    # Absolute path
+    if [ -n "$(echo "$2" | grep -Eo "^/")" ]; then
+      local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+      local -r file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+      if [ -z "${file_name}" ]; then
+        file_name=downloading_program
+      fi
+    else
+      # Relative path
+      if [ -n "$(echo $2 | grep -Eo "/")" ]; then
+        # Relative path that contains folders
+        local -r dir_name="${USR_BIN_FOLDER}/$(echo $2 | rev | cut -d "/" -f2- | rev)"
+        local -r file_name="$(echo $2 | rev | cut -d "/" -f1 | rev)"
+        if [ -z file_name ]; then
+          file_name=downloading_program
+        fi
+      else
+        local -r dir_name="${USR_BIN_FOLDER}"
+        local -r file_name="$2"
+        if [ -z "${file_name}" ]; then
+          file_name=downloading_program
+        fi
+      fi
+    fi
   fi
 
   # Download in a subshell to avoid changing the working directory in the current shell
@@ -280,8 +315,7 @@ download()
 #   - Argument 5: Desired name for the link that points to the previous binary. This name will be the name for that
 #   command in our environment.
 # Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
-download_and_decompress()
-{
+download_and_decompress() {
   download "$1" "${USR_BIN_FOLDER}/downloading_program"
 
   decompress "$3" "${USR_BIN_FOLDER}/downloading_program" "$2"
@@ -305,36 +339,35 @@ download_and_decompress()
 # dpkg -i.
 # - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
 # - Argument 1: Link to the package file to download
-download_and_install_package()
-{
+download_and_install_package() {
   rm -f ${USR_BIN_FOLDER}/downloading_package
-  (cd ${USR_BIN_FOLDER}; wget -qO downloading_package --show-progress $1)
+  (
+    cd ${USR_BIN_FOLDER}
+    wget -qO downloading_package --show-progress $1
+  )
   dpkg -i ${USR_BIN_FOLDER}/downloading_package
   rm -f ${USR_BIN_FOLDER}/downloading_package
 }
 
-
-
 # - Description: Expands installation type and executes the corresponding function
 # - Permissions:
 # - Argument 1:
-generic_install()
-{
+generic_install() {
   # Substitute dashes for underscores. Dashes are not allowed in variable names
   local -r featurename=$(echo "$1" | sed "s@-@_@g")
 
   local -r installationtype=${featurename}_installationtype
   if [[ ! -z "${!installationtype}" ]]; then
     case ${!installationtype} in
-      packagemanager)
-        rootgeneric_installation_type "${featurename}" packagemanager
+    packagemanager)
+      rootgeneric_installation_type "${featurename}" packagemanager
       ;;
-      packageinstall)
-        rootgeneric_installation_type "${featurename}" packageinstall
+    packageinstall)
+      rootgeneric_installation_type "${featurename}" packageinstall
       ;;
-      *)
-        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
-        exit 1
+    *)
+      output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
+      exit 1
       ;;
     esac
   fi
@@ -346,8 +379,7 @@ generic_install()
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 # installation data.
 # - Argument 2: Selects the type of installation between [packagemanager|packageinstall]
-rootgeneric_installation_type()
-{
+rootgeneric_installation_type() {
   # Declare name of variables for indirect expansion
 
   # Name of the launchers to be used by copy_launcher
@@ -409,7 +441,6 @@ rootgeneric_installation_type()
   fi
 }
 
-
 #* First it will create a directory with the name of the currently installing feature in USR_BIN_FOLDER if directory_final_names is not defined.
 # If creating the directory, then downloads from $NAME_compressedpackagenames inside that directory if we created it. If we do not create the folder it will downloaded in USR_BIN_FOLDER
 
@@ -426,8 +457,7 @@ rootgeneric_installation_type()
 #* optional Manual manipulation of icon or Exec line of a launcher
 #* Register file associations
 #* Add to favourites\*
-usergeneric_installationtype()
-{
+usergeneric_installationtype() {
   # Declare name of variables for indirect expansion
 
   # Relative paths are from USR_BIN_FOLDER!
@@ -533,7 +563,7 @@ usergeneric_installationtype()
       if [ "${compressed_i}" == "0" ]; then
         if [ -n "${compressedfileurls}" ]; then
           if [ -z "$(echo "${firstcompressedfiledownloadlocation}" | grep -Eo "^/")" ]; then
-            
+
             echo temps
           fi
         fi
@@ -545,12 +575,10 @@ usergeneric_installationtype()
 
 }
 
-
 # - Description:
 # - Permissions:
 # - Argument 1:
-packageinstall_installation_type()
-{
+packageinstall_installation_type() {
   local -r packagedependencies=$1_packagedependencies
   local -r packageurl=$1_packageurl
   local -r launchername=$1_launchername
@@ -572,8 +600,7 @@ packageinstall_installation_type()
 # - Description: Installs a program that uses package manager relying on declared variables
 # - Permissions: This functions expects to be called as root
 # - Argument 1: Name of the feature to install
-packagemanager_installation_type()
-{
+packagemanager_installation_type() {
   # Declare name of variables for indirect expansion
   local -r packagedependencies="$1_packagedependencies[@]"
   local -r packagenames="$1_packagenames[@]"
@@ -604,29 +631,28 @@ packagemanager_installation_type()
 # - Permissions: Same behaviour being root or normal user.
 # - Argument 1: File types. Example: application/x-shellscript
 # - Argument 2: Application. Example: sublime_text.desktop
-register_file_associations()
-{
-# Check if mimeapps exists
-if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
-  # Check if the association between a mime type and desktop launcher is already existent
-  if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*$2" )" ]]; then
-    # If mime type is not even present we can add the hole line
-    if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Fo "$1=" )" ]]; then
-      sed -i "/\[Added Associations\]/a $1=$2;" "${MIME_ASSOCIATION_PATH}"
-    else
-      # If not, mime type is already registered. We need to register another application for it
-      if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*;$" )" ]]; then
-        # File type(s) is registered without comma. Add the program at the end of the line with comma
-        sed -i "s|$1=.*$|&;$2;|g" "${MIME_ASSOCIATION_PATH}"
+register_file_associations() {
+  # Check if mimeapps exists
+  if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
+    # Check if the association between a mime type and desktop launcher is already existent
+    if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*$2")" ]]; then
+      # If mime type is not even present we can add the hole line
+      if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Fo "$1=")" ]]; then
+        sed -i "/\[Added Associations\]/a $1=$2;" "${MIME_ASSOCIATION_PATH}"
       else
-        # File type is registered with comma at the end. Just add program at end of line
-        sed -i "s|$1=.*;$|&$2;|g" "${MIME_ASSOCIATION_PATH}"
+        # If not, mime type is already registered. We need to register another application for it
+        if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*;$")" ]]; then
+          # File type(s) is registered without comma. Add the program at the end of the line with comma
+          sed -i "s|$1=.*$|&;$2;|g" "${MIME_ASSOCIATION_PATH}"
+        else
+          # File type is registered with comma at the end. Just add program at end of line
+          sed -i "s|$1=.*;$|&$2;|g" "${MIME_ASSOCIATION_PATH}"
+        fi
       fi
     fi
+  else
+    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "${FLAG_QUIETNESS}"
   fi
-else
-  output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "${FLAG_QUIETNESS}"
-fi
 }
 
 if [[ -f "${DIR}/functions_common.sh" ]]; then

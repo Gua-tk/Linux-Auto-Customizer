@@ -74,6 +74,8 @@ ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
 # Default favorites list, data to set favorites
 PROGRAM_FAVORITES_PATH=${BASH_FUNCTIONS_FOLDER}/favorites.txt
+#Default user's fonts folder
+FONTS_FOLDER=${HOME_FOLDER}/.fonts
 
 
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
@@ -103,6 +105,7 @@ FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1
 # install_yes/no; forceness; quietness; overwrite; permissions; function_name
 installation_data=(
   "--aisleriot|--solitaire|--Solitaire|--gnome-solitaire;1"
+  "--Alegreya_Sans|--Alegreya-Sans;0"
   "--alert|--alert-alias|--alias-alert;0"
   "--ant|--apache_ant|--apache-ant;0"
   "--anydesk;0"
@@ -180,6 +183,7 @@ installation_data=(
   "--libgtkglext1|--anydesk-dependencies;1"
   "--libxcb-xtest0;1"
   "--L|--L-function;0"
+  "--Lato;0"
   "--l|--alias-l|--alias-ls|--l-alias|--ls-alias;0"
   "--megasync|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--mega;1"
   "--mendeley-dependencies|--MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies;1"
@@ -190,13 +194,16 @@ installation_data=(
   "--netflix|--Netflix;0"
   "--nvidia-drivers|--ubuntu-drivers|--autoinstall;1"
   "--notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ;1"
+  "--Noto_Sans|--Noto-Sans;0"
   "--obs-studio|--OBS|--obs|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio;1"
   "--o;0"
   "--okular|--Okular|--okularpdf;1"
   "--onedrive|--OneDrive|--one-drive|--One-Drive;0"
   "--openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office;1"
+  "--Oswald;0"
   "--outlook|--Outlook;0"
   "--overleaf|--Overleaf;0"
+  "--Oxygen;0"
   "--pacman|--pac-man;1"
   "--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel;1"
   "--pdfgrep|--findpdf;1"
@@ -213,6 +220,7 @@ installation_data=(
   "--rsync|--Rsync|--grsync;1"
   "--s|--s-function;0"
   "--screenshots|--Screenshots;0"
+  "--system_fonts;0"
   "--shortcuts;0"
   "--shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut;1"
   "--skype|--Skype;1"
@@ -233,6 +241,7 @@ installation_data=(
   "--tilix|--Tilix;1"
   "--tmux|--Tmux;1"
   "--tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser;1"
+  "--msttcorefonts|--microsoftfonts|--microsoft-fonts|--mscorefonts|--ttf-mscorefonts;1"
   "--transmission|--transmission-gtk|--Transmission;1"
   "--trello|--Trello;0"
   "--tumblr|--Tumblr;0"

@@ -294,6 +294,24 @@ fonts_hermit_packagenames=("fonts-hermit")
 fonts_roboto_installationtype="packagemanager"
 fonts_roboto_packagenames=("fonts-roboto")
 
+Alegreya_Sans_installationtype="userprogram"
+Alegreya_Sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
+
+Oxygen_installationtype="userprogram"
+Oxygen_compressedfileurls=("https://fonts.google.com/download?family=Oxygen")
+
+Lato_Sans_installationtype="userprogram"
+Lato_Sans_compressedfileurls=("https://fonts.google.com/download?family=Lato")
+
+Oswald_installationtype="userprogram"
+Oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswald")
+
+Noto_Sans_installationtype="userprogram"
+Noto_Sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
+
+msttcorefonts_installationtype="packagemanager"
+msttcorefonts_packagenames=("msttcorefonts")
+
 freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
@@ -362,6 +380,10 @@ fi
 alias status=\"git status\"
 alias fetch=\"git fetch\"
 
+GIT=${XDG_DESKTOP_DIR}/git
+if [ ! -d \$GIT ]
+  mkdir -p \$GIT
+fi
 "
 
 github_installationtype="packageinstall"
@@ -1161,8 +1183,20 @@ if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a; history -r; \")\"
 fi
 "
 
-shortcut_aliases="export DESK=${XDG_DESKTOP_DIR}
-export USR_BIN_FOLDER=${USR_BIN_FOLDER}
+shortcut_aliases="DESK=${XDG_DESKTOP_DIR}
+FONTS=${FONTS_FOLDER}
+DOWNLOAD=${XDG_DOWNLOAD_DIR}
+DOCUMENTS=${XDG_DOCUMENTS_DIR}
+BIN=${USR_BIN_FOLDER}
+LAUNCHERS=${ALL_USERS_LAUNCHERS_DIR}
+PERSONAL_LAUNCHERS=${PERSONAL_LAUNCHERS_DIR}
+FUNCTIONSD=${BASH_FUNCTIONS_FOLDER}
+FUNCTIONS=${BASH_FUNCTIONS_PATH}
+PICTURES=${XDG_PICTURES_DIR}
+TEMPLATES=${XDG_TEMPLATES_DIR}
+MUSIC=${XDG_MUSIC_DIR}
+CUSTOMIZER=${DIR}
+VIDEOS=${XDG_VIDEOS_DIR}
 "
 
 shotcut_installationtype="packagemanager"
