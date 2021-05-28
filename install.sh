@@ -187,6 +187,11 @@ install_github()
   generic_install github
 }
 
+install_gitk()
+{
+  generic_install gitk
+}
+
 install_gnome-calculator()
 {
   generic_install gnome-calculator
@@ -843,11 +848,6 @@ install_fonts-oswald()
 install_fonts-noto-sans()
 {
   add_font ${fonts_noto_sans_compressedfileurls} zip noto_sans
-}
-
-install_gitk()
-{
-  generic_install gitk
 }
 
 install_k()
