@@ -420,7 +420,7 @@ gnome_tweak_tool_installationtype="packagemanager"
 gnome_tweak_tool_packagenames=("gnome-tweak-tool")
 gnome_tweak_tool_launchernames=("org.gnome.tweaks")
 
-gpaint_icon_path=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
+gpaint_icon_path="/usr/share/icons/hicolor/scalable/apps/gpaint.svg"
 gpaint_installationtype="packagemanager"
 gpaint_packagenames=("gpaint")
 gpaint_launchernames=("gpaint")
