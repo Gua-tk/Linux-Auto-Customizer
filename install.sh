@@ -28,6 +28,11 @@ install_aisleriot()
   generic_install aisleriot
 }
 
+install_aspell()
+{
+  generic_install aspell
+}
+
 install_atom()
 {
   generic_install atom
@@ -755,6 +760,11 @@ install_change-bg()
   done
 }
 
+install_commit()
+{
+  generic_install commit
+}
+
 install_cheat()
 {
   # Rf
@@ -762,6 +772,11 @@ install_cheat()
   (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O cheat.sh ${cheat_downloader})
   chmod 755 ${USR_BIN_FOLDER}/cheat.sh
   create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
+}
+
+install_dummycommit()
+{
+  generic_install dummycommit
 }
 
 install_converters()
@@ -832,6 +847,21 @@ install_fonts-noto-sans()
   add_font ${fonts_noto_sans_compressedfileurls} zip noto_sans
 }
 
+install_gitk()
+{
+  generic_install gitk
+}
+
+install_k()
+{
+  generic_install k
+}
+
+install_status()
+{
+  generic_install status
+}
+
 install_system-fonts()
 {
   # Interface text
@@ -844,6 +874,11 @@ install_system-fonts()
   gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
 }
 
+install_fetch()
+{
+  generic_install fetch
+}
+
 install_forms()
 {
   add_internet_shortcut forms
@@ -854,6 +889,11 @@ install_git-aliases()
   add_bash_function "${git_aliases_function}" git_aliases.sh
   rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
   git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
+}
+
+install_gitprompt()
+{
+  generic_install gitprompt
 }
 
 install_gitlab()
@@ -935,7 +975,7 @@ install_presentation()
 
 install_prompt()
 {
-  add_bash_function "${prompt_function}" prompt.sh
+  add_bash_function "${prompt_functions}" prompt.sh
 }
 
 install_reddit()

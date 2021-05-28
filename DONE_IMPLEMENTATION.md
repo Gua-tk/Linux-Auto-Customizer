@@ -89,3 +89,4 @@
   (coamndas random per a fer aixo segurament, cal contrastar)
 - [x] Complete shortcut function to add more environment vars XDG_PICTURES_DIR, GIT, BACKGROUNDS, SCREENSHOTS in general variables that are in common data that can be useful, etc
 - [x] Install fonts manually
+- [x] `install.sh`: evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)

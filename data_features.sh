@@ -254,8 +254,12 @@ Type=Application
 Version=4.2.2"
 
 evolution_installationtype="packagemanager"
-evolution_packagenames=("evolution")
+evolution_packagenames=("evolution" )
 evolution_launchernames=("evolution-calendar")
+
+aspell_installationtype="packagemanager"
+aspell_packagename=("aspell-es" "aspell-ca")
+
 
 f_irc_installationtype="packagemanager"
 f_irc_packagenames=("f-irc")
@@ -354,8 +358,7 @@ gimp_launchernames=("gimp")
 git_installationtype="packagemanager"
 git_packagenames=("git-all" "git-lfs")
 
-git_aliases_function="
-commit()
+commit_bashfunctions=("commit()
 {
     message=\"\$*\"
     if [ -z \"\$message\" ]; then
@@ -364,28 +367,37 @@ commit()
     fi
     git commit -am \"\$message\"
 }
+")
+commit_installationtype="packagemanager"
 
-dummycommit()
+dummycommit_bashfunctions=("dummycommit()
 {
   git add -A
   git commit -am \"\$1\"
   git push
-}
+}")
+dummycommit_installationtype="packagemanager"
 
-alias gitk=\"gitk --all --date-order &\"
-alias k=\"gitk\"
+gitk_packagenames=("gitk")
+gitk_installationtype="packagemanager"
+gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
+
+k_bashfunctions=("alias k=\"gitk\"")
+k_installationtype="packagemanager"
+
+status_bashfunctions=("alias status=\"git status\"")
+status_installationtype="packagemanager"
+
+fetch_bashfunctions=("alias fetch=\"git fetch\"")
+fetch_installationtype="packagemanager"
+
+gitprompt_bashfunctions=("
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
 fi
-alias status=\"git status\"
-alias fetch=\"git fetch\"
-
-GIT=${XDG_DESKTOP_DIR}/git
-if [ ! -d \$GIT ]; then
-  mkdir -p \$GIT
-fi
-"
+")
+gitprompt_installationtype="packagemanager"
 
 github_installationtype="packageinstall"
 github_packageurls="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
@@ -1198,6 +1210,10 @@ TEMPLATES=${XDG_TEMPLATES_DIR}
 MUSIC=${XDG_MUSIC_DIR}
 CUSTOMIZER=${DIR}
 VIDEOS=${XDG_VIDEOS_DIR}
+GIT=${XDG_DESKTOP_DIR}/git
+if [ ! -d \$GIT ]; then
+  mkdir -p \$GIT
+fi
 "
 
 shotcut_installationtype="packagemanager"

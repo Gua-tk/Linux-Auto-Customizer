@@ -7,14 +7,12 @@
 - [ ] `install.sh`, `uninstall.sh`: New argument in install.sh add to favourites -f / -n normal intallation without favourites(?) also complementary flag in uninstall.sh
 
 ##### Axel
- 
-- [ ] `README.md`: Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
-- [ ] `data_features.sh`, `install.sh`, `uninstall.sh`: create bash functions that defines all the color schemes and styles in bash, storing the format in variables like RED="\e0]", BLUE="\e0", BOLD="...",  so you can `echo "${RED}${BOLD} This text is in red and bold"`
-- [ ] `data_features.sh`: Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt added in prompt...)
-- [ ] `install.sh`: evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)
 - [ ] `README.md`: Write contents of `README.md` in the table in data_common.sh, after the permissions bit. 
+- [~] `data_features.sh`: Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt, commit,  in prompt...)
 - [ ] `functions_common.sh`: Create a function to autogenerate the `README.md` table from the `common_data.sh` table
+- [ ] `README.md`: Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
+- [ ] `data_features.sh`, `install.sh`, `uninstall.sh`: create bash functions that defines all the color schemes and styles in bash, storing the format in variables like RED="\e0]", BLUE="\e0", BOLD="...",  so you can `echo "${RED}${BOLD} This text is in red and bold"`
 - [ ] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to paramtrize and create a func nthat does it for any program
 - [ ] `data_features.sh`: Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 
@@ -46,7 +44,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 # TO-DO v1.0
 
 #### NEW FEATURES
-
+- [ ] `install.sh`: Install --git-full
 - [ ] `install.sh`: Add debug mode, with a simple eval to inject code as a function
 - [ ] `install.sh`, `data_features.sh`: jupyter notebook or jupyter-lab pip install --user jupyterlab (pip install --user notebook). Posible the creation of an venv? bash support
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script  
