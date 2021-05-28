@@ -1,0 +1,91 @@
+###### Aleix
+- [x] Create argument (! or --not) for deselecting installed or uninstalled features.
+- [x] -v --verbose Verbose mode (make the software not verbose by default)
+- [x] Solve a bug of `PATH` addition in shell features. (it works, but it appends the export many times)
+- [x] To add more useful directory path variables in common_data.sh
+- [x] Make sure USR_BIN_FOLDER is present in any user roll
+- [x] Create a file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`
+- [x] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
+- [x] try refactoring the point above by using type, which recognizes alias and functions too
+- [x] Add aliases to pycharm, clion, etc
+- [x] Add argument to dummy commit
+- [x] refactor installation bit to be installation order, which contains an integer that if it is greater than 0 means selected for install, and the integer determines the installation order
+- [x] Installations must be done by argument order apparition (add another column to installation_data to sort an integer that determines the order)
+- [x] declare variables like DESK, GIT, etc
+- [x] Split multifeatures in one function into different functions
+- [x] Create source in bashrc with file bash_functions.sh with all sources calls
+- [x] Desktop wallpapers
+- [x] Refactor old stuff from the README.md
+- [x] Add a new column for testing and permissions
+- [x] Repair broken desktop icons (VLC, VScode, Telegram)
+- [x] Create generic version for the function output_proxy_exec, to integrate with a bash feature to be installed. this command is `s "command"`
+- [x] On nemo desktop delete automatically nautilus
+- [x] Wireshark
+- [X] rar / unrar - zip / unzip (also integrate in extract func)
+- [x] Red prompt for warning and error messages
+- [x] Optimize history to be updated in real-time and share the same hsitory between folders (export PROMPT_COMMAND='history -a; history -r') Also change filesize
+- [x] Anydesk
+- [x] Put Path declaration in common data, as a bash function  
+- [x] Add final & to alias of gitk  (git_aliases), pluma, VS code,  so is always launched in background
+- [x] Apply rule: no apt, the default way to install package in script is apt-get
+- [x] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
+- [x] Write date in all the messages that the customizer outputs (warning, info etc)
+- [x] Fusion create links in path with download and decompress
+- [x] Autofirma
+- [x] AutoUpdate and construct README
+- [x] L Function
+- [x] Add folder to store icons for .desktop files --> `created add_internet_shortcut`
+- [x] Internet shortcut icons are broken because are downloaded into google-chrome folder --> Parametrized using indirect variable expansion, and adding parametrized line of Icon and exec in the launcher
+- [x] Replicate most of the necessary structures and data to adapt `uninstall.sh` to the new specs
+- [x] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
+- [x] Program function in `uninstall.sh` to remove bash functions
+- [x] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
+- [x] Program function to unregister default opening applications on `uninstall.sh`
+- [x] Call add_program matching against table in `common_data.sh` --> move all arguments to `common_data.sh` table and ensure there's no collision with separators.
+- [x] Let uninstall run as normal user for the right features
+- [x] Move all argument processing to the same data structure that we are using for storing info about the programs. This is in order to reduce the steps needed to implement a program an autogenerate a README.md table
+- [x] sysmontask
+- [x] create download function and decompress function
+- [x] refactored download and decompress to use download, decompress and create links in path
+- [x] parametrize the path to the fonts folder and to the background folders
+- [x] change name of `IMPLEMENTATION.md` to `contributing.md`
+- [x] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)
+
+
+###### Axel
+- [x] Delete / rearrange arguments of one letter
+- [x] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
+- [x] Refactor of data table in README.md
+- [x] Youtube-dl
+- [x] Create escape function, which returns an escaped sequence of characters
+- [x] net-tools
+- [x] Eclipse
+- [x] Zoom
+- [x] Geogebra
+- [x] docker 
+- [x] Spotify
+- [x] Teams
+- [x] Create variable in shortcut functions that tells out public IP
+- [x] communication: skype (wget https://go.skype.com/skypeforlinux-64.deb)
+- [x] Change default Screenshots folder to /home/user/Images/screenshots/
+- [x] Internet shortcut launchers: Gapps, Netflix, OneDrive, Outlook, GitHub, Overleaf...
+- [x] INTERNET SHORTCUT BUG: delete lines of Exec and Icon in all launchers of internet desktop launchers
+- [x] Add desktop internet shortcuts for twitch, trello, twitter, tumblr, duckduckgo...
+- [x] Add aliases in `install_git-aliases` of `fetch` as `git fetch`, `status` as `git status`, `commit` as a function that controlls the message etc...
+- [x] Autoinstall nvidia drivers
+- [x] commit function must set `""` for ` commit`
+- [x] Fonts (`apt-get` installs fonts msttcorefonts, firacode, hack, hermit, roboto)
+- [x] GNOME Tweak tools
+- [x] Reconvert Gitlab to internet desktop launcher
+- [x] Synaptic  
+- [x] Rsync and grsync (graphical)
+- [x] gitlab-ce no needs to be installed as source program either as internet launcher
+- [x] gnome-terminal 
+- [x] c, e, o 
+- [x] b alias (`bash`)
+- [x] Add examples (images) of a working environment after applying the customizer in Linux
+- [x] Change `google-chrome` for `xdg-open`  on internet shortcut. Delete `${program_name}_url` and put it hardcoded inside of each desktop launcher
+- [x] Set up typography for interface text as `Roboto Medium` `11`, document as `Fira Code Retina` `12`, monospaced text as `Hack Regular` `11`, inherited windows as `Hermit Bold` `9`. 
+  (coamndas random per a fer aixo segurament, cal contrastar)
+- [x] Complete shortcut function to add more environment vars XDG_PICTURES_DIR, GIT, BACKGROUNDS, SCREENSHOTS in general variables that are in common data that can be useful, etc
+- [x] Install fonts manually
