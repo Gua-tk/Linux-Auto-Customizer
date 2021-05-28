@@ -4,11 +4,10 @@
 - [~] `functions_install.sh`: Make download() and decompress() handle relative paths as paths from USR_BIN_FOLDER. if not absolute
 - [~] `data_features.sh`: Create high level functions that perform variable indirect expansion to install different types of program.
 - [ ] `data_features.sh`: Implement more robustness in function change terminal-background. Change the use of `dconf` for `gsettings`, which is more safe, also make sure to have a correct value before changing background.  
-- [ ] `install.sh`, `uninstall.sh`: New argument in install.sh add to favourites -f / -n normal intallation without favourites(?) also complementary flag in uninstall.sh
+- [ ] `install.sh`, `uninstall.sh`: New argument in install.sh add to favourites -f / -n normal installation without favourites(?) also complementary flag in uninstall.sh
 
 ##### Axel
 - [ ] `README.md`: Write contents of `README.md` in the table in data_common.sh, after the permissions bit. 
-- [~] `data_features.sh`: Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt, commit,  in prompt...)
 - [ ] `functions_common.sh`: Create a function to autogenerate the `README.md` table from the `common_data.sh` table
 - [ ] `README.md`: Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.

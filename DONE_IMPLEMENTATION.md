@@ -90,3 +90,4 @@
 - [x] Complete shortcut function to add more environment vars XDG_PICTURES_DIR, GIT, BACKGROUNDS, SCREENSHOTS in general variables that are in common data that can be useful, etc
 - [x] Install fonts manually
 - [x] `install.sh`: evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)
+- [x] `data_features.sh`: Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt, commit,  in prompt...)
