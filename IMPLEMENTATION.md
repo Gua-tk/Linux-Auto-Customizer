@@ -67,7 +67,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `data_features.sh`, `functions_install.sh`: Allow the modification of the Icon or Exec line of the desktop launchers using sed in the root generic install or hardcoding the full launcher. Maybe the second
 - [ ] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
 - [ ] `install.sh`, `data_fatures.sh`: Refactor functions of root to use the generic_install function. AutoFirma, OpenOffice, nemo, WireShark, gpaint, iqmol, remaining among others
-- [ ] `data_common.sh`: Refactor order of main table to have the same three sections as in install .shç
+- [ ] `data_common.sh`: Refactor order of main table to have the same three sections as in install .sh
 - [ ] `uninstall.sh`: refactor order of function to follow theconvention on `install.sh`  
 - [ ] `README.md`: Refactor order of the table to follow the conventions on `install.sh`. (implement three sections)
 - [ ] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to 

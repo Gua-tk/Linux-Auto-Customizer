@@ -441,44 +441,87 @@ rootgeneric_installation_type() {
   fi
 }
 
-#* First it will create a directory with the name of the currently installing feature in USR_BIN_FOLDER if directory_final_names is not defined.
-# If creating the directory, then downloads from $NAME_compressedpackagenames inside that directory if we created it. If we do not create the folder it will downloaded in USR_BIN_FOLDER
-
-#* After that check the optional variable $NAME_clonableurls to clone inside it. Throw an error if there is more than one clone in this case.
-# If not CD to USR_BIN_FOLDER and clone all there.
-
-#* Then it will download in the just created directory if directory_final_names not defined
-#* After downloading it will decompress depending on $NAME_decompressionoptions.
-#* If directoryfinalnames is defined try to detect a root folder and rename that root folder to direcotryfilenames
-#* Create links in pairs by using relative paths selecting the binary (from the folder that we just decompressed and renamed) or absolute paths from the variable $NAME_pairpathtobinaries
-#* Call add bash functions to add aliases or other code to badge using another variable $NAME_bashfunctions
-#* Create manual launchers calling create manual launchers and using  $NAME_launchercontents
-#* Also use an array of pair of values to indicate the location and destination of files to copy. They can be absolute or from the relative paths from the folder we just created.
-#* optional Manual manipulation of icon or Exec line of a launcher
-#* Register file associations
-#* Add to favourites\*
+# - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
+# of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
+# because indirect expansion is used to obtain the data. Depending on the properties set, some subfunctions will be
+# activated to install related features. Two things can happen with the default directory to download and put our files:
+#
+# 1: If the first position of the array $directorynames[@] is set, it will indicate the location of the
+# default folder to download files while installing the current feature, but this behaviour is changed if the first
+# position of the array $compresedfilesurls[@] is set. In that case, first it will download and decompress that url, but
+# the call to decompress() will be special, because a third argument will be passed to that function indicating to
+# detect a unique folder inside the directory, which will be renamed to the content of the first position of
+# $directorynames[@] after the decompression of the first compressed file. This is used to "inherit" the folder that is
+# inside the compressed file by using it as default folder directly, instead of using another folder that will be called
+# the same to wrap the directory inside the compressed file.
+#
+# 2: If that is not the situation, the first value of $directorynames[@] will be the PATH to the default folder.
+# 3: If the first value of $directorynames[@] is not set, it will inherit $USR_BIN_FOLDER as the default folder.
+#
+# The first thing that the function will do if the first situation is met, is decompress the file and convert it to the
+# default folder of the application. If not, this behaviour will be avoided.
+#
+# After that it will create all directories in $directorynames[@] except the first one, which will be created only if
+# there is no compressed file in the first position of the array $compressedfilesurls[@].
+#
+# Then it will clone the urls to repositories using git clone from the variable $gitrepositoriesurls[@] in the locations
+# in $gitrepositoriesclonelocations[@]. If not set, it will decompress into the default directory.
+#
+# Then it will download and decompress the files from $compressedfileurls in $compressedfiledownloadlocations[@] with
+# the type $compressedfiletypes[@]. If not defined download in the default directory.
+#
+# After that it will add to the PATH all the binaries found in $pathaddedbinaries[@]: The first position will be the
+# relative or absolute folder from the default folder and the second position after the ; will be the name of the
+# program.
+#
+# Add the functions defined in the array $bashfunctions[@] to .bashrc using the customizer system with
+# ${BASH_FUNCTIONS_PATH}
+#
+# Also add the launchers if defined by using $launchercontents[@] which contains the text for all the launchers.
+#
+# Add the file associations to the current user defined in $recognizedfiletypes[@] and using
+# register_file_associations()
+#
+# Finally download $fileurls[@] into $filedownloadlocations[@]
+#
+# Usually paths are absolute or relative from USR_BIN_FOLDER!
+#
+# - Permissions: Expected to be run by normal user.
+# - Arguments:
+# * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
+# function
 usergeneric_installationtype() {
   # Declare name of variables for indirect expansion
 
-  # Relative paths are from USR_BIN_FOLDER!
 
-  # If this variable has a value in the first position and there is a compressed files in the first position present
+  # - If this variable has a value in the first position and there is a compressed files in the first position present
   # (in compressedfileurls): this function will assume that there is a directory in the root of this compressed file,
   # which will be renamed to the contents of this variable and will be the default folder to put downloaded files and
-  # temporals during the installation of this feature.
-  # If there are no compressed files defined but the this variable is present in the first position, it will create
-  # as many directory as many paths are present in this variable with those names, being the first one the default
-  # directory to put files in this feature.
-  # If this variable is not present the default place to put files will be USR_BIN_FOLDER
-  # Summarizing: The first position of this array is special, and will set the default folder. This folder will be
-  # the final name of the folder inside the compressed file, assuming there is such structure.
+  # temporals during the installation of this feature. (inherit folder)
+
+  # - If there are no compressed files in the first position defined but the this variable is present in the first
+  # position, it will create as many directory as many paths are present in this variable with those names, being the
+  # first one the default directory to put files in this feature.
+
+  # - If the first place of the array is not set, the default folder to put files will be $USR_BIN_FOLDER.
+
+  # Summarizing: The first position of this array is special, and will set the default folder. In the case that there is
+  # a compressed file defined in the first position of the array $compressedfileurls[@] and also a directory defined in
+  # the first position of the array below, it will assume that there is a unique directory inside the root of the
+  # compressed file, which will be renamed to $1 and set to be the default folder to download files in the installation
+  # of the current feature.
+
+
   # To skip this feature define the data of the arrays from the second position, leaving the first one blank
   # Also note that paths to directories can be relative from USR_BIN_FOLDER or be absolute.
   local -r directorynames="$1_directorynames[@]"
 
+  # URLs of the git repositories to be cloned
+  local -r gitrepositoriesurls="$1_gitrepositoriesurls[@]"
+  local -r gitrepositoriesclonelocations="$1_gitrepositoriesclonelocations[@]"
+
   # Files to be downloaded that have to be decompressed
   local -r compressedfileurls="$1_compressedfileurls[@]"
-  local -r compressedfileurls_num="$1_compressedfileurls[*]"
   # Folders where compressed files have to be downloaded and decompressed. Relative from USR_BIN_FOLDER or absolute.
   local -r compressedfiledownloadlocations="$1_compressedfiledownloadlocations[@]"
   # All decompression type options for each compressed file defined
@@ -486,19 +529,15 @@ usergeneric_installationtype() {
 
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r pathaddedbinaries="$1_pathaddedbinaries[@]"
-  local -r pathaddedbinaries_num="$1_pathaddedbinaries[*]"
 
   # Code to be added to bashrc as a bash-function feature. Its name will be $1+anticollision_mark
   local -r bashfunctions="$1_bashfunctions[@]"
-  local -r bashfunctions_num="$1_bashfunctions[*]"
 
   # Launchers added using add_manual_launchers function. Its name will be $1+anticollision_mark
   local -r launchercontents="$1_launchercontents[@]"
-  local -r launchercontents_num="$1_launchercontents[*]"
 
   # Recognized file types, used to register application to use a certain mime type
   local -r recognizedfiletypes="$1_recognizedfiletypes[@]"
-  local -r recognizedfiletypes_num="$1_recognizedfiletypes[*]"
 
   # Generic downloads
   local -r fileurls="$1_fileurls[@]"
@@ -572,60 +611,8 @@ usergeneric_installationtype() {
       fi
     done
   fi
-
 }
 
-# - Description:
-# - Permissions:
-# - Argument 1:
-packageinstall_installation_type() {
-  local -r packagedependencies=$1_packagedependencies
-  local -r packageurl=$1_packageurl
-  local -r launchername=$1_launchername
-
-  if [[ ! -z "${!packagedependencies}" ]]; then
-
-    apt-get install -y "${!packagedependencies}"
-  fi
-  download_and_install_package "${!packageurl}"
-  if [[ ! -z "${!launchername}" ]]; then
-    copy_launcher "${!launchername}.desktop"
-  fi
-  if [[ ! -z "${!launchername}" ]]; then
-    copy_launcher "${!launchername}.desktop"
-  fi
-
-}
-
-# - Description: Installs a program that uses package manager relying on declared variables
-# - Permissions: This functions expects to be called as root
-# - Argument 1: Name of the feature to install
-packagemanager_installation_type() {
-  # Declare name of variables for indirect expansion
-  local -r packagedependencies="$1_packagedependencies[@]"
-  local -r packagenames="$1_packagenames[@]"
-  local -r launchernames="$1_launchernames[@]"
-
-  # Install dependency packages
-  if [[ ! -z "${!packagedependencies}" ]]; then
-    for packagedependency in "${!packagedependencies}"; do
-      apt-get install -y "${packagedependency}"
-    done
-  fi
-
-  # Install default packages
-  for packagename in "${!packagenames}"; do
-    apt-get install -y "${packagename}"
-  done
-
-  # Copy launchers
-  if [[ ! -z "${!launchernames}" ]]; then
-    for launchername in "${!launchernames}"; do
-      copy_launcher "${launchername}.desktop"
-    done
-  fi
-
-}
 
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
 # - Permissions: Same behaviour being root or normal user.
