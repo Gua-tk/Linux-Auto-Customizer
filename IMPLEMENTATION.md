@@ -7,13 +7,13 @@
 - [ ] `install.sh`, `uninstall.sh`: New argument in install.sh add to favourites -f / -n normal installation without favourites(?) also complementary flag in uninstall.sh
 
 ##### Axel
-- [ ] `README.md`: Write contents of `README.md` in the table in data_common.sh, after the permissions bit. 
-- [ ] `functions_common.sh`: Create a function to autogenerate the `README.md` table from the `common_data.sh` table
-- [ ] `README.md`: Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
+- [ ] `README.md`: Write escaped contents of `README.md` in the table in data_common.sh, after the permissions bit. 
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 - [ ] `data_features.sh`, `install.sh`, `uninstall.sh`: create bash functions that defines all the color schemes and styles in bash, storing the format in variables like RED="\e0]", BLUE="\e0", BOLD="...",  so you can `echo "${RED}${BOLD} This text is in red and bold"`
-- [ ] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to paramtrize and create a func nthat does it for any program
+- [ ] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to parametrize and create a func that does it for any program
 - [ ] `data_features.sh`: Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
+- [ ] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
+- [ ] `README.md`: (depends on declaration above) Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
 
 
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
@@ -25,17 +25,18 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `install.sh`, `uninstall.sh`: music edition: rosegarden, Ardour, LMMS
 - [ ] `install.sh`, `uninstall.sh`: desktop access: Remmina, TeamViewer
 - [ ] `install.sh`, `uninstall.sh`: Photo organizer: Shotwell  
-- [ ] `install.sh`, `uninstall.sh`: handbreak: format editing tool  
+- [ ] `install.sh`, `uninstall.sh`: handbreak: format editing tool
 - [ ] `install.sh`, `uninstall.sh`: terminal: guake
 - [ ] `install.sh`, `uninstall.sh`: cd/dvd burning: brasero
 - [ ] `install.sh`, `uninstall.sh`: iso customization: Remastersys, UNetbootin
 - [ ] `install.sh`, `uninstall.sh`: image edition: Blender3D, Agave (sudo apt-get instal agave)
 - [ ] `install.sh`, `uninstall.sh`: download manager: Axel
-- [ ] `install.sh`, `uninstall.sh`: Mdadm (raid manager)
+- [ ] `install.sh`, `uninstall.sh`: Mdadm (raid manager) blkid (filesystems that has UUID are displayed) lsblk, fstab (lists all available disk partitions) `/etc/fstab` 
 - [ ] `install.sh`, `uninstall.sh`: HardInfo (Benchmark tool)
 - [ ] `install.sh`, `uninstall.sh`: Dbeaver (database manager)
-- [ ] `install.sh`, `uninstall.sh`: aircrack-ng 
+- [ ] `install.sh`, `uninstall.sh`: aircrack-ng
 - [ ] `install.sh`, `uninstall.sh`: nmap
+- [ ] `install.sh`, `uninstall.sh`: ncat (netcat)
 - [ ] `install.sh`, `uninstall.sh`: zenmap (nmap gui)
 - [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/) 
 
@@ -43,7 +44,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 # TO-DO v1.0
 
 #### NEW FEATURES
-- [ ] `install.sh`: Install --git-full
+
 - [ ] `install.sh`: Add debug mode, with a simple eval to inject code as a function
 - [ ] `install.sh`, `data_features.sh`: jupyter notebook or jupyter-lab pip install --user jupyterlab (pip install --user notebook). Posible the creation of an venv? bash support
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script  
@@ -53,6 +54,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install:
 
+- [ ] `customizer.sh`: Install --git-full
 - [ ] `customizer.sh`: When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
 - [ ] `customizer.sh`: When installing features using package manager (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`...) depending on which system customizer is run
 - [ ] `customizer.sh`: Create a unique endpoint for all the code in customizer `customizer.sh` which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...

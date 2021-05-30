@@ -124,6 +124,11 @@ audacity_packagenames=("audacity")
 
 autofirma_downloader=https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip
 
+bashcolors_function="
+
+
+"
+
 caffeine_installationtype="packagemanager"
 caffeine_launchernames=("caffeine-indicator")
 caffeine_packagenames=("caffeine")

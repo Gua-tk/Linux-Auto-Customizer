@@ -733,6 +733,12 @@ install_b()
   add_bash_function "${b_alias}" b.sh
 }
 
+install_bashcolors()
+{
+  add_bash_function "${bashcolors_function}" bashcolors.sh
+}
+
+
 install_c()
 {
   add_bash_function "${c_function}" c.sh
