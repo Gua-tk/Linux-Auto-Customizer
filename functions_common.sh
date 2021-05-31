@@ -121,11 +121,8 @@ autogen_readme()
 
     # Add arguments to readme
     local prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
-    echo "prefix: $prefix"
     local suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
-    echo "suffix: $suffix"
     local readme_line="${prefix}${program_arguments}${suffix}"
-    echo "$readme_line"
     case ${installation_type} in
       0)
         user_lines+=("${readme_line}")
@@ -138,16 +135,24 @@ autogen_readme()
       ;;
     esac
   done
-  true > table.md
-
-  echo "#### User programs" >> table.md
-  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> table.md
-  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> table.md
-  echo "${user_lines[@]}" | sort >> table.md
-  echo "#### Root Programs" >> table.md
-  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> table.md
-  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> table.md
-  echo "${root_lines[@]}" | sort >> table.md
+  local -r newline=$'\n'
+  true > "table.md"
+  echo "#### User programs" >> "table.md"
+  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> "table.md"
+  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> "table.md"
+  local user_lines_final=
+  for line in "${user_lines[@]}"; do
+    user_lines_final="${user_lines_final}${line}${newline}"
+  done
+  echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort >> "table.md"
+  echo "#### Root Programs" >> "table.md"
+  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> "table.md"
+  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> "table.md"
+  local root_lines_final=
+  for line in "${root_lines[@]}"; do
+    root_lines_final="${root_lines_final}${line}${newline}"
+  done
+  echo "${root_lines_final[@]}" | sed -r '/^\s*$/d' | sort >> "table.md"
 }
 
 # Common piece of code in the execute_installation function
