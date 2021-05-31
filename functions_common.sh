@@ -110,6 +110,9 @@ add_wrapper()
 
 autogen_readme()
 {
+  local packagemanager_lines=
+  local user_lines=
+  local root_lines=
   for program in "${installation_data[@]}"; do
     local readme_line="$(echo "${program}" | cut -d ";" -f3-)"
     local installation_type="$(echo "${program}" | cut -d ";" -f2)"
@@ -118,11 +121,11 @@ autogen_readme()
 
     # Add arguments to readme
     local prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
+    echo "prefix: $prefix"
     local suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
-    readme_line="|${prefix}${program_arguments}${suffix}"
-    local packagemanager_lines=
-    local user_lines=
-    local root_lines=
+    echo "suffix: $suffix"
+    local readme_line="${prefix}${program_arguments}${suffix}"
+    echo "$readme_line"
     case ${installation_type} in
       0)
         user_lines+=("${readme_line}")
