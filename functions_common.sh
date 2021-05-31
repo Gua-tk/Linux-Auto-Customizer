@@ -111,15 +111,15 @@ add_wrapper()
 autogen_readme()
 {
   for program in "${installation_data[@]}"; do
-    local readme_line="$(echo ${program} | cut -d ";" -f3-)"
-    local installation_type="$(echo ${program} | cut -d ";" -f2)"
-    local program_arguments="$(echo ${program} | cut -d ";" -f1 | tr "|" " ")"
-    local program_name="$(echo "${program_arguments}" | cut -d "|" -f1 | cut -d "--" -f2-)"
+    local readme_line="$(echo "${program}" | cut -d ";" -f3-)"
+    local installation_type="$(echo "${program}" | cut -d ";" -f2)"
+    local program_arguments="$(echo "${program}" | cut -d ";" -f1 | tr "|" " ")"
+    local program_name="$(echo "${program_arguments}" | cut -d "|" -f1 | cut -d "-" -f3-)"
 
     # Add arguments to readme
-    local prefix="$(echo "${readme_line}" | cut -f-5)"
-    local suffix="$(echo "${readme_line}" | cut -f5-)"
-    readme_line="${prefix}${program_arguments}${suffix}"
+    local prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
+    local suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
+    readme_line="|${prefix}${program_arguments}${suffix}"
     local packagemanager_lines=
     local user_lines=
     local root_lines=
@@ -134,13 +134,17 @@ autogen_readme()
         packagemanager_lines+=("${readme_line}")
       ;;
     esac
-
-    true > table.md
-    echo "#### User programs" >> table.md
-    echo "${user_lines[@]}" | sort >> table.md
-    echo "#### Root Programs" >> table.md
-    echo "${user_lines[@]}" | sort >> table.md
   done
+  true > table.md
+
+  echo "#### User programs" >> table.md
+  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> table.md
+  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> table.md
+  echo "${user_lines[@]}" | sort >> table.md
+  echo "#### Root Programs" >> table.md
+  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> table.md
+  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> table.md
+  echo "${root_lines[@]}" | sort >> table.md
 }
 
 # Common piece of code in the execute_installation function
