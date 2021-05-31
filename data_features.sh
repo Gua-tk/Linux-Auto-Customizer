@@ -326,6 +326,9 @@ freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
 
+fslint_installationtype="packagemanager"
+fslint_packagenames=("fslint")
+
 gcc_installationtype="packagemanager"
 gcc_packagenames=("gcc")
 gcc_bashfunctions=("# colored GCC warnings and errors
