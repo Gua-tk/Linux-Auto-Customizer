@@ -106,6 +106,11 @@ install_dconf-editor()
   generic_install dconf-editor
 }
 
+install_dia()
+{
+  generic_install dia
+}
+
 install_fdupes()
 {
   generic_install fdupes
@@ -626,6 +631,15 @@ install_studio()
   create_manual_launcher "${android_studio_launcher}" "Android_Studio"
 
   add_bash_function "${android_studio_alias}" "studio_alias.sh"
+}
+
+install_postman()
+{
+  download_and_decompress "${postman_url}" "postman" "z" "Postman" "postman"
+  #download "${postman_url}" "Postman"
+  #decompress "z" "${USR_BIN_FOLDER}/Postman" "postman"
+  #create_links_in_path "Postman/Postman" "postman"
+  create_manual_launcher "${postman_launchercontents[0]}" "Postman"
 }
 
 install_pycharm()

@@ -50,6 +50,7 @@
 - [x] parametrize the path to the fonts folder and to the background folders
 - [x] change name of `IMPLEMENTATION.md` to `contributing.md`
 - [x] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)
+- [x] `install.sh`: Postman [link](https://gist.github.com/elcascarudo-dev/e39eacb490d11cea0c22e1923072d855)
 
 
 ###### Axel
@@ -91,3 +92,5 @@
 - [x] Install fonts manually
 - [x] `install.sh`: evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)
 - [x] `data_features.sh`: Split git aliases in many functions (alias_gitk, function_dummycommit, gitprompt, commit,  in prompt...)
+- [x] `install.sh`: lolcat
+- [x] `install.sh`: generic_install dia (`packagemanager`)

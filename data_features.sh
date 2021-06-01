@@ -241,6 +241,10 @@ dropbox_installationtype="packageinstall"
 dropbox_launchernames=("dropbox")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
 
+dia_installationtype="packagemanager"
+dia_packagenames=("dia-common")
+dia_launchernames=("dia")
+
 discord_downloader="https://discord.com/api/download?platform=linux&format=tar.gz"
 
 discord_launcher="[Desktop Entry]
@@ -1089,6 +1093,18 @@ pdfgrep_packagenames=("pdfgrep")
 pluma_installationtype="packagemanager"
 pluma_packagenames=("pluma")
 pluma_launchernames=("pluma")
+
+postman_url=("https://dl.pstmn.io/download/latest/linux64")
+postman_launchercontents=("
+[Desktop Entry]
+Encoding=UTF-8
+Name=Postman
+Exec=postman
+Icon=${USR_BIN_FOLDER}/postman/app/resources/app/assets/icon.png
+Terminal=false
+Type=Application
+Categories=Development;
+")
 
 prompt_function="
 # set variable identifying the chroot you work in (used in the prompt below)
