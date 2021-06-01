@@ -108,6 +108,52 @@ add_wrapper()
   done
 }
 
+autogen_readme()
+{
+  local packagemanager_lines=
+  local user_lines=
+  local root_lines=
+  for program in "${installation_data[@]}"; do
+    local readme_line="$(echo "${program}" | cut -d ";" -f3-)"
+    local installation_type="$(echo "${program}" | cut -d ";" -f2)"
+    local program_arguments="$(echo "${program}" | cut -d ";" -f1 | tr "|" " ")"
+    local program_name="$(echo "${program_arguments}" | cut -d "|" -f1 | cut -d "-" -f3-)"
+
+    # Add arguments to readme
+    local prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
+    local suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
+    local readme_line="${prefix}${program_arguments}${suffix}"
+    case ${installation_type} in
+      0)
+        user_lines+=("${readme_line}")
+      ;;
+      1)
+        root_lines+=("${readme_line}")
+      ;;
+      packagemanager)
+        packagemanager_lines+=("${readme_line}")
+      ;;
+    esac
+  done
+  local -r newline=$'\n'
+  true > "table.md"
+  echo "#### User programs" >> "table.md"
+  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> "table.md"
+  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> "table.md"
+  local user_lines_final=
+  for line in "${user_lines[@]}"; do
+    user_lines_final="${user_lines_final}${line}${newline}"
+  done
+  echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort >> "table.md"
+  echo "#### Root Programs" >> "table.md"
+  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> "table.md"
+  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> "table.md"
+  local root_lines_final=
+  for line in "${root_lines[@]}"; do
+    root_lines_final="${root_lines_final}${line}${newline}"
+  done
+  echo "${root_lines_final[@]}" | sed -r '/^\s*$/d' | sort >> "table.md"
+}
 
 # Common piece of code in the execute_installation function
 # Argument 1: forceness_bit

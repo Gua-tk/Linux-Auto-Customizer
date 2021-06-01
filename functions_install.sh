@@ -261,7 +261,7 @@ download() {
         # Relative path that contains folders
         local -r dir_name="${USR_BIN_FOLDER}/$(echo $2 | rev | cut -d "/" -f2- | rev)"
         local file_name="$(echo $2 | rev | cut -d "/" -f1 | rev)"
-        if [ -z file_name ]; then
+        if [ -z "${file_name}" ]; then
           file_name=downloading_program
         fi
       else
@@ -283,6 +283,7 @@ download() {
   fi
 }
 
+#//RF
 # - Description: Downloads a compressed file pointed by the provided link in $1 into $USR_BIN_FOLDER.
 # We assume that this compressed file contains only one folder in the root. The name of this folder will be captured in
 # order to change its name to the desired one, contained in $2.
@@ -443,34 +444,41 @@ rootgeneric_installation_type() {
 
 # - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
 # of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
-# because indirect expansion is used to obtain the data. Depending on the properties set, some subfunctions will be
-# activated to install related features. Two things can happen with the default directory to download and put our files:
+# because indirect expansion is used to obtain the data to install each feature of a certain program to install.
+# Depending on the properties set, some subfunctions will be activated to install related features. Two things can
+# happen with the default directory to download and put our files:
 #
-# 1: If the first position of the array $directorynames[@] is set, it will indicate the location of the
+# 1.- If the first position of the array $directorynames[@] is set, it will indicate the location of the
 # default folder to download files while installing the current feature, but this behaviour is changed if the first
 # position of the array $compresedfilesurls[@] is set. In that case, first it will download and decompress that url, but
 # the call to decompress() will be special, because a third argument will be passed to that function indicating to
 # detect a unique folder inside the directory, which will be renamed to the content of the first position of
 # $directorynames[@] after the decompression of the first compressed file. This is used to "inherit" the folder that is
 # inside the compressed file by using it as default folder directly, instead of using another folder that will be called
-# the same to wrap the directory inside the compressed file.
+# the same to wrap the directory inside the compressed file. This is to avoid changing all the data that we already have
+# but also to give certain freedom in the way each user feature in installed.
 #
-# 2: If that is not the situation, the first value of $directorynames[@] will be the PATH to the default folder.
-# 3: If the first value of $directorynames[@] is not set, it will inherit $USR_BIN_FOLDER as the default folder.
+# 2.- If that is not the situation, the first value of $directorynames[@] will be the PATH to the default folder.
 #
-# The first thing that the function will do if the first situation is met, is decompress the file and convert it to the
-# default folder of the application. If not, this behaviour will be avoided.
+# 3.- If the first value of $directorynames[@] is not set, it will inherit $USR_BIN_FOLDER as the default folder.
+#
+# The algorithm of the function works as follows:
+#
+# The first thing that the function will do if the first situation described above is met, is decompress the first
+# compressed file and convert the unique directory extracted from it, to the default folder of the currently installing
+# application. If not, this behaviour will be avoided.
 #
 # After that it will create all directories in $directorynames[@] except the first one, which will be created only if
-# there is no compressed file in the first position of the array $compressedfilesurls[@].
+# there is no compressed file in the first position of the array $compressedfilesurls[@] (because it would mean that
+# has been already decompressed).
 #
 # Then it will clone the urls to repositories using git clone from the variable $gitrepositoriesurls[@] in the locations
-# in $gitrepositoriesclonelocations[@]. If not set, it will decompress into the default directory.
+# in $gitrepositoriesclonedirs[@]. If not set, it will decompress into the default directory.
 #
-# Then it will download and decompress the files from $compressedfileurls in $compressedfiledownloadlocations[@] with
+# Then it will download and decompress the files from $compressedfileurls in $compressedfiledownloadpaths[@] with
 # the type $compressedfiletypes[@]. If not defined download in the default directory.
 #
-# After that it will add to the PATH all the binaries found in $pathaddedbinaries[@]: The first position will be the
+# After that it will add to the PATH all the binaries found in $binariesinstalledpaths[@]: The first position will be the
 # relative or absolute folder from the default folder and the second position after the ; will be the name of the
 # program.
 #
@@ -480,16 +488,17 @@ rootgeneric_installation_type() {
 # Also add the launchers if defined by using $launchercontents[@] which contains the text for all the launchers.
 #
 # Add the file associations to the current user defined in $recognizedfiletypes[@] and using
-# register_file_associations()
+# register_file_associations(). The element in $launchercontents[0] will be the associated desktop used. If not defined,
+# use a file in $ALL_USERS_LAUNCHERS_DIR or $PERSONAL_LAUNCHERS_DIR, if not present show a warning and continue.
 #
-# Finally download $fileurls[@] into $filedownloadlocations[@]
+# Finally download $fileurls[@] into $filedownloaddirs[@].
 #
-# Usually paths are absolute or relative from USR_BIN_FOLDER!
+# Most of the paths can be absolute or relative from the default directory.
 #
 # - Permissions: Expected to be run by normal user.
 # - Arguments:
 # * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
-# function
+# function.
 usergeneric_installationtype() {
   # Declare name of variables for indirect expansion
 
@@ -518,17 +527,17 @@ usergeneric_installationtype() {
 
   # URLs of the git repositories to be cloned
   local -r gitrepositoriesurls="$1_gitrepositoriesurls[@]"
-  local -r gitrepositoriesclonelocations="$1_gitrepositoriesclonelocations[@]"
+  local -r gitrepositoriesclonedirs="$1_gitrepositoriesclonedirs[@]"
 
   # Files to be downloaded that have to be decompressed
   local -r compressedfileurls="$1_compressedfileurls[@]"
   # Folders where compressed files have to be downloaded and decompressed. Relative from USR_BIN_FOLDER or absolute.
-  local -r compressedfiledownloadlocations="$1_compressedfiledownloadlocations[@]"
+  local -r compressedfiledownloadpaths="$1_compressedfiledownloadpaths[@]"
   # All decompression type options for each compressed file defined
   local -r compressedfiletypes="$1_compressedfiletypes[@]"
 
   # Path to the binaries to be added, with a ; with the desired name in the path
-  local -r pathaddedbinaries="$1_pathaddedbinaries[@]"
+  local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
 
   # Code to be added to bashrc as a bash-function feature. Its name will be $1+anticollision_mark
   local -r bashfunctions="$1_bashfunctions[@]"
@@ -541,41 +550,61 @@ usergeneric_installationtype() {
 
   # Generic downloads
   local -r fileurls="$1_fileurls[@]"
-  local -r filedownloadlocations="$1_filedownloadlocations[@]"
+  local -r filedownloaddirs="$1_filedownloaddirs[@]"
 
-  # First elements of necessary arrays to perform the algorithm of inherit the directory of decompressed files.
+
+  # First elements of necessary arrays to perform the algorithm of inheriting the directory of decompressed files.
   local -r firstcompressedfileurl="$1_compressedfileurls[0]"
   local -r firstcompressedfiletype="$1_compressedfiletypes[0]"
-  local -r firstcompressedfiledownloadlocation="$1_compressedfiledownloadlocations[0]"
+  local -r firstcompressedfiledownloadpath="$1_compressedfiledownloadpaths[0]"
   local -r firstdirectoryname="$1_directorynames[0]"
 
   local default_directory=""
 
+  # Used to detect if we have met the situation or not, basically to skip the first compressed file and folder
   local compressed_i=0
   if [ -z "${!firstdirectoryname}" ]; then
     # There is no default directory, so use USR_BIN_FOLDER
     default_directory="${USR_BIN_FOLDER}"
   else
-    # There is a file in the first position and also a default directory. We need to inherit the folder extracted.
-    if [ -n "${!firstcompressedfiledownloadlocation}" ]; then
+    if [ -n "${!firstcompressedfileurl}" ]; then
+      # There is a file in the first position and also a default directory. We need to inherit the folder extracted.
       # Mark that the first compressed file is processed
       compressed_i=1
-      if [ -n "${firstcompressedfileurl}" ]; then
-        # Set the default directory to the directory that comes from decompressing the file
-        if [ -z "$(echo "${firstcompressedfiledownloadlocation}" | grep -Eo "^/")" ]; then
-          download "${firstcompressedfileurl}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadlocation}"
-          decompress "${firstcompressedfiletype}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadlocation}" "${firstdirectoryname}"
-          default_directory="${USR_BIN_FOLDER}/${firstcompressedfiledownloadlocation}"
+      # Set the default directory to the directory that comes from decompressing the file
+      if [ -z "$(echo "${firstcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
+        # The location is relative to default path, which in this special case is USR_BIN_FOLDER
+        # download can be renaming or not, which we assure in the following if
+        download "${firstcompressedfileurl}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadpath}"
+        if [ -d "${firstcompressedfiledownloadpath}" ]; then
+          # Is a directory so it is downloaded in a file with the default name in download()
+          decompress "${firstcompressedfiletype}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadpath}/downloading_program" "${firstdirectoryname}"
         else
-          download "${firstcompressedfileurl}" "${firstcompressedfiledownloadlocation}"
-          decompress "${firstcompressedfiletype}" "${firstcompressedfiledownloadlocation}" "${firstdirectoryname}"
-          default_directory="${firstcompressedfiledownloadlocation}"
+          # it is a path to a file, that has been downloaded previously
+          decompress "${firstcompressedfiletype}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadpath}" "${firstdirectoryname}"
         fi
+        default_directory="${USR_BIN_FOLDER}/${firstcompressedfiledownloadpath}/${firstdirectoryname}"
+      else
+        # the location is absolute path
+        download "${firstcompressedfileurl}" "${firstcompressedfiledownloadpath}"
+        if [ -d "${firstcompressedfiledownloadpath}" ]; then
+          decompress "${firstcompressedfiletype}" "${firstcompressedfiledownloadpath}/downloading_program" "${firstdirectoryname}"
+        else
+          decompress "${firstcompressedfiletype}" "${firstcompressedfiledownloadpath}" "${firstdirectoryname}"
+        fi
+        default_directory="${firstcompressedfiledownloadpath}"
       fi
     else
       # Set the default directory if we do not have to inherit
-      mkdir -p "${USR_BIN_FOLDER}/${firstdirectoryname}"
-      default_directory="${USR_BIN_FOLDER}/${firstdirectoryname}"
+      if [ -z "$(echo "${firstcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
+        # Is not absolute path
+        mkdir -p "${USR_BIN_FOLDER}/${firstdirectoryname}"
+        default_directory="${USR_BIN_FOLDER}/${firstdirectoryname}"
+      else
+        # Absolute path
+        mkdir -p "${firstdirectoryname}"
+        default_directory="${firstdirectoryname}"
+      fi
     fi
   fi
 
@@ -584,11 +613,18 @@ usergeneric_installationtype() {
   # Create directories, using USR_BIN_FOLDER as relative path if no absolute path is given
   if [ -n "${!directorynames}" ]; then
     for directoryname in "${!directorynames}"; do
+      if [ "${compressed_i}" -eq "1" ]; then
+        # Skip the first directory if we had decompressed
+        compressed_i=2
+        continue
+      fi
       if [ -n "${directoryname}" ]; then
         if [ -n "$(echo "${directoryname}" | grep -Eo "^/")" ]; then
+          # Absolute path
           rm -Rf "${directoryname}"
           mkdir -p "${directoryname}"
         else
+          # Relative path
           rm -Rf "${USR_BIN_FOLDER}/${directoryname:?}"
           mkdir -p "${USR_BIN_FOLDER}/${directoryname}"
         fi
@@ -599,15 +635,14 @@ usergeneric_installationtype() {
   # Download and decompress
   if [ -n "${!compressedfileurls}" ]; then
     for compressedfileurls in "${!compressedfileurls}"; do
-      if [ "${compressed_i}" == "0" ]; then
-        if [ -n "${compressedfileurls}" ]; then
-          if [ -z "$(echo "${firstcompressedfiledownloadlocation}" | grep -Eo "^/")" ]; then
-
-            echo temps
-          fi
+      if [ "${compressed_i}" -eq "2" ]; then
+        # Skip the first directory if we had decompressed
+        compressed_i=3
+        continue
+      elif [ -n "${compressedfileurls}" ]; then
+        if [ -z "$(echo "${firstcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
+          echo problem
         fi
-      else
-        compressed_i=0
       fi
     done
   fi
