@@ -195,6 +195,7 @@ installation_data=(
   "--latex|--LaTeX|--tex|--TeX;1;| LaTeX | Software system for document preparation | Command \`tex\` (LaTeX compiler) and \`texmaker\` (LaTeX IDE), desktop launchers for \`texmaker\` and LaTeX documentation ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--libgtkglext1|--anydesk-dependencies;1;| libgtkglext1 | Anydesk dependency | Used when Anydesk is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--libxcb-xtest0;1;| libxcb-xtest0 | Zoom dependency | Used when Zoom is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--lolcat;1;| lolcat | Same as the command \`cat\` but outputting the text in rainbow color and concatenate string | command \`lolcat\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--L|--L-function;0;| Function \`L\` | Function that lists files in a directory, but listing the directory sizes | Function \`L\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--l|--alias-l|--alias-ls|--l-alias|--ls-alias;0;| l alias | alias for \`ls\` | command \`l\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--megasync|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--mega;1;| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Command \`megasync\`, desktop launcher, dashboard launcher and integration with \`nemo\` file explorer ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"

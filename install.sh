@@ -186,7 +186,6 @@ install_gimp()
   generic_install gimp
 }
 
-# Install GIT and all its related utilities (gitk e.g.)
 install_git()
 {
   generic_install git
@@ -230,7 +229,6 @@ install_gnome-sudoku()
 install_gnome-terminal()
 {
   generic_install gnome-terminal
-  add_to_favorites "org.gnome.Terminal.desktop"
 }
 
 install_gnome-tweak-tool()
@@ -241,14 +239,11 @@ install_gnome-tweak-tool()
 install_google-chrome()
 {
   generic_install google-chrome
-  add_to_favorites "google-chrome.desktop"
 }
 
 install_gpaint()
 {
   generic_install gpaint
-
-  sed "s|Icon=gpaint.svg|Icon=${gpaint_icon_path}|" -i ${XDG_DESKTOP_DIR}/gpaint.desktop
 }
 
 install_gparted()
@@ -279,7 +274,6 @@ install_iqmol()
 install_latex()
 {
   generic_install latex
-  echo "Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png" >> ${XDG_DESKTOP_DIR}/texdoctk.desktop
 }
 
 install_parallel()
@@ -295,6 +289,11 @@ install_libgtkglext1()
 install_libxcb-xtest0()
 {
   generic_install libxcb-xtest0
+}
+
+install_lolcat()
+{
+  generic_install lolcat
 }
 
 install_megasync()
@@ -320,7 +319,6 @@ install_nemo()
   gsettings set org.nemo.desktop show-desktop-icons true
 
   copy_launcher "nemo.desktop"
-  add_to_favorites "nemo.desktop"
 }
 
 install_net-tools()
@@ -438,8 +436,6 @@ install_steam()
 install_synaptic()
 {
   generic_install synaptic
-  sed -i "s@Exec=synaptic-pkexec@Exec=synaptic@g" "${XDG_DESKTOP_DIR}/synaptic.desktop"
-  # Add to favorites
 }
 
 install_teamviewer()
@@ -460,7 +456,6 @@ install_terminator()
 install_thunderbird()
 {
   generic_install thunderbird
-  add_to_favorites "thunderbird.desktop"
 }
 
 install_tilix()
@@ -481,7 +476,6 @@ install_tor()
 install_transmission()
 {
   generic_install transmission
-  add_to_favorites "transmission.desktop"
 }
 
 install_uget()
@@ -509,7 +503,6 @@ install_wireshark()
   copy_launcher "wireshark.desktop"
   sed -i 's-Icon=.*-Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg-' ${XDG_DESKTOP_DIR}/wireshark.desktop
 }
-
 
 
 #####################################

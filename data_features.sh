@@ -470,7 +470,18 @@ gnome_tweak_tool_launchernames=("org.gnome.tweaks")
 gpaint_icon_path="/usr/share/icons/hicolor/scalable/apps/gpaint.svg"
 gpaint_installationtype="packagemanager"
 gpaint_packagenames=("gpaint")
-gpaint_launchernames=("gpaint")
+gpaint_launchercontents=("
+[Desktop Entry]
+Name=GNU Paint
+Comment=A small-scale painting program for GNOME, the GNU Desktop
+TryExec=gpaint
+Exec=gpaint
+Icon=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
+Terminal=0
+Type=Application
+Categories=Graphics;2DGraphics;RasterGraphics;
+X-Ubuntu-Gettext-Domain=gpaint-2
+")
 
 gparted_installationtype="packagemanager"
 gparted_packagenames=("gparted")
@@ -990,9 +1001,17 @@ java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b0
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
 
 latex_installationtype="packagemanager"
-latex_launchernames=("texmaker" "texdoctk")
+latex_launchernames=("texmaker")
 latex_dependencies=("perl-tk" )
 lastex_packagenames=("texlive-latex-extra" "texmaker")
+latex_launchercontents=("
+[Desktop Entry]
+Name=TeXdoctk
+Exec=texdoctk
+Type=Application
+Terminal=false
+Categories=Settings;
+Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png")
 
 l_function="alias l=\"ls -lAh --color=auto\""
 
@@ -1001,6 +1020,9 @@ libgtkglext1_packagenames=("libgtkglext1")
 
 libxcb_xtest0_installationtype="packagemanager"
 libxcb_xtest0_packagenames=("libxcb-xtest0")
+
+lolcat_installationtype="packagemanager"
+lolcat_packagenames=("lolcat")
 
 maven_downloader="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 
@@ -1317,6 +1339,20 @@ Version=1.0"
 synaptic_installationtype="packagemanager"
 synaptic_packagenames=("synaptic")
 synaptic_launchernames=("synaptic")
+synaptic_launchercontents=("
+[Desktop Entry]
+Name=Synaptic Package Manager
+GenericName=Package Manager
+Comment=Install, remove and upgrade software packages
+Exec=synaptic
+Icon=synaptic
+Terminal=false
+Type=Application
+Categories=PackageManager;GTK;System;Settings;
+X-Ubuntu-Gettext-Domain=synaptic
+StartupNotify=true
+StartupWMClass=synaptic
+")
 
 sysmontask_downloader="https://github.com/KrispyCamel4u/SysMonTask.git"
 

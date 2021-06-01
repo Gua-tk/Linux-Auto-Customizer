@@ -20,7 +20,8 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `install.sh`, `uninstall.sh`: fslint (duplicate finder graphical) --> tries to install python2 and causes problems possible set installation in an autoenvironment??
 - [ ] `uninstall.sh`: fdups  (duplicate finder CLI)
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
-- [ ] `install.sh`, `uninstall.sh`: sherlock
+- [ ] `install.sh`, `uninstall.sh`: sherlock 
+- [ ] `uninstall.sh`: lolcat
 - [ ] `install.sh`, `uninstall.sh`: nautilus (with uninstall please)
 - [ ] `install.sh`, `uninstall.sh`: music edition: rosegarden, Ardour, LMMS
 - [ ] `uninstall.sh`: desktop access: Remmina, TeamViewer
@@ -53,6 +54,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `commmon_functions.sh`: Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
 - [ ] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions)
 - [ ] `install.sh`: generic_install dia (`packagemanager`)
+- [ ] `install.sh`: Postman [link](https://gist.github.com/elcascarudo-dev/e39eacb490d11cea0c22e1923072d855)
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install:
   
 - [ ] `customizer.sh`: When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
