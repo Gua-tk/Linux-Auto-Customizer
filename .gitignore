@@ -2,3 +2,5 @@
 .idea
 .idea/*
 .swp
+build
+build/

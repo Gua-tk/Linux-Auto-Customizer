@@ -1193,7 +1193,8 @@ main()
       ;;
 
       -H|--help)
-        output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
+        # output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
+        autogenerate_readme()
         exit 0
       ;;
 
