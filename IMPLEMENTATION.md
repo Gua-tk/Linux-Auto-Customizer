@@ -17,7 +17,7 @@
 
 
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
-- [ ] `install.sh`, `uninstall.sh`: fslint (duplicate finder graphical)
+- [ ] `install.sh`, `uninstall.sh`: fslint (duplicate finder graphical) --> tries to install python2 and causes problems possible set installation in an autoenvironment??
 - [ ] `install.sh`, `uninstall.sh`: fdups  (duplicate finder CLI)
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
 - [ ] `install.sh`, `uninstall.sh`: sherlock
@@ -45,22 +45,22 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 #### NEW FEATURES
 
+- [ ] `README.md` or `IMPLEMENTATION.md`: Write down the command dependencies of the folder project
 - [ ] `install.sh`: Add debug mode, with a simple eval to inject code as a function
 - [ ] `install.sh`, `data_features.sh`: jupyter notebook or jupyter-lab pip install --user jupyterlab (pip install --user notebook). Posible the creation of an venv? bash support
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] `commmon_functions.sh`: Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
 - [ ] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions)
-
+- [ ] `install.sh`: generic_install dia (`packagemanager`)
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install:
-
-- [ ] `customizer.sh`: Install --git-full
+  
 - [ ] `customizer.sh`: When having this unique endpoint, if an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager 
 - [ ] `customizer.sh`: When installing features using package manager (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`...) depending on which system customizer is run
 - [ ] `customizer.sh`: Create a unique endpoint for all the code in customizer `customizer.sh` which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
 - [ ] `customizer.sh`: Move high-level wrappers from `install.sh` for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint associate all the features that are needed such as sudo install Nemo and sudo uninstall nautilus
 - [ ] `customizer.sh`: customizer.sh help, customizer install, customizer uninstall, customizer parallel, customizer status... basic commands
-
+- [ ] `customizer.sh`: Automated Unit Testing
 
 #### MAINTENANCE & UPDATES
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. At least sigint programmed to show a warning.
