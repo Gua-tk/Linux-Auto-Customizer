@@ -18,15 +18,15 @@
 
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
 - [ ] `install.sh`, `uninstall.sh`: fslint (duplicate finder graphical) --> tries to install python2 and causes problems possible set installation in an autoenvironment??
-- [ ] `install.sh`, `uninstall.sh`: fdups  (duplicate finder CLI)
+- [ ] `uninstall.sh`: fdups  (duplicate finder CLI)
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
 - [ ] `install.sh`, `uninstall.sh`: sherlock
 - [ ] `install.sh`, `uninstall.sh`: nautilus (with uninstall please)
 - [ ] `install.sh`, `uninstall.sh`: music edition: rosegarden, Ardour, LMMS
-- [ ] `install.sh`, `uninstall.sh`: desktop access: Remmina, TeamViewer
-- [ ] `install.sh`, `uninstall.sh`: Photo organizer: Shotwell  
+- [ ] `uninstall.sh`: desktop access: Remmina, TeamViewer
+- [ ] `uninstall.sh`: Photo organizer: Shotwell  
 - [ ] `install.sh`, `uninstall.sh`: handbreak: format editing tool
-- [ ] `install.sh`, `uninstall.sh`: terminal: guake
+- [ ] `install.sh`, `uninstall.sh`: terminal at F12 key: guake
 - [ ] `install.sh`, `uninstall.sh`: cd/dvd burning: brasero
 - [ ] `install.sh`, `uninstall.sh`: iso customization: Remastersys, UNetbootin
 - [ ] `install.sh`, `uninstall.sh`: image edition: Blender3D, Agave (sudo apt-get instal agave)

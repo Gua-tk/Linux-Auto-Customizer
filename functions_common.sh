@@ -138,16 +138,16 @@ autogen_readme()
   local -r newline=$'\n'
   true > "table.md"
   echo "#### User programs" >> "table.md"
-  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> "table.md"
-  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> "table.md"
+  echo "| Name | Description | Execution | Arguments | Testing |" >> "table.md"
+  echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|" >> "table.md"
   local user_lines_final=
   for line in "${user_lines[@]}"; do
     user_lines_final="${user_lines_final}${line}${newline}"
   done
   echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort >> "table.md"
   echo "#### Root Programs" >> "table.md"
-  echo "| Name | Description | Execution | Arguments | Permissions | Testing |" >> "table.md"
-  echo "|-------------|----------------------|------------------------------------------------------|------------|---------|-------------|" >> "table.md"
+  echo "| Name | Description | Execution | Arguments | Testing |" >> "table.md"
+  echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|" >> "table.md"
   local root_lines_final=
   for line in "${root_lines[@]}"; do
     root_lines_final="${root_lines_final}${line}${newline}"

@@ -124,8 +124,30 @@ audacity_packagenames=("audacity")
 
 autofirma_downloader=https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip
 
-bashcolors_function="
+axel_installationtype="packagemanager"
+axel_packagenames=("axel")
+axel_launchernames=("axel")
 
+bashcolors_function="
+# Consider dracula color palette
+CLEAR='\033[0m' # No Color
+BLACK='\033[0;30m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0,35m'
+CYAN='\033[1;36m'
+LIGHTGREY='\033[0;37m'
+DARKGREY='\033[1;30m'
+LIGHTGREY='\033[0;37m'
+LIGHTRED='\033[1;31m'
+LIGHTGREEN='\033[1;32m'
+YELLOW='\033[1;33m'
+LIGHTBLUE='\033[1;34m'
+LIGHTPURPLE='\033[1;34m'
+LIGHTCYAN='\033[1;36m'
+WHITE='\033[1;37m'
 
 "
 
@@ -284,6 +306,9 @@ Terminal=true
 TryExec=f-irc
 Type=Application
 Version=1.0")
+
+fdupes_installationtype="packagemanager"
+fdupes_packagenames=("fdupes")
 
 ffmpeg_installationtype="packagemanager"
 ffmpeg_packagenames=("ffmpeg")
@@ -1168,6 +1193,10 @@ pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "l
 python3_installationtype="packagemanager"
 python3_packagenames=("python3-dev" "python-dev" "python3-pip")
 
+remmina_installationtype="packagemanager"
+remmina_packagenames=("remmina")
+remmina_launchernames=("org.remmina.Remmina")
+
 rsync_installationtype="packagemanager"
 rsync_dependencies_packagenames=("canberra-gtk-module")
 rsync_packagenames=("rsync" "grsync")
@@ -1245,6 +1274,11 @@ TryExec=shotcut
 Type=Application
 Version=1.0")
 
+shotwell_installationtype="packagemanager"
+shotwell_packagenames=("shotwell")
+shotwell_launchernames=("shotwell")
+
+
 skype_installationtype="packageinstall"
 skype_packageurls=("https://go.skype.com/skypeforlinux-64.deb")
 skype_launchernames=("skypeforlinux")
@@ -1285,6 +1319,10 @@ synaptic_packagenames=("synaptic")
 synaptic_launchernames=("synaptic")
 
 sysmontask_downloader="https://github.com/KrispyCamel4u/SysMonTask.git"
+
+teamviewer_installationtype="packageinstall"
+teamviewer_packageurls=("https://download.teamviewer.com/download/linux/teamviewer_amd64.deb")
+teamviewer_launchernames=("com.teamviewer.TeamViewer")
 
 teams_installationtype="packageinstall"
 teams_packageurls=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")

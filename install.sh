@@ -56,6 +56,11 @@ install_AutoFirma()
   copy_launcher "afirma.desktop"
 }
 
+install_axel()
+{
+  generic_install axel
+}
+
 install_caffeine()
 {
   generic_install caffeine
@@ -99,6 +104,11 @@ install_curl()
 install_dconf-editor()
 {
   generic_install dconf-editor
+}
+
+install_fdupes()
+{
+  generic_install fdupes
 }
 
 install_dropbox()
@@ -391,9 +401,9 @@ install_pluma()
   generic_install pluma
 }
 
-install_rsync()
+install_remmina()
 {
-  generic_install rsync
+  generic_install remmina
 }
 
 install_shotcut()
@@ -401,6 +411,10 @@ install_shotcut()
   generic_install shotcut
 }
 
+install_shotwell()
+{
+  generic_install shotwell
+}
 install_skype()
 {
   generic_install skype
@@ -426,6 +440,11 @@ install_synaptic()
   generic_install synaptic
   sed -i "s@Exec=synaptic-pkexec@Exec=synaptic@g" "${XDG_DESKTOP_DIR}/synaptic.desktop"
   # Add to favorites
+}
+
+install_teamviewer()
+{
+  generic_install teamviewer
 }
 
 install_teams()
