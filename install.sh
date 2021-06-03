@@ -386,7 +386,21 @@ install_pdfgrep()
 
 install_pgadmin4()
 {
-  generic_install pgadmin4
+  # comment
+
+  #Create a file named config_local.py (if not already present) at your installation location ../pgadmin4/web/
+
+  #import os
+#DATA_DIR = os.path.realpath(os.path.expanduser(u'~/.pgadmin/'))
+#LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
+#SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
+#SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
+#STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
+  # comment
+
+  rm -Rf "${USR_BIN_FOLDER}/pgadmin4"
+  python3 -m venv "${USER_BIN_FOLDER}/pgadmin4"
+  "${USR_BIN_FOLDER}/pgadmin4/bin/pip" install wheel pgadmin4
 }
 
 install_psql()

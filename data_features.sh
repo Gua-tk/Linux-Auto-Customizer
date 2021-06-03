@@ -721,6 +721,12 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
+pgadmin4_installationtype=userpip
+pgadmin4_pippackages=("pgadmin4")
+#pgadmin4_installationtype="packagemanager"
+#pgadmin4_packagenames=("pgadmin4-desktop" "pgadmin4")
+#pgadmin4_launchernames=("pgadmin4")
+
 googlecalendar_url=https://calendar.google.com/
 googlecalendar_icon="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg"
 googlecalendar_alias="alias googlecalendar=\"xdg-open ${google-calendar_url} &>/dev/null &\""
@@ -1082,14 +1088,9 @@ pacman_launchernames=("pacman")
 parallel_installationtype="packagemanager"
 parallel_packagenames=("parallel")
 
-pgadmin4_installationtype="packagemanager"
-pgadmin4_packagenames=("pgadmin4-desktop" "pgadmin4")
-pgadmin4_launchernames=("pgadmin4")
-
 psql_installationtype="packagemanager"
 psql_packagedependencies=("libc6-i386" "lib32stdc++6" "libc6=2.31-0ubuntu9.2")
 psql_packagenames=("postgresql-client-12" "postgresql-12" "libpq-dev" "postgresql-server-dev-12")
-
 
 pdfgrep_installationtype="packagemanager"
 pdfgrep_packagenames=("pdfgrep")
@@ -1233,8 +1234,7 @@ pypy3_dependencies_installationtype="packagemanager"
 pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
 
 python3_installationtype="packagemanager"
-python3_packagenames=("python3-dev" "python-dev" "python3-pip" "python3-venv")
-
+python3_packagenames=("python-dev"  "python-pip" "python3-dev" "python3-pip" "python3-venv" "python3-wheel")
 
 remmina_installationtype="packagemanager"
 remmina_packagenames=("remmina")
