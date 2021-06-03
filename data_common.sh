@@ -218,6 +218,7 @@ installation_data=(
   "--pacman|--pac-man;1;| Pac-man | Implementation of the classical arcade game | Command \`pacman\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel;1;| GNUparallel | Command-line driven utility for Linux and other Unix-like operating systems which allows the user to execute shell scripts or commands in parallel | Command \`parallel\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--pdfgrep|--findpdf;1;| pdfgrep | CLI utility that makes it possible to search for text in a PDF file without opening the file | Command \`pdfgrep\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--pgadmin4|--pgadmin;1;| pgAdmin | PostgreSQL Tools | Command \`pgadmin4\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--pluma;1;| pluma | Fork of gedit 2.0 that supports many plugins and new features | Command \`pluma\`, desktop launcjer and dashboard launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--postman|--Postman;0;| Postman | Application to maintain and organize collections of REST API calls | Command \`postman\`, desktop launcher and dashboard launcher  ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--presentation|--google-presentation;0;| Presentation | Google Presentation opening in Chrome | Command \`presentation\`, desktop launcher and dashboard launcher||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"

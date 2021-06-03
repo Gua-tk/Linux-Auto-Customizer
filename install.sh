@@ -384,6 +384,11 @@ install_pdfgrep()
   generic_install pdfgrep
 }
 
+install_pgadmin4()
+{
+  generic_install pgadmin4
+}
+
 install_psql()
 {
   generic_install psql

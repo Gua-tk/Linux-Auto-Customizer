@@ -1079,8 +1079,12 @@ pacman_installationtype="packagemanager"
 pacman_packagenames=("pacman")
 pacman_launchernames=("pacman")
 
-parallel_instalationtype="packagemanager"
+parallel_installationtype="packagemanager"
 parallel_packagenames=("parallel")
+
+pgadmin4_installationtype="packagemanager"
+pgadmin4_packagenames=("pgadmin4-desktop" "pgadmin4")
+pgadmin4_launchernames=("pgadmin4")
 
 psql_installationtype="packagemanager"
 psql_packagedependencies=("libc6-i386" "lib32stdc++6" "libc6=2.31-0ubuntu9.2")
@@ -1229,7 +1233,8 @@ pypy3_dependencies_installationtype="packagemanager"
 pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
 
 python3_installationtype="packagemanager"
-python3_packagenames=("python3-dev" "python-dev" "python3-pip")
+python3_packagenames=("python3-dev" "python-dev" "python3-pip" "python3-venv")
+
 
 remmina_installationtype="packagemanager"
 remmina_packagenames=("remmina")
