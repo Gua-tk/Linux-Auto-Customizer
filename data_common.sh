@@ -105,7 +105,7 @@ FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1
 # install_yes/no; forceness; quietness; overwrite; permissions; function_name
 installation_data=(
   "--aisleriot|--solitaire|--Solitaire|--gnome-solitaire;1;| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--alert|--alert-alias|--alias-alert;0;| Alias \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--alert|--alert-alias|--alias-alert;0;| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--ant|--apache_ant|--apache-ant;0;| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--anydesk;0;| Anydesk | Software to remote control other computers | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--aspell;1;| Aspell | Spell checker | Command \`aspell\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -113,7 +113,7 @@ installation_data=(
   "--audacity|--Audacity;1;| Audacity | Digital audio editor and recording | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--AutoFirma|--autofirma;1;| AutoFirma | Electronic signature recognition | Command \`AutoFirma\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--axel|--Axel;1;| Axel | Download manager | Command \`axel\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--b|--b-alias;0;| Alias \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--b|--b-alias;0;| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--bashcolors;0;| bashcolors | bring color to terminal | Command \`bashcolors\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--c;0;| Function \`c\` | Function \`c\` that changes the directory or clears the screen | Function \`c \` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--caffeine|--Caffeine|--cafe|--coffee;1;| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the “sleep” power saving mode. | Commands \`caffeine\`, \`caffeinate\` and \`caffeine-indicator\`, desktop launcher for \`caffeine\`, dashboard launcher for \`caffeine\` and \`caffeine-indicator\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -156,7 +156,7 @@ installation_data=(
   "--fonts-alegreya-sans|--alegreya_sans;0;| fonts-alegreya_sans | Installs font | Install alegreya font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--fonts-lato;0;| fonts-lato | Installs font | Install lato font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--fonts-oswald;0;| fonts-oswald | Installs font| Install oswald font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--fonts-oxygen;0;| fonts-oxygen( | Installs font | Install oxygen font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--fonts-oxygen;0;| fonts-oxygen | Installs font | Install oxygen font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--fonts-noto-sans|--noto_sans;0;| fonts-noto_sans | Installs font| Install noto_sans font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--forms|--google-forms;0;| Forms | Google Forms opening in Chrome | Command \`forms\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--freecad|--FreeCAD|--freeCAD;1;| FreeCAD | General-purpose parametric 3D computer-aided design modeler and a building information modeling | Command \`freecad\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
