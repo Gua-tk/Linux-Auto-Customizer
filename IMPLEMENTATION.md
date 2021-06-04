@@ -5,6 +5,8 @@
 - [~] `data_features.sh`: Create high level functions that perform variable indirect expansion to install different types of program.
 - [ ] `data_features.sh`: Implement more robustness in function change terminal-background. Change the use of `dconf` for `gsettings`, which is more safe, also make sure to have a correct value before changing background.  
 - [ ] `install.sh`, `uninstall.sh`: New argument in install.sh add to favourites -f / -n normal installation without favourites(?) also complementary flag in uninstall.sh
+- [ ] `install.sh`: Move favourites subsystem to ~.profile, so it is not executed each time we create a terminal.
+- [ ] `install.sh`: Force that the non-interactive running and the path is the first line in .bash_functions, as a common feature
 
 ##### Axel
 - [ ] `data_features.sh`: Add edge cases of function `commit`. Test exhaustively, spaces, strings, colons, commands, multiple arguments etc. It can not fail.
