@@ -754,6 +754,7 @@ Exec=bash ${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh
 ")
 pgadmin_execscript="
 pgadmin &
+sleep 2  # Wait two seconds, so pgadmin can have time to init
 xdg-open http://127.0.0.1:5050/browser
 "
 
@@ -1300,6 +1301,9 @@ HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
 # The cmdhist shell option, if enabled, causes the shell to attempt to save each line of a multi-line command in the
 # same history entry, adding semicolons where necessary to preserve syntactic correctness.
 shopt -s cmdhist
+# Check the windows size on every prompt and reset the number of columns and rows if necessary
+shopt -s checkwinsize
+
 # Save and reload from history before prompt appears
 if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a; history -r; \")\" ]]; then
   export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; history -a; history -r\"
