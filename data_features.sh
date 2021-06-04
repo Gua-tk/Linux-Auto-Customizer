@@ -705,7 +705,7 @@ Version=1.0"
 
 onedrive_icon="https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg"
 onedrive_url=https://onedrive.live.com/
-onedrive_alias="alias onedrive=\"xdg-open${onedrive_url} &>/dev/null &\""
+onedrive_alias="alias onedrive=\"xdg-open ${onedrive_url} &>/dev/null &\""
 onedrive_launcher="[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Microsoft OneDrive from Chrome
@@ -721,11 +721,41 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-pgadmin4_installationtype=userpip
-pgadmin4_pippackages=("pgadmin4")
-#pgadmin4_installationtype="packagemanager"
-#pgadmin4_packagenames=("pgadmin4-desktop" "pgadmin4")
-#pgadmin4_launchernames=("pgadmin4")
+pgadmin_installationtype=userpip  # //RF not used yet... manual installation
+pgadmin_pippackages=("pgadmin4")
+pgadmin_basefolder="${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4"
+pgadmin_datafiles=("
+import os
+DATA_DIR = os.path.realpath(os.path.expanduser(u'${USR_BIN_FOLDER}/pgadmin'))
+LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
+SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
+SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
+STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
+SERVER_MODE = False
+")
+pgadmin_dependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
+pgadmin_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=App to manipulate graphically a postgreSQL database
+Encoding=UTF-8
+GenericName=pgadmin4
+Keywords=pgadmin
+MimeType=
+Name=pgAdmin 4
+StartupNotify=true
+StartupWMClass=pgadmin
+Terminal=false
+Type=Application
+Version=1.0
+
+Icon=${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Exec=bash ${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh
+")
+pgadmin_execscript="
+pgadmin &
+xdg-open http://127.0.0.1:5050/browser
+"
 
 googlecalendar_url=https://calendar.google.com/
 googlecalendar_icon="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg"

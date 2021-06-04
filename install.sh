@@ -384,23 +384,37 @@ install_pdfgrep()
   generic_install pdfgrep
 }
 
-install_pgadmin4()
+install_pgadmin()
 {
-  # comment
+  # Avoid collision and create venv for pgadmin in USR_BIN_FOLDER
+  rm -Rf "${USR_BIN_FOLDER}/pgadmin"
+  python3 -m venv "${USR_BIN_FOLDER}/pgadmin"
 
-  #Create a file named config_local.py (if not already present) at your installation location ../pgadmin4/web/
+  # Source activate to activate the venv, so the venv python interpreter is the one actually used.
+  source "${USR_BIN_FOLDER}/pgadmin/bin/activate"
 
-  #import os
-#DATA_DIR = os.path.realpath(os.path.expanduser(u'~/.pgadmin/'))
-#LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
-#SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
-#SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
-#STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
-  # comment
+  # Update pip and install git dependencies (wheel) and the program itself in the venv
+  python -m pip install -U pip
+  pip install wheel pgadmin4
 
-  rm -Rf "${USR_BIN_FOLDER}/pgadmin4"
-  python3 -m venv "${USER_BIN_FOLDER}/pgadmin4"
-  "${USR_BIN_FOLDER}/pgadmin4/bin/pip" install wheel pgadmin4
+  echo "${pgadmin_datafiles[0]}" > "${pgadmin_basefolder}/config_local.py"
+
+  # deactivate virtual environment
+  deactivate
+
+  # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
+  # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
+  # information on how to call the script
+
+  # Prepend shebang line to python3 interpreter of the venv
+  echo "#!${USR_BIN_FOLDER}/pgadmin/bin/python3" | cat - "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" > "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  chmod +x "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  create_links_in_path "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" pgadmin
+
+  # Create launcher and structures to be able to launch pgadmin and access it using the browser
+  create_manual_launcher "${pgadmin_launchercontents[0]}" pgadmin
+  echo "${pgadmin_execscript}" > "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
+  apply_permissions "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
 }
 
 install_psql()
@@ -782,7 +796,6 @@ install_bashcolors()
 {
   add_bash_function "${bashcolors_function}" bashcolors.sh
 }
-
 
 install_c()
 {

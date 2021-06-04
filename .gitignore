@@ -7,4 +7,7 @@ build/
 table.md
 env
 env/
+env/*
+sys
+todo.txt
 
