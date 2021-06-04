@@ -1086,9 +1086,12 @@ install_templates()
 
 install_terminal-background()
 {
-  local -r profile_terminal=$(dconf list /org/gnome/terminal/legacy/profiles:/)
-  if [[ ! -z "${profile_terminal}" ]]; then
-    dconf write /org/gnome/terminal/legacy/profiles:/${profile}/background-color "'rgb(0,0,0)'"
+  local -r profile_uuid="$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d "'" -f2)"
+  #2E3436
+  if [ -n "${profile_terminal_default_uuid}" ]; then
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile_uuid}/ foreground-color 'rgb(211,215,207)'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile_uuid}/ background-color 'rgb(46,52,54)'
+
   fi
 }
 
