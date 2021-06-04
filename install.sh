@@ -1251,8 +1251,8 @@ main()
       ;;
 
       -H|--help)
-        autogen_readme
-        #output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
+        #autogen_readme
+        output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
         exit 0
       ;;
 
