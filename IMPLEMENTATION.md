@@ -28,7 +28,6 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `install.sh`, `uninstall.sh`: nautilus (with uninstall please)
 - [ ] `install.sh`, `uninstall.sh`: music edition: rosegarden, Ardour, LMMS
 - [ ] `uninstall.sh`: desktop access: Remmina, TeamViewer
-- [ ] `uninstall.sh`: Photo organizer: Shotwell  
 - [ ] `install.sh`, `uninstall.sh`: handbreak: format editing tool
 - [ ] `install.sh`, `uninstall.sh`: terminal at F12 key: guake
 - [ ] `install.sh`, `uninstall.sh`: cd/dvd burning: brasero

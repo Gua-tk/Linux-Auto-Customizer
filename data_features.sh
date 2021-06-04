@@ -1469,9 +1469,9 @@ tor_installationtype="packagemanager"
 tor_packagenames=("torbrowser-launcher")
 tor_launchernames=("torbrowser")
 
-transmission_installationtype="packagemanager"
-transmission_packagenames=("transmission")
-transmission_launchernames=("transmission-gtk")
+transmission_gtk_installationtype="packagemanager"
+transmission_gtk_packagenames=("transmission")
+transmission_gtk_launchernames=("transmission-gtk")
 
 uget_installationtype="packagemanager"
 uget_packagedependencies=("aria2")

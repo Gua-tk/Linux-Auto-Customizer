@@ -511,9 +511,9 @@ install_tor()
   generic_install tor
 }
 
-install_transmission()
+install_transmission-gtk()
 {
-  generic_install transmission
+  generic_install transmission-gtk
 }
 
 install_uget()
