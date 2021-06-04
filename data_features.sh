@@ -1039,6 +1039,25 @@ iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
 java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
 
+jupyter_lab_launchercontents=("
+[Desktop Entry]
+Categories=IDE; text_editor;
+Comment=IDE with a powerful text editor and all code interpreters and compilers in a single application
+Encoding=UTF-8
+GenericName=jupyter-lab
+Keywords=jupyter; programming; text; webpage;
+MimeType=
+Name=Jupyter Lab
+StartupNotify=true
+StartupWMClass=jupyter
+Terminal=false
+Type=Application
+Version=1.0
+
+Icon=${USR_BIN_FOLDER}/jupyter-lab/share/icons/hicolor/scalable/apps/notebook.svg
+Exec=jupyter-lab &
+")
+
 latex_installationtype="packagemanager"
 latex_launchernames=("texmaker")
 latex_dependencies=("perl-tk" )
@@ -1169,7 +1188,7 @@ fi
 
 if [ \"\$color_prompt\" = yes ]; then
     # Colorful custom PS1
-    PS1=\"\\[\\\e[1;37m\\]\\\\\\d \\\\\\\t \\[\\\e[0;32m\\]\\\\\u\[\\\e[4;35m\\]@\\[\\\e[0;36m\\]\\\\\\H\\[\\\e[0;33m\\] \\\\\\w\\[\\\e[0;32m\\] \\\\\\\$ \\033[0m\"
+    PS1=\"\\[\\\e[1;37m\\]\\\\\\d \\\\\\\t \\[\\\e[0;32m\\]\\\\\u\[\\\e[4;35m\\]@\\[\\\e[0;36m\\]\\\\\\H\\[\\\e[0;33m\\] \\\\\\w\\[\\\e[0;32m\\] \\\\\\\$ \\[\\033[0m\\]\"
 else
     PS1='\${debian_chroot:+(\$debian_chroot)}\u@\h:\w\\$ '
 fi
@@ -1262,8 +1281,9 @@ pypy3_downloader="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.b
 pypy3_dependencies_installationtype="packagemanager"
 pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
 
+# Dependency of pgadmin4
 python3_installationtype="packagemanager"
-python3_packagenames=("python-dev"  "python-pip" "python3-dev" "python3-pip" "python3-venv" "python3-wheel")
+python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
 
 remmina_installationtype="packagemanager"
 remmina_packagenames=("remmina")
@@ -1302,7 +1322,7 @@ HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
 # same history entry, adding semicolons where necessary to preserve syntactic correctness.
 shopt -s cmdhist
 # Check the windows size on every prompt and reset the number of columns and rows if necessary
-shopt -s checkwinsize
+#shopt -s checkwinsize  # Kinda buggy
 
 # Save and reload from history before prompt appears
 if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a; history -r; \")\" ]]; then

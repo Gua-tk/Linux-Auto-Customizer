@@ -1,9 +1,114 @@
 # Auto-Customizer
 
-These `bash` scripts can automatize the installation and uninstallation of a batch of preset features in most Linux environments. These features include GNU software, programming languages, IDEs, text editors, media players, games, Internet applications, file templates, wallpapers, environment aliases, environment functions... All installations are cleaner, faster and fancier than a installation with the usual  .    
+`bash` scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
+
+## Description
+
+These `bash` scripts can automatize the installation and uninstallation of a batch of preset 
+features in most Linux environments. These features include GNU software, programming languages, 
+IDEs, text editors, media players, games, Internet applications, file templates, wallpapers, 
+environment aliases, environment functions, terminal personalization... All installations are
+cleaner, faster and fancier than a manual installation.
+
+If you are a developer and use a lot of software this tool can save you a lot of time: Usually 
+we need to set up new programming environments in Linux and we lose a lot of time installing 
+manually all of our programs and personal customization. This can happen often, so with this
+tool you can automatize all this set up.
+
+There are many good reasons for which you would prefer to execute a script that installs the 
+exact features that you want, instead of having environment scripts such as `.bashrc` or `.bash_aliases`
+where you have all your customizations:
+- Optimizing your time because you can install them in a batch without needing any posterior input. 
+  Completely automatic.
+- Be able to select which features you desire, instead of having them all at once.
+- Not all the features that we could desire can be activated using an environment script, or is 
+  actually not desirable to execute some type of code in those scripts.
+
 
 ## Usage
-The scripts `install.sh` and `uninstall.sh` have the same identical arguments, but behave in the opposite way: `install.sh` will install the features selected by the arguments while `uninstall.sh` will uninstall them, using the identical arguments. 
+The scripts `install.sh` and `uninstall.sh` have the same identical arguments, but behave in 
+the opposite way: 
+`install.sh` will install the features selected by the arguments while `uninstall.sh` will
+uninstall them, using
+the identical arguments. 
+
+### Download
+To install this software you must begin cloning this repository to you computer. You can either
+download a `.zip`
+file containing the repository from github from [here](https://github.com/AleixMT/Linux-Auto-Customizer/archive/master.zip), 
+or you can clone the repository using a terminal. To do the last option, you must have installed 
+`git`. If you don't have it, you can install it opening a terminal and typing the following:
+```
+sudo apt-get install git
+```
+Then, navigate to the directory where you want to clone the repository using `cd`. Anywhere in your user folder will be fine. 
+Then clone the repository with `git clone`:
+```
+git clone https://github.com/AleixMT/Linux-Auto-Customizer
+```
+Navigate to the interior of the repository with cd:
+```
+cd Linux-Auto-Customizer  
+```
+Now that the current directory is the repository we can call the main scripts directly without specifying an absolute path. This will be the expected situation in the following explanations.
+We need to check if the program needs root or user permision, if it is needed use sudo at the start of the command.
+### Installing individual features
+```
+bash install --name_of_feature
+```
+### Installing sets of features
+```
+bash install --name_of_set_of_custom_features
+```
+Example:
+```
+bash install -v --discord
+```
+### Behavioural arguments
+Verbose mode
+Examples:
+```
+bash install -v --telegram
+```
+Quiet mode
+```
+sudo bash install -q --firefox --gpaint
+```
+Alternation
+```
+sudo bash install -q --firefox -v --gpaint
+```
+Silent Desktop icons for apps of the system
+```
+sudo bash install -q -o --cheese
+```
+
+### Full installation / uninstallation
+To install ALL the features available for the root user in the script you must type in a terminal:
+```
+sudo bash install.sh
+```
+To install ALL the features available for the normal user in the script you must type in a terminal:
+```
+bash install.sh
+```
+Summarizing: to install ALL the features available in the script you must type in a terminal:
+```
+sudo bash install.sh && bash install.sh
+```
+This command will install all root features first and then it will install all the local user features. 
+
+To uninstall ALL the possible installed features you must type in a terminal:
+```
+sudo bash uninstall.sh
+```
+### Help
+Command for showing a helping menu -h
+with the list of programs we can install.
+```
+bash install.sh -h
+```
+### 
 
 ## Features
 All features available follow a common behaviour:
@@ -192,80 +297,7 @@ The following features can be installed or uninstalled automatically and individ
 | VLC | Media player software, and streaming media server | Command `vlc`, desktop launcher and dashboard launcher |--vlc --VLC --Vlc|  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | Wireshark | Net sniffer | Command `wireshark`, desktop launcher and dashboard launcher |--wireshark --Wireshark|  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 
-## Usage
-### Download
-To install this software you must begin cloning this repository to you computer. You can either download a `.zip` file containing the repository from github from [here](https://github.com/AleixMT/Linux-Auto-Customizer/archive/master.zip), or you can clone the repository using a terminal. To do the last option, you must have installed `git`. If you don't have it, you can install it opening a terminal and typing the following:
-```
-sudo apt-get install git
-```
-Then, navigate to the directory where you want to clone the repository using `cd`. Anywhere in your user folder will be fine. 
-Then clone the repository with `git clone`:
-```
-git clone https://github.com/AleixMT/Linux-Auto-Customizer
-```
-Navigate to the interior of the repository with cd:
-```
-cd Linux-Auto-Customizer  
-```
-Now that the current directory is the repository we can call the main scripts directly without specifying an absolute path. This will be the expected situation in the following explanations.
-We need to check if the program needs root or user permision, if it is needed use sudo at the start of the command.
-### Installing individual features
-```
-bash install --name_of_feature
-```
-### Installing sets of features
-```
-bash install --name_of_set_of_custom_features
-```
-Example:
-```
-bash install -v --discord
-```
-### Behavioural arguments
-Verbose mode
-Examples:
-```
-bash install -v --telegram
-```
-Quiet mode
-```
-sudo bash install -q --firefox --gpaint
-```
-Alternation
-```
-sudo bash install -q --firefox -v --gpaint
-```
-Silent Desktop icons for apps of the system
-```
-sudo bash install -q -o --cheese
-```
 
-### Full installation / uninstallation
-To install ALL the features available for the root user in the script you must type in a terminal:
-```
-sudo bash install.sh
-```
-To install ALL the features available for the normal user in the script you must type in a terminal:
-```
-bash install.sh
-```
-Summarizing: to install ALL the features available in the script you must type in a terminal:
-```
-sudo bash install.sh && bash install.sh
-```
-This command will install all root features first and then it will install all the local user features. 
-
-To uninstall ALL the possible installed features you must type in a terminal:
-```
-sudo bash uninstall.sh
-```
-### Help
-Command for showing a helping menu -h
-with the list of programs we can install.
-```
-bash install.sh -h
-```
-### 
 ## Progression and original idea
 This repository is a partial fork from my repo [TrigenicInteractionPredictor](https://github.com/AleixMT/TrigenicInteractionPredictor). 
 

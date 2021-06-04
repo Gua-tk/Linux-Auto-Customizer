@@ -384,6 +384,19 @@ install_pdfgrep()
   generic_install pdfgrep
 }
 
+install_jupyter-lab()
+{
+  # Avoid collision with previous installations
+  rm -Rf "${USR_BIN_FOLDER}/jupyter-lab"
+  python3 -m venv "${USR_BIN_FOLDER}/jupyter-lab"
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel jupyterlab
+
+  create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab
+  create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
+}
+
 install_pgadmin()
 {
   # Avoid collision and create venv for pgadmin in USR_BIN_FOLDER
