@@ -1043,7 +1043,7 @@ install_presentation()
 
 install_prompt()
 {
-  add_bash_function "${prompt_functions}" prompt.sh
+  add_bash_function "${prompt_functions[0]}" prompt.sh
 }
 
 install_reddit()

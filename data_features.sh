@@ -1139,7 +1139,7 @@ Type=Application
 Categories=Development;
 ")
 
-prompt_function="
+prompt_functions=("
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z \"\${debian_chroot:-}\" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=\$(cat /etc/debian_chroot)
@@ -1208,7 +1208,7 @@ if ! shopt -oq posix; then
 fi
 
 
-"
+")
 
 pycharm_downloader=https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz
 pycharm_launcher="[Desktop Entry]
