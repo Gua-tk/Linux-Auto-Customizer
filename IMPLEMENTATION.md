@@ -9,7 +9,7 @@
 ##### Axel
 - [ ] `data_features.sh`: Add edge cases of function `commit`. Test exhaustively, spaces, strings, colons, commands, multiple arguments etc. It can not fail.
 - [ ] `data_features.sh`: validate `promptcolors` function. 
-- [ ] `common_data.sh`: Change all the bash function such b, alert, c, dummycommit, etc. that adds new behaviour to the shell to begin with the same name, like "Function b", so they get sorted in the same place when calling autogenreadme  
+- [ ] `common_data.sh`: Change all the bash function such b, alert, c, dummycommit, etc. that adds new behaviour to the shell to begin with the same name, like "Function b" or "Bash Feature `b` ", so they get sorted in the same place when calling autogenreadme  
 
 - [ ] `data_features.sh`: Add new features: function/alias `push` function/alias `add`
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
