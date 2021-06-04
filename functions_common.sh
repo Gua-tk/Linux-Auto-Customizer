@@ -113,6 +113,8 @@ autogen_readme()
   local packagemanager_lines=
   local user_lines=
   local root_lines=
+  local root_num=0
+  local user_num=0
   for program in "${installation_data[@]}"; do
     local readme_line="$(echo "${program}" | cut -d ";" -f3-)"
     local installation_type="$(echo "${program}" | cut -d ";" -f2)"
@@ -126,9 +128,11 @@ autogen_readme()
     case ${installation_type} in
       0)
         user_lines+=("${readme_line}")
+        root_num=$(( root_num + 1 ))
       ;;
       1)
         root_lines+=("${readme_line}")
+        user_num=$(( user_num + 1 ))
       ;;
       packagemanager)
         packagemanager_lines+=("${readme_line}")
@@ -153,6 +157,8 @@ autogen_readme()
     root_lines_final="${root_lines_final}${line}${newline}"
   done
   echo "${root_lines_final[@]}" | sed -r '/^\s*$/d' | sort >> "table.md"
+
+  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total" >> table.md
 }
 
 # Common piece of code in the execute_installation function
