@@ -461,6 +461,12 @@ install_slack()
   generic_install slack
 }
 
+install_sonic-pi()
+{
+  DEBIAN_FRONTEND=noninteractive
+  generic_install sonic-pi
+}
+
 install_spotify()
 {
   generic_install spotify
@@ -1251,8 +1257,8 @@ main()
       ;;
 
       -H|--help)
-        #autogen_readme
-        output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
+        autogen_readme
+        #output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
         exit 0
       ;;
 

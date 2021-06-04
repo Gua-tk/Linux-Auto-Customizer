@@ -973,8 +973,6 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-
-
 ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
 ideau_launcher="[Desktop Entry]
 Categories=Development;IDE;
@@ -1359,6 +1357,10 @@ skype_launchernames=("skypeforlinux")
 slack_installationtype="packageinstall"
 slack_repository=("https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb")
 slack_launchernames=("slack")
+
+sonic_pi_installationtype="packagemanager"
+sonic_pi_packagenames=("sonic-pi")
+sonic_pi_launchernames=("sonic-pi")
 
 spotify_installationtype="packageinstall"
 spotify_packageurls=("http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb")
