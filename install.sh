@@ -331,6 +331,13 @@ install_net-tools()
   generic_install net-tools
 }
 
+install_node()
+{
+  download "${node_packageurls}" "${USR_BIN_FOLDER}/node_downloading"
+  decompress "J" "${USR_BIN_FOLDER}/node_downloading" "node"
+  create_links_in_path "${USR_BIN_FOLDER}/node/bin/node" node "${USR_BIN_FOLDER}/node/bin/npm" npm "${USR_BIN_FOLDER}/node/bin/npx" npx
+}
+
 install_notepadqq()
 {
   generic_install notepadqq
@@ -392,8 +399,10 @@ install_jupyter-lab()
 
   # Install necessary pip and python packages
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel bash_kernel jupyterlab
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel bash_kernel jupyterlab_markup powershell_kernel iarm jupyterlab
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
 
   create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab
   create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
@@ -650,6 +659,13 @@ install_ideau()
   register_file_associations "text/x-java" "ideau.desktop"
 
   add_bash_function "${ideau_alias}" "ideau_alias.sh"
+}
+
+install_ijs()
+{
+  "${USR_BIN_FOLDER}/node/bin/npm" config set prefix "${HOME_FOLDER}/.local"
+  "${USR_BIN_FOLDER}/node/bin/npm" install -g ijavascript
+  "${DIR_IN_PATH}/ijsinstall"
 }
 
 install_java()
@@ -933,6 +949,18 @@ install_fonts-oswald()
 install_fonts-noto-sans()
 {
   add_font ${fonts_noto_sans_compressedfileurls} zip noto_sans
+}
+
+install_julia()
+{
+  download "${julia_packageurls}" "${USR_BIN_FOLDER}/julia_downloading"
+  decompress "z" "${USR_BIN_FOLDER}/julia_downloading" "julia"
+  create_links_in_path "${USR_BIN_FOLDER}/julia/bin/julia" julia
+  create_manual_launcher "${julia_launchercontents}" "julia"
+  julia -e '#!/.local/bin/julia
+  using Pkg
+  Pkg.add("IJulia")
+  Pkg.build("IJulia")'
 }
 
 install_k()
