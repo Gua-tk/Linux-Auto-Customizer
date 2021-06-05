@@ -1039,6 +1039,18 @@ iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
 java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
 
+julia_installationtype="packageinstall"
+julia_packageurls=("https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz")
+julia_launchernames=("julia")
+julia_launchercontents=("[Desktop Entry]
+Name=Julia
+Comment=High-level, high-performance dynamic language for technical computing
+Exec=julia
+Icon=${USR_BIN_FOLDER}/julia/share/icons/hicolor/scalable/apps/julia.svg
+Terminal=true
+Type=Application
+Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;ParallelComputing;DataVisualization;ConsoleOnly;")
+
 jupyter_lab_launchercontents=("
 [Desktop Entry]
 Categories=IDE; text_editor;

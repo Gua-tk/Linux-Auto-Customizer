@@ -192,6 +192,7 @@ installation_data=(
   "--ipe|--ipe-function;0;| ipe function | Returns the public IP | Command \`ipe\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--iqmol|--IQmol;1;| IQmol | Program to visualize molecular data | Command \`iqmol\`, silent alias, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11;0;| Java Development Kit 8 | Implementation of version 8 of the Java (programming language) SE Platform | Commands \`java\`, \`javac\` and \`jar\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--julia|--Julia;0;| Julia and IJulia| Programming language | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--jupyter-lab|--jupyter-notebook|--jupyter;0;| Jupyter Lab | IDE with a lot of possible customization and usable for different programming languages | Commands \`jupyter-lab\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--k;0;| k | \`alias for gitk\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--keep|--google-keep|--Keep|--Google-Keep|--googlekeep;0;| Google Keep | Google Keep opening in Chrome | Command \`keep\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"

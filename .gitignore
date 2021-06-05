@@ -11,3 +11,7 @@ env/*
 sys
 todo.txt
 
+.ipynb_checkpoints/
+iarm.ipynb
+node_modules/
+package-lock.json

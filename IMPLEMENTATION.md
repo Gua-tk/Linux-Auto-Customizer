@@ -97,14 +97,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `uninstall.sh`: Show warning in uninstall when activating -o flag
 - [ ] `uninstall.sh`: Rewrite `uninstall.sh` functions using the new auxiliary functions, structures, variables
 - [ ] `install.sh`: refactor extract function: more robustness and error handling. decompress in a folder
-- [ ] `install.sh`, `uninstall.sh`: Add several kernels & customizations for jupyter-lab:
-    - javascript (IJavascript) [~]
-    - markup
-    - markdown
-    - C (jupyterC)
-    - C# (Icsharp)
-    - C++ (Xeus Cling)
-    - java (IJava)
+- [ ] `install.sh`, `uninstall.sh`: Add several kernels & customizations for jupyter-lab: [text-shortcuts](https://github.com/techrah/jupyterext-text-shortcuts)
     - assembler
     - scala (Almond)
     - sql 
@@ -112,7 +105,6 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
     - ruby (IRuby)
     - rust (EvCxR Jupyter Kernel)
     - angular
-    - typescript
     - php (Jupyter-PHP)
     - react
 ###### Other Jupyter-lab kernels
