@@ -54,11 +54,9 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `install.sh`, `uninstall.sh`: aircrack-ng
 - [ ] `install.sh`, `uninstall.sh`: nmap
 - [ ] `install.sh`, `uninstall.sh`: ncat (netcat)
-- [ ] `install.sh`, `uninsstall.sh`: gobuster  
+- [ ] `install.sh`, `uninstall.sh`: gobuster  
 - [ ] `install.sh`, `uninstall.sh`: zenmap (nmap gui) (virtual environment)
 - [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/)
-
-
 
 
 # TO-DO v1.0
