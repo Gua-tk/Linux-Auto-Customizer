@@ -340,14 +340,21 @@ download_and_decompress() {
 # dpkg -i.
 # - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
 # - Argument 1: Link to the package file to download
+# - Argument 2 (Optional): Tho show the name of the program downloading and thus change the name of the downloaded
+# package
 download_and_install_package() {
-  rm -f ${USR_BIN_FOLDER}/downloading_package
+  if [ -z "$2" ]; then
+    local -r file_name=downloading_package
+  else
+    local -r file_name="$2"
+  fi
+  rm -f "${USR_BIN_FOLDER}/${file_name}"
   (
-    cd ${USR_BIN_FOLDER}
-    wget -qO downloading_package --show-progress $1
+    cd ${USR_BIN_FOLDER} || exit
+    wget -qO "${file_name}" --show-progress $1
   )
-  dpkg -i ${USR_BIN_FOLDER}/downloading_package
-  rm -f ${USR_BIN_FOLDER}/downloading_package
+  dpkg -i ${USR_BIN_FOLDER}/"${file_name}"
+  rm -f ${USR_BIN_FOLDER}/"${file_name}"
 }
 
 # - Description: Expands installation type and executes the corresponding function to install.
@@ -408,7 +415,7 @@ rootgeneric_installation_type() {
   if [[ "$2" == packageinstall ]]; then
     # Download package and install using manual package manager
     for packageurl in "${!packageurls}"; do
-      download_and_install_package "${packageurl}"
+      download_and_install_package "${packageurl}" "$1_downloading"
     done
   else
     # Install default packages
@@ -500,7 +507,7 @@ rootgeneric_installation_type() {
 # - Arguments:
 # * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
 # function.
-usergeneric_installationtype() {
+userdecompress_installationtype() {
   # Declare name of variables for indirect expansion
 
 
@@ -523,8 +530,7 @@ usergeneric_installationtype() {
 
 
 
-  # To skip this feature define the data of the arrays from the second position, leaving the first one blank
-  # Also note that paths to directories can be relative from USR_BIN_FOLDER or be absolute.
+
   local -r directorynames="$1_directorynames[@]"
 
   # Files to be downloaded that have to be decompressed
