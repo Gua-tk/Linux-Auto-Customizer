@@ -13,18 +13,30 @@
 - [ ] `data_features.sh`: validate `promptcolors` function. 
 - [ ] `common_data.sh`: Change all the bash function such b, alert, c, dummycommit, etc. that adds new behaviour to the shell to begin with the same name, like "Function b" or "Bash Feature `b` ", so they get sorted in the same place when calling autogenreadme  
 
-- [ ] `data_features.sh`: Add new features: function/alias `push` function/alias `add`
+- [ ] `data_features.sh`: Add new features: function/alias `push` function/alias `add`; (alias all="git add --all")
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 - [ ] `data_features.sh`, `install.sh`, `uninstall.sh`: create bash functions that defines all the color schemes and styles in bash, storing the format in variables like RED="\e0]", BLUE="\e0", BOLD="...",  so you can `echo "${RED}${BOLD} This text is in red and bold"`
 - [ ] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to parametrize and create a func that does it for any program
 - [ ] `data_features.sh`: Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
-
+- [ ] `install.sh`, `uninstall.sh`: Add most significative asix2Atesting aliases & end conflicts with Up-to-Date Customizer duplication; 
+    - gris `(history | grep $1)`, 
+    - bi `(sudo apt --fix-broken install)`, , , , , ,   ,, 
+    - a `("echo '---------------Alias----------------';compgen -a")`
+    - m `(more)`
+    - i `(cat)`
+    - x `(clear && ls)`
+    - xo `(xdg-open)`
+    - u `(du -h --max-depth)`
+    - j `(jobs -l)`
+    - q, :q, :q! `(exit)`
+    - lol `(lolcat)`
+    - notebook `(jupyter notebook)`
 
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
 - [ ] `uninstall.sh`: lolcat
 - [ ] `uninstall.sh`: fdups  (duplicate finder CLI)
-- [ ] `install.sh`, `uninstall.sh`: fslint (duplicate finder graphical) --> tries to install python2 and causes problems possible set installation in an autoenvironment??
+- [ ] `install.sh`, `uninstall.sh`: fslint (virtual environment)
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
 - [ ] `install.sh`, `uninstall.sh`: sherlock 
 - [ ] `install.sh`, `uninstall.sh`: nautilus (with uninstall please)
@@ -42,8 +54,11 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `install.sh`, `uninstall.sh`: aircrack-ng
 - [ ] `install.sh`, `uninstall.sh`: nmap
 - [ ] `install.sh`, `uninstall.sh`: ncat (netcat)
-- [ ] `install.sh`, `uninstall.sh`: zenmap (nmap gui)
-- [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/) 
+- [ ] `install.sh`, `uninsstall.sh`: gobuster  
+- [ ] `install.sh`, `uninstall.sh`: zenmap (nmap gui) (virtual environment)
+- [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/)
+
+
 
 
 # TO-DO v1.0
@@ -52,7 +67,9 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 - [ ] `README.md` or `IMPLEMENTATION.md`: Write down the command dependencies of the folder project
 - [ ] `install.sh`: Add debug mode, with a simple eval to inject code as a function
-- [ ] `install.sh`, `data_features.sh`: jupyter notebook or jupyter-lab pip install --user jupyterlab (pip install --user notebook). Posible the creation of an venv? bash support
+- [ ] `install.sh`, `uninstall.sh`: kernels support for jupyter-lab
+- [ ] `install.sh`, `uninstall.sh`: npm and nodejs (packagemanager installationtype)  
+- [ ] `install.sh`, `uninstall.sh`: ghostwriter (text editor for markdown and others with html preview)  
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] `commmon_functions.sh`: Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
@@ -79,7 +96,43 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `uninstall.sh`: Show warning in uninstall when activating -o flag
 - [ ] `uninstall.sh`: Rewrite `uninstall.sh` functions using the new auxiliary functions, structures, variables
 - [ ] `install.sh`: refactor extract function: more robustness and error handling. decompress in a folder
-
+- [ ] `install.sh`, `uninstall.sh`: Add several kernels & customizations for jupyter-lab:
+    - javascript (IJavascript) [~]
+    - markup
+    - markdown
+    - C (jupyterC)
+    - C# (Icsharp)
+    - C++ (Xeus Cling)
+    - java (IJava)
+    - assembler
+    - scala (Almond)
+    - sql 
+    - perl
+    - ruby (IRuby)
+    - rust (EvCxR Jupyter Kernel)
+    - angular
+    - typescript
+    - php (Jupyter-PHP)
+    - react
+###### Other Jupyter-lab kernels
+    - r (IRkernel)
+    - julia (IJulia.jl)
+    - ansible (Ansible Kernel)
+    - latex
+    - nodejs (jupyter-nodejs)
+    - stata (Stata_kernel)
+    - Wolfram Kernel
+    - lua (ILua)
+    - Xonsh
+###### Other Jupyter-lab customizations (further investigation needed)
+    - vscode-jupyter (integration of jupyter into vscode)
+    - theme-darcula (dark theme Intellij like)
+    - # Web stack (probably included already in vscode)    
+    - xml
+    - html
+    - css
+    - xslt
+    - xsl
 
 ### TO-DO v2.0
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
