@@ -73,7 +73,7 @@ ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 # File that contains the association of mime types with .desktop files
 MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
 # Default favorites list, data to set favorites
-PROGRAM_FAVORITES_PATH=${BASH_FUNCTIONS_FOLDER}/favorites.txt
+PROGRAM_FAVORITES_PATH="${BASH_FUNCTIONS_FOLDER}/favorites.txt"
 #Default user's fonts folder
 FONTS_FOLDER=${HOME_FOLDER}/.fonts
 

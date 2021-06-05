@@ -350,31 +350,6 @@ download_and_install_package() {
   rm -f ${USR_BIN_FOLDER}/downloading_package
 }
 
-# - Description: This functions is the basic piece of the favourites subsystem, but is not a function that it is
-# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
-# is invoked. This function and its necessary files such as $PROGRAM_FAVORITES_PATH are always present during the
-# execution of install.
-# This function basically processes and applies the results of the call to add_to_favourites function.
-# - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
-# add_to_favourites instead, can be called as root or user, so root and user executions can be added
-favorites_function="
-if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
-  IFS=\$'\\\n'
-  for line in \$(cat ${PROGRAM_FAVORITES_PATH}); do
-    favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
-    if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]]; then
-      if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"[]\")\" ]]; then
-        # List with at least an element
-        gsettings set org.gnome.shell favorite-apps \"\$(echo \"\$favorite_apps\" | sed s/.\$//), '\$line']\"
-      else
-        # List empty
-        gsettings set org.gnome.shell favorite-apps \"['\$line']\"
-      fi
-    fi
-  done
-fi
-"
-
 # - Description: Expands installation type and executes the corresponding function to install.
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
@@ -710,4 +685,30 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_common.sh not found. Aborting..."
   exit 1
 fi
+
+
+# - Description: This functions is the basic piece of the favourites subsystem, but is not a function that it is
+# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
+# is invoked. This function and its necessary files such as $PROGRAM_FAVORITES_PATH are always present during the
+# execution of install.
+# This function basically processes and applies the results of the call to add_to_favourites function.
+# - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
+# add_to_favourites instead, can be called as root or user, so root and user executions can be added
+favorites_function="
+if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
+  IFS=\$'\\\n'
+  for line in \$(cat ${PROGRAM_FAVORITES_PATH}); do
+    favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
+    if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]]; then
+      if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"[]\")\" ]]; then
+        # List with at least an element
+        gsettings set org.gnome.shell favorite-apps \"\$(echo \"\$favorite_apps\" | sed s/.\$//), '\$line']\"
+      else
+        # List empty
+        gsettings set org.gnome.shell favorite-apps \"['\$line']\"
+      fi
+    fi
+  done
+fi
+"
 
