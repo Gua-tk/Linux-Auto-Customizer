@@ -45,7 +45,7 @@ add_font() {
   rm -Rf ${FONTS_FOLDER}/$3_font
   mkdir -p ${FONTS_FOLDER}/$3_font
   download "$1" "${FONTS_FOLDER}/$3_font/$3"
-  decompress $2 "${FONTS_FOLDER}/$3_font/$3"
+  decompress "$2" "${FONTS_FOLDER}/$3_font/$3"
   fc-cache -f -v
 }
 
@@ -350,9 +350,35 @@ download_and_install_package() {
   rm -f ${USR_BIN_FOLDER}/downloading_package
 }
 
-# - Description: Expands installation type and executes the corresponding function
-# - Permissions:
-# - Argument 1:
+# - Description: This functions is the basic piece of the favourites subsystem, but is not a function that it is
+# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
+# is invoked. This function and its necessary files such as $PROGRAM_FAVORITES_PATH are always present during the
+# execution of install.
+# This function basically processes and applies the results of the call to add_to_favourites function.
+# - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
+# add_to_favourites instead, can be called as root or user, so root and user executions can be added
+favorites_function="
+if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
+  IFS=\$'\\\n'
+  for line in \$(cat ${PROGRAM_FAVORITES_PATH}); do
+    favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
+    if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]]; then
+      if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"[]\")\" ]]; then
+        # List with at least an element
+        gsettings set org.gnome.shell favorite-apps \"\$(echo \"\$favorite_apps\" | sed s/.\$//), '\$line']\"
+      else
+        # List empty
+        gsettings set org.gnome.shell favorite-apps \"['\$line']\"
+      fi
+    fi
+  done
+fi
+"
+
+# - Description: Expands installation type and executes the corresponding function to install.
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
+# name of the first argument in the common_data.sh table
 generic_install() {
   # Substitute dashes for underscores. Dashes are not allowed in variable names
   local -r featurename=$(echo "$1" | sed "s@-@_@g")
@@ -376,7 +402,7 @@ generic_install() {
 
 # - Description: Installs packages using apt-get or ) + dpkg and also installs additional features such as
 # aliases, related functions, desktop launchers including its icon and links in the path.
-# - Permissions: Needs root permissions, but is expected to be called always as root by install.sh logic
+# - Permissions: Needs root permissions, but is expected to be called always as root by install.sh logic.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 # installation data.
 # - Argument 2: Selects the type of installation between [packagemanager|packageinstall]
@@ -685,20 +711,3 @@ else
   exit 1
 fi
 
-favorites_function="
-if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
-  IFS=\$'\\\n'
-  for line in \$(cat ${PROGRAM_FAVORITES_PATH}); do
-    favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
-    if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]]; then
-      if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"[]\")\" ]]; then
-        # List with at least an element
-        gsettings set org.gnome.shell favorite-apps \"\$(echo \"\$favorite_apps\" | sed s/.\$//), '\$line']\"
-      else
-        # List empty
-        gsettings set org.gnome.shell favorite-apps \"['\$line']\"
-      fi
-    fi
-  done
-fi
-"
