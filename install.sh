@@ -393,6 +393,7 @@ install_jupyter-lab()
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
   "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel bash_kernel jupyterlab
 
+
   create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab
   create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
 }
