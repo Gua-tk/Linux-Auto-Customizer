@@ -485,7 +485,7 @@ usergeneric_installation_type()
   # This function assumes that there is a directory inside the compressed file and renames that directory to this var.
   local -r inheriteddirectoryname="$1_inheriteddirectoryname"
 
-  # This is optional
+  # This is optional or relative
   local -r inheritedcompressedfiledownloadpath="$1_inheritedcompressedfiledownloadpath"
 
 
@@ -504,6 +504,7 @@ usergeneric_installation_type()
   fi
 
   download "${inheritedcompressedfileurl}" "${inheritedcompressedfiledownloadpath}"
+  decompress "${inheritedcompressedfiletype}" "${inheritedcompressedfiledownloadpath}" "${inheriteddirectoryname}"
   # There is a file in the first position and also a default directory. We need to inherit the folder extracted.
   # Mark that the first compressed file is processed
   # Set the default directory to the directory that comes from decompressing the file
@@ -512,7 +513,6 @@ usergeneric_installation_type()
     # download can be renaming or not, which we assure in the following if
     if [ -d "${inheritedcompressedfiledownloadpath}" ]; then
       # Is a directory so it is downloaded in a file with the default name in download()
-      decompress "${inheritedcompressedfiletype}" "${USR_BIN_FOLDER}/${inheritedcompressedfiledownloadpath}/downloading_program" "${inheriteddirectoryname}"
     else
       # it is a path to a file, that has been downloaded previously
       decompress "${inheritedcompressedfiletype}" "${USR_BIN_FOLDER}/${inheritedcompressedfiledownloadpath}" "${inheriteddirectoryname}"
