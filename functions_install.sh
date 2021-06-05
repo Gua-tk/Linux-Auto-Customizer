@@ -208,13 +208,13 @@ decompress() {
   if [ -f "${dir_name}/${file_name}" ]; then
     if [ "$1" == "zip" ]; then
       (
-        cd "${dir_name}"
+        cd "${dir_name}" || exit
         unzip "${file_name}"
       )
     else
       # Decompress in a subshell to avoid changing the working directory in the current shell
       (
-        cd "${dir_name}"
+        cd "${dir_name}" || exit
         tar -x"$1"f -
       ) <"${dir_name}/${file_name}"
     fi
@@ -241,30 +241,48 @@ decompress() {
 # - Argument 2 (optional): Path to the created file, allowing to download in any location and use a different filename.
 #   By default the name of the file is downloading file and the PATH where is being downloaded is USR_BIN_FOLDER
 download() {
-  # Check if a relativepath is specified
+  local dir_name=
+  local file_name=
+  # Check if a path or name is specified
   if [ -z "$2" ]; then
     # default options
-    local -r dir_name="${USR_BIN_FOLDER}"
-    local -r file_name=downloading_program
+    dir_name="${USR_BIN_FOLDER}"
+    file_name=downloading_program
   else
     # Custom file or folder to download
-    # Absolute path
     if [ -n "$(echo "$2" | grep -Eo "^/")" ]; then
-      local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
-      local file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
-      if [ -z "${file_name}" ]; then
+      # Absolute path
+      if [ -d "$2" ]; then
+        # is directory
+        dir_name="$2"
         file_name=downloading_program
+      else
+        # maybe is the path to a file
+        dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+        file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+        if [ -z "${dir_name}" ]; then
+          output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" ${FLAG_QUIETNESS}
+          exit
+        fi
       fi
     else
-      # Relative path
-      if [ -n "$(echo $2 | grep -Eo "/")" ]; then
-        # Relative path that contains folders
-        local -r dir_name="${USR_BIN_FOLDER}/$(echo $2 | rev | cut -d "/" -f2- | rev)"
-        local file_name="$(echo $2 | rev | cut -d "/" -f1 | rev)"
-        if [ -z "${file_name}" ]; then
-          file_name=downloading_program
+      if [ -n "$(echo "$2" | grep -Eo "/")" ]; then
+        # Relative path that contains subfolders
+        if [ -d "$2" ]; then
+          # Directory
+          local -r dir_name="$2"
+          local file_name=downloading_program
+        else
+          # maybe is a path to a file
+          dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+          file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+          if [ -z "${dir_name}" ]; then
+            output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" ${FLAG_QUIETNESS}
+            exit
+          fi
         fi
       else
+        # It is just actually the name of the file downloaded to default USR_BIN_FOLDER
         local -r dir_name="${USR_BIN_FOLDER}"
         local file_name="$2"
         if [ -z "${file_name}" ]; then
@@ -343,18 +361,9 @@ download_and_decompress() {
 # - Argument 2 (Optional): Tho show the name of the program downloading and thus change the name of the downloaded
 # package
 download_and_install_package() {
-  if [ -z "$2" ]; then
-    local -r file_name=downloading_package
-  else
-    local -r file_name="$2"
-  fi
-  rm -f "${USR_BIN_FOLDER}/${file_name}"
-  (
-    cd ${USR_BIN_FOLDER} || exit
-    wget -qO "${file_name}" --show-progress $1
-  )
-  dpkg -i ${USR_BIN_FOLDER}/"${file_name}"
-  rm -f ${USR_BIN_FOLDER}/"${file_name}"
+  download "$1" "$2"
+  dpkg -i ${USR_BIN_FOLDER}/"$2"
+  rm -f ${USR_BIN_FOLDER}/"$2"
 }
 
 # - Description: Expands installation type and executes the corresponding function to install.
@@ -450,6 +459,63 @@ rootgeneric_installation_type() {
   fi
 }
 
+# - Permissions: Expected to be run by normal user.
+# - Arguments:
+# * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
+# function.
+userinheritdecompress_genericinstall()
+{
+  # First elements of necessary arrays to perform the algorithm of inheriting the directory of decompressed files.
+  # These are necessary to perform the download and decompress
+  local -r inheritedcompressedfileurl="$1_inheritedcompressedfileurl"
+  local -r inheritedcompressedfiletype="$1inheritedcompressedfiletype"
+  # This function assumes that there is a directory inside the compressed file and renames that directory to this var.
+  local -r inheriteddirectoryname="$1_inheriteddirectoryname"
+
+  # This is optional
+  local -r inheritedcompressedfiledownloadpath="$1_inheritedcompressedfiledownloadpath"
+
+
+  # Used to detect if we have met the situation or not, basically to skip the first compressed file and folder
+  if [ -z "${!inheriteddirectoryname}" ]; then
+    output_proxy_executioner "echo ERROR: $1_inheriteddirectoryname is not present, so userinheritdecompress_genericinstall cannot run. Skipping..." "${FLAG_QUIETNESS}"
+    exit 1
+  fi
+  if [ -z "${!inheritedcompressedfiletype}" ]; then
+    output_proxy_executioner "echo ERROR: $1_inheritedcompressedfiletype is not present, so userinheritdecompress_genericinstall cannot run. Skipping..." "${FLAG_QUIETNESS}"
+    exit 1
+  fi
+  if [ -z "${!inheritedcompressedfileurl}" ]; then
+    output_proxy_executioner "echo ERROR: $1_inheritedcompressedfileurl is not present, so userinheritdecompress_genericinstall cannot run. Skipping..." "${FLAG_QUIETNESS}"
+    exit 1
+  fi
+
+  download "${inheritedcompressedfileurl}" "${inheritedcompressedfiledownloadpath}"
+  # There is a file in the first position and also a default directory. We need to inherit the folder extracted.
+  # Mark that the first compressed file is processed
+  # Set the default directory to the directory that comes from decompressing the file
+  if [ -z "$(echo "${inheritedcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
+    # The location is relative to default path, which in this special case is USR_BIN_FOLDER
+    # download can be renaming or not, which we assure in the following if
+    if [ -d "${inheritedcompressedfiledownloadpath}" ]; then
+      # Is a directory so it is downloaded in a file with the default name in download()
+      decompress "${inheritedcompressedfiletype}" "${USR_BIN_FOLDER}/${inheritedcompressedfiledownloadpath}/downloading_program" "${inheriteddirectoryname}"
+    else
+      # it is a path to a file, that has been downloaded previously
+      decompress "${inheritedcompressedfiletype}" "${USR_BIN_FOLDER}/${inheritedcompressedfiledownloadpath}" "${inheriteddirectoryname}"
+    fi
+  else
+    # the location is absolute path
+    download "${inheritedcompressedfileurl}" "${inheritedcompressedfiledownloadpath}"
+    if [ -d "${inheritedcompressedfiledownloadpath}" ]; then
+      decompress "${inheritedcompressedfiletype}" "${inheritedcompressedfiledownloadpath}/downloading_program" "${inheriteddirectoryname}"
+    else
+      decompress "${inheritedcompressedfiletype}" "${inheritedcompressedfiledownloadpath}" "${inheriteddirectoryname}"
+    fi
+  fi
+    #if [  ]; then
+}
+
 # - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
 # of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
 # because indirect expansion is used to obtain the data to install each feature of a certain program to install.
@@ -507,7 +573,7 @@ rootgeneric_installation_type() {
 # - Arguments:
 # * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
 # function.
-userdecompress_installationtype() {
+usergeneric_installationtype() {
   # Declare name of variables for indirect expansion
 
 
@@ -527,7 +593,6 @@ userdecompress_installationtype() {
   # the first position of the array below, it will assume that there is a unique directory inside the root of the
   # compressed file, which will be renamed to $1 and set to be the default folder to download files in the installation
   # of the current feature.
-
 
 
 
@@ -554,61 +619,6 @@ userdecompress_installationtype() {
   local -r fileurls="$1_fileurls[@]"
   local -r filedownloaddirs="$1_filedownloaddirs[@]"
 
-
-  # First elements of necessary arrays to perform the algorithm of inheriting the directory of decompressed files.
-  local -r firstcompressedfileurl="$1_compressedfileurls[0]"
-  local -r firstcompressedfiletype="$1_compressedfiletypes[0]"
-  local -r firstcompressedfiledownloadpath="$1_compressedfiledownloadpaths[0]"
-  local -r firstdirectoryname="$1_directorynames[0]"
-
-  local default_directory=""
-
-  # Used to detect if we have met the situation or not, basically to skip the first compressed file and folder
-  local compressed_i=0
-  if [ -z "${!firstdirectoryname}" ]; then
-    # There is no default directory, so use USR_BIN_FOLDER
-    default_directory="${USR_BIN_FOLDER}"
-  else
-    if [ -n "${!firstcompressedfileurl}" ]; then
-      # There is a file in the first position and also a default directory. We need to inherit the folder extracted.
-      # Mark that the first compressed file is processed
-      compressed_i=1
-      # Set the default directory to the directory that comes from decompressing the file
-      if [ -z "$(echo "${firstcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
-        # The location is relative to default path, which in this special case is USR_BIN_FOLDER
-        # download can be renaming or not, which we assure in the following if
-        download "${firstcompressedfileurl}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadpath}"
-        if [ -d "${firstcompressedfiledownloadpath}" ]; then
-          # Is a directory so it is downloaded in a file with the default name in download()
-          decompress "${firstcompressedfiletype}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadpath}/downloading_program" "${firstdirectoryname}"
-        else
-          # it is a path to a file, that has been downloaded previously
-          decompress "${firstcompressedfiletype}" "${USR_BIN_FOLDER}/${firstcompressedfiledownloadpath}" "${firstdirectoryname}"
-        fi
-        default_directory="${USR_BIN_FOLDER}/${firstcompressedfiledownloadpath}/${firstdirectoryname}"
-      else
-        # the location is absolute path
-        download "${firstcompressedfileurl}" "${firstcompressedfiledownloadpath}"
-        if [ -d "${firstcompressedfiledownloadpath}" ]; then
-          decompress "${firstcompressedfiletype}" "${firstcompressedfiledownloadpath}/downloading_program" "${firstdirectoryname}"
-        else
-          decompress "${firstcompressedfiletype}" "${firstcompressedfiledownloadpath}" "${firstdirectoryname}"
-        fi
-        default_directory="${firstcompressedfiledownloadpath}"
-      fi
-    else
-      # Set the default directory if we do not have to inherit
-      if [ -z "$(echo "${firstcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
-        # Is not absolute path
-        mkdir -p "${USR_BIN_FOLDER}/${firstdirectoryname}"
-        default_directory="${USR_BIN_FOLDER}/${firstdirectoryname}"
-      else
-        # Absolute path
-        mkdir -p "${firstdirectoryname}"
-        default_directory="${firstdirectoryname}"
-      fi
-    fi
-  fi
 
   # Beginning with normal installation
 
@@ -642,7 +652,7 @@ userdecompress_installationtype() {
         compressed_i=3
         continue
       elif [ -n "${compressedfileurls}" ]; then
-        if [ -z "$(echo "${firstcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
+        if [ -z "$(echo "${inheritedcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
           echo problem
         fi
       fi
