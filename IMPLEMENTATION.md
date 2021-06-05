@@ -36,7 +36,7 @@
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
 - [ ] `uninstall.sh`: lolcat
 - [ ] `uninstall.sh`: fdups  (duplicate finder CLI)
-- [ ] `uninstall.sh`: fslint 
+- [ ] `install.sh`, `uninstall.sh`: fslint (virtual environment)
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
 - [ ] `install.sh`, `uninstall.sh`: sherlock 
 - [ ] `install.sh`, `uninstall.sh`: nautilus (with uninstall please)
