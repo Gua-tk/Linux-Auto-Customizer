@@ -1205,6 +1205,7 @@ main()
   if [[ -z "$(cat ${BASHRC_PATH} | grep -Fo "source ${BASH_FUNCTIONS_PATH}" )" ]]; then  # .bash_functions not added
     echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
   fi
+  # Built-in favourites system
   add_bash_function "${favorites_function}" "favorites.sh"
 
   #################################

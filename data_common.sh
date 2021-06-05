@@ -94,15 +94,25 @@ FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1
 ### FEATURE_DATA ###
 
 # This pseudo-matrix contains different information for every feature available in this project.
-# The first values are used to store dynamically the arguments desired for that function:
-# 1.- If we are actually going to install the program.
-# 2.- If we should (or not) abort when finding errors.
-# 3.- What level of standard output is desired for that feature: 0 verbose, 1 quiet (only informative prints), 2 totally quiet
-# 4.- If we should reinstall the feature or not when we find that the desired feature already installed.
-# The last two values are static and are used only to read:
-# 5.- Permissions: 0 for user permissions, 1 for root permissions, 2 for indiferent
-# 6.- Function name
-# install_yes/no; forceness; quietness; overwrite; permissions; function_name
+# * The first values of the two cells delimited with ; in each row are used to store dynamically the arguments desired
+#   for that function.
+#   - The first field contains all the arguments to call the program delimited with "|". It is very important to know
+#     that the first argument without the -- is a string that is also matched against a installing function in install
+#     or the corresponding variables in data_features.sh. Also, The name of the first argument without the -- is
+#     expected to be the binary used to detect if there is an installation present.
+#   - The second argument that now is a bit (0 or 1) between semicolons is the permissions needed to install each
+#     program. It is going to be changed to the installation type soon.
+#     Its format: 0 for user permissions, 1 for root permissions, 2 for indiferent. Soon will be the installationtype,
+#     such as "packagemanager"
+#   - In this each of the field of installation_data we would find other data during the runtime, since the rest of
+#     the data is removed.
+#   - Also other numeric data is added to store the desired behavioural flags for each program, such as:
+#     1.- If we are actually going to install the program.
+#     2.- If we should (or not) abort when finding errors.
+#     3.- What level of standard output is desired for that feature: 0 verbose, 1 quiet (only informative prints), 2 totally quiet
+#     4.- If we should reinstall the feature or not when we find that the desired feature already installed.
+#     install_yes/no; forceness; quietness; overwrite; permissions; function_name
+#   - The rest
 installation_data=(
   "--aisleriot|--solitaire|--Solitaire|--gnome-solitaire;1;| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--alert|--alert-alias|--alias-alert;0;| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"

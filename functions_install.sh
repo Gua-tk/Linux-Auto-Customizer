@@ -522,13 +522,10 @@ usergeneric_installationtype() {
   # of the current feature.
 
 
+
   # To skip this feature define the data of the arrays from the second position, leaving the first one blank
   # Also note that paths to directories can be relative from USR_BIN_FOLDER or be absolute.
   local -r directorynames="$1_directorynames[@]"
-
-  # URLs of the git repositories to be cloned
-  local -r gitrepositoriesurls="$1_gitrepositoriesurls[@]"
-  local -r gitrepositoriesclonedirs="$1_gitrepositoriesclonedirs[@]"
 
   # Files to be downloaded that have to be decompressed
   local -r compressedfileurls="$1_compressedfileurls[@]"
@@ -536,10 +533,8 @@ usergeneric_installationtype() {
   local -r compressedfiledownloadpaths="$1_compressedfiledownloadpaths[@]"
   # All decompression type options for each compressed file defined
   local -r compressedfiletypes="$1_compressedfiletypes[@]"
-
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
-
   # Code to be added to bashrc as a bash-function feature. Its name will be $1+anticollision_mark
   local -r bashfunctions="$1_bashfunctions[@]"
 
