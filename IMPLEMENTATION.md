@@ -12,7 +12,7 @@
 - [ ] `data_features.sh`: Add edge cases of function `commit`. Test exhaustively, spaces, strings, colons, commands, multiple arguments etc. It can not fail.
 - [ ] `data_features.sh`: validate `promptcolors` function. 
 - [ ] `common_data.sh`: Change all the bash function such b, alert, c, dummycommit, etc. that adds new behaviour to the shell to begin with the same name, like "Function b" or "Bash Feature `b` ", so they get sorted in the same place when calling autogenreadme  
-
+- [~] `install.sh`, `uninstall.sh`: nodejs and npm
 - [ ] `data_features.sh`: Add new features: function/alias `push` function/alias `add`; (alias all="git add --all")
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 - [ ] `data_features.sh`, `install.sh`, `uninstall.sh`: create bash functions that defines all the color schemes and styles in bash, storing the format in variables like RED="\e0]", BLUE="\e0", BOLD="...",  so you can `echo "${RED}${BOLD} This text is in red and bold"`
@@ -21,17 +21,20 @@
 - [ ] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
 - [ ] `install.sh`, `uninstall.sh`: Add most significative asix2Atesting aliases & end conflicts with Up-to-Date Customizer duplication; 
     - gris `(history | grep $1)`, 
-    - bi `(sudo apt --fix-broken install)`, , , , , ,   ,, 
+    - bi `(sudo apt --fix-broken install)`
     - a `("echo '---------------Alias----------------';compgen -a")`
     - m `(more)`
+    - hard `(git reset HEAD --hard)`  
     - i `(cat)`
     - x `(clear && ls)`
     - xo `(xdg-open)`
-    - u `(du -h --max-depth)`
+    - u `(du -h --max-depth)`   
     - j `(jobs -l)`
     - q, :q, :q! `(exit)`
     - lol `(lolcat)`
-    - notebook `(jupyter notebook)`
+    - notebook `(jupyter notebook)`-
+    - lab `(jupyter lab)`
+    - pull, push, add `(git)`
 
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
 - [ ] `uninstall.sh`: lolcat

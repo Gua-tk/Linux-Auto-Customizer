@@ -1114,6 +1114,9 @@ X-Ubuntu-Gettext-Domain=nemo"
 net_tools_installationtype="packagemanager"
 net_tools_packagenames=("net-tools")
 
+node_installationtype="packageinstall"
+node_packageurls=("https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz")
+
 notepadqq_installationtype="packagemanager"
 notepadqq_packagenames=("notepadqq")
 notepadqq_launchernames=("notepadqq")

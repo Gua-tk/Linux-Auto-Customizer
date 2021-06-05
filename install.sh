@@ -331,6 +331,13 @@ install_net-tools()
   generic_install net-tools
 }
 
+install_node()
+{
+  download "${node_packageurls}" "${USR_BIN_FOLDER}/node_downloading"
+  decompress "J" "${USR_BIN_FOLDER}/node_downloading" "node"
+  create_links_in_path "${USR_BIN_FOLDER}/node/bin/node" node "${USR_BIN_FOLDER}/node/bin/npm" npm "${USR_BIN_FOLDER}/node/bin/npx" npx
+}
+
 install_notepadqq()
 {
   generic_install notepadqq
@@ -650,6 +657,13 @@ install_ideau()
   register_file_associations "text/x-java" "ideau.desktop"
 
   add_bash_function "${ideau_alias}" "ideau_alias.sh"
+}
+
+install_ijs()
+{
+  "${USR_BIN_FOLDER}/node/bin/npm" config set prefix "${HOME_FOLDER}/.local"
+  "${USR_BIN_FOLDER}/node/bin/npm" install -g ijavascript
+  "${DIR_IN_PATH}/ijsinstall"
 }
 
 install_java()
