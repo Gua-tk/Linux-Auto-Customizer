@@ -512,6 +512,7 @@ usergeneric_installation_type()
     # The location is relative to default path, which in this special case is USR_BIN_FOLDER
     # download can be renaming or not, which we assure in the following if
     if [ -d "${inheritedcompressedfiledownloadpath}" ]; then
+      echo sdfsfd
       # Is a directory so it is downloaded in a file with the default name in download()
     else
       # it is a path to a file, that has been downloaded previously
