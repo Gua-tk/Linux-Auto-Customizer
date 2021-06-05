@@ -52,7 +52,7 @@
 - [x] Why some programs such as pycharm can not be added to favourites from the task bar? (related to launchers and how executables are related to launchers)
 - [x] `install.sh`: Postman [link](https://gist.github.com/elcascarudo-dev/e39eacb490d11cea0c22e1923072d855)
 - [x] `install.sh`: pgAdmin4 using pip and venv
-
+- [x] `install.sh`: sonic-pi, jupyter-lab
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
 - [x] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
