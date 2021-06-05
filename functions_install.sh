@@ -185,13 +185,26 @@ create_manual_launcher() {
 # Argument 3 (optional): If argument 3 is set, it will try to get the name of a directory that is in the root of the
 # compressed file. Then, after the decompressing, it will rename that directory to $3
 decompress() {
+  local dir_name=
+  local file_name=
   # capture directory where we have to decompress
-  if [ -n "$(echo $2 | grep -Eo "^/")" ]; then
-    local -r dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
-    local -r file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+  if [ -z "$2" ]; then
+    dir_name="${USR_BIN_FOLDER}"
+    file_name="downloading_program"
+  elif [ -n "$(echo $2 | grep -Eo "^/")" ]; then
+    # Absolute path to a file
+    dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+    file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
   else
-    local -r dir_name="${USR_BIN_FOLDER}"
-    local -r file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+    if [ -n "$(echo $2 | grep -Eo "/")" ]; then
+      # Relative path to a file containing subfolders
+      dir_name="${USR_BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+      file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+    else
+      # Only a filename
+      dir_name="${USR_BIN_FOLDER}"
+      file_name="$2"
+    fi
   fi
   if [ -n "$3" ]; then
     if [ "$1" == "zip" ]; then
@@ -463,7 +476,7 @@ rootgeneric_installation_type() {
 # - Arguments:
 # * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
 # function.
-userinheritdecompress_genericinstall()
+usergeneric_installation_type()
 {
   # First elements of necessary arrays to perform the algorithm of inheriting the directory of decompressed files.
   # These are necessary to perform the download and decompress
