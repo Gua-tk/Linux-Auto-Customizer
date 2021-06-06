@@ -10,7 +10,7 @@
 - [ ] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers or cheat have to be moved
 
 ##### Axel
-- [ ] `data_features.sh`: Add edge cases of function `commit`. Test exhaustively, spaces, strings, colons, commands, multiple arguments etc. It can not fail.
+- [~] `data_features.sh`: Add edge cases of function `commit`. Test exhaustively, spaces, strings, colons, commands, multiple arguments etc. It can not fail.
 - [ ] `data_features.sh`: validate `promptcolors` function. 
 - [ ] `common_data.sh`: Change all the bash function such b, alert, c, dummycommit, etc. that adds new behaviour to the shell to begin with the same name, like "Function b" or "Bash Feature `b` ", so they get sorted in the same place when calling autogenreadme
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
@@ -19,12 +19,51 @@
 - [ ] `data_features.sh`: Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
 - [ ] `common_data.md`: In the table, put the extensions .c, .h, etc in bold or put it in another field, so they are not between literal tildes. In that way, they are not recognized in the help.
-
-- [ ] `install.sh`, `uninstall.sh`: Add most significative asix2Atesting aliases & end conflicts with Up-to-Date Customizer duplication;
+- [ ] `e` function performs an echo if $1 is a string text
+- [ ] git add, checkout, branch function #alias branch="git branch -vv" #alias checkout='git checkout'
+- [~] `install.sh`, `uninstall.sh`: Add most significative asix2Atesting aliases & end conflicts with Up-to-Date Customizer duplication;
     - gris is bash function not alias
     - x `(extract)`
     - u `(xdg-open $1)` function
-    - git add function
+    
+    - add alias cmatrix alias matrix="cmatrix -sC yellow"
+    - alias Clean="sudo apt-get -y autoclean && sudo apt-get -y autoremove"
+    - alias Shutdown="shutdown -h now"
+    - alias Update="sudo apt-get update -y && sudo apt-get upgrade -y"
+    - alias Upgrade="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get -y autoclean && sudo apt-get -y autoremove"
+    - alias Trash="rm -rf ${HOME}/.local/share/Trash/*"
+    - `(goes to net-tools)`: alias PORTS="netstat -tulanp" # alias nr="net-restart"
+    - alias SERVICE="sudo systemctl --type=service"
+    - alias TIMER="sudo systemctl -t timer"
+    - alias TOTALUSAGE="df -hl --total | grep total"
+    - `(shortcuts)`: alias TRASH="cd ${HOME}/.local/share/Trash/*"
+    - alias UF="sudo systemctl list-unit-files"
+    - alias editbashrc="pluma ${HOME}/.bashrc"
+    - `(adapt to bash features)`: alias editfunctions="pluma ${HOME}/.bash_functions"
+    - alias editprofile="pluma ${HOME}/.profile"
+    - alias ipi="hostname -I | awk '{print $1}'"
+    - `(modify, expanded behaviour)`: alias fn="find . -name"
+    - `function`: alias port="lsof -i $1"
+    - alias ports="lsof -Pan -i tcp -i udp"
+- [ ] `install.sh`, `uninstall.sh`: SSH
+    - alias sshCheck="sudo service ssh status"
+    - alias sshConf="sshConfig"
+    - alias sshConfig="pluma ${HOME}/.ssh/config"
+    - alias sshDisable="sudo systemctl disable sshd"
+    - alias sshEnable="sudo systemctl enable ssh"
+    - alias sshRestart="sudo systemctl restart sshd"
+    - alias sshStart="sudo systemctl start sshd"
+    - alias sshStatus="sudo systemctl status sshd"
+    - alias sshStop="sudo systemctl stop sshd"
+    - alias sshconf="sshConfig"
+    - alias r="make run"
+    - alias rs="rsync -av --progress"
+    - alias w="change-gb" `(from customizer)`
+- [ ] `python` virtual env aliases:
+    - alias va="source ./venv/bin/activate"
+    - alias ve="python3 -m venv ./venv"
+    - alias veva="ve; va"
+
 
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
 - [ ] `uninstall.sh`: nautilus
@@ -38,6 +77,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `uninstall.sh`: HardInfo (Benchmark tool)
 - [ ] `uninstall.sh`: Dbeaver (database manager)
 
+- [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: Mdadm (raid manager) blkid (filesystems that has UUID are displayed) lsblk, fstab (lists all available disk partitions) `/etc/fstab`
 - [ ] `install.sh`, `uninstall.sh`: matlab
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
@@ -57,7 +97,11 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 # TO-DO v1.0
 
 #### NEW FEATURES
-
+- [ ] `L` function columns
+- [ ] `e` convert to edit and echo function
+- [ ] turn k to g
+- [ ] rewrite k as function: #alias k9="kill -9"# alias killbyport="k9 \`lsof -i:3000 -t\`"  
+- [ ] Install Customizerself installation #FUNCTION alias Install="sudo apt-get install -y" alias `CUSTOMIZER`= `cd ...?`
 - [ ] `README.md` or `IMPLEMENTATION.md`: Write down the command dependencies of the folder project
 - [ ] `install.sh`: Add debug mode, with a simple eval to inject code as a function
 - [ ] `install.sh`, `uninstall.sh`: kernels support for jupyter-lab

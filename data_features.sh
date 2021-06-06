@@ -419,12 +419,11 @@ git_packagenames=("git-all" "git-lfs")
 
 commit_bashfunctions=("commit()
 {
-    message=\"\$*\"
-    if [ -z \"\$message\" ]; then
-      echo \"Add a message\"
-      read message
-    fi
-    git commit -am \"\$message\"
+    messag=\"\$*\"
+    while [ -z \"\$messag\" ]; do
+      read -p \"Add message: \" messag
+    done
+    git commit -am \"\$messag\"
 }
 ")
 commit_installationtype="packagemanager"

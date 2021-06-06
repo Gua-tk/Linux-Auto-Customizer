@@ -1410,7 +1410,7 @@ main()
         FLAG_FAVORITES=0
       ;;
 
-      -n|--not|-!)
+      -n|--not)
         FLAG_INSTALL=0
       ;;
       -y|--yes)
@@ -1427,6 +1427,10 @@ main()
 
         output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" ${FLAG_QUIETNESS}
         exit 0
+      ;;
+
+      --debug)
+        customizer_prompt
       ;;
 
       ### WRAPPER ARGUMENTS ###

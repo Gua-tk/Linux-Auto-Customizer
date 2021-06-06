@@ -216,6 +216,15 @@ autogen_readme()
   echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total" >> table.md
 }
 
+# Sets up custom prompt when entering debug mode in customizer
+customizer_prompt()
+{
+  while [ true ]; do
+    read -p "customizer-prompt $ " cmds
+    eval "${cmds}"
+  done
+}
+
 # Common piece of code in the execute_installation function
 # Argument 1: forceness_bit
 # Argument 2: quietness_bit
