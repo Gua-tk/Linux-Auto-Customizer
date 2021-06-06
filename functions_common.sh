@@ -108,6 +108,61 @@ add_wrapper()
   done
 }
 
+autogen_help()
+{
+  local packagemanager_lines=
+  local user_lines=
+  local root_lines=
+  local root_num=0
+  local user_num=0
+  true > help.md
+
+  for program in "${installation_data[@]}"; do
+    local readme_line="$(echo "${program}" | cut -d ";" -f3-)"
+    local installation_type="$(echo "${program}" | cut -d ";" -f2)"
+    local program_arguments="$(echo "${program}" | cut -d ";" -f1)"
+    local program_argument="$(echo "${program_arguments}" | cut -d "|" -f1)"
+    local program_name="$(echo "${readme_line}" | cut -d "|" -f2)"
+    local program_features="$(echo "${readme_line}" | cut -d "|" -f4)"
+    local program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " ")"
+
+    local help_line="${program_argument};${program_name};${program_commands}"
+    case ${installation_type} in
+      0)
+        user_lines+=("${help_line}")
+        root_num=$(( root_num + 1 ))
+      ;;
+      1)
+        root_lines+=("${help_line}")
+        user_num=$(( user_num + 1 ))
+      ;;
+      packagemanager)
+        packagemanager_lines+=("${help_line}")
+      ;;
+    esac
+  done
+  local program_headers=("ARGUMENT;FEATURE_NAME;COMMANDS")
+
+  local -r newline=$'\n'
+  local user_lines_final=
+  for line in "${user_lines[@]}"; do
+    user_lines_final="${user_lines_final}${line}${newline}"
+  done
+  user_lines_final="$(echo "${user_lines_final}" | sort)"
+  column -ts ";" <<< "${program_headers}${newline}${user_lines_final}"
+
+  echo "${newline}" >> "help.md"
+
+  local root_lines_final=
+  for line in "${root_lines[@]}"; do
+    root_lines_final="${root_lines_final}${line}${newline}"
+  done
+  root_lines_final="$(echo "${root_lines_final}" | sort)"
+  column -ts ";" <<< "${program_headers}${newline}${root_lines_final}"
+
+  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total"
+}
+
 autogen_readme()
 {
   local packagemanager_lines=
