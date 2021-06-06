@@ -27,24 +27,25 @@
     - git add function
 
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
+- [ ] `uninstall.sh`: nautilus
 - [ ] `uninstall.sh`: lolcat
 - [ ] `uninstall.sh`: fdups  (duplicate finder CLI)
-- [ ] `install.sh`, `uninstall.sh`: matlab, codeblocks  
-- [ ] `install.sh`, `uninstall.sh`: fslint (virtual environment)
+- [ ] `uninstall.sh`: Remmina, TeamViewer: desktop access
+- [ ] `uninstall.sh`: codeblocks
+- [ ] `uninstall.sh`: handbrake: format editing tool
+- [ ] `uninstall.sh`: brasero: cd/dvd burning
+- [ ] `uninstall.sh`: Axel: download manager
+- [ ] `uninstall.sh`: HardInfo (Benchmark tool)
+- [ ] `uninstall.sh`: Dbeaver (database manager)
+
+- [ ] `install.sh`, `uninstall.sh`: Mdadm (raid manager) blkid (filesystems that has UUID are displayed) lsblk, fstab (lists all available disk partitions) `/etc/fstab`
+- [ ] `install.sh`, `uninstall.sh`: matlab
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
-- [ ] `install.sh`, `uninstall.sh`: sherlock 
-- [ ] `install.sh`, `uninstall.sh`: nautilus (with uninstall please)
+- [ ] `install.sh`, `uninstall.sh`: sherlock
 - [ ] `install.sh`, `uninstall.sh`: music edition: rosegarden, Ardour, LMMS
-- [ ] `uninstall.sh`: desktop access: Remmina, TeamViewer
-- [ ] `install.sh`, `uninstall.sh`: handbreak: format editing tool
 - [ ] `install.sh`, `uninstall.sh`: terminal at F12 key: guake
-- [ ] `install.sh`, `uninstall.sh`: cd/dvd burning: brasero
 - [ ] `install.sh`, `uninstall.sh`: iso customization: Remastersys, UNetbootin
 - [ ] `install.sh`, `uninstall.sh`: image edition: Blender3D, Agave (sudo apt-get instal agave)
-- [ ] `install.sh`, `uninstall.sh`: download manager: Axel
-- [ ] `install.sh`, `uninstall.sh`: Mdadm (raid manager) blkid (filesystems that has UUID are displayed) lsblk, fstab (lists all available disk partitions) `/etc/fstab` 
-- [ ] `install.sh`, `uninstall.sh`: HardInfo (Benchmark tool)
-- [ ] `install.sh`, `uninstall.sh`: Dbeaver (database manager)
 - [ ] `install.sh`, `uninstall.sh`: aircrack-ng
 - [ ] `install.sh`, `uninstall.sh`: nmap
 - [ ] `install.sh`, `uninstall.sh`: ncat (netcat)
@@ -92,16 +93,13 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `install.sh`, `uninstall.sh`: Add several kernels & customizations for jupyter-lab: [text-shortcuts](https://github.com/techrah/jupyterext-text-shortcuts)
     - scala (Almond)  
     - perl
-    - ruby (IRuby)
+    - ruby 
     - rust (EvCxR Jupyter Kernel)
-    - angular
     - php (Jupyter-PHP)
-    - react
 ###### Other Jupyter-lab kernels
     - r (IRkernel)
     - ansible (Ansible Kernel)
     - latex
-    - stata (Stata_kernel)
     - Wolfram Kernel
     - lua (ILua)
     - Xonsh
@@ -109,6 +107,8 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
     - vscode-jupyter (integration of jupyter into vscode)
     - theme-darcula (dark theme Intellij like)
     - # Web stack (probably included already in vscode)    
+    - angular
+    - react
     - xml
     - html
     - css
