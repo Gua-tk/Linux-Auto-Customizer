@@ -171,11 +171,6 @@ install_freecad()
   generic_install freecad
 }
 
-install_fslint()
-{
-  generic_install fslint
-}
-
 install_gcc()
 {
   generic_install gcc
@@ -1289,6 +1284,7 @@ main()
   if [[ -z "$(cat ${BASHRC_PATH} | grep -Fo "source ${BASH_FUNCTIONS_PATH}" )" ]]; then  # .bash_functions not added
     echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
   fi
+  # Built-in favourites system
   add_bash_function "${favorites_function}" "favorites.sh"
 
   #################################
@@ -1324,13 +1320,6 @@ main()
         FLAG_IGNORE_ERRORS=1
       ;;
 
-
-      # Force is the two previous active behaviours in one
-      -f|--force)
-        FLAG_IGNORE_ERRORS=1
-        FLAG_OVERWRITE=1
-      ;;
-
       -d|--dirty|--no-autoclean)
         FLAG_AUTOCLEAN=0
       ;;
@@ -1349,6 +1338,13 @@ main()
       ;;
       -U|--upgrade|--Upgrade)
         FLAG_UPGRADE=2
+      ;;
+
+      -f|--favorites|--set-favorites
+        FLAG_FAVORITES=1
+      ;;
+      -z|--no-favorites
+        FLAG_FAVORITES=0
       ;;
 
       -n|--not|-!)

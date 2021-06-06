@@ -88,21 +88,32 @@ FLAG_IGNORE_ERRORS=0 # 1 --> the script will continue its execution even if an e
 NUM_INSTALLATION=1  # Used to perform the (un)installation in the same order that we are receiving arguments. Also, keeps the order even if we use --no, because we need a temporal
 FLAG_UPGRADE=1  # 0 --> no update, no upgrade; 1 --> update, no upgrade; 2 --> update and upgrade
 FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perform autoremove; 2 --> perform autoremove and autoclean
+FLAG_FAVORITES=0  # 0 --> does nothing; 1 --> sets the program to favourites if there is a desktop launcher
 FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1 or 0, respectively
 
 
 ### FEATURE_DATA ###
 
 # This pseudo-matrix contains different information for every feature available in this project.
-# The first values are used to store dynamically the arguments desired for that function:
-# 1.- If we are actually going to install the program.
-# 2.- If we should (or not) abort when finding errors.
-# 3.- What level of standard output is desired for that feature: 0 verbose, 1 quiet (only informative prints), 2 totally quiet
-# 4.- If we should reinstall the feature or not when we find that the desired feature already installed.
-# The last two values are static and are used only to read:
-# 5.- Permissions: 0 for user permissions, 1 for root permissions, 2 for indiferent
-# 6.- Function name
-# install_yes/no; forceness; quietness; overwrite; permissions; function_name
+# * The first values of the two cells delimited with ; in each row are used to store dynamically the arguments desired
+#   for that function.
+#   - The first field contains all the arguments to call the program delimited with "|". It is very important to know
+#     that the first argument without the -- is a string that is also matched against a installing function in install
+#     or the corresponding variables in data_features.sh. Also, The name of the first argument without the -- is
+#     expected to be the binary used to detect if there is an installation present.
+#   - The second argument that now is a bit (0 or 1) between semicolons is the permissions needed to install each
+#     program. It is going to be changed to the installation type soon.
+#     Its format: 0 for user permissions, 1 for root permissions, 2 for indiferent. Soon will be the installationtype,
+#     such as "packagemanager"
+#   - In this each of the field of installation_data we would find other data during the runtime, since the rest of
+#     the data is removed.
+#   - Also other numeric data is added to store the desired behavioural flags for each program, such as:
+#     1.- If we are actually going to install the program.
+#     2.- If we should (or not) abort when finding errors.
+#     3.- What level of standard output is desired for that feature: 0 verbose, 1 quiet (only informative prints), 2 totally quiet
+#     4.- If we should reinstall the feature or not when we find that the desired feature already installed.
+#     install_yes/no; forceness; quietness; overwrite; permissions; function_name
+#   - The rest
 installation_data=(
   "--a;0;| alias | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--all;0;| add | Stands by a function for \`git add --all\` | Command \`all\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -163,14 +174,13 @@ installation_data=(
   "--fonts-noto-sans|--noto_sans;0;| fonts-noto_sans | Installs font| Install noto_sans font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--forms|--google-forms;0;| Forms | Google Forms opening in Chrome | Command \`forms\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--freecad|--FreeCAD|--freeCAD;1;| FreeCAD | General-purpose parametric 3D computer-aided design modeler and a building information modeling | Command \`freecad\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
-  "--fslint;1;| fslint | Duplicate file finder for linux for disk organization | Command \`fslint\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gcc|--GCC;1;| GNU C Compiler | C compiler for GNU systems | Command \`gcc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--geany|--Geany;1;| Geany | Lightweight GUI text editor using Scintilla and GTK, including basic IDE features | Command \`geany\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic;0;| GeoGebra | Geometry calculator GUI | Command \`geogebra\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gimp|--GIMP|--Gimp;1;| Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats. | Command \`gimp\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--git;1;| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Command \`git\` and \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--github|--Github|--GitHub;1;| GitHub | GitHub opening in Chrome | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--gitk|--Gitk|--Git-k;1;| Gitk | GUI for git | Command ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--gitk|--Gitk|--Git-k;1;| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gitlab|--GitLab|--git-lab;0;| GitLab | Gitlab opening in Chrome | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gitprompt|--git-prompt;1;| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gmail|--Gmail;0;| Gmail | Gmail opening in Chrome | Command \`gmail\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -410,7 +420,7 @@ to refer to the complete help, where all behavioural arguments and feature
 arguments are listed and explained in detail.
 "
 
-help_arguments="
+help_auxiliar_arguments="
 #### Arguments:
 
  -c, --clean          Perform an apt-get autoremove at the end of installation
