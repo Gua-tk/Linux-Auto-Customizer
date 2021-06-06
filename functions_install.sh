@@ -85,16 +85,18 @@ add_internet_shortcut() {
 # - Argument 1: Name of the .desktop launcher including .desktop extension written in file in PROGRAM_FAVORITES_PATH
 add_to_favorites()
 {
-  if [ -z "$(cat "${PROGRAM_FAVORITES_PATH}" | grep -Eo "$1")" ]; then
-    if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]; then
-      echo "$1.desktop" >> "${PROGRAM_FAVORITES_PATH}"
+  for argument in "$@"; do
+    if [ -z "$(cat "${PROGRAM_FAVORITES_PATH}" | grep -Eo "${argument}")" ]; then
+      if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
+        echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
+      else
+        output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
+        return
+      fi
     else
-      output_proxy_executioner "echo WARNING: The program $1 cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
-      return
+      output_proxy_executioner "echo WARNING: The program ${argument} is already added to the taskbar favorites. Skipping" "${FLAG_QUIETNESS}"
     fi
-  else
-    output_proxy_executioner "echo WARNING: The program $1 is already added to the taskbar favorites. Skipping" "${FLAG_QUIETNESS}"
-  fi
+  done
 }
 
 # - Description: Apply standard permissions and set owner and group to the user who called root
@@ -415,9 +417,8 @@ generic_install() {
     # To add to favorites if the flag is set
     if [ "${FLAG_FAVORITES}" == "1" ]; then
       if [ -n "${!launchernames}" ]; then
-        for i in "${!launchernames}"; do
-          add_to_favorites "$i"
-        done
+        echo "${!launchernames}"
+        add_to_favorites "${!launchernames}"
       else
         add_to_favorites "${featurename}"
       fi
