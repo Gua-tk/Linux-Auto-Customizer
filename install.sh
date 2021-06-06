@@ -819,11 +819,6 @@ install_a()
   generic_install a
 }
 
-install_all()
-{
-  generic_install all
-}
-
 install_alert()
 {
   add_bash_function "${alert_alias}" alert.sh
@@ -1254,7 +1249,7 @@ main()
     create_folder_as_root ${FONTS_FOLDER}
 
     if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
-      create_file_as_root "${BASH_FUNCTIONS_PATH}" "${bash_functions_init}"
+      add_bash_function "${BASH_FUNCTIONS_PATH}" "${bash_functions_init}"
       # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
       if [[ -z "$(echo "${PATH}" | grep -Eo "(.*:.*)*${DIR_IN_PATH}")" ]]; then  # If it is not in PATH, add to bash functions
         echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASH_FUNCTIONS_PATH}
@@ -1268,7 +1263,7 @@ main()
     mkdir -p ${FONTS_FOLDER}
     # If $BASH_FUNCTION_PATH does not exist, create the exit point when running not interactively.
     if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
-      echo "${bash_functions_init}" > "${BASH_FUNCTIONS_PATH}"
+      add_bash_function "${bash_functions_init}" "${BASH_FUNCTIONS_PATH}"
     else
       # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
       source ${BASH_FUNCTIONS_PATH}
@@ -1340,10 +1335,10 @@ main()
         FLAG_UPGRADE=2
       ;;
 
-      -f|--favorites|--set-favorites
+      -f|--favorites|--set-favorites)
         FLAG_FAVORITES=1
       ;;
-      -z|--no-favorites
+      -z|--no-favorites)
         FLAG_FAVORITES=0
       ;;
 

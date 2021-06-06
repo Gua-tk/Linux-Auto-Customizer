@@ -3,11 +3,10 @@
 - [~] `functions_install.sh`: create user generic install
 - [~] `functions_install.sh`: Make download() and decompress() handle relative paths as paths from USR_BIN_FOLDER. if not absolute
 - [~] `data_features.sh`: Create high level functions that perform variable indirect expansion to install different types of program.
-- [ ] `data_features.sh`: Implement more robustness in function change terminal-background. Change the use of `dconf` for `gsettings`, which is more safe, also make sure to have a correct value before changing background.  
 - [ ] `install.sh`, `uninstall.sh`: New argument in install.sh add to favourites -f / -n normal installation without favourites(?) also complementary flag in uninstall.sh
 - [ ] `install.sh`: Move favourites subsystem to ~.profile, so it is not executed each time we create a terminal.
 - [ ] `install.sh`: Force that the non-interactive running and the path is the first line in .bash_functions, as a common feature
-- [ ] `functions_commo.sh`: in autogen help trim spaces in columns
+- [ ] `functions_common.sh`: in autogen help trim spaces in columns
 - [ ] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers or cheat have to be moved
 
 ##### Axel
@@ -19,6 +18,7 @@
 - [ ] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to parametrize and create a func that does it for any program
 - [ ] `data_features.sh`: Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
+- [ ] `common_data.md`: In the table, put the extensions .c, .h, etc in bold or put it in another field, so they are not between literal tildes. In that way, they are not recognized in the help.
 
 - [ ] `install.sh`, `uninstall.sh`: Add most significative asix2Atesting aliases & end conflicts with Up-to-Date Customizer duplication;
     - gris is bash function not alias

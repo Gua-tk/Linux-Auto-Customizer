@@ -53,6 +53,8 @@
 - [x] `install.sh`: Postman [link](https://gist.github.com/elcascarudo-dev/e39eacb490d11cea0c22e1923072d855)
 - [x] `install.sh`: pgAdmin4 using pip and venv
 - [x] `install.sh`: sonic-pi, jupyter-lab
+- [x] `data_features.sh`: Implement more robustness in function change terminal-background. Change the use of `dconf` for `gsettings`, which is more safe, also make sure to have a correct value before changing background.  
+
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
 - [x] Use the same fields in the same order in launchers: Name, GenericName, Type, Comment, Categories=IDE;Programming;, Version, StartupWMClass, Icon, Exec, Terminal, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
