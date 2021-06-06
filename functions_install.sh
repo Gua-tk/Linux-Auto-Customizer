@@ -418,7 +418,7 @@ generic_install() {
     if [ "${FLAG_FAVORITES}" == "1" ]; then
       if [ -n "${!launchernames}" ]; then
         echo "${!launchernames}"
-        add_to_favorites "${!launchernames}"
+        add_to_favorites ${!launchernames}
       else
         add_to_favorites "${featurename}"
       fi
