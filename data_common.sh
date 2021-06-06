@@ -177,7 +177,7 @@ installation_data=(
   "--gimp|--GIMP|--Gimp;1;| Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats. | Command \`gimp\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--git;1;| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Command \`git\` and \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--github|--Github|--GitHub;1;| GitHub | GitHub opening in Chrome | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--gitk|--Gitk|--Git-k;1;| Gitk | GUI for git | Command ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--gitk|--Gitk|--Git-k;1;| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gitlab|--GitLab|--git-lab;0;| GitLab | Gitlab opening in Chrome | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gitprompt|--git-prompt;1;| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gmail|--Gmail;0;| Gmail | Gmail opening in Chrome | Command \`gmail\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -409,7 +409,7 @@ to refer to the complete help, where all behavioural arguments and feature
 arguments are listed and explained in detail.
 "
 
-help_arguments="
+help_auxiliar_arguments="
 #### Arguments:
 
  -c, --clean          Perform an apt-get autoremove at the end of installation
