@@ -470,6 +470,8 @@ rootgeneric_installation_type() {
       name_suffix_anticollision="${name_suffix_anticollision}_"
     done
   fi
+
+
 }
 
 # - Permissions: Expected to be run by normal user.

@@ -7,6 +7,8 @@
 - [ ] `install.sh`, `uninstall.sh`: New argument in install.sh add to favourites -f / -n normal installation without favourites(?) also complementary flag in uninstall.sh
 - [ ] `install.sh`: Move favourites subsystem to ~.profile, so it is not executed each time we create a terminal.
 - [ ] `install.sh`: Force that the non-interactive running and the path is the first line in .bash_functions, as a common feature
+- [ ] `functions_commo.sh`: in autogen help trim spaces in columns
+- [ ] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers or cheat have to be moved
 
 ##### Axel
 - [ ] `data_features.sh`: Add edge cases of function `commit`. Test exhaustively, spaces, strings, colons, commands, multiple arguments etc. It can not fail.
@@ -27,7 +29,7 @@
     - hard `(git reset HEAD --hard)`  
     - i `(cat)`
     - x `(clear && ls)`
-    - xo `(xdg-open)`
+    - xo `(xdg-open )`
     - u `(du -h --max-depth)`   
     - j `(jobs -l)`
     - q, :q, :q! `(exit)`

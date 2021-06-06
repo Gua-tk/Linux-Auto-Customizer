@@ -88,6 +88,7 @@ FLAG_IGNORE_ERRORS=0 # 1 --> the script will continue its execution even if an e
 NUM_INSTALLATION=1  # Used to perform the (un)installation in the same order that we are receiving arguments. Also, keeps the order even if we use --no, because we need a temporal
 FLAG_UPGRADE=1  # 0 --> no update, no upgrade; 1 --> update, no upgrade; 2 --> update and upgrade
 FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perform autoremove; 2 --> perform autoremove and autoclean
+FLAG_FAVORITES=0  # 0 --> does nothing; 1 --> sets the program to favourites if there is a desktop launcher
 FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1 or 0, respectively
 
 
@@ -170,7 +171,6 @@ installation_data=(
   "--fonts-noto-sans|--noto_sans;0;| fonts-noto_sans | Installs font| Install noto_sans font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--forms|--google-forms;0;| Forms | Google Forms opening in Chrome | Command \`forms\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--freecad|--FreeCAD|--freeCAD;1;| FreeCAD | General-purpose parametric 3D computer-aided design modeler and a building information modeling | Command \`freecad\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
-  "--fslint;1;| fslint | Duplicate file finder for linux for disk organization | Command \`fslint\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gcc|--GCC;1;| GNU C Compiler | C compiler for GNU systems | Command \`gcc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--geany|--Geany;1;| Geany | Lightweight GUI text editor using Scintilla and GTK, including basic IDE features | Command \`geany\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--geogebra|--geogebra-classic-6|--Geogebra-6|--geogebra-6|--Geogebra-Classic-6|--geogebra-classic;0;| GeoGebra | Geometry calculator GUI | Command \`geogebra\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"

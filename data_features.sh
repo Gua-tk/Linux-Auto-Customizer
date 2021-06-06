@@ -355,11 +355,6 @@ freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
 
-fslint_installationtype="packagemanager"
-fslint_packagenames=("fslint")
-fslint_packagedependencies=("findutils" "python" "python-gtk2" "python-glade2" )
-fslint_launchernames=("fslint")
-
 gcc_installationtype="packagemanager"
 gcc_packagenames=("gcc")
 gcc_bashfunctions=("# colored GCC warnings and errors
