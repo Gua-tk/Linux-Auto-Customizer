@@ -94,6 +94,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `data_common.sh`: Refactor order of main table to have the same three sections as in install .sh
 - [ ] `uninstall.sh`: refactor order of function to follow theconvention on `install.sh`  
 - [ ] `README.md`: Refactor order of the table to follow the conventions on `install.sh`. (implement three sections)
+- [ ] `table.md`: Remove spaces for help table
 - [ ] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to 
 - [ ] `uninstall.sh`: Show warning in uninstall when activating -o flag
 - [ ] `uninstall.sh`: Rewrite `uninstall.sh` functions using the new auxiliary functions, structures, variables

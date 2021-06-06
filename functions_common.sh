@@ -149,7 +149,7 @@ autogen_help()
     user_lines_final="${user_lines_final}${line}${newline}"
   done
   user_lines_final="$(echo "${user_lines_final}" | sort)"
-  column -ts ";" <<< "${program_headers}${newline}${user_lines_final}" 
+  column -ts ";" <<< "${program_headers}${newline}${user_lines_final}"
 
   echo "${newline}" >> "help.md"
 
