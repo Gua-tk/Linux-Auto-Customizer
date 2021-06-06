@@ -67,6 +67,9 @@ esac
 a_installationtype="packagemanager"
 a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
 
+all_installationtype="packagemanager"
+all_bashfunctions=("alias add=\"git add --all\"")
+
 aisleriot_installationtype=packagemanager
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")

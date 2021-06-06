@@ -105,6 +105,7 @@ FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1
 # install_yes/no; forceness; quietness; overwrite; permissions; function_name
 installation_data=(
   "--a;0;| alias | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--all;0;| add | Stands by a function for \`git add --all\` | Command \`all\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--aisleriot|--solitaire|--Solitaire|--gnome-solitaire;1;| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--alert|--alert-alias|--alias-alert;0;| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--ant|--apache_ant|--apache-ant;0;| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"

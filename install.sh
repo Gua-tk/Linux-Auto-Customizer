@@ -824,6 +824,11 @@ install_a()
   generic_install a
 }
 
+install_all()
+{
+  generic_install all
+}
+
 install_alert()
 {
   add_bash_function "${alert_alias}" alert.sh
