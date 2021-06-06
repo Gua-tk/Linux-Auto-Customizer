@@ -54,6 +54,8 @@
 - [x] `install.sh`: pgAdmin4 using pip and venv
 - [x] `install.sh`: sonic-pi, jupyter-lab
 - [x] `data_features.sh`: Implement more robustness in function change terminal-background. Change the use of `dconf` for `gsettings`, which is more safe, also make sure to have a correct value before changing background.  
+- [x] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
+- [x] `install.sh`: Force that the non-interactive running and the path is the first line in .bash_functions, as a common feature
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter

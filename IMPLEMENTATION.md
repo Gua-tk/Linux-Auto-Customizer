@@ -5,7 +5,6 @@
 - [~] `data_features.sh`: Create high level functions that perform variable indirect expansion to install different types of program.
 - [ ] `install.sh`, `uninstall.sh`: New argument in install.sh add to favourites -f / -n normal installation without favourites(?) also complementary flag in uninstall.sh
 - [ ] `install.sh`: Move favourites subsystem to ~.profile, so it is not executed each time we create a terminal.
-- [ ] `install.sh`: Force that the non-interactive running and the path is the first line in .bash_functions, as a common feature
 - [ ] `functions_common.sh`: in autogen help trim spaces in columns
 - [ ] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers or cheat have to be moved
 
@@ -16,7 +15,6 @@
 - [ ] `data_features.sh`, `install.sh`, `uninstall.sh`: create bash functions that defines all the color schemes and styles in bash, storing the format in variables like RED="\e0]", BLUE="\e0", BOLD="...",  so you can `echo "${RED}${BOLD} This text is in red and bold"`
 - [ ] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to parametrize and create a func that does it for any program
 - [ ] `data_features.sh`: Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
-- [ ] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
 - [ ] `common_data.md`: In the table, put the extensions .c, .h, etc in bold or put it in another field, so they are not between literal tildes. In that way, they are not recognized in the help.
 - [ ] `e` function performs an echo if $1 is a string text
 - [~] `install.sh`, `uninstall.sh`: Add most significative asix2Atesting aliases & end conflicts with Up-to-Date Customizer duplication;
@@ -72,7 +70,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `uninstall.sh`: brasero: cd/dvd burning
 - [ ] `uninstall.sh`: Axel: download manager
 - [ ] `uninstall.sh`: HardInfo (Benchmark tool)
-- [ ] `uninstall.sh`: Dbeaver (database manager)
+- [ ] `uninstall.sh`: Dbeaver Community (database manager)
 
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: Mdadm (raid manager) blkid (filesystems that has UUID are displayed) lsblk, fstab (lists all available disk partitions) `/etc/fstab`
