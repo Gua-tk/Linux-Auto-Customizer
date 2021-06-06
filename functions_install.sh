@@ -83,8 +83,20 @@ add_internet_shortcut() {
 # - Description: Add new program launcher to the task bar given its desktop launcher filename.
 # - Permissions: This functions expects to be called as a non-privileged user.
 # - Argument 1: Name of the .desktop launcher including .desktop extension written in file in PROGRAM_FAVORITES_PATH
-add_to_favorites() {
-  echo $1 >>"${PROGRAM_FAVORITES_PATH}"
+add_to_favorites()
+{
+  for argument in "$@"; do
+    if [ -z "$(cat "${PROGRAM_FAVORITES_PATH}" | grep -Eo "${argument}")" ]; then
+      if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
+        echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
+      else
+        output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
+        return
+      fi
+    else
+      output_proxy_executioner "echo WARNING: The program ${argument} is already added to the taskbar favorites. Skipping" "${FLAG_QUIETNESS}"
+    fi
+  done
 }
 
 # - Description: Apply standard permissions and set owner and group to the user who called root
@@ -386,6 +398,7 @@ download_and_install_package() {
 generic_install() {
   # Substitute dashes for underscores. Dashes are not allowed in variable names
   local -r featurename=$(echo "$1" | sed "s@-@_@g")
+  local -r launchernames="${featurename}_launchernames[@]"
 
   local -r installationtype=${featurename}_installationtype
   if [[ ! -z "${!installationtype}" ]]; then
@@ -401,7 +414,17 @@ generic_install() {
       exit 1
       ;;
     esac
+    # To add to favorites if the flag is set
+    if [ "${FLAG_FAVORITES}" == "1" ]; then
+      if [ -n "${!launchernames}" ]; then
+        echo "${!launchernames}"
+        add_to_favorites "${!launchernames}"
+      else
+        add_to_favorites "${featurename}"
+      fi
+    fi
   fi
+
 }
 
 # - Description: Installs packages using apt-get or ) + dpkg and also installs additional features such as

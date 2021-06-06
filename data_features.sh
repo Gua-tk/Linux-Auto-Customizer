@@ -57,6 +57,9 @@ case \$- in
     *i*) ;;
       *) return;;
 esac
+if [[ -z \"\$(echo \$PATH | grep -Eo \"${DIR_IN_PATH}\")\" ]]; then
+  export PATH=\$PATH:${DIR_IN_PATH}
+fi
 "
 
 
@@ -1406,8 +1409,12 @@ HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
 # The cmdhist shell option, if enabled, causes the shell to attempt to save each line of a multi-line command in the
 # same history entry, adding semicolons where necessary to preserve syntactic correctness.
 shopt -s cmdhist
+# Store multiline commands with newlines when possible, rather that using semicolons
+#shopt -s lithist 
+# To retrieve the commands correctly
+HISTTIMEFORMAT='%F %T '
 # Check the windows size on every prompt and reset the number of columns and rows if necessary
-#shopt -s checkwinsize  # Kinda buggy
+shopt -s checkwinsize  # Kinda buggy
 
 # Save and reload from history before prompt appears
 if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a; history -r; \")\" ]]; then
