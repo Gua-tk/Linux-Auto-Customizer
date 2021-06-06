@@ -426,10 +426,9 @@ gimp_launchernames=("gimp")
 git_installationtype="packagemanager"
 git_packagenames=("git-all" "git-lfs")
 
-commit_bashfunctions=("
-commit()
+commit_bashfunctions=("commit()
 {
-    messag=\"\$*\"
+    messag=\"\$@\"
     while [ -z \"\$messag\" ]; do
       read -p \"Add message: \" messag
     done
