@@ -1247,6 +1247,9 @@ main()
     create_folder_as_root ${DIR_IN_PATH}
     create_folder_as_root ${PERSONAL_LAUNCHERS_DIR}
     create_folder_as_root ${FONTS_FOLDER}
+    if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
+      create_file_as_root "${PROGRAM_FAVORITES_PATH}" ""
+    fi
 
     if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
       add_bash_function "${BASH_FUNCTIONS_PATH}" "${bash_functions_init}"
@@ -1280,7 +1283,10 @@ main()
     echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
   fi
   # Built-in favourites system
-  add_bash_function "${favorites_function}" "favorites.sh"
+  if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
+    true >> "${PROGRAM_FAVORITES_PATH}"
+    add_bash_function "${favorites_function}" "favorites.sh"
+  fi
 
   #################################
   ###### ARGUMENT PROCESSING ######
