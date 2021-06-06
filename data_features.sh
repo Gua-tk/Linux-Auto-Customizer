@@ -1367,7 +1367,7 @@ HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
 # same history entry, adding semicolons where necessary to preserve syntactic correctness.
 shopt -s cmdhist
 # Store multiline commands with newlines when possible, rather that using semicolons
-#shopt -s lithist
+#shopt -s lithist 
 # To retrieve the commands correctly
 HISTTIMEFORMAT='%F %T '
 # Check the windows size on every prompt and reset the number of columns and rows if necessary
