@@ -97,3 +97,4 @@
 - [x] `README.md`: Write escaped contents of `README.md` in the table in data_common.sh, after the permissions bit.
 - [x] `README.md`: (depends on declaration above) Sort `README.md` table, with same sections as `install.sh` and the sort table in `data_common.sh` with that order too (3 groups of features:root, user, system environment sorted alphabetically).
 - [x] javascript (IJavascript), nodejs, npm, jupyterlab_markup, assembler, julia (IJulia), poweshell_kernel
+- [x] adding aliases: `a`, `bi`, `gris`, `hard`, `lol`, `notebook`, `lab`, 

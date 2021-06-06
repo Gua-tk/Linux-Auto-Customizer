@@ -63,6 +63,10 @@ esac
 ###########################################
 ##### INSTALLATION SPECIFIC VARIABLES #####
 ###########################################
+
+a_installationtype="packagemanager"
+a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
+
 aisleriot_installationtype=packagemanager
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")
@@ -150,6 +154,9 @@ LIGHTCYAN='\033[1;36m'
 WHITE='\033[1;37m'
 
 "
+
+bi_installationtype="packagemanager"
+bi_bashfunctions=("alias bi=\"sudo apt --fix-broken install\"")
 
 caffeine_installationtype="packagemanager"
 caffeine_launchernames=("caffeine-indicator")
@@ -421,6 +428,9 @@ gitk_packagenames=("gitk")
 gitk_installationtype="packagemanager"
 gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
 
+j_bashfunctions=("alias j=\"jobs -l\"")
+j_installationtype="packagemanager"
+
 k_bashfunctions=("alias k=\"gitk\"")
 k_installationtype="packagemanager"
 
@@ -490,6 +500,9 @@ X-Ubuntu-Gettext-Domain=gpaint-2
 gparted_installationtype="packagemanager"
 gparted_packagenames=("gparted")
 gparted_launchernames=("gparted")
+
+gris_installationtype="packagemanager"
+gris_bashfunctions=("alias gris=\"history | grep \$1\"")
 
 gvim_installationtype="packagemanager"
 gvim_packagenames=("vim-gtk3")
@@ -974,6 +987,9 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
+hard_installationtype="packagemanager"
+hard_bashfunctions=("alias hard=\"git reset HEAD --hard\"")
+
 ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
 ideau_launcher="[Desktop Entry]
 Categories=Development;IDE;
@@ -1070,6 +1086,9 @@ Icon=${USR_BIN_FOLDER}/jupyter-lab/share/icons/hicolor/scalable/apps/notebook.sv
 Exec=jupyter-lab &
 ")
 
+lab_installationtype="packagemanager"
+lab_bashfunctions=("alias lab=\"jupyter-lab\"")
+
 latex_installationtype="packagemanager"
 latex_launchernames=("texmaker")
 latex_dependencies=("perl-tk" )
@@ -1078,6 +1097,7 @@ latex_launchercontents=("
 [Desktop Entry]
 Name=TeXdoctk
 Exec=texdoctk
+Type=Application
 Type=Application
 Terminal=false
 Categories=Settings;
@@ -1090,6 +1110,9 @@ libgtkglext1_packagenames=("libgtkglext1")
 
 libxcb_xtest0_installationtype="packagemanager"
 libxcb_xtest0_packagenames=("libxcb-xtest0")
+
+lol_installationtype="packagemanager"
+lol_bashfunctions=("alias lol=\"lolcat\"")
 
 lolcat_installationtype="packagemanager"
 lolcat_packagenames=("lolcat")
@@ -1128,6 +1151,9 @@ net_tools_packagenames=("net-tools")
 
 node_installationtype="packageinstall"
 node_packageurls=("https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz")
+
+notebook_installationtype="packagemanager"
+notebook_bashfunctions=("alias notebook=\"jupyter notebook\"")
 
 notepadqq_installationtype="packagemanager"
 notepadqq_packagenames=("notepadqq")
@@ -1244,6 +1270,12 @@ fi
 
 
 ")
+
+pull_installationtype="packagemanager"
+pull_bashfunctions=("alias pull=\"git pull\"")
+
+push_installationtype="packagemanager"
+push_bashfunctions=("alias push=\"git push\"")
 
 pycharm_downloader=https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz
 pycharm_launcher="[Desktop Entry]

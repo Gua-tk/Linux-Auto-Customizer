@@ -19,22 +19,11 @@
 - [ ] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to parametrize and create a func that does it for any program
 - [ ] `data_features.sh`: Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
-- [ ] `install.sh`, `uninstall.sh`: Add most significative asix2Atesting aliases & end conflicts with Up-to-Date Customizer duplication; 
-    - gris `(history | grep $1)`, 
-    - bi `(sudo apt --fix-broken install)`
-    - a `("echo '---------------Alias----------------';compgen -a")`
-    - m `(more)`
-    - hard `(git reset HEAD --hard)`  
-    - i `(cat)`
-    - x `(clear && ls)`
-    - xo `(xdg-open)`
-    - u `(du -h --max-depth)`   
-    - j `(jobs -l)`
-    - q, :q, :q! `(exit)`
-    - lol `(lolcat)`
-    - notebook `(jupyter notebook)`-
-    - lab `(jupyter lab)`
-    - pull, push, add `(git)`
+- [ ] `install.sh`, `uninstall.sh`: Add most significative asix2Atesting aliases & end conflicts with Up-to-Date Customizer duplication;
+    - gris is bash function not alias
+    - x `(extract)`
+    - u `(xdg-open $1)` function
+    - git add function
 
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
 - [ ] `uninstall.sh`: lolcat

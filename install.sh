@@ -819,6 +819,11 @@ install_zoom()
 #######################################
 # Most (all) of them just use user permissions
 
+install_a()
+{
+  generic_install a
+}
+
 install_alert()
 {
   add_bash_function "${alert_alias}" alert.sh
@@ -832,6 +837,11 @@ install_b()
 install_bashcolors()
 {
   add_bash_function "${bashcolors_function}" bashcolors.sh
+}
+
+install_bi()
+{
+  generic_install bi
 }
 
 install_c()
@@ -951,6 +961,21 @@ install_fonts-noto-sans()
   add_font ${fonts_noto_sans_compressedfileurls} zip noto_sans
 }
 
+install_gris()
+{
+  generic_install gris
+}
+
+install_hard()
+{
+  generic_install hard
+}
+
+install_j()
+{
+  generic_install j
+}
+
 install_julia()
 {
   download "${julia_packageurls}" "${USR_BIN_FOLDER}/julia_downloading"
@@ -967,6 +992,7 @@ install_k()
 {
   generic_install k
 }
+
 
 install_status()
 {
@@ -1053,10 +1079,25 @@ install_l()
   add_bash_function "${l_function}" l.sh
 }
 
+install_lab()
+{
+  generic_install lab
+}
+
+install_lol()
+{
+  generic_install lol
+}
+
 install_netflix()
 {
   add_internet_shortcut netflix
   add_to_favorites "netflix.desktop"
+}
+
+install_notebook()
+{
+  generic_install notebook
 }
 
 install_o()
@@ -1077,6 +1118,16 @@ install_outlook()
 install_overleaf()
 {
   add_internet_shortcut overleaf
+}
+
+install_pull()
+{
+  generic_install pull
+}
+
+install_push()
+{
+  generic_install push
 }
 
 install_presentation()
