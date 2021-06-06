@@ -645,6 +645,11 @@ install_anydesk()
   create_manual_launcher "${anydesk_launcher}" "anydesk"
 }
 
+install_branch()
+{
+  generic_install branch
+}
+
 install_clion()
 {
   download_and_decompress ${clion_downloader} "clion" "z" "bin/clion.sh" "clion"
@@ -881,6 +886,11 @@ install_a()
   generic_install a
 }
 
+install_add()
+{
+  generic_install add
+}
+
 install_alert()
 {
   add_bash_function "${alert_alias}" alert.sh
@@ -929,6 +939,11 @@ install_change-bg()
       cp "/usr/share/backgrounds/${filename}" "${XDG_PICTURES_DIR}/wallpapers"
     fi
   done
+}
+
+install_checkout()
+{
+  generic_install checkout
 }
 
 install_commit()

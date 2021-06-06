@@ -70,6 +70,9 @@ fi
 a_installationtype="packagemanager"
 a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
 
+add_installationtype="packagemanager"
+add_bashfunctions=("alias add=\"git add\"")
+
 aisleriot_installationtype=packagemanager
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")
@@ -163,6 +166,9 @@ WHITE='\033[1;37m'
 bi_installationtype="packagemanager"
 bi_bashfunctions=("alias bi=\"sudo apt --fix-broken install\"")
 
+branch_bashfunctions=("alias branch=\"git branch\"")
+branch_installationtype="packagemanager"
+
 brasero_installationtype="packagemanager"
 brasero_packagenames=("brasero")
 brasero_launchernames=("brasero")
@@ -176,6 +182,9 @@ calibre_launchernames=("calibre-gui")
 calibre_packagenames=("calibre")
 
 cheat_downloader=https://cht.sh/:cht.sh
+
+checkout_installationtype="packagemanager"
+checkout_bashfunctions=("alias checkout=\"git checkout\"")
 
 cheese_installationtype="packagemanager"
 cheese_launchernames=("org.gnome.Cheese")

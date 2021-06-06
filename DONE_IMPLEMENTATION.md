@@ -101,3 +101,4 @@
 - [x] javascript (IJavascript), nodejs, npm, jupyterlab_markup, assembler, julia (IJulia), poweshell_kernel
 - [x] adding aliases: `a`, `bi`, `gris`, `hard`, `lol`, `notebook`, `lab`, `push`, `pull`
 - [x] `data_features.sh`: Add edge cases of function `commit`. Test exhaustively, spaces, strings, colons, commands, multiple arguments etc. It can not fail.
+- [x] git add, checkout
