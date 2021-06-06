@@ -26,6 +26,11 @@ install_aisleriot()
   generic_install aisleriot
 }
 
+install_ansible()
+{
+  generic_install ansible
+}
+
 install_aspell()
 {
   generic_install aspell
@@ -61,6 +66,11 @@ install_axel()
   generic_install axel
 }
 
+install_brasero()
+{
+  generic_install brasero
+}
+
 install_caffeine()
 {
   generic_install caffeine
@@ -91,6 +101,11 @@ install_cmatrix()
   generic_install cmatrix
 }
 
+install_codeblocks()
+{
+  generic_install codeblocks
+}
+
 install_copyq()
 {
   generic_install copyq
@@ -99,6 +114,11 @@ install_copyq()
 install_curl()
 {
   generic_install curl
+}
+
+install_dbeaver()
+{
+  generic_install dbeaver
 }
 
 install_dconf-editor()
@@ -256,6 +276,16 @@ install_gvim()
   generic_install gvim
 }
 
+install_handbrake()
+{
+  generic_install handbrake
+}
+
+install_hardinfo()
+{
+  generic_install hardinfo
+}
+
 install_inkscape()
 {
   generic_install inkscape
@@ -286,6 +316,11 @@ install_libgtkglext1()
   generic_install libgtkglext1
 }
 
+install_libkrb5-dev()
+{
+  generic_install libkrb5-dev
+}
+
 install_libxcb-xtest0()
 {
   generic_install libxcb-xtest0
@@ -296,6 +331,11 @@ install_lolcat()
   generic_install lolcat
 }
 
+install_mdadm()
+{
+  generic_install mdadm
+}
+
 install_megasync()
 {
   generic_install megasync
@@ -304,6 +344,11 @@ install_megasync()
 install_mendeley-dependencies()
 {
   generic_install mendeley-dependencies
+}
+
+install_nautilus()
+{
+  generic_install nautilus
 }
 
 install_nemo()
@@ -394,13 +439,19 @@ install_jupyter-lab()
 
   # Install necessary pip and python packages
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel bash_kernel jupyterlab_markup powershell_kernel iarm jupyterlab
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel bash_kernel jupyterlab_markup powershell_kernel pykerberos pywinrm[kerberos] iarm jupyterlab
+  jupyter labextension install "@jupyter-widgets/jupyterlab-manager"
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command pwsh
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
 
   create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
   create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
+}
+
+install_php()
+{
+  generic_install php
 }
 
 install_pgadmin()
@@ -456,9 +507,21 @@ install_pluma()
   generic_install pluma
 }
 
+install_r-base()
+{
+  generic_install r-base
+}
+
 install_remmina()
 {
   generic_install remmina
+}
+
+install_rustc()
+{
+  generic_install rustc
+  download "${rustc_url}" "${USR_BIN_FOLDER}/rustup-init.sh"
+  bash "${USR_BIN_FOLDER}/rustup-init.sh"
 }
 
 install_shotcut()
@@ -817,11 +880,6 @@ install_zoom()
 install_a()
 {
   generic_install a
-}
-
-install_all()
-{
-  generic_install all
 }
 
 install_alert()
@@ -1340,10 +1398,11 @@ main()
         FLAG_UPGRADE=2
       ;;
 
-      -f|--favorites|--set-favorites
+      -f|--favorites|--set-favorites)
         FLAG_FAVORITES=1
       ;;
-      -z|--no-favorites
+
+      -z|--no-favorites)
         FLAG_FAVORITES=0
       ;;
 

@@ -67,9 +67,6 @@ esac
 a_installationtype="packagemanager"
 a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
 
-all_installationtype="packagemanager"
-all_bashfunctions=("alias add=\"git add --all\"")
-
 aisleriot_installationtype=packagemanager
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")
@@ -100,6 +97,8 @@ TryExec=studio
 Type=Application
 Version=1.0
 "
+ansible_installationtype="packagemanager"
+ansible_packagenames=("ansible")
 
 ant_downloader="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.9-bin.tar.gz"
 
@@ -160,6 +159,10 @@ WHITE='\033[1;37m'
 
 bi_installationtype="packagemanager"
 bi_bashfunctions=("alias bi=\"sudo apt --fix-broken install\"")
+
+brasero_installationtype="packagemanager"
+brasero_packagenames=("brasero")
+brasero_launchernames=("brasero")
 
 caffeine_installationtype="packagemanager"
 caffeine_launchernames=("caffeine-indicator")
@@ -235,12 +238,21 @@ TryExec=cmatrix
 Type=Application
 Version=1.0")
 
+codeblocks_installationtype="packagemanager"
+codeblocks_packagenames=("codeblocks")
+codeblocks_launchernames=("codeblocks")
+
 copyq_installationtype="packagemanager"
 copyq_launchernames=("com.github.hluk.copyq")
 copyq_packagenames=("copyq")
 
 curl_installationtype="packagemanager"
 curl_packagenames=("curl")
+
+dbeaver_installationtype="packageinstall"
+dbeaver_packageurls=("https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb")
+dbeaver_launchernames=("dbeaver")
+
 
 dconf_editor_installationtype="packagemanager"
 dconf_editor_packagenames=("dconf-editor")
@@ -985,8 +997,16 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
+handbrake_installationtype="packagemanager"
+handbrake_packagenames=("handbrake")
+handbrake_launchernames=("fr.handbrake.ghb")
+
 hard_installationtype="packagemanager"
 hard_bashfunctions=("alias hard=\"git reset HEAD --hard\"")
+
+hardinfo_installationtype="packagemanager"
+hardinfo_packagenames=("hardinfo")
+hardinfo_launchernames=("hardinfo")
 
 ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
 ideau_launcher="[Desktop Entry]
@@ -1106,6 +1126,9 @@ l_function="alias l=\"ls -lAh --color=auto\""
 libgtkglext1_installationtype="packagemanager"
 libgtkglext1_packagenames=("libgtkglext1")
 
+libkrb5_dev_installationtype="packagemanager"
+libkrb5_dev_packagenames=("libkrb5-dev")
+
 libxcb_xtest0_installationtype="packagemanager"
 libxcb_xtest0_packagenames=("libxcb-xtest0")
 
@@ -1117,6 +1140,9 @@ lolcat_packagenames=("lolcat")
 
 maven_downloader="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 
+mdadm_installationtype="packagemanager"
+mdadm_packagenames=("mdadm")
+
 megasync_installationtype="packageinstall"
 megasync_dependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
 megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.4.0-1.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb")
@@ -1127,6 +1153,9 @@ mendeley_downloader=https://www.mendeley.com/autoupdates/installer/Linux-x64/sta
 
 music_manager_downloader=https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
 
+nautilus_installationtype="packagemanager"
+nautilus_packagenames=("nautilus")
+nautilus_launchernames=("nautilus")
 nautilus_conf=("xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
   "gsettings set org.gnome.desktop.background show-desktop-icons true"
   "xdg-mime default org.gnome.Nautilus.desktop inode/directory"
@@ -1174,6 +1203,9 @@ pacman_launchernames=("pacman")
 
 parallel_installationtype="packagemanager"
 parallel_packagenames=("parallel")
+
+php_installationtype="packagemanager"
+php_packagenames=("php" "libapache2-mod-php")
 
 psql_installationtype="packagemanager"
 psql_packagedependencies=("libc6-i386" "lib32stdc++6" "libc6=2.31-0ubuntu9.2")
@@ -1330,9 +1362,17 @@ pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "l
 python3_installationtype="packagemanager"
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
 
+r_base_installationtype="packagemanager"
+r_base_packagenames=("r-base")
+
 remmina_installationtype="packagemanager"
 remmina_packagenames=("remmina")
 remmina_launchernames=("org.remmina.Remmina")
+
+rustc_installationtype="packagemanager"
+rustc_packagenames=("rustc")
+rustc_packagedependencies=("cmake" "build-essential")
+rustc_url=("https://sh.rustup.rs")
 
 rsync_installationtype="packagemanager"
 rsync_dependencies_packagenames=("canberra-gtk-module")
