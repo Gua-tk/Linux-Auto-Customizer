@@ -452,8 +452,9 @@ it will be still on for the remaining features.
 
 By default, install.sh runs with the following implicit arguments:
 --exit-on-error, --skip-if-installed, --quiet, -Clean, --Upgrade, --yes
+"
 
-
+help_individual_arguments_header="
 #### Feature arguments:
 
 This arguments are used to select which features we want to install or uninstall
@@ -464,95 +465,9 @@ features.
   customization of a program or system module.
   - Feature wrappers group many individual features with the same permissions
   related to the same topic: programming, image edition, system cutomization...
+"
 
-## Individual features:
-  --autofirma
-  --androidstudio --studio                    Android Studio
-  --ant|--apache_ant)
-  --audacity|--Audacity)
-  --atom|--Atom)
-  --curl|--Curl)
-  --discord|--Discord|--disc)
-  --dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box)
-  --gcc|--GCC)
-  --caffeine|--Caffeine|--cafe|--coffee)
-  --calibre|--Calibre|--cali)
-  --cheat|--cheat.sh|--Cheat.sh|--che)
-  --cheese|--Cheese)
-  --clementine|--Clementine)
-  --clion|--Clion|--CLion)
-  --cmatrix|--Cmatrix)
-  --converters|--Converters)
-  --clonezilla|--CloneZilla|--cloneZilla)
-  --copyq|--copy-q|--copy_q|--copqQ|--Copyq|--copy-Q)
-  --extract-function|-extract_function)
-  --f-irc|--firc|--Firc|--irc)
-  --firefox|--Firefox)
-  --freecad|--FreeCAD|--freeCAD)
-  --ffmpeg|--youtube-dl-dependencies)
-  --gpaint|--paint|--Gpaint)
-  --geany|--Geany)
-  --git)
-  --git-aliases|--git_aliases|--git-prompt)
-  --GIMP|--gimp|--Gimp)
-  --GNOME_Chess|--gnome_Chess|--gnomechess|--chess)
-  --GParted|--gparted|--GPARTED|--Gparted)
-  --gvim|--vim-gtk3|--Gvim|--GVim)
-  --history-optimization)
-  --parallel|--gnu_parallel|--GNUparallel|--GNUParallel|--gnu-parallel)
-  --chrome|--Chrome|--google-chrome|--Google-Chrome)
-  --iqmol|--IQmol)
-  --inkscape|--ink-scape|--Inkscape|--InkScape)
-  --intellijcommunity|--intelliJCommunity|--intelliJ-Community|--intellij-community|--ideac)
-  --intellijultimate|--intelliJUltimate|--intelliJ-Ultimate|--intellij-ultimate|--ideau)
-  --java|--javadevelopmentkit|--java-development-kit|--java-development-kit-11|--java-development-kit11|--jdk|--JDK|--jdk11|--JDK11|--javadevelopmentkit-11)
-  --latex|--LaTeX|--tex|--TeX)
-  --alias-l|--alias-ls|--l-alias|--ls-alias|--l)
-  --maven|--mvn)
-  --mahjongg|--Mahjongg|--gnome-mahjongg)
-  --mega|--Mega|--MEGA|--MegaSync|--MEGAsync|--MEGA-sync|--megasync)
-  --Mendeley|--mendeley|--mendeleyDesktop|--mendeley-desktop|--Mendeley-Desktop)
-  --MendeleyDependencies|--mendeleydependencies|--mendeleydesktopdependencies|--mendeley-desktop-dependencies|--Mendeley-Desktop-Dependencies)
-  --mines|--Mines|--GNU-mines|--gnome-mines|--gnomemines)
-  --nemo|--nemo-desktop|--Nemo-Desktop|--Nemodesktop|--nemodesktop|--Nemo|--Nemodesk|--NemoDesktop)
-  --notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ)
-  --openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office)
-  --OBS|--obs|--obs-studio|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio)
-  --okular|--Okular|--okularpdf)
-  --pacman|--pac-man)
-  --pdfgrep|--findpdf|--pdf)
-  --pluma)
-  --postgreSQL|--PostGreSQL|--postgresql|--postgre-sql|--postgre-SQL|--psql|--pSQL|--p-SQL|--p-sql)
-  --prompt)
-  --pycharmcommunity|--pycharmCommunity|--pycharm_community|--pycharm|--pycharm-community)
-  --pycharmpro|--pycharmPro|--pycharm_pro|--pycharm-pro|--Pycharm-Pro|--PyCharm-pro)
-  -p|--python|--python3|--Python3|--Python)
-  --pypy|--pypy3|--PyPy3|--PyPy)
-  --dependencies|--pypy3_dependencies|--pypy3Dependencies|--PyPy3Dependencies|--pypy3dependencies|--pypy3-dependencies)
-  --s|--s-function)
-  --shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut)
-  --shortcuts)
-  --sudoku|--Sudoku|--gnome-sudoku)
-  --solitaire|--Solitaire|--gnome-solitaire|--aisleriot)
-  --sublime|--sublimeText|--sublime_text|--Sublime|--sublime-Text|--sublime-text)
-  --sudoku|--Sudoku|--GNU-sudoku|--gnome-sudoku|--gnomesudoku)
-  --steam|--Steam|--STEAM)
-  --Telegram|--telegram)
-  --templates)
-  --terminal-background|--terminal_background)
-  --Terminator|--terminator)
-  --Tilix|--tilix)
-  --tmux|--Tmux)
-  --thunderbird|--mozillathunderbird|--mozilla-thunderbird|--Thunderbird|--thunder-bird)
-  --tor|--torbrowser|--tor_browser|--TOR|--TOR-browser|--TOR-BROSWER|--TORBROWSER|--TOR_BROWSER|--TOR_browser)
-  --transmission|--transmission-gtk|--Transmission)
-  --uget)
-  --virtualbox|--virtual-box|--VirtualBox|--virtualBox|--Virtual-Box|--Virtualbox)
-  --visualstudiocode|--visual-studio-code|--code|--Code|--visualstudio|--visual-studio)
-  --vlc|--VLC|--Vlc)
-  --Wallpapers|--wallpapers|--chwlppr)
-  --youtube-dl)
-
+help_wrappers="
 ## Wrapper arguments
   --user|--regular|--normal)
   --root|--superuser|--su)

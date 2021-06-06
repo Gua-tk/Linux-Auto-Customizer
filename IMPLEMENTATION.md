@@ -39,6 +39,7 @@
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
 - [ ] `uninstall.sh`: lolcat
 - [ ] `uninstall.sh`: fdups  (duplicate finder CLI)
+- [ ] `install.sh`, `uninstall.sh`: matlab, codeblocks  
 - [ ] `install.sh`, `uninstall.sh`: fslint (virtual environment)
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
 - [ ] `install.sh`, `uninstall.sh`: sherlock 
@@ -98,9 +99,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `uninstall.sh`: Rewrite `uninstall.sh` functions using the new auxiliary functions, structures, variables
 - [ ] `install.sh`: refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] `install.sh`, `uninstall.sh`: Add several kernels & customizations for jupyter-lab: [text-shortcuts](https://github.com/techrah/jupyterext-text-shortcuts)
-    - assembler
-    - scala (Almond)
-    - sql 
+    - scala (Almond)  
     - perl
     - ruby (IRuby)
     - rust (EvCxR Jupyter Kernel)
@@ -109,10 +108,8 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
     - react
 ###### Other Jupyter-lab kernels
     - r (IRkernel)
-    - julia (IJulia.jl)
     - ansible (Ansible Kernel)
     - latex
-    - nodejs (jupyter-nodejs)
     - stata (Stata_kernel)
     - Wolfram Kernel
     - lua (ILua)

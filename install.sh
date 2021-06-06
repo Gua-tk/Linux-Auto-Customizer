@@ -401,7 +401,7 @@ install_jupyter-lab()
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
   "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel bash_kernel jupyterlab_markup powershell_kernel iarm jupyterlab
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command pwsh
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
 
   create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
@@ -1308,8 +1308,9 @@ main()
       ;;
 
       -H|--help)
-        autogen_readme
-        #output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
+        autogen_help
+
+        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" ${FLAG_QUIETNESS}
         exit 0
       ;;
 
