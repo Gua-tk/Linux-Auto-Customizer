@@ -163,7 +163,6 @@ LIGHTBLUE='\033[1;34m'
 LIGHTPURPLE='\033[1;34m'
 LIGHTCYAN='\033[1;36m'
 WHITE='\033[1;37m'
-
 "
 
 bi_installationtype="packagemanager"
@@ -703,7 +702,16 @@ h_installationtype="packagemanager"
 h_bashfunctions=("
 h()
 {
-  history | grep --color=always \$@
+  if [ \$# -eq 0 ]; then
+    history
+  else
+    if [ \$# -eq 1 ]; then
+      history | grep --color=always \"\$1\"
+    else
+      echo \"ERROR: Too many arguments\"
+      return
+    fi
+  fi
 }
 ")
 
