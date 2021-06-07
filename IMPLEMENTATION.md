@@ -90,6 +90,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [~] `L` function columns
 - [ ] `e` convert to edit and echo function
 - [ ] turn `k` to `g`
+- [ ] scijava-jupyter-kernel
 - [ ] rewrite k as function: #alias k9="kill -9"# alias killbyport="k9 \`lsof -i:3000 -t\`"  
 - [ ] Install & Uninstall Customizerself installation #FUNCTION alias Install="sudo apt-get install -y" alias `CUSTOMIZER`= `cd ...?` ...
 - [ ] `README.md` or `IMPLEMENTATION.md`: Write down the command dependencies of the folder project

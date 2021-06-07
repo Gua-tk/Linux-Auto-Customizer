@@ -113,18 +113,18 @@ autostart_program() {
       return
     fi
   else
-    if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]; then
-      cp "${ALL_USERS_LAUNCHERS_DIR}/$1" "${AUTOSTART_FOLDER}/$1"
+    if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]; then
+      cp "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
       if [ ${EUID} -eq 0 ]; then
-        apply_permissions "$1"
+        apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
       fi
-    elif [ -f "${PERSONAL_LAUNCHERS_DIR}/$1" ]; then
-      cp "${PERSONAL_LAUNCHERS_DIR}/$1" "${AUTOSTART_FOLDER}/$1"
+    elif [ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]; then
+      cp "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
       if [ ${EUID} -eq 0 ]; then
-        apply_permissions "$1"
+        apply_permissions "$1.desktop"
       fi
     else
-      output_proxy_executioner "echo WARNING: The file $1 does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo WARNING: The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." ${FLAG_QUIETNESS}
       return
     fi
   fi

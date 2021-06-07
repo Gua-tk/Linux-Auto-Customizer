@@ -76,8 +76,8 @@ install_caffeine()
   generic_install caffeine
   # patch to start caffeine-indicator activated
   wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
-  # copy caffeine-indicator launcher to autostart directory
-  cp -p "${ALL_USERS_LAUNCHERS_DIR}/caffeine-indicator.desktop" "${HOME_FOLDER}/.config/autostart/caffeine-indicator.desktop"
+
+  autostart_program caffeine-indicator
 }
 
 install_calibre()
@@ -113,6 +113,7 @@ install_codeblocks()
 install_copyq()
 {
   generic_install copyq
+  autostart_program com.github.hluk.copyq
 }
 
 install_curl()
@@ -448,6 +449,7 @@ install_jupyter-lab()
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
 
+
   create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
   create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
 }
@@ -595,6 +597,7 @@ install_tilix()
 install_tmux()
 {
   generic_install tmux
+  autostart_program tmux
 }
 
 install_tor()
@@ -1431,7 +1434,9 @@ main()
       -U|--upgrade|--Upgrade)
         FLAG_UPGRADE=2
       ;;
-
+      -auto|--auto)
+        autostart_program
+      ;;
       -f|--favorites|--set-favorites)
         FLAG_FAVORITES=1
       ;;
