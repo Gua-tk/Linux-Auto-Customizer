@@ -444,10 +444,11 @@ install_jupyter-lab()
 
   # Install necessary pip and python packages
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel bash_kernel jupyterlab_markup powershell_kernel pykerberos pywinrm[kerberos] iarm jupyterlab
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel bash_kernel jupyterlab_markup powershell_kernel pykerberos pywinrm[kerberos] iarm ansible-kernel jupyterlab
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m ansible_kernel.install
 
 
   create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
