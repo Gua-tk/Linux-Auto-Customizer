@@ -1037,9 +1037,9 @@ install_fonts-noto-sans()
   add_font ${fonts_noto_sans_compressedfileurls} zip noto_sans
 }
 
-install_gris()
+install_h()
 {
-  generic_install gris
+  generic_install h
 }
 
 install_hard()

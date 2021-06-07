@@ -201,7 +201,7 @@ installation_data=(
   "--google-chrome|--chrome|--Chrome|--Google-Chrome;1;| Google Chrome | Cross-platform web browser | Command \`google-chrome\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gpaint|--paint|--Gpaint;1;| Gpaint | Raster graphics editor similar to Microsoft Paint | Command \`gpaint\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gparted|--GParted|--GPARTED|--Gparted;1;| GParted | Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems | Command \`gparted\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--gris;0;| gris | Search in your history for previous commands entered, stands by \`history | grep \"\$1\"\` | Command \`gris\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--h;0;| \`h\` | Search in your history for previous commands entered, stands by \`history | grep \"\$@\"\` | Command \`h\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gvim|--vim-gtk3|--Gvim|--GVim;1;| Gvim | Vim with a built-in GUI | Command \`gvim\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--handbrake;1;| Handbrake | Video Transcoder | Command \`handbrake\`, Desktop and dashboard launchers || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--hard;0;| reset hard | alias for \`git reset HEAD --hard\` | <-- || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"

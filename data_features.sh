@@ -126,6 +126,9 @@ TryExec=anydesk
 Type=Application
 Version=1.0"
 
+aspell_installationtype="packagemanager"
+aspell_packagename=("aspell-es" "aspell-ca")
+
 atom_installationtype="packageinstall"
 atom_packageurls=("https://atom.io/download/deb")
 atom_launchernames=("atom")
@@ -255,6 +258,17 @@ codeblocks_installationtype="packagemanager"
 codeblocks_packagenames=("codeblocks")
 codeblocks_launchernames=("codeblocks")
 
+commit_bashfunctions=("commit()
+{
+    messag=\"\$@\"
+    while [ -z \"\$messag\" ]; do
+      read -p \"Add message: \" messag
+    done
+    git commit -am \"\$messag\"
+}
+")
+commit_installationtype="packagemanager"
+
 copyq_installationtype="packagemanager"
 copyq_launchernames=("com.github.hluk.copyq")
 copyq_packagenames=("copyq")
@@ -266,10 +280,45 @@ dbeaver_installationtype="packageinstall"
 dbeaver_packageurls=("https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb")
 dbeaver_launchernames=("dbeaver")
 
-
 dconf_editor_installationtype="packagemanager"
 dconf_editor_packagenames=("dconf-editor")
 dconf_editor_launchernames=("ca.desrt.dconf-editor")
+
+drive_url=https://drive.google.com/
+drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
+drive_alias="alias drive=\"xdg-open ${drive_url} &>/dev/null &\""
+drive_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to instant e-mail messaging from Chrome
+Encoding=UTF-8
+GenericName=Gmail
+Keywords=drive;
+MimeType=
+Name=Google Drive
+StartupNotify=true
+StartupWMClass=Google Drive
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+drive_url=https://drive.google.com/
+drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
+drive_alias="alias drive=\"xdg-open ${drive_url} &>/dev/null &\""
+drive_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to instant e-mail messaging from Chrome
+Encoding=UTF-8
+GenericName=Gmail
+Keywords=drive;
+MimeType=
+Name=Google Drive
+StartupNotify=true
+StartupWMClass=Google Drive
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
 
 dropbox_dependencies=("python3-gpg")
 dropbox_installationtype="packageinstall"
@@ -301,6 +350,49 @@ Version=1.0"
 
 docker_downloader=https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz
 
+document_url=https://docs.google.com/document/
+document_icon="https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg"
+document_alias="alias document=\"xdg-open ${document_url} &>/dev/null &\""
+document_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Google Documents from Chrome
+Encoding=UTF-8
+GenericName=Document
+Keywords=documents;
+MimeType=
+Name=Google Document
+StartupNotify=true
+StartupWMClass=Google Document
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+duckduckgo_url="https://duckduckgo.com/"
+duckduckgo_icon="https://iconape.com/wp-content/png_logo_vector/cib-duckduckgo.png"
+duckduckgo_alias="alias duckduckgo=\"xdg-open ${duckduckgo_url} &>/dev/null &\""
+duckduckgo_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open DuckDuckGo from Chrome
+Encoding=UTF-8
+GenericName=DuckDuckGo
+Keywords=duckduckgo
+Name=DuckDuckGo
+StartupNotify=true
+StartupWMClass=DuckDuckGo
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+dummycommit_bashfunctions=("dummycommit()
+{
+  git add -A
+  git commit -am \"\$1\"
+  git push
+}")
+dummycommit_installationtype="packagemanager"
+
 eclipse_downloader=http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz
 eclipse_launcher="[Desktop Entry]
 Categories=Development;IDE;
@@ -323,9 +415,23 @@ evolution_installationtype="packagemanager"
 evolution_packagenames=("evolution" )
 evolution_launchernames=("evolution-calendar")
 
-aspell_installationtype="packagemanager"
-aspell_packagename=("aspell-es" "aspell-ca")
-
+facebook_url="https://facebook.com/"
+facebook_icon="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+facebook_alias="alias facebook=\"xdg-open ${facebook_url} &>/dev/null &\""
+facebook_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to facebook from Chrome
+Encoding=UTF-8
+GenericName=Facebook
+Keywords=facebook;
+MimeType=
+Name=Facebook
+StartupNotify=true
+StartupWMClass=Facebook
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
 
 f_irc_installationtype="packagemanager"
 f_irc_packagenames=("f-irc")
@@ -348,6 +454,9 @@ Version=1.0")
 
 fdupes_installationtype="packagemanager"
 fdupes_packagenames=("fdupes")
+
+fetch_bashfunctions=("alias fetch=\"git fetch\"")
+fetch_installationtype="packagemanager"
 
 ffmpeg_installationtype="packagemanager"
 ffmpeg_packagenames=("ffmpeg")
@@ -383,8 +492,23 @@ fonts_oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswal
 fonts_noto_sans_installationtype="userprogram"
 fonts_noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
 
-msttcorefonts_installationtype="packagemanager"
-msttcorefonts_packagenames=("msttcorefonts")
+forms_url=https://docs.google.com/forms/
+forms_icon="https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg"
+forms_alias="alias forms=\"xdg-open ${forms_url} &>/dev/null &\""
+forms_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Google Forms from Chrome
+Encoding=UTF-8
+GenericName=Document
+Keywords=forms;
+MimeType=
+Name=Google Forms
+StartupNotify=true
+StartupWMClass=Google Forms
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
 
 freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
@@ -427,40 +551,9 @@ gimp_launchernames=("gimp")
 git_installationtype="packagemanager"
 git_packagenames=("git-all" "git-lfs")
 
-commit_bashfunctions=("commit()
-{
-    messag=\"\$@\"
-    while [ -z \"\$messag\" ]; do
-      read -p \"Add message: \" messag
-    done
-    git commit -am \"\$messag\"
-}
-")
-commit_installationtype="packagemanager"
-
-dummycommit_bashfunctions=("dummycommit()
-{
-  git add -A
-  git commit -am \"\$1\"
-  git push
-}")
-dummycommit_installationtype="packagemanager"
-
 gitk_packagenames=("gitk")
 gitk_installationtype="packagemanager"
 gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
-
-j_bashfunctions=("alias j=\"jobs -l\"")
-j_installationtype="packagemanager"
-
-k_bashfunctions=("alias k=\"gitk\"")
-k_installationtype="packagemanager"
-
-status_bashfunctions=("alias status=\"git status\"")
-status_installationtype="packagemanager"
-
-fetch_bashfunctions=("alias fetch=\"git fetch\"")
-fetch_installationtype="packagemanager"
 
 gitprompt_bashfunctions=("
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
@@ -523,45 +616,9 @@ gparted_installationtype="packagemanager"
 gparted_packagenames=("gparted")
 gparted_launchernames=("gparted")
 
-gris_installationtype="packagemanager"
-gris_bashfunctions=("
-gris()
-{
-  history | grep --color=always \$1
-}
-")
-
-# u function only opens in 'http://google.com', may work with 'google.com' or 'www.google.com'?
-u_installationtype="packagemanager"
-u_bashfunctions=("
-u()
-{
-  xdg-open \"\$1\" &>/dev/null
-}
-")
-
 gvim_installationtype="packagemanager"
 gvim_packagenames=("vim-gtk3")
 gvim_launchernames=("gvim")
-
-
-forms_url=https://docs.google.com/forms/
-forms_icon="https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg"
-forms_alias="alias forms=\"xdg-open ${forms_url} &>/dev/null &\""
-forms_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Google Forms from Chrome
-Encoding=UTF-8
-GenericName=Document
-Keywords=forms;
-MimeType=
-Name=Google Forms
-StartupNotify=true
-StartupWMClass=Google Forms
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
 
 github_icon="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
 github_url=https://github.com/
@@ -600,67 +657,6 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-google_chrome_installationtype="packageinstall"
-google_chrome_dependencies=("libxss1" "libappindicator1" "libindicator7")
-google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
-google_chrome_launchernames=("google-chrome")
-
-
-
-presentation_url=https://docs.google.com/presentation/
-presentation_icon="https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg"
-presentation_alias="alias presentation=\"xdg-open ${presentation_url} &>/dev/null &\""
-presentation_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Google Presentation from Chrome
-Encoding=UTF-8
-GenericName=Document
-Keywords=presentations;
-MimeType=
-Name=Google Presentation
-StartupNotify=true
-StartupWMClass=Google Presentation
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-document_url=https://docs.google.com/document/
-document_icon="https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg"
-document_alias="alias document=\"xdg-open ${document_url} &>/dev/null &\""
-document_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Google Documents from Chrome
-Encoding=UTF-8
-GenericName=Document
-Keywords=documents;
-MimeType=
-Name=Google Document
-StartupNotify=true
-StartupWMClass=Google Document
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-spreadsheets_url=https://docs.google.com/spreadsheets/
-spreadsheets_icon="https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg"
-spreadsheets_alias="alias spreadsheets=\"xdg-open ${spreadsheets_url} &>/dev/null &\""
-spreadsheets_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Google Spreadsheets from Chrome
-Encoding=UTF-8
-GenericName=Spreadsheets
-Keywords=spreadsheets;
-MimeType=
-Name=Google Spreadsheets
-StartupNotify=true
-StartupWMClass=Google Spreadsheets
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
 gmail_url=https://mail.google.com/
 gmail_icon=https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg
 gmail_alias="alias gmail=\"xdg-open ${gmail_url} &>/dev/null &\""
@@ -678,134 +674,6 @@ Terminal=false
 TryExec=google-chrome
 Type=Application
 Version=1.0"
-
-drive_url=https://drive.google.com/
-drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
-drive_alias="alias drive=\"xdg-open ${drive_url} &>/dev/null &\""
-drive_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to instant e-mail messaging from Chrome
-Encoding=UTF-8
-GenericName=Gmail
-Keywords=drive;
-MimeType=
-Name=Google Drive
-StartupNotify=true
-StartupWMClass=Google Drive
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-drive_url=https://drive.google.com/
-drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
-drive_alias="alias drive=\"xdg-open ${drive_url} &>/dev/null &\""
-drive_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to instant e-mail messaging from Chrome
-Encoding=UTF-8
-GenericName=Gmail
-Keywords=drive;
-MimeType=
-Name=Google Drive
-StartupNotify=true
-StartupWMClass=Google Drive
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-overleaf_icon="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg"
-overleaf_url=https://www.overleaf.com/
-overleaf_alias="alias overleaf=\"xdg-open ${overleaf_url} &>/dev/null &\""
-overleaf_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Overleaf online LaTeX editor from Chrome
-Encoding=UTF-8
-GenericName=Overleaf
-Keywords=overleaf;
-MimeType=
-Name=Overleaf
-StartupNotify=true
-StartupWMClass=Overleaf
-#Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-outlook_icon="https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg"
-outlook_url=https://outlook.live.com
-outlook_alias="alias outlook=\"xdg-open ${outlook_url} &>/dev/null &\""
-outlook_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to Microsoft Outlook from Chrome
-Encoding=UTF-8
-GenericName=Outlook
-Keywords=outlook;
-MimeType=
-Name=Outlook
-StartupNotify=true
-StartupWMClass=Outlook
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-
-onedrive_icon="https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg"
-onedrive_url=https://onedrive.live.com/
-onedrive_alias="alias onedrive=\"xdg-open ${onedrive_url} &>/dev/null &\""
-onedrive_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to Microsoft OneDrive from Chrome
-Encoding=UTF-8
-GenericName=OneDrive
-Keywords=onedrive;
-MimeType=
-Name=OneDrive
-StartupNotify=true
-StartupWMClass=OneDrive
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-pgadmin_installationtype=userpip  # //RF not used yet... manual installation
-pgadmin_pippackages=("pgadmin4")
-pgadmin_basefolder="${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4"
-pgadmin_datafiles=("
-import os
-DATA_DIR = os.path.realpath(os.path.expanduser(u'${USR_BIN_FOLDER}/pgadmin'))
-LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
-SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
-SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
-STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
-SERVER_MODE = False
-")
-pgadmin_dependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
-pgadmin_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=App to manipulate graphically a postgreSQL database
-Encoding=UTF-8
-GenericName=pgadmin4
-Keywords=pgadmin
-MimeType=
-Name=pgAdmin 4
-StartupNotify=true
-StartupWMClass=pgadmin
-Terminal=false
-Type=Application
-Version=1.0
-
-Icon=${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
-Exec=bash ${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh
-")
-pgadmin_execscript="
-pgadmin &
-sleep 2  # Wait two seconds, so pgadmin can have time to init
-xdg-open http://127.0.0.1:5050/browser
-"
 
 googlecalendar_url=https://calendar.google.com/
 googlecalendar_icon="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg"
@@ -825,203 +693,19 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-trello_url="https://trello.com"
-trello_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png"
-trello_alias="alias trello=\"xdg-open ${trello_url} &>/dev/null &\""
-trello_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to Trello from Chrome
-Encoding=UTF-8
-GenericName=Google Calendar
-Keywords=trello;
-MimeType=
-Name=Trello
-StartupNotify=true
-StartupWMClass=Trello
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-twitch_url="https://twitch.tv/"
-twitch_icon="http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png"
-twitch_alias="alias twitch=\"xdg-open ${twitch_url} &>/dev/null &\""
-twitch_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to Twitch from Chrome
-Encoding=UTF-8
-GenericName=Twitch.tv
-Keywords=twitch;Twitch;
-MimeType=
-Name=Twitch
-StartupNotify=true
-StartupWMClass=Twitch
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-facebook_url="https://facebook.com/"
-facebook_icon="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-facebook_alias="alias facebook=\"xdg-open ${facebook_url} &>/dev/null &\""
-facebook_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to facebook from Chrome
-Encoding=UTF-8
-GenericName=Facebook
-Keywords=facebook;
-MimeType=
-Name=Facebook
-StartupNotify=true
-StartupWMClass=Facebook
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-twitter_url="https://twitter.com/"
-twitter_icon="https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg"
-twitter_alias="alias twitter=\"xdg-open ${twitter_url} &>/dev/null &\""
-twitter_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Twitter from Chrome
-Encoding=UTF-8
-GenericName=Twitter
-Keywords=twitter
-MimeType=
-Name=Twitter
-StartupNotify=true
-StartupWMClass=Twitter
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
+google_chrome_installationtype="packageinstall"
+google_chrome_dependencies=("libxss1" "libappindicator1" "libindicator7")
+google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
+google_chrome_launchernames=("google-chrome")
 
 
-instagram_url="https://instagram.com"
-instagram_icon="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg"
-instagram_alias="alias instagram=\"xdg-open ${instagram_url} &>/dev/null &\""
-instagram_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Twitter from Chrome
-Encoding=UTF-8
-GenericName=instagram
-Keywords=instagram
-MimeType=
-Name=Instagram
-StartupNotify=true
-StartupWMClass=Instagram
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-reddit_url="https://www.reddit.com/"
-reddit_icon="https://duckduckgo.com/i/b6b8ccc2.png"
-reddit_alias="alias reddit=\"xdg-open ${reddit_url} &>/dev/null &\""
-reddit_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Reddit from Chrome
-Encoding=UTF-8
-GenericName=reddit
-Keywords=reddit
-MimeType=
-Name=Reddit
-StartupNotify=true
-StartupWMClass=Reddit
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-tumblr_url="https://www.tumblr.com/"
-tumblr_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png"
-tumblr_alias="alias tumblr=\"xdg-open ${tumblr_url} &>/dev/null &\""
-tumblr_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Tumblr from Chrome
-Encoding=UTF-8
-GenericName=tumblr
-Keywords=tumblr
-MimeType=
-Name=Tumblr
-StartupNotify=true
-StartupWMClass=Tumblr
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-wikipedia_url="https://www.wikipedia.org/"
-wikipedia_icon="https://upload.wikimedia.org/wikipedia/commons/2/20/Wikipedia-logo-simple.svg"
-wikipedia_alias="alias wikipedia=\"xdg-open ${wikipedia_url} &>/dev/null &\""
-wikipedia_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Reddit from Chrome
-Encoding=UTF-8
-GenericName=reddit
-Keywords=wikipedia
-MimeType=
-Name=Wikipedia
-StartupNotify=true
-StartupWMClass=Wikipedia
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-duckduckgo_url="https://duckduckgo.com/"
-duckduckgo_icon="https://iconape.com/wp-content/png_logo_vector/cib-duckduckgo.png"
-duckduckgo_alias="alias duckduckgo=\"xdg-open ${duckduckgo_url} &>/dev/null &\""
-duckduckgo_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open DuckDuckGo from Chrome
-Encoding=UTF-8
-GenericName=DuckDuckGo
-Keywords=duckduckgo
-Name=DuckDuckGo
-StartupNotify=true
-StartupWMClass=DuckDuckGo
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-keep_url="https://keep.google.com/"
-keep_icon="https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg"
-keep_alias="alias keep=\"xdg-open ${keep_url} &>/dev/null &\""
-keep_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to Google Keep from Chrome
-Encoding=UTF-8
-GenericName=Google Calendar
-Keywords=google-keep;keep;
-MimeType=
-Name=Google Keep
-StartupNotify=true
-StartupWMClass=Google Keep
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-netflix_url=https://www.netflix.com
-netflix_icon="https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg"
-netflix_alias="alias netflix=\"xdg-open ${netflix_url} &>/dev/null &\""
-netflix_launcher="[Desktop Entry]
-Categories=Network;VideoStreaming;Film;
-Comment=Desktop app to reproduce Netflix from Chrome
-Encoding=UTF-8
-GenericName=Netflix
-Keywords=netflix;
-MimeType=
-Name=Netflix
-StartupNotify=true
-StartupWMClass=Netflix
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
+h_installationtype="packagemanager"
+h_bashfunctions=("
+h()
+{
+  history | grep --color=always \$@
+}
+")
 
 handbrake_installationtype="packagemanager"
 handbrake_packagenames=("handbrake")
@@ -1076,6 +760,24 @@ inkscape_installationtype="packagemanager"
 inkscape_packagenames=("inkscape")
 inkscape_launchernames=("inkscape")
 
+instagram_url="https://instagram.com"
+instagram_icon="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg"
+instagram_alias="alias instagram=\"xdg-open ${instagram_url} &>/dev/null &\""
+instagram_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Instagram from Chrome
+Encoding=UTF-8
+GenericName=instagram
+Keywords=instagram
+MimeType=
+Name=Instagram
+StartupNotify=true
+StartupWMClass=Instagram
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
 iqmol_downloader=http://www.iqmol.org/download.php?get=iqmol_2.14.deb
 iqmol_icon=http://www.iqmol.org/images/icon.png
 iqmol_launcher="[Desktop Entry]
@@ -1095,6 +797,9 @@ TryExec=iqmol
 Type=Application
 Version=1.0"
 iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
+
+j_bashfunctions=("alias j=\"jobs -l\"")
+j_installationtype="packagemanager"
 
 java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
@@ -1129,6 +834,27 @@ Version=1.0
 Icon=${USR_BIN_FOLDER}/jupyter-lab/share/icons/hicolor/scalable/apps/notebook.svg
 Exec=jupyter-lab &
 ")
+
+k_bashfunctions=("alias k=\"gitk\"")
+k_installationtype="packagemanager"
+
+keep_url="https://keep.google.com/"
+keep_icon="https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg"
+keep_alias="alias keep=\"xdg-open ${keep_url} &>/dev/null &\""
+keep_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to Google Keep from Chrome
+Encoding=UTF-8
+GenericName=Google Calendar
+Keywords=google-keep;keep;
+MimeType=
+Name=Google Keep
+StartupNotify=true
+StartupWMClass=Google Keep
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
 
 lab_installationtype="packagemanager"
 lab_bashfunctions=("alias lab=\"jupyter-lab\"")
@@ -1177,6 +903,9 @@ megasync_launchernames=("megasync")
 mendeley_dependencies_packagedependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
 mendeley_downloader=https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
 
+msttcorefonts_installationtype="packagemanager"
+msttcorefonts_packagenames=("msttcorefonts")
+
 music_manager_downloader=https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
 
 nautilus_installationtype="packagemanager"
@@ -1198,6 +927,24 @@ Name=Files
 Exec=nemo-desktop
 OnlyShowIn=GNOME;Unity;
 X-Ubuntu-Gettext-Domain=nemo"
+
+netflix_url=https://www.netflix.com
+netflix_icon="https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg"
+netflix_alias="alias netflix=\"xdg-open ${netflix_url} &>/dev/null &\""
+netflix_launcher="[Desktop Entry]
+Categories=Network;VideoStreaming;Film;
+Comment=Desktop app to reproduce Netflix from Chrome
+Encoding=UTF-8
+GenericName=Netflix
+Keywords=netflix;
+MimeType=
+Name=Netflix
+StartupNotify=true
+StartupWMClass=Netflix
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
 
 net_tools_installationtype="packagemanager"
 net_tools_packagenames=("net-tools")
@@ -1223,12 +970,103 @@ okular_launchernames=("org.kde.okular")
 
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 
+onedrive_icon="https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg"
+onedrive_url=https://onedrive.live.com/
+onedrive_alias="alias onedrive=\"xdg-open ${onedrive_url} &>/dev/null &\""
+onedrive_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to Microsoft OneDrive from Chrome
+Encoding=UTF-8
+GenericName=OneDrive
+Keywords=onedrive;
+MimeType=
+Name=OneDrive
+StartupNotify=true
+StartupWMClass=OneDrive
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+outlook_icon="https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg"
+outlook_url=https://outlook.live.com
+outlook_alias="alias outlook=\"xdg-open ${outlook_url} &>/dev/null &\""
+outlook_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to Microsoft Outlook from Chrome
+Encoding=UTF-8
+GenericName=Outlook
+Keywords=outlook;
+MimeType=
+Name=Outlook
+StartupNotify=true
+StartupWMClass=Outlook
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+overleaf_icon="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg"
+overleaf_url=https://www.overleaf.com/
+overleaf_alias="alias overleaf=\"xdg-open ${overleaf_url} &>/dev/null &\""
+overleaf_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Overleaf online LaTeX editor from Chrome
+Encoding=UTF-8
+GenericName=Overleaf
+Keywords=overleaf;
+MimeType=
+Name=Overleaf
+StartupNotify=true
+StartupWMClass=Overleaf
+#Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
 pacman_installationtype="packagemanager"
 pacman_packagenames=("pacman")
 pacman_launchernames=("pacman")
 
 parallel_installationtype="packagemanager"
 parallel_packagenames=("parallel")
+
+pgadmin_installationtype=userpip  # //RF not used yet... manual installation
+pgadmin_pippackages=("pgadmin4")
+pgadmin_basefolder="${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4"
+pgadmin_datafiles=("
+import os
+DATA_DIR = os.path.realpath(os.path.expanduser(u'${USR_BIN_FOLDER}/pgadmin'))
+LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
+SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
+SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
+STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
+SERVER_MODE = False
+")
+pgadmin_dependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
+pgadmin_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=App to manipulate graphically a postgreSQL database
+Encoding=UTF-8
+GenericName=pgadmin4
+Keywords=pgadmin
+MimeType=
+Name=pgAdmin 4
+StartupNotify=true
+StartupWMClass=pgadmin
+Terminal=false
+Type=Application
+Version=1.0
+
+Icon=${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Exec=bash ${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh
+")
+pgadmin_execscript="
+pgadmin &
+sleep 2  # Wait two seconds, so pgadmin can have time to init
+xdg-open http://127.0.0.1:5050/browser
+"
 
 php_installationtype="packagemanager"
 php_packagenames=("php" "libapache2-mod-php")
@@ -1255,6 +1093,24 @@ Terminal=false
 Type=Application
 Categories=Development;
 ")
+
+presentation_url=https://docs.google.com/presentation/
+presentation_icon="https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg"
+presentation_alias="alias presentation=\"xdg-open ${presentation_url} &>/dev/null &\""
+presentation_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Google Presentation from Chrome
+Encoding=UTF-8
+GenericName=Document
+Keywords=presentations;
+MimeType=
+Name=Google Presentation
+StartupNotify=true
+StartupWMClass=Google Presentation
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
 
 prompt_functions=("
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -1392,6 +1248,24 @@ python3_bashfunctions=("alias va=\"source ./venv/bin/activate\"" "alias ve=\"pyt
 r_base_installationtype="packagemanager"
 r_base_packagenames=("r-base")
 
+reddit_url="https://www.reddit.com/"
+reddit_icon="https://duckduckgo.com/i/b6b8ccc2.png"
+reddit_alias="alias reddit=\"xdg-open ${reddit_url} &>/dev/null &\""
+reddit_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Reddit from Chrome
+Encoding=UTF-8
+GenericName=reddit
+Keywords=reddit
+MimeType=
+Name=Reddit
+StartupNotify=true
+StartupWMClass=Reddit
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
 remmina_installationtype="packagemanager"
 remmina_packagenames=("remmina")
 remmina_launchernames=("org.remmina.Remmina")
@@ -1499,6 +1373,9 @@ slack_installationtype="packageinstall"
 slack_repository=("https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb")
 slack_launchernames=("slack")
 
+status_bashfunctions=("alias status=\"git status\"")
+status_installationtype="packagemanager"
+
 sonic_pi_installationtype="packagemanager"
 sonic_pi_packagenames=("sonic-pi")
 sonic_pi_launchernames=("sonic-pi")
@@ -1506,6 +1383,24 @@ sonic_pi_launchernames=("sonic-pi")
 spotify_installationtype="packageinstall"
 spotify_packageurls=("http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb")
 spotify_launchernames=("spotify")
+
+spreadsheets_url=https://docs.google.com/spreadsheets/
+spreadsheets_icon="https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg"
+spreadsheets_alias="alias spreadsheets=\"xdg-open ${spreadsheets_url} &>/dev/null &\""
+spreadsheets_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Google Spreadsheets from Chrome
+Encoding=UTF-8
+GenericName=Spreadsheets
+Keywords=spreadsheets;
+MimeType=
+Name=Google Spreadsheets
+StartupNotify=true
+StartupWMClass=Google Spreadsheets
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
 
 steam_installationtype="packageinstall"
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
@@ -1616,6 +1511,87 @@ transmission_gtk_installationtype="packagemanager"
 transmission_gtk_packagenames=("transmission")
 transmission_gtk_launchernames=("transmission-gtk")
 
+trello_url="https://trello.com"
+trello_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png"
+trello_alias="alias trello=\"xdg-open ${trello_url} &>/dev/null &\""
+trello_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to Trello from Chrome
+Encoding=UTF-8
+GenericName=Google Calendar
+Keywords=trello;
+MimeType=
+Name=Trello
+StartupNotify=true
+StartupWMClass=Trello
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+tumblr_url="https://www.tumblr.com/"
+tumblr_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png"
+tumblr_alias="alias tumblr=\"xdg-open ${tumblr_url} &>/dev/null &\""
+tumblr_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Tumblr from Chrome
+Encoding=UTF-8
+GenericName=tumblr
+Keywords=tumblr
+MimeType=
+Name=Tumblr
+StartupNotify=true
+StartupWMClass=Tumblr
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+twitch_url="https://twitch.tv/"
+twitch_icon="http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png"
+twitch_alias="alias twitch=\"xdg-open ${twitch_url} &>/dev/null &\""
+twitch_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to Twitch from Chrome
+Encoding=UTF-8
+GenericName=Twitch.tv
+Keywords=twitch;Twitch;
+MimeType=
+Name=Twitch
+StartupNotify=true
+StartupWMClass=Twitch
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+twitter_url="https://twitter.com/"
+twitter_icon="https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg"
+twitter_alias="alias twitter=\"xdg-open ${twitter_url} &>/dev/null &\""
+twitter_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Twitter from Chrome
+Encoding=UTF-8
+GenericName=Twitter
+Keywords=twitter
+MimeType=
+Name=Twitter
+StartupNotify=true
+StartupWMClass=Twitter
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+# u function only opens in 'http://google.com', may work with 'google.com' or 'www.google.com'?
+u_installationtype="packagemanager"
+u_bashfunctions=("
+u()
+{
+  xdg-open \"\$1\" &>/dev/null
+}
+")
+
 uget_installationtype="packagemanager"
 uget_packagedependencies=("aria2")
 uget_packagenames=("uget")
@@ -1681,6 +1657,24 @@ MimeType=
 Name=WhatsApp Web
 StartupNotify=true
 StartupWMClass=WhatsApp
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+wikipedia_url="https://www.wikipedia.org/"
+wikipedia_icon="https://upload.wikimedia.org/wikipedia/commons/2/20/Wikipedia-logo-simple.svg"
+wikipedia_alias="alias wikipedia=\"xdg-open ${wikipedia_url} &>/dev/null &\""
+wikipedia_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Reddit from Chrome
+Encoding=UTF-8
+GenericName=reddit
+Keywords=wikipedia
+MimeType=
+Name=Wikipedia
+StartupNotify=true
+StartupWMClass=Wikipedia
 Terminal=false
 TryExec=google-chrome
 Type=Application
