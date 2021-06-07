@@ -104,3 +104,11 @@
 - [x] adding aliases: `a`, `bi`, `gris`, `hard`, `lol`, `notebook`, `lab`, `push`, `pull`
 - [x] `data_features.sh`: Add edge cases of function `commit`. Test exhaustively, spaces, strings, colons, commands, multiple arguments etc. It can not fail.
 - [x] git add, checkout
+- [x] gris is bash function
+- [x] add alias matrix for cmatrix
+- [x] Added ipi function
+- [x] Added TRASH to `(shortcuts)` 
+- [x] `python` virtual env aliases:
+    - alias va="source ./venv/bin/activate"
+    - alias ve="python3 -m venv ./venv"
+    - alias veva="ve; va"

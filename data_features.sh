@@ -233,6 +233,7 @@ Version=1.0"
 
 cmatrix_installationtype="packagemanager"
 cmatrix_packagenames=("cmatrix")
+cmatrix_bashfunctions=("alias matrix=\"cmatrix -sC yellow\"")
 cmatrix_launchercontents=("[Desktop Entry]
 Categories=matrix;
 Comment=Matrix
@@ -523,7 +524,21 @@ gparted_packagenames=("gparted")
 gparted_launchernames=("gparted")
 
 gris_installationtype="packagemanager"
-gris_bashfunctions=("alias gris=\"history | grep \$1\"")
+gris_bashfunctions=("
+gris()
+{
+  history | grep --color=always \$1
+}
+")
+
+# u function only opens in 'http://google.com', may work with 'google.com' or 'www.google.com'?
+u_installationtype="packagemanager"
+u_bashfunctions=("
+u()
+{
+  xdg-open \"\$1\" &>/dev/null
+}
+")
 
 gvim_installationtype="packagemanager"
 gvim_packagenames=("vim-gtk3")
@@ -1372,6 +1387,7 @@ pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "l
 # Dependency of pgadmin4
 python3_installationtype="packagemanager"
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
+python3_bashfunctions=("alias va=\"source ./venv/bin/activate\"" "alias ve=\"python3 -m venv ./venv\"" "alias veva=\"ve; va\"")
 
 r_base_installationtype="packagemanager"
 r_base_packagenames=("r-base")
@@ -1442,6 +1458,7 @@ FUNCTIONS=${BASH_FUNCTIONS_PATH}
 PICTURES=${XDG_PICTURES_DIR}
 TEMPLATES=${XDG_TEMPLATES_DIR}
 MUSIC=${XDG_MUSIC_DIR}
+TRASH=${HOME_FOLDER}/.local/share/Trash/
 CUSTOMIZER=${DIR}
 VIDEOS=${XDG_VIDEOS_DIR}
 GIT=${XDG_DESKTOP_DIR}/git
@@ -1828,6 +1845,14 @@ ipe()
 }
 "
 
+ipi_function="
+
+ipi()
+{
+  hostname -I | awk '{print \$1}'
+}
+"
+
 e_function="
 
 e()
@@ -1922,8 +1947,8 @@ L()
       finaldisplay=\"\$finaldisplay\$NEW_LINE\$linels\"
     fi
   done
-  finaldisplay=\"\${finaldisplay}\$NEW_LINE\$NEW_LINE\"
-  printf \"\$finaldisplay\"
+  finaldisplay=\"\${finaldisplay}\"
+  echo \"\$finaldisplay\"
 }
 "
 

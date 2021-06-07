@@ -1130,6 +1130,11 @@ install_ipe()
   add_bash_function "${ipe_function}" ipe.sh
 }
 
+install_ipi()
+{
+  add_bash_function "${ipi_function}" ipi.sh
+}
+
 install_instagram()
 {
   add_internet_shortcut instagram
@@ -1284,6 +1289,11 @@ install_twitch()
 install_twitter()
 {
   add_internet_shortcut twitter
+}
+
+install_u()
+{
+  generic_install u
 }
 
 install_whatsapp()
