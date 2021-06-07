@@ -176,7 +176,7 @@ brasero_packagenames=("brasero")
 brasero_launchernames=("brasero")
 
 caffeine_installationtype="packagemanager"
-# caffeine_launchernames=("caffeine-indicator")
+caffeine_launchernames=("caffeine-indicator")
 caffeine_packagenames=("caffeine")
 
 calibre_installationtype="packagemanager"

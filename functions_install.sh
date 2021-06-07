@@ -83,12 +83,11 @@ add_internet_shortcut() {
 # - Description: Add new program launcher to the task bar given its desktop launcher filename.
 # - Permissions: This functions expects to be called as a non-privileged user.
 # - Argument 1: Name of the .desktop launcher including .desktop extension written in file in PROGRAM_FAVORITES_PATH
-add_to_favorites()
-{
+add_to_favorites() {
   for argument in "$@"; do
     if [ -z "$(cat "${PROGRAM_FAVORITES_PATH}" | grep -Eo "${argument}")" ]; then
       if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
-        echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
+        echo "${argument}.desktop" >>"${PROGRAM_FAVORITES_PATH}"
       else
         output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
         return
@@ -97,6 +96,38 @@ add_to_favorites()
       output_proxy_executioner "echo WARNING: The program ${argument} is already added to the taskbar favorites. Skipping" "${FLAG_QUIETNESS}"
     fi
   done
+}
+
+# - Description: Apply standard permissions and set owner and group to the user who called root
+# - Permissions: This functions is expected to be called as root
+# Argument 1: Name of .desktop launcher of program file
+autostart_program() {
+  if [ -n "$(echo "$1" | grep -Eo "^/")" ]; then
+    if [ -f "$1" ]; then
+      cp "$1" "${AUTOSTART_FOLDER}"
+      if [ ${EUID} -eq 0 ]; then
+        apply_permissions "$1"
+      fi
+    else
+      output_proxy_executioner "echo WARNING: The file $1 does not exist, skipping..." ${FLAG_QUIETNESS}
+      return
+    fi
+  else
+    if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]; then
+      cp "${ALL_USERS_LAUNCHERS_DIR}/$1" "${AUTOSTART_FOLDER}/$1"
+      if [ ${EUID} -eq 0 ]; then
+        apply_permissions "$1"
+      fi
+    elif [ -f "${PERSONAL_LAUNCHERS_DIR}/$1" ]; then
+      cp "${PERSONAL_LAUNCHERS_DIR}/$1" "${AUTOSTART_FOLDER}/$1"
+      if [ ${EUID} -eq 0 ]; then
+        apply_permissions "$1"
+      fi
+    else
+      output_proxy_executioner "echo WARNING: The file $1 does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." ${FLAG_QUIETNESS}
+      return
+    fi
+  fi
 }
 
 # - Description: Apply standard permissions and set owner and group to the user who called root
@@ -494,15 +525,13 @@ rootgeneric_installation_type() {
     done
   fi
 
-
 }
 
 # - Permissions: Expected to be run by normal user.
 # - Arguments:
 # * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
 # function.
-usergeneric_installation_type()
-{
+usergeneric_installation_type() {
   # First elements of necessary arrays to perform the algorithm of inheriting the directory of decompressed files.
   # These are necessary to perform the download and decompress
   local -r inheritedcompressedfileurl="$1_inheritedcompressedfileurl"
@@ -512,7 +541,6 @@ usergeneric_installation_type()
 
   # This is optional or relative
   local -r inheritedcompressedfiledownloadpath="$1_inheritedcompressedfiledownloadpath"
-
 
   # Used to detect if we have met the situation or not, basically to skip the first compressed file and folder
   if [ -z "${!inheriteddirectoryname}" ]; then
@@ -552,7 +580,7 @@ usergeneric_installation_type()
       decompress "${inheritedcompressedfiletype}" "${inheritedcompressedfiledownloadpath}" "${inheriteddirectoryname}"
     fi
   fi
-    #if [  ]; then
+  #if [  ]; then
 }
 
 # - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
@@ -615,7 +643,6 @@ usergeneric_installation_type()
 usergeneric_installationtype() {
   # Declare name of variables for indirect expansion
 
-
   # - If this variable has a value in the first position and there is a compressed files in the first position present
   # (in compressedfileurls): this function will assume that there is a directory in the root of this compressed file,
   # which will be renamed to the contents of this variable and will be the default folder to put downloaded files and
@@ -632,8 +659,6 @@ usergeneric_installationtype() {
   # the first position of the array below, it will assume that there is a unique directory inside the root of the
   # compressed file, which will be renamed to $1 and set to be the default folder to download files in the installation
   # of the current feature.
-
-
 
   local -r directorynames="$1_directorynames[@]"
 
@@ -657,7 +682,6 @@ usergeneric_installationtype() {
   # Generic downloads
   local -r fileurls="$1_fileurls[@]"
   local -r filedownloaddirs="$1_filedownloaddirs[@]"
-
 
   # Beginning with normal installation
 
@@ -699,7 +723,6 @@ usergeneric_installationtype() {
   fi
 }
 
-
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
 # - Permissions: Same behaviour being root or normal user.
 # - Argument 1: File types. Example: application/x-shellscript
@@ -736,7 +759,6 @@ else
   exit 1
 fi
 
-
 # - Description: This functions is the basic piece of the favourites subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
 # is invoked. This function and its necessary files such as $PROGRAM_FAVORITES_PATH are always present during the
@@ -761,4 +783,3 @@ if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
   done
 fi
 "
-
