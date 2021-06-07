@@ -35,6 +35,7 @@
     - `(modify, expanded behaviour)`: alias fn="find . -name"
     - `function`: alias port="lsof -i $1"
     - alias ports="lsof -Pan -i tcp -i udp"
+    - function grel: ls | grep "$1"
 - [ ] `install.sh`, `uninstall.sh`: SSH
     - alias sshCheck="sudo service ssh status"
     - alias sshConf="sshConfig"
@@ -85,6 +86,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 # TO-DO v1.0
 
 #### NEW FEATURES
+- [ ] Autostarting programs (`caffeine`, )
 - [ ] `L` function columns
 - [ ] `e` convert to edit and echo function
 - [ ] turn `k` to `g`

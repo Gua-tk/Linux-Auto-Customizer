@@ -74,6 +74,10 @@ install_brasero()
 install_caffeine()
 {
   generic_install caffeine
+  # patch to start caffeine-indicator activated
+  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | sudo patch /usr/bin/caffeine-indicator
+  # copy caffeine-indicator launcher to autostart directory
+  cp -p "/usr/share/applications/caffeine-indicator.desktop" "${HOME_FOLDER}/.config/autostart/caffeine-indicator.desktop"
 }
 
 install_calibre()
