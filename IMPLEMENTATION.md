@@ -7,6 +7,7 @@
 - [ ] `install.sh`: Move favourites subsystem to ~.profile, so it is not executed each time we create a terminal.
 - [ ] `functions_common.sh`: in autogen help trim spaces in columns
 - [ ] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers or cheat have to be moved
+- [ ] `install.sh`: Add VBox extension pack
 
 ##### Axel
 - [~] `data_features.sh`: validate `promptcolors` function. Write custom color codes of gnome-terminal profile through gsettings or similar
