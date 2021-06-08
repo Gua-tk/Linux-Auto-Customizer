@@ -694,9 +694,10 @@ install_docker()
 
 install_eclipse()
 {
-  download_and_decompress ${eclipse_downloader} "eclipse" "z" "eclipse" "eclipse"
-
+  download "${eclipse_downloader}" "eclipse_downloading"
+  decompress "z" "eclipse_downloading" "eclipse"
   create_manual_launcher "${eclipse_launcher}" "eclipse"
+  create_links_in_path "eclipse" "Eclipse"
 }
 
 install_geogebra()
