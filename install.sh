@@ -1337,7 +1337,7 @@ main()
   ################################
 
   FLAG_MODE=install  # Install mode
-  if [[ ${EUID} == 0 ]]; then  # root
+  if [ ${EUID} == 0 ]; then  # root
     create_folder_as_root ${USR_BIN_FOLDER}
     create_folder_as_root ${BASH_FUNCTIONS_FOLDER}
     create_folder_as_root ${DIR_IN_PATH}
@@ -1347,12 +1347,9 @@ main()
       create_file_as_root "${PROGRAM_FAVORITES_PATH}" ""
     fi
 
-    if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
+    if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
+      true > "${BASH_FUNCTIONS_PATH}"
       add_bash_function "${BASH_FUNCTIONS_PATH}" "${bash_functions_init}"
-      # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-      if [[ -z "$(echo "${PATH}" | grep -Eo "(.*:.*)*${DIR_IN_PATH}")" ]]; then  # If it is not in PATH, add to bash functions
-        echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASH_FUNCTIONS_PATH}
-      fi
     fi
   else  # user
     mkdir -p ${USR_BIN_FOLDER}
@@ -1361,26 +1358,27 @@ main()
     mkdir -p ${BASH_FUNCTIONS_FOLDER}
     mkdir -p ${FONTS_FOLDER}
     # If $BASH_FUNCTION_PATH does not exist, create the exit point when running not interactively.
-    if [[ ! -f ${BASH_FUNCTIONS_PATH} ]]; then
-      add_bash_function "${bash_functions_init}" "${BASH_FUNCTIONS_PATH}"
+    if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
+      true > "${BASH_FUNCTIONS_PATH}"
+      add_bash_function "${bash_functions_init}" "init.sh"
     else
       # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
       source ${BASH_FUNCTIONS_PATH}
     fi
 
     # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-    if [[ -z "$(echo "${PATH}" | grep -Eo "(.*:.*)*${DIR_IN_PATH}")" ]]; then  # If it is not in PATH, add to bash functions
+    if [ -z "$(echo "${PATH}" | grep -Eo "(.*:.*)*${DIR_IN_PATH}")" ]; then  # If it is not in PATH, add to bash functions
       echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASH_FUNCTIONS_PATH}
     fi
   fi
 
   # Make sure .bash_functions and its structure is present
-  if [[ -z "$(cat ${BASHRC_PATH} | grep -Fo "source ${BASH_FUNCTIONS_PATH}" )" ]]; then  # .bash_functions not added
+  if [ -z "$(cat ${BASHRC_PATH} | grep -Fo "source ${BASH_FUNCTIONS_PATH}" )" ]; then  # .bash_functions not added
     echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
   fi
   # Built-in favourites system
   if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
-    true >> "${PROGRAM_FAVORITES_PATH}"
+    true > "${PROGRAM_FAVORITES_PATH}"
     add_bash_function "${favorites_function}" "favorites.sh"
   fi
 
