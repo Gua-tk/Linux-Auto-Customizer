@@ -1689,7 +1689,7 @@ uget_packagenames=("uget")
 uget_launchernames=("uget-gtk")
 
 virtualbox_installationtype="packageinstall"
-virtuabox_packagedependencies=("libqt5opengl5")
+virtualbox_packagedependencies=("libqt5opengl5")
 virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb")
 virtualbox_launchernames=("virtualbox")
 

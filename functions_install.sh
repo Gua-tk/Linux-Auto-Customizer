@@ -234,12 +234,12 @@ decompress() {
   if [ -z "$2" ]; then
     dir_name="${USR_BIN_FOLDER}"
     file_name="downloading_program"
-  elif [ -n "$(echo $2 | grep -Eo "^/")" ]; then
+  elif [ -n "$(echo "$2" | grep -Eo "^/")" ]; then
     # Absolute path to a file
     dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
     file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
   else
-    if [ -n "$(echo $2 | grep -Eo "/")" ]; then
+    if [ -n "$(echo "$2" | grep -Eo "/")" ]; then
       # Relative path to a file containing subfolders
       dir_name="${USR_BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
       file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
@@ -252,10 +252,10 @@ decompress() {
   if [ -n "$3" ]; then
     if [ "$1" == "zip" ]; then
       # Return this variable via making it global
-      local -r internal_folder_name="$(unzip -l "$2" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1)"
+      local -r internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1)"
     else
       # Capture root folder name
-      local -r internal_folder_name=$( (tar -t"$1"f - | head -1 | cut -d "/" -f1) <"$2")
+      local -r internal_folder_name=$( (tar -t"$1"f - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
     fi
     # Check that variable program_folder_name is set, if not abort
     # Clean to avoid conflicts with previously installed software or aborted installation
@@ -272,20 +272,22 @@ decompress() {
       (
         cd "${dir_name}" || exit
         tar -x"$1"f -
-      ) <"${dir_name}/${file_name}"
+      ) < "${dir_name}/${file_name}"
     fi
   else
     output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist." "${FLAG_QUIETNESS}"
     exit 1
   fi
 
-  # Delete downloaded files which will be no longer used
-  rm -f "${dir_name:?}/${file_name}"
-  # Rename folder to $3 if the argument is set
-  if [ -n "$3" ]; then
-    # Delete the folder that we are going to move to avoid collisions
-    rm -Rf "${dir_name:?}/$3"
-    mv "${dir_name}/${internal_folder_name}" "${dir_name}/$3"
+  # Only enter here if they are different, if not skip since it is pointless because the folder already has the desired
+  # name
+  if [ "$3" != "${internal_folder_name}" ]; then
+    # Rename folder to $3 if the argument is set
+    if [ -n "$3" ]; then
+      # Delete the folder that we are going to move to avoid collisions
+      rm -Rf "${dir_name:?}/$3"
+      mv "${dir_name}/${internal_folder_name}" "${dir_name}/$3"
+    fi
   fi
 }
 
