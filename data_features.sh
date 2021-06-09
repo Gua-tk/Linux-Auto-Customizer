@@ -567,6 +567,10 @@ github_packageurls="https://github.com/shiftkey/desktop/releases/download/releas
 github_packagenames=("github")
 github_launchernames=("github-desktop")
 
+gnat_gps_installationtype="packagemanager"
+gnat_gps_packagenames=("gnat-gps")
+gnat_gps_launchernames=("gnat-programming-studio")
+
 gnome_calculator_installationtype="packagemanager"
 gnome_calculator_packagenames=("gnome-calculator")
 gnome_calculator_launchernames=("org.gnome.Calculator")
@@ -842,6 +846,9 @@ Version=1.0
 Icon=${USR_BIN_FOLDER}/jupyter-lab/share/icons/hicolor/scalable/apps/notebook.svg
 Exec=jupyter-lab &
 ")
+jupyter_lab_bashfunctions=("
+alias lab=\"jupyter-lab\"
+")
 
 k_bashfunctions=("alias k=\"gitk\"")
 k_installationtype="packagemanager"
@@ -954,6 +961,10 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
+nedit_installationtype="packagemanager"
+nedit_packagenames=("nedit")
+nedit_launchernames=("nedit")
+
 net_tools_installationtype="packagemanager"
 net_tools_packagenames=("net-tools")
 
@@ -977,6 +988,9 @@ okular_packagenames=("okular")
 okular_launchernames=("org.kde.okular")
 
 openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
+
+openssl102_installationtype="packageinstall"
+openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
 
 onedrive_icon="https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg"
 onedrive_url=https://onedrive.live.com/
@@ -1251,10 +1265,64 @@ pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "l
 # Dependency of pgadmin4
 python3_installationtype="packagemanager"
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
-python3_bashfunctions=("alias va=\"source ./venv/bin/activate\"" "alias ve=\"python3 -m venv ./venv\"" "alias veva=\"ve; va\"")
+
+# 6 el tres alias aquests del venv s'han de integrar en una sola funcio.
+# (a mes recorda que les features no tenen dependencies entre elles,
+# pel que veva no pot dependre de ve,
+# ha de tenir hardcoded totes les seves propies instruccions.)
+
+# Aquesta funcio dels envs ha de tenir força logica,
+# basicament ha de crear i fer source de un venv
+# amb el nom que li passis per paramaetre.
+# SI ja existeix nomes fa source del activate.
+# Si ja estas en activate pues llavors fer deactivate.
+#("alias va=\"source ./venv/bin/activate\"" "alias ve=\"python3 -m venv ./venv\"" "alias veva=\"ve; va\"")
+
+# Not argument: create local virtual environment named venv, exists
+# argument 1: path to the environment
+python3_bashfunctions=("
+v()
+{
+  if [ \$# -eq 0 ]; then
+    if [ -n \"\${VIRTUAL_ENV}\" ]; then
+      deactivate
+    else
+      if [ -f activate ]; then
+        source activate
+        return
+      elif [ -f bin/activate ]; then
+        source bin/activate
+        return
+      else
+        for i in \$(ls); do
+          if [ -d \"\${i}\" ]; then
+            if [ -f \"\${i}/bin/activate\" ]; then
+              source \"\${i}/bin/activate\"
+              return
+            fi
+          fi
+        done
+      fi
+      python3 -m venv venv
+    fi
+  else
+    if [ -n \"\${VIRTUAL_ENV}\" ]; then
+      deactivate
+    else
+      python3 -m venv \"\$1\"
+    fi
+  fi
+}
+
+")
 
 r_base_installationtype="packagemanager"
 r_base_packagenames=("r-base")
+r_base_launchernames=("R")
+
+rstudio_installationtype="packageinstall"
+rstudio_packageurls=("https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz")
+rstudio_dependencies_packagenames=("libssl.so.1.0.2")
 
 reddit_url="https://www.reddit.com/"
 reddit_icon="https://duckduckgo.com/i/b6b8ccc2.png"
@@ -1294,6 +1362,9 @@ s()
   \"\$@\" &>/dev/null &
 }
 "
+
+scala_installationtype="packagemanager"
+scala_packagenames=("scala")
 
 screenshots_function="
 alias screenshot-full=\"gnome-screenshot -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
@@ -1782,7 +1853,6 @@ bintohex()
 {
   to \$1 2 16
 }
-
 octtobin()
 {
   to \$1 3 2
@@ -1799,7 +1869,6 @@ octohex()
 {
   to \$1 3 16
 }
-
 octotobin()
 {
   to \$1 8 2
@@ -1816,7 +1885,6 @@ octotohex()
 {
   to \$1 8 16
 }
-
 dectobin()
 {
   to \$1 10 2
@@ -1833,7 +1901,6 @@ dectohex()
 {
   to \$1 10 16
 }
-
 hextobin()
 {
   to \$1 16 2

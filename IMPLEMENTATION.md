@@ -35,7 +35,8 @@
     - `(modify, expanded behaviour)`: alias fn="find . -name"
     - `function`: alias port="lsof -i $1"
     - alias ports="lsof -Pan -i tcp -i udp"
-    - function grel: ls | grep "$1"
+    - function lg: ls | grep "$1"
+
 - [ ] `install.sh`, `uninstall.sh`: SSH
     - alias sshCheck="sudo service ssh status"
     - alias sshConf="sshConfig"

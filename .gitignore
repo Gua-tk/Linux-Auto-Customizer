@@ -21,3 +21,5 @@ package-lock.json
 help.md
 venv/
 ansible_kernel.log
+*.ipynb
+.Rhistory
