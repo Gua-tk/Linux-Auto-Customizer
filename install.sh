@@ -226,6 +226,11 @@ install_gitk()
   generic_install gitk
 }
 
+install_gnat-gps()
+{
+  generic_install gnat-gps
+}
+
 install_gnome-calculator()
 {
   generic_install gnome-calculator
@@ -356,6 +361,11 @@ install_nautilus()
   generic_install nautilus
 }
 
+install_nedit()
+{
+  generic_install nedit
+}
+
 install_nemo()
 {
   # Delete Nautilus, the default desktop manager to avoid conflicts
@@ -444,15 +454,38 @@ install_jupyter-lab()
 
   # Install necessary pip and python packages
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel bash_kernel jupyterlab_markup powershell_kernel pykerberos pywinrm[kerberos] iarm ansible-kernel jupyterlab
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel jupyter jupyterlab jupyterlab-git jupyterlab_markup
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install bash_kernel
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install pykerberos pywinrm[kerberos]
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install powershell_kernel
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install iarm
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install ansible-kernel
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m ansible_kernel.install
 
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install kotlin-jupyter-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m kotlin_kernel fix-kernelspec-location
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install vim-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m vim_kernel.install
+
+
+  # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install theme-darcula
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension install @telamonian/theme-darcula
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension enable @telamonian/theme-darcula
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" lab build
 
   create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
   create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
+  add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"
 }
 
 install_php()
@@ -516,6 +549,7 @@ install_pluma()
 install_r-base()
 {
   generic_install r-base
+
 }
 
 install_remmina()
@@ -530,6 +564,11 @@ install_rustc()
   bash "${USR_BIN_FOLDER}/rustup-init.sh"
 }
 
+install_scala()
+{
+  generic_install scala
+}
+
 install_shotcut()
 {
   generic_install shotcut
@@ -539,6 +578,7 @@ install_shotwell()
 {
   generic_install shotwell
 }
+
 install_skype()
 {
   generic_install skype
@@ -636,7 +676,6 @@ install_wireshark()
   copy_launcher "wireshark.desktop"
   sed -i 's-Icon=.*-Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg-' ${XDG_DESKTOP_DIR}/wireshark.desktop
 }
-
 
 #####################################
 ###### USER SOFTWARE FUNCTIONS ######
@@ -1063,6 +1102,8 @@ install_julia()
   decompress "z" "${USR_BIN_FOLDER}/julia_downloading" "julia"
   create_links_in_path "${USR_BIN_FOLDER}/julia/bin/julia" julia
   create_manual_launcher "${julia_launchercontents}" "julia"
+
+  # install jupyter-lab dependencies
   julia -e '#!/.local/bin/julia
   using Pkg
   Pkg.add("IJulia")
@@ -1196,6 +1237,11 @@ install_onedrive()
   add_internet_shortcut onedrive
 }
 
+install_openssl102()
+{
+  generic_install "openssl102"
+}
+
 install_outlook()
 {
   add_internet_shortcut outlook
@@ -1229,6 +1275,13 @@ install_prompt()
 install_reddit()
 {
   add_internet_shortcut reddit
+}
+
+install_rstudio()
+{
+  download "${rstudio_packageurls}" "rstudio_downloading"
+  decompress "z" "${USR_BIN_FOLDER}/rstudio_downloading" "rstudio"
+  create_links_in_path "${USR_BIN_FOLDER}/rstudio/bin/rstudio" rstudio
 }
 
 install_s()
