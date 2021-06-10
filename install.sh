@@ -546,10 +546,14 @@ install_pluma()
   generic_install pluma
 }
 
-install_r-base()
+install_R()
 {
-  generic_install r-base
-
+  generic_install R
+  # install jupyter-lab dependencies
+  # https://www.datacamp.com/community/blog/jupyter-notebook-r
+  R -e "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'))
+  devtools::install_github('IRkernel/IRkernel')
+  IRkernel::installspec()"
 }
 
 install_remmina()
@@ -1282,6 +1286,9 @@ install_rstudio()
   download "${rstudio_packageurls}" "rstudio_downloading"
   decompress "z" "${USR_BIN_FOLDER}/rstudio_downloading" "rstudio"
   create_links_in_path "${USR_BIN_FOLDER}/rstudio/bin/rstudio" rstudio
+  create_manual_launcher "${rstudio_launcher}" rstudio
+  register_file_associations "text/plain" "rstudio.desktop"
+
 }
 
 install_s()

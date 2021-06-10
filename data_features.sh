@@ -1265,22 +1265,10 @@ pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "l
 # Dependency of pgadmin4
 python3_installationtype="packagemanager"
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
-
-# 6 el tres alias aquests del venv s'han de integrar en una sola funcio.
-# (a mes recorda que les features no tenen dependencies entre elles,
-# pel que veva no pot dependre de ve,
-# ha de tenir hardcoded totes les seves propies instruccions.)
-
-# Aquesta funcio dels envs ha de tenir força logica,
-# basicament ha de crear i fer source de un venv
-# amb el nom que li passis per paramaetre.
-# SI ja existeix nomes fa source del activate.
-# Si ja estas en activate pues llavors fer deactivate.
-#("alias va=\"source ./venv/bin/activate\"" "alias ve=\"python3 -m venv ./venv\"" "alias veva=\"ve; va\"")
-
-# Not argument: create local virtual environment named venv, exists
-# argument 1: path to the environment
 python3_bashfunctions=("
+# Create and source a venv with the given name passed as parameter.
+# If already exists, only sources activate
+# If already activated, do deactivate
 v()
 {
   if [ \$# -eq 0 ]; then
@@ -1316,13 +1304,31 @@ v()
 
 ")
 
-r_base_installationtype="packagemanager"
-r_base_packagenames=("r-base")
-r_base_launchernames=("R")
+R_installationtype="packagemanager"
+R_packagenames=("r-base")
+R_launchernames=("R")
 
 rstudio_installationtype="packageinstall"
 rstudio_packageurls=("https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz")
-rstudio_dependencies_packagenames=("libssl.so.1.0.2")
+rstudio_dependencies_packagenames=("libssl-dev")
+rstudio_alias="alias rstudio=\"rstudio &>/dev/null &\""
+rstudio_launcher="[Desktop Entry]
+Categories=Network;
+Comment=Desktop app for programming in R
+Encoding=UTF-8
+Exec=rstudio
+GenericName=RStudio
+Icon=$HOME/.bin/rstudio/www/images/favicon.ico
+Keywords=rstudio
+MimeType=text/plain;
+Name=RStudio
+StartupNotify=true
+StartupWMClass=RStudio
+Terminal=false
+TryExec=rstudio
+Type=Application
+Version=1.0"
+
 
 reddit_url="https://www.reddit.com/"
 reddit_icon="https://duckduckgo.com/i/b6b8ccc2.png"
