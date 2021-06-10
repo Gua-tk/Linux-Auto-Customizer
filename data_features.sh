@@ -745,7 +745,7 @@ Type=Application
 Version=1.0"
 ideau_alias="alias ideau=\"ideau . &>/dev/null &\""
 
-ideac_downloader="https://download.jetbrains.com/idea/ideaIC-2020.3.1.tar.gz"
+ideac_downloader="https://download.jetbrains.com/idea/ideaIC-2020.3.4.tar.gz"
 ideac_launcher="[Desktop Entry]
 Categories=Development;IDE;
 Comment=Capable and Ergonomic IDE for JVM
