@@ -730,7 +730,7 @@ hardinfo_installationtype="packagemanager"
 hardinfo_packagenames=("hardinfo")
 hardinfo_launchernames=("hardinfo")
 
-ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2021.1.2-no-jbr.tar.gz"
+ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2021.1.2.tar.gz"
 ideau_launcher="[Desktop Entry]
 Categories=Development;IDE;
 Comment=Capable and Ergonomic IDE for JVM
