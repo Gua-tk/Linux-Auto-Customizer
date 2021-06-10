@@ -813,7 +813,7 @@ iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
 j_bashfunctions=("alias j=\"jobs -l\"")
 j_installationtype="packagemanager"
 
-java_downloader="https://javadl.oracle.com/webapps/download/AutoDL?BundleId=244575_d7fc238d0cbf4b0dac67be84580cfb4b"
+java_downloader="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
 
 julia_installationtype="packageinstall"
