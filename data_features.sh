@@ -1564,6 +1564,11 @@ tilix_installationtype="packagemanager"
 tilix_packagenames=("tilix")
 tilix_launchernames=("com.gexperts.Tilix")
 
+tomcat_installationtype="userprogram"
+tomcat_inheritedcompressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
+tomcat_inheritedcompressedfiletype="z"
+tomcat_inheriteddirectoryname="tomcat"
+
 tmux_installationtype="packagemanager"
 tmux_packagenames=("tmux")
 tmux_launchercontents=("[Desktop Entry]

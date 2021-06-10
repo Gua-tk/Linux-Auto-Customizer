@@ -906,6 +906,12 @@ install_telegram()
   create_manual_launcher "${telegram_launcher}" "telegram"
 }
 
+install_tomcat()
+{
+  download "${tomcat_inheritedcompressedfileurl}" "tomcat_downloading"
+  decompress "${tomcat_inheritedcompressedfiletype}" "${USR_BIN_FOLDER}/tomcat_downloading" tomcat
+}
+
 install_youtube-dl()
 {
   wget ${youtubedl_downloader} -q --show-progress -O ${USR_BIN_FOLDER}/youtube-dl
