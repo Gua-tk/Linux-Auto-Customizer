@@ -730,7 +730,7 @@ hardinfo_installationtype="packagemanager"
 hardinfo_packagenames=("hardinfo")
 hardinfo_launchernames=("hardinfo")
 
-ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2020.3.1.tar.gz"
+ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2021.1.2.tar.gz"
 ideau_launcher="[Desktop Entry]
 Categories=Development;IDE;
 Comment=Capable and Ergonomic IDE for JVM
@@ -749,7 +749,7 @@ Type=Application
 Version=1.0"
 ideau_alias="alias ideau=\"ideau . &>/dev/null &\""
 
-ideac_downloader="https://download.jetbrains.com/idea/ideaIC-2020.3.1.tar.gz"
+ideac_downloader="https://download.jetbrains.com/idea/ideaIC-2021.1.2.tar.gz"
 ideac_launcher="[Desktop Entry]
 Categories=Development;IDE;
 Comment=Capable and Ergonomic IDE for JVM
@@ -813,7 +813,7 @@ iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
 j_bashfunctions=("alias j=\"jobs -l\"")
 j_installationtype="packagemanager"
 
-java_downloader="https://javadl.oracle.com/webapps/download/GetFile/1.8.0_281-b09/89d678f2be164786b292527658ca1605/linux-i586/jdk-8u281-linux-x64.tar.gz"
+java_downloader="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
 
 julia_installationtype="packageinstall"
@@ -1569,6 +1569,11 @@ thunderbird_launchernames=("thunderbird")
 tilix_installationtype="packagemanager"
 tilix_packagenames=("tilix")
 tilix_launchernames=("com.gexperts.Tilix")
+
+tomcat_installationtype="userprogram"
+tomcat_inheritedcompressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
+tomcat_inheritedcompressedfiletype="z"
+tomcat_inheriteddirectoryname="tomcat"
 
 tmux_installationtype="packagemanager"
 tmux_packagenames=("tmux")

@@ -58,18 +58,18 @@ add_program()
 {
   # Process all arguments
   while [[ $# -gt 0 ]]; do
-
     found=0  # To check for a valid argument
     # Process each argument to write down the flags for each installation in installation_data
     total=${#installation_data[*]}
     for (( i=0; i<$(( ${total} )); i++ )); do  # Check all the entries in installation_data
       # Cut first program name argument (with two -- at the beginning) from the first argument
       # We will generate the program function name with it
-      program_arguments=$(echo "${installation_data[$i]}" | cut -d ";" -f1)
-      for argument in $(echo ${program_arguments} | tr "|" " "); do
+      program_arguments="$(echo "${installation_data[$i]}" | cut -d ";" -f1 | tr "|" " ")"
+      # Set IFS, variable used to determine the default separator on foreach loops in bash. Set space as separator
+      IFS=" "
+      for argument in ${program_arguments}; do
 
-        if [[ "$1" == "${argument}" ]]; then
-
+        if [ "$1" == "${argument}" ]; then
           # Set that the argument is valid
           found=1
           # Cut static bit of permission
