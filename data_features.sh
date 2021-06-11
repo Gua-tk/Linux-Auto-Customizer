@@ -1832,7 +1832,9 @@ StartupWMClass=zoom
 Terminal=false
 TryExec=ZoomLauncher
 Type=Application
-Version=1.0"
+Version=1.0
+Exec=ZoomLauncher
+"
 
 
 ###########################
