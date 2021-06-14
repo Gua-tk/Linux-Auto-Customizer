@@ -57,7 +57,7 @@
 - [x] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
 - [x] `install.sh`: Force that the non-interactive running and the path is the first line in .bash_functions, as a common feature
 - [x] `u` function needs a bit rework  
-
+- [x] turn `k` to `g`
 
 
 ###### Axel

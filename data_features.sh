@@ -513,6 +513,9 @@ freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
 
+g_bashfunctions=("alias g=\"gitk\"")
+g_installationtype="packagemanager"
+
 gcc_installationtype="packagemanager"
 gcc_packagenames=("gcc")
 gcc_bashfunctions=("# colored GCC warnings and errors
@@ -542,6 +545,10 @@ Terminal=false
 TryExec=geogebra
 Type=Application
 Version=4.2.2"
+
+ghostwriter_installationtype="packagemanager"
+ghostwriter_packagenames=("ghostwriter")
+ghostwriter_launchernames=("ghostwriter")
 
 gimp_installationtype="packagemanager"
 gimp_packagenames=("gimp")
@@ -849,9 +856,6 @@ Exec=jupyter-lab &
 jupyter_lab_bashfunctions=("
 alias lab=\"jupyter-lab\"
 ")
-
-k_bashfunctions=("alias k=\"gitk\"")
-k_installationtype="packagemanager"
 
 keep_url="https://keep.google.com/"
 keep_icon="https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg"

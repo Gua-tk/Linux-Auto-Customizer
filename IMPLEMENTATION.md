@@ -14,29 +14,32 @@
 - [ ] `common_data.sh`: Change ALL the bash function such b, alert, c, dummycommit, etc. that adds new behaviour to the shell to begin with the same name, like "Function b" or "Bash Feature `b` ", so they get sorted in the same place when calling autogenreadme
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 - [ ] `data_features.sh`, `install.sh`, `uninstall.sh`: create bash functions that defines all the color schemes and styles in bash, storing the format in variables like RED="\e0]", BLUE="\e0", BOLD="...",  so you can `echo "${RED}${BOLD} This text is in red and bold"`
-- [ ] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to parametrize and create a func that does it for any program
+- [ ] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to parametrize and create a func that does it for any program [Keybindigs of terminal features](https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal/597414#597414)
 - [ ] `data_features.sh`: Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] `common_data.md`: In the table, put the extensions .c, .h, etc in bold or put it in another field, so they are not between literal tildes. In that way, they are not recognized in the help.
 - [ ] `e` function performs an echo if $1 is a string text
 - [~] `install.sh`, `uninstall.sh`: Add most significative asix2Atesting aliases & end conflicts with Up-to-Date Customizer & Linux-System duplication;
     - x `(extract)`
-    - alias Clean="sudo apt-get -y autoclean && sudo apt-get -y autoremove"
-    - alias Shutdown="shutdown -h now"
-    - alias Update="sudo apt-get update -y && sudo apt-get upgrade -y"
-    - alias Upgrade="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get -y autoclean && sudo apt-get -y autoremove"
-    - alias Trash="rm -rf ${HOME}/.local/share/Trash/*"
+    - function lg: ls | grep "$1"- alias r="make run"      
+    - alias clean="sudo apt-get -y autoclean && sudo apt-get -y autoremove"
+    - alias shut="shutdown -h now"
+    - alias update="sudo apt-get update -y && sudo apt-get upgrade -y"
+    - alias upgrade="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get -y autoclean && sudo apt-get -y autoremove"
+    - alias trash="rm -rf ${HOME}/.local/share/Trash/*"
     - `(goes to net-tools)`: alias PORTS="netstat -tulanp" # alias nr="net-restart"
-    - alias SERVICE="sudo systemctl --type=service"
-    - alias TIMER="sudo systemctl -t timer"
-    - alias TOTALUSAGE="df -hl --total | grep total"
-    - alias UF="sudo systemctl list-unit-files"
+    - alias serv="sudo systemctl --type=service"
+    - alias timer="sudo systemctl -t timer"
+    - alias totalusage="df -hl --total | grep total"
+    - alias uf="sudo systemctl list-unit-files"
     - alias editbashrc="pluma ${HOME}/.bashrc"
     - `(adapt to bash features)`: alias editfunctions="pluma ${HOME}/.bash_functions"
     - alias editprofile="pluma ${HOME}/.profile"
     - `(modify, expanded behaviour)`: alias fn="find . -name"
     - `function`: alias port="lsof -i $1"
     - alias ports="lsof -Pan -i tcp -i udp"
-    - function lg: ls | grep "$1"
+    - alias rs="rsync -av --progress"
+    - alias cwp="change-bg" `(from customizer)`
+ 
 
 - [ ] `install.sh`, `uninstall.sh`: SSH
     - alias sshCheck="sudo service ssh status"
@@ -49,11 +52,8 @@
     - alias sshStatus="sudo systemctl status sshd"
     - alias sshStop="sudo systemctl stop sshd"
     - alias sshconf="sshConfig"
-    - alias r="make run"
-    - alias rs="rsync -av --progress"
-    - alias cwp="change-bg" `(from customizer)`
-
   
+
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
 - [ ] `uninstall.sh`: nautilus
 - [ ] `uninstall.sh`: lolcat
@@ -65,10 +65,13 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `uninstall.sh`: Axel: download manager
 - [ ] `uninstall.sh`: HardInfo (Benchmark tool)
 - [ ] `uninstall.sh`: Dbeaver Community (database manager)
+- [ ] `uninstall.sh`: ghostwriter (text editor for markdown and others with html preview)
+- [ ] `uninstall.sh`: jshell (apt-get install default-jdk)
+- [ ] `uninstall.sh`: check program matching
 
 
-- [ ] `install.sh`, `uninstall.sh`: jshell
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
+- [ ] `install.sh`, `uninstall.sh`: lynx --> Terminal web browser (needs custom alias and further image filtering investigations)
 - [ ] `install.sh`, `uninstall.sh`: Mdadm (raid manager) blkid (filesystems that has UUID are displayed) lsblk, fstab (lists all available disk partitions) `/etc/fstab`
 - [ ] `install.sh`, `uninstall.sh`: matlab
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
@@ -87,20 +90,17 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 # TO-DO v1.0
 
-#### NEW FEATURES
-- [~] Autostarting programs (`caffeine`, )
-- [ ] Add alias to notepadqq  
+#### NEW FEATURES 
+- [ ] Colors palette of default profile from terminal function (fonts lookalike)
+- [~] Autostarting programs (`caffeine`, copyq... ) steam? teams? teamviewer?
+- [ ] Add alias \`&\` to notepadqq, and furthermore
 - [~] `L` function columns
 - [ ] `e` convert to edit and echo function
-- [ ] turn `k` to `g`
-- [ ] scijava-jupyter-kernel
 - [ ] rewrite k as function: #alias k9="kill -9"# alias killbyport="k9 \`lsof -i:3000 -t\`"  
 - [ ] Install & Uninstall Customizerself installation #FUNCTION alias Install="sudo apt-get install -y" alias `CUSTOMIZER`= `cd ...?` ...
 - [ ] `README.md` or `IMPLEMENTATION.md`: Write down the command dependencies of the folder project
-- [ ] `install.sh`: Add debug mode, with a simple eval to inject code as a function
-- [ ] `install.sh`, `uninstall.sh`: kernels support for jupyter-lab
-- [ ] `install.sh`, `uninstall.sh`: npm and nodejs (packagemanager installationtype)  
-- [ ] `install.sh`, `uninstall.sh`: ghostwriter (text editor for markdown and others with html preview)  
+- [~] `install.sh`: Add debug mode, with a simple eval to inject code as a function
+- [~] `install.sh`, `uninstall.sh`: npm and nodejs (packagemanager installationtype)  
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script  
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] `commmon_functions.sh`: Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
@@ -116,7 +116,6 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 #### MAINTENANCE & UPDATES
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. At least sigint programmed to show a warning.
-- [ ] BUG: jupyter-lab desktop icon doesn't open in browser  
 - [ ] `data_features.sh`: Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar. move add to favorites to `.bash_profile`
 - [ ] `data_features.sh`, `functions_install.sh`: Allow the modification of the Icon or Exec line of the desktop launchers using sed in the root generic install or hardcoding the full launcher. Maybe the second
 - [ ] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
@@ -130,21 +129,14 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] `uninstall.sh`: Rewrite `uninstall.sh` functions using the new auxiliary functions, structures, variables
 - [ ] `install.sh`: refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] `install.sh`, `uninstall.sh`: Add several kernels & customizations for jupyter-lab: [text-shortcuts](https://github.com/techrah/jupyterext-text-shortcuts)
+- [~] `install.sh`, `uninstall.sh`: kernels support for jupyter-lab  
     - scala (Almond)  
     - perl
     - ruby 
-    - rust (EvCxR Jupyter Kernel)
-    - php (Jupyter-PHP)
 ###### Other Jupyter-lab kernels
-    - r (IRkernel)
-    - ansible (Ansible Kernel)
-    - latex
     - Wolfram Kernel
     - lua (ILua)
-    - Xonsh
 ###### Other Jupyter-lab customizations (further investigation needed)
-    - vscode-jupyter (integration of jupyter into vscode)
-    - theme-darcula (dark theme Intellij like)
     - # Web stack (probably included already in vscode)    
     - angular
     - react
@@ -153,8 +145,9 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
     - css
     - xslt
     - xsl
+- [~] BUG: jupyter-lab desktop icon doesn't open in browser
 
 ### TO-DO v2.0
 - [ ] May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 - [ ] SublimeText-Markdown, & other plugins for programs...
-
+- [ ] tmux features and tmux conf integration from testing

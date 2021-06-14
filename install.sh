@@ -131,14 +131,14 @@ install_dconf-editor()
   generic_install dconf-editor
 }
 
+install_default-jdk()
+{
+  generic_install default-jdk
+}
+
 install_dia()
 {
   generic_install dia
-}
-
-install_fdupes()
-{
-  generic_install fdupes
 }
 
 install_dropbox()
@@ -149,6 +149,11 @@ install_dropbox()
 install_evolution()
 {
   generic_install evolution
+}
+
+install_fdupes()
+{
+  generic_install fdupes
 }
 
 install_f-irc()
@@ -204,6 +209,11 @@ install_gcc()
 install_geany()
 {
   generic_install geany
+}
+
+install_ghostwriter()
+{
+  generic_install ghostwriter
 }
 
 install_gimp()
@@ -1017,6 +1027,11 @@ install_forms()
   add_internet_shortcut forms
 }
 
+install_g()
+{
+  generic_install g
+}
+
 install_git-aliases()
 {
   add_bash_function "${git_aliases_function}" git_aliases.sh
@@ -1133,11 +1148,6 @@ install_jupyter-lab()
   create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
   create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
   add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"
-}
-
-install_k()
-{
-  generic_install k
 }
 
 install_keep()
