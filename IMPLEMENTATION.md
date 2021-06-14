@@ -116,6 +116,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 #### MAINTENANCE & UPDATES
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. At least sigint programmed to show a warning.
+- [ ] BUG: jupyter-lab desktop icon doesn't open in browser  
 - [ ] `data_features.sh`: Add favorite function that not work when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar. move add to favorites to `.bash_profile`
 - [ ] `data_features.sh`, `functions_install.sh`: Allow the modification of the Icon or Exec line of the desktop launchers using sed in the root generic install or hardcoding the full launcher. Maybe the second
 - [ ] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
