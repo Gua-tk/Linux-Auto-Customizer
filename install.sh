@@ -231,6 +231,8 @@ install_gnat-gps()
   generic_install gnat-gps_launcher
   copy_launcher "gnat-programming-studio.desktop"
   sed "s|Icon=.*|Icon=/usr/share/doc/gnat-gps/html/users_guide/_static/favicon.ico|g" -i "${XDG_DESKTOP_DIR}/gnat-programming-studio.desktop"
+  sed "s|Icon=.*|Icon=/usr/share/doc/gnat-gps/html/users_guide/_static/favicon.ico|g" -i "${ALL_USERS_LAUNCHERS_DIR}/gnat-programming-studio.desktop"
+
 }
 
 install_gnome-calculator()
