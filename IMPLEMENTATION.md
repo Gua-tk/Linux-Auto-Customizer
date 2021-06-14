@@ -39,7 +39,7 @@
     - alias ports="lsof -Pan -i tcp -i udp"
     - alias rs="rsync -av --progress"
     - alias cwp="change-bg" `(from customizer)`
- 
+    - alias r="make run"
 
 - [ ] `install.sh`, `uninstall.sh`: SSH
     - alias sshCheck="sudo service ssh status"
