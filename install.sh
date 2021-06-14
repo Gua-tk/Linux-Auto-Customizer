@@ -471,9 +471,6 @@ install_pluma()
 install_R()
 {
   generic_install R
-  # No està acabat
-  # install jupyter-lab dependencies
-  # https://www.datacamp.com/community/blog/jupyter-notebook-r
   R -e "${R_jupyter_lab_function}"
 }
 
