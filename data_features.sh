@@ -1306,7 +1306,17 @@ v()
 
 R_installationtype="packagemanager"
 R_packagenames=("r-base")
+R_packagedependencies=("libzmq3-dev" "python3-zmq")
 R_launchernames=("R")
+R_jupyter_lab_function=("
+install.packages('IRkernel')
+install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
+                  repos = c('http://irkernel.github.io/',
+                  getOption('repos')),
+                  type = 'source')
+IRkernel::installspec()
+")
+
 
 rstudio_installationtype="packageinstall"
 rstudio_packageurls=("https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz")
@@ -1355,7 +1365,7 @@ remmina_launchernames=("org.remmina.Remmina")
 rustc_installationtype="packagemanager"
 rustc_packagenames=("rustc")
 rustc_packagedependencies=("cmake" "build-essential")
-rustc_url=("https://sh.rustup.rs")
+# rustc_url=("https://sh.rustup.rs")
 
 rsync_installationtype="packagemanager"
 rsync_dependencies_packagenames=("canberra-gtk-module")
@@ -1449,7 +1459,6 @@ Version=1.0")
 shotwell_installationtype="packagemanager"
 shotwell_packagenames=("shotwell")
 shotwell_launchernames=("shotwell")
-
 
 skype_installationtype="packageinstall"
 skype_packageurls=("https://go.skype.com/skypeforlinux-64.deb")

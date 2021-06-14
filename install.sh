@@ -228,7 +228,9 @@ install_gitk()
 
 install_gnat-gps()
 {
-  generic_install gnat-gps
+  generic_install gnat-gps_launcher
+  copy_launcher "gnat-programming-studio.desktop"
+  sed "s|Icon=.*|Icon=/usr/share/doc/gnat-gps/html/users_guide/_static/favicon.ico|g" -i "${XDG_DESKTOP_DIR}/gnat-programming-studio.desktop"
 }
 
 install_gnome-calculator()
@@ -386,13 +388,6 @@ install_net-tools()
   generic_install net-tools
 }
 
-install_node()
-{
-  download "${node_packageurls}" "${USR_BIN_FOLDER}/node_downloading"
-  decompress "J" "${USR_BIN_FOLDER}/node_downloading" "node"
-  create_links_in_path "${USR_BIN_FOLDER}/node/bin/node" node "${USR_BIN_FOLDER}/node/bin/npm" npm "${USR_BIN_FOLDER}/node/bin/npx" npx
-}
-
 install_notepadqq()
 {
   generic_install notepadqq
@@ -446,84 +441,9 @@ install_pdfgrep()
   generic_install pdfgrep
 }
 
-install_jupyter-lab()
-{
-  # Avoid collision with previous installations
-  rm -Rf "${USR_BIN_FOLDER}/jupyter-lab"
-  python3 -m venv "${USR_BIN_FOLDER}/jupyter-lab"
-
-  # Install necessary pip and python packages
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel jupyter jupyterlab jupyterlab-git jupyterlab_markup
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install bash_kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install pykerberos pywinrm[kerberos]
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install powershell_kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install iarm
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install ansible-kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m ansible_kernel.install
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install kotlin-jupyter-kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m kotlin_kernel fix-kernelspec-location
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install vim-kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m vim_kernel.install
-
-
-  # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install theme-darcula
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension install @telamonian/theme-darcula
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension enable @telamonian/theme-darcula
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" lab build
-
-  create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
-  create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
-  add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"
-}
-
 install_php()
 {
   generic_install php
-}
-
-install_pgadmin()
-{
-  # Avoid collision and create venv for pgadmin in USR_BIN_FOLDER
-  rm -Rf "${USR_BIN_FOLDER}/pgadmin"
-  python3 -m venv "${USR_BIN_FOLDER}/pgadmin"
-
-  # Source activate to activate the venv, so the venv python interpreter is the one actually used.
-  source "${USR_BIN_FOLDER}/pgadmin/bin/activate"
-
-  # Update pip and install git dependencies (wheel) and the program itself in the venv
-  python -m pip install -U pip
-  pip install wheel pgadmin4
-
-  echo "${pgadmin_datafiles[0]}" > "${pgadmin_basefolder}/config_local.py"
-
-  # deactivate virtual environment
-  deactivate
-
-  # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
-  # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
-  # information on how to call the script
-
-  # Prepend shebang line to python3 interpreter of the venv
-  echo "#!${USR_BIN_FOLDER}/pgadmin/bin/python3" | cat - "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" > "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
-  chmod +x "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
-  create_links_in_path "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" pgadmin
-
-  # Create launcher and structures to be able to launch pgadmin and access it using the browser
-  create_manual_launcher "${pgadmin_launchercontents[0]}" pgadmin
-  echo "${pgadmin_execscript}" > "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
-  apply_permissions "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
 }
 
 install_psql()
@@ -549,11 +469,10 @@ install_pluma()
 install_R()
 {
   generic_install R
+  # No està acabat
   # install jupyter-lab dependencies
   # https://www.datacamp.com/community/blog/jupyter-notebook-r
-  R -e "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'))
-  devtools::install_github('IRkernel/IRkernel')
-  IRkernel::installspec()"
+  R -e "${R_jupyter_lab_function}"
 }
 
 install_remmina()
@@ -564,8 +483,6 @@ install_remmina()
 install_rustc()
 {
   generic_install rustc
-  download "${rustc_url}" "${USR_BIN_FOLDER}/rustup-init.sh"
-  bash "${USR_BIN_FOLDER}/rustup-init.sh"
 }
 
 install_scala()
@@ -676,7 +593,7 @@ install_wireshark()
   echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
   DEBIAN_FRONTEND=noninteractive
 
-  apt-get install -y wireshark
+apt-get install -y wireshark
   copy_launcher "wireshark.desktop"
   sed -i 's-Icon=.*-Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg-' ${XDG_DESKTOP_DIR}/wireshark.desktop
 }
@@ -796,7 +713,7 @@ install_mendeley()
   cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
   chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
   # Modify Icon line
-  sed -i s-Icon=.*-Icon=${HOME}/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png- ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
+  sed -i 's-Icon=.*-Icon=${HOME}/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
   # Modify exec line
   sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
   # Copy to desktop  launchers of the current user
@@ -1018,11 +935,6 @@ install_cheat()
   create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
 }
 
-install_dummycommit()
-{
-  generic_install dummycommit
-}
-
 install_converters()
 {
   rm -Rf ${USR_BIN_FOLDER}/converters
@@ -1049,6 +961,11 @@ install_drive()
 install_duckduckgo()
 {
   add_internet_shortcut duckduckgo
+}
+
+install_dummycommit()
+{
+  generic_install dummycommit
 }
 
 install_e()
@@ -1091,58 +1008,6 @@ install_fonts-noto-sans()
   add_font ${fonts_noto_sans_compressedfileurls} zip noto_sans
 }
 
-install_h()
-{
-  generic_install h
-}
-
-install_hard()
-{
-  generic_install hard
-}
-
-install_j()
-{
-  generic_install j
-}
-
-install_julia()
-{
-  download "${julia_packageurls}" "${USR_BIN_FOLDER}/julia_downloading"
-  decompress "z" "${USR_BIN_FOLDER}/julia_downloading" "julia"
-  create_links_in_path "${USR_BIN_FOLDER}/julia/bin/julia" julia
-  create_manual_launcher "${julia_launchercontents}" "julia"
-
-  # install jupyter-lab dependencies
-  julia -e '#!/.local/bin/julia
-  using Pkg
-  Pkg.add("IJulia")
-  Pkg.build("IJulia")'
-}
-
-install_k()
-{
-  generic_install k
-}
-
-
-install_status()
-{
-  generic_install status
-}
-
-install_system-fonts()
-{
-  # Interface text
-  gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 11'
-  # Document text //RF
-  gsettings set org.gnome.desktop.interface document-font-name 'Fira Code weight=453 10'
-  # Monospaced text
-  gsettings set org.gnome.desktop.interface monospace-font-name 'Hack Regular 12'
-  # Inherited window titles
-  gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
-}
-
 install_fetch()
 {
   generic_install fetch
@@ -1180,6 +1045,16 @@ install_googlecalendar()
   add_internet_shortcut googlecalendar
 }
 
+install_h()
+{
+  generic_install h
+}
+
+install_hard()
+{
+  generic_install hard
+}
+
 install_history-optimization()
 {
   add_bash_function "${shell_history_optimization_function}" history.sh
@@ -1198,6 +1073,72 @@ install_ipi()
 install_instagram()
 {
   add_internet_shortcut instagram
+}
+
+install_j()
+{
+  generic_install j
+}
+
+install_julia()
+{
+  download "${julia_packageurls}" "${USR_BIN_FOLDER}/julia_downloading"
+  decompress "z" "${USR_BIN_FOLDER}/julia_downloading" "julia"
+  create_links_in_path "${USR_BIN_FOLDER}/julia/bin/julia" julia
+  create_manual_launcher "${julia_launchercontents}" "julia"
+
+  # install jupyter-lab dependencies
+  julia -e '#!/.local/bin/julia
+  using Pkg
+  Pkg.add("IJulia")
+  Pkg.build("IJulia")'
+}
+
+install_jupyter-lab()
+{
+  # Avoid collision with previous installations
+  rm -Rf "${USR_BIN_FOLDER}/jupyter-lab"
+  python3 -m venv "${USR_BIN_FOLDER}/jupyter-lab"
+
+  # Install necessary pip and python packages
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel jupyter jupyterlab jupyterlab-git jupyterlab_markup
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install bash_kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install pykerberos pywinrm[kerberos]
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install powershell_kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install iarm
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install ansible-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m ansible_kernel.install
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install kotlin-jupyter-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m kotlin_kernel fix-kernelspec-location
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install vim-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m vim_kernel.install
+
+
+  # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install theme-darcula
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension install @telamonian/theme-darcula
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension enable @telamonian/theme-darcula
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" lab build
+
+  create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
+  create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
+  add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"
+}
+
+install_k()
+{
+  generic_install k
 }
 
 install_keep()
@@ -1232,6 +1173,13 @@ install_netflix()
   add_to_favorites "netflix.desktop"
 }
 
+install_node()
+{
+  download "${node_packageurls}" "${USR_BIN_FOLDER}/node_downloading"
+  decompress "J" "${USR_BIN_FOLDER}/node_downloading" "node"
+  create_links_in_path "${USR_BIN_FOLDER}/node/bin/node" node "${USR_BIN_FOLDER}/node/bin/npm" npm "${USR_BIN_FOLDER}/node/bin/npx" npx
+}
+
 install_notebook()
 {
   generic_install notebook
@@ -1260,6 +1208,39 @@ install_outlook()
 install_overleaf()
 {
   add_internet_shortcut overleaf
+}
+
+install_pgadmin()
+{
+  # Avoid collision and create venv for pgadmin in USR_BIN_FOLDER
+  rm -Rf "${USR_BIN_FOLDER}/pgadmin"
+  python3 -m venv "${USR_BIN_FOLDER}/pgadmin"
+
+  # Source activate to activate the venv, so the venv python interpreter is the one actually used.
+  source "${USR_BIN_FOLDER}/pgadmin/bin/activate"
+
+  # Update pip and install git dependencies (wheel) and the program itself in the venv
+  python -m pip install -U pip
+  pip install wheel pgadmin4
+
+  echo "${pgadmin_datafiles[0]}" > "${pgadmin_basefolder}/config_local.py"
+
+  # deactivate virtual environment
+  deactivate
+
+  # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
+  # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
+  # information on how to call the script
+
+  # Prepend shebang line to python3 interpreter of the venv
+  echo "#!${USR_BIN_FOLDER}/pgadmin/bin/python3" | cat - "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" > "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  chmod +x "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  create_links_in_path "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" pgadmin
+
+  # Create launcher and structures to be able to launch pgadmin and access it using the browser
+  create_manual_launcher "${pgadmin_launchercontents[0]}" pgadmin
+  echo "${pgadmin_execscript}" > "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
+  apply_permissions "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
 }
 
 install_pull()
@@ -1292,7 +1273,7 @@ install_rstudio()
   download "${rstudio_packageurls}" "rstudio_downloading"
   decompress "z" "${USR_BIN_FOLDER}/rstudio_downloading" "rstudio"
   create_links_in_path "${USR_BIN_FOLDER}/rstudio/bin/rstudio" rstudio
-  create_manual_launcher "${rstudio_launcher}" rstudio
+  create_manual_launcher "${rstudio_launcher}" "rstudio"
   register_file_associations "text/plain" "rstudio.desktop"
 
 }
@@ -1316,6 +1297,23 @@ install_shortcuts()
 install_spreadsheets()
 {
   add_internet_shortcut spreadsheets
+}
+
+install_status()
+{
+  generic_install status
+}
+
+install_system-fonts()
+{
+  # Interface text
+  gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 11'
+  # Document text //RF
+  gsettings set org.gnome.desktop.interface document-font-name 'Fira Code weight=453 10'
+  # Monospaced text
+  gsettings set org.gnome.desktop.interface monospace-font-name 'Hack Regular 12'
+  # Inherited window titles
+  gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
 }
 
 install_templates()

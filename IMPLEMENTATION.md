@@ -51,7 +51,7 @@
     - alias sshconf="sshConfig"
     - alias r="make run"
     - alias rs="rsync -av --progress"
-    - alias cwp="change-gb" `(from customizer)`
+    - alias cwp="change-bg" `(from customizer)`
 
   
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
@@ -89,6 +89,7 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 #### NEW FEATURES
 - [~] Autostarting programs (`caffeine`, )
+- [ ] Add alias to notepadqq  
 - [~] `L` function columns
 - [ ] `e` convert to edit and echo function
 - [ ] turn `k` to `g`
