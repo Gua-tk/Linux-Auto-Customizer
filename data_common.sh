@@ -190,7 +190,7 @@ installation_data=(
   "--github|--Github|--GitHub;1;| GitHub | GitHub opening in Chrome | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gitk|--Gitk|--Git-k;1;| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gitlab|--GitLab|--git-lab;0;| GitLab | Gitlab opening in Chrome | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--gitprompt|--git-prompt;1;| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--gitprompt|--git-prompt;0;| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gmail|--Gmail;0;| Gmail | Gmail opening in Chrome | Command \`gmail\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gnat-gps|--gnat-programming-studio|--gnat-ps|--gnatps|--gnatgps;1;| GNAT | Programming Studio for Ada and C | Command \`gnat-gps\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gnome-calculator|--GNOME_Calculator|--gnomecalculator|--calculator;1;| Calculator | GUI calculator| Commmand \`calculator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"

@@ -1149,16 +1149,11 @@ install_forms()
   add_internet_shortcut forms
 }
 
-install_git-aliases()
-{
-  add_bash_function "${git_aliases_function}" git_aliases.sh
-  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
-  git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
-}
-
 install_gitprompt()
 {
-  generic_install gitprompt
+  add_bash_function "${gitprompt_bashfunctions[0]}" git_prompt.sh
+  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
+  git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
 install_gitlab()
