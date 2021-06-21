@@ -684,6 +684,7 @@ install_wireshark()
 install_ant()
 {
   download_and_decompress ${ant_downloader} "apache_ant" "z" "bin/ant" "ant"
+  add_bash_function "${ant_bashfunctions[0]}" "ant_env.sh"
 }
 
 install_anydesk()
