@@ -560,7 +560,7 @@ if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
 fi
 ")
-gitprompt_installationtype="packagemanager"
+gitprompt_installationtype="userclone"
 
 github_installationtype="packageinstall"
 github_packageurls="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
