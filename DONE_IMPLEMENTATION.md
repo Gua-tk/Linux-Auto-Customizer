@@ -56,9 +56,8 @@
 - [x] `data_features.sh`: Implement more robustness in function change terminal-background. Change the use of `dconf` for `gsettings`, which is more safe, also make sure to have a correct value before changing background.  
 - [x] `functions_common.sh`: (depends on merging installationtype with `common_data.sh` table). Create a function to autogenerate the `README.md` table from the `common_data.sh` table
 - [x] `install.sh`: Force that the non-interactive running and the path is the first line in .bash_functions, as a common feature
-- [x] `u` function needs a bit rework  
-- [x] turn `k` to `g`
-
+- [x] `u` function needs a bit rework
+- [x] `v` function for python3 virtual environments
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -93,8 +92,7 @@
 - [x] b alias (`bash`)
 - [x] Add examples (images) of a working environment after applying the customizer in Linux
 - [x] Change `google-chrome` for `xdg-open`  on internet shortcut. Delete `${program_name}_url` and put it hardcoded inside of each desktop launcher
-- [x] Set up typography for interface text as `Roboto Medium` `11`, document as `Fira Code Retina` `12`, monospaced text as `Hack Regular` `11`, inherited windows as `Hermit Bold` `9`. 
-  (coamndas random per a fer aixo segurament, cal contrastar)
+- [x] Set up typography for interface text as `Roboto Medium` `11`, document as `Fira Code Retina` `12`, monospaced text as `Hack Regular` `11`, inherited windows as `Hermit Bold` `9`.
 - [x] Complete shortcut function to add more environment vars XDG_PICTURES_DIR, GIT, BACKGROUNDS, SCREENSHOTS in general variables that are in common data that can be useful, etc
 - [x] Install fonts manually
 - [x] `install.sh`: evolution (sudo apt-get install aspell-es aspell-ca # for different spellings in evolution)
@@ -111,7 +109,4 @@
 - [x] add alias matrix for cmatrix
 - [x] Added ipi function
 - [x] Added TRASH to `(shortcuts)` 
-- [x] `python` virtual env aliases:
-    - alias va="source ./venv/bin/activate"
-    - alias ve="python3 -m venv ./venv"
-    - alias veva="ve; va"
+- [x] turn `k` to `g`
