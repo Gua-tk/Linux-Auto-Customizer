@@ -107,6 +107,7 @@ ansible_installationtype="packagemanager"
 ansible_packagenames=("ansible")
 
 ant_downloader="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.9-bin.tar.gz"
+ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/apache_ant\"")
 
 anydesk_downloader="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
 anydesk_launcher="[Desktop Entry]
@@ -567,7 +568,7 @@ if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
     source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
 fi
 ")
-gitprompt_installationtype="packagemanager"
+gitprompt_installationtype="userclone"
 
 github_installationtype="packageinstall"
 github_packageurls="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"

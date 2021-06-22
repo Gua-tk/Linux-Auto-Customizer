@@ -614,6 +614,7 @@ apt-get install -y wireshark
 install_ant()
 {
   download_and_decompress ${ant_downloader} "apache_ant" "z" "bin/ant" "ant"
+  add_bash_function "${ant_bashfunctions[0]}" "ant_env.sh"
 }
 
 install_anydesk()
@@ -1032,16 +1033,12 @@ install_g()
   generic_install g
 }
 
-install_git-aliases()
-{
-  add_bash_function "${git_aliases_function}" git_aliases.sh
-  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
-  git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
-}
 
 install_gitprompt()
 {
-  generic_install gitprompt
+  add_bash_function "${gitprompt_bashfunctions[0]}" git_prompt.sh
+  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
+  git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
 install_gitlab()

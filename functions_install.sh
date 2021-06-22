@@ -278,7 +278,9 @@ decompress() {
     output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist." "${FLAG_QUIETNESS}"
     exit 1
   fi
-
+  # Delete file now that is has been decompressed trash
+  rm -f "${dir_name}/${file_name}"
+  
   # Only enter here if they are different, if not skip since it is pointless because the folder already has the desired
   # name
   if [ "$3" != "${internal_folder_name}" ]; then
