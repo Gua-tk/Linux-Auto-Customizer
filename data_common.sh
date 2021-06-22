@@ -74,6 +74,8 @@ ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
 # Default favorites list, data to set favorites
 PROGRAM_FAVORITES_PATH="${BASH_FUNCTIONS_FOLDER}/favorites.txt"
+# Default keybind list< data to set custom keybindings
+PROGRAM_KEYBIND_PATH="${BASH_FUNCTIONS_FOLDER}/keybind.txt"
 # Default user's fonts folder
 FONTS_FOLDER=${HOME_FOLDER}/.fonts
 # Here we store the .desktop launchers of the programs we want to autostart

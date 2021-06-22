@@ -283,6 +283,7 @@ install_gnome-tweak-tool()
 install_google-chrome()
 {
   generic_install google-chrome
+  add_keybinding "google-chrome" "<Primary><Alt><Super>O" "Google Chrome"
 }
 
 install_gpaint()
@@ -813,6 +814,7 @@ install_sublime()
 
   add_bash_function "${sublime_alias}" "sublime_alias.sh"
   add_to_favorites "sublime.desktop"
+  add_keybinding "sublime" "<Primary><Alt><Super>s" "Sublime Text"
 }
 
 install_sysmontask()
@@ -1450,6 +1452,12 @@ main()
   if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
     true > "${PROGRAM_FAVORITES_PATH}"
     add_bash_function "${favorites_function}" "favorites.sh"
+  fi
+
+  # Built-in KEYBIND system
+  if [ -f "${PROGRAM_KEYBIND_PATH}" ]; then
+    true > "${PROGRAM_KEYBIND_PATH}"
+    add_bash_function "${keybind_function}" "keybind.sh"
   fi
 
   #################################

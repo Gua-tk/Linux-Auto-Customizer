@@ -94,9 +94,11 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 #### NEW FEATURES 
 - [ ] Functions: sed, cp, mv, echo >> `filename`, touch, less
+- [ ] Add to favorites must not need to run bash command, instead use hash -r or similar strategy  
 - [ ] Colors palette of default profile from terminal function (fonts lookalike)
 - [~] Autostarting programs (`caffeine`, copyq... ) steam? teams? teamviewer?
 - [ ] Add alias \`&\` to notepadqq, and furthermore
+- [ ] Migrate initialization commands from .bashrc to .profile
 - [~] `L` function columns
 - [ ] `e` convert to edit and echo / exit error function
 - [ ] rewrite k as function: #alias k9="kill -9"# alias killbyport="k9 \`lsof -i:3000 -t\`"  

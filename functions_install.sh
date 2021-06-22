@@ -36,6 +36,7 @@ add_bash_function() {
   fi
 }
 
+
 # - Description: Download and install a fonts into ~/.fonts directory
 # - Permissions:
 # - Argument 1: Link to the font to be downloaded
@@ -87,7 +88,7 @@ add_to_favorites() {
   for argument in "$@"; do
     if [ -z "$(cat "${PROGRAM_FAVORITES_PATH}" | grep -Eo "${argument}")" ]; then
       if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
-        echo "${argument}.desktop" >>"${PROGRAM_FAVORITES_PATH}"
+        echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
       else
         output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
         return
@@ -763,13 +764,14 @@ else
   exit 1
 fi
 
-# - Description: This functions is the basic piece of the favourites subsystem, but is not a function that it is
+# - Description: This functions is the basic piece of the favorites subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
 # is invoked. This function and its necessary files such as $PROGRAM_FAVORITES_PATH are always present during the
 # execution of install.
-# This function basically processes and applies the results of the call to add_to_favourites function.
+# This function basically processes and applies the results of the call to add_to_favorites function.
 # - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
-# add_to_favourites instead, can be called as root or user, so root and user executions can be added
+# add_to_favorites instead, can be called as root or user, so root and user executions can be added
+
 favorites_function="
 if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
   IFS=\$'\\\n'
@@ -787,3 +789,55 @@ if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
   done
 fi
 "
+
+# - Description: This function is the basic piece of the keybind subsystem, but is not a function that it is
+# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBIND_PATH every time a terminal
+# is invoked. This function and its necessary files such as $PROGRAM_KEYBIND_PATH are always present during the
+# execution of install.
+# This function basically processes and applies the results of the call to add_custom_keybind function.
+# - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
+# add_custom_keybind instead, can be called as root or user, so root and user executions can be added
+
+# Name, Command, Binding...
+#1st argument Name of the feature
+#2nd argument Command of the feature
+#3rd argument Bind Key Combination of the feature ex(<Primary><Alt><Super>a)
+#4th argument Number of the feature array position slot of the added custom command (custom0, custom1, custom2...)
+
+keybind_function="
+if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
+
+
+  IFS=\$'\\\n'
+  for line in \$(cat \"${PROGRAM_KEYBIND_PATH}\"); do
+    field_command=\"\$(echo \"\$line\" | cut -d \";\" -f1)\"
+    field_binding=\"\$(echo \"\$line\" | cut -d \";\" -f2)\"
+    field_name=\"\$(echo \"\$line\" | cut -d \";\" -f3)\"
+    i=0
+    isInstalled=0
+    while [ -n \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; do
+      if [ \"\${field_name}\" == \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; then
+        isInstalled=1
+        break
+      fi
+      i=\$((i+1))
+    done
+    if [ \$isInstalled == 0 ]; then
+      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\$field_command'\"
+      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\$field_binding'\"
+      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\$field_name'\"
+    fi
+  done
+fi
+"
+
+
+# Description: Sets keybinding data to add a keybinding for keybind_function bash function
+# Permissions: can be executed indifferently as root or user
+# Argument 1: Command to be run with the keyboard shortcut
+# Argument 2: Set of keys with the right format to be binded
+# Argument 3: Descriptive name of the keybinding
+add_keybinding()
+{
+  echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
+}
