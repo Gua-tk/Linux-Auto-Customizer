@@ -97,12 +97,13 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] Add to favorites must not need to run bash command, instead use hash -r or similar strategy  
 - [ ] Colors palette of default profile from terminal function (fonts lookalike)
 - [~] Autostarting programs (`caffeine`, copyq... ) steam? teams? teamviewer?
-- [ ] Add alias \`&\` to notepadqq, and furthermore
 - [ ] Migrate initialization commands from .bashrc to .profile
 - [~] `L` function columns
-- [ ] `e` convert to edit and echo / exit error function
+- [ ] `e` convert to edit and echo function
 - [ ] rewrite k as function: #alias k9="kill -9"# alias killbyport="k9 \`lsof -i:3000 -t\`"  
 - [ ] Install & Uninstall Customizerself installation #FUNCTION alias Install="sudo apt-get install -y" alias `CUSTOMIZER`= `cd ...?` ...
+- [ ] Use nohub in aliases to prevent closing of feature when a process finish if a hanging terminal is closed
+- [ ] Add alias \`&\` to notepadqq, and furthermore  
 - [ ] `README.md` or `IMPLEMENTATION.md`: Write down the command dependencies of the folder project
 - [~] `install.sh`: Add debug mode, with a simple eval to inject code as a function
 - [~] `install.sh`, `uninstall.sh`: npm and nodejs (packagemanager installationtype)  

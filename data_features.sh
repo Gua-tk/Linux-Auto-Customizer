@@ -1483,6 +1483,7 @@ sonic_pi_launchernames=("sonic-pi")
 spotify_installationtype="packageinstall"
 spotify_packageurls=("http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb")
 spotify_launchernames=("spotify")
+spotify_bashfunctions=("alias spotify=\"spotify &>/dev/null &\"")
 
 spreadsheets_url=https://docs.google.com/spreadsheets/
 spreadsheets_icon="https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg"
