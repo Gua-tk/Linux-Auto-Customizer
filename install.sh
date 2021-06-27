@@ -1171,11 +1171,6 @@ install_lab()
   generic_install lab
 }
 
-install_lol()
-{
-  generic_install lol
-}
-
 install_netflix()
 {
   add_internet_shortcut netflix

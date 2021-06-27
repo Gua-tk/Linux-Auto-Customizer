@@ -58,6 +58,8 @@
 - [x] `install.sh`: Force that the non-interactive running and the path is the first line in .bash_functions, as a common feature
 - [x] `u` function needs a bit rework
 - [x] `v` function for python3 virtual environments
+- [x] `functions_install.sh`: Make download() and decompress() handle relative paths as paths from USR_BIN_FOLDER. if not absolute
+
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -110,3 +112,5 @@
 - [x] Added ipi function
 - [x] Added TRASH to `(shortcuts)` 
 - [x] turn `k` to `g`
+- [x] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to parametrize and create a func that does it for any program [Keybindigs of terminal features](https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal/597414#597414)
+- [x] `common_data.sh`: Change ALL the bash function such b, alert, c, dummycommit, etc. that adds new behaviour to the shell to begin with the same name, like "Function b" or "Bash Feature `b` ", so they get sorted in the same place when calling autogenreadme

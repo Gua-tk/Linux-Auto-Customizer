@@ -560,7 +560,7 @@ git_packagenames=("git-all" "git-lfs")
 
 gitk_packagenames=("gitk")
 gitk_installationtype="packagemanager"
-gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
+gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"" "alias g=\"gitk\"" )
 
 gitprompt_bashfunctions=("
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
@@ -909,6 +909,7 @@ lol_bashfunctions=("alias lol=\"lolcat\"")
 
 lolcat_installationtype="packagemanager"
 lolcat_packagenames=("lolcat")
+lolcat_bashfunctions=("alias lol=\"lolcat\"")
 
 maven_downloader="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 
