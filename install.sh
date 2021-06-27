@@ -283,6 +283,7 @@ install_gnome-tweak-tool()
 install_google-chrome()
 {
   generic_install google-chrome
+
   add_keybinding "google-chrome" "<Primary><Alt><Super>O" "Google Chrome"
 }
 
