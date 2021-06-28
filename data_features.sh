@@ -560,7 +560,7 @@ git_packagenames=("git-all" "git-lfs")
 
 gitk_packagenames=("gitk")
 gitk_installationtype="packagemanager"
-gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"" "alias g=\"gitk\"" )
+gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
 
 gitprompt_bashfunctions=("
 if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
