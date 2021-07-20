@@ -147,31 +147,28 @@ apply_permissions() {
 # defined in the the scope of the normal user.
 # - Argument 1: Path to the directory that we want to create.
 # - Argument 2(Optional): Content of the file we want to create
-create_file_as_root() {
-  if [[ ! -z "${SUDO_USER}" ]]; then
-    local -r folder=$(echo "$1" | rev | cut -d "/" -f2- | rev)
-    local -r filename=$(echo "$1" | rev | cut -d "/" -f1 | rev)
-    if [[ -n "${filename}" ]]; then
-      mkdir -p "${folder}"
-      echo "$2" >"$1"
+create_file() {
+  local -r folder=$(echo "$1" | rev | cut -d "/" -f2- | rev)
+  local -r filename=$(echo "$1" | rev | cut -d "/" -f1 | rev)
+  if [ -n "${filename}" ]; then
+    mkdir -p "${folder}"
+    echo "$2" >"$1"
+    if [ ${EUID} == 0 ]; then  # root
       apply_permissions "$1"
-    else
-      output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file_as_root. The file will not be created." "${FLAG_QUIETNESS}"
     fi
   else
-    output_proxy_executioner "echo WARNING: The function create_file_as_root can not be run as normal user. The file will not be created." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file_as_root. The file will not be created." "${FLAG_QUIETNESS}"
   fi
-
 }
 
 # - Description: Creates the necessary folders in order to make $1 a valid path. Afterwards, converts that dir to a
 # writable folder, now property of the $SUDO_USER user (instead of root), which is the user that ran the sudo command.
 # Note that by using mkdir -p we can pass a path that implies the creation of 2 or more directories without any
-# problem. For example create_folder_as_root /home/user/all/driectories/will/be/created
+# problem. For example create_folder /home/user/all/driectories/will/be/created
 # - Permissions: This functions is expected to be called as root, or it will throw an error, since $SUDO_USER is not
 # defined in the the scope of the normal user.
 # - Argument 1: Path to the directory that we want to create.
-create_folder_as_root() {
+create_folder() {
   mkdir -p "$1"
   apply_permissions "$1"
 }
@@ -806,8 +803,6 @@ fi
 
 keybind_function="
 if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
-
-
   IFS=\$'\\\n'
   for line in \$(cat \"${PROGRAM_KEYBIND_PATH}\"); do
     field_command=\"\$(echo \"\$line\" | cut -d \";\" -f1)\"
@@ -816,12 +811,17 @@ if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
     i=0
     isInstalled=0
     while [ -n \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; do
+      # Update keybinding if match
       if [ \"\${field_name}\" == \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; then
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\$field_command'\"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\$field_binding'\"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\$field_name'\"
         isInstalled=1
         break
       fi
       i=\$((i+1))
     done
+    # Append new keybinding
     if [ \$isInstalled == 0 ]; then
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\$field_command'\"
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\$field_binding'\"

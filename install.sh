@@ -320,7 +320,7 @@ install_inkscape()
 install_iqmol()
 {
   download_and_install_package ${iqmol_downloader}
-  create_folder_as_root ${USR_BIN_FOLDER}/iqmol
+  create_folder ${USR_BIN_FOLDER}/iqmol
   # Obtain icon for iqmol
   (cd ${USR_BIN_FOLDER}/iqmol; wget -q -O iqmol_icon.png ${iqmol_icon})
   create_manual_launcher "${iqmol_launcher}" iqmol
@@ -821,7 +821,7 @@ install_sublime()
 install_sysmontask()
 {
   rm -Rf ${USR_BIN_FOLDER}/SysMonTask
-  create_folder_as_root ${USR_BIN_FOLDER}/SysMonTask
+  create_folder ${USR_BIN_FOLDER}/SysMonTask
   git clone ${sysmontask_downloader} ${USR_BIN_FOLDER}/SysMonTask
   #chgrp -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
   #chown -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
@@ -1405,56 +1405,42 @@ main()
   ################################
 
   FLAG_MODE=install  # Install mode
-  if [ ${EUID} == 0 ]; then  # root
-    create_folder_as_root ${USR_BIN_FOLDER}
-    create_folder_as_root ${BASH_FUNCTIONS_FOLDER}
-    create_folder_as_root ${DIR_IN_PATH}
-    create_folder_as_root ${PERSONAL_LAUNCHERS_DIR}
-    create_folder_as_root ${FONTS_FOLDER}
-    if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
-      create_file_as_root "${PROGRAM_FAVORITES_PATH}" ""
-    fi
+  create_folder ${USR_BIN_FOLDER}
+  create_folder ${BASH_FUNCTIONS_FOLDER}
+  create_folder ${DIR_IN_PATH}
+  create_folder ${PERSONAL_LAUNCHERS_DIR}
+  create_folder ${FONTS_FOLDER}
 
-    if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
-      true > "${BASH_FUNCTIONS_PATH}"
-      add_bash_function "${BASH_FUNCTIONS_PATH}" "${bash_functions_init}"
-    fi
-  else  # user
-    mkdir -p ${USR_BIN_FOLDER}
-    mkdir -p ${DIR_IN_PATH}
-    mkdir -p ${PERSONAL_LAUNCHERS_DIR}
-    mkdir -p ${BASH_FUNCTIONS_FOLDER}
-    mkdir -p ${FONTS_FOLDER}
-    # If $BASH_FUNCTION_PATH does not exist, create the exit point when running not interactively.
-    if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
-      true > "${BASH_FUNCTIONS_PATH}"
-      add_bash_function "${bash_functions_init}" "init.sh"
-    else
-      # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
-      source ${BASH_FUNCTIONS_PATH}
-    fi
-
-    # Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-    if [ -z "$(echo "${PATH}" | grep -Eo "(.*:.*)*${DIR_IN_PATH}")" ]; then  # If it is not in PATH, add to bash functions
-      echo "export PATH=$PATH:${DIR_IN_PATH}" >> ${BASH_FUNCTIONS_PATH}
-    fi
+  # Initialize bash functions
+  if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
+    create_file "${BASH_FUNCTIONS_PATH}"
+  else
+    # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
+    source "${BASH_FUNCTIONS_PATH}"
   fi
 
-  # Make sure .bash_functions and its structure is present
-  if [ -z "$(cat ${BASHRC_PATH} | grep -Fo "source ${BASH_FUNCTIONS_PATH}" )" ]; then  # .bash_functions not added
+  # Updates initializations
+  # Avoid running bash functions non-interactively
+  # Adds to the path the folder where we will put our soft links
+  add_bash_function "${bash_functions_init}" "init.sh"
+
+  # Create and / or update built-in favourites subsystem
+  if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
+    create_file "${PROGRAM_FAVORITES_PATH}"
+  fi
+  add_bash_function "${favorites_function}" "favorites.sh"
+
+  # Create and / or update built-in keybinding subsystem
+  if [ -f "${PROGRAM_KEYBIND_PATH}" ]; then
+    create_file "${PROGRAM_KEYBIND_PATH}"
+  fi
+  add_bash_function "${keybind_function}" "keybind.sh"
+
+  # Make sure that .bashrc sources .bash_functions
+  if [ -z "$(cat "${BASHRC_PATH}" | grep -Fo "source "${BASH_FUNCTIONS_PATH}"")" ]; then
     echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
   fi
-  # Built-in favourites system
-  if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
-    true > "${PROGRAM_FAVORITES_PATH}"
-    add_bash_function "${favorites_function}" "favorites.sh"
-  fi
 
-  # Built-in KEYBIND system
-  if [ -f "${PROGRAM_KEYBIND_PATH}" ]; then
-    true > "${PROGRAM_KEYBIND_PATH}"
-    add_bash_function "${keybind_function}" "keybind.sh"
-  fi
 
   #################################
   ###### ARGUMENT PROCESSING ######

@@ -57,7 +57,9 @@ case \$- in
     *i*) ;;
       *) return;;
 esac
-if [[ -z \"\$(echo \$PATH | grep -Eo \"${DIR_IN_PATH}\")\" ]]; then
+
+# Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
+if [ -z \"\$(echo \$PATH | grep -Eo \"${DIR_IN_PATH}\")\" ]; then
   export PATH=\$PATH:${DIR_IN_PATH}
 fi
 "
@@ -2125,9 +2127,9 @@ o_function="
 o()
 {
 	if [[ -z \"\$1\" ]]; then
-		nemo \"\$(pwd)\" &
+		nemo \"\$(pwd)\" &>/dev/null &
 	else
-		nemo \"\$1\"
+		nemo \"\$1\" &>/dev/null &
 	fi
 }
 "
