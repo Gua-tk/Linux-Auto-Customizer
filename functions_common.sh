@@ -100,6 +100,89 @@ add_program()
   done
 }
 
+
+# Common piece of code in the execute_installation function
+# Argument 1: forceness_bit
+# Argument 2: quietness_bit
+# Argument 3: program_function
+execute_installation_install_feature()
+{
+  local -r feature_name=$( echo "$3" | cut -d "_" -f2- )
+  if [[ $1 == 1 ]]; then
+    set +e
+  else
+    set -e
+  fi
+  output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${feature_name}." $2
+
+  local -r installationtype=${feature_name}_installationtype
+  # A generified install
+  if [ -n "${!installationtype}" ]; then
+    output_proxy_executioner "generic_${FLAG_MODE} ${feature_name}" $2
+  else  # A hardcoded install
+    output_proxy_executioner $3 $2
+  fi
+
+  output_proxy_executioner "echo INFO: ${feature_name} ${FLAG_MODE}ed." $2
+  set +e
+}
+
+execute_installation_wrapper_install_feature()
+{
+  if [[ $1 == 1 ]]; then
+    execute_installation_install_feature $2 $3 $4
+  else
+    type "${program_name}" &>/dev/null
+    if [[ $? != 0 ]]; then
+      execute_installation_install_feature $2 $3 $4
+    else
+      output_proxy_executioner "echo WARNING: $5 is already installed. Skipping... Use -o to overwrite this program" $3
+    fi
+  fi
+}
+
+execute_installation()
+{
+  # Double for to perform the installation in same order as the arguments
+  for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
+    # Loop through all the elements in the common data table
+    for program in "${installation_data[@]}"; do
+      # Check the number of elements, if there are less than 3 do not process, that program has not been added
+      num_elements=$(echo ${program} | tr ";" " " | wc -w)
+      if [[ ${num_elements} -lt 3 ]]; then
+        continue
+      fi
+      # Installation bit processing
+      installation_bit=$( echo ${program} | cut -d ";" -f3 )
+      if [[ ${installation_bit} == ${i} ]]; then
+        program_privileges=$( echo ${program} | cut -d ";" -f2 )
+        forceness_bit=$( echo ${program} | cut -d ";" -f4 )
+        quietness_bit=$( echo ${program} | cut -d ";" -f5 )
+        overwrite_bit=$( echo ${program} | cut -d ";" -f6 )
+        program_function=$( echo ${program} | cut -d ";" -f7 )
+        program_name=$( echo ${program_function} | cut -d "_" -f2- )
+        if [[ ${program_privileges} == 1 ]]; then
+          if [[ ${EUID} -ne 0 ]]; then
+            output_proxy_executioner "echo WARNING: ${program_name} needs root permissions to be installed. Skipping." ${quietness_bit}
+          else  # When called from uninstall it will take always this branch
+            execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
+          fi
+        elif [[ ${program_privileges} == 0 ]]; then
+          if [[ ${EUID} -ne 0 ]]; then
+            execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
+          else
+            output_proxy_executioner "echo WARNING: ${program_name} needs user permissions to be installed. Skipping." ${quietness_bit}
+          fi
+        else  # This feature does not care about permissions, ${program_privileges} == 2
+          execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
+        fi
+        break
+      fi
+    done
+  done
+}
+
+
 add_wrapper()
 {
   while [[ $# -gt 0 ]]; do
@@ -222,80 +305,6 @@ customizer_prompt()
   while [ true ]; do
     read -p "customizer-prompt $ " cmds
     eval "${cmds}"
-  done
-}
-
-# Common piece of code in the execute_installation function
-# Argument 1: forceness_bit
-# Argument 2: quietness_bit
-# Argument 3: program_function
-execute_installation_install_feature()
-{
-  local -r feature_name=$( echo "$3" | cut -d "_" -f2- )
-  local -r action_name=$( echo "$3" | cut -d "_" -f1 )
-  if [[ $1 == 1 ]]; then
-    set +e
-  else
-    set -e
-  fi
-  output_proxy_executioner "echo INFO: Attemptying to ${action_name} ${feature_name}." $2
-  output_proxy_executioner $3 $2
-  output_proxy_executioner "echo INFO: ${feature_name} ${action_name}ed." $2
-  set +e
-}
-
-execute_installation_wrapper_install_feature()
-{
-  if [[ $1 == 1 ]]; then
-    execute_installation_install_feature $2 $3 $4
-  else
-    type "${program_name}" &>/dev/null
-    if [[ $? != 0 ]]; then
-      execute_installation_install_feature $2 $3 $4
-    else
-      output_proxy_executioner "echo WARNING: $5 is already installed. Skipping... Use -o to overwrite this program" $3
-    fi
-  fi
-}
-
-execute_installation()
-{
-  # Double for to perform the installation in same order as the arguments
-  for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
-    # Loop through all the elements in the common data table
-    for program in "${installation_data[@]}"; do
-      # Check the number of elements, if there are less than 3 do not process, that program has not been added
-      num_elements=$(echo ${program} | tr ";" " " | wc -w)
-      if [[ ${num_elements} -lt 3 ]]; then
-        continue
-      fi
-      # Installation bit processing
-      installation_bit=$( echo ${program} | cut -d ";" -f3 )
-      if [[ ${installation_bit} == ${i} ]]; then
-        program_privileges=$( echo ${program} | cut -d ";" -f2 )
-        forceness_bit=$( echo ${program} | cut -d ";" -f4 )
-        quietness_bit=$( echo ${program} | cut -d ";" -f5 )
-        overwrite_bit=$( echo ${program} | cut -d ";" -f6 )
-        program_function=$( echo ${program} | cut -d ";" -f7 )
-        program_name=$( echo ${program_function} | cut -d "_" -f2- )
-        if [[ ${program_privileges} == 1 ]]; then
-          if [[ ${EUID} -ne 0 ]]; then
-            output_proxy_executioner "echo WARNING: ${program_name} needs root permissions to be installed. Skipping." ${quietness_bit}
-          else  # When called from uninstall it will take always this branch
-            execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
-          fi
-        elif [[ ${program_privileges} == 0 ]]; then
-          if [[ ${EUID} -ne 0 ]]; then
-            execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
-          else
-            output_proxy_executioner "echo WARNING: ${program_name} needs user permissions to be installed. Skipping." ${quietness_bit}
-          fi
-        else  # This feature does not care about permissions, ${program_privileges} == 2
-          execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
-        fi
-        break
-      fi
-    done
   done
 }
 

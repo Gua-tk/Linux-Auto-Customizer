@@ -424,6 +424,86 @@ download_and_install_package() {
   rm -f ${USR_BIN_FOLDER}/"$2"
 }
 
+# - Description: Expands launcher contents and add them to the desktop and dashboard
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_launchercontents
+# and the name of the first argument in the common_data.sh table
+generic_install_launchers()
+{
+  local -r launchercontents="$1_launchercontents[@]"
+  local name_suffix_anticollision=""
+  if [ ! -z "${!launchercontents}" ]; then
+    for launchercontent in "${!launchercontents}"; do
+      create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
+      name_suffix_anticollision="${name_suffix_anticollision}_"
+    done
+  fi
+}
+
+# - Description: Expands function contents and add them to .bashrc indirectly using bash_functions
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_bashfunctions
+# and the name of the first argument in the common_data.sh table
+generic_install_functions()
+{
+  local -r bashfunctions="$1_bashfunctions[@]"
+  name_suffix_anticollision=""
+  if [ ! -z "${!bashfunctions}" ]; then
+    for bashfunction in "${!bashfunctions}"; do
+      add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
+      name_suffix_anticollision="${name_suffix_anticollision}_"
+    done
+  fi
+}
+
+# - Description: Expands launcher names and add them to the favorites subsystem if FLAF_FAVORITES is set to 1.
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_launchernames
+# and the name of the first argument in the common_data.sh table
+generic_install_favorites()
+{
+  local -r launchernames="$1_launchernames[@]"
+  # To add to favorites if the flag is set
+  if [ "${FLAG_FAVORITES}" == "1" ]; then
+    if [ -n "${!launchernames}" ]; then
+      for launchername in "${!launchernames}"; do
+        add_to_favorites "${launchername}"
+      done
+    else
+      add_to_favorites "$1"
+    fi
+  fi
+}
+
+# - Description:
+# - Permissions: Can be executed as root or user.
+# - Argument 1:
+
+generic_install_file_associations()
+{
+  for associated_file_type in $1; do
+    local -r associated_file="$1_associatedfiletypes[@]"
+
+    register_file_associations "text/x-sh" "$1.desktop"
+  done
+}
+
+# - Description:
+# - Permissions: Can be executed as root or user.
+# - Argument 1:
+
+generic_install_keybindings()
+{
+  local -r keybinds="$1_keybinds[@]"
+  for keybind in ${keybinds}; do
+    local -r command="$(echo "${keybind}" | cut -d ";" -f1)"
+    local -r bind="$(echo "${keybind}" | cut -d ";" -f2)"
+    local -r binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
+    add_keybinding "${command}" "${bind}" "${binding_name}"
+  done
+
+}
+
 # - Description: Expands installation type and executes the corresponding function to install.
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
@@ -431,31 +511,33 @@ download_and_install_package() {
 generic_install() {
   # Substitute dashes for underscores. Dashes are not allowed in variable names
   local -r featurename=$(echo "$1" | sed "s@-@_@g")
-  local -r launchernames="${featurename}_launchernames[@]"
 
   local -r installationtype=${featurename}_installationtype
   if [[ ! -z "${!installationtype}" ]]; then
     case ${!installationtype} in
-    packagemanager)
-      rootgeneric_installation_type "${featurename}" packagemanager
+      # Using package manager such as apt-get
+      packagemanager)
+        rootgeneric_installation_type "${featurename}" packagemanager
       ;;
-    packageinstall)
-      rootgeneric_installation_type "${featurename}" packageinstall
+      # Downloading a package and installing it using a package manager such as dpkg
+      packageinstall)
+        rootgeneric_installation_type "${featurename}" packageinstall
       ;;
-    *)
-      output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
-      exit 1
+      # Download and decompress a file that contains a folder
+      userinherit)
+        userinherit_installation_type "${featurename}"
+      ;;
+      *)
+        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
+        exit 1
       ;;
     esac
-    # To add to favorites if the flag is set
-    if [ "${FLAG_FAVORITES}" == "1" ]; then
-      if [ -n "${!launchernames}" ]; then
-        echo "${!launchernames}"
-        add_to_favorites ${!launchernames}
-      else
-        add_to_favorites "${featurename}"
-      fi
-    fi
+
+    generic_install_launchers "${featurename}"
+    generic_install_functions "${featurename}"
+    generic_install_favorites "${featurename}"
+    generic_install_file_associations "${featurename}"
+    generic_install_keybindings "${featurename}"
   fi
 
 }
@@ -477,20 +559,17 @@ rootgeneric_installation_type() {
   local -r packagenames="$1_packagenames[@]"
   # Used to download .deb and install it if present
   local -r packageurls="$1_packageurls[@]"
-  # Used to call add manual launcher and create a launcher in the path and in the desktop
-  local -r launchercontents="$1_launchercontents[@]"
   # Add code to be executed by bashrc
-  local -r bashfunctions="$1_bashfunctions[@]"
 
   # Install dependency packages
-  if [[ ! -z "${!packagedependencies}" ]]; then
+  if [ ! -z "${!packagedependencies}" ]; then
     for packagedependency in "${!packagedependencies}"; do
       apt-get install -y "${packagedependency}"
     done
   fi
 
   # Select between arguments
-  if [[ "$2" == packageinstall ]]; then
+  if [ "$2" == packageinstall ]; then
     # Download package and install using manual package manager
     for packageurl in "${!packageurls}"; do
       download_and_install_package "${packageurl}" "$1_downloading"
@@ -503,86 +582,11 @@ rootgeneric_installation_type() {
   fi
 
   # Copy launchers if defined
-  if [[ ! -z "${!launchernames}" ]]; then
+  if [ ! -z "${!launchernames}" ]; then
     for launchername in "${!launchernames}"; do
       copy_launcher "${launchername}.desktop"
     done
   fi
-
-  # Create new manual launchers
-  local name_suffix_anticollision=""
-  if [[ ! -z "${!launchercontents}" ]]; then
-    for launchercontent in "${!launchercontents}"; do
-      create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
-      name_suffix_anticollision="${name_suffix_anticollision}_"
-    done
-  fi
-
-  # Install function related with the program (usually has an alias)
-  name_suffix_anticollision=""
-  if [[ ! -z "${!bashfunctions}" ]]; then
-    for bashfunction in "${!bashfunctions}"; do
-      add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
-      name_suffix_anticollision="${name_suffix_anticollision}_"
-    done
-  fi
-
-}
-
-# - Permissions: Expected to be run by normal user.
-# - Arguments:
-# * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
-# function.
-usergeneric_installation_type() {
-  # First elements of necessary arrays to perform the algorithm of inheriting the directory of decompressed files.
-  # These are necessary to perform the download and decompress
-  local -r inheritedcompressedfileurl="$1_inheritedcompressedfileurl"
-  local -r inheritedcompressedfiletype="$1inheritedcompressedfiletype"
-  # This function assumes that there is a directory inside the compressed file and renames that directory to this var.
-  local -r inheriteddirectoryname="$1_inheriteddirectoryname"
-
-  # This is optional or relative
-  local -r inheritedcompressedfiledownloadpath="$1_inheritedcompressedfiledownloadpath"
-
-  # Used to detect if we have met the situation or not, basically to skip the first compressed file and folder
-  if [ -z "${!inheriteddirectoryname}" ]; then
-    output_proxy_executioner "echo ERROR: $1_inheriteddirectoryname is not present, so userinheritdecompress_genericinstall cannot run. Skipping..." "${FLAG_QUIETNESS}"
-    exit 1
-  fi
-  if [ -z "${!inheritedcompressedfiletype}" ]; then
-    output_proxy_executioner "echo ERROR: $1_inheritedcompressedfiletype is not present, so userinheritdecompress_genericinstall cannot run. Skipping..." "${FLAG_QUIETNESS}"
-    exit 1
-  fi
-  if [ -z "${!inheritedcompressedfileurl}" ]; then
-    output_proxy_executioner "echo ERROR: $1_inheritedcompressedfileurl is not present, so userinheritdecompress_genericinstall cannot run. Skipping..." "${FLAG_QUIETNESS}"
-    exit 1
-  fi
-
-  download "${inheritedcompressedfileurl}" "${inheritedcompressedfiledownloadpath}"
-  decompress "${inheritedcompressedfiletype}" "${inheritedcompressedfiledownloadpath}" "${inheriteddirectoryname}"
-  # There is a file in the first position and also a default directory. We need to inherit the folder extracted.
-  # Mark that the first compressed file is processed
-  # Set the default directory to the directory that comes from decompressing the file
-  if [ -z "$(echo "${inheritedcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
-    # The location is relative to default path, which in this special case is USR_BIN_FOLDER
-    # download can be renaming or not, which we assure in the following if
-    if [ -d "${inheritedcompressedfiledownloadpath}" ]; then
-      echo sdfsfd
-      # Is a directory so it is downloaded in a file with the default name in download()
-    else
-      # it is a path to a file, that has been downloaded previously
-      decompress "${inheritedcompressedfiletype}" "${USR_BIN_FOLDER}/${inheritedcompressedfiledownloadpath}" "${inheriteddirectoryname}"
-    fi
-  else
-    # the location is absolute path
-    download "${inheritedcompressedfileurl}" "${inheritedcompressedfiledownloadpath}"
-    if [ -d "${inheritedcompressedfiledownloadpath}" ]; then
-      decompress "${inheritedcompressedfiletype}" "${inheritedcompressedfiledownloadpath}/downloading_program" "${inheriteddirectoryname}"
-    else
-      decompress "${inheritedcompressedfiletype}" "${inheritedcompressedfiledownloadpath}" "${inheriteddirectoryname}"
-    fi
-  fi
-  #if [  ]; then
 }
 
 # - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
@@ -642,87 +646,23 @@ usergeneric_installation_type() {
 # - Arguments:
 # * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
 # function.
-usergeneric_installationtype() {
+userinherit_installation_type() {
   # Declare name of variables for indirect expansion
 
-  # - If this variable has a value in the first position and there is a compressed files in the first position present
-  # (in compressedfileurls): this function will assume that there is a directory in the root of this compressed file,
-  # which will be renamed to the contents of this variable and will be the default folder to put downloaded files and
-  # temporals during the installation of this feature. (inherit folder)
-
-  # - If there are no compressed files in the first position defined but the this variable is present in the first
-  # position, it will create as many directory as many paths are present in this variable with those names, being the
-  # first one the default directory to put files in this feature.
-
-  # - If the first place of the array is not set, the default folder to put files will be $USR_BIN_FOLDER.
-
-  # Summarizing: The first position of this array is special, and will set the default folder. In the case that there is
-  # a compressed file defined in the first position of the array $compressedfileurls[@] and also a directory defined in
-  # the first position of the array below, it will assume that there is a unique directory inside the root of the
-  # compressed file, which will be renamed to $1 and set to be the default folder to download files in the installation
-  # of the current feature.
-
-  local -r directorynames="$1_directorynames[@]"
-
   # Files to be downloaded that have to be decompressed
-  local -r compressedfileurls="$1_compressedfileurls[@]"
-  # Folders where compressed files have to be downloaded and decompressed. Relative from USR_BIN_FOLDER or absolute.
-  local -r compressedfiledownloadpaths="$1_compressedfiledownloadpaths[@]"
+  local -r compressedfileurl="$1_compressedfileurl"
   # All decompression type options for each compressed file defined
-  local -r compressedfiletypes="$1_compressedfiletypes[@]"
+  local -r compressedfiletype="$1_compressedfiletype"
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
-  # Code to be added to bashrc as a bash-function feature. Its name will be $1+anticollision_mark
-  local -r bashfunctions="$1_bashfunctions[@]"
 
-  # Launchers added using add_manual_launchers function. Its name will be $1+anticollision_mark
-  local -r launchercontents="$1_launchercontents[@]"
-
-  # Recognized file types, used to register application to use a certain mime type
-  local -r recognizedfiletypes="$1_recognizedfiletypes[@]"
-
-  # Generic downloads
-  local -r fileurls="$1_fileurls[@]"
-  local -r filedownloaddirs="$1_filedownloaddirs[@]"
-
-  # Beginning with normal installation
-
-  # Create directories, using USR_BIN_FOLDER as relative path if no absolute path is given
-  if [ -n "${!directorynames}" ]; then
-    for directoryname in "${!directorynames}"; do
-      if [ "${compressed_i}" -eq "1" ]; then
-        # Skip the first directory if we had decompressed
-        compressed_i=2
-        continue
-      fi
-      if [ -n "${directoryname}" ]; then
-        if [ -n "$(echo "${directoryname}" | grep -Eo "^/")" ]; then
-          # Absolute path
-          rm -Rf "${directoryname}"
-          mkdir -p "${directoryname}"
-        else
-          # Relative path
-          rm -Rf "${USR_BIN_FOLDER}/${directoryname:?}"
-          mkdir -p "${USR_BIN_FOLDER}/${directoryname}"
-        fi
-      fi
-    done
-  fi
-
-  # Download and decompress
-  if [ -n "${!compressedfileurls}" ]; then
-    for compressedfileurls in "${!compressedfileurls}"; do
-      if [ "${compressed_i}" -eq "2" ]; then
-        # Skip the first directory if we had decompressed
-        compressed_i=3
-        continue
-      elif [ -n "${compressedfileurls}" ]; then
-        if [ -z "$(echo "${inheritedcompressedfiledownloadpath}" | grep -Eo "^/")" ]; then
-          echo problem
-        fi
-      fi
-    done
-  fi
+  download "${compresedfilesurl}" "$1_downloading"
+  decompress "${compressedfiletypes}" "${USR_BIN_FOLDER}/$1_downloading}" "$1"
+  for binary_install_path_and_name in ${!binariesinstalledpaths}; do
+    local -r binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
+    local -r binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
+    create_links_in_path "${USR_BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
+  done
 }
 
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.

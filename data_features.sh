@@ -1510,9 +1510,15 @@ steam_installationtype="packageinstall"
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_launchernames=("steam")
 
-sublime_text_downloader=https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2
-sublime_alias="alias sublime=\"sublime . &>/dev/null &\""
-sublime_text_launcher="[Desktop Entry]
+
+sublime_keybinds=("sublime;<Primary><Alt><Super>s;Sublime Text")
+sublime_installationtype="userinherit"
+sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2"
+sublime_bashfunctions=("alias sublime=\"sublime . &>/dev/null &\"")
+sublime_compressedfiletype="j"
+sublime_binariesinstalledpaths=("sublime;sublime")
+sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
+sublime_launchercontents=("[Desktop Entry]
 Categories=;
 Comment=General Purpose Programming Text Editor
 Encoding=UTF-8
@@ -1527,7 +1533,8 @@ StartupWMClass=Sublime
 Terminal=false
 TryExec=sublime
 Type=Application
-Version=1.0"
+Version=1.0")
+
 
 synaptic_installationtype="packagemanager"
 synaptic_packagenames=("synaptic")

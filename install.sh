@@ -800,9 +800,9 @@ install_pypy3()
 
 install_sublime()
 {
-  download_and_decompress ${sublime_text_downloader} "sublime-text" "j" "sublime_text" "sublime"
+  download_and_decompress ${sublime_downloader} "sublime" "j" "sublime" "sublime"
 
-  create_manual_launcher "${sublime_text_launcher}" "sublime"
+  create_manual_launcher "${sublime_launcher}" "sublime"
 
   # register file associations
   register_file_associations "text/x-sh" "sublime.desktop"
@@ -816,6 +816,7 @@ install_sublime()
   add_bash_function "${sublime_alias}" "sublime_alias.sh"
   add_to_favorites "sublime.desktop"
   add_keybinding "sublime" "<Primary><Alt><Super>s" "Sublime Text"
+
 }
 
 install_sysmontask()
@@ -1249,7 +1250,9 @@ install_pgadmin()
 
 install_pull()
 {
-  generic_install pull
+  #generic_install pull
+  echo
+
 }
 
 install_push()
