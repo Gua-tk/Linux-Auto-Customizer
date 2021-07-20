@@ -21,35 +21,9 @@
 ###### ROOT FUNCTIONS ######
 ############################
 
-install_aisleriot()
-{
-  generic_install aisleriot
-}
-
-install_ansible()
-{
-  generic_install ansible
-}
-
-install_aspell()
-{
-  generic_install aspell
-}
-
-install_atom()
-{
-  generic_install atom
-}
-
-install_audacity()
-{
-  generic_install audacity
-}
-
 install_AutoFirma()
 {
   apt-get install -y libnss3-tools
-
   rm -f ${USR_BIN_FOLDER}/downloading_package*
   (cd ${USR_BIN_FOLDER}; wget -qO downloading_package --show-progress "${autofirma_downloader}")
   rm -Rf ${USR_BIN_FOLDER}/autOfirma
@@ -61,16 +35,6 @@ install_AutoFirma()
   copy_launcher "afirma.desktop"
 }
 
-install_axel()
-{
-  generic_install axel
-}
-
-install_brasero()
-{
-  generic_install brasero
-}
-
 install_caffeine()
 {
   generic_install caffeine
@@ -80,204 +44,10 @@ install_caffeine()
   autostart_program caffeine-indicator
 }
 
-install_calibre()
-{
-  generic_install calibre
-}
-
-install_cheese()
-{
-  generic_install cheese
-}
-
-install_clementine()
-{
-  generic_install clementine
-}
-
-install_clonezilla()
-{
-  generic_install clonezilla
-}
-
-install_cmatrix()
-{
-  generic_install cmatrix
-}
-
-install_codeblocks()
-{
-  generic_install codeblocks
-}
-
 install_copyq()
 {
   generic_install copyq
   autostart_program com.github.hluk.copyq
-}
-
-install_curl()
-{
-  generic_install curl
-}
-
-install_dbeaver()
-{
-  generic_install dbeaver
-}
-
-install_dconf-editor()
-{
-  generic_install dconf-editor
-}
-
-install_default-jdk()
-{
-  generic_install default-jdk
-}
-
-install_dia()
-{
-  generic_install dia
-}
-
-install_dropbox()
-{
-  generic_install dropbox
-}
-
-install_evolution()
-{
-  generic_install evolution
-}
-
-install_fdupes()
-{
-  generic_install fdupes
-}
-
-install_f-irc()
-{
-  generic_install f-irc
-}
-
-install_ffmpeg()
-{
-  generic_install ffmpeg
-}
-
-install_firefox()
-{
-  generic_install firefox
-}
-
-install_fonts-firacode()
-{
-  generic_install fonts-firacode
-}
-
-install_fonts-hack()
-{
-  generic_install fonts-hack
-}
-
-install_fonts-hermit()
-{
-  generic_install fonts-hermit
-}
-
-install_fonts-roboto()
-{
-  generic_install fonts-roboto
-}
-
-install_msttcorefonts()
-{
-  generic_install msttcorefonts
-}
-
-install_freecad()
-{
-  generic_install freecad
-}
-
-install_gcc()
-{
-  generic_install gcc
-}
-
-install_geany()
-{
-  generic_install geany
-}
-
-install_ghostwriter()
-{
-  generic_install ghostwriter
-}
-
-install_gimp()
-{
-  generic_install gimp
-}
-
-install_git()
-{
-  generic_install git
-}
-
-install_github()
-{
-  generic_install github
-}
-
-install_gitk()
-{
-  generic_install gitk
-}
-
-install_gnat-gps()
-{
-  generic_install gnat-gps_launcher
-  copy_launcher "gnat-programming-studio.desktop"
-  sed "s|Icon=.*|Icon=/usr/share/doc/gnat-gps/html/users_guide/_static/favicon.ico|g" -i "${XDG_DESKTOP_DIR}/gnat-programming-studio.desktop"
-  sed "s|Icon=.*|Icon=/usr/share/doc/gnat-gps/html/users_guide/_static/favicon.ico|g" -i "${ALL_USERS_LAUNCHERS_DIR}/gnat-programming-studio.desktop"
-
-}
-
-install_gnome-calculator()
-{
-  generic_install gnome-calculator
-}
-
-install_gnome-chess()
-{
-  generic_install gnome-chess
-}
-
-install_gnome-mahjongg()
-{
-  generic_install gnome-mahjongg
-}
-
-install_gnome-mines()
-{
-  generic_install gnome-mines
-}
-
-install_gnome-sudoku()
-{
-  generic_install gnome-sudoku
-}
-
-install_gnome-terminal()
-{
-  generic_install gnome-terminal
-}
-
-install_gnome-tweak-tool()
-{
-  generic_install gnome-tweak-tool
 }
 
 install_google-chrome()
@@ -285,36 +55,6 @@ install_google-chrome()
   generic_install google-chrome
 
   add_keybinding "google-chrome" "<Primary><Alt><Super>O" "Google Chrome"
-}
-
-install_gpaint()
-{
-  generic_install gpaint
-}
-
-install_gparted()
-{
-  generic_install gparted
-}
-
-install_gvim()
-{
-  generic_install gvim
-}
-
-install_handbrake()
-{
-  generic_install handbrake
-}
-
-install_hardinfo()
-{
-  generic_install hardinfo
-}
-
-install_inkscape()
-{
-  generic_install inkscape
 }
 
 install_iqmol()
@@ -327,60 +67,6 @@ install_iqmol()
   add_bash_function "${iqmol_alias}" "iqmol_alias.sh"
 }
 
-install_latex()
-{
-  generic_install latex
-}
-
-install_parallel()
-{
-  generic_install parallel
-}
-
-install_libgtkglext1()
-{
-  generic_install libgtkglext1
-}
-
-install_libkrb5-dev()
-{
-  generic_install libkrb5-dev
-}
-
-install_libxcb-xtest0()
-{
-  generic_install libxcb-xtest0
-}
-
-install_lolcat()
-{
-  generic_install lolcat
-}
-
-install_mdadm()
-{
-  generic_install mdadm
-}
-
-install_megasync()
-{
-  generic_install megasync
-}
-
-install_mendeley-dependencies()
-{
-  generic_install mendeley-dependencies
-}
-
-install_nautilus()
-{
-  generic_install nautilus
-}
-
-install_nedit()
-{
-  generic_install nedit
-}
 
 install_nemo()
 {
@@ -395,31 +81,6 @@ install_nemo()
   gsettings set org.nemo.desktop show-desktop-icons true
 
   copy_launcher "nemo.desktop"
-}
-
-install_net-tools()
-{
-  generic_install net-tools
-}
-
-install_notepadqq()
-{
-  generic_install notepadqq
-}
-
-install_nvidia-drivers()
-{
-  ubuntu-drivers autoinstall
-}
-
-install_obs-studio()
-{
-  generic_install obs-studio
-}
-
-install_okular()
-{
-  generic_install okular
 }
 
 install_openoffice()
@@ -445,80 +106,10 @@ install_openoffice()
   copy_launcher "openoffice4-writer.desktop"
 }
 
-install_pacman()
-{
-  generic_install pacman
-}
-
-install_pdfgrep()
-{
-  generic_install pdfgrep
-}
-
-install_php()
-{
-  generic_install php
-}
-
-install_psql()
-{
-  generic_install psql
-}
-
-install_pypy3-dependencies()
-{
-  generic_install pypy3-dependencies
-}
-
-install_python3()
-{
-  generic_install python3
-}
-
-install_pluma()
-{
-  generic_install pluma
-}
-
 install_R()
 {
   generic_install R
   R -e "${R_jupyter_lab_function}"
-}
-
-install_remmina()
-{
-  generic_install remmina
-}
-
-install_rustc()
-{
-  generic_install rustc
-}
-
-install_scala()
-{
-  generic_install scala
-}
-
-install_shotcut()
-{
-  generic_install shotcut
-}
-
-install_shotwell()
-{
-  generic_install shotwell
-}
-
-install_skype()
-{
-  generic_install skype
-}
-
-install_slack()
-{
-  generic_install slack
 }
 
 install_sonic-pi()
@@ -527,75 +118,10 @@ install_sonic-pi()
   generic_install sonic-pi
 }
 
-install_spotify()
-{
-  generic_install spotify
-}
-
-install_steam()
-{
-  generic_install steam
-}
-
-install_synaptic()
-{
-  generic_install synaptic
-}
-
-install_teamviewer()
-{
-  generic_install teamviewer
-}
-
-install_teams()
-{
-  generic_install teams
-}
-
-install_terminator()
-{
-  generic_install terminator
-}
-
-install_thunderbird()
-{
-  generic_install thunderbird
-}
-
-install_tilix()
-{
-  generic_install tilix
-}
-
 install_tmux()
 {
   generic_install tmux
   autostart_program tmux
-}
-
-install_tor()
-{
-  generic_install tor
-}
-
-install_transmission-gtk()
-{
-  generic_install transmission-gtk
-}
-
-install_uget()
-{
-  generic_install uget
-}
-
-install_virtualbox()
-{
-  generic_install virtualbox
-}
-
-install_vlc()
-{
-  generic_install vlc
 }
 
 install_wireshark()
@@ -755,32 +281,6 @@ install_postman()
   create_manual_launcher "${postman_launchercontents[0]}" "Postman"
 }
 
-install_pycharm()
-{
-  download_and_decompress ${pycharm_downloader} "pycharm-community" "z" "bin/pycharm.sh" "pycharm"
-
-  create_manual_launcher "$pycharm_launcher" "pycharm"
-
-  register_file_associations "text/x-python" "pycharm.desktop"
-  register_file_associations "text/x-python3" "pycharm.desktop"
-  register_file_associations "text/x-sh" "pycharm.desktop"
-
-  add_bash_function "${pycharm_alias}" "pycharm_alias.sh"
-}
-
-install_pycharmpro()
-{
-  download_and_decompress ${pycharm_professional_downloader} "pycharm-professional" "z" "bin/pycharm.sh" "pycharmpro"
-
-  create_manual_launcher "$pycharm_professional_launcher" "pycharm-pro"
-
-  register_file_associations "text/x-sh" "pycharm-pro.desktop"
-  register_file_associations "text/x-python" "pycharm-pro.desktop"
-  register_file_associations "text/x-python3" "pycharm-pro.desktop"
-
-  add_bash_function "${pycharmpro_alias}" "pycharmpro_alias.sh"
-}
-
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 install_pypy3()
 {
@@ -796,27 +296,6 @@ install_pypy3()
   # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
 
   create_links_in_path "${USR_BIN_FOLDER}/pypy3/bin/pypy3" "pypy3" ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 pypy3-pip
-}
-
-install_sublime()
-{
-  download_and_decompress ${sublime_downloader} "sublime" "j" "sublime" "sublime"
-
-  create_manual_launcher "${sublime_launcher}" "sublime"
-
-  # register file associations
-  register_file_associations "text/x-sh" "sublime.desktop"
-  register_file_associations "text/x-c++hdr" "sublime.desktop"
-  register_file_associations "text/x-c++src" "sublime.desktop"
-  register_file_associations "text/x-chdr" "sublime.desktop"
-  register_file_associations "text/x-csrc" "sublime.desktop"
-  register_file_associations "text/x-python" "sublime.desktop"
-  register_file_associations "text/x-python3" "sublime.desktop"
-
-  add_bash_function "${sublime_alias}" "sublime_alias.sh"
-  add_to_favorites "sublime.desktop"
-  add_keybinding "sublime" "<Primary><Alt><Super>s" "Sublime Text"
-
 }
 
 install_sysmontask()

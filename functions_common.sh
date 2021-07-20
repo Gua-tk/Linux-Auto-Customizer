@@ -77,7 +77,7 @@ add_program()
           # Generate name of the function depending on the mode from the first argument
           program_name="${FLAG_MODE}_$(echo ${program_arguments} | cut -d "|" -f1 | cut -d "-" -f3-)"
           # Append static bits to the state of the flags
-          new="${program_arguments};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${program_name}"
+          new="${program_arguments};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${FLAG_FAVORITES};${program_name}"
           installation_data[$i]=${new}
           # Update flags and program counter if we are installing
           if [[ ${FLAG_INSTALL} -gt 0 ]]; then
@@ -159,7 +159,8 @@ execute_installation()
         forceness_bit=$( echo ${program} | cut -d ";" -f4 )
         quietness_bit=$( echo ${program} | cut -d ";" -f5 )
         overwrite_bit=$( echo ${program} | cut -d ";" -f6 )
-        program_function=$( echo ${program} | cut -d ";" -f7 )
+        favorite_bit=$( echo ${program} | cut -d ";" -f7 )
+        program_function=$( echo ${program} | cut -d ";" -f8 )
         program_name=$( echo ${program_function} | cut -d "_" -f2- )
         if [[ ${program_privileges} == 1 ]]; then
           if [[ ${EUID} -ne 0 ]]; then

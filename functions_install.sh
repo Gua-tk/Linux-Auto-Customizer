@@ -157,7 +157,7 @@ create_file() {
       apply_permissions "$1"
     fi
   else
-    output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file_as_root. The file will not be created." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "${FLAG_QUIETNESS}"
   fi
 }
 
@@ -179,7 +179,7 @@ create_folder() {
 # - Argument 1: name of the desktop launcher in /usr/share/applications
 copy_launcher() {
   if [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]]; then
-    create_file_as_root "${XDG_DESKTOP_DIR}/$1" "$(cat "${ALL_USERS_LAUNCHERS_DIR}/$1")"
+    create_file "${XDG_DESKTOP_DIR}/$1" "$(cat "${ALL_USERS_LAUNCHERS_DIR}/$1")"
   else
     output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." ${FLAG_QUIETNESS}
   fi
@@ -214,7 +214,7 @@ create_manual_launcher() {
     chmod 775 "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
     cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
   else # if root
-    create_file_as_root "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
+    create_file "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
     cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
   fi
 }
@@ -343,16 +343,12 @@ download() {
         # It is just actually the name of the file downloaded to default USR_BIN_FOLDER
         local -r dir_name="${USR_BIN_FOLDER}"
         local file_name="$2"
-        if [ -z "${file_name}" ]; then
-          file_name=downloading_program
-        fi
       fi
     fi
   fi
 
   # Download in a subshell to avoid changing the working directory in the current shell
   wget --show-progress -qO "${dir_name}/${file_name}" "$1"
-
   # If we are root
   if [ ${EUID} == 0 ]; then
     apply_permissions "${dir_name}/${file_name}"
@@ -463,9 +459,10 @@ generic_install_functions()
 generic_install_favorites()
 {
   local -r launchernames="$1_launchernames[@]"
+
   # To add to favorites if the flag is set
-  if [ "${FLAG_FAVORITES}" == "1" ]; then
-    if [ -n "${!launchernames}" ]; then
+  if [ "${favorite_bit}" == "1" ]; then
+    if [ ! -z "${!launchernames}" ]; then
       for launchername in "${!launchernames}"; do
         add_to_favorites "${launchername}"
       done
@@ -473,25 +470,23 @@ generic_install_favorites()
       add_to_favorites "$1"
     fi
   fi
+
 }
 
 # - Description:
 # - Permissions: Can be executed as root or user.
 # - Argument 1:
-
 generic_install_file_associations()
 {
-  for associated_file_type in $1; do
-    local -r associated_file="$1_associatedfiletypes[@]"
-
-    register_file_associations "text/x-sh" "$1.desktop"
+  local -r associated_file_types="$1_associatedfiletypes[@]"
+  for associated_file_type in ${!associated_file_types}; do
+    register_file_associations "${associated_file_type}" "$1.desktop"
   done
 }
 
 # - Description:
 # - Permissions: Can be executed as root or user.
 # - Argument 1:
-
 generic_install_keybindings()
 {
   local -r keybinds="$1_keybinds[@]"
@@ -503,6 +498,21 @@ generic_install_keybindings()
   done
 
 }
+
+# - Description:
+# - Permissions: Can be executed as root or user.
+# - Argument 1:
+generic_install_downloads()
+{
+  local -r downloads="$1_downloads[@]"
+  for download in ${!downloads}; do
+    local -r url="$(echo "${download}" | cut -d ";" -f1)"
+    local -r name="$(echo "${download}" | cut -d ";" -f2)"
+    download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
+  done
+}
+
+
 
 # - Description: Expands installation type and executes the corresponding function to install.
 # - Permissions: Can be executed as root or user.
@@ -527,12 +537,17 @@ generic_install() {
       userinherit)
         userinherit_installation_type "${featurename}"
       ;;
+      #
+      environmental)
+        echo
+      ;;
       *)
         output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
         exit 1
       ;;
     esac
 
+    generic_install_downloads "${featurename}"
     generic_install_launchers "${featurename}"
     generic_install_functions "${featurename}"
     generic_install_favorites "${featurename}"
@@ -656,13 +671,14 @@ userinherit_installation_type() {
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
 
-  download "${compresedfilesurl}" "$1_downloading"
-  decompress "${compressedfiletypes}" "${USR_BIN_FOLDER}/$1_downloading}" "$1"
+  download "${!compressedfileurl}" "$1_downloading"
+  decompress "${!compressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "$1"
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
     local -r binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
     local -r binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
     create_links_in_path "${USR_BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
   done
+
 }
 
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.

@@ -79,6 +79,7 @@ aisleriot_installationtype=packagemanager
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")
 
+
 alert_alias="
 # Add an alert alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -168,11 +169,11 @@ LIGHTCYAN='\033[1;36m'
 WHITE='\033[1;37m'
 "
 
-bi_installationtype="packagemanager"
+bi_installationtype="environmental"
 bi_bashfunctions=("alias bi=\"sudo apt --fix-broken install\"")
 
+branch_installationtype="environmental"
 branch_bashfunctions=("alias branch=\"git branch\"")
-branch_installationtype="packagemanager"
 
 brasero_installationtype="packagemanager"
 brasero_packagenames=("brasero")
@@ -188,7 +189,7 @@ calibre_packagenames=("calibre")
 
 cheat_downloader=https://cht.sh/:cht.sh
 
-checkout_installationtype="packagemanager"
+checkout_installationtype="environmental"
 checkout_bashfunctions=("alias checkout=\"git checkout\"")
 
 cheese_installationtype="packagemanager"
@@ -269,7 +270,7 @@ commit_bashfunctions=("commit()
     git commit -am \"\$messag\"
 }
 ")
-commit_installationtype="packagemanager"
+commit_installationtype="environmental"
 
 copyq_installationtype="packagemanager"
 copyq_launchernames=("com.github.hluk.copyq")
@@ -286,10 +287,10 @@ dconf_editor_installationtype="packagemanager"
 dconf_editor_packagenames=("dconf-editor")
 dconf_editor_launchernames=("ca.desrt.dconf-editor")
 
-drive_url=https://drive.google.com/
-drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
-drive_alias="alias drive=\"xdg-open ${drive_url} &>/dev/null &\""
-drive_launcher="[Desktop Entry]
+drive_installationtype="environmental"
+drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon")
+drive_bashfunctions=("alias drive=\"xdg-open https://drive.google.com/ &>/dev/null &\"")
+drive_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to instant e-mail messaging from Chrome
 Encoding=UTF-8
@@ -300,30 +301,14 @@ Name=Google Drive
 StartupNotify=true
 StartupWMClass=Google Drive
 Terminal=false
+Exec=${BASH_FUNCTIONS_FOLDER}/drive.sh
+Icon=${USR_BIN_FOLDER}/drive/drive_icon
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
-drive_url=https://drive.google.com/
-drive_icon=https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg
-drive_alias="alias drive=\"xdg-open ${drive_url} &>/dev/null &\""
-drive_launcher="[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to instant e-mail messaging from Chrome
-Encoding=UTF-8
-GenericName=Gmail
-Keywords=drive;
-MimeType=
-Name=Google Drive
-StartupNotify=true
-StartupWMClass=Google Drive
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-dropbox_dependencies=("python3-gpg")
 dropbox_installationtype="packageinstall"
+dropbox_dependencies=("python3-gpg")
 dropbox_launchernames=("dropbox")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
 
@@ -331,8 +316,8 @@ dia_installationtype="packagemanager"
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")
 
+discord_installationtype="userinherit"
 discord_downloader="https://discord.com/api/download?platform=linux&format=tar.gz"
-
 discord_launcher="[Desktop Entry]
 Categories=Network;InstantMessaging;
 Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
@@ -350,8 +335,10 @@ TryExec=discord
 Type=Application
 Version=1.0"
 
+docker_installationtype="userinherit"
 docker_downloader=https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz
 
+document_installationtype="environmental"
 document_url=https://docs.google.com/document/
 document_icon="https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg"
 document_alias="alias document=\"xdg-open ${document_url} &>/dev/null &\""
@@ -387,13 +374,13 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
+dummycommit_installationtype="environmental"
 dummycommit_bashfunctions=("dummycommit()
 {
   git add -A
   git commit -am \"\$1\"
   git push
 }")
-dummycommit_installationtype="packagemanager"
 
 eclipse_downloader=http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz
 eclipse_launcher="[Desktop Entry]
@@ -457,8 +444,8 @@ Version=1.0")
 fdupes_installationtype="packagemanager"
 fdupes_packagenames=("fdupes")
 
+fetch_installationtype="environmental"
 fetch_bashfunctions=("alias fetch=\"git fetch\"")
-fetch_installationtype="packagemanager"
 
 ffmpeg_installationtype="packagemanager"
 ffmpeg_packagenames=("ffmpeg")
@@ -516,8 +503,8 @@ freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
 
+g_installationtype="environmental"
 g_bashfunctions=("alias g=\"gitk\"")
-g_installationtype="packagemanager"
 
 gcc_installationtype="packagemanager"
 gcc_packagenames=("gcc")
@@ -580,6 +567,15 @@ github_launchernames=("github-desktop")
 gnat_gps_installationtype="packagemanager"
 gnat_gps_packagenames=("gnat-gps")
 gnat_gps_launchernames=("gnat-programming-studio")
+gnat_gps_launchercontents=("[Desktop Entry]
+Type=Application
+Name=GNAT Programming Studio
+Comment=Integrated Development Environment
+Exec=/usr/bin/gnat-gps
+Icon=/usr/share/doc/gnat-gps/html/users_guide/_static/favicon.ico
+Terminal=false
+Categories=Development;IDE
+Keywords=ide;editor;ada;c")
 
 gnome_calculator_installationtype="packagemanager"
 gnome_calculator_packagenames=("gnome-calculator")
@@ -712,7 +708,7 @@ google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-sta
 google_chrome_launchernames=("google-chrome")
 
 
-h_installationtype="packagemanager"
+h_installationtype="environmental"
 h_bashfunctions=("
 h()
 {
@@ -733,7 +729,7 @@ handbrake_installationtype="packagemanager"
 handbrake_packagenames=("handbrake")
 handbrake_launchernames=("fr.handbrake.ghb")
 
-hard_installationtype="packagemanager"
+hard_installationtype="environmental"
 hard_bashfunctions=("alias hard=\"git reset HEAD --hard\"")
 
 hardinfo_installationtype="packagemanager"
@@ -820,8 +816,8 @@ Type=Application
 Version=1.0"
 iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
 
+j_installationtype="environmental"
 j_bashfunctions=("alias j=\"jobs -l\"")
-j_installationtype="packagemanager"
 
 java_downloader="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
 java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
@@ -878,8 +874,6 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-lab_installationtype="packagemanager"
-lab_bashfunctions=("alias lab=\"jupyter-lab\"")
 
 latex_installationtype="packagemanager"
 latex_launchernames=("texmaker")
@@ -895,6 +889,7 @@ Terminal=false
 Categories=Settings;
 Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png")
 
+l_installationtype="environmental"
 l_function="alias l=\"ls -lAh --color=auto\""
 
 libgtkglext1_installationtype="packagemanager"
@@ -905,9 +900,6 @@ libkrb5_dev_packagenames=("libkrb5-dev")
 
 libxcb_xtest0_installationtype="packagemanager"
 libxcb_xtest0_packagenames=("libxcb-xtest0")
-
-lol_installationtype="packagemanager"
-lol_bashfunctions=("alias lol=\"lolcat\"")
 
 lolcat_installationtype="packagemanager"
 lolcat_packagenames=("lolcat")
@@ -1213,14 +1205,20 @@ fi
 
 ")
 
-pull_installationtype="packagemanager"
+pull_installationtype="environmental"
 pull_bashfunctions=("alias pull=\"git pull\"")
 
-push_installationtype="packagemanager"
+push_installationtype="environmental"
 push_bashfunctions=("alias push=\"git push\"")
 
-pycharm_downloader=https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz
-pycharm_launcher="[Desktop Entry]
+pycharm_installationtype="userinherit"
+pycharm_keybinds=("pycharm;<Primary><Alt><Super>p;Pycharm")
+pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz"
+pycharm_bashfunctions=("alias pycharm=\"pycharm . &>/dev/null &\"")
+pycharm_compressedfiletype="z"
+pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
+pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
+pycharm_launchercontents=("[Desktop Entry]
 Actions=NewWindow;
 Categories=programming;dev;
 Comment=Python IDE Community
@@ -1241,32 +1239,33 @@ Version=1.0
 [Desktop Action NewWindow]
 Name=Pycharm New Window
 Exec=pycharm
-Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png"
+Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png")
 
-pycharm_alias="alias pycharm=\"pycharm . &>/dev/null &\""
-
-pycharm_professional_downloader=https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz
-
-pycharm_professional_launcher="[Desktop Entry]
+pycharmpro_installationtype="userinherit"
+#pycharmpro_keybinds=("pycharm;<Primary><Alt><Super><Space>p;Pycharm Pro")
+pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz"
+pycharmpro_bashfunctions=("alias pycharmpro=\"pycharmpro . &>/dev/null &\"")
+pycharmpro_compressedfiletype="z"
+pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
+pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
+pycharmpro_launchercontents=("[Desktop Entry]
 Categories=programming;dev;
 Comment=Python IDE for Professional Developers
 Encoding=UTF-8
-Exec=pycharm-pro %F
-GenericName=Pycharm
-Icon=${HOME_FOLDER}/.bin/pycharm-professional/bin/pycharm.png
+Exec=pycharmpro %F
+GenericName=Pycharm Pro
+Icon=${USR_BIN_FOLDER}/pycharmpro/bin/pycharm.png
 Keywords=dev;programming;python;
 MimeType=
 Name=PyCharm Professional
 StartupNotify=true
 StartupWMClass=jetbrains-pycharm
 Terminal=false
-TryExec=pycharm-pro
+TryExec=pycharmpro
 Type=Application
-Version=1.0"
-
+Version=1.0")
 
 pypy3_downloader="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
-
 pypy3_dependencies_installationtype="packagemanager"
 pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
 
@@ -1325,7 +1324,6 @@ install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
 IRkernel::installspec()
 ")
 
-
 rstudio_installationtype="packageinstall"
 rstudio_packageurls=("https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz")
 rstudio_dependencies_packagenames=("libssl-dev")
@@ -1380,21 +1378,22 @@ rsync_dependencies_packagenames=("canberra-gtk-module")
 rsync_packagenames=("rsync" "grsync")
 rsync_launchernames=("grsync")
 
-s_function="
+s_installationtype="environmental"
+s_bashfunctions=("
 s()
 {
   \"\$@\" &>/dev/null &
 }
-"
+")
 
 scala_installationtype="packagemanager"
 scala_packagenames=("scala")
 
-screenshots_function="
+screenshots_installationtype="environmental"
+screenshots_bashfunctions=("
 alias screenshot-full=\"gnome-screenshot -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
 alias screenshot-window=\"gnome-screenshot -w -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
-alias screenshot-area=\"gnome-screenshot -a -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
-"
+alias screenshot-area=\"gnome-screenshot -a -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"")
 
 shell_history_optimization_function="
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -1476,8 +1475,8 @@ slack_installationtype="packageinstall"
 slack_repository=("https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb")
 slack_launchernames=("slack")
 
+status_installationtype="environmental"
 status_bashfunctions=("alias status=\"git status\"")
-status_installationtype="packagemanager"
 
 sonic_pi_installationtype="packagemanager"
 sonic_pi_packagenames=("sonic-pi")
@@ -1516,7 +1515,7 @@ sublime_installationtype="userinherit"
 sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2"
 sublime_bashfunctions=("alias sublime=\"sublime . &>/dev/null &\"")
 sublime_compressedfiletype="j"
-sublime_binariesinstalledpaths=("sublime;sublime")
+sublime_binariesinstalledpaths=("sublime_text;sublime")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
 sublime_launchercontents=("[Desktop Entry]
 Categories=;
@@ -1534,7 +1533,6 @@ Terminal=false
 TryExec=sublime
 Type=Application
 Version=1.0")
-
 
 synaptic_installationtype="packagemanager"
 synaptic_packagenames=("synaptic")
@@ -1700,7 +1698,7 @@ Type=Application
 Version=1.0"
 
 # u function only opens in 'http://google.com', may work with 'google.com' or 'www.google.com'?
-u_installationtype="packagemanager"
+u_installationtype="environmental"
 u_bashfunctions=("
 u()
 {
@@ -1875,7 +1873,7 @@ Exec=ZoomLauncher
 ### SYSTEM FEATURE RELATED VARIABLES ###
 
 converters_downloader="https://github.com/Axlfc/converters"
-converters_functions="bintooct()
+converters_bashfunctions=("bintooct()
 {
   to \$1 2 3
 }
@@ -1954,10 +1952,9 @@ hextoocto()
 hextodec()
 {
   to \$1 16 10
-}"
+}")
 
 ipe_function="
-
 ipe()
 {
   dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print \$2 }';
@@ -1965,7 +1962,6 @@ ipe()
 "
 
 ipi_function="
-
 ipi()
 {
   hostname -I | awk '{print \$1}'
@@ -1973,7 +1969,6 @@ ipi()
 "
 
 e_function="
-
 e()
 {
   if [[ -z \"\$1\" ]]; then
@@ -2016,7 +2011,6 @@ e()
 "
 
 extract_function="
-
   # Function that allows to extract any type of compressed files
   extract () {
     if [ -f \$1 ] ; then
@@ -2040,7 +2034,6 @@ extract_function="
   }"
 
 L_function="
-
 L()
 {
   NEW_LINE=\$'\\\n'
@@ -2072,7 +2065,6 @@ L()
 "
 
 c_function="
-
 c()
 {
   clear
@@ -2087,7 +2079,6 @@ c()
 b_alias="alias b=\"bash\""
 
 e_function="
-
 e()
 {
   if [[ -z \"\$1\" ]]; then
@@ -2130,7 +2121,6 @@ e()
 "
 
 o_function="
-
 o()
 {
 	if [[ -z \"\$1\" ]]; then
