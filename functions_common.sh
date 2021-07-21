@@ -327,6 +327,121 @@ add_programs_with_x_permissions()
   done
 }
 
+argument_processing()
+{
+    while [[ $# -gt 0 ]]; do
+    key="$1"
+
+    case ${key} in
+      ### BEHAVIOURAL ARGUMENTS ###
+      -v|--verbose)
+        FLAG_QUIETNESS=0
+      ;;
+      -q|--quiet)
+        FLAG_QUIETNESS=1
+      ;;
+      -Q|--Quiet)
+        FLAG_QUIETNESS=2
+      ;;
+
+      -s|--skip|--skip-if-installed)
+        FLAG_OVERWRITE=0
+      ;;
+      -o|--overwrite|--overwrite-if-present)
+        FLAG_OVERWRITE=1
+      ;;
+
+      -e|--exit|--exit-on-error)
+        FLAG_IGNORE_ERRORS=0
+      ;;
+      -i|--ignore|--ignore-errors)
+        FLAG_IGNORE_ERRORS=1
+      ;;
+
+      -d|--dirty|--no-autoclean)
+        FLAG_AUTOCLEAN=0
+      ;;
+      -c|--clean)
+        FLAG_AUTOCLEAN=1
+      ;;
+      -C|--Clean)
+        FLAG_AUTOCLEAN=2
+      ;;
+
+      -k|--keep-system-outdated)
+        FLAG_UPGRADE=0
+      ;;
+      -u|--update)
+        FLAG_UPGRADE=1
+      ;;
+      -U|--upgrade|--Upgrade)
+        FLAG_UPGRADE=2
+      ;;
+      -auto|--auto)
+        autostart_program
+      ;;
+      -f|--favorites|--set-favorites)
+        FLAG_FAVORITES=1
+      ;;
+      -z|--no-favorites)
+        FLAG_FAVORITES=0
+      ;;
+
+      -n|--not)
+        FLAG_INSTALL=0
+      ;;
+      -y|--yes)
+        FLAG_INSTALL=${NUM_INSTALLATION}
+      ;;
+
+      -h)
+        output_proxy_executioner "echo ${help_common}${help_simple}" ${FLAG_QUIETNESS}
+        exit 0
+      ;;
+
+      -H|--help)
+        autogen_help
+
+        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" ${FLAG_QUIETNESS}
+        exit 0
+      ;;
+
+      --debug)
+        customizer_prompt
+      ;;
+
+      ### WRAPPER ARGUMENTS ###
+      --custom1)
+        add_wrapper "${custom1[@]}"
+      ;;
+      --iochem)
+        add_wrapper "${iochem[@]}"
+      ;;
+      --user|--regular|--normal)
+        add_programs_with_x_permissions 0
+      ;;
+      --root|--superuser|--su)
+        add_programs_with_x_permissions 1
+      ;;
+      --ALL|--all|--All)
+        add_programs_with_x_permissions 2
+      ;;
+
+      *)  # Individual argument
+        add_program ${key}
+      ;;
+    esac
+    shift
+  done
+
+  # If we don't receive arguments we try to install everything that we can given our permissions
+  if [[ ${NUM_INSTALLATION} == 0 ]]; then
+    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo ${help_message}" ${FLAG_QUIETNESS}
+    exit 0
+  fi
+}
+
 post_install_clean()
 {
   if [[ ${EUID} == 0 ]]; then
@@ -342,8 +457,6 @@ post_install_clean()
     fi
   fi
 }
-
-
 
 # Make the bell sound at the end
 bell_sound()

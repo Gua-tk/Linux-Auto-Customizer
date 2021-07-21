@@ -348,7 +348,7 @@ download() {
   fi
 
   # Download in a subshell to avoid changing the working directory in the current shell
-  wget --show-progress -O "${dir_name}/${file_name}" "$1"
+  wget --show-progress -qO "${dir_name}/${file_name}" "$1"
   # If we are root
   if [ ${EUID} == 0 ]; then
     apply_permissions "${dir_name}/${file_name}"
@@ -714,6 +714,62 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_common.sh not found. Aborting..."
   exit 1
 fi
+
+data_and_file_structures_initialization()
+{
+  FLAG_MODE=install  # Install mode
+  create_folder ${USR_BIN_FOLDER}
+  create_folder ${BASH_FUNCTIONS_FOLDER}
+  create_folder ${DIR_IN_PATH}
+  create_folder ${PERSONAL_LAUNCHERS_DIR}
+  create_folder ${FONTS_FOLDER}
+
+  # Initialize bash functions
+  if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
+    create_file "${BASH_FUNCTIONS_PATH}"
+  else
+    # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
+    source "${BASH_FUNCTIONS_PATH}"
+  fi
+
+  # Updates initializations
+  # Avoid running bash functions non-interactively
+  # Adds to the path the folder where we will put our soft links
+  add_bash_function "${bash_functions_init}" "init.sh"
+
+  # Create and / or update built-in favourites subsystem
+  if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
+    create_file "${PROGRAM_FAVORITES_PATH}"
+  fi
+  add_bash_function "${favorites_function}" "favorites.sh"
+
+  # Create and / or update built-in keybinding subsystem
+  if [ -f "${PROGRAM_KEYBIND_PATH}" ]; then
+    create_file "${PROGRAM_KEYBIND_PATH}"
+  fi
+  add_bash_function "${keybind_function}" "keybind.sh"
+
+  # Make sure that .bashrc sources .bash_functions
+  if [ -z "$(cat "${BASHRC_PATH}" | grep -Fo "source "${BASH_FUNCTIONS_PATH}"")" ]; then
+    echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
+  fi
+}
+
+pre_install_update()
+{
+  if [[ ${EUID} == 0 ]]; then
+    if [[ ${FLAG_UPGRADE} -gt 0 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y update" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: System updated." ${FLAG_QUIETNESS}
+    fi
+    if [[ ${FLAG_UPGRADE} == 2 ]]; then
+      output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y upgrade" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: System upgraded." ${FLAG_QUIETNESS}
+    fi
+  fi
+}
 
 # - Description: This functions is the basic piece of the favorites subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
