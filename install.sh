@@ -139,12 +139,6 @@ apt-get install -y wireshark
 ###### USER SOFTWARE FUNCTIONS ######
 #####################################
 
-install_ant()
-{
-  download_and_decompress ${ant_downloader} "apache_ant" "z" "bin/ant" "ant"
-  add_bash_function "${ant_bashfunctions[0]}" "ant_env.sh"
-}
-
 install_anydesk()
 {
   download_and_decompress ${anydesk_downloader} "anydesk" "z" "anydesk" "anydesk"
@@ -243,6 +237,61 @@ install_java()
   add_bash_function "${java_globalvar}" "java_javahome.sh"
 }
 
+install_julia()
+{
+  download "${julia_packageurls}" "${USR_BIN_FOLDER}/julia_downloading"
+  decompress "z" "${USR_BIN_FOLDER}/julia_downloading" "julia"
+  create_links_in_path "${USR_BIN_FOLDER}/julia/bin/julia" julia
+  create_manual_launcher "${julia_launchercontents}" "julia"
+
+  # install jupyter-lab dependencies
+  julia -e '#!/.local/bin/julia
+  using Pkg
+  Pkg.add("IJulia")
+  Pkg.build("IJulia")'
+}
+
+install_jupyter-lab()
+{
+  # Avoid collision with previous installations
+  rm -Rf "${USR_BIN_FOLDER}/jupyter-lab"
+  python3 -m venv "${USR_BIN_FOLDER}/jupyter-lab"
+
+  # Install necessary pip and python packages
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel jupyter jupyterlab jupyterlab-git jupyterlab_markup
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install bash_kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install pykerberos pywinrm[kerberos]
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install powershell_kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install iarm
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install ansible-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m ansible_kernel.install
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install kotlin-jupyter-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m kotlin_kernel fix-kernelspec-location
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install vim-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m vim_kernel.install
+
+  # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install theme-darcula
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension install @telamonian/theme-darcula
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension enable @telamonian/theme-darcula
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" lab build
+
+  create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
+  create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
+  add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"pga
+}
+
 install_mendeley()
 {
   download_and_decompress ${mendeley_downloader} "mendeley" "j" "bin/mendeleydesktop" "mendeley"
@@ -270,6 +319,39 @@ install_studio()
   create_manual_launcher "${android_studio_launcher}" "Android_Studio"
 
   add_bash_function "${android_studio_alias}" "studio_alias.sh"
+}
+
+install_pgadmin()
+{
+  # Avoid collision and create venv for pgadmin in USR_BIN_FOLDER
+  rm -Rf "${USR_BIN_FOLDER}/pgadmin"
+  python3 -m venv "${USR_BIN_FOLDER}/pgadmin"
+
+  # Source activate to activate the venv, so the venv python interpreter is the one actually used.
+  source "${USR_BIN_FOLDER}/pgadmin/bin/activate"
+
+  # Update pip and install git dependencies (wheel) and the program itself in the venv
+  python -m pip install -U pip
+  pip install wheel pgadmin4
+
+  echo "${pgadmin_datafiles[0]}" > "${pgadmin_basefolder}/config_local.py"
+
+  # deactivate virtual environment
+  deactivate
+
+  # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
+  # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
+  # information on how to call the script
+
+  # Prepend shebang line to python3 interpreter of the venv
+  echo "#!${USR_BIN_FOLDER}/pgadmin/bin/python3" | cat - "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" > "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  chmod +x "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  create_links_in_path "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" pgadmin
+
+  # Create launcher and structures to be able to launch pgadmin and access it using the browser
+  create_manual_launcher "${pgadmin_launchercontents[0]}" pgadmin
+  echo "${pgadmin_execscript}" > "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
+  apply_permissions "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
 }
 
 install_postman()
@@ -516,7 +598,6 @@ install_g()
   generic_install g
 }
 
-
 install_gitprompt()
 {
   add_bash_function "${gitprompt_bashfunctions[0]}" git_prompt.sh
@@ -572,62 +653,6 @@ install_instagram()
 install_j()
 {
   generic_install j
-}
-
-install_julia()
-{
-  download "${julia_packageurls}" "${USR_BIN_FOLDER}/julia_downloading"
-  decompress "z" "${USR_BIN_FOLDER}/julia_downloading" "julia"
-  create_links_in_path "${USR_BIN_FOLDER}/julia/bin/julia" julia
-  create_manual_launcher "${julia_launchercontents}" "julia"
-
-  # install jupyter-lab dependencies
-  julia -e '#!/.local/bin/julia
-  using Pkg
-  Pkg.add("IJulia")
-  Pkg.build("IJulia")'
-}
-
-install_jupyter-lab()
-{
-  # Avoid collision with previous installations
-  rm -Rf "${USR_BIN_FOLDER}/jupyter-lab"
-  python3 -m venv "${USR_BIN_FOLDER}/jupyter-lab"
-
-  # Install necessary pip and python packages
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel jupyter jupyterlab jupyterlab-git jupyterlab_markup
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install bash_kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install pykerberos pywinrm[kerberos]
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install powershell_kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install iarm
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install ansible-kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m ansible_kernel.install
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install kotlin-jupyter-kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m kotlin_kernel fix-kernelspec-location
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install vim-kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m vim_kernel.install
-
-
-  # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install theme-darcula
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension install @telamonian/theme-darcula
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension enable @telamonian/theme-darcula
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" lab build
-
-  create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
-  create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
-  add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"
 }
 
 install_keep()
@@ -692,46 +717,6 @@ install_outlook()
 install_overleaf()
 {
   add_internet_shortcut overleaf
-}
-
-install_pgadmin()
-{
-  # Avoid collision and create venv for pgadmin in USR_BIN_FOLDER
-  rm -Rf "${USR_BIN_FOLDER}/pgadmin"
-  python3 -m venv "${USR_BIN_FOLDER}/pgadmin"
-
-  # Source activate to activate the venv, so the venv python interpreter is the one actually used.
-  source "${USR_BIN_FOLDER}/pgadmin/bin/activate"
-
-  # Update pip and install git dependencies (wheel) and the program itself in the venv
-  python -m pip install -U pip
-  pip install wheel pgadmin4
-
-  echo "${pgadmin_datafiles[0]}" > "${pgadmin_basefolder}/config_local.py"
-
-  # deactivate virtual environment
-  deactivate
-
-  # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
-  # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
-  # information on how to call the script
-
-  # Prepend shebang line to python3 interpreter of the venv
-  echo "#!${USR_BIN_FOLDER}/pgadmin/bin/python3" | cat - "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" > "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
-  chmod +x "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
-  create_links_in_path "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" pgadmin
-
-  # Create launcher and structures to be able to launch pgadmin and access it using the browser
-  create_manual_launcher "${pgadmin_launchercontents[0]}" pgadmin
-  echo "${pgadmin_execscript}" > "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
-  apply_permissions "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
-}
-
-install_pull()
-{
-  #generic_install pull
-  echo
-
 }
 
 install_push()

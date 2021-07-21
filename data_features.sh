@@ -37,7 +37,7 @@
 
 
 #######################################
-######## install.sh VARIABLES #########
+######### FEATURE VARIABLES ###########
 #######################################
 
 if [[ -f "${DIR}/data_common.sh" ]]; then
@@ -47,6 +47,7 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: data_common.sh not found. Aborting..."
   exit 1
 fi
+
 
 bash_functions_import="
 source ${BASH_FUNCTIONS_PATH}
@@ -68,12 +69,6 @@ fi
 ###########################################
 ##### INSTALLATION SPECIFIC VARIABLES #####
 ###########################################
-
-a_installationtype="packagemanager"
-a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
-
-add_installationtype="packagemanager"
-add_bashfunctions=("alias add=\"git add\"")
 
 aisleriot_installationtype=packagemanager
 aisleriot_packagenames=("aisleriot")
@@ -106,10 +101,14 @@ TryExec=studio
 Type=Application
 Version=1.0
 "
+
 ansible_installationtype="packagemanager"
 ansible_packagenames=("ansible")
 
-ant_downloader="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.9-bin.tar.gz"
+ant_installationtype="userinherit"
+ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
+ant_compressedfiletype="z"
+ant_binariesinstalledpaths=("bin/ant;ant")
 ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/apache_ant\"")
 
 anydesk_downloader="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
@@ -261,17 +260,6 @@ codeblocks_installationtype="packagemanager"
 codeblocks_packagenames=("codeblocks")
 codeblocks_launchernames=("codeblocks")
 
-commit_bashfunctions=("commit()
-{
-    messag=\"\$@\"
-    while [ -z \"\$messag\" ]; do
-      read -p \"Add message: \" messag
-    done
-    git commit -am \"\$messag\"
-}
-")
-commit_installationtype="environmental"
-
 copyq_installationtype="packagemanager"
 copyq_launchernames=("com.github.hluk.copyq")
 copyq_packagenames=("copyq")
@@ -288,8 +276,9 @@ dconf_editor_packagenames=("dconf-editor")
 dconf_editor_launchernames=("ca.desrt.dconf-editor")
 
 drive_installationtype="environmental"
+drive_url="https://drive.google.com/"
 drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon")
-drive_bashfunctions=("alias drive=\"xdg-open https://drive.google.com/ &>/dev/null &\"")
+drive_bashfunctions=("alias drive=\"xdg-open ${drive_url} &>/dev/null &\"")
 drive_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to instant e-mail messaging from Chrome
@@ -301,7 +290,7 @@ Name=Google Drive
 StartupNotify=true
 StartupWMClass=Google Drive
 Terminal=false
-Exec=${BASH_FUNCTIONS_FOLDER}/drive.sh
+Exec=xdg-open ${drive_url}
 Icon=${USR_BIN_FOLDER}/drive/drive_icon
 TryExec=google-chrome
 Type=Application
@@ -1509,7 +1498,6 @@ steam_installationtype="packageinstall"
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_launchernames=("steam")
 
-
 sublime_keybinds=("sublime;<Primary><Alt><Super>s;Sublime Text")
 sublime_installationtype="userinherit"
 sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2"
@@ -1870,7 +1858,22 @@ Exec=ZoomLauncher
 ##### SYSTEM FEATURES #####
 ###########################
 
-### SYSTEM FEATURE RELATED VARIABLES ###
+a_installationtype="packagemanager"
+a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
+
+add_installationtype="packagemanager"
+add_bashfunctions=("alias add=\"git add\"")
+
+commit_installationtype="environmental"
+commit_bashfunctions=("commit()
+{
+    messag=\"\$@\"
+    while [ -z \"\$messag\" ]; do
+      read -p \"Add message: \" messag
+    done
+    git commit -am \"\$messag\"
+}
+")
 
 converters_downloader="https://github.com/Axlfc/converters"
 converters_bashfunctions=("bintooct()
@@ -2130,6 +2133,7 @@ o()
 	fi
 }
 "
+
 
 ### TEMPLATES ###
 

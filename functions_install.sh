@@ -348,7 +348,7 @@ download() {
   fi
 
   # Download in a subshell to avoid changing the working directory in the current shell
-  wget --show-progress -qO "${dir_name}/${file_name}" "$1"
+  wget --show-progress -O "${dir_name}/${file_name}" "$1"
   # If we are root
   if [ ${EUID} == 0 ]; then
     apply_permissions "${dir_name}/${file_name}"
@@ -521,7 +521,6 @@ generic_install_downloads()
 generic_install() {
   # Substitute dashes for underscores. Dashes are not allowed in variable names
   local -r featurename=$(echo "$1" | sed "s@-@_@g")
-
   local -r installationtype=${featurename}_installationtype
   if [[ ! -z "${!installationtype}" ]]; then
     case ${!installationtype} in
@@ -546,7 +545,6 @@ generic_install() {
         exit 1
       ;;
     esac
-
     generic_install_downloads "${featurename}"
     generic_install_launchers "${featurename}"
     generic_install_functions "${featurename}"
