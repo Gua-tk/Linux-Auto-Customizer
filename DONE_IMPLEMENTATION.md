@@ -59,6 +59,10 @@
 - [x] `u` function needs a bit rework
 - [x] `v` function for python3 virtual environments
 - [x] `functions_install.sh`: Make download() and decompress() handle relative paths as paths from USR_BIN_FOLDER. if not absolute
+- [x] `data_features.sh`: Add favorite function that works when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar. move add to favorites to `.bash_profile`
+- [x] `install.sh`: Add debug mode, with a simple eval to inject code as a function
+- [x] `commmon_functions.sh`: Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
+- [x] `README.md`: Refactor order of the table to follow the conventions on `install.sh`. (implement three sections)
 
 
 ###### Axel
@@ -114,3 +118,5 @@
 - [x] turn `k` to `g`
 - [x] Research: Manually add Keyboard shortcuts function for pycharm. Describe the exact process, in order to parametrize and create a func that does it for any program [Keybindigs of terminal features](https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal/597414#597414)
 - [x] `common_data.sh`: Change ALL the bash function such b, alert, c, dummycommit, etc. that adds new behaviour to the shell to begin with the same name, like "Function b" or "Bash Feature `b` ", so they get sorted in the same place when calling autogenreadme
+- [x] `install.sh`, `uninstall.sh`: kernels support for jupyter-lab
+- [ ] `install.sh`, `uninstall.sh`: Add several kernels & customizations for jupyter-lab: [text-shortcuts](https://github.com/techrah/jupyterext-text-shortcuts)
