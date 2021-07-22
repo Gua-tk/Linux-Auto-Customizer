@@ -3,6 +3,8 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 
 ###### UPDATES
+- [ ] `functions_install`: put nice color to wget bar in download
+- [ ] `functions_install`: Continue previous installation with wget.
 - [ ] `functions_install.sh`: Extract creation of binaries to a common part of a generic install. Give extra logic to this functions to accept relative (from the created folder for the feature in USR_BIN_FOLDER) or absolute paths.
 - [ ] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
 - [ ] `install.sh`, `data_fatures.sh`: Refactor functions of root to use the generic_install function. AutoFirma, OpenOffice, nemo, WireShark, gpaint, iqmol, remaining among others
