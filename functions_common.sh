@@ -153,10 +153,6 @@ execute_installation()
       fi
       # Installation bit processing
       installation_bit=$(echo ${program} | cut -d ";" -f3 )
-      #echo "$program"
-      #echo $num_elements
-      #echo "${installation_bit}"
-      #new="${program_name};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${FLAG_FAVORITES};${FLAG_AUTOSTART}"
       if [ "${installation_bit}" == ${i} ]; then
         program_function=$(echo ${program} | cut -d ";" -f1)
         program_privileges=$(echo ${program} | cut -d ";" -f2)

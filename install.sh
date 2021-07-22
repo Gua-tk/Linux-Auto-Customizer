@@ -110,11 +110,6 @@ apt-get install -y wireshark
 ######################################### USER SOFTWARE FUNCTIONS ######################################################
 ########################################################################################################################
 
-install_branch()
-{
-  generic_install branch
-}
-
 install_clion()
 {
   download_and_decompress ${clion_downloader} "clion" "z" "bin/clion.sh" "clion"
@@ -395,22 +390,6 @@ install_zoom()
 ######################################### USER-ENVIRONMENT FUNCTIONS ###################################################
 ########################################################################################################################
 
-
-install_bashcolors()
-{
-  add_bash_function "${bashcolors_function}" bashcolors.sh
-}
-
-install_bi()
-{
-  generic_install bi
-}
-
-install_c()
-{
-  add_bash_function "${c_function}" c.sh
-}
-
 install_change-bg()
 {
   # Install script changer to be executed manually or with crontab automatically
@@ -436,23 +415,9 @@ install_change-bg()
   done
 }
 
-install_checkout()
-{
-  generic_install checkout
-}
-
 install_commit()
 {
   generic_install commit
-}
-
-install_cheat()
-{
-  # Rf
-  rm -f ${USR_BIN_FOLDER}/cheat.sh
-  (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O cheat.sh ${cheat_downloader})
-  chmod 755 ${USR_BIN_FOLDER}/cheat.sh
-  create_links_in_path ${USR_BIN_FOLDER}/cheat.sh cheat
 }
 
 install_converters()

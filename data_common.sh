@@ -133,7 +133,6 @@ installation_data=(
   "--axel|--Axel;1;| Axel | Download manager | Command \`axel\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--b|--b-alias;0;| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--bashcolors;0;| bashcolors | bring color to terminal | Command \`bashcolors\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--bi;0;| Function \`bi\` | alias for \`(sudo apt --fix-broken install)\` | Command \`bi\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--branch;0;| Function \`branch\` | alias for \`git branch -vv\` | Command \`branch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--brasero;1;| Brasero | Software for image burning | Command \`brasero\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--c;0;| Function \`c\` | Function \`c\` that changes the directory or clears the screen | Function \`c \` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"

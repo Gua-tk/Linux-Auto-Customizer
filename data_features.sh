@@ -90,9 +90,11 @@ fi
 # - FEATUREKEYNAME_launchercontents: Array of contents of launchers to be created (all)
 # - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be added in .bashrc (all)
 # - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature.
-# - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature. Each keybind has 3 fields separated
-#   from each other using ";": Command;key_combination;keybind_description
+# - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature (all). Each keybind has 3 fields separated
+#   from each other using ";": Command;key_combination;keybind_description. It needs a desktop launcher
 # - FEATUREKEYNAME_autostart: Overrides the autostart flag. Set to "yes" in order to autostart the application.
+# - FEATUREKEYNAME_downloads: Array of links to avalid donwload file separated by ";" from the desired name for that file.
+#   It will downloaded in ${USR_BIN_FOLDER}/APPNAME/DESIREDFILENAME
 
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
@@ -165,16 +167,15 @@ AutoFirma_compressedfiletype="zip"
 AutoFirma_launchernames=("afirma")
 AutoFirma_bashfunctions=("alias autofirma=\"nohup AutoFirma &>/dev/null &\"")
 
-# HERE BEGINS THE HOLY TRIM COMMENT THAT SEPARATES ALL OF THE REFACTORED ABOVE FROM ALL THAT NEEDS REFACTOR AT THE BOTTOM
 
 axel_installationtype="packagemanager"
 axel_packagenames=("axel")
-axel_launchernames=("axel")
 
 b_installationtype="environmental"
 b_alias="alias b=\"bash\""
 
-bashcolors_function="
+bashcolors_installationtype="environmental"
+bashcolors_bashfunctions=("
 # Consider dracula color palette
 CLEAR='\033[0m' # No Color
 BLACK='\033[0;30m'
@@ -194,10 +195,8 @@ LIGHTBLUE='\033[1;34m'
 LIGHTPURPLE='\033[1;34m'
 LIGHTCYAN='\033[1;36m'
 WHITE='\033[1;37m'
-"
+")
 
-bi_installationtype="environmental"
-bi_bashfunctions=("alias bi=\"sudo apt --fix-broken install\"")
 
 branch_installationtype="environmental"
 branch_bashfunctions=("alias branch=\"git branch\"")
@@ -205,15 +204,16 @@ branch_bashfunctions=("alias branch=\"git branch\"")
 brasero_installationtype="packagemanager"
 brasero_packagenames=("brasero")
 brasero_launchernames=("brasero")
+brasero_bashfunctions=("alias brasero=\"nohup brasero &>/dev/null &\"")
 
 c_installationtype="environmental"
 c_bashfunctions=("
 c()
 {
   clear
-	if [[ -d \"\$1\" ]]; then
+	if [ -d \"\$1\" ]; then
 		cd \$1
-	elif [[ -f \"\$1\" ]]; then
+	elif [ -f \"\$1\" ]; then
 		cat \$1
 	fi
 }
@@ -227,8 +227,11 @@ caffeine_autostart="yes"
 calibre_installationtype="packagemanager"
 calibre_launchernames=("calibre-gui")
 calibre_packagenames=("calibre")
+calibre_bashfunctions=("alias calibre=\"nohup calibre &>/dev/null &\"")
 
-cheat_downloader=https://cht.sh/:cht.sh
+cheat_installationtype="environmental"
+cheat_downloads=("https://cht.sh/:cht.sh;cht.sh")
+cheat_binariesinstalledpaths=("cht.sh;cheat")
 
 checkout_installationtype="environmental"
 checkout_bashfunctions=("alias checkout=\"git checkout\"")
@@ -236,6 +239,9 @@ checkout_bashfunctions=("alias checkout=\"git checkout\"")
 cheese_installationtype="packagemanager"
 cheese_launchernames=("org.gnome.Cheese")
 cheese_packagenames=("cheese")
+cheese_bashfunctions=("alias cheese=\"nohup cheese &>/dev/null &\"")
+
+# HERE BEGINS THE HOLY TRIM COMMENT THAT SEPARATES ALL OF THE REFACTORED ABOVE FROM ALL THAT NEEDS REFACTOR AT THE BOTTOM
 
 clementine_installationtype="packagemanager"
 clementine_launchernames=("clementine")

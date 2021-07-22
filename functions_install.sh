@@ -524,11 +524,14 @@ generic_install_keybindings()
 generic_install_downloads()
 {
   local -r downloads="$1_downloads[@]"
-  for download in ${!downloads}; do
-    local -r url="$(echo "${download}" | cut -d ";" -f1)"
-    local -r name="$(echo "${download}" | cut -d ";" -f2)"
-    download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
-  done
+  if [ ! -z "${!downloads}" ]; then
+    mkdir -p "${USR_BIN_FOLDER}/$1"
+    for download in ${!downloads}; do
+      local -r url="$(echo "${download}" | cut -d ";" -f1)"
+      local -r name="$(echo "${download}" | cut -d ";" -f2)"
+      download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
+    done
+  fi
 }
 
 # - Description:
@@ -560,6 +563,21 @@ generic_install_autostart()
   fi
 }
 
+generic_install_pathlinks()
+{
+  # Path to the binaries to be added, with a ; with the desired name in the path
+  local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
+  for binary_install_path_and_name in ${!binariesinstalledpaths}; do
+    local -r binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
+    local -r binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
+    # Absolute path
+    if [ -n "$(echo "${binary_name}" | grep -Eo "^/")" ]; then
+      create_links_in_path "${binary_path}" "${binary_name}"
+    else
+      create_links_in_path "${USR_BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
+    fi
+  done
+}
 
 # - Description: Expands installation type and executes the corresponding function to install.
 # - Permissions: Can be executed as root or user.
@@ -585,7 +603,7 @@ generic_install() {
       ;;
       #
       environmental)
-        echo
+        :  # no-op
       ;;
       *)
         output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
@@ -664,32 +682,9 @@ rootgeneric_installation_type() {
 # Depending on the properties set, some subfunctions will be activated to install related features. Two things can
 # happen with the default directory to download and put our files:
 #
-# 1.- If the first position of the array $directorynames[@] is set, it will indicate the location of the
-# default folder to download files while installing the current feature, but this behaviour is changed if the first
-# position of the array $compresedfilesurls[@] is set. In that case, first it will download and decompress that url, but
-# the call to decompress() will be special, because a third argument will be passed to that function indicating to
-# detect a unique folder inside the directory, which will be renamed to the content of the first position of
-# $directorynames[@] after the decompression of the first compressed file. This is used to "inherit" the folder that is
-# inside the compressed file by using it as default folder directly, instead of using another folder that will be called
-# the same to wrap the directory inside the compressed file. This is to avoid changing all the data that we already have
-# but also to give certain freedom in the way each user feature in installed.
-#
-# 2.- If that is not the situation, the first value of $directorynames[@] will be the PATH to the default folder.
-#
-# 3.- If the first value of $directorynames[@] is not set, it will inherit $USR_BIN_FOLDER as the default folder.
-#
-# The algorithm of the function works as follows:
-#
 # The first thing that the function will do if the first situation described above is met, is decompress the first
 # compressed file and convert the unique directory extracted from it, to the default folder of the currently installing
 # application. If not, this behaviour will be avoided.
-#
-# After that it will create all directories in $directorynames[@] except the first one, which will be created only if
-# there is no compressed file in the first position of the array $compressedfilesurls[@] (because it would mean that
-# has been already decompressed).
-#
-# Then it will clone the urls to repositories using git clone from the variable $gitrepositoriesurls[@] in the locations
-# in $gitrepositoriesclonedirs[@]. If not set, it will decompress into the default directory.
 #
 # Then it will download and decompress the files from $compressedfileurls in $compressedfiledownloadpaths[@] with
 # the type $compressedfiletypes[@]. If not defined download in the default directory.
@@ -722,17 +717,9 @@ userinherit_installation_type() {
   local -r compressedfileurl="$1_compressedfileurl"
   # All decompression type options for each compressed file defined
   local -r compressedfiletype="$1_compressedfiletype"
-  # Path to the binaries to be added, with a ; with the desired name in the path
-  local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
 
   download "${!compressedfileurl}" "$1_downloading"
   decompress "${!compressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "$1"
-  for binary_install_path_and_name in ${!binariesinstalledpaths}; do
-    local -r binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
-    local -r binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
-    create_links_in_path "${USR_BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
-  done
-
 }
 
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
