@@ -48,7 +48,7 @@
 - [ ] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers, youtube-dl or cheat have to be moved
 - [ ] `common_data.sh`: Add alias to change-bg alias chwp="change-bg" `(from customizer)`
 - [ ] `data_features.sh`: in net-tools installation: alias ports="netstat -tulanp" # alias nr="net-restart"
-
+- [ ] `data_features.sh`: Search for a new version of caffeine or do the modifications in the actual version, but do not apply a patch #  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
 
 ###### NEW FEATURES
 - [~] `data_features.sh`, `common_data.sh`: Add new installation `install_fastcommands` to install aliases - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias upgrade="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear"

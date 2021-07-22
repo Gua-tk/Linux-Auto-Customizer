@@ -94,7 +94,7 @@ FLAG_UPGRADE=1  # 0 --> no update, no upgrade; 1 --> update, no upgrade; 2 --> u
 FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perform autoremove; 2 --> perform autoremove and autoclean
 FLAG_FAVORITES=0  # 0 --> does nothing; 1 --> sets the program to favourites if there is a desktop launcher
 FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1 or 0, respectively
-
+FLAG_AUTOSTART=0  # 0 --> does nothing; 1 --> autostart program if possible
 
 ### FEATURE_DATA ###
 

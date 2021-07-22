@@ -92,6 +92,7 @@ fi
 # - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature.
 # - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature. Each keybind has 3 fields separated
 #   from each other using ";": Command;key_combination;keybind_description
+# - FEATUREKEYNAME_autostart: Overrides the autostart flag. Set to "yes" in order to autostart the application.
 
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
@@ -221,6 +222,7 @@ c()
 caffeine_installationtype="packagemanager"
 caffeine_launchernames=("caffeine-indicator")
 caffeine_packagenames=("caffeine")
+caffeine_autostart="yes"
 
 calibre_installationtype="packagemanager"
 calibre_launchernames=("calibre-gui")
@@ -396,6 +398,7 @@ hextodec()
 copyq_installationtype="packagemanager"
 copyq_launchernames=("com.github.hluk.copyq")
 copyq_packagenames=("copyq")
+copyq_autostart="yes"
 
 curl_installationtype="packagemanager"
 curl_packagenames=("curl")

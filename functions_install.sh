@@ -538,15 +538,26 @@ generic_install_autostart()
 {
   local -r autostart="$1_autostart"
   local -r launchernames="$1_launchernames"
-  # if launchernames empty we use the automatic
-  if [ -z "${!launchernames}" ]; then
-    echo 
+
+  if [ "${!autostart}" == "yes" ]; then
+    if [ -n "${!launchernames}" ]; then
+      for launchername in ${!launchernames}; do
+        autostart_program "${launchername}"
+      done
+    else
+      autostart_program "$1"
+    fi
+  else
+    if [ "${autostart_bit}" == 1 ]; then
+      if [ -n "${!launchernames}" ]; then
+        for launchername in ${!launchernames}; do
+          autostart_program "${launchername}"
+        done
+      else
+        autostart_program "$1"
+      fi
+    fi
   fi
-  for download in ${!autostart}; do
-    local -r url="$(echo "${download}" | cut -d ";" -f1)"
-    local -r name="$(echo "${download}" | cut -d ";" -f2)"
-    download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
-  done
 }
 
 

@@ -57,7 +57,7 @@ output_proxy_executioner() {
 add_program()
 {
   # Process all arguments
-  while [[ $# -gt 0 ]]; do
+  while [ $# -gt 0 ]; do
     found=0  # To check for a valid argument
     # Process each argument to write down the flags for each installation in installation_data
     total=${#installation_data[*]}
@@ -68,19 +68,18 @@ add_program()
       # Set IFS, variable used to determine the default separator on foreach loops in bash. Set space as separator
       IFS=" "
       for argument in ${program_arguments}; do
-
         if [ "$1" == "${argument}" ]; then
           # Set that the argument is valid
           found=1
           # Cut static bit of permission
           flag_permissions=$(echo "${installation_data[$i]}" | cut -d ";" -f2)
           # Generate name of the function depending on the mode from the first argument
-          program_name="${FLAG_MODE}_$(echo ${program_arguments} | cut -d "|" -f1 | cut -d "-" -f3-)"
+          program_name="${FLAG_MODE}_$(echo ${program_arguments} | cut -d " " -f1 | cut -d "-" -f3-)"
           # Append static bits to the state of the flags
-          new="${program_arguments};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${FLAG_FAVORITES};${program_name}"
+          new="${program_name};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${FLAG_FAVORITES};${FLAG_AUTOSTART}"
           installation_data[$i]=${new}
           # Update flags and program counter if we are installing
-          if [[ ${FLAG_INSTALL} -gt 0 ]]; then
+          if [ ${FLAG_INSTALL} -gt 0 ]; then
             NUM_INSTALLATION=$(( ${NUM_INSTALLATION} + 1 ))
             FLAG_INSTALL=${NUM_INSTALLATION}
           fi
@@ -88,12 +87,12 @@ add_program()
         fi
       done
       # Propagate the inner break, and continue to next argument
-      if [[ ${found} == 1 ]]; then
+      if [ ${found} == 1 ]; then
         break
       fi
 
     done
-    if [[ ${found} == 0 ]]; then
+    if [ ${found} == 0 ]; then
         output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument." ${FLAG_QUIETNESS}
     fi
     shift
@@ -148,28 +147,33 @@ execute_installation()
     # Loop through all the elements in the common data table
     for program in "${installation_data[@]}"; do
       # Check the number of elements, if there are less than 3 do not process, that program has not been added
-      num_elements=$(echo ${program} | tr ";" " " | wc -w)
-      if [[ ${num_elements} -lt 3 ]]; then
+      num_elements=$(echo "${program}" | tr ";" " " | wc -w)
+      if [ "${num_elements}" -lt 8 ]; then
         continue
       fi
       # Installation bit processing
-      installation_bit=$( echo ${program} | cut -d ";" -f3 )
-      if [[ ${installation_bit} == ${i} ]]; then
-        program_privileges=$( echo ${program} | cut -d ";" -f2 )
-        forceness_bit=$( echo ${program} | cut -d ";" -f4 )
-        quietness_bit=$( echo ${program} | cut -d ";" -f5 )
-        overwrite_bit=$( echo ${program} | cut -d ";" -f6 )
-        favorite_bit=$( echo ${program} | cut -d ";" -f7 )
-        program_function=$( echo ${program} | cut -d ";" -f8 )
-        program_name=$( echo ${program_function} | cut -d "_" -f2- )
+      installation_bit=$(echo ${program} | cut -d ";" -f3 )
+      #echo "$program"
+      #echo $num_elements
+      #echo "${installation_bit}"
+      #new="${program_name};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${FLAG_FAVORITES};${FLAG_AUTOSTART}"
+      if [ "${installation_bit}" == ${i} ]; then
+        program_function=$(echo ${program} | cut -d ";" -f1)
+        program_privileges=$(echo ${program} | cut -d ";" -f2)
+        forceness_bit=$(echo ${program} | cut -d ";" -f4)
+        quietness_bit=$(echo ${program} | cut -d ";" -f5)
+        overwrite_bit=$(echo ${program} | cut -d ";" -f6)
+        favorite_bit=$(echo ${program} | cut -d ";" -f7)
+        autostart_bit=$(echo ${program} | cut -d ";" -f8)
+        program_name=$(echo ${program_function} | cut -d "_" -f2- )
         if [[ ${program_privileges} == 1 ]]; then
           if [[ ${EUID} -ne 0 ]]; then
             output_proxy_executioner "echo WARNING: ${program_name} needs root permissions to be installed. Skipping." ${quietness_bit}
           else  # When called from uninstall it will take always this branch
             execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
           fi
-        elif [[ ${program_privileges} == 0 ]]; then
-          if [[ ${EUID} -ne 0 ]]; then
+        elif [ ${program_privileges} == 0 ]; then
+          if [ ${EUID} -ne 0 ]; then
             execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
           else
             output_proxy_executioner "echo WARNING: ${program_name} needs user permissions to be installed. Skipping." ${quietness_bit}
@@ -377,14 +381,19 @@ argument_processing()
       -U|--upgrade|--Upgrade)
         FLAG_UPGRADE=2
       ;;
-      -auto|--auto)
-        autostart_program
-      ;;
+
       -f|--favorites|--set-favorites)
         FLAG_FAVORITES=1
       ;;
       -z|--no-favorites)
         FLAG_FAVORITES=0
+      ;;
+
+      -a|--autostart)
+        FLAG_AUTOSTART=1
+      ;;
+      -r|--regular)
+        FLAG_AUTOSTART=0
       ;;
 
       -n|--not)
