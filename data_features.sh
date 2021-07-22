@@ -78,11 +78,12 @@ fi
 # "packageinstall": Downloads a .deb package and installs it using dpkg.
 # "packagemanager": Uses de package manager such as apt-get to install packages.
 # "userinherit": Downloads a compressed file containing an unique folder.
-#
+# "repositoryclone": Clone a reposiotory inside the directory of the current feature installing.
 # Available properties
 # - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder. (packageinstall, packagemanager)
 # - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get. (packageinstall, packagemanager)
 # - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. (user-inherit)
+# - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform the download and decompression (userinherit)
 # - FEATUREKEYNAME_compressedfiletype: Compression format of the the compressed file from FEATUREKEYNAME_compressedfileurl (userinherit)
 # - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to
 #   binaries that will be added to the PATH (userinherit) and its name in the path separated by ";"
@@ -95,7 +96,7 @@ fi
 # - FEATUREKEYNAME_autostart: Overrides the autostart flag. Set to "yes" in order to autostart the application.
 # - FEATUREKEYNAME_downloads: Array of links to avalid donwload file separated by ";" from the desired name for that file.
 #   It will downloaded in ${USR_BIN_FOLDER}/APPNAME/DESIREDFILENAME
-
+# - FEATUREKEYNAME_repositoryurl: Repository to be cloned. (repositoryclone)
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
 ########################################################################################################################
@@ -241,15 +242,17 @@ cheese_launchernames=("org.gnome.Cheese")
 cheese_packagenames=("cheese")
 cheese_bashfunctions=("alias cheese=\"nohup cheese &>/dev/null &\"")
 
-# HERE BEGINS THE HOLY TRIM COMMENT THAT SEPARATES ALL OF THE REFACTORED ABOVE FROM ALL THAT NEEDS REFACTOR AT THE BOTTOM
-
 clementine_installationtype="packagemanager"
 clementine_launchernames=("clementine")
 clementine_packagenames=("clementine")
 
-# Testing
-clion_downloader=https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz
-clion_launcher="[Desktop Entry]
+clion_installationtype="userinherit"
+clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz"
+clion_compressedfiletype="z"
+clion_binariesinstalledpaths=("bin/clion.sh;clion")
+clion_associatedfiletypes=("text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc")
+clion_bashfunctions=("alias clion=\"nohup clion . &>/dev/null &\"")
+clion_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
 Comment=C and C++ IDE for Professional Developers
 Encoding=UTF-8
@@ -264,25 +267,9 @@ StartupWMClass=jetbrains-clion
 Terminal=false
 TryExec=clion
 Type=Application
-Version=1.0"
-clion_alias="alias clion=\"clion . &>/dev/null &\""
+Version=1.0" )
 
-clonezilla_launcher="[Desktop Entry]
-Categories=backup;images;restoration;boot;
-Comment=Create bootable clonezilla images
-Encoding=UTF-8
-Exec=sudo clonezilla
-GenericName=Disk image utility
-Icon=/usr/share/gdm/themes/drbl-gdm/clonezilla/ocslogo-1.png
-Keywords=clonezilla;CloneZilla;iso
-MimeType=
-Name=CloneZilla
-StartupNotify=true
-StartupWMClass=CloneZilla
-Terminal=true
-TryExec=clonezilla
-Type=Application
-Version=1.0"
+# HERE BEGINS THE HOLY TRIM COMMENT THAT SEPARATES ALL OF THE REFACTORED ABOVE FROM ALL THAT NEEDS REFACTOR AT THE BOTTOM
 
 cmatrix_installationtype="packagemanager"
 cmatrix_packagenames=("cmatrix")
@@ -662,11 +649,13 @@ fonts_hermit_packagenames=("fonts-hermit")
 fonts_roboto_installationtype="packagemanager"
 fonts_roboto_packagenames=("fonts-roboto")
 
-fonts_alegreya_sans_installationtype="userprogram"
+fonts_alegreya_sans_installationtype=""
 fonts_alegreya_sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
 
-fonts_oxygen_installationtype="userprogram"
-fonts_oxygen_compressedfileurls=("https://fonts.google.com/download?family=Oxygen")
+fonts_oxygen_installationtype="userinherit"
+fonts_oxygen_compressedfilepathoverride="${FONTS_FOLDER}"
+fonts_oxygen_compressedfileurl="https://fonts.google.com/download?family=Oxygen"
+fonts_oxygen_compressedfiletype="zip"
 
 fonts_lato_installationtype="userprogram"
 fonts_lato_compressedfileurls=("https://fonts.google.com/download?family=Lato")
@@ -747,13 +736,14 @@ gitk_packagenames=("gitk")
 gitk_installationtype="packagemanager"
 gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
 
+gitprompt_installationtype="repositoryclone"
+gitprompt_repositoryurl="https://github.com/magicmonty/bash-git-prompt.git"
 gitprompt_bashfunctions=("
-if [ -f ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh ]; then
+if [ -f ${USR_BIN_FOLDER}/gitprompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
-    source ${USR_BIN_FOLDER}/.bash-git-prompt/gitprompt.sh
+    source ${USR_BIN_FOLDER}/gitprompt/gitprompt.sh
 fi
 ")
-gitprompt_installationtype="userclone"
 
 github_installationtype="packageinstall"
 github_packageurls="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"

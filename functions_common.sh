@@ -114,10 +114,10 @@ execute_installation_install_feature()
   fi
   output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${feature_name}." $2
 
-  local -r installationtype=${feature_name}_installationtype
+  local -r installationtype="$(echo "${feature_name}" | sed "s/-/_/g")_installationtype"
   # A generified install
   if [ -n "${!installationtype}" ]; then
-    output_proxy_executioner "generic_${FLAG_MODE} ${feature_name}" $2
+    output_proxy_executioner "generic_${FLAG_MODE} $(echo "${feature_name}" | sed "s/-/_/g")" $2
   else  # A hardcoded install
     output_proxy_executioner $3 $2
   fi

@@ -525,13 +525,15 @@ generic_install_downloads()
 {
   local -r downloads="$1_downloads[@]"
   if [ ! -z "${!downloads}" ]; then
-    mkdir -p "${USR_BIN_FOLDER}/$1"
     for download in ${!downloads}; do
       local -r url="$(echo "${download}" | cut -d ";" -f1)"
       local -r name="$(echo "${download}" | cut -d ";" -f2)"
       download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
     done
   fi
+
+      mkdir -p "${USR_BIN_FOLDER}/$1"
+
 }
 
 # - Description:
@@ -601,7 +603,11 @@ generic_install() {
       userinherit)
         userinherit_installation_type "${featurename}"
       ;;
-      #
+      # Clone a repository
+      repositoryclone)
+        repositoryclone_installation_type "${featurename}"
+      ;;
+      # Only uses the common part of the generic installation
       environmental)
         :  # no-op
       ;;
@@ -618,7 +624,14 @@ generic_install() {
     generic_install_file_associations "${featurename}"
     generic_install_keybindings "${featurename}"
   fi
+}
 
+repositoryclone_installation_type()
+{
+  local -r repositoryurl="$1_repositoryurl"
+  rm -Rf "${USR_BIN_FOLDER}/$1"
+  create_folder "${USR_BIN_FOLDER}/$1"
+  git clone "${!repositoryurl}" "${USR_BIN_FOLDER}/$1"
 }
 
 # - Description: Installs packages using apt-get or ) + dpkg and also installs additional features such as
@@ -717,9 +730,19 @@ userinherit_installation_type() {
   local -r compressedfileurl="$1_compressedfileurl"
   # All decompression type options for each compressed file defined
   local -r compressedfiletype="$1_compressedfiletype"
+  # Obtain override download location if present
+  local -r compressedfilepathoverride="$1_compressedfilepathoverride"
+  local defaultpath="${USR_BIN_FOLDER}"
 
-  download "${!compressedfileurl}" "$1_downloading"
-  decompress "${!compressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "$1"
+  if [ ! -z "${!compressedfilepathoverride}" ]; then
+    create_folder "${!compressedfilepathoverride}"
+    defaultpath="${!compressedfilepathoverride}/"
+  else
+    defaultpath="${USR_BIN_FOLDER}/"
+  fi
+
+  download "${!compressedfileurl}" "${defaultpath}$1_downloading"
+  decompress "${!compressedfiletype}" "${defaultpath}$1_downloading" "$1"
 }
 
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.

@@ -110,20 +110,6 @@ apt-get install -y wireshark
 ######################################### USER SOFTWARE FUNCTIONS ######################################################
 ########################################################################################################################
 
-install_clion()
-{
-  download_and_decompress ${clion_downloader} "clion" "z" "bin/clion.sh" "clion"
-
-  create_manual_launcher "${clion_launcher}" "clion"
-
-  register_file_associations "text/x-c++hdr" "clion.desktop"
-  register_file_associations "text/x-c++src" "clion.desktop"
-  register_file_associations "text/x-chdr" "clion.desktop"
-  register_file_associations "text/x-csrc" "clion.desktop"
-
-  add_bash_function "${clion_alias}" "clion_alias.sh"
-}
-
 install_code()
 {
   download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
@@ -415,11 +401,6 @@ install_change-bg()
   done
 }
 
-install_commit()
-{
-  generic_install commit
-}
-
 install_converters()
 {
   rm -Rf ${USR_BIN_FOLDER}/converters
@@ -506,13 +487,6 @@ install_forms()
 install_g()
 {
   generic_install g
-}
-
-install_gitprompt()
-{
-  add_bash_function "${gitprompt_bashfunctions[0]}" git_prompt.sh
-  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
-  git clone https://github.com/magicmonty/bash-git-prompt.git ${USR_BIN_FOLDER}/.bash-git-prompt --depth=1
 }
 
 install_gitlab()
