@@ -2446,7 +2446,7 @@ Version=1.0")
 
 tumblr_installationtype="environmental"
 tumblr_url="https://www.tumblr.com/"
-tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png;tumblr_icon.svg.png"
+tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png;tumblr_icon.svg.png")
 tumblr_bashfunctions=("nohup alias tumblr=\"nohup xdg-open ${tumblr_url} &>/dev/null &\"")
 tumblr_launchercontents=("
 [Desktop Entry]
