@@ -35,10 +35,9 @@
 #   as bash functions or code that does some tweaking to the environment
 #
 
-
-#######################################
-######### FEATURE VARIABLES ###########
-#######################################
+########################################################################################################################
+######################################### IMPORT COMMON VARIABLES ######################################################
+########################################################################################################################
 
 if [[ -f "${DIR}/data_common.sh" ]]; then
   source "${DIR}/data_common.sh"
@@ -47,6 +46,10 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: data_common.sh not found. Aborting..."
   exit 1
 fi
+
+########################################################################################################################
+################################### DATA FOR COMMON INSTALLATION CAPABILITIES ##########################################
+########################################################################################################################
 
 
 bash_functions_import="
@@ -66,41 +69,50 @@ fi
 "
 
 
-###########################################
-##### INSTALLATION SPECIFIC VARIABLES #####
-###########################################
+# The variables in here follow a naming scheme that is required for the code of each feature to obtain its data by
+# variable indirect expansion.
+# The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY.
+# The variables that are used by the code depend on the type of installation, defined as:
+# FEATUREKEYNAME_installationtype. This can be set to:
+# "environmental": Uses only the common part of the installation to install bash code in bashrc, desktop launchers...
+# "packageinstall": Downloads a .deb package and installs it using dpkg.
+# "packagemanager": Uses de package manager such as apt-get to install packages.
+# "userinherit": Downloads a compressed file containing an unique folder.
+#
+# Available properties
+# - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder. (packageinstall, packagemanager)
+# - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get. (packageinstall, packagemanager)
+# - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. (user-inherit)
+# - FEATUREKEYNAME_compressedfiletype: Compression format of the the compressed file from FEATUREKEYNAME_compressedfileurl (userinherit)
+# - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to
+#   binaries that will be added to the PATH (userinherit) and its name in the path separated by ";"
+# - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation (packageinstall, packagemanager)
+# - FEATUREKEYNAME_launchercontents: Array of contents of launchers to be created (all)
+# - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be added in .bashrc (all)
+# - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature.
+# - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature. Each keybind has 3 fields separated
+#   from each other using ";": Command;key_combination;keybind_description
 
-aisleriot_installationtype=packagemanager
+########################################################################################################################
+######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
+########################################################################################################################
+
+a_installationtype="environmental"
+a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
+
+add_installationtype="environmental"
+add_bashfunctions=("alias add=\"git add\"")
+
+aisleriot_installationtype="packagemanager"
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")
 
-
-alert_alias="
+alert_installationtype="environmental"
+alert_bashfunctions=("
 # Add an alert alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i \"\$([ \$? = 0 ] && echo terminal || echo error)\" \"\$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\\'')\"'
-"
-# Variables used exclusively in the corresponding installation function. Alphabetically sorted.
-#Name, GenericName, Type, Comment, Version, StartupWMClass, Icon, Exec, Terminal, Categories=IDE;Programming;, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8
-android_studio_downloader=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz
-android_studio_alias="alias studio=\"studio . &>/dev/null &\""
-android_studio_launcher="[Desktop Entry]
-Categories=Development;IDE;
-Comment=IDE for developing android applications
-Encoding=UTF-8
-Exec=studio %F
-GenericName=studio
-Icon=${USR_BIN_FOLDER}/android-studio/bin/studio.svg
-Keywords=IDE;programming;android;studio;dev;
-MimeType=
-Name=Android Studio
-StartupNotify=true
-StartupWMClass=jetbrains-android-studio
-Terminal=false
-TryExec=studio
-Type=Application
-Version=1.0
-"
+")
 
 ansible_installationtype="packagemanager"
 ansible_packagenames=("ansible")
@@ -109,10 +121,14 @@ ant_installationtype="userinherit"
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_compressedfiletype="z"
 ant_binariesinstalledpaths=("bin/ant;ant")
-ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/apache_ant\"")
+ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/ant\"")
 
-anydesk_downloader="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
-anydesk_launcher="[Desktop Entry]
+anydesk_installationtype="userinherit"
+anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
+anydesk_compressedfiletype="z"
+anydesk_binariesinstalledpaths=("anydesk;anydesk")
+anydesk_bashfunctions=("alias anydesk=\"nohup anydesk &>/dev/null &\"")
+anydesk_launchercontents=("[Desktop Entry]
 Categories=Remote;control;other;
 Comment=Remote control other PCs
 Encoding=UTF-8
@@ -127,10 +143,10 @@ StartupWMClass=anydesk
 Terminal=false
 TryExec=anydesk
 Type=Application
-Version=1.0"
+Version=1.0")
 
 aspell_installationtype="packagemanager"
-aspell_packagename=("aspell-es" "aspell-ca")
+aspell_packagenames=("aspell-es" "aspell-ca")
 
 atom_installationtype="packageinstall"
 atom_packageurls=("https://atom.io/download/deb")
@@ -139,12 +155,23 @@ atom_launchernames=("atom")
 audacity_installationtype="packagemanager"
 audacity_launchernames=("audacity")
 audacity_packagenames=("audacity")
+audacity_bashfunctions=("alias audacity=\"nohup audacity &>/dev/null &\"")
 
-autofirma_downloader=https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip
+AutoFirma_installationtype="packageinstall"
+AutoFirma_dependencies=("libnss3-tools")
+AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip"
+AutoFirma_compressedfiletype="zip"
+AutoFirma_launchernames=("afirma")
+AutoFirma_bashfunctions=("alias autofirma=\"nohup AutoFirma &>/dev/null &\"")
+
+# HERE BEGINS THE HOLY TRIM COMMENT THAT SEPARATES ALL OF THE REFACTORED ABOVE FROM ALL THAT NEEDS REFACTOR AT THE BOTTOM
 
 axel_installationtype="packagemanager"
 axel_packagenames=("axel")
 axel_launchernames=("axel")
+
+b_installationtype="environmental"
+b_alias="alias b=\"bash\""
 
 bashcolors_function="
 # Consider dracula color palette
@@ -177,6 +204,19 @@ branch_bashfunctions=("alias branch=\"git branch\"")
 brasero_installationtype="packagemanager"
 brasero_packagenames=("brasero")
 brasero_launchernames=("brasero")
+
+c_installationtype="environmental"
+c_bashfunctions=("
+c()
+{
+  clear
+	if [[ -d \"\$1\" ]]; then
+		cd \$1
+	elif [[ -f \"\$1\" ]]; then
+		cat \$1
+	fi
+}
+")
 
 caffeine_installationtype="packagemanager"
 caffeine_launchernames=("caffeine-indicator")
@@ -259,6 +299,99 @@ Version=1.0")
 codeblocks_installationtype="packagemanager"
 codeblocks_packagenames=("codeblocks")
 codeblocks_launchernames=("codeblocks")
+
+commit_installationtype="environmental"
+commit_bashfunctions=("commit()
+{
+    messag=\"\$@\"
+    while [ -z \"\$messag\" ]; do
+      read -p \"Add message: \" messag
+    done
+    git commit -am \"\$messag\"
+}
+")
+
+converters_downloader="https://github.com/Axlfc/converters"
+converters_bashfunctions=("bintooct()
+{
+  to \$1 2 3
+}
+bintoocto()
+{
+  to \$1 2 8
+}
+bintodec()
+{
+  to \$1 2 10
+}
+bintohex()
+{
+  to \$1 2 16
+}
+octtobin()
+{
+  to \$1 3 2
+}
+octtoocto()
+{
+  to \$1 3 8
+}
+octtodec()
+{
+  to \$1 3 10
+}
+octohex()
+{
+  to \$1 3 16
+}
+octotobin()
+{
+  to \$1 8 2
+}
+octotooct()
+{
+  to \$1 8 3
+}
+octotodec()
+{
+  to \$1 8 10
+}
+octotohex()
+{
+  to \$1 8 16
+}
+dectobin()
+{
+  to \$1 10 2
+}
+dectooct()
+{
+  to \$1 10 3
+}
+dectoocto()
+{
+  to \$1 10 8
+}
+dectohex()
+{
+  to \$1 10 16
+}
+hextobin()
+{
+  to \$1 16 2
+}
+hextooct()
+{
+  to \$1 16 3
+}
+hextoocto()
+{
+  to \$1 16 8
+}
+hextodec()
+{
+  to \$1 16 10
+}")
 
 copyq_installationtype="packagemanager"
 copyq_launchernames=("com.github.hluk.copyq")
@@ -389,9 +522,74 @@ TryExec=eclipse
 Type=Application
 Version=4.2.2"
 
+e_function="
+e()
+{
+  if [[ -z \"\$1\" ]]; then
+    gedit new_text_file &
+  else
+    if [[ -f \"\$1\" ]]; then
+      if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
+  			local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
+				cd \"\${dir_name}\"
+			fi
+			gedit \"\$1\" &
+		else
+			if [[ -d \"\$1\" ]]; then
+				cd \"\$1\"
+				if [[ -d \".git\" ]]; then
+				  git fetch
+					gitk --all --date-order &
+          pycharm &>/dev/null &
+				else
+					nemo \"\$1\" &
+				fi
+			else
+        #Inexistent route or new file
+        if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
+          local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
+          if [[ -d \"\${dir_name}\" ]]; then
+            cd \"\${dir_name}\"
+          else
+            mkdir -p \"\${dir_name}\"
+            cd \"\${dir_name}\"
+          fi
+          gedit \"\$(echo \$1 | rev | cut -d '/' -f1 | rev)\" &
+        else
+          gedit \"\$1\" &
+        fi
+			fi
+		fi
+	fi
+}
+"
+
 evolution_installationtype="packagemanager"
 evolution_packagenames=("evolution" )
 evolution_launchernames=("evolution-calendar")
+
+extract_function="
+  # Function that allows to extract any type of compressed files
+  extract () {
+    if [ -f \$1 ] ; then
+      case \$1 in
+        *.tar.bz2)   tar xjf \$1        ;;
+        *.tar.gz)    tar xzf \$1     ;;
+        *.bz2)       bunzip2 \$1       ;;
+        *.rar)       rar x \$1     ;;
+        *.gz)        gunzip \$1     ;;
+        *.tar)       tar xf \$1        ;;
+        *.tbz2)      tar xjf \$1      ;;
+        *.tgz)       tar xzf \$1       ;;
+        *.zip)       unzip \$1     ;;
+        *.Z)         uncompress \$1  ;;
+        *.7z)        7z x \$1    ;;
+        *)           echo \"'\$1' cannot be extracted via extract()\" ;;
+      esac
+    else
+        echo \"'\$1' is not a valid file\"
+    fi
+  }"
 
 facebook_url="https://facebook.com/"
 facebook_icon="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
@@ -1498,6 +1696,29 @@ steam_installationtype="packageinstall"
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_launchernames=("steam")
 
+studio_installationtype="userinherit"
+studio_compressedfileurl="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz"
+studio_compressedfiletype="z"
+studio_binariesinstalledpaths=("bin/studio.sh;studio")
+studio_bashfunctions=("alias studio=\"studio . &>/dev/null &\"")
+studio_launchercontents=("[Desktop Entry]
+Categories=Development;IDE;
+Comment=IDE for developing android applications
+Encoding=UTF-8
+Exec=studio %F
+GenericName=studio
+Icon=${USR_BIN_FOLDER}/studio/bin/studio.svg
+Keywords=IDE;programming;android;studio;dev;
+MimeType=
+Name=Android Studio
+StartupNotify=true
+StartupWMClass=jetbrains-android-studio
+Terminal=false
+TryExec=studio
+Type=Application
+Version=1.0
+")
+
 sublime_keybinds=("sublime;<Primary><Alt><Super>s;Sublime Text")
 sublime_installationtype="userinherit"
 sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2"
@@ -1853,110 +2074,6 @@ Version=1.0
 Exec=ZoomLauncher
 "
 
-
-###########################
-##### SYSTEM FEATURES #####
-###########################
-
-a_installationtype="packagemanager"
-a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
-
-add_installationtype="packagemanager"
-add_bashfunctions=("alias add=\"git add\"")
-
-commit_installationtype="environmental"
-commit_bashfunctions=("commit()
-{
-    messag=\"\$@\"
-    while [ -z \"\$messag\" ]; do
-      read -p \"Add message: \" messag
-    done
-    git commit -am \"\$messag\"
-}
-")
-
-converters_downloader="https://github.com/Axlfc/converters"
-converters_bashfunctions=("bintooct()
-{
-  to \$1 2 3
-}
-bintoocto()
-{
-  to \$1 2 8
-}
-bintodec()
-{
-  to \$1 2 10
-}
-bintohex()
-{
-  to \$1 2 16
-}
-octtobin()
-{
-  to \$1 3 2
-}
-octtoocto()
-{
-  to \$1 3 8
-}
-octtodec()
-{
-  to \$1 3 10
-}
-octohex()
-{
-  to \$1 3 16
-}
-octotobin()
-{
-  to \$1 8 2
-}
-octotooct()
-{
-  to \$1 8 3
-}
-octotodec()
-{
-  to \$1 8 10
-}
-octotohex()
-{
-  to \$1 8 16
-}
-dectobin()
-{
-  to \$1 10 2
-}
-dectooct()
-{
-  to \$1 10 3
-}
-dectoocto()
-{
-  to \$1 10 8
-}
-dectohex()
-{
-  to \$1 10 16
-}
-hextobin()
-{
-  to \$1 16 2
-}
-hextooct()
-{
-  to \$1 16 3
-}
-hextoocto()
-{
-  to \$1 16 8
-}
-hextodec()
-{
-  to \$1 16 10
-}")
-
 ipe_function="
 ipe()
 {
@@ -1970,71 +2087,6 @@ ipi()
   hostname -I | awk '{print \$1}'
 }
 "
-
-e_function="
-e()
-{
-  if [[ -z \"\$1\" ]]; then
-    gedit new_text_file &
-  else
-    if [[ -f \"\$1\" ]]; then
-      if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
-  			local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
-				cd \"\${dir_name}\"
-			fi
-			gedit \"\$1\" &
-		else
-			if [[ -d \"\$1\" ]]; then
-				cd \"\$1\"
-				if [[ -d \".git\" ]]; then
-				  git fetch
-					gitk --all --date-order &
-          pycharm &>/dev/null &
-				else
-					nemo \"\$1\" &
-				fi
-			else
-        #Inexistent route or new file
-        if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
-          local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
-          if [[ -d \"\${dir_name}\" ]]; then
-            cd \"\${dir_name}\"
-          else
-            mkdir -p \"\${dir_name}\"
-            cd \"\${dir_name}\"
-          fi
-          gedit \"\$(echo \$1 | rev | cut -d '/' -f1 | rev)\" &
-        else
-          gedit \"\$1\" &
-        fi
-			fi
-		fi
-	fi
-}
-"
-
-extract_function="
-  # Function that allows to extract any type of compressed files
-  extract () {
-    if [ -f \$1 ] ; then
-      case \$1 in
-        *.tar.bz2)   tar xjf \$1        ;;
-        *.tar.gz)    tar xzf \$1     ;;
-        *.bz2)       bunzip2 \$1       ;;
-        *.rar)       rar x \$1     ;;
-        *.gz)        gunzip \$1     ;;
-        *.tar)       tar xf \$1        ;;
-        *.tbz2)      tar xjf \$1      ;;
-        *.tgz)       tar xzf \$1       ;;
-        *.zip)       unzip \$1     ;;
-        *.Z)         uncompress \$1  ;;
-        *.7z)        7z x \$1    ;;
-        *)           echo \"'\$1' cannot be extracted via extract()\" ;;
-      esac
-    else
-        echo \"'\$1' is not a valid file\"
-    fi
-  }"
 
 L_function="
 L()
@@ -2064,62 +2116,6 @@ L()
   done
   finaldisplay=\"\${finaldisplay}\"
   echo \"\$finaldisplay\"
-}
-"
-
-c_function="
-c()
-{
-  clear
-	if [[ -d \"\$1\" ]]; then
-		cd \$1
-	elif [[ -f \"\$1\" ]]; then
-		cat \$1
-	fi
-}
-"
-
-b_alias="alias b=\"bash\""
-
-e_function="
-e()
-{
-  if [[ -z \"\$1\" ]]; then
-    gedit new_text_file &
-  else
-    if [[ -f \"\$1\" ]]; then
-      if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
-				local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
-				cd \"\${dir_name}\"
-			fi
-			gedit \"\$1\" &
-		else
-			if [[ -d \"\$1\" ]]; then
-				cd \"\$1\"
-				if [[ -d \".git\" ]]; then
-				  git fetch
-					gitk --all --date-order &
-          pycharm &>/dev/null &
-				else
-					nemo \"\$1\" &
-				fi
-			else
-        #Inexistent route or new file
-        if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
-          local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
-          if [[ -d \"\${dir_name}\" ]]; then
-            cd \"\${dir_name}\"
-          else
-            mkdir -p \"\${dir_name}\"
-            cd \"\${dir_name}\"
-          fi
-          gedit \"\$(echo \$1 | rev | cut -d '/' -f1 | rev)\" &
-        else
-          gedit \"\$1\" &
-        fi
-			fi
-		fi
-	fi
 }
 "
 

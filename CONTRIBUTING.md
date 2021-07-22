@@ -33,3 +33,4 @@
 - [ ] using ~ or $HOME instead of HOME_FOLDER
 - [ ] All variables must be protected by using "" to avoid resplitting because of spaces, despite, customizer is not emphasized to work with spaces in its variables. Spaces are *evil* in some paths are not considered.
 - [ ] Indent is always 2 spaces and never TAB.
+- [ ] Categories in each desktop launcher: Name, GenericName, Type, Comment, Version, StartupWMClass, Icon, Exec, Terminal, Categories=IDE;Programming;, StartupNotify, MimeType=x-scheme-handler/tg;, Encoding=UTF-8

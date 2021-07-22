@@ -14,6 +14,8 @@
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
+
+
 # - Description: Installs a new bash feature into $BASH_FUNCTIONS_PATH which sources the script that contains the code
 # for this new feature. $BASH_FUNCTIONS_PATH is imported to your environment via .bashrc before entering any
 # installation function.
@@ -100,7 +102,7 @@ add_to_favorites() {
 }
 
 # - Description: Apply standard permissions and set owner and group to the user who called root
-# - Permissions: This functions is expected to be called as root
+# - Permissions: This functions is expected to be called as root or as user.
 # Argument 1: Name of .desktop launcher of program file
 autostart_program() {
   if [ -n "$(echo "$1" | grep -Eo "^/")" ]; then
@@ -249,21 +251,36 @@ decompress() {
   fi
   if [ -n "$3" ]; then
     if [ "$1" == "zip" ]; then
-      # Return this variable via making it global
-      local -r internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5 | cut -d "/" -f1)"
+      local internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
+      # The captured line ends with / so it is a valid directory
+      if [ -n "$(echo "${internal_folder_name}" | grep -Eo "$/")" ]; then
+        internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
+      else
+        # Set the internal folder name empty if it is not detected
+        internal_folder_name=""
+      fi
     else
       # Capture root folder name
       local -r internal_folder_name=$( (tar -t"$1"f - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
     fi
-    # Check that variable program_folder_name is set, if not abort
-    # Clean to avoid conflicts with previously installed software or aborted installation
-    rm -Rf "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
+    # Check that variable program_folder_name is set, if not, decompress in a made up folder.
+    if [ -z "${internal_folder_name}" ]; then
+      # Create a folder where we will decompress the compressed file that has no directory in the root
+      rm -Rf "${dir_name:?}/$3"
+      create_folder "${dir_name}/$3"
+      mv "${dir_name}/${file_name}" "${dir_name}/$3"
+      # Reset the location of the compressed file.
+      dir_name="${dir_name}/$3"
+    else
+      # Clean to avoid conflicts with previously installed software or aborted installation
+      rm -Rf "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
+    fi
   fi
   if [ -f "${dir_name}/${file_name}" ]; then
     if [ "$1" == "zip" ]; then
       (
         cd "${dir_name}" || exit
-        unzip "${file_name}"
+        unzip -o "${file_name}"
       )
     else
       # Decompress in a subshell to avoid changing the working directory in the current shell
@@ -281,12 +298,14 @@ decompress() {
   
   # Only enter here if they are different, if not skip since it is pointless because the folder already has the desired
   # name
-  if [ "$3" != "${internal_folder_name}" ]; then
-    # Rename folder to $3 if the argument is set
-    if [ -n "$3" ]; then
-      # Delete the folder that we are going to move to avoid collisions
-      rm -Rf "${dir_name:?}/$3"
-      mv "${dir_name}/${internal_folder_name}" "${dir_name}/$3"
+  if [ -n "${internal_folder_name}" ]; then
+    if [ "$3" != "${internal_folder_name}" ]; then
+      # Rename folder to $3 if the argument is set
+      if [ -n "$3" ]; then
+        # Delete the folder that we are going to move to avoid collisions
+        rm -Rf "${dir_name:?}/$3"
+        mv "${dir_name}/${internal_folder_name}" "${dir_name}/$3"
+      fi
     fi
   fi
 }
@@ -512,6 +531,23 @@ generic_install_downloads()
   done
 }
 
+# - Description:
+# - Permissions: Can be executed as root or user.
+# - Argument 1:
+generic_install_autostart()
+{
+  local -r autostart="$1_autostart"
+  local -r launchernames="$1_launchernames"
+  # if launchernames empty we use the automatic
+  if [ -z "${!launchernames}" ]; then
+    echo 
+  fi
+  for download in ${!autostart}; do
+    local -r url="$(echo "${download}" | cut -d ";" -f1)"
+    local -r name="$(echo "${download}" | cut -d ";" -f2)"
+    download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
+  done
+}
 
 
 # - Description: Expands installation type and executes the corresponding function to install.
@@ -548,6 +584,7 @@ generic_install() {
     generic_install_downloads "${featurename}"
     generic_install_launchers "${featurename}"
     generic_install_functions "${featurename}"
+    generic_install_autostart "${featurename}"
     generic_install_favorites "${featurename}"
     generic_install_file_associations "${featurename}"
     generic_install_keybindings "${featurename}"
@@ -572,7 +609,9 @@ rootgeneric_installation_type() {
   local -r packagenames="$1_packagenames[@]"
   # Used to download .deb and install it if present
   local -r packageurls="$1_packageurls[@]"
-  # Add code to be executed by bashrc
+  # Used to download a compressed package where the .deb are located.
+  local -r compressedfileurl="$1_compressedfileurl"
+  local -r compressedfiletype="$1_compressedfiletype"
 
   # Install dependency packages
   if [ ! -z "${!packagedependencies}" ]; then
@@ -581,14 +620,20 @@ rootgeneric_installation_type() {
     done
   fi
 
-  # Select between arguments
+  # Download package and install using manual package manager
   if [ "$2" == packageinstall ]; then
-    # Download package and install using manual package manager
-    for packageurl in "${!packageurls}"; do
-      download_and_install_package "${packageurl}" "$1_downloading"
-    done
-  else
-    # Install default packages
+    # Use a compressed file that contains .debs
+    if [ ! -z "${!compressedfileurl}" ]; then
+      download "${!compressedfileurl}" "${USR_BIN_FOLDER}/$1_downloading"
+      decompress "${!compressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "$1"
+      dpkg -Ri "${USR_BIN_FOLDER}/$1"
+      rm -Rf "${USR_BIN_FOLDER:?}/$1"
+    else  # Use directly a downloaded .deb
+      for packageurl in "${!packageurls}"; do
+        download_and_install_package "${packageurl}" "$1_downloading"
+      done
+    fi
+  else  # Install with default package manager
     for packagename in "${!packagenames}"; do
       apt-get install -y "${packagename}"
     done

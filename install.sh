@@ -17,23 +17,9 @@
 ########################################################################################################################
 
 
-############################
-###### ROOT FUNCTIONS ######
-############################
-
-install_AutoFirma()
-{
-  apt-get install -y libnss3-tools
-  rm -f ${USR_BIN_FOLDER}/downloading_package*
-  (cd ${USR_BIN_FOLDER}; wget -qO downloading_package --show-progress "${autofirma_downloader}")
-  rm -Rf ${USR_BIN_FOLDER}/autOfirma
-  (cd ${USR_BIN_FOLDER}; unzip downloading_package -d autOfirma)  # To avoid collisions
-  rm -f ${USR_BIN_FOLDER}/downloading_package
-  dpkg -i ${USR_BIN_FOLDER}/autOfirma/AutoFirma*.deb
-  rm -Rf ${USR_BIN_FOLDER}/autOfirma
-
-  copy_launcher "afirma.desktop"
-}
+########################################################################################################################
+############################################# ROOT FUNCTIONS ###########################################################
+########################################################################################################################
 
 install_caffeine()
 {
@@ -135,15 +121,9 @@ apt-get install -y wireshark
   sed -i 's-Icon=.*-Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg-' ${XDG_DESKTOP_DIR}/wireshark.desktop
 }
 
-#####################################
-###### USER SOFTWARE FUNCTIONS ######
-#####################################
-
-install_anydesk()
-{
-  download_and_decompress ${anydesk_downloader} "anydesk" "z" "anydesk" "anydesk"
-  create_manual_launcher "${anydesk_launcher}" "anydesk"
-}
+########################################################################################################################
+######################################### USER SOFTWARE FUNCTIONS ######################################################
+########################################################################################################################
 
 install_branch()
 {
@@ -426,30 +406,10 @@ install_zoom()
 }
 
 
-#######################################
-###### USER-ENVIRONMENT FEATURES ######
-#######################################
-# Most (all) of them just use user permissions
+########################################################################################################################
+######################################### USER-ENVIRONMENT FUNCTIONS ###################################################
+########################################################################################################################
 
-install_a()
-{
-  generic_install a
-}
-
-install_add()
-{
-  generic_install add
-}
-
-install_alert()
-{
-  add_bash_function "${alert_alias}" alert.sh
-}
-
-install_b()
-{
-  add_bash_function "${b_alias}" b.sh
-}
 
 install_bashcolors()
 {
@@ -485,7 +445,7 @@ install_change-bg()
   rm -f ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz
 
   for filename in $(ls /usr/share/backgrounds); do
-    if [[ -f "/usr/share/backgrounds/${filename}" ]]; then
+    if [ -f "/usr/share/backgrounds/${filename}" ]; then
       cp "/usr/share/backgrounds/${filename}" "${XDG_PICTURES_DIR}/wallpapers"
     fi
   done
