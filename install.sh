@@ -21,29 +21,6 @@
 ############################################# ROOT FUNCTIONS ###########################################################
 ########################################################################################################################
 
-install_openoffice()
-{
-  # Delete old versions of openoffice to avoid conflicts
-  apt-get remove -y libreoffice-base-core libreoffice-impress libreoffice-calc libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us libreoffice-writer
-
-  rm -f ${USR_BIN_FOLDER}/office*
-  (cd ${USR_BIN_FOLDER}; wget -q --show-progress -O office ${openoffice_downloader})
-
-  rm -Rf ${USR_BIN_FOLDER}/en-US
-  (cd ${USR_BIN_FOLDER}; tar -xzf -) < ${USR_BIN_FOLDER}/office
-  rm -f ${USR_BIN_FOLDER}/office
-
-  dpkg -i ${USR_BIN_FOLDER}/en-US/DEBS/*.deb
-  dpkg -i ${USR_BIN_FOLDER}/en-US/DEBS/desktop-integration/*.deb
-  rm -Rf ${USR_BIN_FOLDER}/en-US
-
-  copy_launcher "openoffice4-base.desktop"
-  copy_launcher "openoffice4-calc.desktop"
-  copy_launcher "openoffice4-draw.desktop"
-  copy_launcher "openoffice4-math.desktop"
-  copy_launcher "openoffice4-writer.desktop"
-}
-
 install_R()
 {
   generic_install R
@@ -172,7 +149,7 @@ install_sysmontask()
 {
   rm -Rf ${USR_BIN_FOLDER}/SysMonTask
   create_folder ${USR_BIN_FOLDER}/SysMonTask
-  git clone ${sysmontask_downloader} ${USR_BIN_FOLDER}/SysMonTask
+  git clone ${sysmontask_repositoryurl} ${USR_BIN_FOLDER}/SysMonTask
   #chgrp -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
   #chown -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
   #chmod -R 755 ${USR_BIN_FOLDER}/SysMonTask

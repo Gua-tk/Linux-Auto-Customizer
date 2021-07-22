@@ -1744,7 +1744,10 @@ okular_installationtype="packagemanager"
 okular_packagenames=("okular")
 okular_launchernames=("org.kde.okular")
 
-openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
+openoffice_installationtype="packageinstall"
+openoffice_compressedfileurl="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
+openoffice_compressedfiletype="z"
+openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-draw" "openoffice4-math" "openoffice4-writer")
 
 openssl102_installationtype="packageinstall"
 openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
@@ -2341,9 +2344,8 @@ StartupNotify=true
 StartupWMClass=synaptic
 ")
 
-sysmontask_downloader="https://github.com/KrispyCamel4u/SysMonTask.git"
-
-
+sysmontask_installationtype="repositoryclone"
+sysmontask_repositoryurl="https://github.com/KrispyCamel4u/SysMonTask.git"
 
 teamviewer_installationtype="packageinstall"
 teamviewer_packageurls=("https://download.teamviewer.com/download/linux/teamviewer_amd64.deb")
