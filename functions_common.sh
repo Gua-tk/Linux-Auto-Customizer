@@ -121,7 +121,6 @@ execute_installation_install_feature()
   else  # A hardcoded install
     output_proxy_executioner $3 $2
   fi
-
   output_proxy_executioner "echo INFO: ${feature_name} ${FLAG_MODE}ed." $2
   set +e
 }
@@ -151,6 +150,7 @@ execute_installation()
       if [ "${num_elements}" -lt 8 ]; then
         continue
       fi
+
       # Installation bit processing
       installation_bit=$(echo ${program} | cut -d ";" -f3 )
       if [ "${installation_bit}" == ${i} ]; then
@@ -168,7 +168,7 @@ execute_installation()
           else  # When called from uninstall it will take always this branch
             execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
           fi
-        elif [ ${program_privileges} == 0 ]; then
+        elif [ "${program_privileges}" == 0 ]; then
           if [ ${EUID} -ne 0 ]; then
             execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
           else

@@ -82,7 +82,8 @@ fi
 # Available properties
 # - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder. (packageinstall, packagemanager)
 # - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get. (packageinstall, packagemanager)
-# - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. (user-inherit)
+# - FEATUREKEYNAME_packageurls: Link to the .deb file to download (packageinstall)
+# - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. (userinherit)
 # - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform the download and decompression (userinherit)
 # - FEATUREKEYNAME_compressedfiletype: Compression format of the the compressed file from FEATUREKEYNAME_compressedfileurl (userinherit)
 # - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to
@@ -269,8 +270,6 @@ TryExec=clion
 Type=Application
 Version=1.0" )
 
-# HERE BEGINS THE HOLY TRIM COMMENT THAT SEPARATES ALL OF THE REFACTORED ABOVE FROM ALL THAT NEEDS REFACTOR AT THE BOTTOM
-
 cmatrix_installationtype="packagemanager"
 cmatrix_packagenames=("cmatrix")
 cmatrix_bashfunctions=("alias matrix=\"cmatrix -sC yellow\"")
@@ -291,9 +290,32 @@ TryExec=cmatrix
 Type=Application
 Version=1.0")
 
+code_installationtype="userinherit"
+code_compressedfileurl="https://go.microsoft.com/fwlink/?LinkID=620884"
+code_compressedfiletype="z"
+code_binariesinstallpaths=("code;code")
+code_bashfunctions=("alias code=\"nohup code . &>/dev/null &\"")
+code_launchercontents=("[Desktop Entry]
+Categories=Development;IDE;
+Comment=Develop with pleasure!
+Encoding=UTF-8
+Exec=code %f
+GenericName=IDE for programming
+Icon=${HOME}/.bin/visual-studio/resources/app/resources/linux/code.png
+Keywords=code;
+MimeType=
+Name=Visual Studio Code
+StartupNotify=true
+StartupWMClass=visual-studio-code
+Terminal=false
+TryExec=code
+Type=Application
+Version=1.0")
+
 codeblocks_installationtype="packagemanager"
 codeblocks_packagenames=("codeblocks")
 codeblocks_launchernames=("codeblocks")
+codeblocks_bashfunctions=("alias codeblocks=\"nohup codeblocks &>/dev/null &\"")
 
 commit_installationtype="environmental"
 commit_bashfunctions=("commit()
@@ -306,7 +328,9 @@ commit_bashfunctions=("commit()
 }
 ")
 
-converters_downloader="https://github.com/Axlfc/converters"
+converters_installationtype="repositoryclone"
+converters_repositoryurl="https://github.com/Axlfc/converters"
+converters_binariesinstalledpaths=("converters/to.py;to" "converters/dectoutf.py;dectoutf" "converters/utftodec.py;utftodec")
 converters_bashfunctions=("bintooct()
 {
   to \$1 2 3
@@ -406,8 +430,8 @@ dconf_editor_launchernames=("ca.desrt.dconf-editor")
 
 drive_installationtype="environmental"
 drive_url="https://drive.google.com/"
-drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon")
-drive_bashfunctions=("alias drive=\"xdg-open ${drive_url} &>/dev/null &\"")
+drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon.svg")
+drive_bashfunctions=("alias drive=\"nohup xdg-open ${drive_url} &>/dev/null &\"")
 drive_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to instant e-mail messaging from Chrome
@@ -420,7 +444,7 @@ StartupNotify=true
 StartupWMClass=Google Drive
 Terminal=false
 Exec=xdg-open ${drive_url}
-Icon=${USR_BIN_FOLDER}/drive/drive_icon
+Icon=${USR_BIN_FOLDER}/drive/drive_icon.svg
 TryExec=google-chrome
 Type=Application
 Version=1.0")
@@ -433,10 +457,13 @@ dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbo
 dia_installationtype="packagemanager"
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")
+dia_bashfunctions=("alias dia=\"nohup dia &>/dev/null &\"")
 
 discord_installationtype="userinherit"
-discord_downloader="https://discord.com/api/download?platform=linux&format=tar.gz"
-discord_launcher="[Desktop Entry]
+discord_compressedfiletype="z"
+discord_binariesinstalledpaths=("Discord;discord")
+discord_compressedfileurl="https://discord.com/api/download?platform=linux&format=tar.gz"
+discord_launchercontents=("[Desktop Entry]
 Categories=Network;InstantMessaging;
 Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
 Encoding=UTF-8
@@ -451,19 +478,23 @@ StartupWMClass=discord
 Terminal=false
 TryExec=discord
 Type=Application
-Version=1.0"
+Version=1.0")
 
 docker_installationtype="userinherit"
-docker_downloader=https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz
+docker_compressedfiletype="z"
+docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
+docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 
 document_installationtype="environmental"
-document_url=https://docs.google.com/document/
-document_icon="https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg"
-document_alias="alias document=\"xdg-open ${document_url} &>/dev/null &\""
-document_launcher="[Desktop Entry]
+document_url="https://docs.google.com/document/"
+document_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;document_icon.svg")
+document_bashfunctions=("alias document=\"nohup xdg-open ${document_url} &>/dev/null &\"")
+document_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Documents from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${document_url}
+Icon=${USR_BIN_FOLDER}/document/document_icon.svg
 GenericName=Document
 Keywords=documents;
 MimeType=
@@ -473,15 +504,18 @@ StartupWMClass=Google Document
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
+duckduckgo_installationtype="environmental"
 duckduckgo_url="https://duckduckgo.com/"
-duckduckgo_icon="https://iconape.com/wp-content/png_logo_vector/cib-duckduckgo.png"
-duckduckgo_alias="alias duckduckgo=\"xdg-open ${duckduckgo_url} &>/dev/null &\""
-duckduckgo_launcher="[Desktop Entry]
+duckduckgo_downloads=("https://iconape.com/wp-content/png_logo_vector/cib-duckduckgo.png;duckduckgo_icon.png")
+duckduckgo_bashfunctions=("alias duckduckgo=\"nohup xdg-open ${duckduckgo_url} &>/dev/null &\"")
+duckduckgo_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open DuckDuckGo from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${duckduckgo_url}
+Icon=${USR_BIN_FOLDER}/duckduckgo/duckduckgo_icon.png
 GenericName=DuckDuckGo
 Keywords=duckduckgo
 Name=DuckDuckGo
@@ -490,18 +524,26 @@ StartupWMClass=DuckDuckGo
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
 dummycommit_installationtype="environmental"
 dummycommit_bashfunctions=("dummycommit()
 {
   git add -A
-  git commit -am \"\$1\"
+  messag=\"\$@\"
+  while [ -z \"\$messag\" ]; do
+    read -p \"Add message: \" messag
+  done
+  git commit -am \"\$messag\"
   git push
 }")
 
-eclipse_downloader=http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz
-eclipse_launcher="[Desktop Entry]
+eclipse_installationtype="userinherit"
+eclipse_bashfunctions="alias=\"nobup eclips &>/dev/null &\""
+eclipse_compressedfiletype="z"
+eclipse_binariesinstalledpaths=("eclipse;eclipse")
+eclipse_compressedfileurl="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
+eclipse_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
 Comment=Capable Multi-purpose IDE
 Encoding=UTF-8
@@ -516,84 +558,140 @@ StartupWMClass=Eclipse
 Terminal=false
 TryExec=eclipse
 Type=Application
-Version=4.2.2"
+Version=4.2.2")
 
-e_function="
+e_installationtype="environmental"
+e_bashfunctions=("
 e()
 {
-  if [[ -z \"\$1\" ]]; then
-    gedit new_text_file &
+  if [ -z \"\$1\" ]; then
+    editor new_text_file &
   else
-    if [[ -f \"\$1\" ]]; then
-      if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
-  			local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
+    if [ -f \"\$1\" ]; then
+      if [ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]; then
+  			local -r dir_name=\"\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)\"
+  			mkdir -p \"\${dir_name}\"
 				cd \"\${dir_name}\"
-			fi
-			gedit \"\$1\" &
+      fi
+      case \"\$1\" in
+        *)
+          nohup pluma \"\$1\" &>/dev/null &
+        ;;
+        *.py)
+          nohup pycharm \"\$1\" &>/dev/null &
+        ;;
+        *.tex)
+          nohup texmaker \"\$1\" &>/dev/null &
+        ;;
+        *.pdf)
+          nohup okular \"\$1\" &>/dev/null &
+        ;;
+        *.rtf)
+          nohup gedit \"\$1\" &>/dev/null &
+        ;;
+      esac
 		else
-			if [[ -d \"\$1\" ]]; then
+			if [ -d \"\$1\" ]; then
 				cd \"\$1\"
-				if [[ -d \".git\" ]]; then
+				if [ -d \".git\" ]; then
 				  git fetch
-					gitk --all --date-order &
-          pycharm &>/dev/null &
+          nohup gitk --all --date-order &>/dev/null &
+          nohup pycharm &>/dev/null &
 				else
-					nemo \"\$1\" &
+          nohup nemo \"\$1\" &>/dev/null &
 				fi
 			else
         #Inexistent route or new file
-        if [[ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]]; then
-          local -r dir_name=\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)
-          if [[ -d \"\${dir_name}\" ]]; then
+        if [ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]; then
+          local -r dir_name=\"\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)\"
+          if [ -d \"\${dir_name}\" ]; then
             cd \"\${dir_name}\"
           else
             mkdir -p \"\${dir_name}\"
             cd \"\${dir_name}\"
           fi
-          gedit \"\$(echo \$1 | rev | cut -d '/' -f1 | rev)\" &
+          editor \"\$(echo \"\$1\" | rev | cut -d '/' -f1 | rev)\" &
         else
-          gedit \"\$1\" &
+          case \"\$1\" in
+            *.py)
+              nohup pycharm \"\$1\" &>/dev/null &
+            ;;
+            *.tex)
+              nohup texmaker \"\$1\" &>/dev/null &
+            ;;
+            *)
+              nohup pluma \"\$1\" &>/dev/null &
+            ;;
+         esac
         fi
 			fi
 		fi
 	fi
 }
-"
+")
 
 evolution_installationtype="packagemanager"
 evolution_packagenames=("evolution" )
 evolution_launchernames=("evolution-calendar")
+evolution_bashfunctions=("alias evolution=\"nohup evolution &>/dev/null &\"")
 
-extract_function="
-  # Function that allows to extract any type of compressed files
-  extract () {
-    if [ -f \$1 ] ; then
-      case \$1 in
-        *.tar.bz2)   tar xjf \$1        ;;
-        *.tar.gz)    tar xzf \$1     ;;
-        *.bz2)       bunzip2 \$1       ;;
-        *.rar)       rar x \$1     ;;
-        *.gz)        gunzip \$1     ;;
-        *.tar)       tar xf \$1        ;;
-        *.tbz2)      tar xjf \$1      ;;
-        *.tgz)       tar xzf \$1       ;;
-        *.zip)       unzip \$1     ;;
-        *.Z)         uncompress \$1  ;;
-        *.7z)        7z x \$1    ;;
-        *)           echo \"'\$1' cannot be extracted via extract()\" ;;
-      esac
-    else
-        echo \"'\$1' is not a valid file\"
-    fi
-  }"
+x_installationtype="environmental"
+x_bashfunctions=("
+x() {
+  if [ -f \"\$1\" ] ; then
+    case \"\$1\" in
+      *.tar.bz2)
+        tar xjf \"\$1\"
+      ;;
+      *.tar.gz)
+        tar xzf \"\$1\"
+      ;;
+      *.bz2)
+        bunzip2 \"\$1\"
+      ;;
+      *.rar)
+        rar x \"\$1\"
+      ;;
+      *.gz)
+        gunzip \"\$1\"
+      ;;
+      *.tar)
+        tar xf \"\$1\"
+      ;;
+      *.tbz2)
+        tar xjf \"\$1\"
+      ;;
+      *.tgz)
+        tar xzf \"\$1\"
+      ;;
+      *.zip)
+        unzip \"\$1\"
+      ;;
+      *.Z)
+        uncompress \"\$1\"
+      ;;
+      *.7z)
+        7z x \"\$1\"
+      ;;
+      *)
+        echo \"\$1 cannot be extracted via x\"
+      ;;
+    esac
+  else
+      echo \"'\$1' is not a valid file for x\"
+  fi
+}")
 
+facebook_installationtype="environmental"
 facebook_url="https://facebook.com/"
-facebook_icon="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-facebook_alias="alias facebook=\"xdg-open ${facebook_url} &>/dev/null &\""
-facebook_launcher="[Desktop Entry]
+facebook_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg;facebook_icon.svg")
+facebook_bashfunctions=("alias facebook=\"nohup xdg-open ${facebook_url} &>/dev/null &\"")
+facebook_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to facebook from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${facebook_url}
+Icon=${USR_BIN_FOLDER}/facebook/facebook_icon.svg
 GenericName=Facebook
 Keywords=facebook;
 MimeType=
@@ -603,7 +701,9 @@ StartupWMClass=Facebook
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
+
+# HERE BEGINS THE HOLY TRIM COMMENT THAT SEPARATES ALL OF THE REFACTORED ABOVE FROM ALL THAT NEEDS REFACTOR AT THE BOTTOM
 
 f_irc_installationtype="packagemanager"
 f_irc_packagenames=("f-irc")
@@ -649,30 +749,41 @@ fonts_hermit_packagenames=("fonts-hermit")
 fonts_roboto_installationtype="packagemanager"
 fonts_roboto_packagenames=("fonts-roboto")
 
-fonts_alegreya_sans_installationtype=""
+fonts_alegreya_sans_installationtype="userinherit"
 fonts_alegreya_sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
+fonts_alegreya_sans_compressedfilepathoverride="${FONTS_FOLDER}"
+fonts_alegreya_sans_compressedfiletype="zip"
 
 fonts_oxygen_installationtype="userinherit"
 fonts_oxygen_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_oxygen_compressedfileurl="https://fonts.google.com/download?family=Oxygen"
 fonts_oxygen_compressedfiletype="zip"
 
-fonts_lato_installationtype="userprogram"
+fonts_lato_installationtype="userinherit"
+fonts_lato_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_lato_compressedfileurls=("https://fonts.google.com/download?family=Lato")
+fonts_lato_compressedfiletype="zip"
 
-fonts_oswald_installationtype="userprogram"
+fonts_oswald_installationtype="userinherit"
+fonts_oswald_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswald")
+fonts_oswald_compressedfiletype="zip"
 
-fonts_noto_sans_installationtype="userprogram"
+fonts_noto_sans_installationtype="userinherit"
+fonts_noto_sans_compressedfiletype="zip"
+fonts_noto_sans_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
 
+forms_installationtype="environmental"
 forms_url=https://docs.google.com/forms/
-forms_icon="https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg"
-forms_alias="alias forms=\"xdg-open ${forms_url} &>/dev/null &\""
-forms_launcher="[Desktop Entry]
+forms_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg;forms_icon.svg")
+forms_bashfunctions=("alias forms=\" nohup xdg-open ${forms_url} &>/dev/null &\"")
+forms_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Forms from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${facebook_url}
+Icon=${USR_BIN_FOLDER}/facebook/forms_icon.svg
 GenericName=Document
 Keywords=forms;
 MimeType=
@@ -682,14 +793,14 @@ StartupWMClass=Google Forms
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
 freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
 
 g_installationtype="environmental"
-g_bashfunctions=("alias g=\"gitk\"")
+g_bashfunctions=("alias g=\"git\"")
 
 gcc_installationtype="packagemanager"
 gcc_packagenames=("gcc")
@@ -701,16 +812,18 @@ geany_installationtype="packagemanager"
 geany_packagenames=("geany")
 geany_launchernames=("geany")
 
-geogebra_downloader=https://download.geogebra.org/package/linux-port6
-geogebra_icon=https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg
-
-geogebra_desktop="[Desktop Entry]
+geogebra_installationtype="userinherit"
+geogebra_compressedfileurl="https://download.geogebra.org/package/linux-port6"
+geogebra_compressedfiletype="zip"
+geogebra_binariesinstalledpaths=("Geogebra;geogebra")
+geogebra_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg;geogebra_icon.svg")
+geogebra_launchercontents=("[Desktop Entry]
 Categories=geometry;
 Comment=GeoGebra
 Encoding=UTF-8
 Exec=geogebra
 GenericName=Geometry visualization plotter
-Icon=${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
+Icon=${USR_BIN_FOLDER}/geogebra/geogebra_icon.svg
 Keywords=GeoGebra;geogebra;
 MimeType=
 Name=GeoGebra
@@ -719,7 +832,7 @@ StartupWMClass=geogebra
 Terminal=false
 TryExec=geogebra
 Type=Application
-Version=4.2.2"
+Version=4.2.2")
 
 ghostwriter_installationtype="packagemanager"
 ghostwriter_packagenames=("ghostwriter")
@@ -745,10 +858,10 @@ if [ -f ${USR_BIN_FOLDER}/gitprompt/gitprompt.sh ]; then
 fi
 ")
 
-github_installationtype="packageinstall"
-github_packageurls="https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb"
-github_packagenames=("github")
-github_launchernames=("github-desktop")
+github_desktop_installationtype="packageinstall"
+github_desktop_packageurls=("https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb")
+github_desktop_packagenames=("github")
+github_desktop_launchernames=("github-desktop")
 
 gnat_gps_installationtype="packagemanager"
 gnat_gps_packagenames=("gnat-gps")
@@ -791,7 +904,6 @@ gnome_tweak_tool_installationtype="packagemanager"
 gnome_tweak_tool_packagenames=("gnome-tweak-tool")
 gnome_tweak_tool_launchernames=("org.gnome.tweaks")
 
-gpaint_icon_path="/usr/share/icons/hicolor/scalable/apps/gpaint.svg"
 gpaint_installationtype="packagemanager"
 gpaint_packagenames=("gpaint")
 gpaint_launchercontents=("
@@ -815,13 +927,17 @@ gvim_installationtype="packagemanager"
 gvim_packagenames=("vim-gtk3")
 gvim_launchernames=("gvim")
 
-github_icon="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
-github_url=https://github.com/
-github_alias="alias github=\"xdg-open ${github_url} &>/dev/null &\""
-github_launcher="[Desktop Entry]
+github_installationtype="environmental"
+github_downloads=("https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg;github_icon.svg")
+github_url="https://github.com/"
+github_bashfunctions=("alias github=\"nohup xdg-open ${github_url} &>/dev/null &\"")
+github_launcher="
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Github from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${github_url}
+Icon=${USR_BIN_FOLDER}/github/github_icon.svg
 GenericName=GitHub
 Keywords=github;
 MimeType=
@@ -833,14 +949,17 @@ TryExec=google-chrome
 Type=Application
 Version=1.0"
 
-#gitlab_downloader="https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/focal/gitlab-ce_13.11.4-ce.0_amd64.deb/download.deb"
-gitlab_url=https://gitlab.com/
-gitlab_icon="https://upload.wikimedia.org/wikipedia/commons/1/18/GitLab_Logo.svg"
-gitlab_alias="alias gitlab=\"xdg-open ${gitlab_url} &>/dev/null &\""
-gitlab_launcher="[Desktop Entry]
+gitlab_installationtype="environmental"
+gitlab_url="https://gitlab.com/"
+gitlab_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/18/GitLab_Logo.svg;gitlab_icon.svg")
+gitlab_bashfunctions=("alias gitlab=\"nohup xdg-open ${gitlab_url} &>/dev/null &\"")
+gitlab_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Gitlab from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${gitlab_url}
+Icon=${USR_BIN_FOLDER}/gitlab/gitlab_icon.svg
 GenericName=Code repository online
 Keywords=forms;
 MimeType=
@@ -850,15 +969,19 @@ StartupWMClass=GitLab
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
+gmail_installationtype="environmental"
 gmail_url=https://mail.google.com/
-gmail_icon=https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg
-gmail_alias="alias gmail=\"xdg-open ${gmail_url} &>/dev/null &\""
-gmail_launcher="[Desktop Entry]
+gmail_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg;gmail_icon.svg")
+gmail_bashfunctions=("alias gmail=\"nohup xdg-open ${gmail_url} &>/dev/null &\"")
+gmail_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to instant e-mail messaging from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${gmail_url}
+Icon=${USR_BIN_FOLDER}/gmail/gmail_icon.svg
 GenericName=Gmail
 Keywords=gmail;
 MimeType=
@@ -868,15 +991,19 @@ StartupWMClass=Gmail
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
+googlecalendar_installationtype="environmental"
 googlecalendar_url=https://calendar.google.com/
-googlecalendar_icon="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg"
-googlecalendar_alias="alias googlecalendar=\"xdg-open ${google-calendar_url} &>/dev/null &\""
-googlecalendar_launcher="[Desktop Entry]
+googlecalendar_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg;googlecalendar_icon.svg")
+googlecalendar_bashfunctions=("alias googlecalendar=\"nohup xdg-open ${google-calendar_url} &>/dev/null &\"")
+googlecalendar_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Google Calendar from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${googlecalendar_url}
+Icon=${USR_BIN_FOLDER}/googlecalendar/googlecalendar_icon.svg
 GenericName=Google Calendar
 Keywords=google-calendar;
 MimeType=
@@ -886,13 +1013,13 @@ StartupWMClass=Google Calendar
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
 google_chrome_installationtype="packageinstall"
 google_chrome_dependencies=("libxss1" "libappindicator1" "libindicator7")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
 google_chrome_launchernames=("google-chrome")
-
+google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>O;Google Chrome")
 
 h_installationtype="environmental"
 h_bashfunctions=("
@@ -922,14 +1049,47 @@ hardinfo_installationtype="packagemanager"
 hardinfo_packagenames=("hardinfo")
 hardinfo_launchernames=("hardinfo")
 
-ideau_downloader="https://download.jetbrains.com/idea/ideaIU-2021.1.2.tar.gz"
-ideau_launcher="[Desktop Entry]
+history_optimization_installationtype="environmental"
+history_optimization_bashfunctions=("
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+export HISTSIZE=100000
+export HISTFILESIZE=10000000
+# append to the history file, don't overwrite it
+shopt -s histappend
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoredups
+# Ignore simple commands in history
+HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
+# The cmdhist shell option, if enabled, causes the shell to attempt to save each line of a multi-line command in the
+# same history entry, adding semicolons where necessary to preserve syntactic correctness.
+shopt -s cmdhist
+# Store multiline commands with newlines when possible, rather that using semicolons
+#shopt -s lithist
+# To retrieve the commands correctly
+HISTTIMEFORMAT='%F %T '
+# Check the windows size on every prompt and reset the number of columns and rows if necessary
+shopt -s checkwinsize  # Kinda buggy
+
+# Save and reload from history before prompt appears
+if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a; history -r; \")\" ]]; then
+  export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; history -a; history -r\"
+fi
+")
+
+ideau_installationtype="userinherit"
+ideau_compressedfiletype="z"
+ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
+ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.1.2.tar.gz"
+ideau_associatedfiletypes=("text/x-java")
+ideau_launchercontents=("
+[Desktop Entry]
 Categories=Development;IDE;
 Comment=Capable and Ergonomic IDE for JVM
 Encoding=UTF-8
 Exec=ideau %f
 GenericName=Java programing IDE
-Icon=${HOME_FOLDER}/.bin/idea-iu/bin/idea.png
+Icon=${USR_BIN_FOLDER}/ideau/bin/idea.png
 Keywords=IDE;programming;java;dev;
 MimeType=
 Name=IntelliJ IDEA Ultimate Edition
@@ -938,11 +1098,16 @@ StartupWMClass=jetbrains-idea
 Terminal=false
 TryExec=ideau
 Type=Application
-Version=1.0"
-ideau_alias="alias ideau=\"ideau . &>/dev/null &\""
+Version=1.0")
+ideau_bashfunctions=("alias ideau=\"nohup ideau . &>/dev/null &\"")
 
-ideac_downloader="https://download.jetbrains.com/idea/ideaIC-2021.1.2.tar.gz"
-ideac_launcher="[Desktop Entry]
+ideac_installationtype="userinherit"
+ideac_compressedfiletype="z"
+ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
+ideac_associatedfiletypes=("text/x-java")
+ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.1.2.tar.gz"
+ideac_launchercontents=("
+[Desktop Entry]
 Categories=Development;IDE;
 Comment=Capable and Ergonomic IDE for JVM
 Encoding=UTF-8
@@ -957,20 +1122,24 @@ StartupWMClass=jetbrains-idea
 Terminal=false
 TryExec=ideac
 Type=Application
-Version=13.0"
-ideac_alias="alias ideac=\"ideac . &>/dev/null &\""
+Version=13.0")
+ideac_bashfunctions="alias ideac=\"nohup ideac . &>/dev/null &\""
 
 inkscape_installationtype="packagemanager"
 inkscape_packagenames=("inkscape")
 inkscape_launchernames=("inkscape")
 
+instagram_installationtype="environmental"
 instagram_url="https://instagram.com"
-instagram_icon="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg"
-instagram_alias="alias instagram=\"xdg-open ${instagram_url} &>/dev/null &\""
-instagram_launcher="[Desktop Entry]
+instagram_downloads=("https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg;instagram_icon.svg")
+instagram_bashfunctions="alias instagram=\"nohup xdg-open ${instagram_url} &>/dev/null &\""
+instagram_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Instagram from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${instagran_url}
+Icon=${USR_BIN_FOLDER}/instagram/instagram_icon.svg
 GenericName=instagram
 Keywords=instagram
 MimeType=
@@ -980,11 +1149,29 @@ StartupWMClass=Instagram
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
-iqmol_downloader=http://www.iqmol.org/download.php?get=iqmol_2.14.deb
-iqmol_icon=http://www.iqmol.org/images/icon.png
-iqmol_launcher="[Desktop Entry]
+ipe_installationtype="environmental"
+ipe_bashfunctions=("
+ipe()
+{
+  dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print \$2 }';
+}
+")
+
+ipi_installationtype="environmental"
+ipi_bashfunctions=("
+ipi()
+{
+  hostname -I | awk '{print \$1}'
+}
+")
+
+iqmol_installationtype="installpackage"
+iqmol_packageurls=("http://www.iqmol.org/download.php?get=iqmol_2.14.deb")
+iqmol_downloads=("http://www.iqmol.org/images/icon.png;iqmol_icon.png")
+iqmol_launchercontents=("
+[Desktop Entry]
 Categories=Visualization;
 Comment=Molecule Visualizer
 Encoding=UTF-8
@@ -999,19 +1186,24 @@ StartupWMClass=IQmol
 Terminal=false
 TryExec=iqmol
 Type=Application
-Version=1.0"
-iqmol_alias="alias iqmol=\"iqmol . &>/dev/null &\""
+Version=1.0")
+iqmol_bashfunctions=("alias iqmol=\"nohup iqmol . &>/dev/null &\"")
 
 j_installationtype="environmental"
 j_bashfunctions=("alias j=\"jobs -l\"")
 
-java_downloader="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
-java_globalvar="export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\""
+java_installationtype="userinherit"
+java_compressedfileurl="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
+java_compressedfiletype="z"
+java_binariesinstalledpaths=("bin/java;java")
+java_bashfunctions=("export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\"")
 
-julia_installationtype="packageinstall"
-julia_packageurls=("https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz")
-julia_launchernames=("julia")
-julia_launchercontents=("[Desktop Entry]
+julia_installationtype="userinherit"
+julia_compressedfileurl="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
+julia_compressedfiletype="z"
+julia_binariesinstalledpaths=("bin/julia;julia")
+julia_launchercontents=("
+[Desktop Entry]
 Name=Julia
 Comment=High-level, high-performance dynamic language for technical computing
 Exec=julia
@@ -1042,13 +1234,17 @@ jupyter_lab_bashfunctions=("
 alias lab=\"jupyter-lab\"
 ")
 
+keep_installationtype="environmental"
 keep_url="https://keep.google.com/"
-keep_icon="https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg"
-keep_alias="alias keep=\"xdg-open ${keep_url} &>/dev/null &\""
-keep_launcher="[Desktop Entry]
+keep_downloads=("https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg;keep_icon.svg")
+keep_bashfunctions=("alias keep=\"nohup xdg-open ${keep_url} &>/dev/null &\"")
+keep_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Google Keep from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${keep_url}
+Icon=${USR_BIN_FOLDER}/keep/keep_icon.svg
 GenericName=Google Calendar
 Keywords=google-keep;keep;
 MimeType=
@@ -1058,8 +1254,7 @@ StartupWMClass=Google Keep
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
-
+Version=1.0")
 
 latex_installationtype="packagemanager"
 latex_launchernames=("texmaker")
@@ -1075,8 +1270,40 @@ Terminal=false
 Categories=Settings;
 Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png")
 
+L_installationtype="environmental"
+L_bashfunctions=("
+L()
+{
+  NEW_LINE=\$'\\\n'
+  lsdisplay=\$(ls -lhA | tr -s \" \" | tail -n+2)
+  numfiles=\$(printf \"\$lsdisplay\" | wc -l)
+  dudisplay=\$(du -shxc .[!.]* * | sort -h | tr -s \"\\\t\" \" \")
+  totaldu=\$(echo \${dudisplay} | rev | cut -d \" \" -f2 | rev)
+  finaldisplay=\"\${totaldu} in \${numfiles} files and directories\$NEW_LINE\"
+  IFS=\$'\\\n'
+  for linels in \${lsdisplay}; do
+    if [[ \$linels =~ ^d.* ]]; then
+      foldername=\$(echo \$linels | cut -d ' ' -f9-)
+      for linedu in \${dudisplay}; do
+        if [[ \"\$(echo \${linedu} | cut -d ' ' -f2-)\" = \"\${foldername}\" ]]; then
+          currentline=\$(echo \${linels} | cut -d \" \" -f-4)
+          currentline=\"\$currentline \$(echo \${linedu} | cut -d ' ' -f1)\"
+          currentline=\"\$currentline \$(echo \${linels} | cut -d ' ' -f6-)\"
+          finaldisplay=\"\$finaldisplay\$NEW_LINE\$currentline\"
+          break
+        fi
+      done
+    else
+      finaldisplay=\"\$finaldisplay\$NEW_LINE\$linels\"
+    fi
+  done
+  finaldisplay=\"\${finaldisplay}\"
+  echo \"\$finaldisplay\"
+}
+")
+
 l_installationtype="environmental"
-l_function="alias l=\"ls -lAh --color=auto\""
+l_bashfunctions=("alias l=\"ls -lAh --color=auto\"")
 
 libgtkglext1_installationtype="packagemanager"
 libgtkglext1_packagenames=("libgtkglext1")
@@ -1091,7 +1318,10 @@ lolcat_installationtype="packagemanager"
 lolcat_packagenames=("lolcat")
 lolcat_bashfunctions=("alias lol=\"lolcat\"")
 
-maven_downloader="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
+mvn_installationtype="userinherit"
+mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
+mvn_compressedfiletype="z"
+mvn_binariesinstalledpaths=("bin/mvn;mvn")
 
 mdadm_installationtype="packagemanager"
 mdadm_packagenames=("mdadm")
@@ -1101,41 +1331,371 @@ megasync_dependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extra
 megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.4.0-1.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb")
 megasync_launchernames=("megasync")
 
-mendeley_dependencies_packagedependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
-mendeley_downloader=https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming
+mendeley_dependencies_installationtype="packagemanager"
+mendeley_dependencies_dependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
+
+mendeley_installationtype="userinherit"
+mendeley_compressedfileurl="https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming"
+mendeley_compressedfiletype="j"
+mendeley_binariesinstalledpaths="bin/mendeleydesktop;mendeley"
+mendeley_launchercontents=("
+[Desktop Entry]
+Name=Mendeley Desktop
+GenericName=Research Paper Manager
+Comment=Mendeley Desktop is software for managing and sharing research papers
+Exec=mendeley %f
+Icon=${USR_BIN_FOLDER}/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png
+Terminal=false
+Type=Application
+Categories=Education;Literature;Qt;
+X-SuSE-translate=false
+MimeType=x-scheme-handler/mendeley;application/pdf;text/x-bibtex;
+X-Mendeley-Version=1")
 
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_packagenames=("msttcorefonts")
 
-music_manager_downloader=https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
-
 nautilus_installationtype="packagemanager"
 nautilus_packagenames=("nautilus")
 nautilus_launchernames=("nautilus")
-nautilus_conf=("xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
+nautilus_bashfunctions=(
+  "xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
   "gsettings set org.gnome.desktop.background show-desktop-icons true"
-  "xdg-mime default org.gnome.Nautilus.desktop inode/directory"
-)
+  "xdg-mime default org.gnome.Nautilus.desktop inode/directory")
 
-nemo_conf=("xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search"
+nemo_installationtype="packagemanager"
+nemo_bashfunctions=(
+  "xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search"
   "gsettings set org.gnome.desktop.background show-desktop-icons false"
   "gsettings set org.nemo.desktop show-desktop-icons true"
-)
-nemo_alias="alias nemo=\"nemo . &>/dev/null &\""
-nemo_desktop_launcher="[Desktop Entry]
-Type=Application
-Name=Files
-Exec=nemo-desktop
-OnlyShowIn=GNOME;Unity;
-X-Ubuntu-Gettext-Domain=nemo"
 
+  "alias nemo=\"nohup nemo . &>/dev/null &\"")
+nemo_packagedependencies=("dconf-editor" "gnome-tweak-tool")
+nemo_autostart="yes"
+nemo_launchercontents=("
+[Desktop Entry]
+OnlyShowIn=GNOME;Unity;
+X-Ubuntu-Gettext-Domain=nemo
+
+Name=Files
+Name[am]=ፋይሎች
+Name[ar]=الملفات
+Name[bg]=Файлове
+Name[ca]=Fitxers
+Name[ca@valencia]=Fitxers
+Name[cs]=Soubory
+Name[cy]=Ffeiliau
+Name[da]=Filer
+Name[de]=Dateien
+Name[el]=Αρχεία
+Name[eo]=Dosieroj
+Name[es]=Archivos
+Name[et]=Failid
+Name[eu]=Fitxategiak
+Name[fi]=Tiedostot
+Name[fr]=Fichiers
+Name[fr_CA]=Fichiers
+Name[he]=קבצים
+Name[hr]=Nemo
+Name[hu]=Fájlok
+Name[id]=Berkas
+Name[is]=Skrár
+Name[kab]=Ifuyla
+Name[ko]=파일
+Name[lt]=Failai
+Name[nl]=Bestanden
+Name[pl]=Pliki
+Name[pt]=Ficheiros
+Name[pt_BR]=Arquivos
+Name[ro]=Fișiere
+Name[ru]=Файлы
+Name[sk]=Súbory
+Name[sl]=Datoteke
+Name[sr]=Датотеке
+Name[sr@latin]=Датотеке
+Name[sv]=Filer
+Name[th]=แฟ้ม
+Name[tr]=Dosyalar
+Name[uk]=Файли
+Name[zh_CN]=文件
+Name[zh_HK]=檔案
+Comment=Access and organize files
+Comment[am]=ፋይሎች ጋር መድረሻ እና ማደራጃ
+Comment[ar]=الوصول إلى الملفات وتنظيمها
+Comment[bg]=Достъп и управление на файлове
+Comment[ca]=Organitzeu i accediu als fitxers
+Comment[ca@valencia]=Organitzeu i accediu als fitxers
+Comment[cs]=Přístup k souborům a jejich správa
+Comment[cy]=Mynediad i drefnu ffeiliau
+Comment[da]=Tilgå og organisér filer
+Comment[de]=Dateien aufrufen und organisieren
+Comment[el]=Πρόσβαση και οργάνωση αρχείων
+Comment[en_GB]=Access and organise files
+Comment[eo]=Atingi kaj organizi dosierojn
+Comment[es]=Acceder a los archivos y organizarlos
+Comment[et]=Ligipääs failidele ning failipuu korrastamine
+Comment[eu]=Atzitu eta antolatu fitxategiak
+Comment[fi]=Avaa ja järjestä tiedostoja
+Comment[fr]=Accéder aux fichiers et les organiser
+Comment[fr_CA]=Accéder aux fichiers et les organiser
+Comment[he]=גישה לקבצים וארגונם
+Comment[hr]=Pristupite i organizirajte datoteke
+Comment[hu]=Fájlok elérése és rendszerezése
+Comment[ia]=Acceder e organisar le files
+Comment[id]=Akses dan kelola berkas
+Comment[ie]=Accesse e ordina files
+Comment[is]=Aðgangur og skipulag skráa
+Comment[it]=Accede ai file e li organizza
+Comment[kab]=Kcem udiɣ suddes ifuyla
+Comment[ko]=파일 접근 및 정리
+Comment[lt]=Gauti prieigą prie failų ir juos tvarkyti
+Comment[nl]=Bestanden gebruiken en organiseren
+Comment[pl]=Porządkowanie i dostęp do plików
+Comment[pt]=Aceder e organizar ficheiros
+Comment[pt_BR]=Acesse e organize arquivos
+Comment[ro]=Accesează și organizează fișiere
+Comment[ru]=Управление и доступ к файлам
+Comment[sk]=Prístup a organizácia súborov
+Comment[sl]=Dostop in razvrščanje datotek
+Comment[sr]=Приступите датотекама и организујте их
+Comment[sr@latin]=Приступите датотекама и организујте их
+Comment[sv]=Kom åt och organisera filer
+Comment[th]=เข้าถึงและจัดระเบียบแฟ้ม
+Comment[tr]=Dosyalara eriş ve düzenle
+Comment[uk]=Доступ до файлів та впорядковування файлів
+Comment[zh_CN]=访问和组织文件
+Comment[zh_HK]=存取與組織檔案
+Exec=nemo-desktop
+Icon=folder
+# Translators: these are keywords of the file manager
+Keywords=folders;filesystem;explorer;
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=GNOME;GTK;Utility;Core;
+MimeType=inode/directory;application/x-gnome-saved-search;
+Actions=open-home;open-computer;open-trash;
+
+[Desktop Action open-home]
+Name=Home
+Name[af]=Tuis
+Name[am]=ቤት
+Name[ar]=المجلد الرئيسي
+Name[be]=Дом
+Name[bg]=Домашна папка
+Name[bn]=হোম
+Name[bs]=Početni direktorij
+Name[ca]=Carpeta de l'usuari
+Name[ca@valencia]=Carpeta de l'usuari
+Name[cs]=Domov
+Name[cy]=Cartref
+Name[da]=Hjem
+Name[de]=Persönlicher Ordner
+Name[el]=Προσωπικός φάκελος
+Name[eo]=Hejmo
+Name[es]=Carpeta personal
+Name[et]=Kodu
+Name[eu]=Karpeta nagusia
+Name[fi]=Koti
+Name[fr]=Dossier personnel
+Name[fr_CA]=Dossier personnel
+Name[ga]=Baile
+Name[gd]=Dhachaigh
+Name[gl]=Cartafol persoal
+Name[he]=בית
+Name[hr]=Osobna mapa
+Name[hu]=Saját mappa
+Name[ia]=Al domo
+Name[id]=Beranda
+Name[ie]=Hem
+Name[is]=Heimamappa
+Name[ja]=ホーム
+Name[kab]=Agejdan
+Name[kk]=Үй
+Name[kn]=ಮನೆ
+Name[ko]=홈
+Name[ku]=Mal
+Name[lt]=Namai
+Name[ml]=ആസ്ഥാനം
+Name[mr]=मुख्य
+Name[ms]=Rumah
+Name[nb]=Hjem
+Name[nl]=Persoonlijke map
+Name[oc]=Dorsièr personal
+Name[pl]=Katalog domowy
+Name[pt]=Pasta Pessoal
+Name[pt_BR]=Pasta pessoal
+Name[ro]=Dosar personal
+Name[ru]=Домашняя папка
+Name[sk]=Domov
+Name[sl]=Domov
+Name[sr]=Почетна
+Name[sr@latin]=Početna
+Name[sv]=Hem
+Name[ta]=இல்லம்
+Name[tg]=Асосӣ
+Name[th]=บ้าน
+Name[tr]=Ev Dizini
+Name[uk]=Домівка
+Name[ur]=المنزل
+Name[vi]=Nhà
+Name[zh_CN]=主目录
+Name[zh_HK]=家
+Name[zh_TW]=家
+Exec=nemo %U
+
+[Desktop Action open-computer]
+Name=Computer
+Name[af]=Rekenaar
+Name[am]=ኮምፒዩተር
+Name[ar]=الكمبيوتر
+Name[ast]=Ordenador
+Name[be]=Кампутар
+Name[bg]=Компютър
+Name[bn]=কম্পিউটার
+Name[bs]=Računar
+Name[ca]=Ordinador
+Name[ca@valencia]=Ordinador
+Name[cs]=Počítač
+Name[cy]=Cyfrifiadur
+Name[de]=Rechner
+Name[el]=Υπολογιστής
+Name[eo]=Komputilo
+Name[es]=Equipo
+Name[et]=Arvuti
+Name[eu]=Ordenagailua
+Name[fi]=Tietokone
+Name[fr]=Poste de travail
+Name[fr_CA]=Poste de travail
+Name[gd]=Coimpiutair
+Name[gl]=Computador
+Name[he]=מחשב
+Name[hr]=Računalo
+Name[hu]=Számítógép
+Name[ia]=Computator
+Name[id]=Komputer
+Name[ie]=Computator
+Name[is]=Tölva
+Name[ja]=コンピュータ
+Name[kab]=Aselkim
+Name[kk]=Компьютер
+Name[kn]=ಗಣಕ
+Name[ko]=컴퓨터
+Name[ku]=Komputer
+Name[lt]=Kompiuteris
+Name[ml]=കമ്പ്യൂട്ടർ
+Name[mr]=संगणक
+Name[ms]=Komputer
+Name[nb]=Datamaskin
+Name[nn]=Datamaskin
+Name[oc]=Ordenador
+Name[pl]=Komputer
+Name[pt]=Computador
+Name[pt_BR]=Computador
+Name[ru]=Компьютер
+Name[sk]=Počítač
+Name[sl]=Računalnik
+Name[sq]=Kompjuteri
+Name[sr]=Рачунар
+Name[sr@latin]=Računar
+Name[sv]=Dator
+Name[ta]=கணினி
+Name[tg]=Компютер
+Name[th]=คอมพิวเตอร์
+Name[tr]=Bilgisayar
+Name[uk]=Комп’ютер
+Name[ur]=کمپیوٹر
+Name[vi]=Máy tính
+Name[zh_CN]=计算机
+Name[zh_HK]=電腦
+Name[zh_TW]=電腦
+Exec=nemo computer:///
+
+[Desktop Action open-trash]
+Name=Trash
+Name[af]=Asblik
+Name[am]=ቆሻሻ
+Name[ar]=سلة المهملات
+Name[ast]=Papelera
+Name[be]=Сметніца
+Name[bg]=Кошче
+Name[bn]=ট্র্যাশ
+Name[bs]=Smeće
+Name[ca]=Paperera
+Name[ca@valencia]=Paperera
+Name[cs]=Koš
+Name[cy]=Sbwriel
+Name[da]=Papirkurv
+Name[de]=Papierkorb
+Name[el]=Απορρίμματα
+Name[en_GB]=Rubbish Bin
+Name[eo]=Rubujo
+Name[es]=Papelera
+Name[et]=Prügi
+Name[eu]=Zakarrontzia
+Name[fi]=Roskakori
+Name[fr]=Corbeille
+Name[fr_CA]=Corbeille
+Name[ga]=Bruscar
+Name[gd]=An sgudal
+Name[gl]=Lixo
+Name[he]=אשפה
+Name[hr]=Smeće
+Name[hu]=Kuka
+Name[ia]=Immunditia
+Name[id]=Tempat sampah
+Name[ie]=Paper-corb
+Name[is]=Rusl
+Name[it]=Cestino
+Name[ja]=ゴミ箱
+Name[kab]=Iḍumman
+Name[kk]=Себет
+Name[kn]=ಕಸಬುಟ್ಟಿ
+Name[ko]=휴지통
+Name[ku]=Avêtî
+Name[lt]=Šiukšlinė
+Name[ml]=ട്രാഷ്
+Name[mr]=कचरापेटी
+Name[ms]=Tong Sampah
+Name[nb]=Papirkurv
+Name[nds]=Papierkorb
+Name[nl]=Prullenbak
+Name[nn]=Papirkorg
+Name[oc]=Escobilhièr
+Name[pl]=Kosz
+Name[pt]=Lixo
+Name[pt_BR]=Lixeira
+Name[ro]=Coș de gunoi
+Name[ru]=Корзина
+Name[sk]=Kôš
+Name[sl]=Smeti
+Name[sq]=Koshi
+Name[sr]=Смеће
+Name[sr@latin]=Kanta
+Name[sv]=Papperskorg
+Name[ta]=குப்பைத் தொட்டி
+Name[tg]=Сабад
+Name[th]=ถังขยะ
+Name[tr]=Çöp
+Name[uk]=Смітник
+Name[ur]=ردی
+Name[vi]=Thùng rác
+Name[zh_CN]=回收站
+Name[zh_HK]=垃圾桶
+Name[zh_TW]=回收筒
+Exec=nemo trash:///")
+
+netflix_installationtype="environmental"
 netflix_url=https://www.netflix.com
-netflix_icon="https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg"
-netflix_alias="alias netflix=\"xdg-open ${netflix_url} &>/dev/null &\""
-netflix_launcher="[Desktop Entry]
+netflix_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg;netflix_icon.svg")
+netflix_bashfunctions=("alias netflix=\"nohup xdg-open ${netflix_url} &>/dev/null &\"")
+netflix_launchercontents=("
+[Desktop Entry]
 Categories=Network;VideoStreaming;Film;
 Comment=Desktop app to reproduce Netflix from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${netflix_url}
+Icon=${USR_BIN_FOLDER}/netflix/netflix_icon.svg
 GenericName=Netflix
 Keywords=netflix;
 MimeType=
@@ -1145,7 +1705,7 @@ StartupWMClass=Netflix
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
 nedit_installationtype="packagemanager"
 nedit_packagenames=("nedit")
@@ -1154,15 +1714,26 @@ nedit_launchernames=("nedit")
 net_tools_installationtype="packagemanager"
 net_tools_packagenames=("net-tools")
 
-node_installationtype="packageinstall"
-node_packageurls=("https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz")
-
-notebook_installationtype="packagemanager"
-notebook_bashfunctions=("alias notebook=\"jupyter notebook\"")
+node_installationtype="userinherit"
+node_compressedfileurl="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
+node_compressedfiletype="J"
+node_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
 
 notepadqq_installationtype="packagemanager"
 notepadqq_packagenames=("notepadqq")
 notepadqq_launchernames=("notepadqq")
+
+o_installationtype="environmental"
+o_bashfunctions=("
+o()
+{
+	if [[ -z \"\$1\" ]]; then
+		nemo \"\$(pwd)\" &>/dev/null &
+	else
+		nemo \"\$1\" &>/dev/null &
+	fi
+}
+")
 
 obs_studio_installationtype="packagemanager"
 obs_studio_packagenames=("obs-studio")
@@ -1178,13 +1749,17 @@ openoffice_downloader="https://downloads.sourceforge.net/project/openofficeorg.m
 openssl102_installationtype="packageinstall"
 openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
 
-onedrive_icon="https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg"
-onedrive_url=https://onedrive.live.com/
-onedrive_alias="alias onedrive=\"xdg-open ${onedrive_url} &>/dev/null &\""
-onedrive_launcher="[Desktop Entry]
+onedrive_installationtype="environmental"
+onedrive_downloads=("https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg;onedrive_icon.svg")
+onedrive_url="https://onedrive.live.com/"
+onedrive_bashfunctions=("alias onedrive=\"nohup xdg-open ${onedrive_url} &>/dev/null &\"")
+onedrive_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Microsoft OneDrive from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${onedrive_url}
+Icon=${USR_BIN_FOLDER}/onedrive/onedrive_icon.svg
 GenericName=OneDrive
 Keywords=onedrive;
 MimeType=
@@ -1194,15 +1769,19 @@ StartupWMClass=OneDrive
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
-outlook_icon="https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg"
-outlook_url=https://outlook.live.com
-outlook_alias="alias outlook=\"xdg-open ${outlook_url} &>/dev/null &\""
-outlook_launcher="[Desktop Entry]
+outlook_installationtype="environmental"
+outlook_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg;outlook_icon.svg")
+outlook_url="https://outlook.live.com"
+outlook_bashfunctions=("alias outlook=\"nohup xdg-open ${outlook_url} &>/dev/null &\"")
+outlook_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Microsoft Outlook from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${outlook_url}
+Icon=${USR_BIN_FOLDER}/outlook/outlook_icon.svg
 GenericName=Outlook
 Keywords=outlook;
 MimeType=
@@ -1212,15 +1791,19 @@ StartupWMClass=Outlook
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
-overleaf_icon="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg"
-overleaf_url=https://www.overleaf.com/
-overleaf_alias="alias overleaf=\"xdg-open ${overleaf_url} &>/dev/null &\""
-overleaf_launcher="[Desktop Entry]
+overleaf_installationtype="environmental"
+overleaf_downloads="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg;overleaf_icon.svg"
+overleaf_url="https://www.overleaf.com/"
+overleaf_bashfunctions=("alias overleaf=\"nohup xdg-open ${overleaf_url} &>/dev/null &\"")
+overleaf_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Overleaf online LaTeX editor from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${overleaf_url}
+Icon=${USR_BIN_FOLDER}/overleaf/overleaf_icon.svg
 GenericName=Overleaf
 Keywords=overleaf;
 MimeType=
@@ -1230,7 +1813,7 @@ StartupWMClass=Overleaf
 #Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
 pacman_installationtype="packagemanager"
 pacman_packagenames=("pacman")
@@ -1290,7 +1873,10 @@ pluma_installationtype="packagemanager"
 pluma_packagenames=("pluma")
 pluma_launchernames=("pluma")
 
-postman_url=("https://dl.pstmn.io/download/latest/linux64")
+postman_installationtype="userinherit"
+postman_compressedfileurl="https://dl.pstmn.io/download/latest/linux64"
+postman_compressedfiletype="z"
+postman_binariesinstalledpaths=("Postman;postman")
 postman_launchercontents=("
 [Desktop Entry]
 Encoding=UTF-8
@@ -1302,13 +1888,17 @@ Type=Application
 Categories=Development;
 ")
 
-presentation_url=https://docs.google.com/presentation/
-presentation_icon="https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg"
-presentation_alias="alias presentation=\"xdg-open ${presentation_url} &>/dev/null &\""
-presentation_launcher="[Desktop Entry]
+presentation_installationtype="environmental"
+presentation_url="https://docs.google.com/presentation/"
+presentation_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;presentation_icon.svg")
+presentation_bashfunctions=("alias presentation=\"nohup xdg-open ${presentation_url} &>/dev/null &\"")
+presentation_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Presentation from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${presentation_url}
+Icon=${USR_BIN_FOLDER}/presentation/presentation_icon.svg
 GenericName=Document
 Keywords=presentations;
 MimeType=
@@ -1318,9 +1908,10 @@ StartupWMClass=Google Presentation
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
-prompt_functions=("
+prompt_installationtype="environmental"
+prompt_bashfunctions=("
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z \"\${debian_chroot:-}\" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=\$(cat /etc/debian_chroot)
@@ -1404,7 +1995,8 @@ pycharm_bashfunctions=("alias pycharm=\"pycharm . &>/dev/null &\"")
 pycharm_compressedfiletype="z"
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
-pycharm_launchercontents=("[Desktop Entry]
+pycharm_launchercontents=("
+[Desktop Entry]
 Actions=NewWindow;
 Categories=programming;dev;
 Comment=Python IDE Community
@@ -1434,7 +2026,8 @@ pycharmpro_bashfunctions=("alias pycharmpro=\"pycharmpro . &>/dev/null &\"")
 pycharmpro_compressedfiletype="z"
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
 pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
-pycharmpro_launchercontents=("[Desktop Entry]
+pycharmpro_launchercontents=("
+[Desktop Entry]
 Categories=programming;dev;
 Comment=Python IDE for Professional Developers
 Encoding=UTF-8
@@ -1510,11 +2103,14 @@ install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
 IRkernel::installspec()
 ")
 
-rstudio_installationtype="packageinstall"
-rstudio_packageurls=("https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz")
-rstudio_dependencies_packagenames=("libssl-dev")
-rstudio_alias="alias rstudio=\"rstudio &>/dev/null &\""
-rstudio_launcher="[Desktop Entry]
+rstudio_installationtype="userinherit"
+rstudio_compressedfileurl="https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz"
+rstudio_compressedfiletype="z"
+rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
+rstudio_associatedfiletypes=("text/plain")
+rstudio_bashfunctions=("alias rstudio=\"nohup rstudio &>/dev/null &\"")
+rstudio_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app for programming in R
 Encoding=UTF-8
@@ -1529,16 +2125,19 @@ StartupWMClass=RStudio
 Terminal=false
 TryExec=rstudio
 Type=Application
-Version=1.0"
+Version=1.0")
 
-
+reddit_installationtype="environmental"
 reddit_url="https://www.reddit.com/"
-reddit_icon="https://duckduckgo.com/i/b6b8ccc2.png"
-reddit_alias="alias reddit=\"xdg-open ${reddit_url} &>/dev/null &\""
-reddit_launcher="[Desktop Entry]
+reddit_downloads=("https://duckduckgo.com/i/b6b8ccc2.png")
+reddit_bashfunctions=("alias reddit=\"nohup xdg-open ${reddit_url} &>/dev/null &\"")
+reddit_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Reddit from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${reddit_url}
+Icon=${USR_BIN_FOLDER}/reddit/reddit_icon.svg
 GenericName=reddit
 Keywords=reddit
 MimeType=
@@ -1548,7 +2147,7 @@ StartupWMClass=Reddit
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
 remmina_installationtype="packagemanager"
 remmina_packagenames=("remmina")
@@ -1577,38 +2176,13 @@ scala_packagenames=("scala")
 
 screenshots_installationtype="environmental"
 screenshots_bashfunctions=("
+mkdir -p ${XDG_PICTURES_DIR}/screenshots
 alias screenshot-full=\"gnome-screenshot -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
 alias screenshot-window=\"gnome-screenshot -w -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
 alias screenshot-area=\"gnome-screenshot -a -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"")
 
-shell_history_optimization_function="
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-export HISTSIZE=100000
-export HISTFILESIZE=10000000
-# append to the history file, don't overwrite it
-shopt -s histappend
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoredups
-# Ignore simple commands in history
-HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
-# The cmdhist shell option, if enabled, causes the shell to attempt to save each line of a multi-line command in the
-# same history entry, adding semicolons where necessary to preserve syntactic correctness.
-shopt -s cmdhist
-# Store multiline commands with newlines when possible, rather that using semicolons
-#shopt -s lithist 
-# To retrieve the commands correctly
-HISTTIMEFORMAT='%F %T '
-# Check the windows size on every prompt and reset the number of columns and rows if necessary
-shopt -s checkwinsize  # Kinda buggy
-
-# Save and reload from history before prompt appears
-if [[ -z \"\$(echo \${PROMPT_COMMAND} | grep -Fo \"history -a; history -r; \")\" ]]; then
-  export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; history -a; history -r\"
-fi
-"
-
-shortcut_aliases="DESK=${XDG_DESKTOP_DIR}
+shortcuts_installationtype="environmental"
+shortcuts_bashfunctions=("DESK=${XDG_DESKTOP_DIR}
 FONTS=${FONTS_FOLDER}
 AUTOSTART=${AUTOSTART_FOLDER}
 DOWNLOAD=${XDG_DOWNLOAD_DIR}
@@ -1628,11 +2202,12 @@ GIT=${XDG_DESKTOP_DIR}/git
 if [ ! -d \$GIT ]; then
   mkdir -p \$GIT
 fi
-"
+")
 
 shotcut_installationtype="packagemanager"
 shotcut_packagenames=("shotcut")
-shotcut_launchercontents=("[Desktop Entry]
+shotcut_launchercontents=("
+[Desktop Entry]
 Categories=video;
 Comment= Open Source, cross-platform video editor
 Encoding=UTF-8
@@ -1673,13 +2248,17 @@ spotify_packageurls=("http://repository.spotify.com/pool/non-free/s/spotify-clie
 spotify_launchernames=("spotify")
 spotify_bashfunctions=("alias spotify=\"spotify &>/dev/null &\"")
 
+spreadsheets_installationtype="environmental"
 spreadsheets_url=https://docs.google.com/spreadsheets/
-spreadsheets_icon="https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg"
-spreadsheets_alias="alias spreadsheets=\"xdg-open ${spreadsheets_url} &>/dev/null &\""
-spreadsheets_launcher="[Desktop Entry]
+spreadsheets_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg;spreadsheets_icon.svg")
+spreadsheets_bashfunctions=("alias spreadsheets=\"nohup xdg-open ${spreadsheets_url} &>/dev/null &\"")
+spreadsheets_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Spreadsheets from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${spreadsheets_url}
+Icon=${USR_BIN_FOLDER}/spreadsheets/spreadsheets_icon.svg
 GenericName=Spreadsheets
 Keywords=spreadsheets;
 MimeType=
@@ -1689,7 +2268,7 @@ StartupWMClass=Google Spreadsheets
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
 steam_installationtype="packageinstall"
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
@@ -1700,7 +2279,8 @@ studio_compressedfileurl="https://redirector.gvt1.com/edgedl/android/studio/ide-
 studio_compressedfiletype="z"
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
 studio_bashfunctions=("alias studio=\"studio . &>/dev/null &\"")
-studio_launchercontents=("[Desktop Entry]
+studio_launchercontents=("
+[Desktop Entry]
 Categories=Development;IDE;
 Comment=IDE for developing android applications
 Encoding=UTF-8
@@ -1725,7 +2305,8 @@ sublime_bashfunctions=("alias sublime=\"sublime . &>/dev/null &\"")
 sublime_compressedfiletype="j"
 sublime_binariesinstalledpaths=("sublime_text;sublime")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
-sublime_launchercontents=("[Desktop Entry]
+sublime_launchercontents=("
+[Desktop Entry]
 Categories=;
 Comment=General Purpose Programming Text Editor
 Encoding=UTF-8
@@ -1762,6 +2343,8 @@ StartupWMClass=synaptic
 
 sysmontask_downloader="https://github.com/KrispyCamel4u/SysMonTask.git"
 
+
+
 teamviewer_installationtype="packageinstall"
 teamviewer_packageurls=("https://download.teamviewer.com/download/linux/teamviewer_amd64.deb")
 teamviewer_launchernames=("com.teamviewer.TeamViewer")
@@ -1770,15 +2353,19 @@ teams_installationtype="packageinstall"
 teams_packageurls=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")
 teams_launchernames=("teams")
 
-telegram_icon=https://telegram.org/img/t_logo.svg?1
-telegram_downloader=https://telegram.org/dl/desktop/linux
-telegram_launcher="[Desktop Entry]
+telegram_installationtype="userinherit"
+telegram_downloads=("https://telegram.org/img/t_logo.svg?1;telegram_icon.svg")
+telegram_compressedfileurl="https://telegram.org/dl/desktop/linux"
+telegram_compressedfiletype="J"
+telegram_binariesinstalledpaths=("Telegram;telegram")
+telegram_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Instant messaging cross platform
 Encoding=UTF-8
 Exec=telegram -- %u
 GenericName=Telegram
-Icon=${USR_BIN_FOLDER}/telegram/telegram.svg
+Icon=${USR_BIN_FOLDER}/telegram/telegram_icon.svg
 Keywords=telegram;
 MimeType=x-scheme-handler/tg;
 Name=Telegram
@@ -1787,7 +2374,7 @@ StartupWMClass=Telegram
 Terminal=false
 TryExec=telegram
 Type=Application
-Version=1.0"
+Version=1.0")
 
 terminator_installationtype="packagemanager"
 terminator_packagenames=("terminator")
@@ -1801,14 +2388,14 @@ tilix_installationtype="packagemanager"
 tilix_packagenames=("tilix")
 tilix_launchernames=("com.gexperts.Tilix")
 
-tomcat_installationtype="userprogram"
-tomcat_inheritedcompressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
-tomcat_inheritedcompressedfiletype="z"
-tomcat_inheriteddirectoryname="tomcat"
+tomcat_installationtype="userinherit"
+tomcat_dcompressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
+tomcat_compressedfiletype="z"
 
 tmux_installationtype="packagemanager"
 tmux_packagenames=("tmux")
-tmux_launchercontents=("[Desktop Entry]
+tmux_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Terminal Multiplexer
 Encoding=UTF-8
@@ -1833,13 +2420,17 @@ transmission_gtk_installationtype="packagemanager"
 transmission_gtk_packagenames=("transmission")
 transmission_gtk_launchernames=("transmission-gtk")
 
+trello_installationtype="environmental"
 trello_url="https://trello.com"
-trello_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png"
-trello_alias="alias trello=\"xdg-open ${trello_url} &>/dev/null &\""
-trello_launcher="[Desktop Entry]
+trello_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png;trello.svg.png")
+trello_bashfunctions=("alias trello=\"nohup xdg-open ${trello_url} &>/dev/null &\"")
+trello_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Trello from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${trello_url}
+Icon=${USR_BIN_FOLDER}/trello/trello_icon.svg.png
 GenericName=Google Calendar
 Keywords=trello;
 MimeType=
@@ -1849,15 +2440,19 @@ StartupWMClass=Trello
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
+tumblr_installationtype="environmental"
 tumblr_url="https://www.tumblr.com/"
-tumblr_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png"
-tumblr_alias="alias tumblr=\"xdg-open ${tumblr_url} &>/dev/null &\""
-tumblr_launcher="[Desktop Entry]
+tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png;tumblr_icon.svg.png"
+tumblr_bashfunctions=("nohup alias tumblr=\"nohup xdg-open ${tumblr_url} &>/dev/null &\"")
+tumblr_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Tumblr from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${tumblr_url}
+Icon=${USR_BIN_FOLDER}/tumblr/tumblr_icon.svg
 GenericName=tumblr
 Keywords=tumblr
 MimeType=
@@ -1867,12 +2462,14 @@ StartupWMClass=Tumblr
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
+twitch_installationtype="environmental"
 twitch_url="https://twitch.tv/"
-twitch_icon="http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png"
-twitch_alias="alias twitch=\"xdg-open ${twitch_url} &>/dev/null &\""
-twitch_launcher="[Desktop Entry]
+twitch_downloads=("http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png;twitch_icon.svg.png")
+twitch_bashfunctions=("alias twitch=\"nohup xdg-open ${twitch_url} &>/dev/null &\"")
+twitch_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Twitch from Chrome
 Encoding=UTF-8
@@ -1885,15 +2482,19 @@ StartupWMClass=Twitch
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
+twitter_installationtype="environmental"
 twitter_url="https://twitter.com/"
-twitter_icon="https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg"
-twitter_alias="alias twitter=\"xdg-open ${twitter_url} &>/dev/null &\""
-twitter_launcher="[Desktop Entry]
+twitter_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg;twitter_icon.svg")
+twitter_bashfunctions=("alias twitter=\"nohup xdg-open ${twitter_url} &>/dev/null &\"")
+twitter_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Twitter from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${twitter_url}
+Icon=${USR_BIN_FOLDER}/twitter/twitter_icon.svg
 GenericName=Twitter
 Keywords=twitter
 MimeType=
@@ -1903,9 +2504,8 @@ StartupWMClass=Twitter
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
-# u function only opens in 'http://google.com', may work with 'google.com' or 'www.google.com'?
 u_installationtype="environmental"
 u_bashfunctions=("
 u()
@@ -1935,25 +2535,6 @@ virtualbox_packagedependencies=("libqt5opengl5")
 virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb")
 virtualbox_launchernames=("virtualbox")
 
-visualstudiocode_downloader="https://go.microsoft.com/fwlink/?LinkID=620884"
-code_alias="alias code=\"code . &>/dev/null &\""
-visualstudiocode_launcher="[Desktop Entry]
-Categories=Development;IDE;
-Comment=Develop with pleasure!
-Encoding=UTF-8
-Exec=code %f
-GenericName=IDE for programming
-Icon=${HOME}/.bin/visual-studio/resources/app/resources/linux/code.png
-Keywords=code;
-MimeType=
-Name=Visual Studio Code
-StartupNotify=true
-StartupWMClass=visual-studio-code
-Terminal=false
-TryExec=code
-Type=Application
-Version=1.0"
-
 vlc_installationtype="packagemanager"
 vlc_packagenames=("vlc")
 vlc_launchernames=("vlc")
@@ -1977,13 +2558,17 @@ dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${P
 "
 wallpapers_cronjob="*/5 * * * * ${USR_BIN_FOLDER}/wallpaper_changer.sh"
 
-whatsapp_url=https://web.whatsapp.com/
-whatsapp_icon="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-whatsapp_alias="alias whatsapp=\"xdg-open ${whatsapp_url} &>/dev/null &\""
-whatsapp_launcher="[Desktop Entry]
+whatsapp_installationtype="environmental"
+whatsapp_url="https://web.whatsapp.com/"
+whatsapp_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg;whatsapp_icon.svg")
+whatsapp_bashfunctions=("alias whatsapp=\"nohup xdg-open ${whatsapp_url} &>/dev/null &\"")
+whatsapp_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Whatsapp Web from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${whatsapp_url}
+Icon=${USR_BIN_FOLDER}/whatsapp/whatsapp_icon.svg
 GenericName=WhatsApp Web
 Keywords=forms;
 MimeType=
@@ -1993,15 +2578,19 @@ StartupWMClass=WhatsApp
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
+wikipedia_installationtype="environmental"
 wikipedia_url="https://www.wikipedia.org/"
-wikipedia_icon="https://upload.wikimedia.org/wikipedia/commons/2/20/Wikipedia-logo-simple.svg"
-wikipedia_alias="alias wikipedia=\"xdg-open ${wikipedia_url} &>/dev/null &\""
-wikipedia_launcher="[Desktop Entry]
+wikipedia_downloads=("https://upload.wikimedia.org/wikipedia/commons/2/20/Wikipedia-logo-simple.svg;wikipedia_icon.svg")
+wikipedia_bashfunctions=("alias wikipedia=\"nohup xdg-open ${wikipedia_url} &>/dev/null &\"")
+wikipedia_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Reddit from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${wikipedia_url}
+Icon=${USR_BIN_FOLDER}/wikipedia/wikipedia_icon.svg
 GenericName=reddit
 Keywords=wikipedia
 MimeType=
@@ -2011,15 +2600,135 @@ StartupWMClass=Wikipedia
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
-youtube_url=https://youtube.com/
-youtube_icon="https://upload.wikimedia.org/wikipedia/commons/4/4f/YouTube_social_white_squircle.svg"
-youtube_alias="alias youtube=\"xdg-open ${youtube_url} &>/dev/null &\""
-youtube_launcher="[Desktop Entry]
+wireshark_installationtype="packagemanager"
+wireshark_packagenames=("wireshark")
+wireshark_launchercontents=("
+[Desktop Entry]
+# The format of this file is specified at
+# https://specifications.freedesktop.org/desktop-entry-spec/1.0/
+# The entries are in the order they are listed in version 1.0
+Type=Application
+# This is the version of the spec for this file, not the application version.
+Version=1.0
+Name=Wireshark
+Name[vi]=Wireshark
+GenericName=Network Analyzer
+GenericName[af]=Netwerk Analiseerder
+GenericName[az]=Şəbəkə Analiz Proqramı
+GenericName[bg]=Анализатор на мрежови трафик
+GenericName[bs]=Mrežni analizer
+GenericName[ca]=Analitzador de xarxa
+GenericName[cs]=Analyzátor sítě
+GenericName[da]=Netværksanalyse
+GenericName[de]=Programm für die Netzwerk-Analyse
+GenericName[el]=Αναλυτής Δικτύων
+GenericName[en_GB]=Network Analyser
+GenericName[eo]=Retanalizilo
+GenericName[es]=Analizador de redes
+GenericName[et]=Võrguliikluse analüsaator
+GenericName[eu]=Sare ikerketaria
+GenericName[fa]=تحلیل‌گر شبکه
+GenericName[fi]=Verkkoanalysaattori
+GenericName[fr]=Analyseur réseau
+GenericName[he]=מאבחן רשת
+GenericName[hr]=Program za analiziranje mreža
+GenericName[hu]=hálózatanalizáló
+GenericName[id]=Analisis jaringan
+GenericName[is]=Netskoðunartól
+GenericName[it]=Analizzatore di rete
+GenericName[ja]=ネットワークアナライザ
+GenericName[ko]=네트워크 분석기
+GenericName[lo]=ເຄື່ອງມືວິເຄາະເຄືອຂ່າຍ
+GenericName[lt]=Tinklo analizatorius
+GenericName[lv]=Tīkla Analizators
+GenericName[mk]=Анализатор на мрежи
+GenericName[mn]=Сүлжээ-шинжлэлийн програм
+GenericName[mt]=Analizzatur tan-network
+GenericName[nb]=Nettverksanalysator
+GenericName[nl]=netwerkanalyseprogramma
+GenericName[nn]=Nettverksanalysator
+GenericName[nso]=Moahlaahli wa Kgokagano
+GenericName[pl]=Analizator sieci
+GenericName[pt]=Analisador de Redes
+GenericName[pt_BR]=Analisador de rede
+GenericName[ro]=Analizor de reţea
+GenericName[ru]=Анализатор сетевого трафика
+GenericName[se]=Fierbmeanalysa
+GenericName[sk]=Analyzátor siete
+GenericName[sl]=Analizator omrežij
+GenericName[sr]=Analizatror mreže
+GenericName[ss]=Sihlatiyi seluchungechunge
+GenericName[sv]=Nätverksanalyserare
+GenericName[ta]=Å¨Ä ¬öÅ¡Ç÷
+GenericName[th]=เครื่องมือวิเคราะห์เครือข่าย
+GenericName[tr]=Ağ Analiz Programı
+GenericName[uk]=Аналізатор мережі
+GenericName[ven]=Musengulusi wa Vhukwamani
+GenericName[vi]=Trình phân tích  mạng
+GenericName[xh]=Umcukucezi Womsebenzi womnatha
+GenericName[zh_CN]=网络分析程序
+GenericName[zh_TW]=網路分析程式
+GenericName[zu]=Umhloli Woxhumano olusakazekile
+Comment=Network traffic analyzer
+Comment[fi]=Verkkoliikenne analysaattori
+Comment[fr]=Analyseur de trafic réseau
+Comment[sv]=Nätverkstrafikanalysator
+Comment[af]=Netwerkverkeer analiseerder
+Comment[sq]=Analizues i trafikut të rrjetit
+Comment[ast]=Analizador de tráficu de rede
+Comment[bn]=নেটওয়ার্ক ট্রাফিক বিশ্লেষক
+Comment[bg]=Анализатор на мрежовия трафик
+Comment[bs]=Analizator mrežnoga prometa
+Comment[pt_BR]=Analisador de tráfego de rede
+Comment[et]=Võrguliikluse analüüsija
+Comment[nl]=Netwerkverkeer analyseren
+Comment[da]=Netværkstrafikanalyse
+Comment[cs]=Analyzátor síťového přenosu
+Comment[gl]=Analizador do tráfico de rede
+Comment[el]=Ανάλυση κίνησης δικτύου
+Comment[de]=Netzwerkverkehr-Analyseprogramm
+Comment[hu]=Hálózatiforgalom-elemző
+Comment[it]=Analizzatore del traffico di rete
+Comment[ja]=ネットワークトラフィックアナライザー
+Comment[ko]=네트워크 트래픽 분석기
+Comment[ky]=Тармактык трафикти анализдөө
+Comment[lt]=Tinklo duomenų srauto analizatorius
+Comment[ms]=Penganalisa trafik rangkaian
+Comment[nb]=Nettverkstrafikk-analysator
+Comment[oc]=Analisador de tramas de ret
+Comment[pt]=Analisador de tráfego da rede
+Comment[pl]=Analizator ruchu sieciowego
+Comment[ro]=Analizator trafic de rețea
+Comment[ru]=Анализ сетевого трафика
+Comment[sk]=Analyzátor sieťovej premávky
+Comment[es]=Analizador de tráfico de red
+Comment[sl]=Preučevalnik omrežnega prometa
+Comment[tr]=Ağ trafiği çözümleyicisi
+Comment[vi]=Trình phân tích giao thông mạng
+Comment[uk]=Аналізатор мережевого трафіку
+Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg
+TryExec=wireshark
+Exec=wireshark %f
+Terminal=false
+MimeType=application/vnd.tcpdump.pcap;application/x-pcapng;application/x-snoop;application/x-iptrace;application/x-lanalyzer;application/x-nettl;application/x-radcom;application/x-etherpeek;application/x-visualnetworks;application/x-netinstobserver;application/x-5view;application/x-tektronix-rf5;application/x-micropross-mplog;application/x-apple-packetlogger;application/x-endace-erf;application/ipfix;application/x-ixia-vwr;
+# Category entry according to:
+# https://specifications.freedesktop.org/menu-spec/1.0/
+Categories=Network;Monitor;Qt;
+")
+
+youtube_installationtype="environmental"
+youtube_url="https://youtube.com/"
+youtube_downloads=("https://upload.wikimedia.org/wikipedia/commons/4/4f/YouTube_social_white_squircle.svg;youtube_icon.svg")
+youtube_bashfunctions=("alias youtube=\"nohup xdg-open ${youtube_url} &>/dev/null &\"")
+youtube_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open YouTube from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${youtube_url}
+Icon=${USR_BIN_FOLDER}/youtube/youtube_icon.svg
 GenericName=YouTube
 Keywords=forms;
 MimeType=
@@ -2029,15 +2738,19 @@ StartupWMClass=YouTube
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
-youtubemusic_url=https://music.youtube.com
-youtubemusic_icon="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg"
-youtubemusic_alias="alias youtubemusic=\"xdg-open ${youtubemusic_url} &>/dev/null &\""
-youtubemusic_launcher="[Desktop Entry]
+youtubemusic_installationtype="environmental"
+youtubemusic_url="https://music.youtube.com"
+youtubemusic_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg;youtubemusic_icon.svg")
+youtubemusic_bashfunctions="alias youtubemusic=\"nohup xdg-open ${youtubemusic_url} &>/dev/null &\""
+youtubemusic_launchercontents=("
+[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open YouTube Music from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${youtubemusic_url}
+Icon=${USR_BIN_FOLDER}/youtubemusic/youtubemusic_icon.svg
 GenericName=YouTube Music
 Keywords=forms;
 MimeType=
@@ -2047,15 +2760,20 @@ StartupWMClass=YouTube Music
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
-youtubedl_downloader=https://yt-dl.org/downloads/latest/youtube-dl
+youtube_dl_installationtype="environmental"
+youtube_dl_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl")
+youtube_dl_binariesinstalledpaths=("youtube-dl;youtube-dl")
+youtubewav_bashfunctions=("alias youtubewav=\"youtube-dl --extract-audio --audio-format wav\"")
 
-youtubewav_alias="alias youtubewav=\"youtube-dl --extract-audio --audio-format wav\""
-
-zoom_downloader=https://zoom.us/client/latest/zoom_x86_64.tar.xz
-zoom_icon_downloader="https://play-lh.googleusercontent.com/JgU6AIREDMsGLmrFSJ8OwLb-JJVw_jwqdwEZWUHemAj0V5Dl7i7GOpmranv2GsCKobM"
-zoom_launcher="[Desktop Entry]
+zoom_installationtype="userinherit"
+zoom_compressedfileurl="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
+zoom_compressedfiletype="J"
+zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
+zoom_downloads=("https://play-lh.googleusercontent.com/JgU6AIREDMsGLmrFSJ8OwLb-JJVw_jwqdwEZWUHemAj0V5Dl7i7GOpmranv2GsCKobM;zoom_icon.ico")
+zoom_launchercontents=("
+[Desktop Entry]
 Categories=Social;Communication;
 Comment=Live Video Streaming for Meetings
 Encoding=UTF-8
@@ -2071,64 +2789,7 @@ TryExec=ZoomLauncher
 Type=Application
 Version=1.0
 Exec=ZoomLauncher
-"
-
-ipe_function="
-ipe()
-{
-  dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print \$2 }';
-}
-"
-
-ipi_function="
-ipi()
-{
-  hostname -I | awk '{print \$1}'
-}
-"
-
-L_function="
-L()
-{
-  NEW_LINE=\$'\\\n'
-  lsdisplay=\$(ls -lhA | tr -s \" \" | tail -n+2)
-  numfiles=\$(printf \"\$lsdisplay\" | wc -l)
-  dudisplay=\$(du -shxc .[!.]* * | sort -h | tr -s \"\\\t\" \" \")
-  totaldu=\$(echo \${dudisplay} | rev | cut -d \" \" -f2 | rev)
-  finaldisplay=\"\${totaldu} in \${numfiles} files and directories\$NEW_LINE\"
-  IFS=\$'\\\n'
-  for linels in \${lsdisplay}; do
-    if [[ \$linels =~ ^d.* ]]; then
-      foldername=\$(echo \$linels | cut -d ' ' -f9-)
-      for linedu in \${dudisplay}; do
-        if [[ \"\$(echo \${linedu} | cut -d ' ' -f2-)\" = \"\${foldername}\" ]]; then
-          currentline=\$(echo \${linels} | cut -d \" \" -f-4)
-          currentline=\"\$currentline \$(echo \${linedu} | cut -d ' ' -f1)\"
-          currentline=\"\$currentline \$(echo \${linels} | cut -d ' ' -f6-)\"
-          finaldisplay=\"\$finaldisplay\$NEW_LINE\$currentline\"
-          break
-        fi
-      done
-    else
-      finaldisplay=\"\$finaldisplay\$NEW_LINE\$linels\"
-    fi
-  done
-  finaldisplay=\"\${finaldisplay}\"
-  echo \"\$finaldisplay\"
-}
-"
-
-o_function="
-o()
-{
-	if [[ -z \"\$1\" ]]; then
-		nemo \"\$(pwd)\" &>/dev/null &
-	else
-		nemo \"\$1\" &>/dev/null &
-	fi
-}
-"
-
+")
 
 ### TEMPLATES ###
 

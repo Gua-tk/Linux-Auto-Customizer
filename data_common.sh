@@ -39,6 +39,8 @@
 # XDG_TEMPLATES_DIR: /home/username/Templates
 
 ### VARIABLE DECLARATION ###
+# To avoid to be queried by apt-get or dpkg when installing such features such wireshark and sonic-pi.
+DEBIAN_FRONTEND=noninteractive
 
 if [[ "$(whoami)" != "root" ]]; then
   # Path pointing to $HOME
@@ -161,10 +163,10 @@ installation_data=(
   "--dummycommit;0;| Function \`dummycommit\` | Do the following commands \`git add -a\` \`git commit -am \$1\` \`git push\` | Command \`dummycommit\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--drive|--GoogleDrive|--Drive|--google-drive|--Google-Drive;0;| Google Drive | Google Drive opening in Chrome | Command \`drive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--dropbox|--Dropbox|--DropBox|--Drop-box|--drop-box|--Drop-Box;1;| Dropbox | File hosting service | Command \`dropbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--duckduckgo|--DuckDuckGo;0|| DuckDuckGo | Opens DuckDuckGo in Chrome | Command \`duckduckgo\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--duckduckgo|--DuckDuckGo;0;| DuckDuckGo | Opens DuckDuckGo in Chrome | Command \`duckduckgo\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--e;0;| Function \`e\` | Multi Function \`e\` to edit a file or project in folder | Function \`e\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--eclipse|--Eclipse;0;| Eclipse | IDE for general purpose programming | Command \`eclipse\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--extract|--extract-function|--extract_function;0;| Function \`extract\` | Function to extract from a compressed file, no matter its format | Function \`extract \"filename\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--x|--x-function|--extract;0;| Function \`x\` | Function to extract from a compressed file, no matter its format | Function \`x \"filename\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--evolution|--Evolution;1;| evolution | User calendar agend, planning | Command \`evolution\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--f-irc|--firc|--Firc|--irc;1;| f-irc | CLI IRC client | Command \`f-irc\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--facebook|--Facebook;0;| Facebook| Opens Facebook in Chrome | Command \`facebook\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -190,6 +192,7 @@ installation_data=(
   "--gimp|--GIMP|--Gimp;1;| Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats. | Command \`gimp\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--git;1;| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Command \`git\` and \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--github|--Github|--GitHub;1;| GitHub | GitHub opening in Chrome | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--github-desktop|--Github-Desktop|--GitHub-Desktop;1;| GitHub Desktop | GitHub Application | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gitk|--Gitk|--Git-k;1;| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gitlab|--GitLab|--git-lab;0;| GitLab | Gitlab opening in Chrome | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--gitprompt|--git-prompt;0;| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -245,7 +248,6 @@ installation_data=(
   "--netflix|--Netflix;0;| Netflix | Netflix opening in Chrome | Command \`netflix\`. Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |;| Netflix | Netflix opening in Chrome | Command \`netflix\`. Desktop launcher and dashboard launcher for the file manager | --netflix --Netflix |  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--nvidia-drivers|--ubuntu-drivers|--autoinstall;1;| nvidia-drivers | Auto-install nvidia drivers in ubuntu | Drivers || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--node;0;| NodeJS npm and npx | JavaScript for the developers. | Command \`node\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--notebook;0;| Jupyter Notebook alias | alias for opening \`jupyter notebook\` | Alias \`notebook\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--notepadqq|--Notepadqq|--notepadQQ|--NotepadQQ|--notepadQq|--notepadQq|--NotepadQq|--NotepadqQ;1;| Notepadqq | Text editor that is designed by developers for the developers. It supports more than 100 programming languages | Command \`notepadqq\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--obs-studio|--OBS|--obs|--obs_studio|--obs_Studio|--OBS_studio|--obs-Studio|--OBS_Studio|--OBS-Studio;1;| OBS | Streaming and recording program | Command \`obs\`, desktop launcher and dashboard launcher. ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--o|--o-function|--function-o;0;| Function \`o\` | Alias for \`nemo-desktop\` | Alias \`o\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"

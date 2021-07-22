@@ -21,39 +21,6 @@
 ############################################# ROOT FUNCTIONS ###########################################################
 ########################################################################################################################
 
-install_google-chrome()
-{
-  generic_install google-chrome
-
-  add_keybinding "google-chrome" "<Primary><Alt><Super>O" "Google Chrome"
-}
-
-install_iqmol()
-{
-  download_and_install_package ${iqmol_downloader}
-  create_folder ${USR_BIN_FOLDER}/iqmol
-  # Obtain icon for iqmol
-  (cd ${USR_BIN_FOLDER}/iqmol; wget -q -O iqmol_icon.png ${iqmol_icon})
-  create_manual_launcher "${iqmol_launcher}" iqmol
-  add_bash_function "${iqmol_alias}" "iqmol_alias.sh"
-}
-
-
-install_nemo()
-{
-  # Delete Nautilus, the default desktop manager to avoid conflicts
-  apt-get purge -y nautilus gnome-shell-extension-desktop-icons
-  apt-get install -y nemo dconf-editor gnome-tweak-tool
-  # Create special launcher to execute nemo daemon at system start
-  echo -e "${nemo_desktop_launcher}" > /etc/xdg/autostart/nemo-autostart.desktop
-  # nemo configuration
-  xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
-  gsettings set org.gnome.desktop.background show-desktop-icons false
-  gsettings set org.nemo.desktop show-desktop-icons true
-
-  copy_launcher "nemo.desktop"
-}
-
 install_openoffice()
 {
   # Delete old versions of openoffice to avoid conflicts
@@ -83,92 +50,15 @@ install_R()
   R -e "${R_jupyter_lab_function}"
 }
 
-install_sonic-pi()
-{
-  DEBIAN_FRONTEND=noninteractive
-  generic_install sonic-pi
-}
-
-install_tmux()
-{
-  generic_install tmux
-  autostart_program tmux
-}
-
 install_wireshark()
 {
-  # Used to install wireshark without prompt
   echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
-  DEBIAN_FRONTEND=noninteractive
-
-apt-get install -y wireshark
-  copy_launcher "wireshark.desktop"
-  sed -i 's-Icon=.*-Icon=/usr/share/icons/hicolor/scalable/apps/wireshark.svg-' ${XDG_DESKTOP_DIR}/wireshark.desktop
+  generic_install wireshark
 }
 
 ########################################################################################################################
 ######################################### USER SOFTWARE FUNCTIONS ######################################################
 ########################################################################################################################
-
-install_code()
-{
-  download_and_decompress ${visualstudiocode_downloader} "visual-studio" "z" "code" "code"
-
-  create_manual_launcher "${visualstudiocode_launcher}" "code"
-
-  add_bash_function "${code_alias}" "code_alias.sh"
-}
-
-install_discord()
-{
-  download_and_decompress ${discord_downloader} "discord" "z" "Discord" "discord"
-  create_manual_launcher "${discord_launcher}" "discord"
-}
-
-install_docker()
-{
-    download_and_decompress ${docker_downloader} "docker" "z" "docker" "docker" "containerd" "containerd" "containerd-shim" "containerd-shim" "containerd-shim-runc-v2" "containerd-shim-runc-v2" "ctr" "ctr" "dockerd" "dockerd" "docker-init" "docker-init" "docker-proxy" "docker-proxy" "runc" "runc"
-}
-
-install_eclipse()
-{
-  download "${eclipse_downloader}" "eclipse_downloading"
-  decompress "z" "eclipse_downloading" "eclipse"
-  create_manual_launcher "${eclipse_launcher}" "eclipse"
-  create_links_in_path "eclipse" "Eclipse"
-}
-
-install_geogebra()
-{
-
-  download_and_decompress ${geogebra_downloader} "geogebra" "zip" "GeoGebra" "geogebra"
-
-  wget "${geogebra_icon}" -q --show-progress -O ${USR_BIN_FOLDER}/geogebra/GeoGebra.svg
-
-  create_manual_launcher "${geogebra_desktop}" "geogebra"
-}
-
-install_ideac()
-{
-  download_and_decompress ${ideac_downloader} "idea-ic" "z" "bin/idea.sh" "ideac"
-
-  create_manual_launcher "${ideac_launcher}" "ideac"
-
-  register_file_associations "text/x-java" "ideac.desktop"
-
-  add_bash_function "${ideac_alias}" "ideac_alias.sh"
-}
-
-install_ideau()
-{
-  download_and_decompress ${ideau_downloader} "idea-iu" "z" "bin/idea.sh" "ideau"
-
-  create_manual_launcher "${ideau_launcher}" "ideau"
-
-  register_file_associations "text/x-java" "ideau.desktop"
-
-  add_bash_function "${ideau_alias}" "ideau_alias.sh"
-}
 
 install_ijs()
 {
@@ -177,20 +67,10 @@ install_ijs()
   "${DIR_IN_PATH}/ijsinstall"
 }
 
-install_java()
-{
-  download_and_decompress ${java_downloader} "jdk8" "z" "bin/java" "java"
-  add_bash_function "${java_globalvar}" "java_javahome.sh"
-}
-
 install_julia()
 {
-  download "${julia_packageurls}" "${USR_BIN_FOLDER}/julia_downloading"
-  decompress "z" "${USR_BIN_FOLDER}/julia_downloading" "julia"
-  create_links_in_path "${USR_BIN_FOLDER}/julia/bin/julia" julia
-  create_manual_launcher "${julia_launchercontents}" "julia"
-
-  # install jupyter-lab dependencies
+  generic_install julia
+  # install jupyter-lab dependencies down Rf
   julia -e '#!/.local/bin/julia
   using Pkg
   Pkg.add("IJulia")
@@ -238,35 +118,6 @@ install_jupyter-lab()
   add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"pga
 }
 
-install_mendeley()
-{
-  download_and_decompress ${mendeley_downloader} "mendeley" "j" "bin/mendeleydesktop" "mendeley"
-
-  # Create Desktop launcher
-  cp ${USR_BIN_FOLDER}/mendeley/share/applications/mendeleydesktop.desktop ${XDG_DESKTOP_DIR}
-  chmod 775 ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-  # Modify Icon line
-  sed -i 's-Icon=.*-Icon=${HOME}/.bin/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-  # Modify exec line
-  sed -i 's-Exec=.*-Exec=mendeley %f-' ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
-  # Copy to desktop  launchers of the current user
-  cp -p ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop ${PERSONAL_LAUNCHERS_DIR}
-}
-
-install_mvn()
-{
-  download_and_decompress ${maven_downloader} "maven" "z" "bin/mvn" "mvn"
-}
-
-install_studio()
-{
-  download_and_decompress ${android_studio_downloader} "android-studio" "z" "bin/studio.sh" "studio"
-
-  create_manual_launcher "${android_studio_launcher}" "Android_Studio"
-
-  add_bash_function "${android_studio_alias}" "studio_alias.sh"
-}
-
 install_pgadmin()
 {
   # Avoid collision and create venv for pgadmin in USR_BIN_FOLDER
@@ -300,15 +151,6 @@ install_pgadmin()
   apply_permissions "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
 }
 
-install_postman()
-{
-  download_and_decompress "${postman_url}" "postman" "z" "Postman" "postman"
-  #download "${postman_url}" "Postman"
-  #decompress "z" "${USR_BIN_FOLDER}/Postman" "postman"
-  #create_links_in_path "Postman/Postman" "postman"
-  create_manual_launcher "${postman_launchercontents[0]}" "Postman"
-}
-
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 install_pypy3()
 {
@@ -339,39 +181,6 @@ install_sysmontask()
   copy_launcher "SysMonTask.desktop"
 }
 
-install_telegram()
-{
-  download_and_decompress ${telegram_downloader} "telegram" "J" "Telegram" "telegram"
-
-  wget ${telegram_icon} -q --show-progress -O ${USR_BIN_FOLDER}/telegram/telegram.svg
-
-  create_manual_launcher "${telegram_launcher}" "telegram"
-}
-
-install_tomcat()
-{
-  download "${tomcat_inheritedcompressedfileurl}" "tomcat_downloading"
-  decompress "${tomcat_inheritedcompressedfiletype}" "${USR_BIN_FOLDER}/tomcat_downloading" tomcat
-}
-
-install_youtube-dl()
-{
-  wget ${youtubedl_downloader} -q --show-progress -O ${USR_BIN_FOLDER}/youtube-dl
-  chmod a+rx ${USR_BIN_FOLDER}/youtube-dl
-  create_links_in_path ${USR_BIN_FOLDER}/youtube-dl youtube-dl
-  add_bash_function "${youtubewav_alias}" youtube-wav_alias.sh
-}
-
-install_zoom()
-{
-  download_and_decompress ${zoom_downloader} "zoom" "J" "zoom" "zoom" "ZoomLauncher" "ZoomLauncher"
-
-  create_manual_launcher "${zoom_launcher}" "zoom"
-
-  wget ${zoom_icon_downloader} -q --show-progress -O ${USR_BIN_FOLDER}/zoom/zoom_icon.ico
-}
-
-
 ########################################################################################################################
 ######################################### USER-ENVIRONMENT FUNCTIONS ###################################################
 ########################################################################################################################
@@ -399,264 +208,6 @@ install_change-bg()
       cp "/usr/share/backgrounds/${filename}" "${XDG_PICTURES_DIR}/wallpapers"
     fi
   done
-}
-
-install_converters()
-{
-  rm -Rf ${USR_BIN_FOLDER}/converters
-  mkdir -p ${USR_BIN_FOLDER}/converters
-  git clone ${converters_downloader} ${USR_BIN_FOLDER}/converters
-
-  for converter in $(ls ${USR_BIN_FOLDER}/converters/converters); do
-    create_links_in_path ${USR_BIN_FOLDER}/converters/converters/${converter} "$(echo ${converter} | cut -d "." -f1)"
-  done
-
-  add_bash_function "${converters_functions}" converters.sh
-}
-
-install_document()
-{
-  add_internet_shortcut document
-}
-
-install_drive()
-{
-  add_internet_shortcut drive
-}
-
-install_duckduckgo()
-{
-  add_internet_shortcut duckduckgo
-}
-
-install_dummycommit()
-{
-  generic_install dummycommit
-}
-
-install_e()
-{
-  add_bash_function "${e_function}" e.sh
-}
-
-install_extract()
-{
-  add_bash_function "${extract_function}" extract.sh
-}
-
-install_facebook()
-{
-  add_internet_shortcut facebook
-}
-
-install_fonts-alegreya-sans()
-{
-  add_font ${fonts_alegreya_sans_compressedfileurls} zip alegreya_sans
-}
-
-install_fonts-oxygen()
-{
-  add_font ${fonts_oxygen_compressedfileurls} zip oxygen
-}
-
-install_fonts-lato()
-{
-  add_font ${fonts_lato_compressedfileurls} zip lato
-}
-
-install_fonts-oswald()
-{
-  add_font ${fonts_oswald_compressedfileurls} zip oswald
-}
-
-install_fonts-noto-sans()
-{
-  add_font ${fonts_noto_sans_compressedfileurls} zip noto_sans
-}
-
-install_fetch()
-{
-  generic_install fetch
-}
-
-install_forms()
-{
-  add_internet_shortcut forms
-}
-
-install_g()
-{
-  generic_install g
-}
-
-install_gitlab()
-{
-  add_internet_shortcut gitlab
-}
-
-install_gmail()
-{
-  add_internet_shortcut gmail
-}
-
-install_googlecalendar()
-{
-  add_internet_shortcut googlecalendar
-}
-
-install_h()
-{
-  generic_install h
-}
-
-install_hard()
-{
-  generic_install hard
-}
-
-install_history-optimization()
-{
-  add_bash_function "${shell_history_optimization_function}" history.sh
-}
-
-install_ipe()
-{
-  add_bash_function "${ipe_function}" ipe.sh
-}
-
-install_ipi()
-{
-  add_bash_function "${ipi_function}" ipi.sh
-}
-
-install_instagram()
-{
-  add_internet_shortcut instagram
-}
-
-install_j()
-{
-  generic_install j
-}
-
-install_keep()
-{
-  add_internet_shortcut keep
-  add_to_favorites "keep.desktop"
-}
-
-install_L()
-{
-  add_bash_function "${L_function}" L.sh
-}
-
-install_l()
-{
-  add_bash_function "${l_function}" l.sh
-}
-
-install_lab()
-{
-  generic_install lab
-}
-
-install_netflix()
-{
-  add_internet_shortcut netflix
-  add_to_favorites "netflix.desktop"
-}
-
-install_node()
-{
-  download "${node_packageurls}" "${USR_BIN_FOLDER}/node_downloading"
-  decompress "J" "${USR_BIN_FOLDER}/node_downloading" "node"
-  create_links_in_path "${USR_BIN_FOLDER}/node/bin/node" node "${USR_BIN_FOLDER}/node/bin/npm" npm "${USR_BIN_FOLDER}/node/bin/npx" npx
-}
-
-install_notebook()
-{
-  generic_install notebook
-}
-
-install_o()
-{
-  add_bash_function "${o_function}" o.sh
-}
-
-install_onedrive()
-{
-  add_internet_shortcut onedrive
-}
-
-install_openssl102()
-{
-  generic_install "openssl102"
-}
-
-install_outlook()
-{
-  add_internet_shortcut outlook
-}
-
-install_overleaf()
-{
-  add_internet_shortcut overleaf
-}
-
-install_push()
-{
-  generic_install push
-}
-
-install_presentation()
-{
-  add_internet_shortcut presentation
-}
-
-install_prompt()
-{
-  add_bash_function "${prompt_functions[0]}" prompt.sh
-}
-
-install_reddit()
-{
-  add_internet_shortcut reddit
-}
-
-install_rstudio()
-{
-  download "${rstudio_packageurls}" "rstudio_downloading"
-  decompress "z" "${USR_BIN_FOLDER}/rstudio_downloading" "rstudio"
-  create_links_in_path "${USR_BIN_FOLDER}/rstudio/bin/rstudio" rstudio
-  create_manual_launcher "${rstudio_launcher}" "rstudio"
-  register_file_associations "text/plain" "rstudio.desktop"
-
-}
-
-install_s()
-{
-  add_bash_function "${s_function}" s.sh
-}
-
-install_screenshots()
-{
-  mkdir -p ${XDG_PICTURES_DIR}/screenshots
-  add_bash_function "${screenshots_function}" "screenshots.sh"
-}
-
-install_shortcuts()
-{
-  add_bash_function "${shortcut_aliases}" shortcuts.sh
-}
-
-install_spreadsheets()
-{
-  add_internet_shortcut spreadsheets
-}
-
-install_status()
-{
-  generic_install status
 }
 
 install_system-fonts()
@@ -698,52 +249,6 @@ install_terminal-background()
     gsettings set org.gnome.Terminal.Legacy.Profile:/:"${profile_uuid}"/ cursor-shape 'ibeam'
   fi
 }
-
-install_trello()
-{
-  add_internet_shortcut trello
-}
-
-install_tumblr()
-{
-  add_internet_shortcut tumblr
-}
-
-install_twitch()
-{
-  add_internet_shortcut twitch
-}
-
-install_twitter()
-{
-  add_internet_shortcut twitter
-}
-
-install_u()
-{
-  generic_install u
-}
-
-install_whatsapp()
-{
-  add_internet_shortcut whatsapp
-}
-
-install_wikipedia()
-{
-  add_internet_shortcut wikipedia
-}
-
-install_youtube()
-{
-  add_internet_shortcut youtube
-}
-
-install_youtubemusic()
-{
-  add_internet_shortcut youtubemusic
-}
-
 
 
 ##################

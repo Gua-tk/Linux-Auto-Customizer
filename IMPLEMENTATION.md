@@ -38,7 +38,7 @@
 - [ ] `data_features.sh`: Add alias \`&\` to notepadqq, and furthermore
 - [ ] `data_features.sh`: Colors palette of default profile from terminal function (fonts lookalike)
 - [~] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
-- [ ] `data_features.sh`: `e` convert to edit and echo function
+- [~] `data_features.sh`: `e` convert to edit and echo function
 - [ ] `data_features.sh`: `x` refactor and update with cases of not existing file, possibility of adding arguments etc.
 - [ ] `data_features.sh`: refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] `install.sh`: May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
@@ -50,6 +50,7 @@
 - [ ] `data_features.sh`: in net-tools installation: alias ports="netstat -tulanp" # alias nr="net-restart"
 - [ ] `data_features.sh`: Search for a new version of caffeine or do the modifications in the actual version, but do not apply a patch #  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
 - [ ] `data_features.sh`: restore clonezilla which has been lost in combat clonezilla_launcher="[Desktop Entry] Categories=backup;images;restoration;boot;  Comment=Create bootable clonezilla images Encoding=UTF-8  Exec=sudo clonezilla  GenericName=Disk image utility  Icon=/usr/share/gdm/themes/drbl-gdm/clonezilla/ocslogo-1.png  Keywords=clonezilla;CloneZilla;iso  MimeType=  Name=CloneZilla  StartupNotify=true  StartupWMClass=CloneZilla  Terminal=true  TryExec=clonezilla  Type=Application  Version=1.0"   "--clonezilla|--CloneZilla|--cloneZilla;1;| CloneZilla | Disk cloning, disk imaging, data recovery, and deployment | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
+- [ ] `install.sh`: register openoffice file associations
 
 ###### NEW FEATURES
 - [~] `data_features.sh`, `common_data.sh`: Add new installation `install_fastcommands` to install aliases - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias upgrade="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear" alias bi=\"sudo apt --fix-broken install\"
@@ -98,6 +99,7 @@
 - [ ] `install.sh`, `uninstall.sh`: gobuster
 - [ ] `install.sh`, `uninstall.sh`: zenmap (nmap gui) (virtual environment)
 - [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/)
+- [ ] `data_features.sh`: Rstudio split libssl-dev dependency 
 
 # TO-DO uninstall.sh and uninstall core for v1.0
 
