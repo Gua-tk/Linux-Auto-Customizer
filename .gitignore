@@ -24,3 +24,5 @@ ansible_kernel.log
 *.ipynb
 .Rhistory
 t
+customizersudoall.outerr
+customizeruserall.outerr
