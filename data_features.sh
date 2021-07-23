@@ -865,7 +865,6 @@ github_desktop_launchernames=("github-desktop")
 
 gnat_gps_installationtype="packagemanager"
 gnat_gps_packagenames=("gnat-gps")
-gnat_gps_launchernames=("gnat-programming-studio")
 gnat_gps_launchercontents=("
 [Desktop Entry]
 Type=Application
