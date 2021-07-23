@@ -1203,7 +1203,6 @@ java_compressedfiletype="z"
 java_binariesinstalledpaths=("bin/java;java")
 java_bashfunctions=("export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\"")
 
-julia_installationtype="userinherit"
 julia_compressedfileurl="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
 julia_compressedfiletype="z"
 julia_binariesinstalledpaths=("bin/julia;julia")
@@ -2097,7 +2096,6 @@ v()
 
 ")
 
-R_installationtype="packagemanager"
 R_packagenames=("r-base")
 R_packagedependencies=("libzmq3-dev" "python3-zmq")
 R_launchernames=("R")
@@ -2547,7 +2545,7 @@ vlc_installationtype="packagemanager"
 vlc_packagenames=("vlc")
 vlc_launchernames=("vlc")
 
-wallpapers_downloader=https://github.com/AleixMT/wallpapers
+wallpapers_downloader="https://github.com/AleixMT/wallpapers"
 wallpapers_changer_script="#!/bin/bash
 if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
   user=\$(whoami)

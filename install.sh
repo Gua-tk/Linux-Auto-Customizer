@@ -23,6 +23,7 @@
 
 install_R()
 {
+  R_installationtype="packagemanager"
   generic_install R
   R -e "${R_jupyter_lab_function}"
 }
@@ -40,6 +41,7 @@ install_ijs()
 
 install_julia()
 {
+  julia_installationtype="userinherit"
   generic_install julia
   # install jupyter-lab dependencies down Rf
   julia -e '#!/.local/bin/julia
