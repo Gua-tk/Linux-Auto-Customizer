@@ -786,15 +786,16 @@ data_and_file_structures_initialization()
   if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
     create_file "${BASH_FUNCTIONS_PATH}"
   else
+    echo hasta aqui
     # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
     source "${BASH_FUNCTIONS_PATH}"
+    echo dw
   fi
 
   # Updates initializations
   # Avoid running bash functions non-interactively
   # Adds to the path the folder where we will put our soft links
   add_bash_function "${bash_functions_init}" "init.sh"
-
   # Create and / or update built-in favourites subsystem
   if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
     create_file "${PROGRAM_FAVORITES_PATH}"
