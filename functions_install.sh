@@ -154,7 +154,7 @@ create_file() {
   local -r filename=$(echo "$1" | rev | cut -d "/" -f1 | rev)
   if [ -n "${filename}" ]; then
     mkdir -p "${folder}"
-    echo "$2" >"$1"
+    echo "$2" > "$1"
     if [ ${EUID} == 0 ]; then  # root
       apply_permissions "$1"
     fi
@@ -505,7 +505,7 @@ generic_install_file_associations()
 generic_install_keybindings()
 {
   local -r keybinds="$1_keybinds[@]"
-  for keybind in ${keybinds}; do
+  for keybind in ${!keybinds}; do
     local -r command="$(echo "${keybind}" | cut -d ";" -f1)"
     local -r bind="$(echo "${keybind}" | cut -d ";" -f2)"
     local -r binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
@@ -802,7 +802,7 @@ data_and_file_structures_initialization()
   add_bash_function "${favorites_function}" "favorites.sh"
 
   # Create and / or update built-in keybinding subsystem
-  if [ -f "${PROGRAM_KEYBIND_PATH}" ]; then
+  if [ ! -f "${PROGRAM_KEYBIND_PATH}" ]; then
     create_file "${PROGRAM_KEYBIND_PATH}"
   fi
   add_bash_function "${keybind_function}" "keybind.sh"
