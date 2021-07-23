@@ -525,15 +525,13 @@ generic_install_downloads()
 {
   local -r downloads="$1_downloads[@]"
   if [ ! -z "${!downloads}" ]; then
+  	mkdir -p "${USR_BIN_FOLDER}/$1"
     for download in ${!downloads}; do
       local -r url="$(echo "${download}" | cut -d ";" -f1)"
       local -r name="$(echo "${download}" | cut -d ";" -f2)"
       download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
     done
   fi
-
-      mkdir -p "${USR_BIN_FOLDER}/$1"
-
 }
 
 # - Description:

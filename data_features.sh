@@ -163,7 +163,7 @@ audacity_packagenames=("audacity")
 audacity_bashfunctions=("alias audacity=\"nohup audacity &>/dev/null &\"")
 
 AutoFirma_installationtype="packageinstall"
-AutoFirma_dependencies=("libnss3-tools")
+AutoFirma_packagedependencies=("libnss3-tools")
 AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip"
 AutoFirma_compressedfiletype="zip"
 AutoFirma_launchernames=("afirma")
@@ -450,7 +450,7 @@ Type=Application
 Version=1.0")
 
 dropbox_installationtype="packageinstall"
-dropbox_dependencies=("python3-gpg")
+dropbox_packagedependencies=("python3-gpg")
 dropbox_launchernames=("dropbox")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
 
@@ -485,11 +485,11 @@ docker_compressedfiletype="z"
 docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 
-document_installationtype="environmental"
-document_url="https://docs.google.com/document/"
-document_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;document_icon.svg")
-document_bashfunctions=("alias document=\"nohup xdg-open ${document_url} &>/dev/null &\"")
-document_launchercontents=("[Desktop Entry]
+documents_installationtype="environmental"
+documents_url="https://docs.google.com/document/"
+documents_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;document_icon.svg")
+documents_bashfunctions=("alias document=\"nohup xdg-open ${document_url} &>/dev/null &\"")
+documents_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Documents from Chrome
 Encoding=UTF-8
@@ -1016,7 +1016,7 @@ Type=Application
 Version=1.0")
 
 google_chrome_installationtype="packageinstall"
-google_chrome_dependencies=("libxss1" "libappindicator1" "libindicator7")
+google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
 google_chrome_launchernames=("google-chrome")
 google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>O;Google Chrome")
@@ -1258,8 +1258,8 @@ Version=1.0")
 
 latex_installationtype="packagemanager"
 latex_launchernames=("texmaker")
-latex_dependencies=("perl-tk" )
-lastex_packagenames=("texlive-latex-extra" "texmaker")
+latex_packagedependencies=("perl-tk" )
+latex_packagenames=("texlive-latex-extra" "texmaker")
 latex_launchercontents=("
 [Desktop Entry]
 Name=TeXdoctk
@@ -1327,12 +1327,12 @@ mdadm_installationtype="packagemanager"
 mdadm_packagenames=("mdadm")
 
 megasync_installationtype="packageinstall"
-megasync_dependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
+megasync_packagedependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
 megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.4.0-1.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb")
 megasync_launchernames=("megasync")
 
 mendeley_dependencies_installationtype="packagemanager"
-mendeley_dependencies_dependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
+mendeley_dependencies_packagedependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
 
 mendeley_installationtype="userinherit"
 mendeley_compressedfileurl="https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming"
@@ -1837,7 +1837,7 @@ SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
 STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
 SERVER_MODE = False
 ")
-pgadmin_dependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
+pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
 pgadmin_launchercontents=("
 [Desktop Entry]
 Categories=Network;
@@ -2023,7 +2023,6 @@ Exec=pycharm
 Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png")
 
 pycharmpro_installationtype="userinherit"
-#pycharmpro_keybinds=("pycharm;<Primary><Alt><Super><Space>p;Pycharm Pro")
 pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz"
 pycharmpro_bashfunctions=("alias pycharmpro=\"pycharmpro . &>/dev/null &\"")
 pycharmpro_compressedfiletype="z"
@@ -2162,7 +2161,7 @@ rustc_packagedependencies=("cmake" "build-essential")
 # rustc_url=("https://sh.rustup.rs")
 
 rsync_installationtype="packagemanager"
-rsync_dependencies_packagenames=("canberra-gtk-module")
+rsync_packagedependencies=("canberra-gtk-module")
 rsync_packagenames=("rsync" "grsync")
 rsync_launchernames=("grsync")
 
@@ -2604,7 +2603,7 @@ TryExec=google-chrome
 Type=Application
 Version=1.0")
 
-wireshark_installationtype="packagemanager"
+#wireshark_installationtype="packagemanager"
 wireshark_packagenames=("wireshark")
 wireshark_launchercontents=("
 [Desktop Entry]

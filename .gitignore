@@ -26,3 +26,5 @@ ansible_kernel.log
 t
 customizersudoall.outerr
 customizeruserall.outerr
+customizersudoall.outerr.txt
+customizeruserall.outerr.txt

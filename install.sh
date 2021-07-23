@@ -165,12 +165,12 @@ install_sysmontask()
 install_change-bg()
 {
   # Install script changer to be executed manually or with crontab automatically
-  echo "${wallpapers_changer_script}" > ${USR_BIN_FOLDER}/wallpaper_changer.sh
-  chmod 775 ${USR_BIN_FOLDER}/wallpaper_changer.sh
-  ln -sf ${USR_BIN_FOLDER}/wallpaper_changer.sh ${DIR_IN_PATH}/change-bg
+  echo "${wallpapers_changer_script}" > ${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh
+  chmod 775 ${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh
+  ln -sf ${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh ${DIR_IN_PATH}/change-bg
 
-  echo "${wallpapers_cronjob}" > ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
-  crontab ${BASH_FUNCTIONS_FOLDER}/wallpapers_cronjob
+  echo "${wallpapers_cronjob}" > ${BASH_FUNCTIONS_FOLDER}/change-bg/wallpapers_cronjob
+  crontab ${BASH_FUNCTIONS_FOLDER}/change-bg/wallpapers_cronjob
 
   # Download and install wallpaper
   rm -Rf ${XDG_PICTURES_DIR}/wallpapers
