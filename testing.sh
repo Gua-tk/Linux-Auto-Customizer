@@ -6,6 +6,10 @@ bash install.sh -v -o -i --user 2>&1 | tee customizeruserall.outerr.txt &
 PID_USER=$!
 wait $PID_ROOT
 wait $PID_USER
-shutdown -h now
+if [ "$1" == "shutdown" ]; then
+  shutdown -h now
+else if [ "$1" == "reboot" ]; then
+  reboot
+fi
 
 
