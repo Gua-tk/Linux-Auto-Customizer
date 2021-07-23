@@ -561,8 +561,6 @@ generic_install_pathlinks()
 {
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
-  echo "binatiesinstalled: ${!binariesinstalledpaths}"
-  
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
     local binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
     local binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
