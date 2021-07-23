@@ -68,7 +68,6 @@ if [ -z \"\$(echo \$PATH | grep -Eo \"${DIR_IN_PATH}\")\" ]; then
 fi
 "
 
-
 # The variables in here follow a naming scheme that is required for the code of each feature to obtain its data by
 # variable indirect expansion.
 # The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY.
@@ -98,6 +97,9 @@ fi
 # - FEATUREKEYNAME_downloads: Array of links to avalid donwload file separated by ";" from the desired name for that file.
 #   It will downloaded in ${USR_BIN_FOLDER}/APPNAME/DESIREDFILENAME
 # - FEATUREKEYNAME_repositoryurl: Repository to be cloned. (repositoryclone)
+# - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if
+#   there is manual code for that feature to be executed or not. If it is in one, it will try to execute a function
+#   with its name following a certain pattern
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
 ########################################################################################################################
@@ -1354,7 +1356,8 @@ Type=Application
 Categories=Education;Literature;Qt;
 X-SuSE-translate=false
 MimeType=x-scheme-handler/mendeley;application/pdf;text/x-bibtex;
-X-Mendeley-Version=1")
+X-Mendeley-Version=1
+")
 
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_packagenames=("msttcorefonts")
@@ -1362,18 +1365,21 @@ msttcorefonts_packagenames=("msttcorefonts")
 nautilus_installationtype="packagemanager"
 nautilus_packagenames=("nautilus")
 nautilus_launchernames=("nautilus-autorun-software")
-nautilus_bashfunctions=(
-  "xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
-  "gsettings set org.gnome.desktop.background show-desktop-icons true"
-  "xdg-mime default org.gnome.Nautilus.desktop inode/directory")
+nautilus_bashfunctions=("
+xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
+gsettings set org.gnome.desktop.background show-desktop-icons true
+xdg-mime default org.gnome.Nautilus.desktop inode/directory
+")
 
 nemo_installationtype="packagemanager"
-nemo_bashfunctions=(
-  "xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
-  gsettings set org.gnome.desktop.background show-desktop-icons false
-  gsettings set org.nemo.desktop show-desktop-icons true"
+nemo_bashfunctions=("
+xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+gsettings set org.gnome.desktop.background show-desktop-icons false
+gsettings set org.nemo.desktop show-desktop-icons tru
+""
+alias nemo=\"nohup nemo . &>/dev/null &\"
+")
 
-  "alias nemo=\"nohup nemo . &>/dev/null &\"")
 nemo_packagedependencies=("dconf-editor" "gnome-tweak-tool")
 nemo_autostart="yes"
 nemo_launchercontents=("

@@ -32,13 +32,6 @@ install_R()
 ######################################### USER SOFTWARE FUNCTIONS ######################################################
 ########################################################################################################################
 
-install_ijs()
-{
-  "${USR_BIN_FOLDER}/node/bin/npm" config set prefix "${HOME_FOLDER}/.local"
-  "${USR_BIN_FOLDER}/node/bin/npm" install -g ijavascript
-  "${DIR_IN_PATH}/ijsinstall"
-}
-
 install_julia()
 {
   julia_installationtype="userinherit"
@@ -62,33 +55,40 @@ install_jupyter-lab()
   "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel jupyter jupyterlab jupyterlab-git jupyterlab_markup
 
   "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install bash_kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
-
   "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install pykerberos pywinrm[kerberos]
   "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install powershell_kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install iarm
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install ansible-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install kotlin-jupyter-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install vim-kernel
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install theme-darcula
+
+  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
+
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
 
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install iarm
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
 
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install ansible-kernel
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m ansible_kernel.install
 
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install kotlin-jupyter-kernel
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m kotlin_kernel fix-kernelspec-location
 
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install vim-kernel
   "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m vim_kernel.install
 
   # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install theme-darcula
   "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension install @telamonian/theme-darcula
   "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension enable @telamonian/theme-darcula
+
   "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" lab build
+
+  # ijs legacy install
+  npm config set prefix "${HOME_FOLDER}/.local"
+  npm install -g ijavascript
+  ijsinstall
 
   create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
   create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
-  add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"pga
+  add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"
 }
 
 install_pgadmin()

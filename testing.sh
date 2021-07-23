@@ -13,7 +13,7 @@ wait $PID_ROOT
 wait $PID_USER
 if [ "$1" == "shutdown" ]; then
   shutdown -h now
-else if [ "$1" == "reboot" ]; then
+elif [ "$1" == "reboot" ]; then
   reboot
 fi
 
