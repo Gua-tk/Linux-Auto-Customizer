@@ -161,21 +161,22 @@ install_sysmontask()
 install_change-bg()
 {
   # Install script changer to be executed manually or with crontab automatically
-  mkdir -p "${USR_BIN_FOLDER}/change-bg"
+  rm -Rf "${XDG_PICTURES_DIR}/wallpapers"
+  create_folder "${USR_BIN_FOLDER}/change-bg"
   echo "${wallpapers_changer_script}" > "${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh"
-  chmod 775 ${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh
-  ln -sf ${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh ${DIR_IN_PATH}/change-bg
+  chmod 775 "${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh"
+  ln -sf "${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh" "${DIR_IN_PATH}/change-bg"
 
-  echo "${wallpapers_cronjob}" > ${BASH_FUNCTIONS_FOLDER}/change-bg/wallpapers_cronjob
-  crontab ${BASH_FUNCTIONS_FOLDER}/change-bg/wallpapers_cronjob
+  echo "${wallpapers_cronjob}" > "${USR_BIN_FOLDER}/change-bg/wallpapers_cronjob"
+  crontab "${USR_BIN_FOLDER}/change-bg/wallpapers_cronjob"
 
   # Download and install wallpaper
-  rm -Rf ${XDG_PICTURES_DIR}/wallpapers
-  mkdir -p ${XDG_PICTURES_DIR}/wallpapers
-  git clone ${wallpapers_downloader} ${XDG_PICTURES_DIR}/wallpapers
+  rm -Rf "${XDG_PICTURES_DIR}/wallpapers"
+  create_folder "${XDG_PICTURES_DIR}/wallpapers"
+  git clone "${wallpapers_downloader}" "${XDG_PICTURES_DIR}/wallpapers"
 
   $(cd ${XDG_PICTURES_DIR}/wallpapers; tar -xzf *.tar.gz)
-  rm -f ${XDG_PICTURES_DIR}/wallpapers/*.tar.gz
+  rm -f "${XDG_PICTURES_DIR}/wallpapers/*.tar.gz"
 
   for filename in $(ls /usr/share/backgrounds); do
     if [ -f "/usr/share/backgrounds/${filename}" ]; then
