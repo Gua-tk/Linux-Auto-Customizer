@@ -447,12 +447,10 @@ generic_install_launchers()
 {
   local -r launchercontents="$1_launchercontents[@]"
   local name_suffix_anticollision=""
-  if [ ! -z "${!launchercontents}" ]; then
-    for launchercontent in "${!launchercontents}"; do
-      create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
-      name_suffix_anticollision="${name_suffix_anticollision}_"
+  for launchercontent in "${!launchercontents}"; do
+    create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
     done
-  fi
 }
 
 # - Description: Expands function contents and add them to .bashrc indirectly using bash_functions
@@ -463,12 +461,11 @@ generic_install_functions()
 {
   local -r bashfunctions="$1_bashfunctions[@]"
   name_suffix_anticollision=""
-  if [ ! -z "${!bashfunctions}" ]; then
-    for bashfunction in "${!bashfunctions}"; do
-      add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
-      name_suffix_anticollision="${name_suffix_anticollision}_"
-    done
-  fi
+  echo "bashfunctions ${!bashfunctions}" 
+  for bashfunction in "${!bashfunctions}"; do
+    add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
 }
 
 # - Description: Expands launcher names and add them to the favorites subsystem if FLAF_FAVORITES is set to 1.
@@ -524,14 +521,12 @@ generic_install_keybindings()
 generic_install_downloads()
 {
   local -r downloads="$1_downloads[@]"
-  if [ ! -z "${!downloads}" ]; then
-  	mkdir -p "${USR_BIN_FOLDER}/$1"
-    for download in ${!downloads}; do
-      local -r url="$(echo "${download}" | cut -d ";" -f1)"
-      local -r name="$(echo "${download}" | cut -d ";" -f2)"
-      download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
-    done
-  fi
+  for download in ${!downloads}; do
+    mkdir -p "${USR_BIN_FOLDER}/$1"
+    local -r url="$(echo "${download}" | cut -d ";" -f1)"
+    local -r name="$(echo "${download}" | cut -d ";" -f2)"
+    download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
+  done
 }
 
 # - Description:
@@ -653,12 +648,12 @@ rootgeneric_installation_type() {
   local -r compressedfileurl="$1_compressedfileurl"
   local -r compressedfiletype="$1_compressedfiletype"
 
+  echo "packagedependencies ${!packagedependencies}" 
   # Install dependency packages
-  if [ ! -z "${!packagedependencies}" ]; then
-    for packagedependency in "${!packagedependencies}"; do
-      apt-get install -y "${packagedependency}"
-    done
-  fi
+  for packagedependency in ${!packagedependencies}; do
+    apt-get install -y "${packagedependency}"
+  done
+
 
   # Download package and install using manual package manager
   if [ "$2" == packageinstall ]; then
@@ -674,17 +669,15 @@ rootgeneric_installation_type() {
       done
     fi
   else  # Install with default package manager
-    for packagename in "${!packagenames}"; do
+    for packagename in ${!packagenames}; do
       apt-get install -y "${packagename}"
     done
   fi
 
   # Copy launchers if defined
-  if [ ! -z "${!launchernames}" ]; then
-    for launchername in "${!launchernames}"; do
-      copy_launcher "${launchername}.desktop"
-    done
-  fi
+  for launchername in ${!launchernames}; do
+    copy_launcher "${launchername}.desktop"
+  done
 }
 
 # - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name

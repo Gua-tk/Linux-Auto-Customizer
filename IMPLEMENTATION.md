@@ -31,6 +31,7 @@
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
+- [ ] `data_features.sh`: ttf-mscorefonts-installer autoaccept end user agreement or goes out
 - [ ] `data_features.sh`: in rsync installation # alias rs="rsync -av --progress"
 - [ ] `data_features.sh`: validate `promptcolors` function. Write custom color codes of gnome-terminal profile through gsettings or similar
 - [ ] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH

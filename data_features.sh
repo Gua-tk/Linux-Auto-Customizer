@@ -1362,7 +1362,7 @@ msttcorefonts_packagenames=("msttcorefonts")
 
 nautilus_installationtype="packagemanager"
 nautilus_packagenames=("nautilus")
-nautilus_launchernames=("nautilus")
+nautilus_launchernames=("nautilus-autorun-software")
 nautilus_bashfunctions=(
   "xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search"
   "gsettings set org.gnome.desktop.background show-desktop-icons true"
@@ -2011,7 +2011,7 @@ Comment=Python IDE Community
 Encoding=UTF-8
 Exec=pycharm %F
 GenericName=Pycharm
-Icon=${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.png
+Icon=${USR_BIN_FOLDER}/pycharm/bin/pycharm.png
 Keywords=dev;programming;python;
 MimeType=
 Name=PyCharm
@@ -2025,7 +2025,7 @@ Version=1.0
 [Desktop Action NewWindow]
 Name=Pycharm New Window
 Exec=pycharm
-Icon=${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.png")
+Icon=${USR_BIN_FOLDER}/pycharm/bin/pycharm.png")
 
 pycharmpro_installationtype="userinherit"
 pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz"
@@ -2136,7 +2136,7 @@ Version=1.0")
 
 reddit_installationtype="environmental"
 reddit_url="https://www.reddit.com/"
-reddit_downloads=("https://duckduckgo.com/i/b6b8ccc2.png")
+reddit_downloads=("https://duckduckgo.com/i/b6b8ccc2.png;reddit_icon.svg")
 reddit_bashfunctions=("alias reddit=\"nohup xdg-open ${reddit_url} &>/dev/null &\"")
 reddit_launchercontents=("
 [Desktop Entry]
@@ -2319,7 +2319,7 @@ Comment=General Purpose Programming Text Editor
 Encoding=UTF-8
 Exec=sublime %F
 GenericName=Text Editor, programming...
-Icon=$HOME/.bin/sublime-text/Icon/256x256/sublime-text.png
+Icon=$HOME/.bin/sublime/Icon/256x256/sublime-text.png
 Keywords=subl;sublime;
 MimeType=
 Name=Sublime Text
@@ -2428,7 +2428,7 @@ transmission_gtk_launchernames=("transmission-gtk")
 
 trello_installationtype="environmental"
 trello_url="https://trello.com"
-trello_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png;trello.svg.png")
+trello_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png;trello_icon.svg")
 trello_bashfunctions=("alias trello=\"nohup xdg-open ${trello_url} &>/dev/null &\"")
 trello_launchercontents=("
 [Desktop Entry]
@@ -2436,7 +2436,7 @@ Categories=Network;
 Comment=Desktop app to Trello from Chrome
 Encoding=UTF-8
 Exec=xdg-open ${trello_url}
-Icon=${USR_BIN_FOLDER}/trello/trello_icon.svg.png
+Icon=${USR_BIN_FOLDER}/trello/trello_icon.svg
 GenericName=Google Calendar
 Keywords=trello;
 MimeType=
@@ -2450,7 +2450,7 @@ Version=1.0")
 
 tumblr_installationtype="environmental"
 tumblr_url="https://www.tumblr.com/"
-tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png;tumblr_icon.svg.png")
+tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png;tumblr_icon.svg")
 tumblr_bashfunctions=("nohup alias tumblr=\"nohup xdg-open ${tumblr_url} &>/dev/null &\"")
 tumblr_launchercontents=("
 [Desktop Entry]
@@ -2472,13 +2472,15 @@ Version=1.0")
 
 twitch_installationtype="environmental"
 twitch_url="https://twitch.tv/"
-twitch_downloads=("http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png;twitch_icon.svg.png")
+twitch_downloads=("http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png;twitch_icon.svg")
 twitch_bashfunctions=("alias twitch=\"nohup xdg-open ${twitch_url} &>/dev/null &\"")
 twitch_launchercontents=("
 [Desktop Entry]
 Categories=Network;
 Comment=Desktop app to Twitch from Chrome
 Encoding=UTF-8
+Exec=xdg-open ${twitch_url}
+Icon=${USR_BIN_FOLDER}/twitch/twitch_icon.svg
 GenericName=Twitch.tv
 Keywords=twitch;Twitch;
 MimeType=
@@ -2608,7 +2610,7 @@ TryExec=google-chrome
 Type=Application
 Version=1.0")
 
-#wireshark_installationtype="packagemanager"
+wireshark_installationtype="packagemanager"
 wireshark_packagenames=("wireshark")
 wireshark_launchercontents=("
 [Desktop Entry]

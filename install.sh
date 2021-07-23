@@ -27,12 +27,6 @@ install_R()
   R -e "${R_jupyter_lab_function}"
 }
 
-install_wireshark()
-{
-  echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
-  generic_install wireshark
-}
-
 ########################################################################################################################
 ######################################### USER SOFTWARE FUNCTIONS ######################################################
 ########################################################################################################################
@@ -215,7 +209,6 @@ install_templates()
 install_terminal-background()
 {
   local -r profile_uuid="$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d "'" -f2)"
-  #2E3436
   if [ -n "${profile_uuid}" ]; then
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"${profile_uuid}"/ use-theme-colors false
     # soft grey terminal background
@@ -223,7 +216,6 @@ install_terminal-background()
     # green text terminal
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"${profile_uuid}"/ foreground-color 'rgb(28,135,39)'
     # Cursor like in a text editor
-
     gsettings set org.gnome.Terminal.Legacy.Profile:/:"${profile_uuid}"/ cursor-shape 'ibeam'
   fi
 }
