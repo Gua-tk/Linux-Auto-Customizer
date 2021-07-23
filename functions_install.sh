@@ -655,6 +655,7 @@ rootgeneric_installation_type() {
   done
 
 
+
   # Download package and install using manual package manager
   if [ "$2" == packageinstall ]; then
     # Use a compressed file that contains .debs
