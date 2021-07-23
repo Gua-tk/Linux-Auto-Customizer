@@ -165,7 +165,8 @@ install_sysmontask()
 install_change-bg()
 {
   # Install script changer to be executed manually or with crontab automatically
-  echo "${wallpapers_changer_script}" > ${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh
+  mkdir -p "${USR_BIN_FOLDER}/change-bg"
+  echo "${wallpapers_changer_script}" > "${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh"
   chmod 775 ${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh
   ln -sf ${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh ${DIR_IN_PATH}/change-bg
 
