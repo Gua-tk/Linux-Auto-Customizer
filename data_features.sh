@@ -1369,9 +1369,9 @@ nautilus_bashfunctions=(
 
 nemo_installationtype="packagemanager"
 nemo_bashfunctions=(
-  "xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search"
-  "gsettings set org.gnome.desktop.background show-desktop-icons false"
-  "gsettings set org.nemo.desktop show-desktop-icons true"
+  "xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+  gsettings set org.gnome.desktop.background show-desktop-icons false
+  gsettings set org.nemo.desktop show-desktop-icons true"
 
   "alias nemo=\"nohup nemo . &>/dev/null &\"")
 nemo_packagedependencies=("dconf-editor" "gnome-tweak-tool")
@@ -1718,10 +1718,10 @@ nedit_launchernames=("nedit")
 net_tools_installationtype="packagemanager"
 net_tools_packagenames=("net-tools")
 
-node_installationtype="userinherit"
-node_compressedfileurl="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
-node_compressedfiletype="J"
-node_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
+npm_installationtype="userinherit"
+npm_compressedfileurl="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
+npm_compressedfiletype="J"
+npm_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
 
 notepadqq_installationtype="packagemanager"
 notepadqq_packagenames=("notepadqq")

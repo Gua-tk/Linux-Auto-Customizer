@@ -450,7 +450,7 @@ generic_install_launchers()
   for launchercontent in "${!launchercontents}"; do
     create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
     name_suffix_anticollision="${name_suffix_anticollision}_"
-    done
+  done
 }
 
 # - Description: Expands function contents and add them to .bashrc indirectly using bash_functions
@@ -461,7 +461,6 @@ generic_install_functions()
 {
   local -r bashfunctions="$1_bashfunctions[@]"
   name_suffix_anticollision=""
-  echo "bashfunctions ${!bashfunctions}" 
   for bashfunction in "${!bashfunctions}"; do
     add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
     name_suffix_anticollision="${name_suffix_anticollision}_"
@@ -562,9 +561,11 @@ generic_install_pathlinks()
 {
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
+  echo "binatiesinstalled: ${!binariesinstalledpaths}"
+  
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
-    local -r binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
-    local -r binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
+    local binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
+    local binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
     # Absolute path
     if [ -n "$(echo "${binary_name}" | grep -Eo "^/")" ]; then
       create_links_in_path "${binary_path}" "${binary_name}"
@@ -616,6 +617,7 @@ generic_install() {
     generic_install_favorites "${featurename}"
     generic_install_file_associations "${featurename}"
     generic_install_keybindings "${featurename}"
+    generic_install_pathlinks "${featurename}"
   fi
 }
 
@@ -648,7 +650,6 @@ rootgeneric_installation_type() {
   local -r compressedfileurl="$1_compressedfileurl"
   local -r compressedfiletype="$1_compressedfiletype"
 
-  echo "packagedependencies ${!packagedependencies}" 
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
     apt-get install -y "${packagedependency}"
@@ -775,6 +776,7 @@ fi
 
 data_and_file_structures_initialization()
 {
+  output_proxy_executioner "echo INFO: Initializing data and file structures." ${FLAG_QUIETNESS}
   FLAG_MODE=install  # Install mode
   create_folder ${USR_BIN_FOLDER}
   create_folder ${BASH_FUNCTIONS_FOLDER}
@@ -786,10 +788,9 @@ data_and_file_structures_initialization()
   if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
     create_file "${BASH_FUNCTIONS_PATH}"
   else
-    echo hasta aqui
     # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
+    output_proxy_executioner "echo INFO: Checking the features that are already installed. This may take a while..." ${FLAG_QUIETNESS}
     source "${BASH_FUNCTIONS_PATH}"
-    echo dw
   fi
 
   # Updates initializations

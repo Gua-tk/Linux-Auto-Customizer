@@ -329,6 +329,7 @@ add_programs_with_x_permissions()
 
 argument_processing()
 {
+  output_proxy_executioner "echo INFO: Processing arguments" ${FLAG_QUIETNESS}
     while [[ $# -gt 0 ]]; do
     key="$1"
 
