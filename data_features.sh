@@ -301,7 +301,7 @@ Comment=Develop with pleasure!
 Encoding=UTF-8
 Exec=code %f
 GenericName=IDE for programming
-Icon=${HOME}/.bin/visual-studio/resources/app/resources/linux/code.png
+Icon=${USR_BIN_FOLDER}/code/resources/app/resources/linux/code.png
 Keywords=code;
 MimeType=
 Name=Visual Studio Code
@@ -487,14 +487,14 @@ docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containe
 
 documents_installationtype="environmental"
 documents_url="https://docs.google.com/document/"
-documents_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;document_icon.svg")
+documents_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;documents_icon.svg")
 documents_bashfunctions=("alias document=\"nohup xdg-open ${document_url} &>/dev/null &\"")
 documents_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Documents from Chrome
 Encoding=UTF-8
 Exec=xdg-open ${document_url}
-Icon=${USR_BIN_FOLDER}/document/document_icon.svg
+Icon=${USR_BIN_FOLDER}/document/documents_icon.svg
 GenericName=Document
 Keywords=documents;
 MimeType=
@@ -775,15 +775,15 @@ fonts_noto_sans_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
 
 forms_installationtype="environmental"
-forms_url=https://docs.google.com/forms/
+forms_url="https://docs.google.com/forms/"
 forms_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg;forms_icon.svg")
-forms_bashfunctions=("alias forms=\" nohup xdg-open ${forms_url} &>/dev/null &\"")
+forms_bashfunctions=("alias forms=\"nohup xdg-open ${forms_url} &>/dev/null &\"")
 forms_launchercontents=("[Desktop Entry]
 Categories=Network;
 Comment=Desktop app to open Google Forms from Chrome
 Encoding=UTF-8
 Exec=xdg-open ${facebook_url}
-Icon=${USR_BIN_FOLDER}/facebook/forms_icon.svg
+Icon=${USR_BIN_FOLDER}/forms/forms_icon.svg
 GenericName=Document
 Keywords=forms;
 MimeType=
@@ -866,7 +866,8 @@ github_desktop_launchernames=("github-desktop")
 gnat_gps_installationtype="packagemanager"
 gnat_gps_packagenames=("gnat-gps")
 gnat_gps_launchernames=("gnat-programming-studio")
-gnat_gps_launchercontents=("[Desktop Entry]
+gnat_gps_launchercontents=("
+[Desktop Entry]
 Type=Application
 Name=GNAT Programming Studio
 Comment=Integrated Development Environment
@@ -951,7 +952,7 @@ Version=1.0"
 
 gitlab_installationtype="environmental"
 gitlab_url="https://gitlab.com/"
-gitlab_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/18/GitLab_Logo.svg;gitlab_icon.svg")
+gitlab_downloads=("https://about.gitlab.com/images/press/logo/svg/gitlab-icon-rgb.svg;gitlab_icon.svg")
 gitlab_bashfunctions=("alias gitlab=\"nohup xdg-open ${gitlab_url} &>/dev/null &\"")
 gitlab_launchercontents=("
 [Desktop Entry]
@@ -1113,7 +1114,7 @@ Comment=Capable and Ergonomic IDE for JVM
 Encoding=UTF-8
 Exec=ideac %f
 GenericName=Java programming IDE
-Icon=${HOME_FOLDER}/.bin/idea-ic/bin/idea.png
+Icon=${USR_BIN_FOLDER}/ideac/bin/idea.svg
 Keywords=IDE;programming;java;dev;
 MimeType=
 Name=IntelliJ IDEA Community Edition
@@ -1167,7 +1168,7 @@ ipi()
 }
 ")
 
-iqmol_installationtype="installpackage"
+iqmol_installationtype="packageinstall"
 iqmol_packageurls=("http://www.iqmol.org/download.php?get=iqmol_2.14.deb")
 iqmol_downloads=("http://www.iqmol.org/images/icon.png;iqmol_icon.png")
 iqmol_launchercontents=("
@@ -1825,7 +1826,7 @@ pacman_launchernames=("pacman")
 parallel_installationtype="packagemanager"
 parallel_packagenames=("parallel")
 
-pgadmin_installationtype=userpip  # //RF not used yet... manual installation
+#pgadmin_installationtype="userpip"  
 pgadmin_pippackages=("pgadmin4")
 pgadmin_basefolder="${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4"
 pgadmin_datafiles=("
@@ -2006,7 +2007,7 @@ Comment=Python IDE Community
 Encoding=UTF-8
 Exec=pycharm %F
 GenericName=Pycharm
-Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png
+Icon=${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.png
 Keywords=dev;programming;python;
 MimeType=
 Name=PyCharm
@@ -2020,7 +2021,7 @@ Version=1.0
 [Desktop Action NewWindow]
 Name=Pycharm New Window
 Exec=pycharm
-Icon=${HOME_FOLDER}/.bin/pycharm-community/bin/pycharm.png")
+Icon=${USR_BIN_FOLDER}/pycharm-community/bin/pycharm.png")
 
 pycharmpro_installationtype="userinherit"
 pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz"
@@ -2052,7 +2053,7 @@ pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "l
 
 # Dependency of pgadmin4
 python3_installationtype="packagemanager"
-python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
+python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel" "python3.8-venv")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
 python3_bashfunctions=("
 # Create and source a venv with the given name passed as parameter.
 # If already exists, only sources activate
@@ -2118,7 +2119,7 @@ Comment=Desktop app for programming in R
 Encoding=UTF-8
 Exec=rstudio
 GenericName=RStudio
-Icon=$HOME/.bin/rstudio/www/images/favicon.ico
+Icon=${USR_BIN_FOLDER}/rstudio/www/images/favicon.ico
 Keywords=rstudio
 MimeType=text/plain;
 Name=RStudio

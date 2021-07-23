@@ -100,6 +100,7 @@
 - [ ] `install.sh`, `uninstall.sh`: zenmap (nmap gui) (virtual environment)
 - [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/)
 - [ ] `data_features.sh`: Rstudio split libssl-dev dependency 
+- [ ] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 
 # TO-DO uninstall.sh and uninstall core for v1.0
 
