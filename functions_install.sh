@@ -522,7 +522,7 @@ generic_install_downloads()
 {
   local -r downloads="$1_downloads[@]"
   for download in ${!downloads}; do
-    mkdir -p "${USR_BIN_FOLDER}/$1"
+    create_folder "${USR_BIN_FOLDER}/$1"
     local -r url="$(echo "${download}" | cut -d ";" -f1)"
     local -r name="$(echo "${download}" | cut -d ";" -f2)"
     download "${url}" "${USR_BIN_FOLDER}/$1/${name}"

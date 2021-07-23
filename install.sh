@@ -226,11 +226,8 @@ install_terminal-background()
 ##################
 main()
 {
-echo jssdhfjh
   data_and_file_structures_initialization
-  echo nope
   argument_processing "$@"
-  echo qhT
   pre_install_update
   execute_installation
   post_install_clean

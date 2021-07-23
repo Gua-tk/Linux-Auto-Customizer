@@ -996,7 +996,7 @@ Version=1.0")
 googlecalendar_installationtype="environmental"
 googlecalendar_url=https://calendar.google.com/
 googlecalendar_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg;googlecalendar_icon.svg")
-googlecalendar_bashfunctions=("alias googlecalendar=\"nohup xdg-open ${google-calendar_url} &>/dev/null &\"")
+googlecalendar_bashfunctions=("alias googlecalendar=\"nohup xdg-open ${googlecalendar_url} &>/dev/null &\"")
 googlecalendar_launchercontents=("
 [Desktop Entry]
 Categories=Network;
@@ -1691,7 +1691,7 @@ Name[zh_TW]=回收筒
 Exec=nemo trash:///")
 
 netflix_installationtype="environmental"
-netflix_url=https://www.netflix.com
+netflix_url="https://www.netflix.com"
 netflix_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg;netflix_icon.svg")
 netflix_bashfunctions=("alias netflix=\"nohup xdg-open ${netflix_url} &>/dev/null &\"")
 netflix_launchercontents=("
