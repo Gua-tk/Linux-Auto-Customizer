@@ -17,8 +17,8 @@
 
 ###### NEW FEATURES
 - [ ] `data_features.sh`, `functions_common.sh`: Manage autostart in generic install: autostarting programs (`caffeine`, `copyq`... ) steam? teams? teamviewer?
-- [ ] `install.sh`: Reload `bash` env at the end of install must not need to run bash command, instead use hash -r or similar strategy
-- [ ] `install.sh`: Move favorites subsystem to `~/.profile`, so it is not executed each time we create a terminal. --> Create another variable type for indirect expansion for features in bashrc
+- [ ] `install.sh`: Reload `bash` env at the end of install must not need to run bash command, instead use hash -r or similar strategy, also reload font cache
+- [ ] `install.sh`: Move favorites subsystem and keybinding subsystem initializations to `~/.profile`, so it is not executed each time we create a terminal. --> Create another variable type for indirect expansion for features in .profile 
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `install.sh`, `uninstall.sh`: Add npm packagemanager installationtype
 - [ ] `install.sh`, `uninstall.sh`: Add fonts installationtype
