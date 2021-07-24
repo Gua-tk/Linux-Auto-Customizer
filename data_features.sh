@@ -1218,6 +1218,7 @@ Terminal=true
 Type=Application
 Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;ParallelComputing;DataVisualization;ConsoleOnly;")
 
+#jupyter_installationtype=""
 jupyter_lab_launchercontents=("
 [Desktop Entry]
 Categories=IDE; text_editor;
@@ -2056,6 +2057,7 @@ TryExec=pycharmpro
 Type=Application
 Version=1.0")
 
+#pypy3_installationtype="userinherit"
 pypy3_downloader="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
 pypy3_dependencies_installationtype="packagemanager"
 pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
