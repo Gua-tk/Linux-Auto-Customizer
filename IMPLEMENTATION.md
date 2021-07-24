@@ -52,6 +52,7 @@
 - [ ] `data_features.sh`: Search for a new version of caffeine or do the modifications in the actual version, but do not apply a patch #  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
 - [ ] `data_features.sh`: restore clonezilla which has been lost in combat clonezilla_launcher="[Desktop Entry] Categories=backup;images;restoration;boot;  Comment=Create bootable clonezilla images Encoding=UTF-8  Exec=sudo clonezilla  GenericName=Disk image utility  Icon=/usr/share/gdm/themes/drbl-gdm/clonezilla/ocslogo-1.png  Keywords=clonezilla;CloneZilla;iso  MimeType=  Name=CloneZilla  StartupNotify=true  StartupWMClass=CloneZilla  Terminal=true  TryExec=clonezilla  Type=Application  Version=1.0"   "--clonezilla|--CloneZilla|--cloneZilla;1;| CloneZilla | Disk cloning, disk imaging, data recovery, and deployment | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 - [ ] `install.sh`: register openoffice file associations
+- [ ] `screenshots`: Screenshot is temporarily saved in clipboard for `paste` in addition to saving the image at `Images/screenshots`
 
 ###### NEW FEATURES
 - [~] `data_features.sh`, `common_data.sh`: Add new installation `install_fastcommands` to install aliases - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias upgrade="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear" alias bi=\"sudo apt --fix-broken install\"
@@ -82,6 +83,8 @@
 - [ ] `install.sh`, `uninstall.sh`: ghostwriter (text editor for markdown and others with html preview)
 - [ ] `install.sh`, `uninstall.sh`: jshell (apt-get install default-jdk)
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
+- [ ] `install.sh`, `uninstall.sh`: `Google`/`translator` internet shortcut launcher and value possibility to use w3m to navigate internet through console and see images there with w3m-img.
+- [ ] `git functions`: Git ammend lets you change the message for previous commit; research about changing git commit message after push for git associated functions creation. 
 - [ ] `install.sh`, `uninstall.sh`: Mdadm (raid manager)
 - [ ] `install.sh`, `uninstall.sh`: matlab (add matlab template)
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
