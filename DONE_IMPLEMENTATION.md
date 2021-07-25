@@ -63,6 +63,11 @@
 - [x] `install.sh`: Add debug mode, with a simple eval to inject code as a function
 - [x] `commmon_functions.sh`: Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
 - [x] `README.md`: Refactor order of the table to follow the conventions on `install.sh`. (implement three sections)
+- [x] `functions_install.sh`: Extract creation of binaries to a common part of a generic install. Give extra logic to this functions to accept relative (from the created folder for the feature in USR_BIN_FOLDER) or absolute paths.
+- [x] `install.sh`, `data_fatures.sh`: Refactor functions of root to use the generic_install function. AutoFirma, OpenOffice, nemo, WireShark, gpaint, iqmol, remaining among others
+- [x] `functions_install.sh`, `data_features.sh`: Add parametrization in generic_install to clone a repository instead of downloading and decompressing
+- [x] `functions_install.sh`: Parametrize Autofirma: In the generic install of a packageinstall add the possibility of having a compressed file that contains a deb instead of directly a deb.. This
+- [x] `functions_install.sh`: Create another installationtype for cloning repositories.
 
 
 ###### Axel
@@ -124,3 +129,8 @@
 - [x] `functions_install.sh`: create user generic install
 - [x] `data_features.sh`: Create high level functions that perform variable indirect expansion to install different types of program.
 - [x] `install.sh`, `uninstall.sh`: New argument in install.sh add to favorites -f / -n normal installation without favorites(?) also complementary flag in uninstall.sh
+- [x] `data_features.sh`: `e` convert to edit and echo function
+- [x] `data_features.sh`: `x` refactor and update with cases of not existing file, possibility of adding arguments etc.
+- [x] `data_features.sh`, `functions_common.sh`: Manage autostart in generic install: autostarting programs (`caffeine`, `copyq`... ) steam? teams? teamviewer?
+- [x] `install.sh`, `uninstall.sh`: Add fonts installationtype --> Parametrized via userinherit and packagemanager
+- [x] `install.sh`: Depopulation of nonrelevant install_program functions and programs from `install.sh`

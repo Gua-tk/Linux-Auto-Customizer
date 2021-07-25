@@ -84,16 +84,8 @@ install_pypy3_mid() {
   # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
 }
 
-install_sysmontask() {
-  rm -Rf ${USR_BIN_FOLDER}/SysMonTask
-  create_folder ${USR_BIN_FOLDER}/SysMonTask
-  git clone ${sysmontask_repositoryurl} ${USR_BIN_FOLDER}/SysMonTask
-  #chgrp -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
-  #chown -R ${SUDO_USER} ${USR_BIN_FOLDER}/SysMonTask
-  #chmod -R 755 ${USR_BIN_FOLDER}/SysMonTask
+install_sysmontask_mid() {
   $(cd ${USR_BIN_FOLDER}/SysMonTask && python3 setup.py install &>/dev/null)
-  #python3 ${USR_BIN_FOLDER}/SysMonTask/setup.py install
-  copy_launcher "SysMonTask.desktop"
 }
 
 ########################################################################################################################
@@ -163,6 +155,10 @@ main() {
   execute_installation
   post_install_clean
   bell_sound
+
+  hash -r
+  fc-cache -f -v
+  bash
 }
 
 # Import file of common variables in a relative way, so customizer can be called system-wide

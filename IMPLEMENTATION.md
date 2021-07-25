@@ -5,28 +5,20 @@
 ###### UPDATES
 - [ ] `functions_install`: put nice color to wget bar in download
 - [ ] `functions_install`: Continue previous installation with wget.
-- [ ] `functions_install.sh`: Extract creation of binaries to a common part of a generic install. Give extra logic to this functions to accept relative (from the created folder for the feature in USR_BIN_FOLDER) or absolute paths.
 - [ ] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
-- [ ] `install.sh`, `data_fatures.sh`: Refactor functions of root to use the generic_install function. AutoFirma, OpenOffice, nemo, WireShark, gpaint, iqmol, remaining among others
 - [ ] `functions_common.sh`, `table.md`: Remove spaces for help table
-- [ ] `functions_install.sh`, `data_features.sh`: Add parametrization in generic_install_userinherit to clone a repository instead of downloading and decompressing
 - [ ] `common_data.md`: (for the --help) In the master table, put the extensions .c, .h, etc in bold or put it in another field, so they are not between literal tildes. In that way, they are not recognized in the help.
 - [ ] `functions_common.sh`: (for the --help) in autogen help trim spaces in columns
 - [ ] `functions_install.sh`: Headers of the generic install mini-functions.
-- [ ] `functions_install.sh`: Parametrize Autofirma: In the generic install of a packageinstall add the possibility of having a compressed file that contains a deb instead of directly a deb.. This
 
 ###### NEW FEATURES
-- [ ] `data_features.sh`, `functions_common.sh`: Manage autostart in generic install: autostarting programs (`caffeine`, `copyq`... ) steam? teams? teamviewer?
 - [ ] `install.sh`: Reload `bash` env at the end of install must not need to run bash command, instead use hash -r or similar strategy, also reload font cache
 - [ ] `install.sh`: Move favorites subsystem and keybinding subsystem initializations to `~/.profile`, so it is not executed each time we create a terminal. --> Create another variable type for indirect expansion for features in .profile 
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `install.sh`, `uninstall.sh`: Add npm packagemanager installationtype
-- [ ] `install.sh`, `uninstall.sh`: Add fonts installationtype
-- [ ] `functions_install.sh`: Create another installationtype for cloning repositories.
 - [ ] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions)
 - [ ] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to generify the permissions of the installation.
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`...) depending on which is the main package-manager
-- [ ] `install.sh`: Depopulation of nonrelevant install_program functions and programs from `install.sh`
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
@@ -35,12 +27,10 @@
 - [ ] `data_features.sh`: in rsync installation # alias rs="rsync -av --progress"
 - [ ] `data_features.sh`: validate `promptcolors` function. Write custom color codes of gnome-terminal profile through gsettings or similar
 - [ ] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
-- [ ] `data_features.sh`: Use nohub in aliases to prevent closing of feature when a process finish if a hanging terminal is closed
+- [ ] `data_features.sh`: Use nohup in aliases to prevent closing of feature when a process finish if a hanging terminal is closed
 - [ ] `data_features.sh`: Add alias \`&\` to notepadqq, and furthermore
 - [ ] `data_features.sh`: Colors palette of default profile from terminal function (fonts lookalike)
 - [~] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
-- [~] `data_features.sh`: `e` convert to edit and echo function
-- [ ] `data_features.sh`: `x` refactor and update with cases of not existing file, possibility of adding arguments etc.
 - [ ] `data_features.sh`: refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] `install.sh`: May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 - [ ] `data_features.sh`: All features must be standarized to the default name and format of the variables for indirect expansion.
@@ -62,6 +52,7 @@
 - [ ] `data_features.sh`, `common_data.sh`: `edit` functions. It edits a system or user configuration file by passing the argument of the name. By default with no parameters it should edit .bashrc.  alias editbashrc="editor ${HOME}/.bashrc"  alias editprofile="editor ${HOME}/.profile" alias editfunctions="editor ${HOME}/.bash_functions" sshConfig="pluma ${HOME}/.ssh/config" also edit shortcuts.sh if present, edit fastcommands if present etc. whatever it is interesting 
 - [ ] `data_features.sh`: Screenshots Keyboard combination set to the same as for windows or similar (Windows+Shift+s) --> create to function to install custom keyboard shortcut combinations
 - [ ] `data_features.sh`, `common_data.sh`: rewrite k as function: #alias k9="kill -9"# alias killbyport="k9 \`lsof -i:3000 -t\`"
+- [ ] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
@@ -104,7 +95,6 @@
 - [ ] `install.sh`, `uninstall.sh`: zenmap (nmap gui) (virtual environment)
 - [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/)
 - [ ] `data_features.sh`: Rstudio split libssl-dev dependency 
-- [ ] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 - [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
 
 # TO-DO uninstall.sh and uninstall core for v1.0

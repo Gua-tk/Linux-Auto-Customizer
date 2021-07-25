@@ -2375,6 +2375,9 @@ StartupWMClass=synaptic
 
 sysmontask_installationtype="repositoryclone"
 sysmontask_repositoryurl="https://github.com/KrispyCamel4u/SysMonTask.git"
+sysmontask_manualcontentavailable="0;1;0"
+sysmontask_launchernames=("SysMonTask")
+sysmontask_bashfunctions=("alias sysmontask=\"nohup sysmontask &>/dev/null &\"")
 
 teamviewer_installationtype="packageinstall"
 teamviewer_packageurls=("https://download.teamviewer.com/download/linux/teamviewer_amd64.deb")

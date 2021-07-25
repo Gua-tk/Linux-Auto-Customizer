@@ -38,49 +38,14 @@ add_bash_function() {
   fi
 }
 
-
-# - Description: Download and install a fonts into ~/.fonts directory
-# - Permissions:
-# - Argument 1: Link to the font to be downloaded
-# - Argument 2: Extension of the file
-# - Argument 3: Name of the file
-add_font() {
-  rm -Rf ${FONTS_FOLDER}/$3_font
-  mkdir -p ${FONTS_FOLDER}/$3_font
-  download "$1" "${FONTS_FOLDER}/$3_font/$3"
-  decompress "$2" "${FONTS_FOLDER}/$3_font/$3"
-  fc-cache -f -v
-}
-
-# - Description: Create .desktop with custom url to open a link in favorite internet navigator
-# - Permissions: This functions needs to be executed as user
-# - Argument 1: Name of the program
-# - Argument 2: Link of the icon of the program
-add_internet_shortcut() {
-  # Perform indirect variable expansion
-  local -r icon=$1_icon
-  local -r launcher=$1_launcher
-  local -r alias=$1_alias
-  local -r url=$1_url
-
-  # Obtain icon for program
-  mkdir -p "${USR_BIN_FOLDER}/$1"
-  (
-    cd ${USR_BIN_FOLDER}/$1
-    wget -qO $1_icon.svg --show-progress ${!icon}
-  )
-
-  # Parametrize the exec and icon line of the desktop launcher
-  local -r icon_exec_launcher_line="
-  Exec=xdg-open ${!url}
-  Icon=${USR_BIN_FOLDER}/$1/$1_icon.svg
-  "
-  # add the icon and exec lines to desktop launcher
-  local -r launcher_complete="${!launcher}${icon_exec_launcher_line}"
-  create_manual_launcher "${launcher_complete}" $1
-
-  # Add the corresponding alias
-  add_bash_function "${!alias}" "$1.sh"
+# Description: Sets keybinding data to add a keybinding for keybind_function bash function
+# Permissions: can be executed indifferently as root or user
+# Argument 1: Command to be run with the keyboard shortcut
+# Argument 2: Set of keys with the right format to be binded
+# Argument 3: Descriptive name of the keybinding
+add_keybinding()
+{
+  echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
 }
 
 # - Description: Add new program launcher to the task bar given its desktop launcher filename.
@@ -374,59 +339,6 @@ download() {
   if [ ${EUID} == 0 ]; then
     apply_permissions "${dir_name}/${file_name}"
   fi
-}
-
-#//RF
-# - Description: Downloads a compressed file pointed by the provided link in $1 into $USR_BIN_FOLDER.
-# We assume that this compressed file contains only one folder in the root. The name of this folder will be captured in
-# order to change its name to the desired one, contained in $2.
-# IF THE FORMAT OF THE COMPRESSED FILE DOES NOT HAVE A SINGLE DIRECTORY IN THE ROOT THIS FUNCTION WILL NOT WORK.
-# Afterwards, it will be decompressed in a way dependent of $3, which specifies the type of compression.
-# Then, all the remaining arguments are interpreted in pairs: the first one of the pair is a path to a file that we want
-# to add to our path relatively from the root folder of the downloaded compressed file, the second one in the pair is
-# the name that we are giving to that command in our environment.
-#
-# - Usage:
-# For example, we download pypy.tar.gz, containing the root folder pypy-3.4.5.67, which contains the binary file pypy
-# and the directory bin. The directory bin contains the binary pip:
-# - pypy.tar.gz
-#   - pypy-3.4.5.67
-#     - bin
-#       pip
-#     pypy
-#
-# If we want to create links in the path to pypy and pip, that are called pypy3 and pypy-pip in our environment,
-# we need to call this function like this:
-# download_and_decompress ${link_to_compressed_file} "pypy" "z" "bin/pip" "pypy-pip" "pypy" "pypy3"
-#
-# - MANDATORY ARGUMENTS:
-#   - Argument 1: link to the compressed file
-#   - Argument 2: Final name of the folder
-#   - Argument 3: Decompression options: [z, j, J, zip]
-# - OPTIONAL ARGUMENTS:
-# (if the first arguments of the pair is provided, then the second one is expected)
-#   - Argument 4: Relative path to the selected binary to create the links in the path from the just decompressed folder
-#   - Argument 5: Desired name for the link that points to the previous binary. This name will be the name for that
-#   command in our environment.
-# Argument 6 and 7, 8 and 9, 10 and 11... : Same as argument 4 and 5
-download_and_decompress() {
-  download "$1" "${USR_BIN_FOLDER}/downloading_program"
-
-  decompress "$3" "${USR_BIN_FOLDER}/downloading_program" "$2"
-
-  # Save the final name of the folder to regenerate the full path after the shifts
-  program_folder_name="$2"
-  # Shift the first 3 arguments to have only from 4th argument to the last in order to call create_links_in_path
-  shift
-  shift
-  shift
-  # Create links in the PATH. Greater that 1 to avoid the case where there are impair name of arguments
-  while [[ $# -gt 1 ]]; do
-    # Clean to avoid collisions
-    create_links_in_path "${USR_BIN_FOLDER}/${program_folder_name}/$1" "$2"
-    shift
-    shift
-  done
 }
 
 # - Description: Downloads a .deb package temporarily into USR_BIN_FOLDER from the provided link and installs it using
@@ -955,12 +867,3 @@ fi
 "
 
 
-# Description: Sets keybinding data to add a keybinding for keybind_function bash function
-# Permissions: can be executed indifferently as root or user
-# Argument 1: Command to be run with the keyboard shortcut
-# Argument 2: Set of keys with the right format to be binded
-# Argument 3: Descriptive name of the keybinding
-add_keybinding()
-{
-  echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
-}
