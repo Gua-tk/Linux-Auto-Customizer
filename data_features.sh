@@ -100,6 +100,13 @@ fi
 # - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if
 #   there is manual code for that feature to be executed or not. If it is in one, it will try to execute a function
 #   with its name following a certain pattern
+# - FEATUREKEYNAME_pipinstallations: Array containing set of programs to be installed via pip (pythonvenv)
+# - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3 (pythonvenv)
+# - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from a
+#   function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid, install_FEATUREKEYNAME_post (pythonvenv)
+# - FEATUREKEYNAME_filekeys: Array contentaining the keys to indirect expand file to be created and its path
+# - FEATUREKEYNAME_FILEKEY_content: Variable with the content of a file
+# - FEATUREKEYNAME_FILEKEY_path: Variable with the path where we need to store the file with that FILEKEY
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
 ########################################################################################################################
@@ -135,7 +142,8 @@ anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd6
 anydesk_compressedfiletype="z"
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_bashfunctions=("alias anydesk=\"nohup anydesk &>/dev/null &\"")
-anydesk_launchercontents=("[Desktop Entry]
+anydesk_launchercontents=("
+[Desktop Entry]
 Categories=Remote;control;other;
 Comment=Remote control other PCs
 Encoding=UTF-8
@@ -1205,6 +1213,7 @@ java_compressedfiletype="z"
 java_binariesinstalledpaths=("bin/java;java")
 java_bashfunctions=("export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\"")
 
+julia_installationtype="userinherit"
 julia_compressedfileurl="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
 julia_compressedfiletype="z"
 julia_binariesinstalledpaths=("bin/julia;julia")
@@ -1218,7 +1227,11 @@ Terminal=true
 Type=Application
 Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;ParallelComputing;DataVisualization;ConsoleOnly;")
 
-#jupyter_installationtype=""
+jupyter_lab_installationtype="pythonvenv"
+jupyter_lab_manualcontentavailable="1;1;0"
+jupyter_lab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
+jupyter_lab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
+jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
 jupyter_lab_launchercontents=("
 [Desktop Entry]
 Categories=IDE; text_editor;
@@ -1233,7 +1246,6 @@ StartupWMClass=jupyter
 Terminal=false
 Type=Application
 Version=1.0
-
 Icon=${USR_BIN_FOLDER}/jupyter-lab/share/icons/hicolor/scalable/apps/notebook.svg
 Exec=jupyter-lab &
 ")
@@ -1836,19 +1848,10 @@ pacman_launchernames=("pacman")
 parallel_installationtype="packagemanager"
 parallel_packagenames=("parallel")
 
-#pgadmin_installationtype="userpip"  
-pgadmin_pippackages=("pgadmin4")
-pgadmin_basefolder="${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4"
-pgadmin_datafiles=("
-import os
-DATA_DIR = os.path.realpath(os.path.expanduser(u'${USR_BIN_FOLDER}/pgadmin'))
-LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
-SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
-SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
-STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
-SERVER_MODE = False
-")
-pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
+pgadmin_installationtype="pythonvenv"
+pgadmin_manualcontentavailable="0;1;0"
+pgadmin_pipinstallations=("pgadmin4")
+pgadmin_binariesinstalledpaths=("lib/python3.8/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
 pgadmin_launchercontents=("
 [Desktop Entry]
 Categories=Network;
@@ -1863,11 +1866,22 @@ StartupWMClass=pgadmin
 Terminal=false
 Type=Application
 Version=1.0
-
 Icon=${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
 Exec=bash ${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh
 ")
-pgadmin_execscript="
+pgadmin_filekeys=("confoverride" "executionscript")
+pgadmin_confoverride_path="lib/python3.8/site-packages/pgadmin4/config_local.py"
+pgadmin_confoverride_content=("
+import os
+DATA_DIR = os.path.realpath(os.path.expanduser(u'${USR_BIN_FOLDER}/pgadmin'))
+LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
+SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
+SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
+STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
+SERVER_MODE = False
+")
+pgadmin_executionscript_path="pgadmin_exec.sh"
+pgadmin_executionscript_content="
 pgadmin &
 sleep 2  # Wait two seconds, so pgadmin can have time to init
 xdg-open http://127.0.0.1:5050/browser
@@ -2057,8 +2071,12 @@ TryExec=pycharmpro
 Type=Application
 Version=1.0")
 
-#pypy3_installationtype="userinherit"
-pypy3_downloader="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
+pypy3_installationtype="userinherit"
+pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
+pypy3_compressedfiletype="j"
+pypy3_manualcontentavailable="0;1;0"
+pypy3_binariesinstalledpaths=("bin/pypy3;pypy3" "bin/pip3.6;pypy3-pip")
+
 pypy3_dependencies_installationtype="packagemanager"
 pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
 
@@ -2104,6 +2122,7 @@ v()
 
 ")
 
+R_installationtype="packagemanager"
 R_packagenames=("r-base")
 R_packagedependencies=("libzmq3-dev" "python3-zmq")
 R_launchernames=("R")
@@ -2387,6 +2406,211 @@ Terminal=false
 TryExec=telegram
 Type=Application
 Version=1.0")
+
+templates_installationtype="environmental"
+templates_filekeys=("c" "headers" "makefile" "python" "bash" "latex" "empty")
+templates_c_path="${XDG_TEMPLATES_DIR}/c_script.c"
+templates_c_content="########################################################################################################################
+# -Name:
+# -Description:
+# -Creation Date:
+# -Last Revision:
+# -Author:
+# -Email:
+# -Permissions:
+# -Args:
+# -Usage:
+# -License:
+########################################################################################################################
+
+
+#include \"c_script_header.h\"
+
+
+int main(int nargs, char* args[])
+{
+  printf(\"Hello World\");
+}
+"
+templates_headers_path="${XDG_TEMPLATES_DIR}/c_script_header.h"
+templates_headers_content="// Includes
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+"
+templates_makefile_path="${XDG_TEMPLATES_DIR}/makefile"
+templates_makefile_content="CC = gcc
+CFLAGS = -O3 -Wall
+
+all : c_script
+
+c_script : c_script.c
+	\$(CC) \$(CFLAGS) c_script.c -o c_script -lm
+
+run : c_script
+	./c_script
+
+.PHONY : clean
+clean :
+	rm -f c_script
+"
+templates_python_path="${XDG_TEMPLATES_DIR}/python3_script.py"
+templates_python_content="#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+########################################################################################################################
+# -Name:
+# -Description:
+# -Creation Date:
+# -Last Revision:
+# -Author:
+# -Email:
+# -Permissions:
+# -Args:
+# -Usage:
+# -License:
+########################################################################################################################
+
+
+if __name__ == \"__main__\":
+    print(\"HELLO WORLD!\")
+    exit(0)
+"
+templates_bash_path="${XDG_TEMPLATES_DIR}/shell_script.sh"
+templates_bash_content="#!/usr/bin/env bash
+########################################################################################################################
+# -Name:
+# -Description:
+# -Creation Date:
+# -Last Modified:
+# -Author:
+# -Email:
+# -Permissions:
+# -Args:
+# -Usage:
+# -License:
+########################################################################################################################
+
+main()
+{
+  echo \"Hello World\"
+  exit 0
+}
+
+set -e
+main \"\$@\""
+templates_latex_path="${XDG_TEMPLATES_DIR}/latex_document.tex"
+templates_latex_content="%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+\documentclass[11pt]{article}
+
+% Use helvetica font (similar to Arial)
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[scaled=1]{helvet}
+
+% Don't include Table of Contents (ToC) in ToC
+% Don't include List of Figures (LoF) in ToC
+% Don't include List of Tables (LoT) in ToC
+% Include bibliography in ToC with its own section number
+\usepackage[nottoc, notlot, notlof, numbib]{tocbibind}
+
+% //W: Kept because error if these commands are removed
+\title{}
+\date{}
+\author{}
+
+\begin{document}
+
+
+% Title Page
+\begin{titlepage}
+\centering
+%\includegraphics[width=0.5\textwidth]{imgs/logourv}  % Logo
+\par
+\vspace{1cm}
+\Large
+{An exemple document of LaTeX\par}
+\vspace{1cm}
+{John Doe \par}
+\vspace{1cm}
+{\itshape\Large LaTeX FINAL PROJECT \par}
+\vfill
+
+\vspace{1cm}
+%\includegraphics[width=0.7\textwidth]{imgs/grafportada}  % Portada Imagen
+\par
+\vspace{1cm}
+\vfill
+
+\large
+\raggedright
+{Tutor and supervisor: Jane Doe, UL, (jane.doe@LaTeX.cat) \par}
+{In cooperation with: LaTeX and Friends \par}
+\vspace{2cm}
+
+\raggedleft
+\large
+November 2020
+\par
+\end{titlepage}
+
+% Dont number the title page
+\pagenumbering{gobble}
+
+% Rest of the document
+\setlength{\parskip}{1em}  % Set vertical separation between paragraphs
+%\onehalfspacing  % spacing 1.5
+\normalsize  % //Spec: normalsize = 11 pt (declared at e headers)
+
+% Resumen (Abstract)
+\newpage
+\section*{Abstract}  % Use the * to not include section in ToC
+  We try to explain a basic example of LaTeX. We will include ToC and references.
+
+% Index (ToC)
+\newpage
+\setlength{\parskip}{0em}  % Set vertical separation = 0 between paragraphs in the index
+\tableofcontents
+\newpage
+
+\setlength{\parskip}{1em}  % Set vertical separation between paragraphs for the rest of the doc
+%\onehalfspacing  % //Spec: spacing 1.5
+
+% First Section
+\pagenumbering{arabic}  % Start numbering in the intro, not in the title or abstract page
+\section{Hello World!}
+  Hello World!
+
+% Second Section
+\section{Advanced Hello World}
+  Hello, World. Basic LaTeX Operations:
+  \subsection{Itemizes}
+    \begin{itemize}
+      \item One thing.
+      \item Two things.
+      \item Last
+    \end{itemize}
+  \subsection{Enumerates}
+    \begin{enumerate}
+      \item First thing
+      \item Second thing
+      \item Third thing \textbf{and last!}
+    \end{enumerate}
+  \subsection{References}
+    We can use \cite{Doe20} to cite, but the same happens citing \cite{Doe19}.
+
+% Bibliography
+\newpage
+\begin{thebibliography}{0}
+\bibitem{Doe20} Doe, J., Martínez A. (2020). How to LaTeX with Linux Auto Customizer. University of Computing, Girona, Spain
+\bibitem{Doe19} Doe, J., Priyatniva, A. \& Solanas, A. (2019). Referencing in LaTeX, 10th International Conference on Information, Intelligence, Systems and Applications. https://doi.org/20.1105/IISO.2019.8903718
+\end{thebibliography}
+
+\end{document}
+
+"
+templates_empty_path="${XDG_TEMPLATES_DIR}/empty_text_file.txt"
+templates_empty_content=""
 
 terminator_installationtype="packagemanager"
 terminator_packagenames=("terminator")
@@ -2804,206 +3028,3 @@ Type=Application
 Version=1.0
 Exec=ZoomLauncher
 ")
-
-### TEMPLATES ###
-
-c_file_template="########################################################################################################################
-# -Name:
-# -Description:
-# -Creation Date:
-# -Last Revision:
-# -Author:
-# -Email:
-# -Permissions:
-# -Args:
-# -Usage:
-# -License:
-########################################################################################################################
-
-
-#include \"c_script.h\"
-
-
-int main(int nargs, char* args[])
-{
-  printf(\"Hello World\");
-}
-"
-
-c_header_file_template="// Includes
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-"
-
-makefile_file_template="CC = gcc
-CFLAGS = -O3 -Wall
-
-all : c_script
-
-c_script : c_script.c
-	\$(CC) \$(CFLAGS) c_script.c -o c_script -lm
-
-run : c_script
-	./c_script
-
-.PHONY : clean
-clean :
-	rm -f c_script
-"
-
-python_file_template="#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-########################################################################################################################
-# -Name:
-# -Description:
-# -Creation Date:
-# -Last Revision:
-# -Author:
-# -Email:
-# -Permissions:
-# -Args:
-# -Usage:
-# -License:
-########################################################################################################################
-
-
-if __name__ == \"__main__\":
-    print(\"HELLO WORLD!\")
-    exit(0)
-"
-
-bash_file_template="#!/usr/bin/env bash
-
-########################################################################################################################
-# -Name:
-# -Description:
-# -Creation Date:
-# -Last Modified:
-# -Author:
-# -Email:
-# -Permissions:
-# -Args:
-# -Usage:
-# -License:
-########################################################################################################################
-
-main()
-{
-  echo \"Hello World\"
-  exit 0
-}
-
-set -e
-main \"\$@\""
-
-latex_file_template="%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%2345678901234567890123456789012345678901234567890123456789012345678901234567890
-%        1         2         3         4         5         6         7         8
-\documentclass[11pt]{article}
-
-% Use helvetica font (similar to Arial)
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage[scaled=1]{helvet}
-
-% Don't include Table of Contents (ToC) in ToC
-% Don't include List of Figures (LoF) in ToC
-% Don't include List of Tables (LoT) in ToC
-% Include bibliography in ToC with its own section number
-\usepackage[nottoc, notlot, notlof, numbib]{tocbibind}
-
-% //W: Kept because error if these commands are removed
-\title{}
-\date{}
-\author{}
-
-\begin{document}
-
-
-% Title Page
-\begin{titlepage}
-\centering
-%\includegraphics[width=0.5\textwidth]{imgs/logourv}  % Logo
-\par
-\vspace{1cm}
-\Large
-{An exemple document of LaTeX\par}
-\vspace{1cm}
-{John Doe \par}
-\vspace{1cm}
-{\itshape\Large LaTeX FINAL PROJECT \par}
-\vfill
-
-\vspace{1cm}
-%\includegraphics[width=0.7\textwidth]{imgs/grafportada}  % Portada Imagen
-\par
-\vspace{1cm}
-\vfill
-
-\large
-\raggedright
-{Tutor and supervisor: Jane Doe, UL, (jane.doe@LaTeX.cat) \par}
-{In cooperation with: LaTeX and Friends \par}
-\vspace{2cm}
-
-\raggedleft
-\large
-November 2020
-\par
-\end{titlepage}
-
-% Dont number the title page
-\pagenumbering{gobble}
-
-% Rest of the document
-\setlength{\parskip}{1em}  % Set vertical separation between paragraphs
-%\onehalfspacing  % spacing 1.5
-\normalsize  % //Spec: normalsize = 11 pt (declared at e headers)
-
-% Resumen (Abstract)
-\newpage
-\section*{Abstract}  % Use the * to not include section in ToC
-  We try to explain a basic example of LaTeX. We will include ToC and references.
-
-% Index (ToC)
-\newpage
-\setlength{\parskip}{0em}  % Set vertical separation = 0 between paragraphs in the index
-\tableofcontents
-\newpage
-
-\setlength{\parskip}{1em}  % Set vertical separation between paragraphs for the rest of the doc
-%\onehalfspacing  % //Spec: spacing 1.5
-
-% First Section
-\pagenumbering{arabic}  % Start numbering in the intro, not in the title or abstract page
-\section{Hello World!}
-  Hello World!
-
-% Second Section
-\section{Advanced Hello World}
-  Hello, World. Basic LaTeX Operations:
-  \subsection{Itemizes}
-    \begin{itemize}
-      \item One thing.
-      \item Two things.
-      \item Last
-    \end{itemize}
-  \subsection{Enumerates}
-    \begin{enumerate}
-      \item First thing
-      \item Second thing
-      \item Third thing \textbf{and last!}
-    \end{enumerate}
-  \subsection{References}
-    We can use \cite{Doe20} to cite, but the same happens citing \cite{Doe19}.
-
-% Bibliography
-\newpage
-\begin{thebibliography}{0}
-\bibitem{Doe20} Doe, J., Martínez A. (2020). How to LaTeX with Linux Auto Customizer. University of Computing, Girona, Spain
-\bibitem{Doe19} Doe, J., Priyatniva, A. \& Solanas, A. (2019). Referencing in LaTeX, 10th International Conference on Information, Intelligence, Systems and Applications. https://doi.org/20.1105/IISO.2019.8903718
-\end{thebibliography}
-
-\end{document}
-
-"

@@ -16,65 +16,24 @@
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
-
-########################################################################################################################
-############################################# ROOT FUNCTIONS ###########################################################
-########################################################################################################################
-
-install_R()
-{
-  R_installationtype="packagemanager"
-  generic_install R
-  R -e "${R_jupyter_lab_function}"
-}
-
 ########################################################################################################################
 ######################################### USER SOFTWARE FUNCTIONS ######################################################
 ########################################################################################################################
 
-install_julia()
-{
-  julia_installationtype="userinherit"
-  generic_install julia
-  # install jupyter-lab dependencies down Rf
-  julia -e '#!/.local/bin/julia
-  using Pkg
-  Pkg.add("IJulia")
-  Pkg.build("IJulia")'
+install_jupyter_lab_pre() {
+  local -r dependencies=("npm" "R" "julia")
+  for dependency in ${dependencies[@]}; do
+    which "${dependency}" &>/dev/null
+    if [ $? != 0 ]; then
+      output_proxy_executioner "echo ERROR: ${dependency} is not installed. You can installing using bash install.sh --npm --R --julia" ${quietness_bit}
+      if [ "${forceness_bit}" == 0 ]; then
+        exit 1
+      fi
+    fi
+  done
 }
 
-install_jupyter-lab()
-{
-  # Avoid collision with previous installations
-  rm -Rf "${USR_BIN_FOLDER}/jupyter-lab"
-  python3 -m venv "${USR_BIN_FOLDER}/jupyter-lab"
-
-  # Install necessary pip and python packages
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m pip install -U pip
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install wheel jupyter jupyterlab jupyterlab-git jupyterlab_markup
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install bash_kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install pykerberos pywinrm[kerberos]
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install powershell_kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install iarm
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install ansible-kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install kotlin-jupyter-kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install vim-kernel
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/pip" install theme-darcula
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m bash_kernel.install
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m powershell_kernel.install --powershell-command powershell
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m iarm_kernel.install
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m ansible_kernel.install
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m kotlin_kernel fix-kernelspec-location
-
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/python3" -m vim_kernel.install
-
+install_jupyter_lab_mid() {
   # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
   "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension install @telamonian/theme-darcula
   "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension enable @telamonian/theme-darcula
@@ -86,49 +45,35 @@ install_jupyter-lab()
   npm install -g ijavascript
   ijsinstall
 
-  create_links_in_path "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter-lab" jupyter-lab "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" jupyter "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython" ipython "${USR_BIN_FOLDER}/jupyter-lab/bin/ipython3" ipython3
-  create_manual_launcher "${jupyter_lab_launchercontents}" "jupyter-lab"
-  add_bash_function "${jupyter_lab_bashfunctions[0]}" "jupyter_lab.sh"
+  # Set up IRKernel for R-jupyter
+  R -e "install.packages('IRkernel')
+install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
+                  repos = c('http://irkernel.github.io/',
+                  getOption('repos')),
+                  type = 'source')
+IRkernel::installspec()"
+
+  # install jupyter-lab dependencies down
+  julia -e '#!/.local/bin/julia
+  using Pkg
+  Pkg.add("IJulia")
+  Pkg.build("IJulia")'
 }
 
-install_pgadmin()
-{
-  # Avoid collision and create venv for pgadmin in USR_BIN_FOLDER
-  rm -Rf "${USR_BIN_FOLDER}/pgadmin"
-  python3 -m venv "${USR_BIN_FOLDER}/pgadmin"
-
-  # Source activate to activate the venv, so the venv python interpreter is the one actually used.
-  source "${USR_BIN_FOLDER}/pgadmin/bin/activate"
-
-  # Update pip and install git dependencies (wheel) and the program itself in the venv
-  python -m pip install -U pip
-  pip install wheel pgadmin4
-
-  echo "${pgadmin_datafiles[0]}" > "${pgadmin_basefolder}/config_local.py"
-
-  # deactivate virtual environment
-  deactivate
+install_pgadmin_mid() {
 
   # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
   # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
   # information on how to call the script
 
   # Prepend shebang line to python3 interpreter of the venv
-  echo "#!${USR_BIN_FOLDER}/pgadmin/bin/python3" | cat - "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" > "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  echo "#!${USR_BIN_FOLDER}/pgadmin/bin/python3" | cat - "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" >"${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
   chmod +x "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
-  create_links_in_path "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" pgadmin
 
-  # Create launcher and structures to be able to launch pgadmin and access it using the browser
-  create_manual_launcher "${pgadmin_launchercontents[0]}" pgadmin
-  echo "${pgadmin_execscript}" > "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
-  apply_permissions "${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh"
 }
 
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
-install_pypy3()
-{
-  download_and_decompress ${pypy3_downloader} "pypy3" "j"
-
+install_pypy3_mid() {
   # Install modules using pip
   ${USR_BIN_FOLDER}/pypy3/bin/pypy3 -m ensurepip
 
@@ -137,12 +82,9 @@ install_pypy3()
   ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 --no-cache-dir install cython numpy
   # Currently not supported
   # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
-
-  create_links_in_path "${USR_BIN_FOLDER}/pypy3/bin/pypy3" "pypy3" ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 pypy3-pip
 }
 
-install_sysmontask()
-{
+install_sysmontask() {
   rm -Rf ${USR_BIN_FOLDER}/SysMonTask
   create_folder ${USR_BIN_FOLDER}/SysMonTask
   git clone ${sysmontask_repositoryurl} ${USR_BIN_FOLDER}/SysMonTask
@@ -158,16 +100,15 @@ install_sysmontask()
 ######################################### USER-ENVIRONMENT FUNCTIONS ###################################################
 ########################################################################################################################
 
-install_change-bg()
-{
+install_change-bg() {
   # Install script changer to be executed manually or with crontab automatically
   rm -Rf "${XDG_PICTURES_DIR}/wallpapers"
   create_folder "${USR_BIN_FOLDER}/change-bg"
-  echo "${wallpapers_changer_script}" > "${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh"
+  echo "${wallpapers_changer_script}" >"${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh"
   chmod 775 "${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh"
   ln -sf "${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh" "${DIR_IN_PATH}/change-bg"
 
-  echo "${wallpapers_cronjob}" > "${USR_BIN_FOLDER}/change-bg/wallpapers_cronjob"
+  echo "${wallpapers_cronjob}" >"${USR_BIN_FOLDER}/change-bg/wallpapers_cronjob"
   crontab "${USR_BIN_FOLDER}/change-bg/wallpapers_cronjob"
 
   # Download and install wallpaper
@@ -175,7 +116,10 @@ install_change-bg()
   create_folder "${XDG_PICTURES_DIR}/wallpapers"
   git clone "${wallpapers_downloader}" "${XDG_PICTURES_DIR}/wallpapers"
 
-  $(cd ${XDG_PICTURES_DIR}/wallpapers; tar -xzf *.tar.gz)
+  $(
+    cd ${XDG_PICTURES_DIR}/wallpapers
+    tar -xzf *.tar.gz
+  )
   rm -f "${XDG_PICTURES_DIR}/wallpapers/*.tar.gz"
 
   for filename in $(ls /usr/share/backgrounds); do
@@ -185,8 +129,7 @@ install_change-bg()
   done
 }
 
-install_system-fonts()
-{
+install_system-fonts() {
   # Interface text
   gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 11'
   # Document text //RF
@@ -197,20 +140,7 @@ install_system-fonts()
   gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
 }
 
-install_templates()
-{
-  echo -e "${bash_file_template}" > ${XDG_TEMPLATES_DIR}/shell_script.sh
-  echo -e "${python_file_template}" > ${XDG_TEMPLATES_DIR}/python3_script.py
-  echo -e "${latex_file_template}" > ${XDG_TEMPLATES_DIR}/latex_document.tex
-  echo -e "${makefile_file_template}" > ${XDG_TEMPLATES_DIR}/makefile
-  echo "${c_file_template}" > ${XDG_TEMPLATES_DIR}/c_script.c
-  echo "${c_header_file_template}" > ${XDG_TEMPLATES_DIR}/c_script_header.h
-  > ${XDG_TEMPLATES_DIR}/empty_text_file.txt
-  chmod 775 ${XDG_TEMPLATES_DIR}/*
-}
-
-install_terminal-background()
-{
+install_terminal-background() {
   local -r profile_uuid="$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d "'" -f2)"
   if [ -n "${profile_uuid}" ]; then
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"${profile_uuid}"/ use-theme-colors false
@@ -223,12 +153,10 @@ install_terminal-background()
   fi
 }
 
-
 ##################
 ###### MAIN ######
 ##################
-main()
-{
+main() {
   data_and_file_structures_initialization
   argument_processing "$@"
   pre_install_update
@@ -236,7 +164,6 @@ main()
   post_install_clean
   bell_sound
 }
-
 
 # Import file of common variables in a relative way, so customizer can be called system-wide
 # RF, necessary duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh

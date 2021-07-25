@@ -157,6 +157,8 @@ create_file() {
     echo "$2" > "$1"
     if [ ${EUID} == 0 ]; then  # root
       apply_permissions "$1"
+    else
+      chmod 755 "$1"
     fi
   else
     output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "${FLAG_QUIETNESS}"
@@ -534,7 +536,7 @@ generic_install_downloads()
 generic_install_autostart()
 {
   local -r autostart="$1_autostart"
-  local -r launchernames="$1_launchernames"
+  local -r launchernames="$1_launchernames[@]"
 
   if [ "${!autostart}" == "yes" ]; then
     if [ -n "${!launchernames}" ]; then
@@ -573,6 +575,21 @@ generic_install_pathlinks()
   done
 }
 
+generic_install_files()
+{
+  local -r filekeys="$1_filekeys[@]"
+  for filekey in "${!filekeys}"; do
+    local content="$1_${filekey}_content"
+    local path="$1_${filekey}_path"
+    if [ -n "$(echo "${!path}" | grep -Eo "^/")" ]; then
+      create_file "${!path}" "${!content}"
+    else
+      create_file "${USR_BIN_FOLDER}/$1/${!path}" "${!content}"
+    fi
+  done
+
+}
+
 # - Description: Expands installation type and executes the corresponding function to install.
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
@@ -581,7 +598,14 @@ generic_install() {
   # Substitute dashes for underscores. Dashes are not allowed in variable names
   local -r featurename=$(echo "$1" | sed "s@-@_@g")
   local -r installationtype=${featurename}_installationtype
+  local -r manualcontentavailable="$1_manualcontentavailable"
+
   if [[ ! -z "${!installationtype}" ]]; then
+
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1 )" == "1" ]; then
+      "install_$1_pre"
+    fi
+
     case ${!installationtype} in
       # Using package manager such as apt-get
       packagemanager)
@@ -599,6 +623,9 @@ generic_install() {
       repositoryclone)
         repositoryclone_installation_type "${featurename}"
       ;;
+      pythonvenv)
+        pythonvenv_installation_type "${featurename}"
+      ;;
       # Only uses the common part of the generic installation
       environmental)
         :  # no-op
@@ -608,7 +635,13 @@ generic_install() {
         exit 1
       ;;
     esac
+
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2 )" == "1" ]; then
+      "install_$1_mid"
+    fi
+
     generic_install_downloads "${featurename}"
+    generic_install_files "${featurename}"
     generic_install_launchers "${featurename}"
     generic_install_functions "${featurename}"
     generic_install_autostart "${featurename}"
@@ -616,7 +649,29 @@ generic_install() {
     generic_install_file_associations "${featurename}"
     generic_install_keybindings "${featurename}"
     generic_install_pathlinks "${featurename}"
+
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3 )" == "1" ]; then
+      "install_$1_post"
+    fi
   fi
+}
+
+pythonvenv_installation_type()
+{
+  rm -Rf "${USR_BIN_FOLDER}/$1"
+  python3 -m venv "${USR_BIN_FOLDER}/$1"
+  "${USR_BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
+  "${USR_BIN_FOLDER}/$1/bin/pip" install wheel
+
+  local -r pipinstallations="$1_pipinstallations[@]"
+  local -r pythoncommands="$1_pythoncommands[@]"
+  for pipinstallation in ${!pipinstallations}; do
+    "${USR_BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
+  done
+  for pythoncommand in "${!pythoncommands}"; do
+    "${USR_BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
+  done
+
 }
 
 repositoryclone_installation_type()
