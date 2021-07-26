@@ -785,9 +785,9 @@ pre_install_update()
 {
   if [[ ${EUID} == 0 ]]; then
     if [[ ${FLAG_UPGRADE} -gt 0 ]]; then
-      output_proxy_executioner "echo \"INFO: Attempting to update system via apt-get.\"" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y update" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo \"INFO: System updated.\"" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: System updated." ${FLAG_QUIETNESS}
     fi
     if [[ ${FLAG_UPGRADE} == 2 ]]; then
       output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${FLAG_QUIETNESS}
@@ -804,7 +804,8 @@ update_environment()
   output_proxy_executioner "echo INFO: Rebuilding font cache" "${quietness_bit}"
   output_proxy_executioner "fc-cache -f -v" "${quietness_bit}"
   output_proxy_executioner "echo INFO: Reloading bash features" "${quietness_bit}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
+  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"  # After sourcing, output_proxy_executioner stops working unexpectedly
+  #output_proxy_executioner "echo INFO: Finished execution" "${quietness_bit}"
 }
 
 # - Description: This functions is the basic piece of the favorites subsystem, but is not a function that it is
