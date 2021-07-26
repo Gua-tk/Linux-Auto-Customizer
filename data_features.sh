@@ -2379,6 +2379,9 @@ sysmontask_manualcontentavailable="0;1;0"
 sysmontask_launchernames=("SysMonTask")
 sysmontask_bashfunctions=("alias sysmontask=\"nohup sysmontask &>/dev/null &\"")
 
+system_fonts_installationtype="environmental"
+system_fonts_manualcontentavailable="0;1;0"
+
 teamviewer_installationtype="packageinstall"
 teamviewer_packageurls=("https://download.teamviewer.com/download/linux/teamviewer_amd64.deb")
 teamviewer_launchernames=("com.teamviewer.TeamViewer")
@@ -2614,6 +2617,9 @@ November 2020
 "
 templates_empty_path="${XDG_TEMPLATES_DIR}/empty_text_file.txt"
 templates_empty_content=""
+
+terminal_background_installationtype="environmental"
+terminal_background_manualcontentavailable="0;1;0"
 
 terminator_installationtype="packagemanager"
 terminator_packagenames=("terminator")

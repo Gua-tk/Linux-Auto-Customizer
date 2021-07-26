@@ -91,10 +91,6 @@ install_sysmontask_mid() {
   )
 }
 
-########################################################################################################################
-######################################### USER-ENVIRONMENT FUNCTIONS ###################################################
-########################################################################################################################
-
 install_change-bg() {
   # Install script changer to be executed manually or with crontab automatically
   rm -Rf "${XDG_PICTURES_DIR}/wallpapers"
@@ -124,7 +120,7 @@ install_change-bg() {
   done
 }
 
-install_system-fonts() {
+install_system_fonts_mid() {
   # Interface text
   gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 11'
   # Document text //RF
@@ -135,7 +131,8 @@ install_system-fonts() {
   gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
 }
 
-install_terminal-background() {
+install_terminal_background_mid()
+{
   local -r profile_uuid="$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d "'" -f2)"
   if [ -n "${profile_uuid}" ]; then
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"${profile_uuid}"/ use-theme-colors false
