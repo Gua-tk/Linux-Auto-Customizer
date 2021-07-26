@@ -20,6 +20,8 @@
 # Argument 1: Bash command to execute.
 # Argument 2: Quietness level [0, 1, 2].
 output_proxy_executioner() {
+  #echo "$1"
+  #echo "$2"
   comm=$(echo "$1" | head -1 | cut -d " " -f1)
   if [[ "${comm}" == "echo" ]]; then
     rest=$(echo "$1" | sed '1 s@^echo @@')
@@ -331,7 +333,7 @@ add_programs_with_x_permissions()
 
 argument_processing()
 {
-  output_proxy_executioner "echo INFO: Processing arguments" ${FLAG_QUIETNESS}
+  output_proxy_executioner "echo INFO: Processing arguments" "${FLAG_QUIETNESS}"
     while [[ $# -gt 0 ]]; do
     key="$1"
 

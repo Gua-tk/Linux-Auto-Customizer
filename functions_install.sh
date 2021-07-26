@@ -741,7 +741,7 @@ fi
 
 data_and_file_structures_initialization()
 {
-  output_proxy_executioner "echo INFO: Initializing data and file structures." ${FLAG_QUIETNESS}
+  output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
   FLAG_MODE=install  # Install mode
   create_folder ${USR_BIN_FOLDER}
   create_folder ${BASH_FUNCTIONS_FOLDER}
@@ -802,7 +802,7 @@ update_environment()
   output_proxy_executioner "hash -r" "${quietness_bit}"
   output_proxy_executioner "echo INFO: Rebuilding font cache" "${quietness_bit}"
   output_proxy_executioner "fc-cache -f -v" "${quietness_bit}"
-  output_proxy_executioner "echo INFO: Reloading bash feature" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Reloading bash features" "${quietness_bit}"
   output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
 }
 
