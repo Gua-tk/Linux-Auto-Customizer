@@ -754,8 +754,8 @@ data_and_file_structures_initialization()
     create_file "${BASH_FUNCTIONS_PATH}"
   else
     # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
-    output_proxy_executioner "echo INFO: Checking the features that are already installed. This may take a while..." ${FLAG_QUIETNESS}
-    source "${BASH_FUNCTIONS_PATH}"
+    output_proxy_executioner "echo INFO: Checking the features that are already installed. This may take a while..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
   fi
 
   # Updates initializations
