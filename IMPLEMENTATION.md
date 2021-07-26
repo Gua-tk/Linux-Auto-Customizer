@@ -61,7 +61,6 @@
 - [ ] `install.sh`, `uninstall.sh`: nautilus
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server: alias sshDisable="sudo systemctl disable sshd", alias sshEnable="sudo systemctl enable ssh", alias sshRestart="sudo systemctl restart sshd", alias sshStart="sudo systemctl start sshd", alias sshStatus="sudo systemctl status sshd", alias sshStop="sudo systemctl stop sshd"  
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client
-- [ ] `install.sh`, `uninstall.sh`: gnome-terminal  
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: fdups (duplicate finder CLI)
 - [ ] `install.sh`, `uninstall.sh`: Remmina (desktop access)
