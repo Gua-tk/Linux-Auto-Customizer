@@ -31,7 +31,9 @@ output_proxy_executioner() {
     elif [[ ${message_type} == "ERROR" ]]; then
       echo -en "\e[91m" # Activate red colour
     fi
-    echo -n "$(date +%Y-%m-%d_%T) -- "
+    if [ "$2" != "2" ]; then
+      echo -n "$(date +%Y-%m-%d_%T) -- "
+    fi
   fi
 
   if [[ $2 == 0 ]]; then

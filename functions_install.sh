@@ -798,9 +798,11 @@ pre_install_update()
 
 update_environment()
 {
-  output_proxy_executioner "echo INFO: Reloading font cache, path caché and .bashrc functions" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Rebuilding path cache" "${quietness_bit}"
   output_proxy_executioner "hash -r" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Rebuilding font cache" "${quietness_bit}"
   output_proxy_executioner "fc-cache -f -v" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Reloading bash feature" "${quietness_bit}"
   output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
 }
 
