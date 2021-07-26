@@ -22,34 +22,49 @@
 output_proxy_executioner() {
   comm=$(echo "$1" | head -1 | cut -d " " -f1)
   if [[ "${comm}" == "echo" ]]; then
-    rest=$(echo "$1" | sed '1 s@^echo @@')
-    message_type="$(echo "${rest}" | cut -d ":" -f1)"
-    if [[ ${message_type} == "WARNING" ]]; then
-      echo -en "\e[33m" # Activate yellow colour
-    elif [[ ${message_type} == "INFO" ]]; then
-      echo -en "\e[36m" # Activate cyan colour
-    elif [[ ${message_type} == "ERROR" ]]; then
-      echo -en "\e[91m" # Activate red colour
+    if [ "$2" != "2" ]; then
+      rest=$(echo "$1" | sed '1 s@^echo @@')
+      message_type="$(echo "${rest}" | cut -d ":" -f1)"
+      if [[ ${message_type} == "WARNING" ]]; then
+        echo -en "\e[33m" # Activate yellow colour
+      elif [[ ${message_type} == "INFO" ]]; then
+        echo -en "\e[36m" # Activate cyan colour
+      elif [[ ${message_type} == "ERROR" ]]; then
+        echo -en "\e[91m" # Activate red colour
+      fi
+      echo -n "$(date +%Y-%m-%d_%T) -- "
     fi
-    echo -n "$(date +%Y-%m-%d_%T) -- "
   fi
-
+  echo "$1"
+  echo $2
   if [[ $2 == 0 ]]; then
-    $1
+    if [[ "${comm}" == "echo" ]]; then
+      # If it is a echo command, delete trailing echo and echo formatting
+      rest=$(echo "$1" | sed '1 s@^echo @@') # Delete echo at the beggining of the line
+      echo "${rest}"
+    else
+      generic_install nemo
+      "$1"
+    fi
   elif [[ $2 == 1 ]]; then
     if [[ "${comm}" == "echo" ]]; then
       # If it is a echo command, delete trailing echo and echo formatting
       rest=$(echo "$1" | sed '1 s@^echo @@') # Delete echo at the beggining of the line
       echo "${rest}"
     else
-      $1 &>/dev/null
+      "$1" &>/dev/null
     fi
-  else
-    $1 &>/dev/null
+  else  # Case quietness bit == 2
+    if [[ "${comm}" == "echo" ]]; then
+      true
+    else
+      "$1" &>/dev/null
+    fi
   fi
   if [[ "${comm}" == "echo" ]]; then
     echo -en "\e[0m" # DeActivate colour
   fi
+  echo fin
 }
 
 # Receives a list of arguments selecting features (--pycharm, --vlc...) and applies the current flags to it,
@@ -442,8 +457,8 @@ argument_processing()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [[ ${NUM_INSTALLATION} == 0 ]]; then
-    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${FLAG_QUIETNESS}
-    output_proxy_executioner "echo ${help_message}" ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${quietness_bit}
+    output_proxy_executioner "echo ${help_message}" ${quietness_bit}
     exit 0
   fi
 }
@@ -452,14 +467,14 @@ post_install_clean()
 {
   if [[ ${EUID} == 0 ]]; then
     if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${quietness_bit}
+      output_proxy_executioner "apt-get -y autoremove" ${quietness_bit}
+      output_proxy_executioner "echo INFO: Finished." ${quietness_bit}
     fi
     if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${quietness_bit}
+      output_proxy_executioner "apt-get -y autoclean" ${quietness_bit}
+      output_proxy_executioner "echo INFO: Finished." ${quietness_bit}
     fi
   fi
 }
@@ -471,6 +486,15 @@ bell_sound()
   echo -en "\07"
   echo -en "\07"
 }
+
+update_environment()
+{
+  output_proxy_executioner "echo INFO: Reloading font cache, path caché and .bashrc functions" "${quietness_bit}"
+  output_proxy_executioner "hash -r" "${quietness_bit}"
+  output_proxy_executioner "fc-cache -f -v" "${quietness_bit}"
+  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
+}
+
 
 if [[ -f "${DIR}/data_features.sh" ]]; then
   source "${DIR}/data_features.sh"

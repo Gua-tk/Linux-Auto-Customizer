@@ -149,16 +149,14 @@ install_terminal-background() {
 ###### MAIN ######
 ##################
 main() {
-  data_and_file_structures_initialization
+
   argument_processing "$@"
+  data_and_file_structures_initialization
   pre_install_update
   execute_installation
   post_install_clean
+  update_environment
   bell_sound
-
-  hash -r
-  fc-cache -f -v
-  bash
 }
 
 # Import file of common variables in a relative way, so customizer can be called system-wide
