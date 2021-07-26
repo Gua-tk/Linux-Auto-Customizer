@@ -22,49 +22,34 @@
 output_proxy_executioner() {
   comm=$(echo "$1" | head -1 | cut -d " " -f1)
   if [[ "${comm}" == "echo" ]]; then
-    if [ "$2" != "2" ]; then
-      rest=$(echo "$1" | sed '1 s@^echo @@')
-      message_type="$(echo "${rest}" | cut -d ":" -f1)"
-      if [[ ${message_type} == "WARNING" ]]; then
-        echo -en "\e[33m" # Activate yellow colour
-      elif [[ ${message_type} == "INFO" ]]; then
-        echo -en "\e[36m" # Activate cyan colour
-      elif [[ ${message_type} == "ERROR" ]]; then
-        echo -en "\e[91m" # Activate red colour
-      fi
-      echo -n "$(date +%Y-%m-%d_%T) -- "
+    rest=$(echo "$1" | sed '1 s@^echo @@')
+    message_type="$(echo "${rest}" | cut -d ":" -f1)"
+    if [[ ${message_type} == "WARNING" ]]; then
+      echo -en "\e[33m" # Activate yellow colour
+    elif [[ ${message_type} == "INFO" ]]; then
+      echo -en "\e[36m" # Activate cyan colour
+    elif [[ ${message_type} == "ERROR" ]]; then
+      echo -en "\e[91m" # Activate red colour
     fi
+    echo -n "$(date +%Y-%m-%d_%T) -- "
   fi
-  echo "$1"
-  echo $2
+
   if [[ $2 == 0 ]]; then
-    if [[ "${comm}" == "echo" ]]; then
-      # If it is a echo command, delete trailing echo and echo formatting
-      rest=$(echo "$1" | sed '1 s@^echo @@') # Delete echo at the beggining of the line
-      echo "${rest}"
-    else
-      generic_install nemo
-      "$1"
-    fi
+    $1
   elif [[ $2 == 1 ]]; then
     if [[ "${comm}" == "echo" ]]; then
       # If it is a echo command, delete trailing echo and echo formatting
       rest=$(echo "$1" | sed '1 s@^echo @@') # Delete echo at the beggining of the line
       echo "${rest}"
     else
-      "$1" &>/dev/null
+      $1 &>/dev/null
     fi
-  else  # Case quietness bit == 2
-    if [[ "${comm}" == "echo" ]]; then
-      true
-    else
-      "$1" &>/dev/null
-    fi
+  else
+    $1 &>/dev/null
   fi
   if [[ "${comm}" == "echo" ]]; then
     echo -en "\e[0m" # DeActivate colour
   fi
-  echo fin
 }
 
 # Receives a list of arguments selecting features (--pycharm, --vlc...) and applies the current flags to it,

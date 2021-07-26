@@ -149,9 +149,8 @@ install_terminal-background() {
 ###### MAIN ######
 ##################
 main() {
-
-  argument_processing "$@"
   data_and_file_structures_initialization
+  argument_processing "$@"
   pre_install_update
   execute_installation
   post_install_clean
