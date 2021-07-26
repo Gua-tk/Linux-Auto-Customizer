@@ -742,7 +742,6 @@ fi
 data_and_file_structures_initialization()
 {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
-  FLAG_MODE=install  # Install mode
   create_folder ${USR_BIN_FOLDER}
   create_folder ${BASH_FUNCTIONS_FOLDER}
   create_folder ${DIR_IN_PATH}
@@ -752,10 +751,12 @@ data_and_file_structures_initialization()
   # Initialize bash functions
   if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
     create_file "${BASH_FUNCTIONS_PATH}"
-  else
+  # //RF output proxy executioner stops working after sourcing ${BASH_FUNCTIONS_PATH}
+  # else
     # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
-    output_proxy_executioner "echo INFO: Checking the features that are already installed. This may take a while..." "${FLAG_QUIETNESS}"
-    output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+    # output_proxy_executioner "echo INFO: Checking the features that are already installed. This may take a while..." "${FLAG_QUIETNESS}"
+    # source "${BASH_FUNCTIONS_PATH}" &>/dev/null
+    # output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
   fi
 
   # Updates initializations
@@ -784,9 +785,9 @@ pre_install_update()
 {
   if [[ ${EUID} == 0 ]]; then
     if [[ ${FLAG_UPGRADE} -gt 0 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo \"INFO: Attempting to update system via apt-get.\"" ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y update" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: System updated." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo \"INFO: System updated.\"" ${FLAG_QUIETNESS}
     fi
     if [[ ${FLAG_UPGRADE} == 2 ]]; then
       output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${FLAG_QUIETNESS}

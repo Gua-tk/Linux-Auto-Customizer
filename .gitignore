@@ -32,3 +32,5 @@ wget-log
 nohup.out
 ~
 IMPLEMENTATION.md.backup
+build
+build/

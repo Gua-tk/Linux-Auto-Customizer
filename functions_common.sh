@@ -20,8 +20,6 @@
 # Argument 1: Bash command to execute.
 # Argument 2: Quietness level [0, 1, 2].
 output_proxy_executioner() {
-  #echo "$1"
-  #echo "$2"
   comm=$(echo "$1" | head -1 | cut -d " " -f1)
   if [[ "${comm}" == "echo" ]]; then
     rest=$(echo "$1" | sed '1 s@^echo @@')
@@ -44,7 +42,6 @@ output_proxy_executioner() {
     if [[ "${comm}" == "echo" ]]; then
       # If it is a echo command, delete trailing echo and echo formatting
       rest=$(echo "$1" | sed '1 s@^echo @@') # Delete echo at the beggining of the line
-      echo "${rest}"
     else
       $1 &>/dev/null
     fi
@@ -333,8 +330,8 @@ add_programs_with_x_permissions()
 
 argument_processing()
 {
-  output_proxy_executioner "echo INFO: Processing arguments" "${FLAG_QUIETNESS}"
-    while [[ $# -gt 0 ]]; do
+  output_proxy_executioner "echo \"INFO: Processing arguments\"" "${FLAG_QUIETNESS}"
+  while [[ $# -gt 0 ]]; do
     key="$1"
 
     case ${key} in
@@ -478,9 +475,11 @@ bell_sound()
 
 update_environment()
 {
-  output_proxy_executioner "echo INFO: Reloading font cache, path caché and .bashrc functions" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Rebuilding path cache" "${quietness_bit}"
   output_proxy_executioner "hash -r" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Rebuilding font cache" "${quietness_bit}"
   output_proxy_executioner "fc-cache -f -v" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Reload .bashrc shell environment" "${quietness_bit}"
   output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
 }
 
