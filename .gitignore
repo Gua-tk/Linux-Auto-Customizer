@@ -34,3 +34,4 @@ nohup.out
 IMPLEMENTATION.md.backup
 build
 build/
+sysmontask.egg-info/

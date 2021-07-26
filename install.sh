@@ -85,7 +85,10 @@ install_pypy3_mid() {
 }
 
 install_sysmontask_mid() {
-  $(cd ${USR_BIN_FOLDER}/SysMonTask && python3 setup.py install &>/dev/null)
+  (
+    cd ${USR_BIN_FOLDER}/sysmontask
+    python3 setup.py install
+  )
 }
 
 ########################################################################################################################
