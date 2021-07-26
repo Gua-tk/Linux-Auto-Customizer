@@ -796,6 +796,14 @@ pre_install_update()
   fi
 }
 
+update_environment()
+{
+  output_proxy_executioner "echo INFO: Reloading font cache, path caché and .bashrc functions" "${quietness_bit}"
+  output_proxy_executioner "hash -r" "${quietness_bit}"
+  output_proxy_executioner "fc-cache -f -v" "${quietness_bit}"
+  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
+}
+
 # - Description: This functions is the basic piece of the favorites subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
 # is invoked. This function and its necessary files such as $PROGRAM_FAVORITES_PATH are always present during the
