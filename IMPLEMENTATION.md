@@ -61,6 +61,7 @@
 - [ ] `install.sh`, `uninstall.sh`: nautilus
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server: alias sshDisable="sudo systemctl disable sshd", alias sshEnable="sudo systemctl enable ssh", alias sshRestart="sudo systemctl restart sshd", alias sshStart="sudo systemctl start sshd", alias sshStatus="sudo systemctl status sshd", alias sshStop="sudo systemctl stop sshd"  
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client
+- [ ] `install.sh`, `uninstall.sh`: gnome-terminal  
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: fdups (duplicate finder CLI)
 - [ ] `install.sh`, `uninstall.sh`: Remmina (desktop access)
@@ -96,7 +97,7 @@
 - [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/)
 - [ ] `data_features.sh`: Rstudio split libssl-dev dependency 
 - [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
-
+- [ ] `install.sh`, `uninstall.sh`: Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
 # TO-DO uninstall.sh and uninstall core for v1.0
 
 ###### UPDATES
