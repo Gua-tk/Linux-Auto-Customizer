@@ -142,3 +142,4 @@
 - [x] `data_features.sh`: Use nohup in aliases to prevent closing of feature when a process finish if a hanging terminal is closed
 - [x] `functions_install.sh`: Headers of the generic install mini-functions.
 - [x] `data_features.sh`: in rsync installation # alias rs="rsync -av --progress"
+- [x] `data_features.sh`: Add alias \`&\` to notepadqq, and furthermore

@@ -2790,10 +2790,11 @@ vlc_packagenames=("vlc")
 vlc_launchernames=("vlc")
 
 changebg_installationtype="repositoryclone"
+changebg_binariesinstalledpaths=".cronscript.sh;changebg"
 changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
 changebg_manualcontentavailable="0;0;1"
 changebg_filekeys=("cronscript" "cronjob")
-changebg_cronscript_path="cronscript.sh"
+changebg_cronscript_path=".cronscript.sh"
 changebg_cronscript_content="
 #!/bin/bash
 if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
@@ -2807,12 +2808,13 @@ if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
 fi
 DIR=\"${USR_BIN_FOLDER}/changebg\"
 PIC=\$(ls \${DIR} | shuf -n1)
+echo \"\$DIR/\$PIC\"
 dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
 
 #gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
 "
-changebg_cronjob_path="cronjob"
-changebg_cronjob_content="*/5 * * * * ${USR_BIN_FOLDER}/changebg/cronscript.sh"
+changebg_cronjob_path=".cronjob"
+changebg_cronjob_content="*/5 * * * * ${USR_BIN_FOLDER}/changebg/.cronscript.sh"
 
 whatsapp_installationtype="environmental"
 whatsapp_url="https://web.whatsapp.com/"

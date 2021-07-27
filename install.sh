@@ -92,7 +92,7 @@ install_sysmontask_mid() {
 }
 
 install_changebg_post() {
-  crontab "${USR_BIN_FOLDER}/changebg/cronjob"
+  crontab "${USR_BIN_FOLDER}/changebg/.cronjob"
 }
 
 install_system_fonts_mid() {
