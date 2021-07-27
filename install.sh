@@ -6,7 +6,7 @@
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 19/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Tester: Axel Fernández Curros                                                                                      #
+# - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
 # logged as root) to install some of the features.                                                                     #
@@ -19,6 +19,16 @@
 ########################################################################################################################
 ######################################### USER SOFTWARE FUNCTIONS ######################################################
 ########################################################################################################################
+
+install_caffeine_pre()
+{
+  apt-get purge -y caffeine
+}
+
+install_caffeine_post()
+{
+  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
+}
 
 install_jupyter_lab_pre() {
   local -r dependencies=("npm" "R" "julia")

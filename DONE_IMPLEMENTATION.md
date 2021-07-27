@@ -73,7 +73,9 @@
 - [x] `common_data.md`: (for the --help) In the master table, put the extensions .c, .h, etc in bold or put it in another field, so they are not between literal tildes. In that way, they are not recognized in the help.
 - [x] `install.sh`: Reload `bash` env at the end of install must not need to run bash command, instead use hash -r or similar strategy, also reload font cache
 - [x] `data_features.sh`: ttf-mscorefonts-installer autoaccept end user agreement or goes out (may `yes | apt install ttf...` work?) --> Added frontend non interactive needs to be tested
-
+- [x] `data_features.sh`: All features must be standarized to the default name and format of the variables for indirect expansion.
+- [x] `data_features.sh`: in net-tools installation: alias ports="netstat -tulanp" # alias nr="net-restart"
+- [x] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers, youtube-dl or cheat have to be moved
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -143,3 +145,4 @@
 - [x] `functions_install.sh`: Headers of the generic install mini-functions.
 - [x] `data_features.sh`: in rsync installation # alias rs="rsync -av --progress"
 - [x] `data_features.sh`: Add alias \`&\` to notepadqq, and furthermore
+- [x] `install.sh`: All manual features in `install.sh` should use the installationtype `environmental` and use the generic_install to get rid of common parts of the code. 

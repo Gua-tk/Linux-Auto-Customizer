@@ -6,7 +6,7 @@
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 16/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Tester: Axel Fernández Curros                                                                                      #
+# - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
 # logged as root) to install some of the features.                                                                     #

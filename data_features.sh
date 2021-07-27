@@ -6,7 +6,7 @@
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 16/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Tester: Axel Fernández Curros                                                                                      #
+# - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
 # imports. See the header of each function to see its privilege requirements                                           #
@@ -235,6 +235,7 @@ caffeine_installationtype="packagemanager"
 caffeine_launchernames=("caffeine-indicator")
 caffeine_packagenames=("caffeine")
 caffeine_autostart="yes"
+caffeine_manualcontentavailable="1;0;1"
 
 calibre_installationtype="packagemanager"
 calibre_launchernames=("calibre-gui")
@@ -1738,6 +1739,11 @@ nedit_launchernames=("nedit")
 
 net_tools_installationtype="packagemanager"
 net_tools_packagenames=("net-tools")
+net_tools_bashfunctions=("
+alias ports=\"netstat -tulanp\"
+alias nr=\"net-restart\
+")
+
 
 npm_installationtype="userinherit"
 npm_compressedfileurl="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
