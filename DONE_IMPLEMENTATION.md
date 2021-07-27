@@ -76,6 +76,7 @@
 - [x] `data_features.sh`: All features must be standarized to the default name and format of the variables for indirect expansion.
 - [x] `data_features.sh`: in net-tools installation: alias ports="netstat -tulanp" # alias nr="net-restart"
 - [x] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers, youtube-dl or cheat have to be moved
+- [x] `data_features.sh`: Post installation Search for a new version of caffeine or do the modifications in the actual version, but do not apply a patch #  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -146,3 +147,16 @@
 - [x] `data_features.sh`: in rsync installation # alias rs="rsync -av --progress"
 - [x] `data_features.sh`: Add alias \`&\` to notepadqq, and furthermore
 - [x] `install.sh`: All manual features in `install.sh` should use the installationtype `environmental` and use the generic_install to get rid of common parts of the code. 
+- [x] `data_features.sh`: restore clonezilla which has been lost in combat clonezilla_launcher   
+- [x] `install.sh`, `uninstall.sh`: nautilus
+- [x] `install.sh`, `uninstall.sh`: fdups (duplicate finder CLI)
+- [x] `install.sh`, `uninstall.sh`: codeblocks
+- [x] `install.sh`, `uninstall.sh`: Dbeaver Community (database manager)
+- [x] `install.sh`, `uninstall.sh`: handbrake (format editing tool)
+- [x] `install.sh`, `uninstall.sh`: Axel (download manager)
+- [x] `install.sh`, `uninstall.sh`: Remmina (desktop access)
+- [x] `install.sh`, `uninstall.sh`: TeamViewer
+- [x] `install.sh`, `uninstall.sh`: brasero (cd/dvd burning)
+- [x] `install.sh`, `uninstall.sh`: ghostwriter (text editor for markdown and others with html preview)
+- [x] `install.sh`, `uninstall.sh`: jshell (apt-get install default-jdk)
+- [x] `install.sh`, `uninstall.sh`: Mdadm (raid manager)
