@@ -441,9 +441,9 @@ argument_processing()
   done
 
   # If we don't receive arguments we try to install everything that we can given our permissions
-  if [[ ${NUM_INSTALLATION} == 0 ]]; then
+  if [[ ${NUM_INSTALLATION} == 1 ]]; then
     output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${quietness_bit}
-    output_proxy_executioner "echo ${help_message}" ${quietness_bit}
+    output_proxy_executioner "echo ${help_common}" ${quietness_bit}
     exit 0
   fi
 }

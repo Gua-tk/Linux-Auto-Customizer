@@ -282,6 +282,27 @@ TryExec=clion
 Type=Application
 Version=1.0" )
 
+clonezilla_installationtype="packagemanager"
+clonezilla_packagenames=("clonezilla")
+clonezilla_launchercontents=("[Desktop Entry]
+Categories=backup;images;restoration;boot;
+Comment=Create bootable clonezilla images
+Encoding=UTF-8
+Exec=sudo clonezilla
+GenericName=Disk image utility
+Icon=/usr/share/gdm/themes/drbl-gdm/clonezilla/ocslogo-1.png
+Keywords=clonezilla;CloneZilla;iso
+MimeType=
+Name=CloneZilla
+StartupNotify=true
+StartupWMClass=CloneZilla
+Terminal=true
+TryExec=clonezilla
+Type=Application
+Version=1.0"
+
+)
+
 cmatrix_installationtype="packagemanager"
 cmatrix_packagenames=("cmatrix")
 cmatrix_bashfunctions=("alias matrix=\"cmatrix -sC yellow\"")
