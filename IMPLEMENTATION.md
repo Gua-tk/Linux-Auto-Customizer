@@ -23,7 +23,7 @@
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
-- [ ] `data_features.sh`: ttf-mscorefonts-installer autoaccept end user agreement or goes out
+- [ ] `data_features.sh`: ttf-mscorefonts-installer autoaccept end user agreement or goes out (may `yes | apt install ttf...` work?)
 - [ ] `data_features.sh`: in rsync installation # alias rs="rsync -av --progress"
 - [ ] `data_features.sh`: validate `promptcolors` function. Write custom color codes of gnome-terminal profile through gsettings or similar
 - [ ] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
@@ -43,7 +43,7 @@
 - [ ] `data_features.sh`: restore clonezilla which has been lost in combat clonezilla_launcher="[Desktop Entry] Categories=backup;images;restoration;boot;  Comment=Create bootable clonezilla images Encoding=UTF-8  Exec=sudo clonezilla  GenericName=Disk image utility  Icon=/usr/share/gdm/themes/drbl-gdm/clonezilla/ocslogo-1.png  Keywords=clonezilla;CloneZilla;iso  MimeType=  Name=CloneZilla  StartupNotify=true  StartupWMClass=CloneZilla  Terminal=true  TryExec=clonezilla  Type=Application  Version=1.0"   "--clonezilla|--CloneZilla|--cloneZilla;1;| CloneZilla | Disk cloning, disk imaging, data recovery, and deployment | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 - [ ] `install.sh`: register openoffice file associations
 - [ ] `screenshots`: Screenshot is temporarily saved in clipboard for `paste` in addition to saving the image at `Images/screenshots`
-
+- [ ] `desktop launchers`: Change `.ico` icon files to `.svg` to make desktop launcher icons more Debian friendly.
 ###### NEW FEATURES
 - [~] `data_features.sh`, `common_data.sh`: Add new installation `install_fastcommands` to install aliases - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias upgrade="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear" alias bi=\"sudo apt --fix-broken install\"
 - [ ] `data_features.sh`, `common_data.sh`: `clean` performs different automatic optimizations to release space and delete cluttering such as broken links or broken installations (?) # alias autolclean="sudo apt-get -y autoclean && sudo apt-get -y autoremove"  alias trash="rm -rf ${HOME}/.local/share/Trash/*"
