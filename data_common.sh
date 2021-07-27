@@ -40,7 +40,7 @@
 
 ### VARIABLE DECLARATION ###
 # To avoid to be queried by apt-get or dpkg when installing such features such wireshark and sonic-pi.
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 if [[ "$(whoami)" != "root" ]]; then
   # Path pointing to $HOME

@@ -1246,7 +1246,7 @@ StartupWMClass=jupyter
 Terminal=false
 Type=Application
 Version=1.0
-Icon=${USR_BIN_FOLDER}/jupyter-lab/share/icons/hicolor/scalable/apps/notebook.svg
+Icon=${USR_BIN_FOLDER}/jupyter_lab/share/icons/hicolor/scalable/apps/notebook.svg
 Exec=jupyter-lab &
 ")
 jupyter_lab_bashfunctions=("
@@ -1377,7 +1377,7 @@ msttcorefonts_packagenames=("msttcorefonts")
 
 nautilus_installationtype="packagemanager"
 nautilus_packagenames=("nautilus")
-nautilus_launchernames=("nautilus-autorun-software")
+nautilus_launchernames=("org.gnome.Nautilus")
 nautilus_bashfunctions=("
 xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons true
