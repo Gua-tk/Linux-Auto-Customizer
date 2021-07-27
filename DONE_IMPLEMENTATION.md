@@ -68,6 +68,11 @@
 - [x] `functions_install.sh`, `data_features.sh`: Add parametrization in generic_install to clone a repository instead of downloading and decompressing
 - [x] `functions_install.sh`: Parametrize Autofirma: In the generic install of a packageinstall add the possibility of having a compressed file that contains a deb instead of directly a deb.. This
 - [x] `functions_install.sh`: Create another installationtype for cloning repositories.
+- [x] `functions_install`: put nice color to wget bar in download
+- [x] `functions_common.sh`, `table.md`: Remove spaces for help table
+- [x] `common_data.md`: (for the --help) In the master table, put the extensions .c, .h, etc in bold or put it in another field, so they are not between literal tildes. In that way, they are not recognized in the help.
+- [x] `install.sh`: Reload `bash` env at the end of install must not need to run bash command, instead use hash -r or similar strategy, also reload font cache
+- [x] `data_features.sh`: ttf-mscorefonts-installer autoaccept end user agreement or goes out (may `yes | apt install ttf...` work?) --> Added frontend non interactive needs to be tested
 
 
 ###### Axel
@@ -134,3 +139,6 @@
 - [x] `data_features.sh`, `functions_common.sh`: Manage autostart in generic install: autostarting programs (`caffeine`, `copyq`... ) steam? teams? teamviewer?
 - [x] `install.sh`, `uninstall.sh`: Add fonts installationtype --> Parametrized via userinherit and packagemanager
 - [x] `install.sh`: Depopulation of nonrelevant install_program functions and programs from `install.sh`
+- [x] `data_features.sh`: Use nohup in aliases to prevent closing of feature when a process finish if a hanging terminal is closed
+- [x] `functions_install.sh`: Headers of the generic install mini-functions.
+- [x] `data_features.sh`: in rsync installation # alias rs="rsync -av --progress"

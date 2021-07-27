@@ -91,33 +91,8 @@ install_sysmontask_mid() {
   )
 }
 
-install_change-bg() {
-  # Install script changer to be executed manually or with crontab automatically
-  rm -Rf "${XDG_PICTURES_DIR}/wallpapers"
-  create_folder "${USR_BIN_FOLDER}/change-bg"
-  echo "${wallpapers_changer_script}" >"${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh"
-  chmod 775 "${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh"
-  ln -sf "${USR_BIN_FOLDER}/change-bg/wallpaper_changer.sh" "${DIR_IN_PATH}/change-bg"
-
-  echo "${wallpapers_cronjob}" >"${USR_BIN_FOLDER}/change-bg/wallpapers_cronjob"
-  crontab "${USR_BIN_FOLDER}/change-bg/wallpapers_cronjob"
-
-  # Download and install wallpaper
-  rm -Rf "${XDG_PICTURES_DIR}/wallpapers"
-  create_folder "${XDG_PICTURES_DIR}/wallpapers"
-  git clone "${wallpapers_downloader}" "${XDG_PICTURES_DIR}/wallpapers"
-
-  $(
-    cd ${XDG_PICTURES_DIR}/wallpapers
-    tar -xzf *.tar.gz
-  )
-  rm -f "${XDG_PICTURES_DIR}/wallpapers/*.tar.gz"
-
-  for filename in $(ls /usr/share/backgrounds); do
-    if [ -f "/usr/share/backgrounds/${filename}" ]; then
-      cp "/usr/share/backgrounds/${filename}" "${XDG_PICTURES_DIR}/wallpapers"
-    fi
-  done
+install_changebg_post() {
+  crontab "${USR_BIN_FOLDER}/changebg/cronjob"
 }
 
 install_system_fonts_mid() {

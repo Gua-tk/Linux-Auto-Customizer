@@ -5,7 +5,7 @@
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 16/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Tester: Axel Fernández Curros                                                                                      #
+# - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
 # imports. See the header of each function to see its privilege requirements.                                          #
@@ -14,48 +14,50 @@
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
-
+########################################################################################################################
+############################################ INSTALL AUXILIAR FUNCTIONS ################################################
+########################################################################################################################
 
 # - Description: Installs a new bash feature into $BASH_FUNCTIONS_PATH which sources the script that contains the code
-# for this new feature. $BASH_FUNCTIONS_PATH is imported to your environment via .bashrc before entering any
-# installation function.
+# for this new feature.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
 # - Argument 2: Name of the file.
 add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
-  echo -e "$1" >"${BASH_FUNCTIONS_FOLDER}/$2"
-
+  create_file "${BASH_FUNCTIONS_FOLDER}/$2" "$1"
   # If we are root apply permission to the file
-  if [[ ${EUID} == 0 ]]; then
+  if [ ${EUID} == 0 ]; then
     apply_permissions "${BASH_FUNCTIONS_FOLDER}/$2"
   fi
 
-  import_line="source ${BASH_FUNCTIONS_FOLDER}/$2"
   # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
-  if [[ -z $(cat "${BASH_FUNCTIONS_PATH}" | grep -Fo "${import_line}") ]]; then
-    echo "${import_line}" >>"${BASH_FUNCTIONS_PATH}"
+  if [ -z "$(cat "${BASH_FUNCTIONS_PATH}" | grep -Fo "source ${BASH_FUNCTIONS_FOLDER}/$2")" ]; then
+    echo "source ${BASH_FUNCTIONS_FOLDER}/$2" >>"${BASH_FUNCTIONS_PATH}"
   fi
 }
 
-# Description: Sets keybinding data to add a keybinding for keybind_function bash function
-# Permissions: can be executed indifferently as root or user
-# Argument 1: Command to be run with the keyboard shortcut
-# Argument 2: Set of keys with the right format to be binded
-# Argument 3: Descriptive name of the keybinding
-add_keybinding()
-{
-  echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
+# Description: Sets keybinding adding keybinding for keybind_function bash function.
+# Permissions: can be executed indifferently as root or user.
+# Argument 1: Command to be run with the keyboard shortcut.
+# Argument 2: Set of keys with the right format to be binded.
+# Argument 3: Descriptive name of the keybinding.
+add_keybinding() {
+  echo "$1;$2;$3" >>"${PROGRAM_KEYBIND_PATH}"
 }
 
 # - Description: Add new program launcher to the task bar given its desktop launcher filename.
-# - Permissions: This functions expects to be called as a non-privileged user.
-# - Argument 1: Name of the .desktop launcher including .desktop extension written in file in PROGRAM_FAVORITES_PATH
+#   This is done by writing in PROGRAM_FAVORITES_PATH the 1st argument.
+#   This file is the input for add_to_favorites functions which is always present in all installations and this function
+#   is executed each time we source ~/.bashrc.
+# - Permissions: This functions can be called indistinctly as root or user.
+# - Argument 1: Name of the .desktop launcher without .desktop extension located in file in PERSONAL_LAUNCHERS_DIR or
+#   ALL_USERS_LAUNCHERS_DIR.
 add_to_favorites() {
   for argument in "$@"; do
     if [ -z "$(cat "${PROGRAM_FAVORITES_PATH}" | grep -Eo "${argument}")" ]; then
       if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
-        echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
+        echo "${argument}.desktop" >>"${PROGRAM_FAVORITES_PATH}"
       else
         output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
         return
@@ -66,11 +68,14 @@ add_to_favorites() {
   done
 }
 
-# - Description: Apply standard permissions and set owner and group to the user who called root
-# - Permissions: This functions is expected to be called as root or as user.
-# Argument 1: Name of .desktop launcher of program file
+# - Description: Sets a program to autostart by giving its launcher name without .desktop extension.
+#   This .desktop are searched at ALL_USERS_LAUNCHERS_DIR and PERSONAL_LAUNCHERS_DIR.
+# - Permissions: This functions can be called as root or as user.
+# Argument 1: Name of .desktop launcher of program file without the '.desktop' extension.
 autostart_program() {
+  # If absolute path
   if [ -n "$(echo "$1" | grep -Eo "^/")" ]; then
+    # If it's a file, make it autostart
     if [ -f "$1" ]; then
       cp "$1" "${AUTOSTART_FOLDER}"
       if [ ${EUID} -eq 0 ]; then
@@ -80,7 +85,7 @@ autostart_program() {
       output_proxy_executioner "echo WARNING: The file $1 does not exist, skipping..." ${FLAG_QUIETNESS}
       return
     fi
-  else
+  else # Else relative path from ALL_USERS_LAUNCHERS_DIR or PERSONAL_LAUNCHERS_DIR
     if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]; then
       cp "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
       if [ ${EUID} -eq 0 ]; then
@@ -98,13 +103,15 @@ autostart_program() {
   fi
 }
 
-# - Description: Apply standard permissions and set owner and group to the user who called root
-# - Permissions: This functions is expected to be called as root
+# - Description: Apply standard permissions and set owner and group to the user who called root.
+# - Permissions: This functions can be called as root or user.
 # Argument 1: Path to the file or directory whose permissions are changed.
 apply_permissions() {
-  chgrp "${SUDO_USER}" "$1"
-  chown "${SUDO_USER}" "$1"
-  chmod 775 "$1"
+  if [ ${EUID} == 0 ]; then # root
+    chgrp "${SUDO_USER}" "$1"
+    chown "${SUDO_USER}" "$1"
+  fi
+  chmod 755 "$1"
 }
 
 # - Description: Creates the file with $1 specifying location and name of the file. Afterwards, apply permissions to it,
@@ -113,18 +120,14 @@ apply_permissions() {
 # - Permissions: This functions is expected to be called as root, or it will throw an error, since $SUDO_USER is not
 # defined in the the scope of the normal user.
 # - Argument 1: Path to the directory that we want to create.
-# - Argument 2(Optional): Content of the file we want to create
+# - Argument 2 (Optional): Content of the file we want to create.
 create_file() {
-  local -r folder=$(echo "$1" | rev | cut -d "/" -f2- | rev)
-  local -r filename=$(echo "$1" | rev | cut -d "/" -f1 | rev)
+  local -r folder="$(echo "$1" | rev | cut -d "/" -f2- | rev)"
+  local -r filename="$(echo "$1" | rev | cut -d "/" -f1 | rev)"
   if [ -n "${filename}" ]; then
     mkdir -p "${folder}"
-    echo "$2" > "$1"
-    if [ ${EUID} == 0 ]; then  # root
-      apply_permissions "$1"
-    else
-      chmod 755 "$1"
-    fi
+    echo "$2" >"$1"
+    apply_permissions "$1"
   else
     output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "${FLAG_QUIETNESS}"
   fi
@@ -133,7 +136,7 @@ create_file() {
 # - Description: Creates the necessary folders in order to make $1 a valid path. Afterwards, converts that dir to a
 # writable folder, now property of the $SUDO_USER user (instead of root), which is the user that ran the sudo command.
 # Note that by using mkdir -p we can pass a path that implies the creation of 2 or more directories without any
-# problem. For example create_folder /home/user/all/driectories/will/be/created
+# problem. For example create_folder /home/user/all/directories/will/be/created.
 # - Permissions: This functions is expected to be called as root, or it will throw an error, since $SUDO_USER is not
 # defined in the the scope of the normal user.
 # - Argument 1: Path to the directory that we want to create.
@@ -144,48 +147,39 @@ create_folder() {
 
 # - Description: Creates a valid launcher for the normal user in the desktop using an already created launcher from an
 # automatic install (for example using apt-get or dpkg).
-# - Permissions: This function expects to be called as root since it uses the variable $SUDO_USER
-# - Argument 1: name of the desktop launcher in /usr/share/applications
+# - Permissions: This function expects to be called as root since it uses the variable $SUDO_USER.
+# - Argument 1: name of the desktop launcher in ALL_USERS_LAUNCHERS_DIR.
 copy_launcher() {
-  if [[ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]]; then
-    create_file "${XDG_DESKTOP_DIR}/$1" "$(cat "${ALL_USERS_LAUNCHERS_DIR}/$1")"
+  if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]; then
+    cp "${ALL_USERS_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}/$1"
+    apply_permissions "${XDG_DESKTOP_DIR}/$1"
   else
     output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." ${FLAG_QUIETNESS}
   fi
 }
 
 # - Description: This function accepts an undefined number of pairs of arguments. The first of the pair is a path to a
-# binary that will be linked to our path. The second one is the name that it will have as a terminal command.
-# This function processes the last optional arguments of the function download_and_decompress, but can be
-# used as a manual way to add binaries to the PATH, in order to add new commands to your environment.
-#
-# - Argument 1: Absolute path to the binary you want to be in the PATH
-# - Argument 2: Name of the command that will be added to your environment to execute the previous binary
-# - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2
+#   binary that will be linked to our path. The second one is the name that it will have as a terminal command.
+#   This function processes the last optional arguments of the function download_and_decompress, but can be
+#   used as a manual way to add binaries to the PATH, in order to add new commands to your environment.
+# - Argument 1: Absolute path to the binary you want to be in the PATH.
+# - Argument 2: Name of the command that will be added to your environment to execute the previous binary.
+# - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2.
 create_links_in_path() {
-  while [[ $# -gt 0 ]]; do
-    # Clean to avoid collisions
-    ln -sf "$1" ${DIR_IN_PATH}/$2
+  while [ $# -gt 0 ]; do
+    ln -sf "$1" "${DIR_IN_PATH}/$2"
     shift
     shift
   done
 }
 
-# - Description: This function creates a valid launcher in the desktop using a a given string with a given name
+# - Description: This function creates a valid launcher in the desktop using a a given string with a given name.
 # - Permissions: Can be called being root or normal user with same behaviour: when calling it as root, it will change
 # the owner and group of the created launcher to the one of the $SUDO_USER.
 # Argument 1: The string of the text representing the content of the desktop launcher that we want to create.
 # Argument 2: The name of the launcher. This argument can be any name with no consequences.
 create_manual_launcher() {
-  # If user
-  if [[ ${EUID} -ne 0 ]]; then
-    echo -e "$1" >"${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
-    chmod 775 "${PERSONAL_LAUNCHERS_DIR}/$2.desktop"
-    cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
-  else # if root
-    create_file "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
-    cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
-  fi
+  create_file "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
 }
 
 # - Description:
@@ -228,7 +222,7 @@ decompress() {
       fi
     else
       # Capture root folder name
-      local -r internal_folder_name=$( (tar -t"$1"f - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
+      local -r internal_folder_name=$( (tar -t"$1"f - | head -1 | cut -d "/" -f1) <"${dir_name}/${file_name}")
     fi
     # Check that variable program_folder_name is set, if not, decompress in a made up folder.
     if [ -z "${internal_folder_name}" ]; then
@@ -254,7 +248,7 @@ decompress() {
       (
         cd "${dir_name}" || exit
         tar -x"$1"f -
-      ) < "${dir_name}/${file_name}"
+      ) <"${dir_name}/${file_name}"
     fi
   else
     output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist." "${FLAG_QUIETNESS}"
@@ -262,7 +256,7 @@ decompress() {
   fi
   # Delete file now that is has been decompressed trash
   rm -f "${dir_name}/${file_name}"
-  
+
   # Only enter here if they are different, if not skip since it is pointless because the folder already has the desired
   # name
   if [ -n "${internal_folder_name}" ]; then
@@ -278,12 +272,12 @@ decompress() {
 }
 
 # - Description: Downloads a file from the link provided in $1 and, if specified, with the location and name specified
-#   in $2. If $2 is not defined, download into ${USR_BIN_FOLDER}/downloading_program
+#   in $2. If $2 is not defined, download into ${USR_BIN_FOLDER}/downloading_program.
 # - Permissions: Can be called as root or normal user. If called as root changes the permissions and owner to the
 #   $SUDO_USER user, otherwise, needs permissions to create the file $2.
-# - Argument 1: link to the file to download
+# - Argument 1: Link to the file to download.
 # - Argument 2 (optional): Path to the created file, allowing to download in any location and use a different filename.
-#   By default the name of the file is downloading file and the PATH where is being downloaded is USR_BIN_FOLDER
+#   By default the name of the file is downloading file and the PATH where is being downloaded is USR_BIN_FOLDER.
 download() {
   local dir_name=
   local file_name=
@@ -334,7 +328,10 @@ download() {
   fi
 
   # Download in a subshell to avoid changing the working directory in the current shell
+  echo -e '\033[1;33m'
   wget --show-progress -qO "${dir_name}/${file_name}" "$1"
+  echo -e '\033[0m'
+
   # If we are root
   if [ ${EUID} == 0 ]; then
     apply_permissions "${dir_name}/${file_name}"
@@ -342,23 +339,22 @@ download() {
 }
 
 # - Description: Downloads a .deb package temporarily into USR_BIN_FOLDER from the provided link and installs it using
-# dpkg -i.
+#   dpkg -i.
 # - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
-# - Argument 1: Link to the package file to download
+# - Argument 1: Link to the package file to download.
 # - Argument 2 (Optional): Tho show the name of the program downloading and thus change the name of the downloaded
-# package
+#   package.
 download_and_install_package() {
   download "$1" "$2"
-  dpkg -i ${USR_BIN_FOLDER}/"$2"
-  rm -f ${USR_BIN_FOLDER}/"$2"
+  dpkg -i "${USR_BIN_FOLDER}/$2"
+  rm -f "${USR_BIN_FOLDER}/$2"
 }
 
-# - Description: Expands launcher contents and add them to the desktop and dashboard
+# - Description: Expands launcher contents and add them to the desktop and dashboard.
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_launchercontents
-# and the name of the first argument in the common_data.sh table
-generic_install_launchers()
-{
+#   and the name of the first argument in the common_data.sh table
+generic_install_launchers() {
   local -r launchercontents="$1_launchercontents[@]"
   local name_suffix_anticollision=""
   for launchercontent in "${!launchercontents}"; do
@@ -370,9 +366,8 @@ generic_install_launchers()
 # - Description: Expands function contents and add them to .bashrc indirectly using bash_functions
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_bashfunctions
-# and the name of the first argument in the common_data.sh table
-generic_install_functions()
-{
+#   and the name of the first argument in the common_data.sh table
+generic_install_functions() {
   local -r bashfunctions="$1_bashfunctions[@]"
   name_suffix_anticollision=""
   for bashfunction in "${!bashfunctions}"; do
@@ -384,9 +379,8 @@ generic_install_functions()
 # - Description: Expands launcher names and add them to the favorites subsystem if FLAF_FAVORITES is set to 1.
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_launchernames
-# and the name of the first argument in the common_data.sh table
-generic_install_favorites()
-{
+#   and the name of the first argument in the common_data.sh table.
+generic_install_favorites() {
   local -r launchernames="$1_launchernames[@]"
 
   # To add to favorites if the flag is set
@@ -402,22 +396,22 @@ generic_install_favorites()
 
 }
 
-# - Description:
+# - Description: Expands file associations and register the desktop launchers as default application's mimetypes
 # - Permissions: Can be executed as root or user.
-# - Argument 1:
-generic_install_file_associations()
-{
+# - Argument 1: Name of the feature to install, matching the variable $1_associatedfiletypes
+#   and the name of the first argument in the common_data.sh table.
+generic_install_file_associations() {
   local -r associated_file_types="$1_associatedfiletypes[@]"
   for associated_file_type in ${!associated_file_types}; do
     register_file_associations "${associated_file_type}" "$1.desktop"
   done
 }
 
-# - Description:
+# - Description: Expands keybinds for functions and programs and append to keybind sub-system
 # - Permissions: Can be executed as root or user.
-# - Argument 1:
-generic_install_keybindings()
-{
+# - Argument 1: Name of the feature to install, matching the variable $1_keybinds
+#   and the name of the first argument in the common_data.sh table
+generic_install_keybindings() {
   local -r keybinds="$1_keybinds[@]"
   for keybind in ${!keybinds}; do
     local -r command="$(echo "${keybind}" | cut -d ";" -f1)"
@@ -425,14 +419,13 @@ generic_install_keybindings()
     local -r binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
     add_keybinding "${command}" "${bind}" "${binding_name}"
   done
-
 }
 
-# - Description:
+# - Description: Expands downloads and saves it to USR_BIN_FOLDER/FEATUREKEYNAME/NAME_OF_DOWNLOADED_FILE_i
 # - Permissions: Can be executed as root or user.
-# - Argument 1:
-generic_install_downloads()
-{
+# - Argument 1: Name of the feature to install, matching the variable $1_downloads
+#   and the name of the first argument in the common_data.sh table
+generic_install_downloads() {
   local -r downloads="$1_downloads[@]"
   for download in ${!downloads}; do
     create_folder "${USR_BIN_FOLDER}/$1"
@@ -442,11 +435,11 @@ generic_install_downloads()
   done
 }
 
-# - Description:
+# - Description: Expands autostarting program option if set to 'yes' it'll expand launcher names to autostart
 # - Permissions: Can be executed as root or user.
-# - Argument 1:
-generic_install_autostart()
-{
+# - Argument 1: Name of the feature to install, matching the variable $1_downloads
+##   and the name of the first argument in the common_data.sh table
+generic_install_autostart() {
   local -r autostart="$1_autostart"
   local -r launchernames="$1_launchernames[@]"
 
@@ -471,8 +464,7 @@ generic_install_autostart()
   fi
 }
 
-generic_install_pathlinks()
-{
+generic_install_pathlinks() {
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
@@ -487,8 +479,7 @@ generic_install_pathlinks()
   done
 }
 
-generic_install_files()
-{
+generic_install_files() {
   local -r filekeys="$1_filekeys[@]"
   for filekey in "${!filekeys}"; do
     local content="$1_${filekey}_content"
@@ -514,41 +505,41 @@ generic_install() {
 
   if [[ ! -z "${!installationtype}" ]]; then
 
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1 )" == "1" ]; then
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
       "install_$1_pre"
     fi
 
     case ${!installationtype} in
-      # Using package manager such as apt-get
-      packagemanager)
-        rootgeneric_installation_type "${featurename}" packagemanager
+    # Using package manager such as apt-get
+    packagemanager)
+      rootgeneric_installation_type "${featurename}" packagemanager
       ;;
-      # Downloading a package and installing it using a package manager such as dpkg
-      packageinstall)
-        rootgeneric_installation_type "${featurename}" packageinstall
+    # Downloading a package and installing it using a package manager such as dpkg
+    packageinstall)
+      rootgeneric_installation_type "${featurename}" packageinstall
       ;;
-      # Download and decompress a file that contains a folder
-      userinherit)
-        userinherit_installation_type "${featurename}"
+    # Download and decompress a file that contains a folder
+    userinherit)
+      userinherit_installation_type "${featurename}"
       ;;
-      # Clone a repository
-      repositoryclone)
-        repositoryclone_installation_type "${featurename}"
+    # Clone a repository
+    repositoryclone)
+      repositoryclone_installation_type "${featurename}"
       ;;
-      pythonvenv)
-        pythonvenv_installation_type "${featurename}"
+    pythonvenv)
+      pythonvenv_installation_type "${featurename}"
       ;;
-      # Only uses the common part of the generic installation
-      environmental)
-        :  # no-op
+    # Only uses the common part of the generic installation
+    environmental)
+      : # no-op
       ;;
-      *)
-        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
-        exit 1
+    *)
+      output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
+      exit 1
       ;;
     esac
 
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2 )" == "1" ]; then
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
       "install_$1_mid"
     fi
 
@@ -562,14 +553,13 @@ generic_install() {
     generic_install_keybindings "${featurename}"
     generic_install_pathlinks "${featurename}"
 
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3 )" == "1" ]; then
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
       "install_$1_post"
     fi
   fi
 }
 
-pythonvenv_installation_type()
-{
+pythonvenv_installation_type() {
   rm -Rf "${USR_BIN_FOLDER}/$1"
   python3 -m venv "${USR_BIN_FOLDER}/$1"
   "${USR_BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
@@ -586,8 +576,7 @@ pythonvenv_installation_type()
 
 }
 
-repositoryclone_installation_type()
-{
+repositoryclone_installation_type() {
   local -r repositoryurl="$1_repositoryurl"
   rm -Rf "${USR_BIN_FOLDER}/$1"
   create_folder "${USR_BIN_FOLDER}/$1"
@@ -620,8 +609,6 @@ rootgeneric_installation_type() {
     apt-get install -y "${packagedependency}"
   done
 
-
-
   # Download package and install using manual package manager
   if [ "$2" == packageinstall ]; then
     # Use a compressed file that contains .debs
@@ -630,12 +617,12 @@ rootgeneric_installation_type() {
       decompress "${!compressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "$1"
       dpkg -Ri "${USR_BIN_FOLDER}/$1"
       rm -Rf "${USR_BIN_FOLDER:?}/$1"
-    else  # Use directly a downloaded .deb
+    else # Use directly a downloaded .deb
       for packageurl in "${!packageurls}"; do
         download_and_install_package "${packageurl}" "$1_downloading"
       done
     fi
-  else  # Install with default package manager
+  else # Install with default package manager
     for packagename in ${!packagenames}; do
       apt-get install -y "${packagename}"
     done
@@ -739,8 +726,7 @@ else
   exit 1
 fi
 
-data_and_file_structures_initialization()
-{
+data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
   create_folder ${USR_BIN_FOLDER}
   create_folder ${BASH_FUNCTIONS_FOLDER}
@@ -751,8 +737,8 @@ data_and_file_structures_initialization()
   # Initialize bash functions
   if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
     create_file "${BASH_FUNCTIONS_PATH}"
-  # //RF output proxy executioner stops working after sourcing ${BASH_FUNCTIONS_PATH}
-  # else
+    # //RF output proxy executioner stops working after sourcing ${BASH_FUNCTIONS_PATH}
+    # else
     # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
     # output_proxy_executioner "echo INFO: Checking the features that are already installed. This may take a while..." "${FLAG_QUIETNESS}"
     # source "${BASH_FUNCTIONS_PATH}" &>/dev/null
@@ -777,12 +763,11 @@ data_and_file_structures_initialization()
 
   # Make sure that .bashrc sources .bash_functions
   if [ -z "$(cat "${BASHRC_PATH}" | grep -Fo "source "${BASH_FUNCTIONS_PATH}"")" ]; then
-    echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
+    echo -e "${bash_functions_import}" >>${BASHRC_PATH}
   fi
 }
 
-pre_install_update()
-{
+pre_install_update() {
   if [[ ${EUID} == 0 ]]; then
     if [[ ${FLAG_UPGRADE} -gt 0 ]]; then
       output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${FLAG_QUIETNESS}
@@ -797,14 +782,13 @@ pre_install_update()
   fi
 }
 
-update_environment()
-{
+update_environment() {
   output_proxy_executioner "echo INFO: Rebuilding path cache" "${quietness_bit}"
   output_proxy_executioner "hash -r" "${quietness_bit}"
   output_proxy_executioner "echo INFO: Rebuilding font cache" "${quietness_bit}"
-  output_proxy_executioner "fc-cache -f -v" "${quietness_bit}"
+  output_proxy_executioner "fc-cache -f" "${quietness_bit}"
   output_proxy_executioner "echo INFO: Reloading bash features" "${quietness_bit}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"  # After sourcing, output_proxy_executioner stops working unexpectedly
+  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}" # After sourcing, output_proxy_executioner stops working unexpectedly
   #output_proxy_executioner "echo INFO: Finished execution" "${quietness_bit}"
 }
 
@@ -877,5 +861,3 @@ if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
   done
 fi
 "
-
-

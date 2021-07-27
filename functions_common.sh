@@ -207,10 +207,9 @@ autogen_help()
     local installation_type="$(echo "${program}" | cut -d ";" -f2)"
     local program_arguments="$(echo "${program}" | cut -d ";" -f1)"
     local program_argument="$(echo "${program_arguments}" | cut -d "|" -f1)"
-    local program_name="$(echo "${readme_line}" | cut -d "|" -f2)"
+    local program_name="$(echo "${readme_line}" | cut -d "|" -f2 | sed 's/^ *//g')"
     local program_features="$(echo "${readme_line}" | cut -d "|" -f4)"
-    local program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " ")"
-
+    local program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " " | sed "s/\.[a-z]*//g" | sed 's/^ *//g')"
     local help_line="${program_argument};${program_name};${program_commands}"
     case ${installation_type} in
       0)

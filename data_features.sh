@@ -256,6 +256,7 @@ cheese_bashfunctions=("alias cheese=\"nohup cheese &>/dev/null &\"")
 clementine_installationtype="packagemanager"
 clementine_launchernames=("clementine")
 clementine_packagenames=("clementine")
+clementine_bashfunctions=("alias clementine=\"nohup clementine &>/dev/null &\"")
 
 clion_installationtype="userinherit"
 clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz"
@@ -472,6 +473,7 @@ dia_bashfunctions=("alias dia=\"nohup dia &>/dev/null &\"")
 discord_installationtype="userinherit"
 discord_compressedfiletype="z"
 discord_binariesinstalledpaths=("Discord;discord")
+discord_bashfunctions=("alias discord=\"nohup discord &>/dev/null &\"")
 discord_compressedfileurl="https://discord.com/api/download?platform=linux&format=tar.gz"
 discord_launchercontents=("[Desktop Entry]
 Categories=Network;InstantMessaging;
@@ -2194,6 +2196,7 @@ rsync_installationtype="packagemanager"
 rsync_packagedependencies=("canberra-gtk-module")
 rsync_packagenames=("rsync" "grsync")
 rsync_launchernames=("grsync")
+rsync_bashfunctions=("alias rs=\"rsync -av --progress\"")
 
 s_installationtype="environmental"
 s_bashfunctions=("
@@ -2786,8 +2789,13 @@ vlc_installationtype="packagemanager"
 vlc_packagenames=("vlc")
 vlc_launchernames=("vlc")
 
-wallpapers_downloader="https://github.com/AleixMT/wallpapers"
-wallpapers_changer_script="#!/bin/bash
+changebg_installationtype="repositoryclone"
+changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
+changebg_manualcontentavailable="0;0;1"
+changebg_filekeys=("cronscript" "cronjob")
+changebg_cronscript_path="cronscript.sh"
+changebg_cronscript_content="
+#!/bin/bash
 if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
   user=\$(whoami)
   fl=\$(find /proc -maxdepth 2 -user \$user -name environ -print -quit)
@@ -2797,13 +2805,14 @@ if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
   done
   export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
 fi
-DIR=\"${XDG_PICTURES_DIR}/wallpapers\"
+DIR=\"${USR_BIN_FOLDER}/changebg\"
 PIC=\$(ls \${DIR} | shuf -n1)
 dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
 
 #gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
 "
-wallpapers_cronjob="*/5 * * * * ${USR_BIN_FOLDER}/wallpaper_changer.sh"
+changebg_cronjob_path="cronjob"
+changebg_cronjob_content="*/5 * * * * ${USR_BIN_FOLDER}/changebg/cronscript.sh"
 
 whatsapp_installationtype="environmental"
 whatsapp_url="https://web.whatsapp.com/"
