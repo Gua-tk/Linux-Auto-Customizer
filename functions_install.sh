@@ -180,11 +180,11 @@ create_links_in_path() {
 # Argument 2: The name of the launcher. This argument can be any name with no consequences.
 create_manual_launcher() {
   if [ ${EUID} == 0 ]; then  # root
-    create_file "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "$1"
-    cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
-  else
     create_file "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
     cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
+  else
+    create_file "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "$1"
+    cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
   fi
 }
 
