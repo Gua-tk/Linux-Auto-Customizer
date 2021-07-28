@@ -2664,7 +2664,7 @@ tilix_packagenames=("tilix")
 tilix_launchernames=("com.gexperts.Tilix")
 
 tomcat_installationtype="userinherit"
-tomcat_dcompressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
+tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
 tomcat_compressedfiletype="z"
 
 tmux_installationtype="packagemanager"
