@@ -220,9 +220,15 @@ decompress() {
     if [ "$1" == "zip" ]; then
       local internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
       # The captured line ends with / so it is a valid directory
-      echo $internal_folder_name
-      if [ -n "$(echo "${internal_folder_name}" | grep -Eo "$/")" ]; then
+      echo
+      echo
+      echo
+      echo AAAAAAAAAAAAAAAAAAAAA$internal_folder_name
+      echo
+      echo
+      if [ -n "$(echo "${internal_folder_name}" | grep -Eo "/$")" ]; then
         internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
+        echo $internal_folder_name
       else
         # Set the internal folder name empty if it is not detected
         internal_folder_name=""
