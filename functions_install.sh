@@ -179,7 +179,13 @@ create_links_in_path() {
 # Argument 1: The string of the text representing the content of the desktop launcher that we want to create.
 # Argument 2: The name of the launcher. This argument can be any name with no consequences.
 create_manual_launcher() {
-  create_file "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
+  if [ ${EUID} == 0 ]; then  # root
+    create_file "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "$1"
+    cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
+  else
+    create_file "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
+    cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
+  fi
 }
 
 # - Description:
@@ -214,6 +220,7 @@ decompress() {
     if [ "$1" == "zip" ]; then
       local internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
       # The captured line ends with / so it is a valid directory
+      echo $internal_folder_name
       if [ -n "$(echo "${internal_folder_name}" | grep -Eo "$/")" ]; then
         internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
       else
