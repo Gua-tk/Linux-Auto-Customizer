@@ -179,7 +179,6 @@ AutoFirma_compressedfiletype="zip"
 AutoFirma_launchernames=("afirma")
 AutoFirma_bashfunctions=("alias autofirma=\"nohup AutoFirma &>/dev/null &\"")
 
-
 axel_installationtype="packagemanager"
 axel_packagenames=("axel")
 
@@ -208,7 +207,6 @@ LIGHTPURPLE='\033[1;34m'
 LIGHTCYAN='\033[1;36m'
 WHITE='\033[1;37m'
 ")
-
 
 branch_installationtype="environmental"
 branch_bashfunctions=("alias branch=\"git branch\"")
@@ -241,6 +239,33 @@ calibre_installationtype="packagemanager"
 calibre_launchernames=("calibre-gui")
 calibre_packagenames=("calibre")
 calibre_bashfunctions=("alias calibre=\"nohup calibre &>/dev/null &\"")
+
+changebg_installationtype="repositoryclone"
+changebg_binariesinstalledpaths=".cronscript.sh;changebg"
+changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
+changebg_manualcontentavailable="0;0;1"
+changebg_filekeys=("cronscript" "cronjob")
+changebg_cronscript_path=".cronscript.sh"
+changebg_cronscript_content="
+#!/bin/bash
+if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
+  user=\$(whoami)
+  fl=\$(find /proc -maxdepth 2 -user \$user -name environ -print -quit)
+  while [ -z \$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2- | tr -d '\000' ) ]
+  do
+    fl=\$(find /proc -maxdepth 2 -user \$user -name environ -newer \"\$fl\" -print -quit)
+  done
+  export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
+fi
+DIR=\"${USR_BIN_FOLDER}/changebg\"
+PIC=\$(ls \${DIR} | shuf -n1)
+echo \"\$DIR/\$PIC\"
+dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
+
+#gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
+"
+changebg_cronjob_path=".cronjob"
+changebg_cronjob_content="*/5 * * * * ${USR_BIN_FOLDER}/changebg/.cronscript.sh"
 
 cheat_installationtype="environmental"
 cheat_downloads=("https://cht.sh/:cht.sh;cht.sh")
@@ -461,32 +486,6 @@ dconf_editor_installationtype="packagemanager"
 dconf_editor_packagenames=("dconf-editor")
 dconf_editor_launchernames=("ca.desrt.dconf-editor")
 
-drive_installationtype="environmental"
-drive_url="https://drive.google.com/"
-drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon.svg")
-drive_bashfunctions=("alias drive=\"nohup xdg-open ${drive_url} &>/dev/null &\"")
-drive_launchercontents=("[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to instant e-mail messaging from Chrome
-Encoding=UTF-8
-GenericName=Gmail
-Keywords=drive;
-MimeType=
-Name=Google Drive
-StartupNotify=true
-StartupWMClass=Google Drive
-Terminal=false
-Exec=xdg-open ${drive_url}
-Icon=${USR_BIN_FOLDER}/drive/drive_icon.svg
-TryExec=google-chrome
-Type=Application
-Version=1.0")
-
-dropbox_installationtype="packageinstall"
-dropbox_packagedependencies=("python3-gpg")
-dropbox_launchernames=("dropbox")
-dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
-
 dia_installationtype="packagemanager"
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")
@@ -540,6 +539,32 @@ TryExec=google-chrome
 Type=Application
 Version=1.0")
 
+drive_installationtype="environmental"
+drive_url="https://drive.google.com/"
+drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon.svg")
+drive_bashfunctions=("alias drive=\"nohup xdg-open ${drive_url} &>/dev/null &\"")
+drive_launchercontents=("[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to instant e-mail messaging from Chrome
+Encoding=UTF-8
+GenericName=Gmail
+Keywords=drive;
+MimeType=
+Name=Google Drive
+StartupNotify=true
+StartupWMClass=Google Drive
+Terminal=false
+Exec=xdg-open ${drive_url}
+Icon=${USR_BIN_FOLDER}/drive/drive_icon.svg
+TryExec=google-chrome
+Type=Application
+Version=1.0")
+
+dropbox_installationtype="packageinstall"
+dropbox_packagedependencies=("python3-gpg")
+dropbox_launchernames=("dropbox")
+dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
+
 duckduckgo_installationtype="environmental"
 duckduckgo_url="https://duckduckgo.com/"
 duckduckgo_downloads=("https://iconape.com/wp-content/png_logo_vector/cib-duckduckgo.png;duckduckgo_icon.png")
@@ -571,28 +596,6 @@ dummycommit_bashfunctions=("dummycommit()
   git commit -am \"\$messag\"
   git push
 }")
-
-eclipse_installationtype="userinherit"
-eclipse_bashfunctions="alias=\"nobup eclips &>/dev/null &\""
-eclipse_compressedfiletype="z"
-eclipse_binariesinstalledpaths=("eclipse;eclipse")
-eclipse_compressedfileurl="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
-eclipse_launchercontents=("[Desktop Entry]
-Categories=Development;IDE;
-Comment=Capable Multi-purpose IDE
-Encoding=UTF-8
-Exec=eclipse
-GenericName=IDE
-Icon=${USR_BIN_FOLDER}/eclipse/icon.xpm
-Keywords=IDE;programming;
-MimeType=
-Name=Eclipse IDE
-StartupNotify=true
-StartupWMClass=Eclipse
-Terminal=false
-TryExec=eclipse
-Type=Application
-Version=4.2.2")
 
 e_installationtype="environmental"
 e_bashfunctions=("
@@ -664,57 +667,51 @@ e()
 }
 ")
 
+eclipse_installationtype="userinherit"
+eclipse_bashfunctions="alias=\"nobup eclips &>/dev/null &\""
+eclipse_compressedfiletype="z"
+eclipse_binariesinstalledpaths=("eclipse;eclipse")
+eclipse_compressedfileurl="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
+eclipse_launchercontents=("[Desktop Entry]
+Categories=Development;IDE;
+Comment=Capable Multi-purpose IDE
+Encoding=UTF-8
+Exec=eclipse
+GenericName=IDE
+Icon=${USR_BIN_FOLDER}/eclipse/icon.xpm
+Keywords=IDE;programming;
+MimeType=
+Name=Eclipse IDE
+StartupNotify=true
+StartupWMClass=Eclipse
+Terminal=false
+TryExec=eclipse
+Type=Application
+Version=4.2.2")
+
 evolution_installationtype="packagemanager"
 evolution_packagenames=("evolution" )
 evolution_launchernames=("evolution-calendar")
 evolution_bashfunctions=("alias evolution=\"nohup evolution &>/dev/null &\"")
 
-x_installationtype="environmental"
-x_bashfunctions=("
-x() {
-  if [ -f \"\$1\" ] ; then
-    case \"\$1\" in
-      *.tar.bz2)
-        tar xjf \"\$1\"
-      ;;
-      *.tar.gz)
-        tar xzf \"\$1\"
-      ;;
-      *.bz2)
-        bunzip2 \"\$1\"
-      ;;
-      *.rar)
-        rar x \"\$1\"
-      ;;
-      *.gz)
-        gunzip \"\$1\"
-      ;;
-      *.tar)
-        tar xf \"\$1\"
-      ;;
-      *.tbz2)
-        tar xjf \"\$1\"
-      ;;
-      *.tgz)
-        tar xzf \"\$1\"
-      ;;
-      *.zip)
-        unzip \"\$1\"
-      ;;
-      *.Z)
-        uncompress \"\$1\"
-      ;;
-      *.7z)
-        7z x \"\$1\"
-      ;;
-      *)
-        echo \"\$1 cannot be extracted via x\"
-      ;;
-    esac
-  else
-      echo \"'\$1' is not a valid file for x\"
-  fi
-}")
+f_irc_installationtype="packagemanager"
+f_irc_packagenames=("f-irc")
+f_irc_launchercontents=("[Desktop Entry]
+Categories=InstantMessaging;Communication;
+Comment=irc relay chat for terminal (easy to use)
+Encoding=UTF-8
+Exec=f-irc
+GenericName=IRC client
+Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.png
+Keywords=InstantMessaging;irc;
+MimeType=
+Name=F-irc
+StartupNotify=true
+StartupWMClass=f-irc
+Terminal=true
+TryExec=f-irc
+Type=Application
+Version=1.0")
 
 facebook_installationtype="environmental"
 facebook_url="https://facebook.com/"
@@ -737,27 +734,6 @@ TryExec=google-chrome
 Type=Application
 Version=1.0")
 
-# HERE BEGINS THE HOLY TRIM COMMENT THAT SEPARATES ALL OF THE REFACTORED ABOVE FROM ALL THAT NEEDS REFACTOR AT THE BOTTOM
-
-f_irc_installationtype="packagemanager"
-f_irc_packagenames=("f-irc")
-f_irc_launchercontents=("[Desktop Entry]
-Categories=InstantMessaging;Communication;
-Comment=irc relay chat for terminal (easy to use)
-Encoding=UTF-8
-Exec=f-irc
-GenericName=IRC client
-Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.png
-Keywords=InstantMessaging;irc;
-MimeType=
-Name=F-irc
-StartupNotify=true
-StartupWMClass=f-irc
-Terminal=true
-TryExec=f-irc
-Type=Application
-Version=1.0")
-
 fdupes_installationtype="packagemanager"
 fdupes_packagenames=("fdupes")
 
@@ -771,6 +747,11 @@ firefox_installationtype="packagemanager"
 firefox_packagenames=("firefox")
 firefox_launchernames=("firefox")
 
+fonts_alegreya_sans_installationtype="userinherit"
+fonts_alegreya_sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
+fonts_alegreya_sans_compressedfilepathoverride="${FONTS_FOLDER}"
+fonts_alegreya_sans_compressedfiletype="zip"
+
 fonts_firacode_installationtype="packagemanager"
 fonts_firacode_packagenames=("fonts-firacode")
 
@@ -780,33 +761,28 @@ fonts_hack_packagenames=("fonts-hack")
 fonts_hermit_installationtype="packagemanager"
 fonts_hermit_packagenames=("fonts-hermit")
 
-fonts_roboto_installationtype="packagemanager"
-fonts_roboto_packagenames=("fonts-roboto")
-
-fonts_alegreya_sans_installationtype="userinherit"
-fonts_alegreya_sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
-fonts_alegreya_sans_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_alegreya_sans_compressedfiletype="zip"
-
-fonts_oxygen_installationtype="userinherit"
-fonts_oxygen_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_oxygen_compressedfileurl="https://fonts.google.com/download?family=Oxygen"
-fonts_oxygen_compressedfiletype="zip"
-
 fonts_lato_installationtype="userinherit"
 fonts_lato_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_lato_compressedfileurls=("https://fonts.google.com/download?family=Lato")
 fonts_lato_compressedfiletype="zip"
+
+fonts_noto_sans_installationtype="userinherit"
+fonts_noto_sans_compressedfiletype="zip"
+fonts_noto_sans_compressedfilepathoverride="${FONTS_FOLDER}"
+fonts_noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
 
 fonts_oswald_installationtype="userinherit"
 fonts_oswald_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswald")
 fonts_oswald_compressedfiletype="zip"
 
-fonts_noto_sans_installationtype="userinherit"
-fonts_noto_sans_compressedfiletype="zip"
-fonts_noto_sans_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
+fonts_oxygen_installationtype="userinherit"
+fonts_oxygen_compressedfilepathoverride="${FONTS_FOLDER}"
+fonts_oxygen_compressedfileurl="https://fonts.google.com/download?family=Oxygen"
+fonts_oxygen_compressedfiletype="zip"
+
+fonts_roboto_installationtype="packagemanager"
+fonts_roboto_packagenames=("fonts-roboto")
 
 forms_installationtype="environmental"
 forms_url="https://docs.google.com/forms/"
@@ -832,9 +808,6 @@ Version=1.0")
 freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
-
-g_installationtype="environmental"
-g_bashfunctions=("alias g=\"git\"")
 
 gcc_installationtype="packagemanager"
 gcc_packagenames=("gcc")
@@ -879,9 +852,58 @@ gimp_launchernames=("gimp")
 git_installationtype="packagemanager"
 git_packagenames=("git-all" "git-lfs")
 
+github_installationtype="environmental"
+github_downloads=("https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg;github_icon.svg")
+github_url="https://github.com/"
+github_bashfunctions=("alias github=\"nohup xdg-open ${github_url} &>/dev/null &\"")
+github_launcher="
+[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Github from Chrome
+Encoding=UTF-8
+Exec=xdg-open ${github_url}
+Icon=${USR_BIN_FOLDER}/github/github_icon.svg
+GenericName=GitHub
+Keywords=github;
+MimeType=
+Name=GitHub
+StartupNotify=true
+StartupWMClass=GitHub
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0"
+
+github_desktop_installationtype="packageinstall"
+github_desktop_packageurls=("https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb")
+github_desktop_packagenames=("github")
+github_desktop_launchernames=("github-desktop")
+
 gitk_packagenames=("gitk")
 gitk_installationtype="packagemanager"
 gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
+
+gitlab_installationtype="environmental"
+gitlab_url="https://gitlab.com/"
+gitlab_downloads=("https://about.gitlab.com/images/press/logo/svg/gitlab-icon-rgb.svg;gitlab_icon.svg")
+gitlab_bashfunctions=("alias gitlab=\"nohup xdg-open ${gitlab_url} &>/dev/null &\"")
+gitlab_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to open Gitlab from Chrome
+Encoding=UTF-8
+Exec=xdg-open ${gitlab_url}
+Icon=${USR_BIN_FOLDER}/gitlab/gitlab_icon.svg
+GenericName=Code repository online
+Keywords=gitlab;
+MimeType=
+Name=GitLab
+StartupNotify=true
+StartupWMClass=GitLab
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0")
 
 gitprompt_installationtype="repositoryclone"
 gitprompt_repositoryurl="https://github.com/magicmonty/bash-git-prompt.git"
@@ -892,10 +914,27 @@ if [ -f ${USR_BIN_FOLDER}/gitprompt/gitprompt.sh ]; then
 fi
 ")
 
-github_desktop_installationtype="packageinstall"
-github_desktop_packageurls=("https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb")
-github_desktop_packagenames=("github")
-github_desktop_launchernames=("github-desktop")
+gmail_installationtype="environmental"
+gmail_url=https://mail.google.com/
+gmail_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg;gmail_icon.svg")
+gmail_bashfunctions=("alias gmail=\"nohup xdg-open ${gmail_url} &>/dev/null &\"")
+gmail_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=Desktop app to instant e-mail messaging from Chrome
+Encoding=UTF-8
+Exec=xdg-open ${gmail_url}
+Icon=${USR_BIN_FOLDER}/gmail/gmail_icon.svg
+GenericName=Gmail
+Keywords=gmail;
+MimeType=
+Name=Gmail
+StartupNotify=true
+StartupWMClass=Gmail
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0")
 
 gnat_gps_installationtype="packagemanager"
 gnat_gps_packagenames=("gnat-gps")
@@ -938,95 +977,6 @@ gnome_tweak_tool_installationtype="packagemanager"
 gnome_tweak_tool_packagenames=("gnome-tweak-tool")
 gnome_tweak_tool_launchernames=("org.gnome.tweaks")
 
-gpaint_installationtype="packagemanager"
-gpaint_packagenames=("gpaint")
-gpaint_launchercontents=("
-[Desktop Entry]
-Name=GNU Paint
-Comment=A small-scale painting program for GNOME, the GNU Desktop
-TryExec=gpaint
-Exec=gpaint
-Icon=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
-Terminal=0
-Type=Application
-Categories=Graphics;2DGraphics;RasterGraphics;
-X-Ubuntu-Gettext-Domain=gpaint-2
-")
-
-gparted_installationtype="packagemanager"
-gparted_packagenames=("gparted")
-gparted_launchernames=("gparted")
-
-gvim_installationtype="packagemanager"
-gvim_packagenames=("vim-gtk3")
-gvim_launchernames=("gvim")
-
-github_installationtype="environmental"
-github_downloads=("https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg;github_icon.svg")
-github_url="https://github.com/"
-github_bashfunctions=("alias github=\"nohup xdg-open ${github_url} &>/dev/null &\"")
-github_launcher="
-[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Github from Chrome
-Encoding=UTF-8
-Exec=xdg-open ${github_url}
-Icon=${USR_BIN_FOLDER}/github/github_icon.svg
-GenericName=GitHub
-Keywords=github;
-MimeType=
-Name=GitHub
-StartupNotify=true
-StartupWMClass=GitHub
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0"
-
-gitlab_installationtype="environmental"
-gitlab_url="https://gitlab.com/"
-gitlab_downloads=("https://about.gitlab.com/images/press/logo/svg/gitlab-icon-rgb.svg;gitlab_icon.svg")
-gitlab_bashfunctions=("alias gitlab=\"nohup xdg-open ${gitlab_url} &>/dev/null &\"")
-gitlab_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to open Gitlab from Chrome
-Encoding=UTF-8
-Exec=xdg-open ${gitlab_url}
-Icon=${USR_BIN_FOLDER}/gitlab/gitlab_icon.svg
-GenericName=Code repository online
-Keywords=gitlab;
-MimeType=
-Name=GitLab
-StartupNotify=true
-StartupWMClass=GitLab
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0")
-
-gmail_installationtype="environmental"
-gmail_url=https://mail.google.com/
-gmail_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg;gmail_icon.svg")
-gmail_bashfunctions=("alias gmail=\"nohup xdg-open ${gmail_url} &>/dev/null &\"")
-gmail_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=Desktop app to instant e-mail messaging from Chrome
-Encoding=UTF-8
-Exec=xdg-open ${gmail_url}
-Icon=${USR_BIN_FOLDER}/gmail/gmail_icon.svg
-GenericName=Gmail
-Keywords=gmail;
-MimeType=
-Name=Gmail
-StartupNotify=true
-StartupWMClass=Gmail
-Terminal=false
-TryExec=google-chrome
-Type=Application
-Version=1.0")
-
 googlecalendar_installationtype="environmental"
 googlecalendar_url=https://calendar.google.com/
 googlecalendar_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg;googlecalendar_icon.svg")
@@ -1054,6 +1004,29 @@ google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
 google_chrome_launchernames=("google-chrome")
 google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>O;Google Chrome")
+
+gpaint_installationtype="packagemanager"
+gpaint_packagenames=("gpaint")
+gpaint_launchercontents=("
+[Desktop Entry]
+Name=GNU Paint
+Comment=A small-scale painting program for GNOME, the GNU Desktop
+TryExec=gpaint
+Exec=gpaint
+Icon=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
+Terminal=0
+Type=Application
+Categories=Graphics;2DGraphics;RasterGraphics;
+X-Ubuntu-Gettext-Domain=gpaint-2
+")
+
+gparted_installationtype="packagemanager"
+gparted_packagenames=("gparted")
+gparted_launchernames=("gparted")
+
+gvim_installationtype="packagemanager"
+gvim_packagenames=("vim-gtk3")
+gvim_launchernames=("gvim")
 
 h_installationtype="environmental"
 h_bashfunctions=("
@@ -1116,30 +1089,6 @@ if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \"history -a; history -r\")\
 fi
 ")
 
-ideau_installationtype="userinherit"
-ideau_compressedfiletype="z"
-ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
-ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.1.2.tar.gz"
-ideau_associatedfiletypes=("text/x-java")
-ideau_launchercontents=("
-[Desktop Entry]
-Categories=Development;IDE;
-Comment=Capable and Ergonomic IDE for JVM
-Encoding=UTF-8
-Exec=ideau %f
-GenericName=Java programing IDE
-Icon=${USR_BIN_FOLDER}/ideau/bin/idea.png
-Keywords=IDE;programming;java;dev;
-MimeType=
-Name=IntelliJ IDEA Ultimate Edition
-StartupNotify=true
-StartupWMClass=jetbrains-idea
-Terminal=false
-TryExec=ideau
-Type=Application
-Version=1.0")
-ideau_bashfunctions=("alias ideau=\"nohup ideau . &>/dev/null &\"")
-
 ideac_installationtype="userinherit"
 ideac_compressedfiletype="z"
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
@@ -1163,6 +1112,30 @@ TryExec=ideac
 Type=Application
 Version=13.0")
 ideac_bashfunctions="alias ideac=\"nohup ideac . &>/dev/null &\""
+
+ideau_installationtype="userinherit"
+ideau_compressedfiletype="z"
+ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
+ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.1.2.tar.gz"
+ideau_associatedfiletypes=("text/x-java")
+ideau_launchercontents=("
+[Desktop Entry]
+Categories=Development;IDE;
+Comment=Capable and Ergonomic IDE for JVM
+Encoding=UTF-8
+Exec=ideau %f
+GenericName=Java programing IDE
+Icon=${USR_BIN_FOLDER}/ideau/bin/idea.png
+Keywords=IDE;programming;java;dev;
+MimeType=
+Name=IntelliJ IDEA Ultimate Edition
+StartupNotify=true
+StartupWMClass=jetbrains-idea
+Terminal=false
+TryExec=ideau
+Type=Application
+Version=1.0")
+ideau_bashfunctions=("alias ideau=\"nohup ideau . &>/dev/null &\"")
 
 inkscape_installationtype="packagemanager"
 inkscape_packagenames=("inkscape")
@@ -1299,20 +1272,6 @@ TryExec=google-chrome
 Type=Application
 Version=1.0")
 
-latex_installationtype="packagemanager"
-latex_launchernames=("texmaker")
-latex_packagedependencies=("perl-tk" )
-latex_packagenames=("texlive-latex-extra" "texmaker")
-latex_launchercontents=("
-[Desktop Entry]
-Name=TeXdoctk
-Exec=texdoctk
-Type=Application
-Type=Application
-Terminal=false
-Categories=Settings;
-Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png")
-
 L_installationtype="environmental"
 L_bashfunctions=("
 L()
@@ -1348,6 +1307,20 @@ L()
 l_installationtype="environmental"
 l_bashfunctions=("alias l=\"ls -lAh --color=auto\"")
 
+latex_installationtype="packagemanager"
+latex_launchernames=("texmaker")
+latex_packagedependencies=("perl-tk" )
+latex_packagenames=("texlive-latex-extra" "texmaker")
+latex_launchercontents=("
+[Desktop Entry]
+Name=TeXdoctk
+Exec=texdoctk
+Type=Application
+Type=Application
+Terminal=false
+Categories=Settings;
+Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png")
+
 libgtkglext1_installationtype="packagemanager"
 libgtkglext1_packagenames=("libgtkglext1")
 
@@ -1360,11 +1333,6 @@ libxcb_xtest0_packagenames=("libxcb-xtest0")
 lolcat_installationtype="packagemanager"
 lolcat_packagenames=("lolcat")
 lolcat_bashfunctions=("alias lol=\"lolcat\"")
-
-mvn_installationtype="userinherit"
-mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
-mvn_compressedfiletype="z"
-mvn_binariesinstalledpaths=("bin/mvn;mvn")
 
 mdadm_installationtype="packagemanager"
 mdadm_packagenames=("mdadm")
@@ -1399,6 +1367,11 @@ X-Mendeley-Version=1
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_packagenames=("msttcorefonts")
 
+mvn_installationtype="userinherit"
+mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
+mvn_compressedfiletype="z"
+mvn_binariesinstalledpaths=("bin/mvn;mvn")
+
 nautilus_installationtype="packagemanager"
 nautilus_packagenames=("nautilus")
 nautilus_launchernames=("org.gnome.Nautilus")
@@ -1407,6 +1380,10 @@ xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-sear
 gsettings set org.gnome.desktop.background show-desktop-icons true
 xdg-mime default org.gnome.Nautilus.desktop inode/directory
 ")
+
+nedit_installationtype="packagemanager"
+nedit_packagenames=("nedit")
+nedit_launchernames=("nedit")
 
 nemo_installationtype="packagemanager"
 nemo_bashfunctions=("
@@ -1754,10 +1731,6 @@ TryExec=google-chrome
 Type=Application
 Version=1.0")
 
-nedit_installationtype="packagemanager"
-nedit_packagenames=("nedit")
-nedit_launchernames=("nedit")
-
 net_tools_installationtype="packagemanager"
 net_tools_packagenames=("net-tools")
 net_tools_bashfunctions=("
@@ -1796,14 +1769,6 @@ okular_installationtype="packagemanager"
 okular_packagenames=("okular")
 okular_launchernames=("org.kde.okular")
 
-openoffice_installationtype="packageinstall"
-openoffice_compressedfileurl="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
-openoffice_compressedfiletype="z"
-openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-draw" "openoffice4-math" "openoffice4-writer")
-
-openssl102_installationtype="packageinstall"
-openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
-
 onedrive_installationtype="environmental"
 onedrive_downloads=("https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg;onedrive_icon.svg")
 onedrive_url="https://onedrive.live.com/"
@@ -1825,6 +1790,15 @@ Terminal=false
 TryExec=google-chrome
 Type=Application
 Version=1.0")
+
+openoffice_installationtype="packageinstall"
+openoffice_compressedfileurl="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
+openoffice_compressedfiletype="z"
+openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-draw" "openoffice4-math" "openoffice4-writer")
+#openoffice_associatedfiletypes=("")
+
+openssl102_installationtype="packageinstall"
+openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
 
 outlook_installationtype="environmental"
 outlook_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg;outlook_icon.svg")
@@ -1877,6 +1851,9 @@ pacman_launchernames=("pacman")
 parallel_installationtype="packagemanager"
 parallel_packagenames=("parallel")
 
+pdfgrep_installationtype="packagemanager"
+pdfgrep_packagenames=("pdfgrep")
+
 pgadmin_installationtype="pythonvenv"
 pgadmin_manualcontentavailable="0;1;0"
 pgadmin_pipinstallations=("pgadmin4")
@@ -1919,16 +1896,10 @@ xdg-open http://127.0.0.1:5050/browser
 php_installationtype="packagemanager"
 php_packagenames=("php" "libapache2-mod-php")
 
-psql_installationtype="packagemanager"
-psql_packagedependencies=("libc6-i386" "lib32stdc++6" "libc6=2.31-0ubuntu9.2")
-psql_packagenames=("postgresql-client-12" "postgresql-12" "libpq-dev" "postgresql-server-dev-12")
-
-pdfgrep_installationtype="packagemanager"
-pdfgrep_packagenames=("pdfgrep")
-
 pluma_installationtype="packagemanager"
 pluma_packagenames=("pluma")
 pluma_launchernames=("pluma")
+pluma_bashfunctions=("alias pluma=\"nohup pluma &>/dev/null &\"")
 
 postman_installationtype="userinherit"
 postman_compressedfileurl="https://dl.pstmn.io/download/latest/linux64"
@@ -2039,6 +2010,10 @@ fi
 
 ")
 
+psql_installationtype="packagemanager"
+psql_packagedependencies=("libc6-i386" "lib32stdc++6" "libc6=2.31-0ubuntu9.2")
+psql_packagenames=("postgresql-client-12" "postgresql-12" "libpq-dev" "postgresql-server-dev-12")
+
 pull_installationtype="environmental"
 pull_bashfunctions=("alias pull=\"git pull\"")
 
@@ -2100,16 +2075,6 @@ TryExec=pycharmpro
 Type=Application
 Version=1.0")
 
-pypy3_installationtype="userinherit"
-pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
-pypy3_compressedfiletype="j"
-pypy3_manualcontentavailable="0;1;0"
-pypy3_binariesinstalledpaths=("bin/pypy3;pypy3" "bin/pip3.6;pypy3-pip")
-
-pypy3_dependencies_installationtype="packagemanager"
-pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
-
-# Dependency of pgadmin4
 python3_installationtype="packagemanager"
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel" "python3.8-venv")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
 python3_bashfunctions=("
@@ -2151,6 +2116,15 @@ v()
 
 ")
 
+pypy3_installationtype="userinherit"
+pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
+pypy3_compressedfiletype="j"
+pypy3_manualcontentavailable="0;1;0"
+pypy3_binariesinstalledpaths=("bin/pypy3;pypy3" "bin/pip3.6;pypy3-pip")
+
+pypy3_dependencies_installationtype="packagemanager"
+pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
+
 R_installationtype="packagemanager"
 R_packagenames=("r-base")
 R_packagedependencies=("libzmq3-dev" "python3-zmq")
@@ -2163,30 +2137,6 @@ install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
                   type = 'source')
 IRkernel::installspec()
 ")
-
-rstudio_installationtype="userinherit"
-rstudio_compressedfileurl="https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz"
-rstudio_compressedfiletype="z"
-rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
-rstudio_associatedfiletypes=("text/plain")
-rstudio_bashfunctions=("alias rstudio=\"nohup rstudio &>/dev/null &\"")
-rstudio_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=Desktop app for programming in R
-Encoding=UTF-8
-Exec=rstudio
-GenericName=RStudio
-Icon=${USR_BIN_FOLDER}/rstudio/www/images/favicon.ico
-Keywords=rstudio
-MimeType=text/plain;
-Name=RStudio
-StartupNotify=true
-StartupWMClass=RStudio
-Terminal=false
-TryExec=rstudio
-Type=Application
-Version=1.0")
 
 reddit_installationtype="environmental"
 reddit_url="https://www.reddit.com/"
@@ -2214,16 +2164,40 @@ remmina_installationtype="packagemanager"
 remmina_packagenames=("remmina")
 remmina_launchernames=("org.remmina.Remmina")
 
-rustc_installationtype="packagemanager"
-rustc_packagenames=("rustc")
-rustc_packagedependencies=("cmake" "build-essential")
-# rustc_url=("https://sh.rustup.rs")
+rstudio_installationtype="userinherit"
+rstudio_compressedfileurl="https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz"
+rstudio_compressedfiletype="z"
+rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
+rstudio_associatedfiletypes=("text/plain")
+rstudio_bashfunctions=("alias rstudio=\"nohup rstudio &>/dev/null &\"")
+rstudio_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=Desktop app for programming in R
+Encoding=UTF-8
+Exec=rstudio
+GenericName=RStudio
+Icon=${USR_BIN_FOLDER}/rstudio/www/images/favicon.ico
+Keywords=rstudio
+MimeType=text/plain;
+Name=RStudio
+StartupNotify=true
+StartupWMClass=RStudio
+Terminal=false
+TryExec=rstudio
+Type=Application
+Version=1.0")
 
 rsync_installationtype="packagemanager"
 rsync_packagedependencies=("canberra-gtk-module")
 rsync_packagenames=("rsync" "grsync")
 rsync_launchernames=("grsync")
 rsync_bashfunctions=("alias rs=\"rsync -av --progress\"")
+
+rustc_installationtype="packagemanager"
+rustc_packagenames=("rustc")
+rustc_packagedependencies=("cmake" "build-essential")
+# rustc_url=("https://sh.rustup.rs")
 
 s_installationtype="environmental"
 s_bashfunctions=("
@@ -2298,9 +2272,6 @@ slack_installationtype="packageinstall"
 slack_repository=("https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb")
 slack_launchernames=("slack")
 
-status_installationtype="environmental"
-status_bashfunctions=("alias status=\"git status\"")
-
 sonic_pi_installationtype="packagemanager"
 sonic_pi_packagenames=("sonic-pi")
 sonic_pi_launchernames=("sonic-pi")
@@ -2331,6 +2302,9 @@ Terminal=false
 TryExec=google-chrome
 Type=Application
 Version=1.0")
+
+status_installationtype="environmental"
+status_bashfunctions=("alias status=\"git status\"")
 
 steam_installationtype="packageinstall"
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
@@ -2446,7 +2420,8 @@ Version=1.0")
 templates_installationtype="environmental"
 templates_filekeys=("c" "headers" "makefile" "python" "bash" "latex" "empty")
 templates_c_path="${XDG_TEMPLATES_DIR}/c_script.c"
-templates_c_content="########################################################################################################################
+templates_c_content="
+########################################################################################################################
 # -Name:
 # -Description:
 # -Creation Date:
@@ -2469,13 +2444,15 @@ int main(int nargs, char* args[])
 }
 "
 templates_headers_path="${XDG_TEMPLATES_DIR}/c_script_header.h"
-templates_headers_content="// Includes
+templates_headers_content="
+// Includes
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 "
 templates_makefile_path="${XDG_TEMPLATES_DIR}/makefile"
-templates_makefile_content="CC = gcc
+templates_makefile_content="
+CC = gcc
 CFLAGS = -O3 -Wall
 
 all : c_script
@@ -2491,7 +2468,8 @@ clean :
 	rm -f c_script
 "
 templates_python_path="${XDG_TEMPLATES_DIR}/python3_script.py"
-templates_python_content="#!/usr/bin/env python3
+templates_python_content="
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ########################################################################################################################
 # -Name:
@@ -2512,7 +2490,8 @@ if __name__ == \"__main__\":
     exit(0)
 "
 templates_bash_path="${XDG_TEMPLATES_DIR}/shell_script.sh"
-templates_bash_content="#!/usr/bin/env bash
+templates_bash_content="
+#!/usr/bin/env bash
 ########################################################################################################################
 # -Name:
 # -Description:
@@ -2535,7 +2514,8 @@ main()
 set -e
 main \"\$@\""
 templates_latex_path="${XDG_TEMPLATES_DIR}/latex_document.tex"
-templates_latex_content="%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+templates_latex_content="
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 \documentclass[11pt]{article}
@@ -2663,10 +2643,6 @@ tilix_installationtype="packagemanager"
 tilix_packagenames=("tilix")
 tilix_launchernames=("com.gexperts.Tilix")
 
-tomcat_installationtype="userinherit"
-tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
-tomcat_compressedfiletype="z"
-
 tmux_installationtype="packagemanager"
 tmux_packagenames=("tmux")
 tmux_launchercontents=("
@@ -2687,6 +2663,10 @@ TryExec=tmux
 Type=Application
 Version=1.0")
 
+tomcat_installationtype="userinherit"
+tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
+tomcat_compressedfiletype="z"
+
 tor_installationtype="packagemanager"
 tor_packagenames=("torbrowser-launcher")
 tor_launchernames=("torbrowser")
@@ -2697,7 +2677,7 @@ transmission_gtk_launchernames=("transmission-gtk")
 
 trello_installationtype="environmental"
 trello_url="https://trello.com"
-trello_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png;trello_icon.svg")
+trello_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png;trello_icon.svg.png")
 trello_bashfunctions=("alias trello=\"nohup xdg-open ${trello_url} &>/dev/null &\"")
 trello_launchercontents=("
 [Desktop Entry]
@@ -2705,8 +2685,8 @@ Categories=Network;
 Comment=Desktop app to Trello from Chrome
 Encoding=UTF-8
 Exec=xdg-open ${trello_url}
-Icon=${USR_BIN_FOLDER}/trello/trello_icon.svg
-GenericName=Google Calendar
+Icon=${USR_BIN_FOLDER}/trello/trello_icon.svg.png
+GenericName=Trello
 Keywords=trello;
 MimeType=
 Name=Trello
@@ -2815,33 +2795,6 @@ virtualbox_launchernames=("virtualbox")
 vlc_installationtype="packagemanager"
 vlc_packagenames=("vlc")
 vlc_launchernames=("vlc")
-
-changebg_installationtype="repositoryclone"
-changebg_binariesinstalledpaths=".cronscript.sh;changebg"
-changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
-changebg_manualcontentavailable="0;0;1"
-changebg_filekeys=("cronscript" "cronjob")
-changebg_cronscript_path=".cronscript.sh"
-changebg_cronscript_content="
-#!/bin/bash
-if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
-  user=\$(whoami)
-  fl=\$(find /proc -maxdepth 2 -user \$user -name environ -print -quit)
-  while [ -z \$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2- | tr -d '\000' ) ]
-  do
-    fl=\$(find /proc -maxdepth 2 -user \$user -name environ -newer \"\$fl\" -print -quit)
-  done
-  export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
-fi
-DIR=\"${USR_BIN_FOLDER}/changebg\"
-PIC=\$(ls \${DIR} | shuf -n1)
-echo \"\$DIR/\$PIC\"
-dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
-
-#gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
-"
-changebg_cronjob_path=".cronjob"
-changebg_cronjob_content="*/5 * * * * ${USR_BIN_FOLDER}/changebg/.cronscript.sh"
 
 whatsapp_installationtype="environmental"
 whatsapp_url="https://web.whatsapp.com/"
@@ -3002,6 +2955,54 @@ MimeType=application/vnd.tcpdump.pcap;application/x-pcapng;application/x-snoop;a
 # https://specifications.freedesktop.org/menu-spec/1.0/
 Categories=Network;Monitor;Qt;
 ")
+
+x_installationtype="environmental"
+x_bashfunctions=("
+x() {
+  if [ -f \"\$1\" ] ; then
+    case \"\$1\" in
+      *.tar.bz2)
+        tar xjf \"\$1\"
+      ;;
+      *.tar.gz)
+        tar xzf \"\$1\"
+      ;;
+      *.bz2)
+        bunzip2 \"\$1\"
+      ;;
+      *.rar)
+        rar x \"\$1\"
+      ;;
+      *.gz)
+        gunzip \"\$1\"
+      ;;
+      *.tar)
+        tar xf \"\$1\"
+      ;;
+      *.tbz2)
+        tar xjf \"\$1\"
+      ;;
+      *.tgz)
+        tar xzf \"\$1\"
+      ;;
+      *.zip)
+        unzip \"\$1\"
+      ;;
+      *.Z)
+        uncompress \"\$1\"
+      ;;
+      *.7z)
+        7z x \"\$1\"
+      ;;
+      *)
+        echo \"\$1 cannot be extracted via x\"
+      ;;
+    esac
+  else
+      echo \"'\$1' is not a valid file for x\"
+  fi
+}")
+
 
 youtube_installationtype="environmental"
 youtube_url="https://youtube.com/"

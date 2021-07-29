@@ -14,7 +14,7 @@
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `install.sh`, `uninstall.sh`: Add npm packagemanager installationtype
 - [ ] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions)
-- [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`, `winget`, `macos package manager`...) depending on which is the main package-manager
+- [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`...) depending on which is the main package-manager
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
@@ -24,8 +24,9 @@
 - [ ] `data_features.sh`: refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] `install.sh`: May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
-- [ ] `screenshots`: Screenshot is temporarily saved in clipboard for `paste` in addition to saving the image at `Images/screenshots`
-- [ ] `desktop launchers`: Change `.ico` icon files to `.svg` to make desktop launcher icons more Debian friendly.
+- [ ] `screenshots`: Screenshot is temporarily saved in clipboard for `paste` in addition to saving the image at `Images/screenshots` --> test
+- [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg
+
 
 
 ###### NEW FEATURES
@@ -45,7 +46,6 @@
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server: alias sshDisable="sudo systemctl disable sshd", alias sshEnable="sudo systemctl enable ssh", alias sshRestart="sudo systemctl restart sshd", alias sshStart="sudo systemctl start sshd", alias sshStatus="sudo systemctl status sshd", alias sshStop="sudo systemctl stop sshd"  
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
-- [ ] `install.sh`, `uninstall.sh`: HardInfo (Benchmark tool)
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: `Google`/`translator` internet shortcut launcher and value possibility to use w3m to navigate internet through console and see images there with w3m-img.
 - [ ] `install.sh`, `uninstall.sh`: matlab (add matlab template)
@@ -95,3 +95,4 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 ### TO-DO v2.0
 - [ ] Creation of \`customizer.py\`file as an alternative endpoint for customizer.sh. We can use it to give to it a graphical interface (GUI)
 - [ ] log
+- [ ] Server running programs / ports management localhost (or IP)
