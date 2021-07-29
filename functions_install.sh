@@ -815,7 +815,7 @@ update_environment() {
 
 favorites_function="
 if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
-  IFS=\$'\\\n'
+  IFS=\$'\\n'
   for line in \$(cat ${PROGRAM_FAVORITES_PATH}); do
     favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
     if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]]; then
