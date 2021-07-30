@@ -37,6 +37,7 @@ add_bash_function() {
   fi
 }
 
+
 # Description: Sets keybinding adding keybinding for keybind_function bash function.
 # Permissions: can be executed indifferently as root or user.
 # Argument 1: Command to be run with the keyboard shortcut.
@@ -45,6 +46,7 @@ add_bash_function() {
 add_keybinding() {
   echo "$1;$2;$3" >>"${PROGRAM_KEYBIND_PATH}"
 }
+
 
 # - Description: Add new program launcher to the task bar given its desktop launcher filename.
 #   This is done by writing in PROGRAM_FAVORITES_PATH the 1st argument.
@@ -67,6 +69,7 @@ add_to_favorites() {
     fi
   done
 }
+
 
 # - Description: Sets a program to autostart by giving its launcher name without .desktop extension.
 #   This .desktop are searched at ALL_USERS_LAUNCHERS_DIR and PERSONAL_LAUNCHERS_DIR.
@@ -103,6 +106,7 @@ autostart_program() {
   fi
 }
 
+
 # - Description: Apply standard permissions and set owner and group to the user who called root.
 # - Permissions: This functions can be called as root or user.
 # Argument 1: Path to the file or directory whose permissions are changed.
@@ -113,6 +117,7 @@ apply_permissions() {
   fi
   chmod 755 "$1"
 }
+
 
 # - Description: Creates the file with $1 specifying location and name of the file. Afterwards, apply permissions to it,
 # to make it property of the $SUDO_USER user (instead of root), which is the user that originally ran the sudo command
@@ -133,6 +138,7 @@ create_file() {
   fi
 }
 
+
 # - Description: Creates the necessary folders in order to make $1 a valid path. Afterwards, converts that dir to a
 # writable folder, now property of the $SUDO_USER user (instead of root), which is the user that ran the sudo command.
 # Note that by using mkdir -p we can pass a path that implies the creation of 2 or more directories without any
@@ -144,6 +150,7 @@ create_folder() {
   mkdir -p "$1"
   apply_permissions "$1"
 }
+
 
 # - Description: Creates a valid launcher for the normal user in the desktop using an already created launcher from an
 # automatic install (for example using apt-get or dpkg).
@@ -157,6 +164,7 @@ copy_launcher() {
     output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." ${FLAG_QUIETNESS}
   fi
 }
+
 
 # - Description: This function accepts an undefined number of pairs of arguments. The first of the pair is a path to a
 #   binary that will be linked to our path. The second one is the name that it will have as a terminal command.
@@ -173,6 +181,7 @@ create_links_in_path() {
   done
 }
 
+
 # - Description: This function creates a valid launcher in the desktop using a a given string with a given name.
 # - Permissions: Can be called being root or normal user with same behaviour: when calling it as root, it will change
 # the owner and group of the created launcher to the one of the $SUDO_USER.
@@ -187,6 +196,7 @@ create_manual_launcher() {
     cp -p "${PERSONAL_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
   fi
 }
+
 
 # - Description:
 # Argument 1: Type of decompression [zip, J, j, z].
@@ -284,6 +294,7 @@ decompress() {
   fi
 }
 
+
 # - Description: Downloads a file from the link provided in $1 and, if specified, with the location and name specified
 #   in $2. If $2 is not defined, download into ${USR_BIN_FOLDER}/downloading_program.
 # - Permissions: Can be called as root or normal user. If called as root changes the permissions and owner to the
@@ -351,6 +362,7 @@ download() {
   fi
 }
 
+
 # - Description: Downloads a .deb package temporarily into USR_BIN_FOLDER from the provided link and installs it using
 #   dpkg -i.
 # - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
@@ -362,6 +374,7 @@ download_and_install_package() {
   dpkg -i "${USR_BIN_FOLDER}/$2"
   rm -f "${USR_BIN_FOLDER}/$2"
 }
+
 
 # - Description: Expands launcher contents and add them to the desktop and dashboard.
 # - Permissions: Can be executed as root or user.
@@ -376,6 +389,7 @@ generic_install_launchers() {
   done
 }
 
+
 # - Description: Expands function contents and add them to .bashrc indirectly using bash_functions
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_bashfunctions
@@ -388,6 +402,7 @@ generic_install_functions() {
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
+
 
 # - Description: Expands launcher names and add them to the favorites subsystem if FLAF_FAVORITES is set to 1.
 # - Permissions: Can be executed as root or user.
@@ -409,6 +424,7 @@ generic_install_favorites() {
 
 }
 
+
 # - Description: Expands file associations and register the desktop launchers as default application's mimetypes
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_associatedfiletypes
@@ -419,6 +435,7 @@ generic_install_file_associations() {
     register_file_associations "${associated_file_type}" "$1.desktop"
   done
 }
+
 
 # - Description: Expands keybinds for functions and programs and append to keybind sub-system
 # - Permissions: Can be executed as root or user.
@@ -434,6 +451,7 @@ generic_install_keybindings() {
   done
 }
 
+
 # - Description: Expands downloads and saves it to USR_BIN_FOLDER/FEATUREKEYNAME/NAME_OF_DOWNLOADED_FILE_i
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_downloads
@@ -448,10 +466,11 @@ generic_install_downloads() {
   done
 }
 
+
 # - Description: Expands autostarting program option if set to 'yes' it'll expand launcher names to autostart
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_downloads
-##   and the name of the first argument in the common_data.sh table
+# - Argument 1: Name of the feature to install, matching the variable $1_autostart
+#   and associating it to all the launchers in $1_launchernames
 generic_install_autostart() {
   local -r autostart="$1_autostart"
   local -r launchernames="$1_launchernames[@]"
@@ -477,6 +496,12 @@ generic_install_autostart() {
   fi
 }
 
+
+# - Description: Expands $1_binariesinstalledpaths which contain the relative path
+#   from the installation folder or the absolute path separated by ';' with the name
+#   of the link created in PATH.
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_binariesinstalledpaths
 generic_install_pathlinks() {
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
@@ -492,6 +517,11 @@ generic_install_pathlinks() {
   done
 }
 
+
+# - Description: Expands $1_filekeys to obtain the keys which are a name of a variable
+#   that has to be expanded to obtain the data of the file.
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_filekeys
 generic_install_files() {
   local -r filekeys="$1_filekeys[@]"
   for filekey in "${!filekeys}"; do
@@ -506,10 +536,16 @@ generic_install_files() {
 
 }
 
-# - Description: Expands installation type and executes the corresponding function to install.
+
+# - Description: Installs a user program in a generic way relying on variables declared in data_features.sh and the name
+#   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
+#   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
+#   Depending on the properties set, some subfunctions will be activated to install related features.
+#   Also performs the manual execution of paths of the feature and calls generic functions to install the common
+#   part of the features such as desktop launchers, sourced .bashrc functions...
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
-# name of the first argument in the common_data.sh table
+#   name of the first argument in the common_data.sh table
 generic_install() {
   # Substitute dashes for underscores. Dashes are not allowed in variable names
   local -r featurename=$(echo "$1" | sed "s@-@_@g")
@@ -572,6 +608,11 @@ generic_install() {
   fi
 }
 
+
+# - Description: Installs packages using python environment.
+# - Permissions: It is expected to be called as user.
+# - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
+#   installation data.
 pythonvenv_installation_type() {
   rm -Rf "${USR_BIN_FOLDER}/$1"
   python3 -m venv "${USR_BIN_FOLDER}/$1"
@@ -586,9 +627,13 @@ pythonvenv_installation_type() {
   for pythoncommand in "${!pythoncommands}"; do
     "${USR_BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
   done
-
 }
 
+
+# - Description: Clones git repository in USR_BIN_FOLDER
+# - Permissions: It is expected to be called as user.
+# - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
+#   installation data.
 repositoryclone_installation_type() {
   local -r repositoryurl="$1_repositoryurl"
   rm -Rf "${USR_BIN_FOLDER}/$1"
@@ -596,11 +641,12 @@ repositoryclone_installation_type() {
   git clone "${!repositoryurl}" "${USR_BIN_FOLDER}/$1"
 }
 
-# - Description: Installs packages using apt-get or ) + dpkg and also installs additional features such as
-# aliases, related functions, desktop launchers including its icon and links in the path.
+
+# - Description: Installs packages using apt-get or ) + dpkg.
+#   Also performs file decompression to obtain .deb if the corresponding variables are defined.
 # - Permissions: Needs root permissions, but is expected to be called always as root by install.sh logic.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
-# installation data.
+#   installation data.
 # - Argument 2: Selects the type of installation between [packagemanager|packageinstall]
 rootgeneric_installation_type() {
   # Declare name of variables for indirect expansion
@@ -647,40 +693,10 @@ rootgeneric_installation_type() {
   done
 }
 
-# - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
-# of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
-# because indirect expansion is used to obtain the data to install each feature of a certain program to install.
-# Depending on the properties set, some subfunctions will be activated to install related features. Two things can
-# happen with the default directory to download and put our files:
-#
-# The first thing that the function will do if the first situation described above is met, is decompress the first
-# compressed file and convert the unique directory extracted from it, to the default folder of the currently installing
-# application. If not, this behaviour will be avoided.
-#
-# Then it will download and decompress the files from $compressedfileurls in $compressedfiledownloadpaths[@] with
-# the type $compressedfiletypes[@]. If not defined download in the default directory.
-#
-# After that it will add to the PATH all the binaries found in $binariesinstalledpaths[@]: The first position will be the
-# relative or absolute folder from the default folder and the second position after the ; will be the name of the
-# program.
-#
-# Add the functions defined in the array $bashfunctions[@] to .bashrc using the customizer system with
-# ${BASH_FUNCTIONS_PATH}
-#
-# Also add the launchers if defined by using $launchercontents[@] which contains the text for all the launchers.
-#
-# Add the file associations to the current user defined in $recognizedfiletypes[@] and using
-# register_file_associations(). The element in $launchercontents[0] will be the associated desktop used. If not defined,
-# use a file in $ALL_USERS_LAUNCHERS_DIR or $PERSONAL_LAUNCHERS_DIR, if not present show a warning and continue.
-#
-# Finally download $fileurls[@] into $filedownloaddirs[@].
-#
-# Most of the paths can be absolute or relative from the default directory.
-#
+
+# - Description: Download a file into USR_BIN_FOLDER, decompress it assuming that there is a directory inside it.
 # - Permissions: Expected to be run by normal user.
-# - Arguments:
-# * Argument 1: String that matches a set of variables in data_features that set and change the behaviour of this
-# function.
+# - Argument 1: String that matches a set of variables in data_features.
 userinherit_installation_type() {
   # Declare name of variables for indirect expansion
 
@@ -703,21 +719,22 @@ userinherit_installation_type() {
   decompress "${!compressedfiletype}" "${defaultpath}$1_downloading" "$1"
 }
 
+
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
 # - Permissions: Same behaviour being root or normal user.
-# - Argument 1: File types. Example: application/x-shellscript
-# - Argument 2: Application. Example: sublime_text.desktop
+# - Argument 1: File types. Example: application/x-shellscript.
+# - Argument 2: Application. Example: sublime_text.desktop.
 register_file_associations() {
   # Check if mimeapps exists
-  if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
+  if [ -f "${MIME_ASSOCIATION_PATH}" ]; then
     # Check if the association between a mime type and desktop launcher is already existent
-    if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*$2")" ]]; then
+    if [ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*$2")" ]; then
       # If mime type is not even present we can add the hole line
-      if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Fo "$1=")" ]]; then
+      if [ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Fo "$1=")" ]; then
         sed -i "/\[Added Associations\]/a $1=$2;" "${MIME_ASSOCIATION_PATH}"
       else
         # If not, mime type is already registered. We need to register another application for it
-        if [[ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*;$")" ]]; then
+        if [ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*;$")" ]; then
           # File type(s) is registered without comma. Add the program at the end of the line with comma
           sed -i "s|$1=.*$|&;$2;|g" "${MIME_ASSOCIATION_PATH}"
         else
@@ -731,14 +748,8 @@ register_file_associations() {
   fi
 }
 
-if [[ -f "${DIR}/functions_common.sh" ]]; then
-  source "${DIR}/functions_common.sh"
-else
-  # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
-  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_common.sh not found. Aborting..."
-  exit 1
-fi
-
+# - Description: Initialize common subsystems and common subfeatures
+# - Permissions: Same behaviour being root or normal user.
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
   create_folder ${USR_BIN_FOLDER}
@@ -780,14 +791,16 @@ data_and_file_structures_initialization() {
   fi
 }
 
+# - Description: Update the system using apt-get -y update or apt-get -y upgrade depending a
+# - Permissions: Can be called as root or user but user will not do anything.
 pre_install_update() {
-  if [[ ${EUID} == 0 ]]; then
-    if [[ ${FLAG_UPGRADE} -gt 0 ]]; then
+  if [ ${EUID} == 0 ]; then
+    if [ ${FLAG_UPGRADE} -gt 0 ]; then
       output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y update" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: System updated." ${FLAG_QUIETNESS}
     fi
-    if [[ ${FLAG_UPGRADE} == 2 ]]; then
+    if [ ${FLAG_UPGRADE} == 2 ]; then
       output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y upgrade" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: System upgraded." ${FLAG_QUIETNESS}
@@ -795,6 +808,8 @@ pre_install_update() {
   fi
 }
 
+# - Description: Performs update of system fonts and bash environment.
+# - Permissions: Same behaviour being root or normal user.
 update_environment() {
   output_proxy_executioner "echo INFO: Rebuilding path cache" "${quietness_bit}"
   output_proxy_executioner "hash -r" "${quietness_bit}"
@@ -804,6 +819,16 @@ update_environment() {
   output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}" # After sourcing, output_proxy_executioner stops working unexpectedly
   #output_proxy_executioner "echo INFO: Finished execution" "${quietness_bit}"
 }
+
+
+if [[ -f "${DIR}/functions_common.sh" ]]; then
+  source "${DIR}/functions_common.sh"
+else
+  # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
+  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_common.sh not found. Aborting..."
+  exit 1
+fi
+
 
 # - Description: This functions is the basic piece of the favorites subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
