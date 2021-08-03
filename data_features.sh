@@ -284,7 +284,10 @@ clean_bashfunctions=("
 clean()
 {
   if [ \${EUID} -eq 0 ]; then
-    apt-get -y autoclean && apt-get -y autoremove
+    apt-get -y --fix-broken install
+    apt-get update -y --fix-missing
+    apt-get -y autoclean
+    apt-get -y autoremove
   fi
   rm -rf ${HOME}/.local/share/Trash/*
 }
@@ -2236,21 +2239,26 @@ scala_packagenames=("scala")
 
 screenshots_installationtype="environmental"
 screenshots_bashfunctions=("
-mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
 
 screenshot-area()
 {
-  gnome-screenshot -a -f \"${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+  mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
+  local -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+  gnome-screenshot -a -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
 }
 
 screenshot-full()
 {
-  gnome-screenshot -f \"${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+  mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
+  local -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+  gnome-screenshot -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
 }
 
 screenshot-window()
 {
-  gnome-screenshot -w -f \"${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+  mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
+  local -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+  gnome-screenshot -w -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
 }
 
 ")
@@ -3040,6 +3048,9 @@ x() {
       echo \"'\$1' is not a valid file for x\"
   fi
 }")
+
+xclip_installationtype="packagemanager"
+xclip_packagenames=("xclip")
 
 
 youtube_installationtype="environmental"
