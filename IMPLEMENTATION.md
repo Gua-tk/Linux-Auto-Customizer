@@ -23,7 +23,7 @@
 - [ ] `data_features.sh`: refactor extract function: more robustness and error handling. decompress in a folder
 - [ ] `install.sh`: May be possible to achieve a post configuration install to nemo-desktop ? to add some customization such as the rendering thumbnails of images depending on the size nemo-terminal
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
-- [ ] `screenshots`: Screenshot has a `xclip` dependency. --> (sudo apt-get install -y xclip)
+- [~] `screenshots`: Screenshots need proper key bindings.
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg
 - [ ] Adapt download (wget) behaviour to `axel` if it is already installed. It goes way faster. --> if... (`which axel`)...
 
