@@ -252,7 +252,6 @@ installation_data=(
   "--onedrive|--OneDrive|--one-drive|--One-Drive;0;| OneDrive | Microsoft OneDrive opening in Chrome | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office;1;| OpenOffice | Office suite for open-source systems | Command \`openoffice4\` in PATH, desktop launchers for \`base\`, \`calc\`, \`draw\`, \`math\` and \`writer\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--openssl102|--rstudio-dependencies;1;| openssl1.0 | RStudio dependency | Used for running rstudio ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--origin|--origin-function|--function-origin;0;| Function \`origin\` | Alias for \`git pull origin \$1\` | Command \`origin\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--outlook|--Outlook;0;| Outlook | Microsoft Outlook e-mail opening in Chrome | Command \`outlook\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--overleaf|--Overleaf;0;| Overleaf | Online LaTeX editor opening in Chrome | Command \`overleaf\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--pacman|--pac-man;1;| Pac-man | Implementation of the classical arcade game | Command \`pacman\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
