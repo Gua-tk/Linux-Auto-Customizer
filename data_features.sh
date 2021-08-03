@@ -283,7 +283,7 @@ autoclean_installationtype="environmental"
 autoclean_bashfunctions=("
 autoclean()
 {
-  rm -Rf ${HOME}/.local/share/Trash/*\ &&	sudo apt-get -y autoclean && sudo apt-get -y autoremove
+  rm -rf ${HOME}/.local/share/Trash/* &&	sudo apt-get -y autoclean && sudo apt-get -y autoremove
 }
 ")
 
@@ -2231,12 +2231,35 @@ s()
 scala_installationtype="packagemanager"
 scala_packagenames=("scala")
 
-screenshots_installationtype="environmental"
-screenshots_bashfunctions=("
-mkdir -p ${XDG_PICTURES_DIR}/screenshots
-alias screenshot-full=\"gnome-screenshot -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && xclip -in -selection clipboard -target image/png ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
-alias screenshot-window=\"gnome-screenshot -w -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && xclip -in -selection clipboard -target image/png ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"
-alias screenshot-area=\"gnome-screenshot -a -f ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && xclip -in -selection clipboard -target image/png ${XDG_PICTURES_DIR}/screenshots/Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga\"")
+screenshot_full_installationtype="environmental"
+screenshot_full_bashfunctions=("
+screenshot-full()
+{
+  mkdir -p ${XDG_PICTURES_DIR}/screenshots
+  local -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+  gnome-screenshot -f ${XDG_PICTURES_DIR}/screenshots/\$screenshotname && xclip -in -selection clipboard -target image/png ${XDG_PICTURES_DIR}/screenshots/\$screenshotname && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+}
+")
+
+screenshot_window_installationtype="environmental"
+screenshot_window_bashfunctions=("
+screenshot-window()
+{
+  mkdir -p ${XDG_PICTURES_DIR}/screenshots
+  local -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+  gnome-screenshot -w -f ${XDG_PICTURES_DIR}/screenshots/\$screenshotname && xclip -in -selection clipboard -target image/png ${XDG_PICTURES_DIR}/screenshots/\$screenshotname && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+}
+")
+
+screenshot_area_installationtype="environmental"
+screenshot_area_bashfunctions=("
+screenshot-area()
+{
+  mkdir -p ${XDG_PICTURES_DIR}/screenshots
+  local -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+  gnome-screenshot -a -f ${XDG_PICTURES_DIR}/screenshots/\$screenshotname && xclip -in -selection clipboard -target image/png ${XDG_PICTURES_DIR}/screenshots/\$screenshotname && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+}
+")
 
 shortcuts_installationtype="environmental"
 shortcuts_bashfunctions=("DESK=${XDG_DESKTOP_DIR}
