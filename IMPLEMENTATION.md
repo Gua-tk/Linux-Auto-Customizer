@@ -25,12 +25,10 @@
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 - [ ] `screenshots`: Screenshot is temporarily saved in clipboard for `paste` in addition to saving the image at `Images/screenshots` --> test
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg
-
-
+- [ ] Adapt download (wget) behaviour to `axel` if it is already installed. It goes way faster. --> if... (`which axel`)...
 
 ###### NEW FEATURES
-- [~] `data_features.sh`, `common_data.sh`: Add new installation `install_fastcommands` to install aliases - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias up="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear"    
-- [ ] `data_features.sh`, `common_data.sh`: `clean` performs different automatic optimizations to release space and delete cluttering such as broken links or broken installations (?) # alias autolclean="sudo apt-get -y autoclean && sudo apt-get -y autoremove"  alias trash="rm -rf ${HOME}/.local/share/Trash/*"
+- [~] `data_features.sh`, `common_data.sh`: Add new installation `install_fastcommands` to install aliases in ~/.bash_aliases - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias up="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear"    
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
 - [ ] `data_features.sh`, `common_data.sh`: `port` function. It returns the name and PID of a process using the given port #  "lsof -i $1"  alias ports="lsof -Pan -i tcp -i udp"
 - [ ] `data_features.sh`, `common_data.sh`: `edit` functions. It edits a system or user configuration file by passing the argument of the name. By default with no parameters it should edit .bashrc.  alias editbashrc="editor ${HOME}/.bashrc"  alias editprofile="editor ${HOME}/.profile" alias editfunctions="editor ${HOME}/.bash_functions" sshConfig="pluma ${HOME}/.ssh/config" also edit shortcuts.sh if present, edit fastcommands if present favorites, keybindings...etc. whatever it is interesting 
@@ -46,7 +44,7 @@
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
-- [ ] `install.sh`, `uninstall.sh`: `Google`/`translator` internet shortcut launcher and value possibility to use w3m to navigate internet through console and see images there with w3m-img.
+- [ ] `install.sh`, `uninstall.sh`: `Google`/`translator` internet shortcut launcher.
 - [ ] `install.sh`, `uninstall.sh`: matlab (add matlab template)
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
 - [ ] `install.sh`, `uninstall.sh`: sherlock

@@ -279,6 +279,14 @@ cheese_launchernames=("org.gnome.Cheese")
 cheese_packagenames=("cheese")
 cheese_bashfunctions=("alias cheese=\"nohup cheese &>/dev/null &\"")
 
+autoclean_installationtype="environmental"
+autoclean_bashfunctions=("
+autoclean()
+{
+  rm -Rf ${HOME}/.local/share/Trash/*\ &&	sudo apt-get -y autoclean && sudo apt-get -y autoremove
+}
+")
+
 clementine_installationtype="packagemanager"
 clementine_launchernames=("clementine")
 clementine_packagenames=("clementine")
@@ -1800,6 +1808,14 @@ openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-dra
 openssl102_installationtype="packageinstall"
 openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
 
+origin_installationtype="environmental"
+origin_bashfunctions=("
+origin()
+{
+	git pull origin \$1
+}
+")
+
 outlook_installationtype="environmental"
 outlook_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg;outlook_icon.svg")
 outlook_url="https://outlook.live.com"
@@ -1899,7 +1915,12 @@ php_packagenames=("php" "libapache2-mod-php")
 pluma_installationtype="packagemanager"
 pluma_packagenames=("pluma")
 pluma_launchernames=("pluma")
-pluma_bashfunctions=("alias pluma=\"nohup pluma &>/dev/null &\"")
+pluma_bashfunctions=("
+pluma()
+{
+  nohup pluma \$1 &>/dev/null &
+}
+")
 
 postman_installationtype="userinherit"
 postman_compressedfileurl="https://dl.pstmn.io/download/latest/linux64"

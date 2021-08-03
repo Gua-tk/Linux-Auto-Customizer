@@ -160,3 +160,4 @@
 - [x] `install.sh`, `uninstall.sh`: ghostwriter (text editor for markdown and others with html preview)
 - [x] `install.sh`, `uninstall.sh`: jshell (apt-get install default-jdk)
 - [x] `install.sh`, `uninstall.sh`: Mdadm (raid manager)
+- [x] `data_features.sh`, `common_data.sh`: `autoclean` performs different automatic optimizations to release space and delete cluttering such as broken links or broken installations (?) # alias autoclean="sudo apt-get -y autoclean && sudo apt-get -y autoremove"  alias trash="rm -rf ${HOME}/.local/share/Trash/*"

@@ -82,6 +82,8 @@ PROGRAM_KEYBIND_PATH="${BASH_FUNCTIONS_FOLDER}/keybinds.txt"
 FONTS_FOLDER=${HOME_FOLDER}/.fonts
 # Here we store the .desktop launchers of the programs we want to autostart
 AUTOSTART_FOLDER=${HOME_FOLDER}/.config/autostart
+# Directory to store the aliases
+ALIASES_PATH=${HOME_FOLDER}/.bash_aliases
 
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
@@ -130,8 +132,9 @@ installation_data=(
   "--aspell;1;| Aspell | Spell checker | Command \`aspell\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--atom|--Atom;1;| Atom | Text and source code editor | Command \`atom\`, desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--audacity|--Audacity;1;| Audacity | Digital audio editor and recording | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--autoclean|--function-autoclean|--autoclean-function;0;| Function \`autoclean\` | Remove files and contents from the trash bin and performs \`sudo apt-get -y autoclean\` and \`sudo apt-get -y autoremove\`. | Command \`autoclean\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--AutoFirma|--autofirma;1;| AutoFirma | Electronic signature recognition | Command \`AutoFirma\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--axel|--Axel;1;| Axel | Download manager | Command \`axel\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--axel|--Axel;1;| Axel | Download manager | Command \`axel\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--b|--b-alias;0;| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--bashcolors;0;| bashcolors | bring color to terminal | Command \`bashcolors\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--branch;0;| Function \`branch\` | alias for \`git branch -vv\` | Command \`branch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -251,6 +254,7 @@ installation_data=(
   "--onedrive|--OneDrive|--one-drive|--One-Drive;0;| OneDrive | Microsoft OneDrive opening in Chrome | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--openoffice|--office|--Openoffice|--OpenOffice|--openOfice|--open_office|--Office;1;| OpenOffice | Office suite for open-source systems | Command \`openoffice4\` in PATH, desktop launchers for \`base\`, \`calc\`, \`draw\`, \`math\` and \`writer\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--openssl102|--rstudio-dependencies;1;| openssl1.0 | RStudio dependency | Used for running rstudio ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+  "--origin|--origin-function|--function-origin;0;| Function \`origin\` | Alias for \`git pull origin \$1\` | Command \`origin\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--outlook|--Outlook;0;| Outlook | Microsoft Outlook e-mail opening in Chrome | Command \`outlook\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--overleaf|--Overleaf;0;| Overleaf | Online LaTeX editor opening in Chrome | Command \`overleaf\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--pacman|--pac-man;1;| Pac-man | Implementation of the classical arcade game | Command \`pacman\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
