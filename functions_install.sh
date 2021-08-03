@@ -444,9 +444,9 @@ generic_install_file_associations() {
 generic_install_keybindings() {
   local -r keybinds="$1_keybinds[@]"
   for keybind in ${!keybinds}; do
-    local -r command="$(echo "${keybind}" | cut -d ";" -f1)"
-    local -r bind="$(echo "${keybind}" | cut -d ";" -f2)"
-    local -r binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
+    local command="$(echo "${keybind}" | cut -d ";" -f1)"
+    local bind="$(echo "${keybind}" | cut -d ";" -f2)"
+    local binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
     add_keybinding "${command}" "${bind}" "${binding_name}"
   done
 }
