@@ -2038,7 +2038,6 @@ pull_bashfunctions=("
 pull()
 {
   if [ -z \"\$1\" ]; then
-
 	  git pull
 	else
 	  git pull origin \"\$1\"
@@ -2047,7 +2046,16 @@ pull()
 ")
 
 push_installationtype="environmental"
-push_bashfunctions=("alias push=\"git push\"")
+push_bashfunctions=("
+push()
+{
+  if [ -z \"\$1\" ]; then
+	  git push
+	else
+	  git push origin \"\$1\"
+	fi
+}
+")
 
 pycharm_installationtype="userinherit"
 pycharm_keybinds=("pycharm;<Primary><Alt><Super>p;Pycharm")
