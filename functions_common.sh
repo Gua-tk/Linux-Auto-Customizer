@@ -335,68 +335,68 @@ argument_processing()
 
     case ${key} in
       ### BEHAVIOURAL ARGUMENTS ###
-      -v|--verbose)
+      -v|-verbose)
         FLAG_QUIETNESS=0
       ;;
-      -q|--quiet)
+      -q|-quiet)
         FLAG_QUIETNESS=1
       ;;
-      -Q|--Quiet)
+      -Q|-Quiet)
         FLAG_QUIETNESS=2
       ;;
 
-      -s|--skip|--skip-if-installed)
+      -s|-skip|-skip-if-installed)
         FLAG_OVERWRITE=0
       ;;
-      -o|--overwrite|--overwrite-if-present)
+      -o|-overwrite|-overwrite-if-present)
         FLAG_OVERWRITE=1
       ;;
 
-      -e|--exit|--exit-on-error)
+      -e|-exit|-exit-on-error)
         FLAG_IGNORE_ERRORS=0
       ;;
-      -i|--ignore|--ignore-errors)
+      -i|-ignore|-ignore-errors)
         FLAG_IGNORE_ERRORS=1
       ;;
 
-      -d|--dirty|--no-autoclean)
+      -d|-dirty|-no-autoclean)
         FLAG_AUTOCLEAN=0
       ;;
-      -c|--clean)
+      -c|-clean)
         FLAG_AUTOCLEAN=1
       ;;
-      -C|--Clean)
+      -C|-Clean)
         FLAG_AUTOCLEAN=2
       ;;
 
-      -k|--keep-system-outdated)
+      -k|-keep-system-outdated)
         FLAG_UPGRADE=0
       ;;
-      -u|--update)
+      -u|-update)
         FLAG_UPGRADE=1
       ;;
-      -U|--upgrade|--Upgrade)
+      -U|-upgrade|--Upgrade)
         FLAG_UPGRADE=2
       ;;
 
-      -f|--favorites|--set-favorites)
+      -f|-favorites|-set-favorites)
         FLAG_FAVORITES=1
       ;;
-      -z|--no-favorites)
+      -z|-no-favorites)
         FLAG_FAVORITES=0
       ;;
 
-      -a|--autostart)
+      -a|-autostart)
         FLAG_AUTOSTART=1
       ;;
-      -r|--regular)
+      -r|-regular)
         FLAG_AUTOSTART=0
       ;;
 
-      -n|--not)
+      -n|-not)
         FLAG_INSTALL=0
       ;;
-      -y|--yes)
+      -y|-yes)
         FLAG_INSTALL=${NUM_INSTALLATION}
       ;;
 
@@ -405,14 +405,14 @@ argument_processing()
         exit 0
       ;;
 
-      -H|--help)
+      -H|-help)
         autogen_help
 
         output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" ${FLAG_QUIETNESS}
         exit 0
       ;;
 
-      --debug)
+      -debug)
         customizer_prompt
       ;;
 

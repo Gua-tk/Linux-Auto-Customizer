@@ -82,8 +82,6 @@ PROGRAM_KEYBIND_PATH="${BASH_FUNCTIONS_FOLDER}/keybinds.txt"
 FONTS_FOLDER=${HOME_FOLDER}/.fonts
 # Here we store the .desktop launchers of the programs we want to autostart
 AUTOSTART_FOLDER=${HOME_FOLDER}/.config/autostart
-# Directory to store the aliases
-ALIASES_PATH=${HOME_FOLDER}/.bash_aliases
 
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
@@ -282,9 +280,7 @@ installation_data=(
   "--rustc;1;| Rust | Programming Language | Installs \`rustc\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
   "--s|--s-function;0;| Function \`s\` | Function to execute any program silently and in the background | Function \`s \"command\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--scala|--Scala;1;| Scala | Programming language | Command \`scala\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-  "--screenshot-area;0;| Screenshots (area) | Takes a screenshot and saves it to custom ~/Images/screenshots folder and stores it to clipboard for fast paste| Commands \`screenshot-area\`||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
-  "--screenshot-full;0;| Screenshots (full) | Takes a full screen screenshot and saves it to custom ~/Images/screenshots folder and stores it to clipboard for fast paste | Commands \`screenshot-full\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
-  "--screenshot-window;0;| Screenshots (window) | Takes a screenshot and saves it to custom ~/Images/screenshots folder and stores it to clipboard for fast paste| Commands \`screenshot-window\`||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
+  "--screenshots|--Screenshots;0;| Screenshots | Takes a screenshot and saves it to custom ~/Images/screenshots folder | Commands \`screenshot-full\` \`screenshot-window\` \`screenshot-area\`||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
   "--system-fonts;0;| Customize fonts | Changes system fonts to predefined ones downloadable with Customizer | Set custom fonts predefinedly || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--shortcuts;0;| shortcuts | Installs custom key commands | variables... (\$DESK...) || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--shotcut|--ShotCut|--Shotcut|--shot-cut|--shot_cut;1;| ShotCut | Cross-platform video editing | Command \`shotcut\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
