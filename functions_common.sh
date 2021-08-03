@@ -375,7 +375,7 @@ argument_processing()
       -u|-update)
         FLAG_UPGRADE=1
       ;;
-      -U|-upgrade|--Upgrade)
+      -U|-upgrade|-Upgrade)
         FLAG_UPGRADE=2
       ;;
 

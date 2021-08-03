@@ -283,7 +283,7 @@ clean_installationtype="environmental"
 clean_bashfunctions=("
 clean()
 {
-  if [ ${FLAG_UPGRADE} -eq 0 ]; then
+  if [ \${EUID} -eq 0 ]; then
     apt-get -y autoclean && apt-get -y autoremove
   fi
   rm -rf ${HOME}/.local/share/Trash/*
