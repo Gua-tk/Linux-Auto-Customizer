@@ -865,37 +865,40 @@ fi
 # add_custom_keybind instead, can be called as root or user, so root and user executions can be added
 
 # Name, Command, Binding...
-#1st argument Name of the feature
-#2nd argument Command of the feature
-#3rd argument Bind Key Combination of the feature ex(<Primary><Alt><Super>a)
-#4th argument Number of the feature array position slot of the added custom command (custom0, custom1, custom2...)
-
+# 1st argument Name of the feature
+# 2nd argument Command of the feature
+# 3rd argument Bind Key Combination of the feature ex(<Primary><Alt><Super>a)
+# 4th argument Number of the feature array position slot of the added custom command (custom0, custom1, custom2...)
 keybind_function="
+# Check if there are keybinds available
 if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
-  IFS=\$'\\\n'
-  for line in \$(cat \"${PROGRAM_KEYBIND_PATH}\"); do
-    field_command=\"\$(echo \"\$line\" | cut -d \";\" -f1)\"
-    field_binding=\"\$(echo \"\$line\" | cut -d \";\" -f2)\"
-    field_name=\"\$(echo \"\$line\" | cut -d \";\" -f3)\"
+  while IFS= read -r line; do
+    if [ -z \"\$line\" ]; then
+      continue
+    fi
+    field_command=\"\$(echo \"\${line}\" | cut -d \";\" -f1)\"
+    field_binding=\"\$(echo \"\${line}\" | cut -d \";\" -f2)\"
+    field_name=\"\$(echo \"\${line}\" | cut -d \";\" -f3)\"
+
     i=0
     isInstalled=0
     while [ -n \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; do
-      # Update keybinding if match
+      # Overwrite keybinding if there is a collision with previous ones
       if [ \"\${field_name}\" == \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; then
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\$field_command'\"
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\$field_binding'\"
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\$field_name'\"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\${field_command}'\"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\${field_binding}'\"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\${field_name}'\"
         isInstalled=1
         break
       fi
       i=\$((i+1))
     done
-    # Append new keybinding
-    if [ \$isInstalled == 0 ]; then
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\$field_command'\"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\$field_binding'\"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\$field_name'\"
+    # No collision: append new keybinding
+    if [ \${isInstalled} == 0 ]; then
+      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\${field_command}'\"
+      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\${field_binding}'\"
+      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\${field_name}'\"
     fi
-  done
+  done < \"${PROGRAM_KEYBIND_PATH}\"
 fi
 "
