@@ -856,10 +856,11 @@ if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
 fi
 "
 
+# https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal
 # - Description: This function is the basic piece of the keybind subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBIND_PATH every time a terminal
 # is invoked. This function and its necessary files such as $PROGRAM_KEYBIND_PATH are always present during the
-# execution of install.
+# execution of install. Also, for simplicity, we consider that each keybinding
 # This function basically processes and applies the results of the call to add_custom_keybind function.
 # - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
 # add_custom_keybind instead, can be called as root or user, so root and user executions can be added
@@ -872,6 +873,9 @@ fi
 keybind_function="
 # Check if there are keybinds available
 if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
+  # regenerate list of active keybinds
+  declare -a active_keybinds=\"\$(echo \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)\" | sed 's/@as //g' | tr -d \",\" | tr \"[\" \"(\" | tr \"]\" \")\" | tr \"'\" \"\\\"\")\"
+
   while IFS= read -r line; do
     if [ -z \"\$line\" ]; then
       continue
@@ -883,22 +887,50 @@ if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
     i=0
     isInstalled=0
     while [ -n \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; do
-      # Overwrite keybinding if there is a collision with previous ones
+      # Overwrite keybinding if there is a collision in the name with previous defined keybindings
       if [ \"\${field_name}\" == \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; then
         gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\${field_command}'\"
         gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\${field_binding}'\"
         gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\${field_name}'\"
+        # Make sure that the keybinding data that we just uploaded is active
+        isActive=0
+        for active_keybind in \${active_keybinds[@]}; do
+          if [ \"\${active_keybind}\" == \"\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/\'\" ]; then
+            isActive=1
+            break
+          fi
+        done
+        # If is not active, active it by adding to the activated keybindings array
+        if [ \${isActive} == 0 ]; then
+          active_keybinds+=(\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/\')
+        fi
+        # The keybind data was already in the table, no need for occupying a new custom keybind
         isInstalled=1
         break
       fi
       i=\$((i+1))
     done
-    # No collision: append new keybinding
+    # No collision: append new keybinding data
     if [ \${isInstalled} == 0 ]; then
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\${field_command}'\"
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\${field_binding}'\"
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\${field_name}'\"
+      echo fin
+      # Make sure that the keybinding data that we just uploaded is active
+      isActive=0
+      for active_keybind in \${active_keybinds[@]}; do
+        if [ \"\${active_keybind}\" == \"\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/\'\" ]; then
+          isActive=1
+          break
+        fi
+      done
+      # If is not active, active it by adding to the activated keybindings array
+      if [ \${isActive} == 0 ]; then
+        active_keybinds+=(\'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/\')
+      fi
     fi
   done < \"${PROGRAM_KEYBIND_PATH}\"
+  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings \"[\${active_keybinds[@]}]\"
+  echo \"gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings \"[\${active_keybinds[@]}]\" \"
 fi
 "

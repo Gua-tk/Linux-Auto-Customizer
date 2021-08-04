@@ -1017,7 +1017,7 @@ google_chrome_installationtype="packageinstall"
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
 google_chrome_launchernames=("google-chrome")
-google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>O;Google Chrome")
+google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
 
 gpaint_installationtype="packagemanager"
 gpaint_packagenames=("gpaint")
