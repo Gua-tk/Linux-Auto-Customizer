@@ -14,20 +14,73 @@
 - [ ] `functions_common.sh`: refactor auto help and auto readme 
 
 - [ ] big refactor: new algorithm selection for decoupling
-- Need an readonly common array variable to store all the feature keynames (the string used to indirect expansion and used with which to know if feature is already installed with opposite of -o option )
-- Need another variable to construct an array in the installation order. We will continue accepting -n -y args, but with -n we need to delete from this array. With this we don't need num installation anymore, only flag install to keep record of the state
-- new property for indirect expansion FEATUREKEYNAME_arguments, which will contain the arguments for that feature
+- Need an readonly common array variable to store all the feature keynames (the string used 
+to indirect expansion and used with which to know if feature is already installed with 
+opposite of -o option )
+- Need another variable to construct an array in the installation order. We will continue
+ accepting -n -y args, but with -n we need to delete from this array and unset the runtime
+ variable FEATUREKEYNAME_flagsstate With this we don't need num installation anymore, only
+ FLAG_INSTALL to keep record of the state
+- show warning when adding a feature that is already added
+- new property for indirect expansion FEATUREKEYNAME_arguments, which will contain the 
+arguments for that feature
 - By default permission will be guessed from installation type. 
-  Root installation types will be executed by root. The rest will be indifferent. Except if there is an override for this bit (see next bullet). --> refactor some of the user generic functions so they can be called as root indiferently
-  New property for indirect expansion FEATUREKEYNAME_flagsstate.
-  This variable will be used to store the flag states at the moment of adding a feature to the installation
+  Root installation types will be executed by root. The rest will be indifferent. Except if
+  there is an override for this bit (see next bullet). --> refactor some of the user generic 
+  install static functions so they can be called as root indiferently
+  - New property for indirect expansion FEATUREKEYNAME_flagsstateoverride.
+  This variable will be used to override your custom flags over the ones in runtime.
+  the installation (runtime, does not has to be declared in data features.sh)
   By default it will look like this
-  spotify_flagsstate=";;;;;;;"
+  spotify_flagsstateoverride=";;;;;;;"
   That will mean that there are no flags overriden.
   Differently, copyq for having an autostart should look something like 
-  copyq_flagsstate=";;;;;1;;" # notice the one in the autostart bit
-  That bit indicates override in the flag, ignoring the state of the runtime flag and always being an autostart program.
+  copyq_flagsstateoverride=";;;;;1;;" # notice the one in the autostart bit
+  That bit indicates override in the flag, ignoring the state of the runtime flag and 
+  always being an autostart program.
+
+  - Also, we will use (using declare, in runtime) a variable called FEATUREKEYNAME_flagsstate
+  where we will put the actual bits that customizer uses. When having a -n we will delete 
+  the corresponding entry in the array if already present. 
+  Each time we install (-y, the default) overwrite (redeclare) the values in 
+  FEATUREKEYNAMES_flagsstate with the ones in FEATUREKEYNAMES_flagsstateoverride
   
+  - Use indifferently capital letters of minúscul letter in the args
+
+Add program
+Try to expand the argument directly as the keyname
+  - remove first dashes in the args
+  - change - for _
+  - try indirect expansion pointer=${processed_argument}_installationtype ; ${!pointer}
+
+#If not match go through all args using vars in the common list of krynames with indirect expansion against all args
+For kryname in keynamescommon:
+  pointer=${keyname}_arguments
+  If $1 in ${!pointer} 
+    # save this keyname outside of for scope
+    Matchedkeyname=$keyname
+    Break
+If $flag_install:
+  If $matchedkeyname in $resulttable
+    Show warning 
+    Return
+  if ${!${matchedkeyname}_flagsstateoverride} defined
+    declare -a ${matchedkeyname}_flagsstate=fillwithemptyvalues()
+    Trim ${!${matchedkeyname}_flagsstateoverride} and put each flag on the positions of flagstate
+  3lse
+    declare -a ${matchedkeyname}_flagsstate=fillwithemptyvalues()
+
+    For each bit in ${matchedkeyname}_flagsstates with IFS=;  or for each bitpos in range(${numbitsstate_common}) 
+      If $bit == ""
+        ${matchedkeyname}_flagsstates.put(bitpos, FLAG_WHATEVER). # THIS IS NOT PARAMETRIZABLE AND THE FOR NEEDS TO BE ROLLED OUT
+      else 
+        ${matchedkeyname}_flagsstates.put(bitpos, flagsstateoverride.get(bitpos)
+    
+else
+  If $matchedkeyname in $resulttable
+     $resulttable=matchedkeyname
+  Else 
+    Show warning that it was not added
 
 - [ ] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
 - [ ] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
