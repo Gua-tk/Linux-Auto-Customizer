@@ -113,13 +113,16 @@ fi
 
 a_installationtype="environmental"
 a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
+a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 add_installationtype="environmental"
 add_bashfunctions=("alias add=\"git add\"")
+add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 aisleriot_installationtype="packagemanager"
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")
+aisleriot_readmelines="| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 alert_installationtype="environmental"
 alert_bashfunctions=("
@@ -127,28 +130,33 @@ alert_bashfunctions=("
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i \"\$([ \$? = 0 ] && echo terminal || echo error)\" \"\$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\\'')\"'
 ")
+alert_readmeline="| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ansible_installationtype="packagemanager"
 ansible_packagenames=("ansible")
+ansible_readmeline="| Ansible | Automation of software | Command \`ansible\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ant_installationtype="userinherit"
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_compressedfiletype="z"
 ant_binariesinstalledpaths=("bin/ant;ant")
 ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/ant\"")
+ant_readmeline="| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
 
 anydesk_installationtype="userinherit"
 anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
 anydesk_compressedfiletype="z"
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
+anydesk_readmelinedescription="Software to remote control other computers"
+anydesk_readmeline="| Anydesk | ${anydesk_readmelinedescription} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 anydesk_bashfunctions=("alias anydesk=\"nohup anydesk &>/dev/null &\"")
 anydesk_launchercontents=("
 [Desktop Entry]
 Categories=Remote;control;other;
-Comment=Remote control other PCs
+Comment=${anydesk_readmelinedescription}
 Encoding=UTF-8
 Exec=anydesk
-GenericName=Remote computer control
+GenericName=Remote desktop application
 Icon=${USR_BIN_FOLDER}/anydesk/icons/hicolor/scalable/apps/anydesk.svg
 Keywords=IDE;programming;android;studio;dev;
 MimeType=
@@ -162,15 +170,18 @@ Version=1.0")
 
 aspell_installationtype="packagemanager"
 aspell_packagenames=("aspell-es" "aspell-ca")
+aspell_readmeline="| Aspell | Spell checker | Command \`aspell\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 atom_installationtype="packageinstall"
 atom_packageurls=("https://atom.io/download/deb")
 atom_launchernames=("atom")
+atom_readmeline="| Atom | Text and source code editor | Command \`atom\`, desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 audacity_installationtype="packagemanager"
 audacity_launchernames=("audacity")
 audacity_packagenames=("audacity")
 audacity_bashfunctions=("alias audacity=\"nohup audacity &>/dev/null &\"")
+audacity_readmeline="| Audacity | Digital audio editor and recording | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 AutoFirma_installationtype="packageinstall"
 AutoFirma_packagedependencies=("libnss3-tools")
@@ -178,12 +189,15 @@ AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/curr
 AutoFirma_compressedfiletype="zip"
 AutoFirma_launchernames=("afirma")
 AutoFirma_bashfunctions=("alias autofirma=\"nohup AutoFirma &>/dev/null &\"")
+AutoFirma_readmeline="| AutoFirma | Electronic signature recognition | Command \`AutoFirma\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 axel_installationtype="packagemanager"
 axel_packagenames=("axel")
+axel_readmeline="| Axel | Download manager | Command \`axel\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 b_installationtype="environmental"
 b_alias="alias b=\"bash\""
+b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 bashcolors_installationtype="environmental"
 bashcolors_bashfunctions=("
@@ -207,14 +221,17 @@ LIGHTPURPLE='\033[1;34m'
 LIGHTCYAN='\033[1;36m'
 WHITE='\033[1;37m'
 ")
+bashcolors_readmeline="| bashcolors | bring color to terminal | Command \`bashcolors\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 branch_installationtype="environmental"
 branch_bashfunctions=("alias branch=\"git branch\"")
+branch_readmeline="| Function \`branch\` | alias for \`git branch -vv\` | Command \`branch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 brasero_installationtype="packagemanager"
 brasero_packagenames=("brasero")
 brasero_launchernames=("brasero")
 brasero_bashfunctions=("alias brasero=\"nohup brasero &>/dev/null &\"")
+brasero_readmeline="| Brasero | Software for image burning | Command \`brasero\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 c_installationtype="environmental"
 c_bashfunctions=("
@@ -228,17 +245,20 @@ c()
 	fi
 }
 ")
+c_readmeline="| Function \`c\` | Function \`c\` that changes the directory or clears the screen | Function \`c \` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 caffeine_installationtype="packagemanager"
 caffeine_launchernames=("caffeine-indicator")
 caffeine_packagenames=("caffeine")
 caffeine_autostart="yes"
 caffeine_manualcontentavailable="1;0;1"
+caffeine_readmeline="| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the “sleep” power saving mode. | Commands \`caffeine\`, \`caffeinate\` and \`caffeine-indicator\`, desktop launcher for \`caffeine\`, dashboard launcher for \`caffeine\` and \`caffeine-indicator\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 calibre_installationtype="packagemanager"
 calibre_launchernames=("calibre-gui")
 calibre_packagenames=("calibre")
 calibre_bashfunctions=("alias calibre=\"nohup calibre &>/dev/null &\"")
+calibre_readmeline="| Calibre | e-book reader| Commmand \`calibre\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 changebg_installationtype="repositoryclone"
 changebg_binariesinstalledpaths=".cronscript.sh;changebg"
@@ -266,18 +286,22 @@ dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${P
 "
 changebg_cronjob_path=".cronjob"
 changebg_cronjob_content="*/5 * * * * ${USR_BIN_FOLDER}/changebg/.cronscript.sh"
+changebg_readmeline="| Function \`changebg\` | Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes | Function \`changebg\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 cheat_installationtype="environmental"
 cheat_downloads=("https://cht.sh/:cht.sh;cht.sh")
 cheat_binariesinstalledpaths=("cht.sh;cheat")
+cheat_readmeline="| cheat.sh | Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages | Command \`cheat\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 checkout_installationtype="environmental"
 checkout_bashfunctions=("alias checkout=\"git checkout\"")
+checkout_readmeline="| Function \`checkout\` | alias for \`git checkout\` | Command \`checkout\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 cheese_installationtype="packagemanager"
 cheese_launchernames=("org.gnome.Cheese")
 cheese_packagenames=("cheese")
 cheese_bashfunctions=("alias cheese=\"nohup cheese &>/dev/null &\"")
+cheese_readmeline="| Cheese | GNOME webcam application | Command \`cheese\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 clean_installationtype="environmental"
 clean_bashfunctions=("
@@ -292,11 +316,13 @@ clean()
   rm -rf ${HOME}/.local/share/Trash/*
 }
 ")
+clean_readmeline="| Function \`clean\` | Remove files and contents from the trash bin and performs \`sudo apt-get -y autoclean\` and \`sudo apt-get -y autoremove\`. | Command \`clean\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 clementine_installationtype="packagemanager"
 clementine_launchernames=("clementine")
 clementine_packagenames=("clementine")
 clementine_bashfunctions=("alias clementine=\"nohup clementine &>/dev/null &\"")
+clementine_readmeline="| Clementine | Modern music player and library organizer | Command \`clementine\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 clion_installationtype="userinherit"
 clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz"
@@ -304,9 +330,11 @@ clion_compressedfiletype="z"
 clion_binariesinstalledpaths=("bin/clion.sh;clion")
 clion_associatedfiletypes=("text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc")
 clion_bashfunctions=("alias clion=\"nohup clion . &>/dev/null &\"")
+clion_readmelinedescription="Cross-platform C/C++ IDE"
+clion_readmeline="| Clion | ${clion_readmelinedescription} | Command \`clion\`, silent alias \`clion\`, desktop launcher, dashboard launcher, associated with mimetypes \`.c\`, \`.h\` and \`.cpp\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 clion_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
-Comment=C and C++ IDE for Professional Developers
+Comment=${clion_readmelinedescription}
 Encoding=UTF-8
 Exec=clion %F
 GenericName=C Programing IDE
@@ -323,9 +351,11 @@ Version=1.0" )
 
 clonezilla_installationtype="packagemanager"
 clonezilla_packagenames=("clonezilla")
+clonezilla_readmelinedescription="Disk cloning, disk imaging, data recovery, and deployment"
+clonezilla_readmeline="| CloneZilla | ${clonezilla_readmelinedescription} | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 clonezilla_launchercontents=("[Desktop Entry]
 Categories=backup;images;restoration;boot;
-Comment=Create bootable clonezilla images
+Comment=${clonezilla_readmelinedescription}
 Encoding=UTF-8
 Exec=sudo clonezilla
 GenericName=Disk image utility
@@ -339,7 +369,6 @@ Terminal=true
 TryExec=clonezilla
 Type=Application
 Version=1.0"
-
 )
 
 cmatrix_installationtype="packagemanager"
