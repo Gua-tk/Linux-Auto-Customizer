@@ -119,7 +119,7 @@ FLAG_AUTOSTART=0  # 0 --> does nothing; 1 --> autostart program if possible
 #     4.- If we should reinstall the feature or not when we find that the desired feature already installed.
 #     install_yes/no; forceness; quietness; overwrite; permissions; function_name
 #   - The rest
-declare -r installation_data=(
+declare -r feature_keynames=(
   "a"
   "add"
   "aisleriot"
@@ -326,6 +326,8 @@ declare -r installation_data=(
   "--youtube|--Youtube|--YouTube;0;| Youtube| YouTube opens in Chrome | Command \`youtube\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
   "--zoom|--Zoom;0;| Zoom | Video Stram Calls | Command \`zoom\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 )
+
+added_feature_keynames=()
 
 ####################
 ##### WRAPPERS #####

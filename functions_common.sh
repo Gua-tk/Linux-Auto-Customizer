@@ -63,19 +63,26 @@ output_proxy_executioner() {
   fi
 }
 
+#added_feature_keynames
 # Receives a list of arguments selecting features (--pycharm, --vlc...) and applies the current flags to it,
-# modifying the corresponding line of installation_data
+# modifying the corresponding line of feature_keynames
+add_programx()
+{
+
+}
+
+
 add_program()
 {
   # Process all arguments
   while [ $# -gt 0 ]; do
     found=0  # To check for a valid argument
-    # Process each argument to write down the flags for each installation in installation_data
-    total=${#installation_data[*]}
-    for (( i=0; i<$(( ${total} )); i++ )); do  # Check all the entries in installation_data
+    # Process each argument to write down the flags for each installation in feature_keynames
+    total=${#feature_keynames[*]}
+    for (( i=0; i<$(( ${total} )); i++ )); do  # Check all the entries in feature_keynames
       # Cut first program name argument (with two -- at the beginning) from the first argument
       # We will generate the program function name with it
-      program_arguments="$(echo "${installation_data[$i]}" | cut -d ";" -f1 | tr "|" " ")"
+      program_arguments="$(echo "${feature_keynames[$i]}" | cut -d ";" -f1 | tr "|" " ")"
       # Set IFS, variable used to determine the default separator on foreach loops in bash. Set space as separator
       IFS=" "
       for argument in ${program_arguments}; do
@@ -83,12 +90,12 @@ add_program()
           # Set that the argument is valid
           found=1
           # Cut static bit of permission
-          flag_permissions=$(echo "${installation_data[$i]}" | cut -d ";" -f2)
+          flag_permissions=$(echo "${feature_keynames[$i]}" | cut -d ";" -f2)
           # Generate name of the function depending on the mode from the first argument
           program_name="${FLAG_MODE}_$(echo ${program_arguments} | cut -d " " -f1 | cut -d "-" -f3-)"
           # Append static bits to the state of the flags
           new="${program_name};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${FLAG_FAVORITES};${FLAG_AUTOSTART}"
-          installation_data[$i]=${new}
+          feature_keynames[$i]=${new}
           # Update flags and program counter if we are installing
           if [ ${FLAG_INSTALL} -gt 0 ]; then
             NUM_INSTALLATION=$(( ${NUM_INSTALLATION} + 1 ))
@@ -155,7 +162,7 @@ execute_installation()
   # Double for to perform the installation in same order as the arguments
   for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
     # Loop through all the elements in the common data table
-    for program in "${installation_data[@]}"; do
+    for program in "${feature_keynames[@]}"; do
       # Check the number of elements, if there are less than 3 do not process, that program has not been added
       num_elements=$(echo "${program}" | tr ";" " " | wc -w)
       if [ "${num_elements}" -lt 8 ]; then
@@ -212,7 +219,7 @@ autogen_help()
   local user_num=0
   true > help.md
 
-  for program in "${installation_data[@]}"; do
+  for program in "${feature_keynames[@]}"; do
     local readme_line="$(echo "${program}" | cut -d ";" -f3-)"
     local installation_type="$(echo "${program}" | cut -d ";" -f2)"
     local program_arguments="$(echo "${program}" | cut -d ";" -f1)"
@@ -264,7 +271,7 @@ autogen_readme()
   local root_lines=
   local root_num=0
   local user_num=0
-  for program in "${installation_data[@]}"; do
+  for program in "${feature_keynames[@]}"; do
     local readme_line="$(echo "${program}" | cut -d ";" -f3-)"
     local installation_type="$(echo "${program}" | cut -d ";" -f2)"
     local program_arguments="$(echo "${program}" | cut -d ";" -f1 | tr "|" " ")"
@@ -324,7 +331,7 @@ customizer_prompt()
 # - Argument 1: Type of permissions of the selected program: 0 for user, 1 for root, 2 for everything
 add_programs_with_x_permissions()
 {
-  for program in "${installation_data[@]}"; do
+  for program in "${feature_keynames[@]}"; do
     permissions=$(echo ${program} | cut -d ";" -f2)
     name=$(echo ${program} | cut -d ";" -f1 | cut -d "|" -f1)
     if [[ 2 == $1 ]]; then
