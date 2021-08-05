@@ -374,7 +374,10 @@ Version=1.0"
 cmatrix_installationtype="packagemanager"
 cmatrix_packagenames=("cmatrix")
 cmatrix_bashfunctions=("alias matrix=\"cmatrix -sC yellow\"")
-cmatrix_launchercontents=("[Desktop Entry]
+cmatrix_readmelinedescription="Terminal screensaver from The Matrix"
+cmatrix_readmeline="| Cmatrix |  | Command \`cmatrix\`, function \`matrix\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+cmatrix_launchercontents=("
+[Desktop Entry]
 Categories=matrix;
 Comment=Matrix
 Encoding=UTF-8
@@ -389,16 +392,19 @@ StartupWMClass=cmatrix
 Terminal=true
 TryExec=cmatrix
 Type=Application
-Version=1.0")
+Version=1.0
+")
 
 code_installationtype="userinherit"
 code_compressedfileurl="https://go.microsoft.com/fwlink/?LinkID=620884"
 code_compressedfiletype="z"
 code_binariesinstallpaths=("code;code")
 code_bashfunctions=("alias code=\"nohup code . &>/dev/null &\"")
+code_readmelinedescription="Source-code editor"
+code_readmeline="| Visual Studio Code | ${code_readmelinedescription} | Command \`code\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 code_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
-Comment=Develop with pleasure!
+Comment=${code_readmelinedescription}
 Encoding=UTF-8
 Exec=code %f
 GenericName=IDE for programming
@@ -417,9 +423,11 @@ codeblocks_installationtype="packagemanager"
 codeblocks_packagenames=("codeblocks")
 codeblocks_launchernames=("codeblocks")
 codeblocks_bashfunctions=("alias codeblocks=\"nohup codeblocks &>/dev/null &\"")
+codeblocks_readmeline="| Code::Blocks | IDE for programming  | Command \`codeblocks\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 commit_installationtype="environmental"
-commit_bashfunctions=("commit()
+commit_bashfunctions=("
+commit()
 {
     messag=\"\$@\"
     while [ -z \"\$messag\" ]; do
@@ -428,9 +436,11 @@ commit_bashfunctions=("commit()
     git commit -am \"\$messag\"
 }
 ")
+commit_readmeline="| Function \`commit\` | Function \`commit\` that makes \`git commit -am \"\$1\"\` | Function \`commit\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> "
 
 converters_installationtype="repositoryclone"
 converters_repositoryurl="https://github.com/Axlfc/converters"
+converters_readmeline="| Converters | Set of converter Python scripts that integrate in your environment as \`bash\` commands | Commands \`bintodec\`, \`dectobin\`, \`dectohex\`, \`dectoutf\`, \`escaper\`, \`hextodec\`, \`to\` and \`utftodec\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 converters_binariesinstalledpaths=("converters/to.py;to" "converters/dectoutf.py;dectoutf" "converters/utftodec.py;utftodec")
 converters_bashfunctions=("bintooct()
 {
@@ -517,31 +527,39 @@ copyq_installationtype="packagemanager"
 copyq_launchernames=("com.github.hluk.copyq")
 copyq_packagenames=("copyq")
 copyq_autostart="yes"
+copyq_readmeline="| copyq | A clipboard manager application that comes with extra features such as editing and scripting | Command \`copyq\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 curl_installationtype="packagemanager"
 curl_packagenames=("curl")
+curl_readmeline="| Curl | Curl is a CLI command for retrieving or sending data to a server | Command \`curl\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 dbeaver_installationtype="packageinstall"
 dbeaver_packageurls=("https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb")
 dbeaver_launchernames=("dbeaver")
+dbeaver_readmeline="| DBeaver | SQL Client IDE | Command \`dbeaver\` desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 dconf_editor_installationtype="packagemanager"
 dconf_editor_packagenames=("dconf-editor")
 dconf_editor_launchernames=("ca.desrt.dconf-editor")
+dconf_editor_readmeline="| dconf-editor | Editor settings | Command \`dconf-editor\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 dia_installationtype="packagemanager"
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")
 dia_bashfunctions=("alias dia=\"nohup dia &>/dev/null &\"")
+dia_readmeline="| Dia | Graph and relational  | Command \`dia\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 discord_installationtype="userinherit"
 discord_compressedfiletype="z"
 discord_binariesinstalledpaths=("Discord;discord")
 discord_bashfunctions=("alias discord=\"nohup discord &>/dev/null &\"")
 discord_compressedfileurl="https://discord.com/api/download?platform=linux&format=tar.gz"
-discord_launchercontents=("[Desktop Entry]
+discord_readmelinedescription="All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone."
+discord_readmeline="| Discord | ${discord_readmelinedescription} | Command \`discord\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+discord_launchercontents=("
+[Desktop Entry]
 Categories=Network;InstantMessaging;
-Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
+Comment=${discord_readmelinedescription}
 Encoding=UTF-8
 Exec=discord
 GenericName=Internet Messenger
@@ -560,14 +578,18 @@ docker_installationtype="userinherit"
 docker_compressedfiletype="z"
 docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
+docker_readmeline="| Docker | Containerization service | Command \`docker\`, \`containerd\`, \`containerd-shim\`, \`containerd-shim-runc-v2\`, \`ctr\`, \`dockerd\`, \`docker-init\`, \`docker-proxy\`, \`runc\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 documents_installationtype="environmental"
 documents_url="https://docs.google.com/document/"
 documents_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;documents_icon.svg")
 documents_bashfunctions=("alias document=\"nohup xdg-open ${document_url} &>/dev/null &\"")
-documents_launchercontents=("[Desktop Entry]
+documents_readmelinedescription="Google Document opening in Chrome"
+documents_readmeline="| Google Documents | ${documents_readmelinedescription} | Command \`document\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+documents_launchercontents=("
+[Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Google Documents from Chrome
+Comment=${documents_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${document_url}
 Icon=${USR_BIN_FOLDER}/documents/documents_icon.svg
@@ -586,11 +608,14 @@ drive_installationtype="environmental"
 drive_url="https://drive.google.com/"
 drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon.svg")
 drive_bashfunctions=("alias drive=\"nohup xdg-open ${drive_url} &>/dev/null &\"")
-drive_launchercontents=("[Desktop Entry]
+drive_readmelinedescription="Google Drive opening in Chrome"
+drive_readmeline="| Google Drive | ${drive_readmelinedescription} | Command \`drive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+drive_launchercontents=("
+[Desktop Entry]
 Categories=Network;
-Comment=Desktop app to instant e-mail messaging from Chrome
+Comment=${drive_readmelinedescription}
 Encoding=UTF-8
-GenericName=Gmail
+GenericName=drive
 Keywords=drive;
 MimeType=
 Name=Google Drive
@@ -607,14 +632,18 @@ dropbox_installationtype="packageinstall"
 dropbox_packagedependencies=("python3-gpg")
 dropbox_launchernames=("dropbox")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
+dropbox_readmeline="| Dropbox | File hosting service | Command \`dropbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 duckduckgo_installationtype="environmental"
 duckduckgo_url="https://duckduckgo.com/"
 duckduckgo_downloads=("https://iconape.com/wp-content/png_logo_vector/cib-duckduckgo.png;duckduckgo_icon.png")
 duckduckgo_bashfunctions=("alias duckduckgo=\"nohup xdg-open ${duckduckgo_url} &>/dev/null &\"")
-duckduckgo_launchercontents=("[Desktop Entry]
+duckduckgo_readmelinedescription="Opens DuckDuckGo in Chrome"
+duckduckgo_readmeline="| DuckDuckGo | ${duckduckgo_readmelinedescription} | Command \`duckduckgo\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+duckduckgo_launchercontents=("
+[Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open DuckDuckGo from Chrome
+Comment=${duckduckgo_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${duckduckgo_url}
 Icon=${USR_BIN_FOLDER}/duckduckgo/duckduckgo_icon.png
@@ -629,7 +658,9 @@ Type=Application
 Version=1.0")
 
 dummycommit_installationtype="environmental"
-dummycommit_bashfunctions=("dummycommit()
+dummycommit_readmeline="| Function \`dummycommit\` | Do the following commands \`git add -a\` \`git commit -am \$1\` \`git push\` | Command \`dummycommit\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+dummycommit_bashfunctions=("
+dummycommit()
 {
   git add -A
   messag=\"\$@\"
@@ -638,9 +669,11 @@ dummycommit_bashfunctions=("dummycommit()
   done
   git commit -am \"\$messag\"
   git push
-}")
+}
+")
 
 e_installationtype="environmental"
+e_readmeline="| Function \`e\` | Multi Function \`e\` to edit a file or project in folder | Function \`e\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 e_bashfunctions=("
 e()
 {
@@ -715,9 +748,11 @@ eclipse_bashfunctions="alias=\"nobup eclips &>/dev/null &\""
 eclipse_compressedfiletype="z"
 eclipse_binariesinstalledpaths=("eclipse;eclipse")
 eclipse_compressedfileurl="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
+eclipse_readmelinedescription="IDE for Java"
+eclipse_readmeline="| Eclipse | ${eclipse_readmelinedescription} | Command \`eclipse\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 eclipse_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
-Comment=Capable Multi-purpose IDE
+Comment=${eclipse_readmelinedescription}
 Encoding=UTF-8
 Exec=eclipse
 GenericName=IDE
@@ -736,12 +771,15 @@ evolution_installationtype="packagemanager"
 evolution_packagenames=("evolution" )
 evolution_launchernames=("evolution-calendar")
 evolution_bashfunctions=("alias evolution=\"nohup evolution &>/dev/null &\"")
+evolution_readmeline="| evolution | User calendar agend, planning | Command \`evolution\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 f_irc_installationtype="packagemanager"
 f_irc_packagenames=("f-irc")
+f_irc_readmelinedescription="CLI IRC client"
+f_irc_readmeline="| f-irc | ${f_irc_readmelinedescription} | Command \`f-irc\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 f_irc_launchercontents=("[Desktop Entry]
 Categories=InstantMessaging;Communication;
-Comment=irc relay chat for terminal (easy to use)
+Comment=${f_irc_readmelinedescription}
 Encoding=UTF-8
 Exec=f-irc
 GenericName=IRC client
@@ -760,9 +798,11 @@ facebook_installationtype="environmental"
 facebook_url="https://facebook.com/"
 facebook_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg;facebook_icon.svg")
 facebook_bashfunctions=("alias facebook=\"nohup xdg-open ${facebook_url} &>/dev/null &\"")
+facebook_readmelinedescription="Desktop app to facebook from Chrome"
+facebook_readmeline="| Facebook | ${facebook_readmelinedescription} | Command \`facebook\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 facebook_launchercontents=("[Desktop Entry]
 Categories=Network;
-Comment=Desktop app to facebook from Chrome
+Comment=${facebook_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${facebook_url}
 Icon=${USR_BIN_FOLDER}/facebook/facebook_icon.svg
