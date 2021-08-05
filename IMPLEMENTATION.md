@@ -13,14 +13,13 @@
 - [ ] `functions_common.sh`: get_field $string $separator $position function
 - [ ] `functions_common.sh`: refactor auto help and auto readme 
 
-- [ ] big refactor: new algorithm selection for decoupling
-- Need an readonly common array variable to store all the feature keynames (the string used 
-to indirect expansion and used with which to know if feature is already installed with 
-opposite of -o option )
-- Need another variable to construct an array in the installation order. We will continue
- accepting -n -y args, but with -n we need to delete from this array and unset the runtime
- variable FEATUREKEYNAME_flagsstate With this we don't need num installation anymore, only
- FLAG_INSTALL to keep record of the state
+- [ ] big refactor in common functions: new algorithm selection for decoupling
+- Need an readonly common array variable to store all the feature keynames (each string used 
+to indirect expansion, which is the string that matches the prefix of each variable in data features
+- also define by indirect expansion the arguments of each features in installation data
+- Need another common array with keynames in the installation order. We will continue
+ accepting -n and -y args, but with -n we need to delete from this array. With this we don't need num
+ installation anymore, only FLAG_INSTALL to keep record of the state of the flag.
 - show warning when adding a feature that is already added
 - new property for indirect expansion FEATUREKEYNAME_arguments, which will contain the 
 arguments for that feature
@@ -38,6 +37,8 @@ arguments for that feature
   copyq_flagsstateoverride=";;;;;1;;" # notice the one in the autostart bit
   That bit indicates override in the flag, ignoring the state of the runtime flag and 
   always being an autostart program.
+  - Add new flag to force the installation even if you do not match the needed permissions (-P) 
+  and its counterpart (-p) which is the default behaviour
 
   - Also, we will use (using declare, in runtime) a variable called FEATUREKEYNAME_flagsstate
   where we will put the actual bits that customizer uses. When having a -n we will delete 
@@ -45,7 +46,7 @@ arguments for that feature
   Each time we install (-y, the default) overwrite (redeclare) the values in 
   FEATUREKEYNAMES_flagsstate with the ones in FEATUREKEYNAMES_flagsstateoverride
   
-  - Use indifferently capital letters of minúscul letter in the args
+  - Use minúscul letter in the args of each features and avoid using - or _
 
 Add program
 Try to expand the argument directly as the keyname
@@ -54,28 +55,27 @@ Try to expand the argument directly as the keyname
   - try indirect expansion pointer=${processed_argument}_installationtype ; ${!pointer}
 
 #If not match go through all args using vars in the common list of krynames with indirect expansion against all args
-For kryname in keynamescommon:
+For keyname in keynamescommon:
   pointer=${keyname}_arguments
   If $1 in ${!pointer} 
     # save this keyname outside of for scope
     Matchedkeyname=$keyname
     Break
 If $flag_install:
-  If $matchedkeyname in $resulttable
-    Show warning 
-    Return
+  declare -a ${matchedkeyname}_flagsstate=fillwithemptyvalues()
   if ${!${matchedkeyname}_flagsstateoverride} defined
-    declare -a ${matchedkeyname}_flagsstate=fillwithemptyvalues()
     Trim ${!${matchedkeyname}_flagsstateoverride} and put each flag on the positions of flagstate
-  3lse
-    declare -a ${matchedkeyname}_flagsstate=fillwithemptyvalues()
 
-    For each bit in ${matchedkeyname}_flagsstates with IFS=;  or for each bitpos in range(${numbitsstate_common}) 
-      If $bit == ""
-        ${matchedkeyname}_flagsstates.put(bitpos, FLAG_WHATEVER). # THIS IS NOT PARAMETRIZABLE AND THE FOR NEEDS TO BE ROLLED OUT
-      else 
-        ${matchedkeyname}_flagsstates.put(bitpos, flagsstateoverride.get(bitpos)
-    
+  For each bit in ${matchedkeyname}_flagsstates with IFS=;  or for each bitpos in range(${numbitsstate_common}) 
+    # here we need to satisfy the new bit of forcing installation even with wrong permissions.
+    # if the bit of skip permissions is not set (default) check the bit of permissions of the feature. If it is 2, continue.
+    # else if is 0 it has to coincide with the EUID (then continue installation if not warning and skip) else if it is 1,
+    # then the EUID has to be different from 0  
+   
+    If $bit == ""
+      ${matchedkeyname}_flagsstates.put(bitpos, FLAG_WHATEVER). # THIS IS NOT PARAMETRIZABLE AND THE FOR NEEDS TO BE ROLLED OUT
+    else 
+      ${matchedkeyname}_flagsstates.put(bitpos, flagsstateoverride.get(bitpos))  
 else
   If $matchedkeyname in $resulttable
      $resulttable=matchedkeyname
