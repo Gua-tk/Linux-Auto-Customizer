@@ -10,7 +10,7 @@
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
 # imports. See the header of each function to see its privilege requirements.                                          #
 # - Arguments: No arguments                                                                                            #
-# - Usage: Sourced from install.sh                                                                                     #
+# - Usage: Not executed directly, sourced from install.sh                                                                                     #
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
@@ -74,7 +74,7 @@ add_to_favorites() {
 # - Description: Sets a program to autostart by giving its launcher name without .desktop extension.
 #   This .desktop are searched at ALL_USERS_LAUNCHERS_DIR and PERSONAL_LAUNCHERS_DIR.
 # - Permissions: This functions can be called as root or as user.
-# Argument 1: Name of .desktop launcher of program file without the '.desktop' extension.
+# - Argument 1: Name of .desktop launcher of program file without the '.desktop' extension.
 autostart_program() {
   # If absolute path
   if [ -n "$(echo "$1" | grep -Eo "^/")" ]; then
@@ -230,12 +230,6 @@ decompress() {
     if [ "$1" == "zip" ]; then
       local internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
       # The captured line ends with / so it is a valid directory
-      echo
-      echo
-      echo
-      echo AAAAAAAAAAAAAAAAAAAAA$internal_folder_name
-      echo
-      echo
       if [ -n "$(echo "${internal_folder_name}" | grep -Eo "/$")" ]; then
         internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
         echo $internal_folder_name
@@ -752,11 +746,11 @@ register_file_associations() {
 # - Permissions: Same behaviour being root or normal user.
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
-  create_folder ${USR_BIN_FOLDER}
-  create_folder ${BASH_FUNCTIONS_FOLDER}
-  create_folder ${DIR_IN_PATH}
-  create_folder ${PERSONAL_LAUNCHERS_DIR}
-  create_folder ${FONTS_FOLDER}
+  create_folder "${USR_BIN_FOLDER}"
+  create_folder "${BASH_FUNCTIONS_FOLDER}"
+  create_folder "${DIR_IN_PATH}"
+  create_folder "${PERSONAL_LAUNCHERS_DIR}"
+  create_folder "${FONTS_FOLDER}"
 
   # Initialize bash functions
   if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then

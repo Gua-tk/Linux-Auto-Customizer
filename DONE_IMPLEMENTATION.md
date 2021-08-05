@@ -77,6 +77,13 @@
 - [x] `data_features.sh`: in net-tools installation: alias ports="netstat -tulanp" # alias nr="net-restart"
 - [x] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers, youtube-dl or cheat have to be moved
 - [x] `data_features.sh`: Post installation Search for a new version of caffeine or do the modifications in the actual version, but do not apply a patch #  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
+- [x] `install.sh`, `uninstall.sh`: Add fonts installationtype --> Parametrized via userinherit and packagemanager
+- [x] completed keybinds subsystem
+- [x] `functions_install.sh`: Fix verbosity mode and avoid proceeding to installation if no program is selected.
+- [x] `functions_install.sh`: create user generic install
+- [x] `data_features.sh`: Create high level functions that perform variable indirect expansion to install different types of program.
+- [x] `install.sh`, `uninstall.sh`: New argument in install.sh add to favorites -f / -n normal installation without favorites(?) also complementary flag in uninstall.sh
+- [x] `data_features.sh`: `e` convert to edit and echo function
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -134,13 +141,8 @@
 - [x] `install.sh`, `uninstall.sh`: kernels support for jupyter-lab
 - [x] `install.sh`, `uninstall.sh`: Add several kernels & customizations for jupyter-lab: [text-shortcuts](https://github.com/techrah/jupyterext-text-shortcuts)
 - [x] `data_features.sh`, `install.sh`, `uninstall.sh`: create bash functions that defines all the color schemes and styles in bash, storing the format in variables like RED="\e0]", BLUE="\e0", BOLD="...",  so you can `echo "${RED}${BOLD} This text is in red and bold"`
-- [x] `functions_install.sh`: create user generic install
-- [x] `data_features.sh`: Create high level functions that perform variable indirect expansion to install different types of program.
-- [x] `install.sh`, `uninstall.sh`: New argument in install.sh add to favorites -f / -n normal installation without favorites(?) also complementary flag in uninstall.sh
-- [x] `data_features.sh`: `e` convert to edit and echo function
 - [x] `data_features.sh`: `x` refactor and update with cases of not existing file, possibility of adding arguments etc.
 - [x] `data_features.sh`, `functions_common.sh`: Manage autostart in generic install: autostarting programs (`caffeine`, `copyq`... ) steam? teams? teamviewer?
-- [x] `install.sh`, `uninstall.sh`: Add fonts installationtype --> Parametrized via userinherit and packagemanager
 - [x] `install.sh`: Depopulation of nonrelevant install_program functions and programs from `install.sh`
 - [x] `data_features.sh`: Use nohup in aliases to prevent closing of feature when a process finish if a hanging terminal is closed
 - [x] `functions_install.sh`: Headers of the generic install mini-functions.

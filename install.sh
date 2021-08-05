@@ -71,7 +71,6 @@ IRkernel::installspec()"
 }
 
 install_pgadmin_mid() {
-
   # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
   # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
   # information on how to call the script
@@ -79,7 +78,6 @@ install_pgadmin_mid() {
   # Prepend shebang line to python3 interpreter of the venv
   echo "#!${USR_BIN_FOLDER}/pgadmin/bin/python3" | cat - "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" >"${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
   chmod +x "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
-
 }
 
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.

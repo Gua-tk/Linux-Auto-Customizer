@@ -20,36 +20,41 @@
 # Argument 1: Bash command to execute.
 # Argument 2: Quietness level [0, 1, 2].
 output_proxy_executioner() {
-  comm=$(echo "$1" | head -1 | cut -d " " -f1)
-  if [[ "${comm}" == "echo" ]]; then
-    rest=$(echo "$1" | sed '1 s@^echo @@')
-    message_type="$(echo "${rest}" | cut -d ":" -f1)"
-    if [[ ${message_type} == "WARNING" ]]; then
-      echo -en "\e[33m" # Activate yellow colour
-    elif [[ ${message_type} == "INFO" ]]; then
-      echo -en "\e[36m" # Activate cyan colour
-    elif [[ ${message_type} == "ERROR" ]]; then
-      echo -en "\e[91m" # Activate red colour
+  # If the command to execute is an echo, capture echo type and apply format to it depending on the message type
+  local -r command_name=$(echo "$1" | head -1 | cut -d " " -f1)
+  if [ "${command_name}" == "echo" ]; then
+    local echo_processed_command=""
+    local echo_command_arguments="$(echo "$1" | sed '1 s@^echo @@')"
+    local -r echo_message_type="$(echo "${echo_command_arguments}" | head -1 | cut -d ":" -f1)"
+    if [ "${echo_message_type}" == "WARNING" ]; then
+      echo_processed_command+="\e[33m"  # Activate yellow colour
+    elif [ "${echo_message_type}" == "INFO" ]; then
+      echo_processed_command+="\e[36m"  # Activate cyan colour
+    elif [ "${echo_message_type}" == "ERROR" ]; then
+      echo_processed_command+="\e[91m"  # Activate red colour
     fi
-    if [ "$2" != "2" ]; then
-      echo -n "$(date +%Y-%m-%d_%T) -- "
-    fi
+    # If we need to process an echo and we are not in full quietness mode print the prefix with date for each echo
+    echo_processed_command+="$(date +%Y-%m-%d_%T) -- "
+    echo_processed_command+="${echo_command_arguments}"
+    echo_processed_command+="\e[0m"  # deactivate colour after the echo
   fi
 
-  if [[ $2 == 0 ]]; then
-    $1
-  elif [[ $2 == 1 ]]; then
-    if [[ "${comm}" == "echo" ]]; then
-      # If it is a echo command, delete trailing echo and echo formatting
-      rest=$(echo "$1" | sed '1 s@^echo @@') # Delete echo at the beggining of the line
+  # Execute command with verbosity depending on quietness level and if the command_name is an echo or not
+
+  if [ $2 == 0 ]; then
+    if [ "${command_name}" == "echo" ]; then
+      echo -e "$echo_processed_command"
+    else
+      $1
+    fi
+  elif [ $2 == 1 ]; then
+    if [ "${command_name}" == "echo" ]; then
+      echo -e "$echo_processed_command"
     else
       $1 &>/dev/null
     fi
-  else
+  elif [ $2 == 2 ]; then
     $1 &>/dev/null
-  fi
-  if [[ "${comm}" == "echo" ]]; then
-    echo -en "\e[0m" # DeActivate colour
   fi
 }
 
@@ -329,7 +334,7 @@ add_programs_with_x_permissions()
 
 argument_processing()
 {
-  output_proxy_executioner "echo \"INFO: Processing arguments\"" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Processing arguments" "${FLAG_QUIETNESS}"
   while [[ $# -gt 0 ]]; do
     key="$1"
 
@@ -441,9 +446,9 @@ argument_processing()
   done
 
   # If we don't receive arguments we try to install everything that we can given our permissions
-  if [[ ${NUM_INSTALLATION} == 1 ]]; then
-    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${quietness_bit}
-    output_proxy_executioner "echo ${help_common}" ${quietness_bit}
+  if [ ${NUM_INSTALLATION} == 1 ]; then
+    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo INFO: Displaying help ${help_common}" ${FLAG_QUIETNESS}
     exit 0
   fi
 }
@@ -452,14 +457,14 @@ post_install_clean()
 {
   if [[ ${EUID} == 0 ]]; then
     if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${quietness_bit}
-      output_proxy_executioner "apt-get -y autoremove" ${quietness_bit}
-      output_proxy_executioner "echo INFO: Finished." ${quietness_bit}
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
     fi
     if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${quietness_bit}
-      output_proxy_executioner "apt-get -y autoclean" ${quietness_bit}
-      output_proxy_executioner "echo INFO: Finished." ${quietness_bit}
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
+      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
     fi
   fi
 }

@@ -3,8 +3,6 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 
 ###### UPDATES
-- [x] completed keybinds subsystem
-- [ ] `functions_install.sh`: Fix verbosity mode and avoid proceeding to installation if no program is selected.
 - [~] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
 - [ ] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to generify the permissions of the installation. --> Delete the permission bit and "guess" needed permissions from the installationtype
 - [ ] `data_features.sh`, `data_common.sh`: move each readme line for every feature to the corresponding feature 
@@ -16,6 +14,7 @@
 - [ ] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
 - [ ] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
 - [ ] all: unset or set to local variables that are needed only locally
+- [ ] `functions_common.sh`: process argument validation in add program instead of execute_installation, to stop installation if a permission mismatch is found
 
 ###### NEW FEATURES
 - [ ] `install.sh`: Move favorites subsystem and keybinding subsystem initializations to `~/.profile`, so it is not executed each time we create a terminal. --> Create another variable type for indirect expansion for features in .profile. program add_bash_initialization or refactor add bash function to handle .profile with an argument 
