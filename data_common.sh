@@ -333,28 +333,28 @@ declare -r installation_data=(
 
 # Associates lists representing a wrapper containing a set of related features
 
-programming_core=("python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies")
-programming_ide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
-programming_pro=("intellij_ultimate" "pycharm_professional" "clion")
-text_editor_core=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
-media_core=("vlc" "gpaint" "okular" "clementine")
-system_core=("virtualbox" "gparted" "clonezilla")
-internet_core=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
-art_core=("audacity" "shotcut" "gimp" "obs" "inkscape")
-games_install=("games" "steam" "cmatrix")
-standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
+declare -r programming_core=("python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies")
+declare -r programming_ide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
+declare -r programming_pro=("intellij_ultimate" "pycharm_professional" "clion")
+declare -r text_editor_core=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
+declare -r media_core=("vlc" "gpaint" "okular" "clementine")
+declare -r system_core=("virtualbox" "gparted" "clonezilla")
+declare -r internet_core=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
+declare -r art_core=("audacity" "shotcut" "gimp" "obs" "inkscape")
+declare -r games_install=("games" "steam" "cmatrix")
+declare -r standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
 
 # custom
 #custom1_system=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "chwlppr")
 #custom1_user=("sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley")
 #custom1_root=("megasync" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice")
 #dependencies=("gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
-custom1=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "change-bg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
-iochem=("psql" "gcc" "java" "ant" "mvn")
+declare -r custom1=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "change-bg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
+declare -r iochem=("psql" "gcc" "java" "ant" "mvn")
 
 
 
-help_common="
+declare -r help_common="
 \e[0m
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
         10        20        30        40        50        60        70        80
@@ -432,7 +432,7 @@ help_common="
     sudo bash install.sh --all && bash install --all
 "
 
-help_simple="
+declare -r help_simple="
 Some install.sh arguments change the way in which each feature succeeding that
 argument is installed. This behaviour is maintained until the end of the
 program, unless another argument changes this behaviour again.
@@ -445,7 +445,7 @@ to refer to the complete help, where all behavioural arguments and feature
 arguments are listed and explained in detail.
 "
 
-help_auxiliar_arguments="
+declare -r help_auxiliar_arguments="
 #### Arguments:
 
  -c, --clean          Perform an apt-get autoremove at the end of installation
@@ -500,7 +500,7 @@ By default, install.sh runs with the following implicit arguments:
 --exit-on-error, --skip-if-installed, --quiet, -Clean, --Upgrade, --yes
 "
 
-help_individual_arguments_header="
+declare -r help_individual_arguments_header="
 #### Feature arguments:
 
 This arguments are used to select which features we want to install or uninstall
@@ -513,7 +513,7 @@ features.
   related to the same topic: programming, image edition, system cutomization...
 "
 
-help_wrappers="
+declare -r help_wrappers="
 ## Wrapper arguments
   --user|--regular|--normal)
   --root|--superuser|--su)
