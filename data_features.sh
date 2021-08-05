@@ -2255,11 +2255,13 @@ pycharm_bashfunctions=("alias pycharm=\"pycharm . &>/dev/null &\"")
 pycharm_compressedfiletype="z"
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
+pycharm_readmelinedescription="Integrated development environment used in computer programming"
+pycharm_readmeline="| Pycharm Community | ${pycharm_readmelinedescription} | Command \`pycharm\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files  || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 pycharm_launchercontents=("
 [Desktop Entry]
 Actions=NewWindow;
 Categories=programming;dev;
-Comment=Python IDE Community
+Comment=${pycharm_readmelinedescription}
 Encoding=UTF-8
 Exec=pycharm %F
 GenericName=Pycharm
@@ -2285,10 +2287,12 @@ pycharmpro_bashfunctions=("alias pycharmpro=\"pycharmpro . &>/dev/null &\"")
 pycharmpro_compressedfiletype="z"
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
 pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
+pycharmpro_readmelinedescription="Integrated development environment used in computer programming"
+pycharmpro_readmeline="| Pycharm Pro | ${pycharmpro_readmelinedescription} | Command \`pycharm-pro\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 pycharmpro_launchercontents=("
 [Desktop Entry]
 Categories=programming;dev;
-Comment=Python IDE for Professional Developers
+Comment=${pycharmpro_readmelinedescription}
 Encoding=UTF-8
 Exec=pycharmpro %F
 GenericName=Pycharm Pro
@@ -2303,8 +2307,20 @@ TryExec=pycharmpro
 Type=Application
 Version=1.0")
 
+pypy3_installationtype="userinherit"
+pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
+pypy3_compressedfiletype="j"
+pypy3_manualcontentavailable="0;1;0"
+pypy3_binariesinstalledpaths=("bin/pypy3;pypy3" "bin/pip3.6;pypy3-pip")
+pypy3_readmeline="| pypy3 | Faster interpreter for the Python3 programming language | Commands \`pypy3\` and \`pypy3-pip\` in the PATH || <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+
+pypy3_dependencies_installationtype="packagemanager"
+pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
+pypy3_dependencies_readmeline="| pypy3_dependencies | Dependencies to run pypy3 | Libraries \`pkg-config\`, \`libfreetype6-dev\`, \`libpng-dev\` and \`libffi-dev\` used when deploying \`pypy\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+
 python3_installationtype="packagemanager"
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel" "python3.8-venv")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
+python3_readmeline="| Python3 | Interpreted, high-level and general-purpose programming language | Commands \`python\`, \`python3\`, \`pip3\` and Function \`v\` is for activate/deactivate python3 virtual environments (venv) can be used as default \`v\` as a command creates the /venv/ environment we can activate/deactivate new or existing virtual environments, command \`v namevenv\` creates /namevenv/ we can activate the virtual environment again using \`v namenv\` or deactivate same again, using \`v namenv\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 python3_bashfunctions=("
 # Create and source a venv with the given name passed as parameter.
 # If already exists, only sources activate
@@ -2344,19 +2360,11 @@ v()
 
 ")
 
-pypy3_installationtype="userinherit"
-pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
-pypy3_compressedfiletype="j"
-pypy3_manualcontentavailable="0;1;0"
-pypy3_binariesinstalledpaths=("bin/pypy3;pypy3" "bin/pip3.6;pypy3-pip")
-
-pypy3_dependencies_installationtype="packagemanager"
-pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
-
 R_installationtype="packagemanager"
 R_packagenames=("r-base")
 R_packagedependencies=("libzmq3-dev" "python3-zmq")
 R_launchernames=("R")
+R_readmeline="| R | Programming language | Commands \`R\`, Dashboard Launcher, Desktop Launcher|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
 R_jupyter_lab_function=("
 install.packages('IRkernel')
 install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
@@ -2370,10 +2378,12 @@ reddit_installationtype="environmental"
 reddit_url="https://www.reddit.com/"
 reddit_downloads=("https://duckduckgo.com/i/b6b8ccc2.png;reddit_icon.svg")
 reddit_bashfunctions=("alias reddit=\"nohup xdg-open ${reddit_url} &>/dev/null &\"")
+reddit_readmelinedescription="Opens Reddit in Chrome"
+reddit_readmeline="| Reddit | ${reddit_readmelinedescription} | Commands \`reddit\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 reddit_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Reddit from Chrome
+Comment=${reddit_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${reddit_url}
 Icon=${USR_BIN_FOLDER}/reddit/reddit_icon.svg
@@ -2391,6 +2401,7 @@ Version=1.0")
 remmina_installationtype="packagemanager"
 remmina_packagenames=("remmina")
 remmina_launchernames=("org.remmina.Remmina")
+remmina_readmeline="| Remmina | Remote Desktop Contol | Commands \`remmina\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
 
 rstudio_installationtype="userinherit"
 rstudio_compressedfileurl="https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz"
@@ -2398,10 +2409,12 @@ rstudio_compressedfiletype="z"
 rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
 rstudio_associatedfiletypes=("text/plain")
 rstudio_bashfunctions=("alias rstudio=\"nohup rstudio &>/dev/null &\"")
+rstudio_readmelinedescription="Default application for .R files "
+rstudio_readmeline="| RStudio | ${rstudio_readmelinedescription} | Commands \`rstudio\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
 rstudio_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app for programming in R
+Comment=${rstudio_readmelinedescription}
 Encoding=UTF-8
 Exec=rstudio
 GenericName=RStudio
@@ -2421,13 +2434,16 @@ rsync_packagedependencies=("canberra-gtk-module")
 rsync_packagenames=("rsync" "grsync")
 rsync_launchernames=("grsync")
 rsync_bashfunctions=("alias rs=\"rsync -av --progress\"")
+rsync_readmeline="| Grsync | Software for file/folders synchronization | Commands \`grsync\`, desktop launcher and \`rsync\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 rustc_installationtype="packagemanager"
 rustc_packagenames=("rustc")
 rustc_packagedependencies=("cmake" "build-essential")
+rustc_readmeline="| Rust | Programming Language | Installs \`rustc\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 # rustc_url=("https://sh.rustup.rs")
 
 s_installationtype="environmental"
+s_readmeline="| Function \`s\` | Function to execute any program silently and in the background | Function \`s \"command\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 s_bashfunctions=("
 s()
 {
@@ -2437,8 +2453,10 @@ s()
 
 scala_installationtype="packagemanager"
 scala_packagenames=("scala")
+scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 screenshots_installationtype="environmental"
+screenshots_readmeline="| Screenshots | Takes a screenshot and saves it to custom ~/Images/screenshots folder and save it to the clipboard for pasting | Commands \`screenshot-full\` \`screenshot-window\` \`screenshot-area\`||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 screenshots_bashfunctions=("
 
 screenshot-area()
@@ -2465,6 +2483,7 @@ screenshot-window()
 ")
 
 shortcuts_installationtype="environmental"
+shortcuts_readmeline="| shortcuts | Installs custom key commands | variables... (\$DESK...) || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 shortcuts_bashfunctions=("DESK=${XDG_DESKTOP_DIR}
 FONTS=${FONTS_FOLDER}
 AUTOSTART=${AUTOSTART_FOLDER}
@@ -2489,10 +2508,12 @@ fi
 
 shotcut_installationtype="packagemanager"
 shotcut_packagenames=("shotcut")
+shotcut_readmelinedescription="Cross-platform video editing"
+shotcut_readmeline="| ShotCut | ${shotcut_readmelinedescription} | Command \`shotcut\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 shotcut_launchercontents=("
 [Desktop Entry]
 Categories=video;
-Comment= Open Source, cross-platform video editor
+Comment=${shotcut_readmelinedescription}
 Encoding=UTF-8
 Exec=shotcut
 GenericName=shotcut
@@ -2510,32 +2531,39 @@ Version=1.0")
 shotwell_installationtype="packagemanager"
 shotwell_packagenames=("shotwell")
 shotwell_launchernames=("shotwell")
+shotwell_readmeline="| Shotwell | Cross-platform video editing | Command \`shotwell\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 skype_installationtype="packageinstall"
 skype_packageurls=("https://go.skype.com/skypeforlinux-64.deb")
 skype_launchernames=("skypeforlinux")
+skype_readmeline="| Skype | Call & conversation tool service | Icon Launcher... ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 slack_installationtype="packageinstall"
 slack_repository=("https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb")
 slack_launchernames=("slack")
+slack_readmeline="| Slack | Platform to coordinate your work with a team | Icon Launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 sonic_pi_installationtype="packagemanager"
 sonic_pi_packagenames=("sonic-pi")
 sonic_pi_launchernames=("sonic-pi")
+sonic_pi_readmeline="| Sonic Pi | programming language that ouputs sounds as compilation product | Command \`sonic-pi\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 
 spotify_installationtype="packageinstall"
 spotify_packageurls=("http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb")
 spotify_launchernames=("spotify")
 spotify_bashfunctions=("alias spotify=\"spotify &>/dev/null &\"")
+spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 
 spreadsheets_installationtype="environmental"
 spreadsheets_url=https://docs.google.com/spreadsheets/
 spreadsheets_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg;spreadsheets_icon.svg")
 spreadsheets_bashfunctions=("alias spreadsheets=\"nohup xdg-open ${spreadsheets_url} &>/dev/null &\"")
+spreadsheets_readmelinedescription="Google Spreadsheets opening in Chrome"
+spreadsheets_readmeline="| Spreadsheets | ${spreadsheets_readmelinedescription} | Command \`spreadsheets\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 spreadsheets_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Google Spreadsheets from Chrome
+Comment=${spreadsheets_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${spreadsheets_url}
 Icon=${USR_BIN_FOLDER}/spreadsheets/spreadsheets_icon.svg
@@ -2552,20 +2580,24 @@ Version=1.0")
 
 status_installationtype="environmental"
 status_bashfunctions=("alias status=\"git status\"")
+status_readmeline="| status | \`git status\` | Command \`status\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 steam_installationtype="packageinstall"
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_launchernames=("steam")
+steam_readmeline="| Steam | Video game digital distribution service | Command \`steam\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 studio_installationtype="userinherit"
 studio_compressedfileurl="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz"
 studio_compressedfiletype="z"
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
 studio_bashfunctions=("alias studio=\"studio . &>/dev/null &\"")
+studio_readmelinedescription="Development environment for Google's Android operating system"
+studio_readmeline="| Android Studio | ${studio_readmelinedescription} | Command \`studio\`, alias \`studio\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 studio_launchercontents=("
 [Desktop Entry]
 Categories=Development;IDE;
-Comment=IDE for developing android applications
+Comment=${studio_readmelinedescription}
 Encoding=UTF-8
 Exec=studio %F
 GenericName=studio
@@ -2588,10 +2620,12 @@ sublime_bashfunctions=("alias sublime=\"sublime . &>/dev/null &\"")
 sublime_compressedfiletype="j"
 sublime_binariesinstalledpaths=("sublime_text;sublime")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
+sublime_readmelinedescription="Source code editor with an emphasis on source code editing"
+sublime_readmeline="| Sublime | ${sublime_readmelinedescription} | Command \`sublime\`, silent alias for \`sublime\`, desktop launcher, dashboard launcher, associated with the mime type of \`.c\`, \`.h\`, \`.cpp\`, \`.hpp\`, \`.sh\` and \`.py\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 sublime_launchercontents=("
 [Desktop Entry]
 Categories=;
-Comment=General Purpose Programming Text Editor
+Comment=${sublime_readmelinedescription}
 Encoding=UTF-8
 Exec=sublime %F
 GenericName=Text Editor, programming...
@@ -2609,11 +2643,13 @@ Version=1.0")
 synaptic_installationtype="packagemanager"
 synaptic_packagenames=("synaptic")
 synaptic_launchernames=("synaptic")
+synaptic_readmelinedescription="Graphical installation manager to install, remove and upgrade software packages"
+synaptic_readmeline="| Synaptic | ${synaptic_readmelinedescription} | Command \`synaptic\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 synaptic_launchercontents=("
 [Desktop Entry]
 Name=Synaptic Package Manager
 GenericName=Package Manager
-Comment=Install, remove and upgrade software packages
+Comment=${synaptic_readmelinedescription}
 Exec=synaptic
 Icon=synaptic
 Terminal=false
@@ -2629,27 +2665,33 @@ sysmontask_repositoryurl="https://github.com/KrispyCamel4u/SysMonTask.git"
 sysmontask_manualcontentavailable="0;1;0"
 sysmontask_launchernames=("SysMonTask")
 sysmontask_bashfunctions=("alias sysmontask=\"nohup sysmontask &>/dev/null &\"")
+sysmontask_readmeline="| Sysmontask | Control panel for linux | Command \`sysmontask\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 
 system_fonts_installationtype="environmental"
 system_fonts_manualcontentavailable="0;1;0"
+system_fonts_readmeline="| Change default fonts | Sets pre-defined fonts to desktop environment. | A new set of fonts is updated in the system's screen. || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 
 teamviewer_installationtype="packageinstall"
 teamviewer_packageurls=("https://download.teamviewer.com/download/linux/teamviewer_amd64.deb")
 teamviewer_launchernames=("com.teamviewer.TeamViewer")
+teamviewer_readmeline="| Team Viewer | Video remote pc control | Command \`teamviewer\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 
 teams_installationtype="packageinstall"
 teams_packageurls=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")
 teams_launchernames=("teams")
+teams_readmeline="| Microsoft Teams | Video Conference, calls and meetings | Command \`teams\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 
 telegram_installationtype="userinherit"
 telegram_downloads=("https://telegram.org/img/t_logo.svg?1;telegram_icon.svg")
 telegram_compressedfileurl="https://telegram.org/dl/desktop/linux"
 telegram_compressedfiletype="J"
 telegram_binariesinstalledpaths=("Telegram;telegram")
+telegram_readmelinedescription="Cloud-based instant messaging software and application service"
+telegram_readmeline="| Telegram | ${telegram_readmelinedescription} | Command \`telegram\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 telegram_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Instant messaging cross platform
+Comment=${telegram_readmelinedescription}
 Encoding=UTF-8
 Exec=telegram -- %u
 GenericName=Telegram
@@ -2665,6 +2707,7 @@ Type=Application
 Version=1.0")
 
 templates_installationtype="environmental"
+templates_readmeline="| Templates | Different collection of templates for starting code projects: Python3 script (\`.py\`), Bash script (\`.sh\`), LaTeX document (\`.tex\`), C script (\`.c\`), C header script (\`.h\`), makefile example (\`makefile\`) and empty text file (\`.txt\`) | In the file explorer, right click on any folder to see the contextual menu of \"create document\", where all the templates are located || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 templates_filekeys=("c" "headers" "makefile" "python" "bash" "latex" "empty")
 templates_c_path="${XDG_TEMPLATES_DIR}/c_script.c"
 templates_c_content="
@@ -2877,25 +2920,31 @@ templates_empty_content=""
 
 terminal_background_installationtype="environmental"
 terminal_background_manualcontentavailable="0;1;0"
+terminal_background_readmeline="| Terminal background | Change background of the terminal to black | Every time you open a terminal || <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 terminator_installationtype="packagemanager"
 terminator_packagenames=("terminator")
 terminator_launchernames=("terminator")
+terminator_readmeline="| Terminator | Terminal emulator for Linux programmed in Python | Command \`terminator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 thunderbird_installationtype="packagemanager"
 thunderbird_packagenames=("thunderbird")
 thunderbird_launchernames=("thunderbird")
+thunderbird_readmeline="| Thunderbird | Email, personal information manager, news, RSS and chat client | Command \`thunderbird\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 tilix_installationtype="packagemanager"
 tilix_packagenames=("tilix")
 tilix_launchernames=("com.gexperts.Tilix")
+tilix_readmeline="| Tilix | Advanced GTK3 tiling terminal emulator | Command \`tilix\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 tmux_installationtype="packagemanager"
 tmux_packagenames=("tmux")
+tmux_readmelinedescription="Terminal multiplexer for Unix-like operating systems"
+tmux_readmeline="| Tmux | ${tmux_readmelinedescription} | Command \`tmux\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 tmux_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Terminal Multiplexer
+Comment=${tmux_readmelinedescription}
 Encoding=UTF-8
 Exec=tmux
 GenericName=Terminal multiplexor with special mnemo-rules 'Ctrl+a'
@@ -2913,23 +2962,28 @@ Version=1.0")
 tomcat_installationtype="userinherit"
 tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
 tomcat_compressedfiletype="z"
+tomcat_readmeline="| Apache Tomcat 9.0.43 | Open-source server to run web apps written in Jakarta Server Pages | Tomcat available in \${USER_BIN_FOLDER} to deploy web apps || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li>|"
 
 tor_installationtype="packagemanager"
 tor_packagenames=("torbrowser-launcher")
 tor_launchernames=("torbrowser")
+tor_readmeline="| Tor browser | Software for enabling anonymous communication by directing Internet traffic. | Command \`tor\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 transmission_gtk_installationtype="packagemanager"
 transmission_gtk_packagenames=("transmission")
 transmission_gtk_launchernames=("transmission-gtk")
+transmission_gtk_readmeline="| Transmission | A set of lightweight Torrent client (in GUI, CLI and daemon form) | Executable \`transmission\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 trello_installationtype="environmental"
 trello_url="https://trello.com"
 trello_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png;trello_icon.svg.png")
 trello_bashfunctions=("alias trello=\"nohup xdg-open ${trello_url} &>/dev/null &\"")
+trello_readmelinedescription="Trello web opens in Chrome"
+trello_readmeline="| Trello | ${trello_readmelinedescription} | Command \`trello\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 trello_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to Trello from Chrome
+Comment=${trello_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${trello_url}
 Icon=${USR_BIN_FOLDER}/trello/trello_icon.svg.png
@@ -2948,10 +3002,12 @@ tumblr_installationtype="environmental"
 tumblr_url="https://www.tumblr.com/"
 tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png;tumblr_icon.svg")
 tumblr_bashfunctions=("alias tumblr=\"nohup xdg-open ${tumblr_url} &>/dev/null &\"")
+tumblr_readmelinedescription="Tumblr web opens in Chrome"
+tumblr_readmeline="| Tumblr | ${tumblr_readmelinedescription} | Command \`tumblr\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 tumblr_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Tumblr from Chrome
+Comment=${tumblr_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${tumblr_url}
 Icon=${USR_BIN_FOLDER}/tumblr/tumblr_icon.svg
@@ -2970,10 +3026,12 @@ twitch_installationtype="environmental"
 twitch_url="https://twitch.tv/"
 twitch_downloads=("http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png;twitch_icon.svg")
 twitch_bashfunctions=("alias twitch=\"nohup xdg-open ${twitch_url} &>/dev/null &\"")
+twitch_readmelinedescription="Twitch web opens in Chrome"
+twitch_readmeline="| Twitch | ${twitch_readmelinedescription} | Command \`twitch\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 twitch_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to Twitch from Chrome
+Comment=${twitch_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${twitch_url}
 Icon=${USR_BIN_FOLDER}/twitch/twitch_icon.svg
@@ -2992,10 +3050,12 @@ twitter_installationtype="environmental"
 twitter_url="https://twitter.com/"
 twitter_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg;twitter_icon.svg")
 twitter_bashfunctions=("alias twitter=\"nohup xdg-open ${twitter_url} &>/dev/null &\"")
+twitter_readmelinedescription="Twitter web opens in Chrome"
+twitter_readmeline="| Twitter | ${twitter_readmelinedescription} | Command \`twitter\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 twitter_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Twitter from Chrome
+Comment=${twitter_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${twitter_url}
 Icon=${USR_BIN_FOLDER}/twitter/twitter_icon.svg
@@ -3011,6 +3071,7 @@ Type=Application
 Version=1.0")
 
 u_installationtype="environmental"
+u_readmeline="| Function \`u\` | Opens given link in default web browser | Command \`u\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 u_bashfunctions=("
 u()
 {
@@ -3033,24 +3094,29 @@ uget_installationtype="packagemanager"
 uget_packagedependencies=("aria2")
 uget_packagenames=("uget")
 uget_launchernames=("uget-gtk")
+uget_readmeline="| uget | GUI utility to manage downloads | Command \`uget\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 virtualbox_installationtype="packageinstall"
 virtualbox_packagedependencies=("libqt5opengl5")
 virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb")
 virtualbox_launchernames=("virtualbox")
+virtualbox_readmeline="| VirtualBox | Hosted hypervisor for x86 virtualization | Command \`virtualbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 vlc_installationtype="packagemanager"
 vlc_packagenames=("vlc")
 vlc_launchernames=("vlc")
+vlc_readmeline="| VLC | Media player software, and streaming media server | Command \`vlc\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 whatsapp_installationtype="environmental"
 whatsapp_url="https://web.whatsapp.com/"
 whatsapp_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg;whatsapp_icon.svg")
 whatsapp_bashfunctions=("alias whatsapp=\"nohup xdg-open ${whatsapp_url} &>/dev/null &\"")
+whatsapp_readmelinedescription="Whatsapp web opens in Chrome"
+whatsapp_readmeline="| Whatsapp Web | ${whatsapp_readmelinedescription} | Command \`whatsapp\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 whatsapp_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Whatsapp Web from Chrome
+Comment=${whatsapp_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${whatsapp_url}
 Icon=${USR_BIN_FOLDER}/whatsapp/whatsapp_icon.svg
@@ -3069,10 +3135,12 @@ wikipedia_installationtype="environmental"
 wikipedia_url="https://www.wikipedia.org/"
 wikipedia_downloads=("https://upload.wikimedia.org/wikipedia/commons/2/20/Wikipedia-logo-simple.svg;wikipedia_icon.svg")
 wikipedia_bashfunctions=("alias wikipedia=\"nohup xdg-open ${wikipedia_url} &>/dev/null &\"")
+wikipedia_readmelinedescription="Wikipedia web opens in Chrome"
+wikipedia_readmeline="| Wikipedia | ${wikipedia_readmelinedescription} | Command \`wikipedia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 wikipedia_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Reddit from Chrome
+Comment=${wikipedia_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${wikipedia_url}
 Icon=${USR_BIN_FOLDER}/wikipedia/wikipedia_icon.svg
@@ -3089,6 +3157,7 @@ Version=1.0")
 
 wireshark_installationtype="packagemanager"
 wireshark_packagenames=("wireshark")
+wireshark_readmeline="| Wireshark | Net sniffer | Command \`wireshark\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 wireshark_launchercontents=("
 [Desktop Entry]
 # The format of this file is specified at
@@ -3204,6 +3273,7 @@ Categories=Network;Monitor;Qt;
 ")
 
 x_installationtype="environmental"
+x_readmeline="| Function \`x\` | Function to extract from a compressed file, no matter its format | Function \`x \"filename\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 x_bashfunctions=("
 x() {
   if [ -f \"\$1\" ] ; then
@@ -3252,16 +3322,19 @@ x() {
 
 xclip_installationtype="packagemanager"
 xclip_packagenames=("xclip")
+xclip_readmeline="| \`xclip\` | Utility for pasting. | Command \`xclip\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 
 youtube_installationtype="environmental"
 youtube_url="https://youtube.com/"
 youtube_downloads=("https://upload.wikimedia.org/wikipedia/commons/4/4f/YouTube_social_white_squircle.svg;youtube_icon.svg")
 youtube_bashfunctions=("alias youtube=\"nohup xdg-open ${youtube_url} &>/dev/null &\"")
+youtube_readmelinedescription="YouTube opens in Chrome"
+youtube_readmeline="| Youtube| ${youtube_readmelinedescription} | Command \`youtube\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 youtube_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open YouTube from Chrome
+Comment=${youtube_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${youtube_url}
 Icon=${USR_BIN_FOLDER}/youtube/youtube_icon.svg
@@ -3276,14 +3349,22 @@ TryExec=google-chrome
 Type=Application
 Version=1.0")
 
+youtube_dl_installationtype="environmental"
+youtube_dl_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl")
+youtube_dl_binariesinstalledpaths=("youtube-dl;youtube-dl")
+youtube_dl_bashfunctions=("alias youtubewav=\"youtube-dl --extract-audio --audio-format wav\"")
+youtube_dl_readmeline="| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command \`youtube-dl\` in the PATH and alias \`youtube-wav\` to scratch a mp3 from youtube || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+
 youtubemusic_installationtype="environmental"
 youtubemusic_url="https://music.youtube.com"
 youtubemusic_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg;youtubemusic_icon.svg")
 youtubemusic_bashfunctions="alias youtubemusic=\"nohup xdg-open ${youtubemusic_url} &>/dev/null &\""
+youtubemusic_readmelinedescription="YouTube music opens in Chrome."
+youtubemusic_readmeline="| Youtube Music | ${youtubemusic_readmelinedescription} | Command \`youtubemusic\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 youtubemusic_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open YouTube Music from Chrome
+Comment=${youtubemusic_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${youtubemusic_url}
 Icon=${USR_BIN_FOLDER}/youtubemusic/youtubemusic_icon.svg
@@ -3298,20 +3379,17 @@ TryExec=google-chrome
 Type=Application
 Version=1.0")
 
-youtube_dl_installationtype="environmental"
-youtube_dl_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl")
-youtube_dl_binariesinstalledpaths=("youtube-dl;youtube-dl")
-youtubewav_bashfunctions=("alias youtubewav=\"youtube-dl --extract-audio --audio-format wav\"")
-
 zoom_installationtype="userinherit"
 zoom_compressedfileurl="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
 zoom_compressedfiletype="J"
 zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
 zoom_downloads=("https://play-lh.googleusercontent.com/JgU6AIREDMsGLmrFSJ8OwLb-JJVw_jwqdwEZWUHemAj0V5Dl7i7GOpmranv2GsCKobM;zoom_icon.ico")
+zoom_readmelinedescription="Live Video Streaming for Meetings"
+zoom_readmeline="| Zoom | ${zoom_readmelinedescription} | Command \`zoom\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 zoom_launchercontents=("
 [Desktop Entry]
 Categories=Social;Communication;
-Comment=Live Video Streaming for Meetings
+Comment=${zoom_readmelinedescription}
 Encoding=UTF-8
 GenericName=Video multiple calls
 Icon=${USR_BIN_FOLDER}/zoom/zoom_icon.ico
