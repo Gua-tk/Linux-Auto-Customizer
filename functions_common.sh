@@ -16,9 +16,15 @@
 ########################################################################################################################
 
 
-# Execute the command received in the first argument and redirect the output depending on the quietness level
-# Argument 1: Bash command to execute.
-# Argument 2: Quietness level [0, 1, 2].
+# - Description: Execute the command received in the first argument and redirect the standard and error output depending
+#   on the quietness level. If the command in the first argument is an echo, adds the date, tries to detect what type
+#   of message contains this echo, which can be INFO, WARNING or ERROR. Each message type has an associated colour.
+# - Permissions: Can be called as root or as normal user presumably with the same behaviour.
+# - Argument 1: Bash command to execute.
+# - Argument 2: Quietness level [0, 1, 2]:
+#   * 0: Full verbose: Display echoes and output from other commands
+#   * 1: Quiet: Display echoes but silences output from other commands
+#   * 2: Full quiet: No output from executed commands
 output_proxy_executioner() {
   # If the command to execute is an echo, capture echo type and apply format to it depending on the message type
   local -r command_name=$(echo "$1" | head -1 | cut -d " " -f1)
@@ -40,7 +46,6 @@ output_proxy_executioner() {
   fi
 
   # Execute command with verbosity depending on quietness level and if the command_name is an echo or not
-
   if [ $2 == 0 ]; then
     if [ "${command_name}" == "echo" ]; then
       echo -e "$echo_processed_command"
