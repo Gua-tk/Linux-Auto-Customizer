@@ -3,7 +3,7 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 
 ###### UPDATES
-- [~] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
+- [ ] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
 - [x] `functions_install`: Fix finished message after sourcing bashrc problem  
 - [ ] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to generify the permissions of the installation. --> Delete the permission bit and "guess" needed permissions from the installationtype
 - [ ] `data_features.sh`, `data_common.sh`: move each readme line for every feature to the corresponding feature 
@@ -78,7 +78,7 @@ If $flag_install:
       ${matchedkeyname}_flagsstates.put(bitpos, flagsstateoverride.get(bitpos))  
 else
   If $matchedkeyname in $resulttable
-     $resulttable=matchedkeyname
+     $resulttable-=matchedkeyname
   Else 
     Show warning that it was not added
 
@@ -166,6 +166,7 @@ else
       libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us 
       libreoffice-writer --> this info goes to data_features.sh as packagenames. Even though install when using 
       a download package installationtype will not use it, uninstall will when removing the feature
+
 
 
 # TO-DO customizer.sh and final endpoint for v1.0
