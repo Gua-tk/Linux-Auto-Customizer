@@ -122,7 +122,7 @@ add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` || 
 aisleriot_installationtype="packagemanager"
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")
-aisleriot_readmelines="| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+aisleriot_readmeline="| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 alert_installationtype="environmental"
 alert_bashfunctions=("
@@ -819,61 +819,76 @@ Version=1.0")
 
 fdupes_installationtype="packagemanager"
 fdupes_packagenames=("fdupes")
+fdupes_readmeline="| Fdupes| Searches for duplicated files within given directories | Command \`fdupes\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fetch_installationtype="environmental"
 fetch_bashfunctions=("alias fetch=\"git fetch\"")
+fetch_readmeline="| fetch| \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ffmpeg_installationtype="packagemanager"
 ffmpeg_packagenames=("ffmpeg")
+ffmpeg_readmeline="| ffmpeg | Super fast video / audio encoder | Command \`ffmpeg\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 firefox_installationtype="packagemanager"
 firefox_packagenames=("firefox")
 firefox_launchernames=("firefox")
+firefox_readmeline="| Firefox | Free web browser | Command \`firefox\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_alegreya_sans_installationtype="userinherit"
 fonts_alegreya_sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
 fonts_alegreya_sans_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_alegreya_sans_compressedfiletype="zip"
+fonts_alegreya_sans_readmeline="| fonts-alegreya_sans | Installs font | Install alegreya font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_firacode_installationtype="packagemanager"
 fonts_firacode_packagenames=("fonts-firacode")
+fonts_firacode_readmeline="| fonts-firacode | Installs font | Install firacode font ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_hack_installationtype="packagemanager"
 fonts_hack_packagenames=("fonts-hack")
+fonts_hack_readmeline="| fonts-hack | Installs font | Install hack font ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_hermit_installationtype="packagemanager"
 fonts_hermit_packagenames=("fonts-hermit")
+fonts_hermit_readmeline="| fonts-hermit | Installs font | Install hermit font ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_lato_installationtype="userinherit"
 fonts_lato_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_lato_compressedfileurls=("https://fonts.google.com/download?family=Lato")
 fonts_lato_compressedfiletype="zip"
+fonts_lato_readmeline="| fonts-lato | Installs font | Install lato font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_noto_sans_installationtype="userinherit"
 fonts_noto_sans_compressedfiletype="zip"
 fonts_noto_sans_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
+fonts_noto_sans_readmeline="| fonts-noto_sans | Installs font| Install noto_sans font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_oswald_installationtype="userinherit"
 fonts_oswald_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswald")
 fonts_oswald_compressedfiletype="zip"
+fonts_oswald_readmeline="| fonts-oswald | Installs font| Install oswald font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_oxygen_installationtype="userinherit"
 fonts_oxygen_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_oxygen_compressedfileurl="https://fonts.google.com/download?family=Oxygen"
 fonts_oxygen_compressedfiletype="zip"
+fonts_oxygen_readmeline="| fonts-oxygen | Installs font | Install oxygen font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_roboto_installationtype="packagemanager"
 fonts_roboto_packagenames=("fonts-roboto")
+fonts_roboto_readmeline="| fonts-roboto | Installs font| Install roboto font ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 forms_installationtype="environmental"
 forms_url="https://docs.google.com/forms/"
 forms_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg;forms_icon.svg")
 forms_bashfunctions=("alias forms=\"nohup xdg-open ${forms_url} &>/dev/null &\"")
+forms_readmeline="| Forms | ${forms_readmelinedescription} | Command \`forms\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+forms_readmelinedescription="Google Forms opening in Chrome"
 forms_launchercontents=("[Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Google Forms from Chrome
+Comment=${forms_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${forms_url}
 Icon=${USR_BIN_FOLDER}/forms/forms_icon.svg
@@ -891,25 +906,30 @@ Version=1.0")
 freecad_installationtype="packagemanager"
 freecad_packagenames=("freecad")
 freecad_launchernames=("freecad")
+freecad_readmeline="| FreeCAD | General-purpose parametric 3D computer-aided design modeler and a building information modeling | Command \`freecad\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 
 gcc_installationtype="packagemanager"
 gcc_packagenames=("gcc")
 gcc_bashfunctions=("# colored GCC warnings and errors
 export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01\"
 ")
+gcc_readmeline="| GNU C Compiler | C compiler for GNU systems | Command \`gcc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 geany_installationtype="packagemanager"
 geany_packagenames=("geany")
 geany_launchernames=("geany")
+geany_readmeline="| Geany | Lightweight GUI text editor using Scintilla and GTK, including basic IDE features | Command \`geany\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 geogebra_installationtype="userinherit"
 geogebra_compressedfileurl="https://download.geogebra.org/package/linux-port6"
 geogebra_compressedfiletype="zip"
 geogebra_binariesinstalledpaths=("GeoGebra;geogebra")
 geogebra_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg;geogebra_icon.svg")
+geogebra_readmelinedescription="Geometry calculator GUI"
+geogebra_readmeline="| GeoGebra | ${geogebra_readmelinedescription} | Command \`geogebra\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 geogebra_launchercontents=("[Desktop Entry]
 Categories=geometry;
-Comment=GeoGebra
+Comment=${geogebra_readmelinedescription}
 Encoding=UTF-8
 Exec=geogebra
 GenericName=Geometry visualization plotter
@@ -927,22 +947,27 @@ Version=4.2.2")
 ghostwriter_installationtype="packagemanager"
 ghostwriter_packagenames=("ghostwriter")
 ghostwriter_launchernames=("ghostwriter")
+ghostwriter_readmeline="| GhostWriter | Text editor without distractions. | Command \`ghostwriter, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gimp_installationtype="packagemanager"
 gimp_packagenames=("gimp")
 gimp_launchernames=("gimp")
+gimp_reameline="| Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats. | Command \`gimp\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 git_installationtype="packagemanager"
 git_packagenames=("git-all" "git-lfs")
+git_readmeline="| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Command \`git\` and \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 github_installationtype="environmental"
 github_downloads=("https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg;github_icon.svg")
 github_url="https://github.com/"
+github_readmelinedescription="GitHub opening in Chrome"
+github_readmeline="| GitHub | ${github_readmelinedescription} | Command \`github\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 github_bashfunctions=("alias github=\"nohup xdg-open ${github_url} &>/dev/null &\"")
-github_launcher="
+github_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Github from Chrome
+Comment=${github_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${github_url}
 Icon=${USR_BIN_FOLDER}/github/github_icon.svg
@@ -955,25 +980,29 @@ StartupWMClass=GitHub
 Terminal=false
 TryExec=google-chrome
 Type=Application
-Version=1.0"
+Version=1.0")
 
 github_desktop_installationtype="packageinstall"
 github_desktop_packageurls=("https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb")
 github_desktop_packagenames=("github")
 github_desktop_launchernames=("github-desktop")
+github_desktop_readmeline="| GitHub Desktop | GitHub Application | Command \`github-desktop\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gitk_packagenames=("gitk")
 gitk_installationtype="packagemanager"
 gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
+gitk_readmeline="| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gitlab_installationtype="environmental"
 gitlab_url="https://gitlab.com/"
 gitlab_downloads=("https://about.gitlab.com/images/press/logo/svg/gitlab-icon-rgb.svg;gitlab_icon.svg")
 gitlab_bashfunctions=("alias gitlab=\"nohup xdg-open ${gitlab_url} &>/dev/null &\"")
+gitlab_readmelinedescription="Gitlab opening in Chrome"
+gitlab_readmeline="| GitLab | ${gitlab_readmelinedescription} | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 gitlab_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Gitlab from Chrome
+Comment=${gitlab_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${gitlab_url}
 Icon=${USR_BIN_FOLDER}/gitlab/gitlab_icon.svg
@@ -990,6 +1019,7 @@ Version=1.0")
 
 gitprompt_installationtype="repositoryclone"
 gitprompt_repositoryurl="https://github.com/magicmonty/bash-git-prompt.git"
+gitprompt_readmeline="| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 gitprompt_bashfunctions=("
 if [ -f ${USR_BIN_FOLDER}/gitprompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
@@ -1001,10 +1031,12 @@ gmail_installationtype="environmental"
 gmail_url=https://mail.google.com/
 gmail_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg;gmail_icon.svg")
 gmail_bashfunctions=("alias gmail=\"nohup xdg-open ${gmail_url} &>/dev/null &\"")
+gmail_readmelinedescription="Gmail opening in Chrome"
+gmail_readmeline="| Gmail | ${gmail_readmelinedescription} | Command \`gmail\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 gmail_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to instant e-mail messaging from Chrome
+Comment=${gmail_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${gmail_url}
 Icon=${USR_BIN_FOLDER}/gmail/gmail_icon.svg
@@ -1021,11 +1053,13 @@ Version=1.0")
 
 gnat_gps_installationtype="packagemanager"
 gnat_gps_packagenames=("gnat-gps")
+gnat_gps_readmelinedescription="Programming Studio for Ada and C"
+gnat_gps_readmeline="| GNAT | ${gnat_gps_readmelinedescription} | Command \`gnat-gps\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 gnat_gps_launchercontents=("
 [Desktop Entry]
 Type=Application
 Name=GNAT Programming Studio
-Comment=Integrated Development Environment
+Comment=${gnat_gps_readmelinedescription}
 Exec=/usr/bin/gnat-gps
 Icon=/usr/share/doc/gnat-gps/html/users_guide/_static/favicon.ico
 Terminal=false
@@ -1035,39 +1069,48 @@ Keywords=ide;editor;ada;c")
 gnome_calculator_installationtype="packagemanager"
 gnome_calculator_packagenames=("gnome-calculator")
 gnome_calculator_launchernames=("org.gnome.Calculator")
+gnome_calculator_readmeline="| Calculator | GUI calculator| Commmand \`calculator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_chess_installationtype="packagemanager"
 gnome_chess_packagenames=("gnome-chess")
 gnome_chess_launchernames=("org.gnome.Chess")
+gnome_chess_readmeline="| Chess | Plays a full game of chess against a human being or other computer program | Command \`gnome-chess\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_mahjongg_installationtype="packagemanager"
 gnome_mahjongg_packagenames=("gnome-mahjongg")
 gnome_mahjongg_launchernames=("org.gnome.Mahjongg")
+gnome_mahjongg_readmeline="| Mahjongg | Implementation for GNU systems of the famous popular chinese game Mahjongg | Command \`gnome-mahjongg\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_mines_installationtype="packagemanager"
 gnome_mines_packagenames=("gnome-mines")
 gnome_mines_launchernames=("org.gnome.Mines")
+gnome_mines_readmeline="| Mines | Implementation for GNU systems of the famous game mines | Command \`gnome-mines\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_sudoku_installationtype="packagemanager"
 gnome_sudoku_packagenames=("gnome-sudoku")
 gnome_sudoku_launchernames=("org.gnome.Sudoku")
+gnome_sudoku_readmeline="| sudoku | Implementation for GNU systems of the famous popular mathematical game sudoku | Command \`gnome-sudoku\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_terminal_installationtype="packagemanager"
 gnome_terminal_packagenames=("gnome-terminal")
 gnome_terminal_launchernames=("org.gnome.Terminal")
+gnome_terminal_readmeline="| GNOME terminal | Terminal of the system | Command \`gnome-terminal\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_tweak_tool_installationtype="packagemanager"
 gnome_tweak_tool_packagenames=("gnome-tweak-tool")
 gnome_tweak_tool_launchernames=("org.gnome.tweaks")
+gnome_tweak_tool_readmeline="| GNOME Tweaks | GUI for system customization | command and desktop launcher... ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 googlecalendar_installationtype="environmental"
 googlecalendar_url=https://calendar.google.com/
 googlecalendar_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg;googlecalendar_icon.svg")
 googlecalendar_bashfunctions=("alias googlecalendar=\"nohup xdg-open ${googlecalendar_url} &>/dev/null &\"")
+googlecalendar_readmelinedescription="Google Calendar opening in Chrome"
+googlecalendar_readmeline="| Google Calendar | ${googlecalendar_readmelinedescription} | Command \`googlecalendar\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 googlecalendar_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to Google Calendar from Chrome
+Comment=${googlecalendar_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${googlecalendar_url}
 Icon=${USR_BIN_FOLDER}/googlecalendar/googlecalendar_icon.svg
@@ -1087,9 +1130,11 @@ google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
 google_chrome_launchernames=("google-chrome")
 google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
+google_chrome_readmeline="| Google Chrome | Cross-platform web browser | Command \`google-chrome\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gpaint_installationtype="packagemanager"
 gpaint_packagenames=("gpaint")
+gpaint_readmeline="| Gpaint | Raster graphics editor similar to Microsoft Paint | Command \`gpaint\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 gpaint_launchercontents=("
 [Desktop Entry]
 Name=GNU Paint
@@ -1106,12 +1151,15 @@ X-Ubuntu-Gettext-Domain=gpaint-2
 gparted_installationtype="packagemanager"
 gparted_packagenames=("gparted")
 gparted_launchernames=("gparted")
+gparted_readmeline="| GParted | Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems | Command \`gparted\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gvim_installationtype="packagemanager"
 gvim_packagenames=("vim-gtk3")
 gvim_launchernames=("gvim")
+gvim_readmeline="| Gvim | Vim with a built-in GUI | Command \`gvim\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 h_installationtype="environmental"
+h_readmeline="| Function \`h\` | Search in your history for previous commands entered, stands by \`history | grep \"\$@\"\` | Command \`h\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 h_bashfunctions=("
 h()
 {
@@ -1131,15 +1179,19 @@ h()
 handbrake_installationtype="packagemanager"
 handbrake_packagenames=("handbrake")
 handbrake_launchernames=("fr.handbrake.ghb")
+handbrake_readmeline="| Handbrake | Video Transcoder | Command \`handbrake\`, Desktop and dashboard launchers || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 hard_installationtype="environmental"
 hard_bashfunctions=("alias hard=\"git reset HEAD --hard\"")
+hard_readmeline="| Function \`hard\` | alias for \`git reset HEAD --hard\` | <-- || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 hardinfo_installationtype="packagemanager"
 hardinfo_packagenames=("hardinfo")
 hardinfo_launchernames=("hardinfo")
+hardinfo_readmeline="| Hardinfo | Check pc hardware info | Command \`hardinfo\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 history_optimization_installationtype="environmental"
+history_optimization_readmeline="| history optimization | Increased the size of bash history, store multiline commands in just one line, force append and not overwrite to history, ignore repeated commands when appending to history, deleted tracking history of some simple commands: \`ls\`, \`cd\`, \`gitk\`... | <-- || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 history_optimization_bashfunctions=("
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=100000
@@ -1177,10 +1229,12 @@ ideac_compressedfiletype="z"
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
 ideac_associatedfiletypes=("text/x-java")
 ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.1.2.tar.gz"
+ideac_readmelinedescription="Integrated development environment written in Java for developing computer software"
+ideac_readmeline="| intelliJ Community | ${ideac_readmelinedescription} | Command \`ideac\`, silent alias for \`ideac\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
 ideac_launchercontents=("
 [Desktop Entry]
 Categories=Development;IDE;
-Comment=Capable and Ergonomic IDE for JVM
+Comment=${ideac_readmelinedescription}
 Encoding=UTF-8
 Exec=ideac %f
 GenericName=Java programming IDE
@@ -1200,11 +1254,13 @@ ideau_installationtype="userinherit"
 ideau_compressedfiletype="z"
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
 ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.1.2.tar.gz"
+ideau_readmelinedescription="Integrated development environment written in Java for developing computer software"
+ideau_readmeline="| intelliJ Ultimate | ${ideau_readmelinedescription} | Command \`ideau\`, silent alias for \`ideau\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
 ideau_associatedfiletypes=("text/x-java")
 ideau_launchercontents=("
 [Desktop Entry]
 Categories=Development;IDE;
-Comment=Capable and Ergonomic IDE for JVM
+Comment=${ideau_readmelinedescription}
 Encoding=UTF-8
 Exec=ideau %f
 GenericName=Java programing IDE
@@ -1223,15 +1279,18 @@ ideau_bashfunctions=("alias ideau=\"nohup ideau . &>/dev/null &\"")
 inkscape_installationtype="packagemanager"
 inkscape_packagenames=("inkscape")
 inkscape_launchernames=("inkscape")
+inkscape_readmeline="| Inkscape | Vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format | Command \`inkscape\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 instagram_installationtype="environmental"
 instagram_url="https://instagram.com"
 instagram_downloads=("https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg;instagram_icon.svg")
 instagram_bashfunctions="alias instagram=\"nohup xdg-open ${instagram_url} &>/dev/null &\""
+instagram_readmelinedescription="Opens Instagram in Chrome"
+instagram_readmeline="| Instagram | ${instagram_readmelinedescription} | Command \`instagram\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 instagram_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Instagram from Chrome
+Comment=${instagram_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${instagran_url}
 Icon=${USR_BIN_FOLDER}/instagram/instagram_icon.svg
@@ -1247,6 +1306,7 @@ Type=Application
 Version=1.0")
 
 ipe_installationtype="environmental"
+ipe_readmeline="| ipe function | Returns the public IP | Command \`ipe\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 ipe_bashfunctions=("
 ipe()
 {
@@ -1255,6 +1315,7 @@ ipe()
 ")
 
 ipi_installationtype="environmental"
+ipi_readmeline="| ipi function | Returns the private IP | Command \`ipi\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 ipi_bashfunctions=("
 ipi()
 {
@@ -1265,10 +1326,12 @@ ipi()
 iqmol_installationtype="packageinstall"
 iqmol_packageurls=("http://www.iqmol.org/download.php?get=iqmol_2.14.deb")
 iqmol_downloads=("http://www.iqmol.org/images/icon.png;iqmol_icon.png")
+iqmol_readmelinedescription="Program to visualize molecular data"
+iqmol_readmeline="| IQmol | ${iqmol_readmelinedescription} | Command \`iqmol\`, silent alias, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 iqmol_launchercontents=("
 [Desktop Entry]
 Categories=Visualization;
-Comment=Molecule Visualizer
+Comment=${iqmol_readmelinedescription}
 Encoding=UTF-8
 Exec=iqmol
 GenericName=Molecule visualizer
@@ -1286,21 +1349,25 @@ iqmol_bashfunctions=("alias iqmol=\"nohup iqmol . &>/dev/null &\"")
 
 j_installationtype="environmental"
 j_bashfunctions=("alias j=\"jobs -l\"")
+j_readmeline="| Function \`j\` | alias for jobs -l | Commands \`j\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 java_installationtype="userinherit"
 java_compressedfileurl="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
 java_compressedfiletype="z"
 java_binariesinstalledpaths=("bin/java;java")
 java_bashfunctions=("export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\"")
+java_readmeline="| Java Development Kit 8 | Implementation of version 8 of the Java (programming language) SE Platform | Commands \`java\`, \`javac\` and \`jar\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 julia_installationtype="userinherit"
 julia_compressedfileurl="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
 julia_compressedfiletype="z"
 julia_binariesinstalledpaths=("bin/julia;julia")
+julia_readmelinedescription="High-level, high-performance dynamic language for technical computing"
+julia_readmeline="| Julia and IJulia| ${julia_readmelinedescription} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 julia_launchercontents=("
 [Desktop Entry]
 Name=Julia
-Comment=High-level, high-performance dynamic language for technical computing
+Comment=${julia_readmelinedescription}
 Exec=julia
 Icon=${USR_BIN_FOLDER}/julia/share/icons/hicolor/scalable/apps/julia.svg
 Terminal=true
@@ -1312,10 +1379,12 @@ jupyter_lab_manualcontentavailable="1;1;0"
 jupyter_lab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
 jupyter_lab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
 jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
+jupyter_lab_readmelinedescription="IDE with a lot of possible customization and usable for different programming languages."
+jupyter_lab_readmeline="| Jupyter Lab | ${jupyter_lab_readmelinedescription} | alias \`lab\`, commands \`jupyter-lab\`, \`jupyter-lab\`, \`ipython\`, \`ipython3\`, desktop launcher and dashboard launcher. Recognized programming languages: Python, Ansible, Bash, IArm, Kotlin, PowerShell, Vim. || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 jupyter_lab_launchercontents=("
 [Desktop Entry]
 Categories=IDE; text_editor;
-Comment=IDE with a powerful text editor and all code interpreters and compilers in a single application
+Comment=${jupyter_lab_readmelinedescription}
 Encoding=UTF-8
 GenericName=jupyter-lab
 Keywords=jupyter; programming; text; webpage;
@@ -1337,10 +1406,12 @@ keep_installationtype="environmental"
 keep_url="https://keep.google.com/"
 keep_downloads=("https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg;keep_icon.svg")
 keep_bashfunctions=("alias keep=\"nohup xdg-open ${keep_url} &>/dev/null &\"")
+keep_readmelinedescription="Google Keep opening in Chrome"
+keep_readmeline="| Google Keep | ${keep_readmelinedescription} | Command \`keep\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 keep_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to Google Keep from Chrome
+Comment=${keep_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${keep_url}
 Icon=${USR_BIN_FOLDER}/keep/keep_icon.svg
@@ -1356,6 +1427,7 @@ Type=Application
 Version=1.0")
 
 L_installationtype="environmental"
+L_readmeline="| Function \`L\` | Function that lists files in a directory, but listing the directory sizes | Function \`L\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 L_bashfunctions=("
 L()
 {
@@ -1388,16 +1460,20 @@ L()
 ")
 
 l_installationtype="environmental"
+l_readmeline="| Function \`l\` | alias for \`ls\` | command \`l\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 l_bashfunctions=("alias l=\"ls -lAh --color=auto\"")
 
 latex_installationtype="packagemanager"
 latex_launchernames=("texmaker")
 latex_packagedependencies=("perl-tk" )
 latex_packagenames=("texlive-latex-extra" "texmaker")
+latex_readmelinedescription="Software system for document preparation"
+latex_readmeline="| LaTeX | ${latex_readmelinedescription} | Command \`tex\` (LaTeX compiler) and \`texmaker\` (LaTeX IDE), desktop launchers for \`texmaker\` and LaTeX documentation ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 latex_launchercontents=("
 [Desktop Entry]
 Name=TeXdoctk
 Exec=texdoctk
+Comment=${latex_readmelinedescription}
 Type=Application
 Type=Application
 Terminal=false
@@ -1406,37 +1482,46 @@ Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png")
 
 libgtkglext1_installationtype="packagemanager"
 libgtkglext1_packagenames=("libgtkglext1")
+libgtkglext1_readmeline="| libgtkglext1 | Anydesk dependency | Used when Anydesk is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 libkrb5_dev_installationtype="packagemanager"
 libkrb5_dev_packagenames=("libkrb5-dev")
+libkrb5_dev_readmeline="| libkrb5-dev | Kerberos dependency | Used when Jupiter Lab is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 libxcb_xtest0_installationtype="packagemanager"
 libxcb_xtest0_packagenames=("libxcb-xtest0")
+libxcb_xtest0_readmeline="| libxcb-xtest0 | Zoom dependency | Used when Zoom is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 lolcat_installationtype="packagemanager"
 lolcat_packagenames=("lolcat")
 lolcat_bashfunctions=("alias lol=\"lolcat\"")
+lolcat_readmeline="| lolcat | Same as the command \`cat\` but outputting the text in rainbow color and concatenate string | command \`lolcat\`, alias \`lol\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 mdadm_installationtype="packagemanager"
 mdadm_packagenames=("mdadm")
+mdadm_readmeline="| mdadm | Manage RAID systems | Command \`mdadm\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 megasync_installationtype="packageinstall"
 megasync_packagedependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
 megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.4.0-1.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb")
 megasync_launchernames=("megasync")
+megasync_readmeline="| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Command \`megasync\`, desktop launcher, dashboard launcher and integration with \`nemo\` file explorer ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 mendeley_dependencies_installationtype="packagemanager"
 mendeley_dependencies_packagedependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
+mendeley_dependencies_readmeline="| MendeleyDependencies | Installs Mendeley Desktop dependencies \`gconf2\`, \`qt5-default\`, \`qt5-doc\`, \`qt5-doc-html\`, \`qtbase5-examples\` and \`qml-module-qtwebengine\` | Used when installing Mendeley and other dependent software || <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 mendeley_installationtype="userinherit"
 mendeley_compressedfileurl="https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming"
 mendeley_compressedfiletype="j"
 mendeley_binariesinstalledpaths="bin/mendeleydesktop;mendeley"
+mendeley_readmelinedescription="It is most known for its reference manager which is used to manage and share research papers and generate bibliographies for scholarly articles"
+mendeley_readmeline="| Mendeley | ${mendeley_readmelinedescription} | Command \`mendeley\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 mendeley_launchercontents=("
 [Desktop Entry]
 Name=Mendeley Desktop
 GenericName=Research Paper Manager
-Comment=Mendeley Desktop is software for managing and sharing research papers
+Comment=${mendeley_readmelinedescription}
 Exec=mendeley %f
 Icon=${USR_BIN_FOLDER}/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png
 Terminal=false
@@ -1449,15 +1534,18 @@ X-Mendeley-Version=1
 
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_packagenames=("msttcorefonts")
+msttcorefonts_readmeline="| font Msttcorefonts | Windows classic fonts | Install mscore fonts ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 
 mvn_installationtype="userinherit"
 mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 mvn_compressedfiletype="z"
 mvn_binariesinstalledpaths=("bin/mvn;mvn")
+mvn_readmeline="| Maven | Build automation tool used primarily for Java projects | Command \`mvn\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
 
 nautilus_installationtype="packagemanager"
 nautilus_packagenames=("nautilus")
 nautilus_launchernames=("org.gnome.Nautilus")
+nautilus_readmeline="| Nautilus | Standard file and desktop manager | Command \`nautilus\` Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 nautilus_bashfunctions=("
 xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons true
@@ -1467,6 +1555,7 @@ xdg-mime default org.gnome.Nautilus.desktop inode/directory
 nedit_installationtype="packagemanager"
 nedit_packagenames=("nedit")
 nedit_launchernames=("nedit")
+nedit_readmeline="| NEdit | Multi-purpose text editor and source code editor | Command \`nedit\` desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 nemo_installationtype="packagemanager"
 nemo_bashfunctions=("
@@ -1476,7 +1565,8 @@ gsettings set org.nemo.desktop show-desktop-icons true
 ""
 alias nemo=\"nohup nemo . &>/dev/null &\"
 ")
-
+nemo_readmelinedescription="File and desktop manager, usually with better options and less bugs than nautilus. *We recommend this explorer to view correctly the launchers*"
+nemo_readmeline="| Nemo Desktop | Access and organise files | Command \`nemo\` for the file manager, and \`nemo-desktop\` for the desktop manager service. Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 nemo_packagedependencies=("dconf-editor" "gnome-tweak-tool")
 nemo_autostart="yes"
 nemo_launchercontents=("
@@ -1796,10 +1886,12 @@ netflix_installationtype="environmental"
 netflix_url="https://www.netflix.com"
 netflix_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg;netflix_icon.svg")
 netflix_bashfunctions=("alias netflix=\"nohup xdg-open ${netflix_url} &>/dev/null &\"")
+netflix_readmelinedescription="Netflix opening in Chrome"
+netflix_readmeline="| Netflix | ${netflix_readmelinedescription} | Command \`netflix\`. Desktop launcher and dashboard launcher for the file manager | --netflix --Netflix |  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 netflix_launchercontents=("
 [Desktop Entry]
 Categories=Network;VideoStreaming;Film;
-Comment=Desktop app to reproduce Netflix from Chrome
+Comment=${netflix_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${netflix_url}
 Icon=${USR_BIN_FOLDER}/netflix/netflix_icon.svg
@@ -1816,6 +1908,7 @@ Version=1.0")
 
 net_tools_installationtype="packagemanager"
 net_tools_packagenames=("net-tools")
+net_tools_readmeline="| net-tools | GUI network interfaces. *We recommend this explorer to view correctly the launchers* | Command \`net-tools\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 net_tools_bashfunctions=("
 alias ports=\"netstat -tulanp\"
 alias nr=\"net-restart\
@@ -1826,12 +1919,15 @@ npm_installationtype="userinherit"
 npm_compressedfileurl="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
 npm_compressedfiletype="J"
 npm_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
+npm_readmeline="| NodeJS npm | JavaScript packagemanager for the developers. | Command \`node\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 notepadqq_installationtype="packagemanager"
 notepadqq_packagenames=("notepadqq")
 notepadqq_launchernames=("notepadqq")
+notepadqq_readmeline="| Notepadqq | Text editor that is designed by developers for the developers. It supports more than 100 programming languages | Command \`notepadqq\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 o_installationtype="environmental"
+o_readmeline="| Function \`o\` | Alias for \`nemo-desktop\` | Alias \`o\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 o_bashfunctions=("
 o()
 {
@@ -1847,19 +1943,23 @@ obs_studio_installationtype="packagemanager"
 obs_studio_packagenames=("obs-studio")
 obs_studio_launchernames=("com.obsproject.Studio")
 obs_studio_packagedependencies=("ffmpeg")
+obs_studio_readmeline="| OBS | Streaming and recording program | Command \`obs\`, desktop launcher and dashboard launcher. ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 okular_installationtype="packagemanager"
 okular_packagenames=("okular")
 okular_launchernames=("org.kde.okular")
+okular_readmeline="| Okular | PDF viewer | Command \`okular\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 onedrive_installationtype="environmental"
 onedrive_downloads=("https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg;onedrive_icon.svg")
 onedrive_url="https://onedrive.live.com/"
 onedrive_bashfunctions=("alias onedrive=\"nohup xdg-open ${onedrive_url} &>/dev/null &\"")
+onedrive_readmelinedescription="Microsoft OneDrive opening in Chrome"
+onedrive_readmeline="| OneDrive | ${onedrive_readmelinedescription} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 onedrive_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to Microsoft OneDrive from Chrome
+Comment=${onedrive_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${onedrive_url}
 Icon=${USR_BIN_FOLDER}/onedrive/onedrive_icon.svg
@@ -1878,19 +1978,23 @@ openoffice_installationtype="packageinstall"
 openoffice_compressedfileurl="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 openoffice_compressedfiletype="z"
 openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-draw" "openoffice4-math" "openoffice4-writer")
+openoffice_readmeline="| OpenOffice | Office suite for open-source systems | Command \`openoffice4\` in PATH, desktop launchers for \`base\`, \`calc\`, \`draw\`, \`math\` and \`writer\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 #openoffice_associatedfiletypes=("")
 
 openssl102_installationtype="packageinstall"
 openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
+openssl102_readmeline="| openssl1.0 | RStudio dependency | Used for running rstudio ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 outlook_installationtype="environmental"
 outlook_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg;outlook_icon.svg")
 outlook_url="https://outlook.live.com"
 outlook_bashfunctions=("alias outlook=\"nohup xdg-open ${outlook_url} &>/dev/null &\"")
+outlook_readmelinedescription="Microsoft Outlook e-mail opening in Chrome"
+outlook_readmeline="| Outlook | ${outlook_readmelinedescription} | Command \`outlook\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 outlook_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to Microsoft Outlook from Chrome
+Comment=${outlook_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${outlook_url}
 Icon=${USR_BIN_FOLDER}/outlook/outlook_icon.svg
@@ -1909,10 +2013,12 @@ overleaf_installationtype="environmental"
 overleaf_downloads="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg;overleaf_icon.svg"
 overleaf_url="https://www.overleaf.com/"
 overleaf_bashfunctions=("alias overleaf=\"nohup xdg-open ${overleaf_url} &>/dev/null &\"")
+overleaf_readmelinedescription="Online LaTeX editor opening in Chrome"
+overleaf_readmeline="| Overleaf | ${overleaf_readmelinedescription} | Command \`overleaf\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 overleaf_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Overleaf online LaTeX editor from Chrome
+Comment=${overleaf_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${overleaf_url}
 Icon=${USR_BIN_FOLDER}/overleaf/overleaf_icon.svg
@@ -1930,21 +2036,26 @@ Version=1.0")
 pacman_installationtype="packagemanager"
 pacman_packagenames=("pacman")
 pacman_launchernames=("pacman")
+pacman_readmeline="| Pac-man | Implementation of the classical arcade game | Command \`pacman\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 parallel_installationtype="packagemanager"
 parallel_packagenames=("parallel")
+parallel_readmeline="| GNUparallel | Command-line driven utility for Linux and other Unix-like operating systems which allows the user to execute shell scripts or commands in parallel | Command \`parallel\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 pdfgrep_installationtype="packagemanager"
 pdfgrep_packagenames=("pdfgrep")
+pdfgrep_readmeline="| pdfgrep | CLI utility that makes it possible to search for text in a PDF file without opening the file | Command \`pdfgrep\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 pgadmin_installationtype="pythonvenv"
 pgadmin_manualcontentavailable="0;1;0"
 pgadmin_pipinstallations=("pgadmin4")
 pgadmin_binariesinstalledpaths=("lib/python3.8/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
+pgadmin_readmelinedescription="PostgreSQL Tools"
+pgadmin_readmeline="| pgAdmin | ${pgadmin_readmelinedescription} | Command \`pgadmin4\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 pgadmin_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=App to manipulate graphically a postgreSQL database
+Comment=${pgadmin_readmelinedescription}
 Encoding=UTF-8
 GenericName=pgadmin4
 Keywords=pgadmin
@@ -1978,10 +2089,12 @@ xdg-open http://127.0.0.1:5050/browser
 
 php_installationtype="packagemanager"
 php_packagenames=("php" "libapache2-mod-php")
+php_readmeline="| php | Programming language | Command \`php\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 pluma_installationtype="packagemanager"
 pluma_packagenames=("pluma")
 pluma_launchernames=("pluma")
+pluma_readmeline="| pluma | Fork of gedit 2.0 that supports many plugins and new features | Command \`pluma\`, desktop launcjer and dashboard launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 pluma_bashfunctions=("
 pluma()
 {
@@ -1993,11 +2106,14 @@ postman_installationtype="userinherit"
 postman_compressedfileurl="https://dl.pstmn.io/download/latest/linux64"
 postman_compressedfiletype="z"
 postman_binariesinstalledpaths=("Postman;postman")
+postman_readmelinedescription="Application to maintain and organize collections of REST API calls"
+postman_readmeline="| Postman | ${postman_readmelinedescription} | Command \`postman\`, desktop launcher and dashboard launcher  ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 postman_launchercontents=("
 [Desktop Entry]
 Encoding=UTF-8
 Name=Postman
 Exec=postman
+Comment=${postman_readmelinedescription}
 Icon=${USR_BIN_FOLDER}/postman/app/resources/app/assets/icon.png
 Terminal=false
 Type=Application
@@ -2008,10 +2124,12 @@ presentation_installationtype="environmental"
 presentation_url="https://docs.google.com/presentation/"
 presentation_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;presentation_icon.svg")
 presentation_bashfunctions=("alias presentation=\"nohup xdg-open ${presentation_url} &>/dev/null &\"")
+presentation_readmelinedescription="Google Presentation opening in Chrome"
+presentation_readmeline="| Presentation | ${presentation_readmelinedescription} | Command \`presentation\`, desktop launcher and dashboard launcher||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 presentation_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=Desktop app to open Google Presentation from Chrome
+Comment=D${presentation_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${presentation_url}
 Icon=${USR_BIN_FOLDER}/presentation/presentation_icon.svg
@@ -2027,6 +2145,7 @@ Type=Application
 Version=1.0")
 
 prompt_installationtype="environmental"
+prompt_readmeline="| prompt | Installs a new colourful prompt on terminal window including and upgrading the default ones in Ubuntu | Adds a personalized prompt that shows the date, return code of last executed program, user, group and working directory. It also changes the prompt colour of introduced text to green. It changes the terminal windows title, adds colourful aliases and ensures completion || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 prompt_bashfunctions=("
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z \"\${debian_chroot:-}\" ] && [ -r /etc/debian_chroot ]; then
@@ -2101,6 +2220,7 @@ fi
 psql_installationtype="packagemanager"
 psql_packagedependencies=("libc6-i386" "lib32stdc++6" "libc6=2.31-0ubuntu9.2")
 psql_packagenames=("postgresql-client-12" "postgresql-12" "libpq-dev" "postgresql-server-dev-12")
+psql_readmeline="| PostGreSQL | Installs \`psql\`|  Command \`psql\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 pull_installationtype="environmental"
 pull_bashfunctions=("
@@ -2113,6 +2233,7 @@ pull()
 	fi
 }
 ")
+pull_readmeline="| \`pull\` | Alias for \`git pull\`|  Command \`pull\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 push_installationtype="environmental"
 push_bashfunctions=("
@@ -2125,6 +2246,7 @@ push()
 	fi
 }
 ")
+push_readmeline="| \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 pycharm_installationtype="userinherit"
 pycharm_keybinds=("pycharm;<Primary><Alt><Super>p;Pycharm")
