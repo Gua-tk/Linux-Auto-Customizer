@@ -4,14 +4,13 @@
 
 ###### UPDATES
 - [ ] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
-- [x] `functions_install`: Fix finished message after sourcing bashrc problem  
 - [ ] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to generify the permissions of the installation. --> Delete the permission bit and "guess" needed permissions from the installationtype
 - [ ] `data_features.sh`, `data_common.sh`: move each readme line for every feature to the corresponding feature 
        data in data_features.sh with its own variableschema for every feature such as FEATURE_readmeline.
        Also, define FEATURE_featurename and FEATURE_description for each feature (moving values from common data tables), and use them to compose the definition of FEATURE_readmeline
 - [ ] `functions_common.sh`: set_field $string $separator $position function 
 - [ ] `functions_common.sh`: get_field $string $separator $position function
-- [ ] `functions_common.sh`: refactor auto help and auto readme 
+- [ ] `functions_common.sh`: redo auto help and auto readme 
 
 - [ ] big refactor in common functions: new algorithm selection for decoupling
 - Need an readonly common array variable to store all the feature keynames (each string used 
