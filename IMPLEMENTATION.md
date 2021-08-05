@@ -14,7 +14,7 @@
 
 - [ ] big refactor in common functions: new algorithm selection for decoupling
 - Need an readonly common array variable to store all the feature keynames (each string used 
-to indirect expansion, which is the string that matches the prefix of each variable in data features
+to indirect expansion, which is the string that matches the prefix of each variable in data features --> installation_data
 - also define by indirect expansion the arguments of each features in installation data
 - Need another common array with keynames in the installation order. We will continue
  accepting -n and -y args, but with -n we need to delete from this array. With this we don't need num

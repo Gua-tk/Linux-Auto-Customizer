@@ -113,15 +113,21 @@ fi
 
 a_installationtype="environmental"
 a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
+a_arguments=("a")
+a_flagsstateoverride="2;;;;"
 a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 add_installationtype="environmental"
 add_bashfunctions=("alias add=\"git add\"")
+add_arguments=("add")
+add_flagsstateoverride="0;;;;"
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 aisleriot_installationtype="packagemanager"
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")
+aisleriot_arguments=("aisleriot" "solitaire" "gnome-solitaire")
+aisleriot_flagsstateoverride="1;;;;"
 aisleriot_readmelines="| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 alert_installationtype="environmental"
@@ -253,6 +259,8 @@ caffeine_packagenames=("caffeine")
 caffeine_autostart="yes"
 caffeine_manualcontentavailable="1;0;1"
 caffeine_readmeline="| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the “sleep” power saving mode. | Commands \`caffeine\`, \`caffeinate\` and \`caffeine-indicator\`, desktop launcher for \`caffeine\`, dashboard launcher for \`caffeine\` and \`caffeine-indicator\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+
+# Line of the test. The Above is refactored (not yet!). The Below is not (of course).
 
 calibre_installationtype="packagemanager"
 calibre_launchernames=("calibre-gui")

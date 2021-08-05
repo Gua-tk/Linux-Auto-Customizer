@@ -42,15 +42,15 @@
 # To avoid to be queried by apt-get or dpkg when installing such features such wireshark and sonic-pi.
 export DEBIAN_FRONTEND=noninteractive
 
-if [[ "$(whoami)" != "root" ]]; then
+if [ ${EUID} != 0 ]; then
   # Path pointing to $HOME
-  HOME_FOLDER=${HOME}
+  declare -r HOME_FOLDER=${HOME}
 
   # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   source ${HOME_FOLDER}/.config/user-dirs.dirs
 else
   # Path pointing to $HOME
-  HOME_FOLDER=/home/${SUDO_USER}
+  declare -r HOME_FOLDER=/home/${SUDO_USER}
 
   # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
@@ -59,37 +59,37 @@ else
 fi
 
 # Path pointing to a directory that is included in the PATH variable
-DIR_IN_PATH=${HOME_FOLDER}/.local/bin
+declare -r DIR_IN_PATH=${HOME_FOLDER}/.local/bin
 # Path pointing to a folder that contains the desktop launchers for the unity application launcher of the current user
-PERSONAL_LAUNCHERS_DIR=${HOME_FOLDER}/.local/share/applications
+declare -r PERSONAL_LAUNCHERS_DIR=${HOME_FOLDER}/.local/share/applications
 # Path pointing to .bashrc file of the user
-BASHRC_PATH=${HOME_FOLDER}/.bashrc
+declare -r BASHRC_PATH=${HOME_FOLDER}/.bashrc
 # Folder where all the software will be installed
-USR_BIN_FOLDER=${HOME_FOLDER}/.bin
+declare -r USR_BIN_FOLDER=${HOME_FOLDER}/.bin
 # Path pointing to .bash_functions, which is the file used to control the installed features of the customizer
-BASH_FUNCTIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_functions
+declare -r BASH_FUNCTIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_functions
 # Path pointing to the folder containing all the scripts of the bash functions
-BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
+declare -r BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 # Path pointing to a folder that contains the desktop launchers of all users
-ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
+declare -r ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 # File that contains the association of mime types with .desktop files
-MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
+declare -r MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
 # Default favorites list, data to set favorites
-PROGRAM_FAVORITES_PATH="${BASH_FUNCTIONS_FOLDER}/favorites.txt"
+declare -r PROGRAM_FAVORITES_PATH="${BASH_FUNCTIONS_FOLDER}/favorites.txt"
 # Default keybind list< data to set custom keybindings
-PROGRAM_KEYBIND_PATH="${BASH_FUNCTIONS_FOLDER}/keybinds.txt"
+declare -r PROGRAM_KEYBIND_PATH="${BASH_FUNCTIONS_FOLDER}/keybinds.txt"
 # Default user's fonts folder
-FONTS_FOLDER=${HOME_FOLDER}/.fonts
+declare -r FONTS_FOLDER=${HOME_FOLDER}/.fonts
 # Here we store the .desktop launchers of the programs we want to autostart
-AUTOSTART_FOLDER=${HOME_FOLDER}/.config/autostart
+declare -r AUTOSTART_FOLDER=${HOME_FOLDER}/.config/autostart
 
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
-FLAG_OVERWRITE=0     # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
-FLAG_INSTALL=1       # 1 or more --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
+FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
+FLAG_INSTALL=1  # 1 or more --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
 # Also, flag_install is the number used to determine the installation order
-FLAG_QUIETNESS=2     # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
-FLAG_IGNORE_ERRORS=0 # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
+FLAG_QUIETNESS=2  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
+FLAG_IGNORE_ERRORS=0  # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
 NUM_INSTALLATION=1  # Used to perform the (un)installation in the same order that we are receiving arguments. Also, keeps the order even if we use --no, because we need a temporal
 FLAG_UPGRADE=1  # 0 --> no update, no upgrade; 1 --> update, no upgrade; 2 --> update and upgrade
 FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perform autoremove; 2 --> perform autoremove and autoclean
@@ -119,10 +119,10 @@ FLAG_AUTOSTART=0  # 0 --> does nothing; 1 --> autostart program if possible
 #     4.- If we should reinstall the feature or not when we find that the desired feature already installed.
 #     install_yes/no; forceness; quietness; overwrite; permissions; function_name
 #   - The rest
-installation_data=(
-  "--a;0;"
-  "--add;0;"
-  "--aisleriot|--solitaire|--Solitaire|--gnome-solitaire;1;"
+declare -r installation_data=(
+  "a"
+  "add"
+  "aisleriot"
   "--alert|--alert-alias|--alias-alert;0;"
   "--ansible;1;"
   "--ant|--apache_ant|--apache-ant;0;"
