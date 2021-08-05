@@ -9,9 +9,26 @@
 - [ ] `data_features.sh`, `data_common.sh`: move each readme line for every feature to the corresponding feature 
        data in data_features.sh with its own variableschema for every feature such as FEATURE_readmeline.
        Also, define FEATURE_featurename and FEATURE_description for each feature (moving values from common data tables), and use them to compose the definition of FEATURE_readmeline
-- [ ] `functions_common.sh`: set_flag_from_feature function 
-- [ ] `functions_common.sh`: get_flag_from_feature function
+- [ ] `functions_common.sh`: set_field $string $separator $position function 
+- [ ] `functions_common.sh`: get_field $string $separator $position function
 - [ ] `functions_common.sh`: refactor auto help and auto readme 
+
+- [ ] big refactor: new algorithm selection for decoupling
+- Need an readonly common array variable to store all the feature keynames (the string used to indirect expansion and used with which to know if feature is already installed with opposite of -o option )
+- Need another variable to construct an array in the installation order. We will continue accepting -n -y args, but with -n we need to delete from this array. With this we don't need num installation anymore, only flag install to keep record of the state
+- new property for indirect expansion FEATUREKEYNAME_arguments, which will contain the arguments for that feature
+- By default permission will be guessed from installation type. 
+  Root installation types will be executed by root. The rest will be indifferent. Except if there is an override for this bit (see next bullet). --> refactor some of the user generic functions so they can be called as root indiferently
+  New property for indirect expansion FEATUREKEYNAME_flagsstate.
+  This variable will be used to store the flag states at the moment of adding a feature to the installation
+  By default it will look like this
+  spotify_flagsstate=";;;;;;;"
+  That will mean that there are no flags overriden.
+  Differently, copyq for having an autostart should look something like 
+  copyq_flagsstate=";;;;;1;;" # notice the one in the autostart bit
+  That bit indicates override in the flag, ignoring the state of the runtime flag and always being an autostart program.
+  
+
 - [ ] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
 - [ ] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
 - [ ] all: unset or set to local variables that are needed only locally
