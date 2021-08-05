@@ -4,6 +4,7 @@
 
 ###### UPDATES
 - [~] `functions_install.sh`, `functions_uninstall.sh`, `functions_common.sh`: Create headers and comments in auxiliary functions
+- [x] `functions_install`: Fix finished message after sourcing bashrc problem  
 - [ ] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to generify the permissions of the installation. --> Delete the permission bit and "guess" needed permissions from the installationtype
 - [ ] `data_features.sh`, `data_common.sh`: move each readme line for every feature to the corresponding feature 
        data in data_features.sh with its own variableschema for every feature such as FEATURE_readmeline.

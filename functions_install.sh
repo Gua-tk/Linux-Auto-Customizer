@@ -810,8 +810,8 @@ update_environment() {
   output_proxy_executioner "echo INFO: Rebuilding font cache" "${quietness_bit}"
   output_proxy_executioner "fc-cache -f" "${quietness_bit}"
   output_proxy_executioner "echo INFO: Reloading bash features" "${quietness_bit}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}" # After sourcing, output_proxy_executioner stops working unexpectedly
-  #output_proxy_executioner "echo INFO: Finished execution" "${quietness_bit}"
+  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Finished execution" "${quietness_bit}"
 }
 
 
