@@ -63,7 +63,10 @@ output_proxy_executioner() {
   fi
 }
 
-# Sets up custom prompt when entering debug mode in customizer
+
+# - Description: Sets up a prompt in the desired point of customizer, which is used for in-place debugging. You can
+#   input your desired bash commands for using variables of call functions.
+# - Permission: Can be run as root or user.
 customizer_prompt()
 {
   while [ true ]; do
@@ -71,6 +74,7 @@ customizer_prompt()
     eval "${cmds}"
   done
 }
+
 
 # - Description: Receives an string, a separator and a position and returns the selected field via stdout
 # - Permission: Can be called as root or user.
@@ -98,43 +102,6 @@ set_field()
   echo -n "$(echo "$1" | cut -d "$2" -f-"$3" | sed "s@${value_in_pos}\$@@g")$4$(echo "$1" | cut -d "$2" -f"$3"- | sed "s@^${value_in_pos}@@g")"
 }
 
-# Add program
-# Try to expand the argument directly as the keyname
-#   - remove first dashes in the args
-#  - change - for _
-#  - try indirect expansion pointer=${processed_argument}_installationtype ; ${!pointer}
-
-#If not match go through all args using vars in the common list of krynames with indirect expansion against all args
-# For keyname in keynamescommon:
-#  pointer=${keyname}_arguments
-#  If $1 in ${!pointer}
-    # save this keyname outside of for scope
-#    Matchedkeyname=$keyname
-#    Break
-
-
-#If $flag_install:
-#  declare -a ${matchedkeyname}_flagsstate=fillwithemptyvalues()
-#  if ${!${matchedkeyname}_flagsstateoverride} defined
-#    Trim ${!${matchedkeyname}_flagsstateoverride} and put each flag on the positions of flagstate
-
-#  For each bit in ${matchedkeyname}_flagsstates with IFS=;  or for each bitpos in range(${numbitsstate_common})
-    # here we need to satisfy the new bit of forcing installation even with wrong permissions.
-    # if the bit of skip permissions is not set (default) check the bit of permissions of the feature. If it is 2, continue.
-    # else if is 0 it has to coincide with the EUID (then continue installation if not warning and skip) else if it is 1,
-    # then the EUID has to be different from 0
-
-#    If $bit == ""
-#      ${matchedkeyname}_flagsstates.put(bitpos, FLAG_WHATEVER). # THIS IS NOT PARAMETRIZABLE AND THE FOR NEEDS TO BE ROLLED OUT
-#    else
-#      ${matchedkeyname}_flagsstates.put(bitpos, flagsstateoverride.get(bitpos))
-#else
-#  If $matchedkeyname in $resulttable
-#     $resulttable-=matchedkeyname
-#  Else
-#    Show warning that it was not added
-
-#added_feature_keynames
 
 # - Description: Receives an argument and add or remove the corresponding feature for that argument to the installation
 #   list. Also, if adding the installation of a program, save the current state of the flags, taking in account the flag
@@ -191,7 +158,40 @@ add_program()
     # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
     local flag_privileges="$(get_field "${flags_override_stringbuild}" ";" "1")"
     if [ -z "${flag_privileges}" ]; then
-      flag_privileges=2  # If not present in override, set to 2 (indifferent)
+      # If override not present, check installation type
+      local -r installationtype_pointer="${matched_keyname}_installationtype"
+
+      case ${!installationtype_pointer} in
+        # Using package manager such as apt-get
+        packagemanager)
+          flag_privileges=0
+        ;;
+        # Downloading a package and installing it using a package manager such as dpkg
+        packageinstall)
+          flag_privileges=0
+        ;;
+        # Download and decompress a file that contains a folder
+        userinherit)
+          flag_privileges=1
+        ;;
+        # Clone a repository
+        repositoryclone)
+          flag_privileges=1
+        ;;
+        # Create a virtual environment to install the feature
+        pythonvenv)
+          flag_privileges=1
+        ;;
+        # Only uses the common part of the generic installation
+        environmental)
+          flag_privileges=1
+        ;;
+        # If not recognized put 2, so we do not care
+        *)
+          flag_privileges=2
+        ;;
+      esac
+
     fi
     # Process FLAG_SKIP_PRIVILEGES_CHECK. If 1 skip privilege check
     if [ ${FLAG_SKIP_PRIVILEGES_CHECK} -eq 0 ] && [ ${flag_privileges} -ne 2 ]; then
@@ -271,137 +271,10 @@ add_program()
 }
 
 
-
-
-add_programx()
-{
-  # Process all arguments
-  while [ $# -gt 0 ]; do
-    found=0  # To check for a valid argument
-    # Process each argument to write down the flags for each installation in feature_keynames
-    total=${#feature_keynames[*]}
-    for (( i=0; i<$(( ${total} )); i++ )); do  # Check all the entries in feature_keynames
-      # Cut first program name argument (with two -- at the beginning) from the first argument
-      # We will generate the program function name with it
-      program_arguments="$(echo "${feature_keynames[$i]}" | cut -d ";" -f1 | tr "|" " ")"
-      # Set IFS, variable used to determine the default separator on foreach loops in bash. Set space as separator
-      IFS=" "
-      for argument in ${program_arguments}; do
-        if [ "$1" == "${argument}" ]; then
-          # Set that the argument is valid
-          found=1
-          # Cut static bit of permission
-          flag_permissions=$(echo "${feature_keynames[$i]}" | cut -d ";" -f2)
-          # Generate name of the function depending on the mode from the first argument
-          program_name="${FLAG_MODE}_$(echo ${program_arguments} | cut -d " " -f1 | cut -d "-" -f3-)"
-          # Append static bits to the state of the flags
-          new="${program_name};${flag_permissions};${FLAG_INSTALL};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_OVERWRITE};${FLAG_FAVORITES};${FLAG_AUTOSTART}"
-          feature_keynames[$i]=${new}
-          # Update flags and program counter if we are installing
-          if [ ${FLAG_INSTALL} -gt 0 ]; then
-            NUM_INSTALLATION=$(( ${NUM_INSTALLATION} + 1 ))
-            FLAG_INSTALL=${NUM_INSTALLATION}
-          fi
-          break  # Argument matched, so we can stop searching
-        fi
-      done
-      # Propagate the inner break, and continue to next argument
-      if [ ${found} == 1 ]; then
-        break
-      fi
-
-    done
-    if [ ${found} == 0 ]; then
-        output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument." ${FLAG_QUIETNESS}
-    fi
-    shift
-  done
-}
-
-
-# Common piece of code in the execute_installation function
-# Argument 1: forceness_bit
-# Argument 2: quietness_bit
-# Argument 3: program_function
-execute_installation_install_feature()
-{
-  local -r feature_name=$( echo "$3" | cut -d "_" -f2- )
-  if [[ $1 == 1 ]]; then
-    set +e
-  else
-    set -e
-  fi
-  output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${feature_name}." $2
-
-  local -r installationtype="$(echo "${feature_name}" | sed "s/-/_/g")_installationtype"
-  # A generified install
-  if [ -n "${!installationtype}" ]; then
-    output_proxy_executioner "generic_${FLAG_MODE} $(echo "${feature_name}" | sed "s/-/_/g")" $2
-  else  # A hardcoded install
-    output_proxy_executioner $3 $2
-  fi
-  output_proxy_executioner "echo INFO: ${feature_name} ${FLAG_MODE}ed." $2
-  set +e
-}
-
-execute_installation_wrapper_install_feature()
-{
-  if [[ $1 == 1 ]]; then
-    execute_installation_install_feature $2 $3 $4
-  else
-    type "${program_name}" &>/dev/null
-    if [[ $? != 0 ]]; then
-      execute_installation_install_feature $2 $3 $4
-    else
-      output_proxy_executioner "echo WARNING: $5 is already installed. Skipping... Use -o to overwrite this program" $3
-    fi
-  fi
-}
-
-execute_installationx()
-{
-  # Double for to perform the installation in same order as the arguments
-  for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
-    # Loop through all the elements in the common data table
-    for program in "${feature_keynames[@]}"; do
-      # Check the number of elements, if there are less than 3 do not process, that program has not been added
-      num_elements=$(echo "${program}" | tr ";" " " | wc -w)
-      if [ "${num_elements}" -lt 8 ]; then
-        continue
-      fi
-
-      # Installation bit processing
-      installation_bit=$(echo ${program} | cut -d ";" -f3 )
-      if [ "${installation_bit}" == ${i} ]; then
-        program_function=$(echo ${program} | cut -d ";" -f1)
-        program_privileges=$(echo ${program} | cut -d ";" -f2)
-        forceness_bit=$(echo ${program} | cut -d ";" -f4)
-        quietness_bit=$(echo ${program} | cut -d ";" -f5)
-        overwrite_bit=$(echo ${program} | cut -d ";" -f6)
-        favorite_bit=$(echo ${program} | cut -d ";" -f7)
-        autostart_bit=$(echo ${program} | cut -d ";" -f8)
-        program_name=$(echo ${program_function} | cut -d "_" -f2- )
-        if [[ ${program_privileges} == 1 ]]; then
-          if [[ ${EUID} -ne 0 ]]; then
-            output_proxy_executioner "echo WARNING: ${program_name} needs root permissions to be installed. Skipping." ${quietness_bit}
-          else  # When called from uninstall it will take always this branch
-            execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
-          fi
-        elif [ "${program_privileges}" == 0 ]; then
-          if [ ${EUID} -ne 0 ]; then
-            execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
-          else
-            output_proxy_executioner "echo WARNING: ${program_name} needs user permissions to be installed. Skipping." ${quietness_bit}
-          fi
-        else  # This feature does not care about permissions, ${program_privileges} == 2
-          execute_installation_wrapper_install_feature ${overwrite_bit} ${forceness_bit} ${quietness_bit} ${program_function} ${program_name}
-        fi
-        break
-      fi
-    done
-  done
-}
-
+# - Description: Reads the array added_feature_keynames where are stored the keynames of features that have to be
+#   installed, interprets or delegates the flags and runs the generic_(un)install
+# - Permission: Can be called indistinctly as root or user but it can skip or show error if the permissions do not
+#   coincide with the required ones.
 execute_installation()
 {
   # flagsruntime ${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
@@ -427,10 +300,16 @@ execute_installation()
   done
 }
 
-add_wrapper()
+
+# - Description: Accepts N individual arguments representing feature keynames and adds them to the installation.
+#   Useful for adding many arguments at the same time, like with a wrapper.
+# - Permission: Can be called as root or as user.
+# - Argument 1: Feature keyname to be added.
+# - Argument 2, 3, 4... : Feature keyname to be added
+add_programs()
 {
-  while [[ $# -gt 0 ]]; do
-    add_program "--$1"
+  while [ $# -gt 0 ]; do
+    add_program "$1"
     shift
   done
 }
@@ -543,28 +422,14 @@ autogen_readme()
 }
 
 
-# - Description: Adds all the programs with specific privileges to the installation data
-# - Permissions: This function can be called as root or as user with same behaviour.
-# - Argument 1: Type of permissions of the selected program: 0 for user, 1 for root, 2 for everything
-add_programs_with_x_permissions()
-{
-  for program in "${feature_keynames[@]}"; do
-    permissions=$(echo ${program} | cut -d ";" -f2)
-    name=$(echo ${program} | cut -d ";" -f1 | cut -d "|" -f1)
-    if [[ 2 == $1 ]]; then
-      add_program ${name}
-      continue
-    fi
-    if [[ ${permissions} == $1 ]]; then
-      add_program ${name}
-    fi
-  done
-}
-
+# - Description: Processes the arguments received from the outside and activates or deactivates flags and calls
+#   add_program to append a keyname to the list of features to install.
+# - Permission: Can be called as root or user.
+# - Argument 1, 2, 3... : Arguments for the whole program.
 argument_processing()
 {
   output_proxy_executioner "echo INFO: Processing arguments" "${FLAG_QUIETNESS}"
-  while [[ $# -gt 0 ]]; do
+  while [ $# -gt 0 ]; do
     key="$1"
 
     case ${key} in
@@ -682,6 +547,8 @@ argument_processing()
   fi
 }
 
+# - Description: Performs a post-install clean by using cleaning option of package manager
+# - Permission: Can be called as root or user.
 post_install_clean()
 {
   if [ ${EUID} -eq 0 ]; then
@@ -698,7 +565,9 @@ post_install_clean()
   fi
 }
 
-# Make the bell sound at the end
+
+# - Description: Makes a bell sound.
+# - Permission: Can be called as root or as user.
 bell_sound()
 {
   echo -en "\07"
@@ -706,6 +575,9 @@ bell_sound()
   echo -en "\07"
 }
 
+
+# - Description: Updates the system by using the package manager
+# - Permission: Can be called as root or as user.
 update_environment()
 {
   output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"

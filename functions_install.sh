@@ -546,39 +546,40 @@ generic_install() {
   local -r installationtype=${featurename}_installationtype
   local -r manualcontentavailable="$1_manualcontentavailable"
 
-  if [[ ! -z "${!installationtype}" ]]; then
+  if [ ! -z "${!installationtype}" ]; then
 
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
       "install_$1_pre"
     fi
 
     case ${!installationtype} in
-    # Using package manager such as apt-get
-    packagemanager)
-      rootgeneric_installation_type "${featurename}" packagemanager
+      # Using package manager such as apt-get
+      packagemanager)
+        rootgeneric_installation_type "${featurename}" packagemanager
       ;;
-    # Downloading a package and installing it using a package manager such as dpkg
-    packageinstall)
-      rootgeneric_installation_type "${featurename}" packageinstall
+      # Downloading a package and installing it using a package manager such as dpkg
+      packageinstall)
+        rootgeneric_installation_type "${featurename}" packageinstall
       ;;
-    # Download and decompress a file that contains a folder
-    userinherit)
-      userinherit_installation_type "${featurename}"
+      # Download and decompress a file that contains a folder
+      userinherit)
+        userinherit_installation_type "${featurename}"
       ;;
-    # Clone a repository
-    repositoryclone)
-      repositoryclone_installation_type "${featurename}"
+      # Clone a repository
+      repositoryclone)
+        repositoryclone_installation_type "${featurename}"
       ;;
-    pythonvenv)
-      pythonvenv_installation_type "${featurename}"
+      # Create a virtual environment to install the feature
+      pythonvenv)
+        pythonvenv_installation_type "${featurename}"
       ;;
-    # Only uses the common part of the generic installation
-    environmental)
-      : # no-op
+      # Only uses the common part of the generic installation
+      environmental)
+        : # no-op
       ;;
-    *)
-      output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
-      exit 1
+      *)
+        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
+        exit 1
       ;;
     esac
 

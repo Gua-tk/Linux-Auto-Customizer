@@ -142,7 +142,7 @@ declare -r feature_keynames=(
   "alert"
   "ansible"
   "ant"
-  "--anydesk;0;"
+  "anydesk"
   "--aspell;1;"
   "--atom|--Atom;1;"
   "--audacity|--Audacity;1;"
@@ -368,8 +368,6 @@ declare -r standard_install=("templates" "virtualbox" "converters" "thunderbird"
 #dependencies=("gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
 declare -r custom1=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "change-bg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
 declare -r iochem=("psql" "gcc" "java" "ant" "mvn")
-
-
 
 declare -r help_common="\e[0m
 12345678901234567890123456789012345678901234567890123456789012345678901234567890

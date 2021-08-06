@@ -168,6 +168,7 @@ anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd6
 anydesk_compressedfiletype="z"
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_readmelinedescription="Software to remote control other computers"
+anydesk_arguments=("any-desk")
 anydesk_readmeline="| Anydesk | ${anydesk_readmelinedescription} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 anydesk_bashfunctions=("alias anydesk=\"nohup anydesk &>/dev/null &\"")
 anydesk_launchercontents=("
