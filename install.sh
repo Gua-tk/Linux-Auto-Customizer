@@ -133,7 +133,6 @@ install_terminal_background_mid()
 ##################
 main() {
   FLAG_MODE=install  # Install mode
-  customizer_prompt
   argument_processing "$@"
   data_and_file_structures_initialization
   pre_install_update

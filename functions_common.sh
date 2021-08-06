@@ -173,8 +173,8 @@ add_programx()
 
   # If we do not have a match after checking all args, this arg is not valid
   if [ -z "${matched_keyname}" ]; then
-    output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument..." ${FLAG_QUIETNESS}
-    return 1
+    output_proxy_executioner "echo ERROR: $1 is not a recognized command. Skipping this argument..." ${FLAG_QUIETNESS}
+    exit 1
   fi
 
   # Here matched_keyname matches a valid feature. Process its flagsoverride and add or remove from added_feature_keynames
@@ -196,29 +196,38 @@ add_programx()
     # Process FLAG_SKIP_PRIVILEGES_CHECK. If 1 skip privilege check
     if [ ${FLAG_SKIP_PRIVILEGES_CHECK} -eq 0 ] && [ ${flag_privileges} -ne 2 ]; then
       if [ ${EUID} -eq 0 ] && [ ${flag_privileges} -eq 1 ]; then
-        output_proxy_executioner "echo WARNING: $1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." ${FLAG_QUIETNESS}
-        return 1
+        output_proxy_executioner "echo ERROR: $1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." ${FLAG_QUIETNESS}
+        exit 1
       fi
       if [ ${EUID} -ne 0 ] && [ ${flag_privileges} -eq 0 ]; then
-        output_proxy_executioner "echo WARNING: $1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." ${FLAG_QUIETNESS}
-        return 1
+        output_proxy_executioner "echo ERROR: $1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." ${FLAG_QUIETNESS}
+        exit 1
       fi
     fi
-    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "1" "${flag_privileges}")"
+    # No need to pass to the execute installation the permissions of each feature, they are already processed here
+    # flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "1" "${flag_privileges}")"
 
-    # Second flag ignore errors
-    local flag_errors="$(get_field "${flags_override_stringbuild}" ";" "2")"
-    if [ -z "${flag_errors}" ]; then
-      flag_errors=${FLAG_IGNORE_ERRORS}  # If not present in override, inherit from runtime flags
-    fi
-    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "2" "${flag_errors}")"
-
-    # Third flag overwrite bit
-    local flag_overwrite="$(get_field "${flags_override_stringbuild}" ";" "3")"
+    # Second flag overwrite bit
+    local flag_overwrite="$(get_field "${flags_override_stringbuild}" ";" "2")"
     if [ -z "${flag_overwrite}" ]; then
       flag_overwrite=${FLAG_OVERWRITE}  # If not present in override, inherit from runtime flags
     fi
-    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "3" "${flag_overwrite}")"
+    # No need to pass to the execute installation the override, it can be processed here
+    # Process flag_overwrite. if installation is already present show error
+    if [ ${flag_overwrite} -eq 0 ]; then
+      type "${matched_keyname}" &>/dev/null
+      if [ $? -eq 0 ]; then
+        output_proxy_executioner "echo WARNING: ${matched_keyname} is already installed. Continuing installation without this program... Use -o to overwrite this program" ${FLAG_QUIETNESS}
+        return 1
+      fi
+    fi
+
+    # Third flag ignore errors
+    local flag_errors="$(get_field "${flags_override_stringbuild}" ";" "3")"
+    if [ -z "${flag_errors}" ]; then
+      flag_errors=${FLAG_IGNORE_ERRORS}  # If not present in override, inherit from runtime flags
+    fi
+    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "3" "${flag_errors}")"
 
     # Fourth flag quietness bit
     local flag_quietness="$(get_field "${flags_override_stringbuild}" ";" "4")"
@@ -247,7 +256,6 @@ add_programx()
     declare "${matched_keyname}_flagsruntime"="${flags_override_stringbuild}"
     # Add this feature in the result list
     added_feature_keynames+="${matched_keyname}"
-
   else
     # Deletion mode
 
@@ -259,10 +267,7 @@ add_programx()
       fi
       i=$(( ${i}+1 ))
     done
-
   fi
-
-
 }
 
 
@@ -397,6 +402,31 @@ execute_installation()
   done
 }
 
+execute_installationx()
+{
+  # flagsoverride ${FLAG_PERMISSION};${FLAG_OVERWRITE};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
+  for keyname in "${added_feature_keynames[@]}"; do
+    local flagsoverride_pointer="${keyname}_flagsoverride"
+
+    local -r flag_ignore_errors="$(get_field "${!flagsoverride_pointer}" ";" "3")"  # local, processed here
+    FLAG_QUIETNESS="$(get_field "${!flagsoverride_pointer}" ";" "4")"  # Global, so it can be accessed during installations
+    FLAG_FAVORITES="$(get_field "${!flagsoverride_pointer}" ";" "5")"  # Global, accessed in generic_install
+    FLAG_AUTOSTART="$(get_field "${!flagsoverride_pointer}" ";" "6")"  # Global, accessed in generic_install
+
+    # Process flag_ignore_errors
+    if [ ${flag_ignore_errors} -eq 0 ]; then
+      set -e
+    fi
+
+    output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${keyname}." ${FLAG_QUIETNESS}
+    output_proxy_executioner "generic_${FLAG_MODE} ${keyname}" ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." ${FLAG_QUIETNESS}
+
+    # Return flag errors to bash defaults (ignore errors)
+    set -e
+
+    return
+}
 
 add_wrapper()
 {

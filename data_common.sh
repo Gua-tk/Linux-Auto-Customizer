@@ -100,7 +100,11 @@ FLAG_AUTOSTART=0  # 0 --> does nothing; 1 --> autostart program if possible
 # 1 --> Does not check, allowing to install as root things forced as user and viceversa
 FLAG_SKIP_PRIVILEGES_CHECK=0
 
-# flagsoverride / flags: ${FLAG_PERMISSION};${FLAG_IGNORE_ERRORS};${FLAG_OVERWRITE};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
+#                    1                      2                3                    4                  5                 6
+# flagsoverride ${FLAG_PERMISSION};${FLAG_OVERWRITE};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
+#                 3                    4                5                 6
+# flags ${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
+
 flagsoverride_template=";;;;;"
 flagsoverride_number=$(( ${#flagsoverride_template}+1 ))
 
