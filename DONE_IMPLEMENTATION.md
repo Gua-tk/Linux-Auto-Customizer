@@ -84,6 +84,7 @@
 - [x] `data_features.sh`: Create high level functions that perform variable indirect expansion to install different types of program.
 - [x] `install.sh`, `uninstall.sh`: New argument in install.sh add to favorites -f / -n normal installation without favorites(?) also complementary flag in uninstall.sh
 - [x] `data_features.sh`: `e` convert to edit and echo function
+- [x] `functions_install`: Fix finished message after sourcing bashrc problem  
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
