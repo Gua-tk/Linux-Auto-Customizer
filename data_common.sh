@@ -371,8 +371,7 @@ declare -r iochem=("psql" "gcc" "java" "ant" "mvn")
 
 
 
-declare -r help_common="
-\e[0m
+declare -r help_common="\e[0m
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
         10        20        30        40        50        60        70        80
 #### install.sh manual usage:
