@@ -142,7 +142,7 @@ set_field()
 # - Permission: Can be called indistinctly as root or user with same behaviour.
 # - Argument 1: Outside argument that can match a feature keyname (fast match with binary search) or an argument (slow
 #   match looping through all the arguments, obtained by indirect expansion using every feature keyname)
-add_programx()
+add_program()
 {
   local matched_keyname=""
   # fast match against keynames
@@ -182,8 +182,8 @@ add_programx()
     # Addition mode, we need to add keyname to added_feature_keynames and build flags
     local -r flags_override_pointer="${matched_keyname}_flagsoverride"
     local flags_override_stringbuild=""
-    if [ ! -z "${!flagsoverride_pointer}" ]; then  # If flagsoverride property is defined for this feature
-      flags_override_stringbuild="${!flagsoverride_pointer}"
+    if [ ! -z "${!flags_override_pointer}" ]; then  # If flagsoverride property is defined for this feature
+      flags_override_stringbuild="${!flags_override_pointer}"
     else  # flagsoverride not defined, load template
       flags_override_stringbuild="${flags_overrides_template}"
     fi
@@ -253,7 +253,7 @@ add_programx()
     # At this point flags_override_stringbuild have all flags merged inside (override and runtime)
 
     # Declare runtime flags for accession in execute_feature
-    declare "${matched_keyname}_flagsruntime"="${flags_override_stringbuild}"
+    declare -g ${matched_keyname}_flagsruntime="${flags_override_stringbuild}"
     # Add this feature in the result list
     added_feature_keynames+="${matched_keyname}"
   else
@@ -273,7 +273,7 @@ add_programx()
 
 
 
-add_program()
+add_programx()
 {
   # Process all arguments
   while [ $# -gt 0 ]; do
@@ -358,7 +358,7 @@ execute_installation_wrapper_install_feature()
   fi
 }
 
-execute_installation()
+execute_installationx()
 {
   # Double for to perform the installation in same order as the arguments
   for (( i = 1 ; i != ${NUM_INSTALLATION} ; i++ )); do
@@ -402,16 +402,16 @@ execute_installation()
   done
 }
 
-execute_installationx()
+execute_installation()
 {
-  # flagsoverride ${FLAG_PERMISSION};${FLAG_OVERWRITE};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
+  # flagsruntime ${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
   for keyname in "${added_feature_keynames[@]}"; do
-    local flagsoverride_pointer="${keyname}_flagsoverride"
+    local flags_pointer="${keyname}_flagsruntime"
 
-    local -r flag_ignore_errors="$(get_field "${!flagsoverride_pointer}" ";" "3")"  # local, processed here
-    FLAG_QUIETNESS="$(get_field "${!flagsoverride_pointer}" ";" "4")"  # Global, so it can be accessed during installations
-    FLAG_FAVORITES="$(get_field "${!flagsoverride_pointer}" ";" "5")"  # Global, accessed in generic_install
-    FLAG_AUTOSTART="$(get_field "${!flagsoverride_pointer}" ";" "6")"  # Global, accessed in generic_install
+    local -r flag_ignore_errors="$(get_field "${!flags_pointer}" ";" "3")"  # local, processed here
+    FLAG_QUIETNESS="$(get_field "${!flags_pointer}" ";" "4")"  # Global, so it can be accessed during installations
+    FLAG_FAVORITES="$(get_field "${!flags_pointer}" ";" "5")"  # Global, accessed in generic_install
+    FLAG_AUTOSTART="$(get_field "${!flags_pointer}" ";" "6")"  # Global, accessed in generic_install
 
     # Process flag_ignore_errors
     if [ ${flag_ignore_errors} -eq 0 ]; then
@@ -423,9 +423,8 @@ execute_installationx()
     output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." ${FLAG_QUIETNESS}
 
     # Return flag errors to bash defaults (ignore errors)
-    set -e
-
-    return
+    set +e
+  done
 }
 
 add_wrapper()
@@ -570,68 +569,68 @@ argument_processing()
 
     case ${key} in
       ### BEHAVIOURAL ARGUMENTS ###
-      -v|-verbose)
+      -v|--verbose)
         FLAG_QUIETNESS=0
       ;;
-      -q|-quiet)
+      -q|--quiet)
         FLAG_QUIETNESS=1
       ;;
-      -Q|-Quiet)
+      -Q|--Quiet)
         FLAG_QUIETNESS=2
       ;;
 
-      -s|-skip|-skip-if-installed)
+      -s|--skip|--skip-if-installed)
         FLAG_OVERWRITE=0
       ;;
-      -o|-overwrite|-overwrite-if-present)
+      -o|--overwrite|--overwrite-if-present)
         FLAG_OVERWRITE=1
       ;;
 
-      -e|-exit|-exit-on-error)
+      -e|--exit|--exit-on-error)
         FLAG_IGNORE_ERRORS=0
       ;;
-      -i|-ignore|-ignore-errors)
+      -i|--ignore|--ignore-errors)
         FLAG_IGNORE_ERRORS=1
       ;;
 
-      -d|-dirty|-no-autoclean)
+      -d|--dirty|--no-autoclean)
         FLAG_AUTOCLEAN=0
       ;;
-      -c|-clean)
+      -c|--clean)
         FLAG_AUTOCLEAN=1
       ;;
-      -C|-Clean)
+      -C|--Clean)
         FLAG_AUTOCLEAN=2
       ;;
 
-      -k|-keep-system-outdated)
+      -k|--keep-system-outdated)
         FLAG_UPGRADE=0
       ;;
-      -u|-update)
+      -u|--update)
         FLAG_UPGRADE=1
       ;;
-      -U|-upgrade|-Upgrade)
+      -U|--upgrade|--Upgrade)
         FLAG_UPGRADE=2
       ;;
 
-      -f|-favorites|-set-favorites)
+      -f|--favorites|--set-favorites)
         FLAG_FAVORITES=1
       ;;
-      -z|-no-favorites)
+      -z|--no-favorites)
         FLAG_FAVORITES=0
       ;;
 
-      -a|-autostart)
+      -a|--autostart)
         FLAG_AUTOSTART=1
       ;;
-      -r|-regular)
+      -r|--regular)
         FLAG_AUTOSTART=0
       ;;
 
-      -n|-not)
+      -n|--not)
         FLAG_INSTALL=0
       ;;
-      -y|-yes)
+      -y|--yes)
         FLAG_INSTALL=${NUM_INSTALLATION}
       ;;
 
@@ -640,14 +639,14 @@ argument_processing()
         exit 0
       ;;
 
-      -H|-help)
+      -H|--help)
         autogen_help
 
         output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" ${FLAG_QUIETNESS}
         exit 0
       ;;
 
-      -debug)
+      --debug)
         customizer_prompt
       ;;
 
@@ -676,7 +675,7 @@ argument_processing()
   done
 
   # If we don't receive arguments we try to install everything that we can given our permissions
-  if [ ${NUM_INSTALLATION} == 1 ]; then
+  if [ ${#added_feature_keynames[@]} -eq 0 ]; then
     output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${FLAG_QUIETNESS}
     output_proxy_executioner "echo INFO: Displaying help ${help_common}" ${FLAG_QUIETNESS}
     exit 0
@@ -685,13 +684,13 @@ argument_processing()
 
 post_install_clean()
 {
-  if [[ ${EUID} == 0 ]]; then
-    if [[ ${FLAG_AUTOCLEAN} -gt 0 ]]; then
+  if [ ${EUID} == 0 ]; then
+    if [ ${FLAG_AUTOCLEAN} -gt 0 ]; then
       output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
     fi
-    if [[ ${FLAG_AUTOCLEAN} == 2 ]]; then
+    if [ ${FLAG_AUTOCLEAN} == 2 ]; then
       output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
@@ -709,16 +708,16 @@ bell_sound()
 
 update_environment()
 {
-  output_proxy_executioner "echo INFO: Rebuilding path cache" "${quietness_bit}"
-  output_proxy_executioner "hash -r" "${quietness_bit}"
-  output_proxy_executioner "echo INFO: Rebuilding font cache" "${quietness_bit}"
-  output_proxy_executioner "fc-cache -f -v" "${quietness_bit}"
-  output_proxy_executioner "echo INFO: Reload .bashrc shell environment" "${quietness_bit}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Reload .bashrc shell environment" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
 }
 
 
-if [[ -f "${DIR}/data_features.sh" ]]; then
+if [ -f "${DIR}/data_features.sh" ]; then
   source "${DIR}/data_features.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
