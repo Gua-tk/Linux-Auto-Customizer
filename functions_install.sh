@@ -755,12 +755,6 @@ data_and_file_structures_initialization() {
   # Initialize bash functions
   if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
     create_file "${BASH_FUNCTIONS_PATH}"
-    # //RF output proxy executioner stops working after sourcing ${BASH_FUNCTIONS_PATH}
-    # else
-    # Import bash functions to know which functions are installed (used for detecting installed alias or functions)
-    # output_proxy_executioner "echo INFO: Checking the features that are already installed. This may take a while..." "${FLAG_QUIETNESS}"
-    # source "${BASH_FUNCTIONS_PATH}" &>/dev/null
-    # output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
   fi
 
   # Updates initializations

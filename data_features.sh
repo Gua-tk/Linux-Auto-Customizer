@@ -120,13 +120,13 @@ fi
 a_installationtype="environmental"
 a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
 a_arguments=("a")
-a_flagsoverride="2;;;;;"
+#a_flagsoverride="2;;;;;"
 a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 add_installationtype="environmental"
 add_bashfunctions=("alias add=\"git add\"")
-add_arguments=("add")
-add_flagsoverride="1;;;;;"
+add_arguments=("add" "add_function")
+#add_flagsoverride="1;;;;;"
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 aisleriot_installationtype="packagemanager"
@@ -144,10 +144,14 @@ alert_bashfunctions=("
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i \"\$([ \$? = 0 ] && echo terminal || echo error)\" \"\$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\\'')\"'
 ")
+alert_arguments=("alert" "alert-alias" "alias-alert")
+#alert_flagsoverride="0;;;;;"
 alert_readmeline="| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ansible_installationtype="packagemanager"
 ansible_packagenames=("ansible")
+ansible_arguments=("ansible")
+#ansible_flagsoverride="0;;;;;"
 ansible_readmeline="| Ansible | Automation of software | Command \`ansible\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ant_installationtype="userinherit"
@@ -155,6 +159,8 @@ ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10
 ant_compressedfiletype="z"
 ant_binariesinstalledpaths=("bin/ant;ant")
 ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/ant\"")
+ant_arguments=("ant" "apache-ant")
+ant_flagsoverride="1;;;;;"
 ant_readmeline="| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
 
 anydesk_installationtype="userinherit"

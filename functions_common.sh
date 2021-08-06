@@ -160,7 +160,7 @@ add_program()
     for keyname in "${feature_keynames[@]}"; do
       local arguments_pointer="${keyname}_arguments[@]"
       for argument in "${!arguments_pointer}"; do  # Expand arguments of each feature using feature_keyname
-        if [ "${argument}" == "$1" ]; then  # Literal match
+        if [ "${argument}" == "${processed_argument}" ] || [ "$(echo "${argument}" | tr -d "_")" == "$(echo "${processed_argument}" | tr -d "_")" ] ; then  # Flexible match
           matched_keyname="${keyname}"  # Save the match
           break  # Break the inner loop
         fi
@@ -678,19 +678,19 @@ argument_processing()
   if [ ${#added_feature_keynames[@]} -eq 0 ]; then
     output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${FLAG_QUIETNESS}
     output_proxy_executioner "echo INFO: Displaying help ${help_common}" ${FLAG_QUIETNESS}
-    exit 0
+    exit 1
   fi
 }
 
 post_install_clean()
 {
-  if [ ${EUID} == 0 ]; then
+  if [ ${EUID} -eq 0 ]; then
     if [ ${FLAG_AUTOCLEAN} -gt 0 ]; then
       output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
     fi
-    if [ ${FLAG_AUTOCLEAN} == 2 ]; then
+    if [ ${FLAG_AUTOCLEAN} -eq 2 ]; then
       output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
       output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
       output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
