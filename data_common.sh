@@ -96,6 +96,16 @@ FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perfo
 FLAG_FAVORITES=0  # 0 --> does nothing; 1 --> sets the program to favourites if there is a desktop launcher
 FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1 or 0, respectively
 FLAG_AUTOSTART=0  # 0 --> does nothing; 1 --> autostart program if possible
+# 0 --> in add_program, if flagsoverride is defined, control that matches our privileges;
+# 1 --> Does not check, allowing to install as root things forced as user and viceversa
+FLAG_SKIP_PRIVILEGES_CHECK=0
+
+# flagsoverride / flags: ${FLAG_PERMISSION};${FLAG_IGNORE_ERRORS};${FLAG_OVERWRITE};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
+flagsoverride_template=";;;;;"
+flagsoverride_number=$(( ${#flagsoverride_template}+1 ))
+
+# Array to store the keynames of the features that have been added for installation
+added_feature_keynames=()
 
 ### FEATURE_DATA ###
 
@@ -119,6 +129,8 @@ FLAG_AUTOSTART=0  # 0 --> does nothing; 1 --> autostart program if possible
 #     4.- If we should reinstall the feature or not when we find that the desired feature already installed.
 #     install_yes/no; forceness; quietness; overwrite; permissions; function_name
 #   - The rest
+
+# New features in this list must contain _ if the keyname contains _.
 declare -r feature_keynames=(
   "a"
   "add"
@@ -327,7 +339,6 @@ declare -r feature_keynames=(
   "--zoom|--Zoom;0;| Zoom | Video Stram Calls | Command \`zoom\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 )
 
-added_feature_keynames=()
 
 ####################
 ##### WRAPPERS #####

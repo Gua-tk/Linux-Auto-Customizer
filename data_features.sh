@@ -107,6 +107,12 @@ fi
 # - FEATUREKEYNAME_filekeys: Array contentaining the keys to indirect expand file to be created and its path
 # - FEATUREKEYNAME_FILEKEY_content: Variable with the content of a file
 # - FEATUREKEYNAME_FILEKEY_path: Variable with the path where we need to store the file with that FILEKEY
+
+# - FEATUREKEYNAME_flagsoverride: Contains bits that will override the current state fo the flags for that feature
+#   Its format is the following:
+#   ${FLAG_PERMISSION};${FLAG_IGNORE_ERRORS};${FLAG_OVERWRITE};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
+#   If we want to override permissions for being executed as root at all times:
+#   FEATUREKEYNAME_flagsoverride="0;;;;;"
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
 ########################################################################################################################
@@ -114,21 +120,23 @@ fi
 a_installationtype="environmental"
 a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
 a_arguments=("a")
-a_flagsstateoverride="2;;;;"
+a_flagsoverride="2;;;;;"
 a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 add_installationtype="environmental"
 add_bashfunctions=("alias add=\"git add\"")
 add_arguments=("add")
-add_flagsstateoverride="0;;;;"
+add_flagsoverride="1;;;;;"
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 aisleriot_installationtype="packagemanager"
 aisleriot_packagenames=("aisleriot")
 aisleriot_launchernames=("sol")
 aisleriot_arguments=("aisleriot" "solitaire" "gnome-solitaire")
-aisleriot_flagsstateoverride="1;;;;"
+aisleriot_flagsoverride="0;;;;;"
 aisleriot_readmelines="| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+
+# Line of the test. The Above is refactored (not yet!). The Below is not (of course).
 
 alert_installationtype="environmental"
 alert_bashfunctions=("
@@ -259,8 +267,6 @@ caffeine_packagenames=("caffeine")
 caffeine_autostart="yes"
 caffeine_manualcontentavailable="1;0;1"
 caffeine_readmeline="| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the “sleep” power saving mode. | Commands \`caffeine\`, \`caffeinate\` and \`caffeine-indicator\`, desktop launcher for \`caffeine\`, dashboard launcher for \`caffeine\` and \`caffeine-indicator\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-
-# Line of the test. The Above is refactored (not yet!). The Below is not (of course).
 
 calibre_installationtype="packagemanager"
 calibre_launchernames=("calibre-gui")

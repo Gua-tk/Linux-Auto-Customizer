@@ -63,13 +63,209 @@ output_proxy_executioner() {
   fi
 }
 
+# Sets up custom prompt when entering debug mode in customizer
+customizer_prompt()
+{
+  while [ true ]; do
+    read -p "customizer-prompt $ " cmds
+    eval "${cmds}"
+  done
+}
+
+# - Description: Receives an string, a separator and a position and returns the selected field via stdout
+# - Permission: Can be called as root or user.
+# - Argument 1: String containing fields
+# - Argument 2: Separator of the fields
+# - Argument 3: Field position to get
+get_field()
+{
+  echo -n "$1" | cut -d "$2" -f"$3"
+}
+
+
+# - Description: Receives an string, a separator and a position and returns the same string with the selected field
+#   changed with the desired value. To do that obtains the value in position and cuts from that position to the
+#   beginning and from that position to the end. Them delete the old value from these two substrings and joins them
+#   with the desired value in between. Returns the new string via stdout.
+# - Permission: Can be called as root or user.
+# - Argument 1: String containing fields
+# - Argument 2: Separator of the fields
+# - Argument 3: Field position to set
+# - Argument 4: Value to set
+set_field()
+{
+  local -r value_in_pos="$(get_field "$1" "$2" "$3")"
+  echo -n "$(echo "$1" | cut -d "$2" -f-"$3" | sed "s@${value_in_pos}\$@@g")$4$(echo "$1" | cut -d "$2" -f"$3"- | sed "s@^${value_in_pos}@@g")"
+}
+
+# Add program
+# Try to expand the argument directly as the keyname
+#   - remove first dashes in the args
+#  - change - for _
+#  - try indirect expansion pointer=${processed_argument}_installationtype ; ${!pointer}
+
+#If not match go through all args using vars in the common list of krynames with indirect expansion against all args
+# For keyname in keynamescommon:
+#  pointer=${keyname}_arguments
+#  If $1 in ${!pointer}
+    # save this keyname outside of for scope
+#    Matchedkeyname=$keyname
+#    Break
+
+
+#If $flag_install:
+#  declare -a ${matchedkeyname}_flagsstate=fillwithemptyvalues()
+#  if ${!${matchedkeyname}_flagsstateoverride} defined
+#    Trim ${!${matchedkeyname}_flagsstateoverride} and put each flag on the positions of flagstate
+
+#  For each bit in ${matchedkeyname}_flagsstates with IFS=;  or for each bitpos in range(${numbitsstate_common})
+    # here we need to satisfy the new bit of forcing installation even with wrong permissions.
+    # if the bit of skip permissions is not set (default) check the bit of permissions of the feature. If it is 2, continue.
+    # else if is 0 it has to coincide with the EUID (then continue installation if not warning and skip) else if it is 1,
+    # then the EUID has to be different from 0
+
+#    If $bit == ""
+#      ${matchedkeyname}_flagsstates.put(bitpos, FLAG_WHATEVER). # THIS IS NOT PARAMETRIZABLE AND THE FOR NEEDS TO BE ROLLED OUT
+#    else
+#      ${matchedkeyname}_flagsstates.put(bitpos, flagsstateoverride.get(bitpos))
+#else
+#  If $matchedkeyname in $resulttable
+#     $resulttable-=matchedkeyname
+#  Else
+#    Show warning that it was not added
+
 #added_feature_keynames
-# Receives a list of arguments selecting features (--pycharm, --vlc...) and applies the current flags to it,
-# modifying the corresponding line of feature_keynames
+
+# - Description: Receives an argument and add or remove the corresponding feature for that argument to the installation
+#   list. Also, if adding the installation of a program, save the current state of the flags, taking in account the flag
+#   states that have to be overwritten.
+# - Permission: Can be called indistinctly as root or user with same behaviour.
+# - Argument 1: Outside argument that can match a feature keyname (fast match with binary search) or an argument (slow
+#   match looping through all the arguments, obtained by indirect expansion using every feature keyname)
 add_programx()
 {
+  local matched_keyname=""
+  # fast match against keynames
+  local processed_argument="$(echo "$1" | tr "-" "_")"  # Convert - to _
+  for keyname in "${feature_keynames[@]}"; do
+    if [ "${processed_argument}" == "${keyname}" ]; then
+      matched_keyname="${keyname}"
+      break
+    fi
+  done
+
+  if [ -z "${matched_keyname}" ]; then
+    # We did not achieve fast match. Loop through elements in all arguments property of all features looking for match
+    processed_argument="$(echo "${processed_argument}" | tr '[:upper:]' '[:lower:]')"  # Convert to lowercase
+    for keyname in "${feature_keynames[@]}"; do
+      local arguments_pointer="${keyname}_arguments[@]"
+      for argument in "${!arguments_pointer}"; do  # Expand arguments of each feature using feature_keyname
+        if [ "${argument}" == "$1" ]; then  # Literal match
+          matched_keyname="${keyname}"  # Save the match
+          break  # Break the inner loop
+        fi
+      done
+      if [ -n "${matched_keyname}" ]; then  # If we have already matched something  break external loop and continue
+        break
+      fi
+    done
+  fi
+
+  # If we do not have a match after checking all args, this arg is not valid
+  if [ -z "${matched_keyname}" ]; then
+    output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument..." ${FLAG_QUIETNESS}
+    return 1
+  fi
+
+  # Here matched_keyname matches a valid feature. Process its flagsoverride and add or remove from added_feature_keynames
+  if [ ${FLAG_INSTALL} == 1 ]; then
+    # Addition mode, we need to add keyname to added_feature_keynames and build flags
+    local -r flags_override_pointer="${matched_keyname}_flagsoverride"
+    local flags_override_stringbuild=""
+    if [ ! -z "${!flagsoverride_pointer}" ]; then  # If flagsoverride property is defined for this feature
+      flags_override_stringbuild="${!flagsoverride_pointer}"
+    else  # flagsoverride not defined, load template
+      flags_override_stringbuild="${flags_overrides_template}"
+    fi
+
+    # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
+    local flag_privileges="$(get_field "${flags_override_stringbuild}" ";" "1")"
+    if [ -z "${flag_privileges}" ]; then
+      flag_privileges=2  # If not present in override, set to 2 (indifferent)
+    fi
+    # Process FLAG_SKIP_PRIVILEGES_CHECK. If 1 skip privilege check
+    if [ ${FLAG_SKIP_PRIVILEGES_CHECK} -eq 0 ] && [ ${flag_privileges} -ne 2 ]; then
+      if [ ${EUID} -eq 0 ] && [ ${flag_privileges} -eq 1 ]; then
+        output_proxy_executioner "echo WARNING: $1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." ${FLAG_QUIETNESS}
+        return 1
+      fi
+      if [ ${EUID} -ne 0 ] && [ ${flag_privileges} -eq 0 ]; then
+        output_proxy_executioner "echo WARNING: $1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." ${FLAG_QUIETNESS}
+        return 1
+      fi
+    fi
+    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "1" "${flag_privileges}")"
+
+    # Second flag ignore errors
+    local flag_errors="$(get_field "${flags_override_stringbuild}" ";" "2")"
+    if [ -z "${flag_errors}" ]; then
+      flag_errors=${FLAG_IGNORE_ERRORS}  # If not present in override, inherit from runtime flags
+    fi
+    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "2" "${flag_errors}")"
+
+    # Third flag overwrite bit
+    local flag_overwrite="$(get_field "${flags_override_stringbuild}" ";" "3")"
+    if [ -z "${flag_overwrite}" ]; then
+      flag_overwrite=${FLAG_OVERWRITE}  # If not present in override, inherit from runtime flags
+    fi
+    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "3" "${flag_overwrite}")"
+
+    # Fourth flag quietness bit
+    local flag_quietness="$(get_field "${flags_override_stringbuild}" ";" "4")"
+    if [ -z "${flag_quietness}" ]; then
+      flag_quietness=${FLAG_QUIETNESS}  # If not present in override, inherit from runtime flags
+    fi
+    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "4" "${flag_quietness}")"
+
+    # Fifth flag favorites bit
+    local flag_favorites="$(get_field "${flags_override_stringbuild}" ";" "5")"
+    if [ -z "${flag_favorites}" ]; then
+      flag_favorites=${FLAG_FAVORITES}  # If not present in override, inherit from runtime flags
+    fi
+    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "5" "${flag_favorites}")"
+
+    # Sixth flag autostart
+    local flag_autostart="$(get_field "${flags_override_stringbuild}" ";" "6")"
+    if [ -z "${flag_autostart}" ]; then
+      flag_autostart=${FLAG_AUTOSTART}  # If not present in override, inherit from runtime flags
+    fi
+    flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "6" "${flag_autostart}")"
+
+    # At this point flags_override_stringbuild have all flags merged inside (override and runtime)
+
+    # Declare runtime flags for accession in execute_feature
+    declare "${matched_keyname}_flagsruntime"="${flags_override_stringbuild}"
+    # Add this feature in the result list
+    added_feature_keynames+="${matched_keyname}"
+
+  else
+    # Deletion mode
+
+    # Delete from the result array
+    local i=0
+    for keyname in "${added_feature_keynames[@]}"; do
+      if [ "${keyname}" == "${matched_keyname}" ]; then
+        unset added_feature_keynames[${i}]
+      fi
+      i=$(( ${i}+1 ))
+    done
+
+  fi
+
 
 }
+
+
 
 
 add_program()
@@ -317,14 +513,6 @@ autogen_readme()
   echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total" >> table.md
 }
 
-# Sets up custom prompt when entering debug mode in customizer
-customizer_prompt()
-{
-  while [ true ]; do
-    read -p "customizer-prompt $ " cmds
-    eval "${cmds}"
-  done
-}
 
 # - Description: Adds all the programs with specific privileges to the installation data
 # - Permissions: This function can be called as root or as user with same behaviour.
