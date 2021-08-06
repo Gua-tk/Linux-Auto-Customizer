@@ -85,6 +85,12 @@
 - [x] `install.sh`, `uninstall.sh`: New argument in install.sh add to favorites -f / -n normal installation without favorites(?) also complementary flag in uninstall.sh
 - [x] `data_features.sh`: `e` convert to edit and echo function
 - [x] `functions_install`: Fix finished message after sourcing bashrc problem  
+- [ ] `functions_common.sh`: set_field $string $separator $position function 
+- [ ] `functions_common.sh`: get_field $string $separator $position function
+- [ ] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to generify the permissions of the installation. --> Delete the permission bit and "guess" needed permissions from the installationtype
+- [x] all: unset or set to local variables that are needed only locally
+- [ ] `functions_common.sh`: process argument validation in add program instead of execute_installation, to stop installation if a permission mismatch is found
+- [ ] `functions_common.sh`: Allow to match against arguments with different case and different - or _
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -164,3 +170,4 @@
 - [x] `install.sh`, `uninstall.sh`: jshell (apt-get install default-jdk)
 - [x] `install.sh`, `uninstall.sh`: Mdadm (raid manager)
 - [x] `data_features.sh`, `common_data.sh`: `autoclean` performs different automatic optimizations to release space and delete cluttering such as broken links or broken installations (?) # alias autoclean="sudo apt-get -y autoclean && sudo apt-get -y autoremove"  alias trash="rm -rf ${HOME}/.local/share/Trash/*"
+- [ ] `data_features.sh`, `data_common.sh`: move each readme line for every feature to the corresponding feature 

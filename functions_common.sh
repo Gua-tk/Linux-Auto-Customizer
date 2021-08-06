@@ -496,7 +496,14 @@ argument_processing()
         FLAG_INSTALL=0
       ;;
       -y|--yes)
-        FLAG_INSTALL=${NUM_INSTALLATION}
+        FLAG_INSTALL=1
+      ;;
+
+      -p|--privilege-check)
+        FLAG_SKIP_PRIVILEGES_CHECK=0
+      ;;
+      -P|--skip-privilege-check)
+        FLAG_SKIP_PRIVILEGES_CHECK=1
       ;;
 
       -h)
