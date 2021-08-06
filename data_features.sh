@@ -159,7 +159,7 @@ ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10
 ant_compressedfiletype="z"
 ant_binariesinstalledpaths=("bin/ant;ant")
 ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/ant\"")
-ant_arguments=("ant" "apache-ant")
+ant_arguments=("ant" "apache_ant")
 ant_flagsoverride="1;;;;;"
 ant_readmeline="| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
 
@@ -168,7 +168,7 @@ anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd6
 anydesk_compressedfiletype="z"
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_readmelinedescription="Software to remote control other computers"
-anydesk_arguments=("any-desk")
+anydesk_arguments=("any_desk")
 anydesk_readmeline="| Anydesk | ${anydesk_readmelinedescription} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 anydesk_bashfunctions=("alias anydesk=\"nohup anydesk &>/dev/null &\"")
 anydesk_launchercontents=("
