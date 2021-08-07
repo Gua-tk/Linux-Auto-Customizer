@@ -2608,7 +2608,7 @@ remmina_launchernames=("org.remmina.Remmina")
 remmina_readmeline="| Remmina | Remote Desktop Contol | Commands \`remmina\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
 
 rstudio_installationtype="userinherit"
-rstudio_arguments=("rstudio")
+rstudio_arguments=("r_studio")
 rstudio_associatedfiletypes=("text/plain")
 rstudio_bashfunctions=("alias rstudio=\"nohup rstudio &>/dev/null &\"")
 rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
