@@ -130,7 +130,7 @@ add_bashfunctions=("alias add=\"git add\"")
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 aisleriot_installationtype="packagemanager"
-aisleriot_arguments=("aisleriot" "solitaire" "gnome-solitaire")
+aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
 #aisleriot_flagsoverride="0;;;;;"
 aisleriot_launchernames=("sol")
 aisleriot_packagenames=("aisleriot")
@@ -139,7 +139,7 @@ aisleriot_readmeline="| Solitaire aisleriot | Implementation of the classical ga
 # Line of the test. The Above is refactored (not yet!). The Below is not (of course).
 
 alert_installationtype="environmental"
-alert_arguments=("alert" "alert-alias" "alias-alert")
+alert_arguments=("alert" "alert_alias" "alias_alert")
 alert_bashfunctions=("
 # Add an alert alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -209,7 +209,7 @@ audacity_packagenames=("audacity")
 audacity_readmeline="| Audacity | Digital audio editor and recording | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 AutoFirma_installationtype="packageinstall"
-AutoFirma_arguments=("AutoFirma" "autofirma")
+AutoFirma_arguments=("auto_firma")
 AutoFirma_bashfunctions=("alias autofirma=\"nohup AutoFirma &>/dev/null &\"")
 AutoFirma_compressedfiletype="zip"
 AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip"
@@ -228,7 +228,7 @@ b_bashfunctions=("alias b=\"bash\"")
 b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 bashcolors_installationtype="environmental"
-bashcolors_arguments=("bashcolors")
+bashcolors_arguments=("bash_colors")
 bashcolors_bashfunctions=("
 # Consider dracula color palette
 CLEAR='\033[0m' # No Color
@@ -295,7 +295,7 @@ calibre_packagenames=("calibre")
 calibre_readmeline="| Calibre | e-book reader| Commmand \`calibre\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 changebg_installationtype="repositoryclone"
-changebg_arguments=("changebg" "wallpaper" "wallpapers" "change_bg")
+changebg_arguments=("change_bg" "wallpaper" "wallpapers")
 changebg_binariesinstalledpaths=".cronscript.sh;changebg"
 changebg_cronscript_content="
 #!/bin/bash
@@ -324,7 +324,7 @@ changebg_readmeline="| Function \`changebg\` | Function that changes the wallpap
 changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
 
 cheat_installationtype="environmental"
-cheat_arguments=("cheat" "cheat.sh")
+cheat_arguments=("cheat" "cht.sh")
 cheat_binariesinstalledpaths=("cht.sh;cheat")
 cheat_downloads=("https://cht.sh/:cht.sh;cht.sh")
 cheat_readmeline="| cheat.sh | Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages | Command \`cheat\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -441,7 +441,7 @@ cmatrix_readmelinedescription="Terminal screensaver from The Matrix"
 cmatrix_readmeline="| Cmatrix |  | Command \`cmatrix\`, function \`matrix\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 code_installationtype="userinherit"
-code_arguments=("code" "visualstudiocode" "visual-studio-code" "visual-studio")
+code_arguments=("code" "visual_studio_code" "visual_studio")
 code_bashfunctions=("alias code=\"nohup code . &>/dev/null &\"")
 code_binariesinstallpaths=("code;code")
 code_compressedfiletype="z"
@@ -641,7 +641,7 @@ docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containe
 docker_readmeline="| Docker | Containerization service | Command \`docker\`, \`containerd\`, \`containerd-shim\`, \`containerd-shim-runc-v2\`, \`ctr\`, \`dockerd\`, \`docker-init\`, \`docker-proxy\`, \`runc\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 documents_installationtype="environmental"
-documents_arguments=("documents" "google-document" "google-documents")
+documents_arguments=("documents" "google_document" "google_documents" "document")
 documents_url="https://docs.google.com/document/"
 documents_bashfunctions=("alias documents=\"nohup xdg-open ${documents_url} &>/dev/null &\"")
 documents_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;documents_icon.svg")
@@ -905,7 +905,7 @@ fetch_bashfunctions=("alias fetch=\"git fetch\"")
 fetch_readmeline="| fetch| \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ffmpeg_installationtype="packagemanager"
-ffmpeg_arguments=("ffmpeg" "youtube-dl-dependencies")
+ffmpeg_arguments=("ffmpeg" "youtube_dl_dependencies")
 ffmpeg_packagenames=("ffmpeg")
 ffmpeg_readmeline="| ffmpeg | Super fast video / audio encoder | Command \`ffmpeg\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
@@ -1124,7 +1124,7 @@ Version=1.0
 gitlab_readmeline="| GitLab | ${gitlab_readmelinedescription} | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gitprompt_installationtype="repositoryclone"
-gitprompt_arguments=("gitprompt" "git_prompt")
+gitprompt_arguments=("git_prompt")
 gitprompt_bashfunctions=("
 if [ -f ${USR_BIN_FOLDER}/gitprompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
@@ -1221,7 +1221,7 @@ gnome_tweak_tool_launchernames=("org.gnome.tweaks")
 gnome_tweak_tool_readmeline="| GNOME Tweaks | GUI for system customization | command and desktop launcher... ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 googlecalendar_installationtype="environmental"
-googlecalendar_arguments=("googlecalendar" "google_calendar")
+googlecalendar_arguments=("google_calendar")
 googlecalendar_url="https://calendar.google.com/"
 googlecalendar_bashfunctions=("alias googlecalendar=\"nohup xdg-open ${googlecalendar_url} &>/dev/null &\"")
 googlecalendar_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg;googlecalendar_icon.svg")
@@ -1356,7 +1356,7 @@ fi
 history_optimization_readmeline="| history optimization | Increased the size of bash history, store multiline commands in just one line, force append and not overwrite to history, ignore repeated commands when appending to history, deleted tracking history of some simple commands: \`ls\`, \`cd\`, \`gitk\`... | <-- || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ideac_installationtype="userinherit"
-ideac_arguments=("ideac" "intellijcommunity" "intellij_community")
+ideac_arguments=("ideac" "intellij_community")
 ideac_associatedfiletypes=("text/x-java")
 ideac_bashfunctions="alias ideac=\"nohup ideac . &>/dev/null &\""
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
@@ -1384,7 +1384,7 @@ Version=13.0
 ideac_readmeline="| intelliJ Community | ${ideac_readmelinedescription} | Command \`ideac\`, silent alias for \`ideac\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
 
 ideau_installationtype="userinherit"
-ideau_arguments=("ideau" "intellijultimate" "intellij_ultimate")
+ideau_arguments=("ideau" "intellij_ultimate")
 ideau_associatedfiletypes=("text/x-java")
 ideau_bashfunctions=("alias ideau=\"nohup ideau . &>/dev/null &\"")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
@@ -1412,7 +1412,7 @@ Version=1.0
 ideau_readmeline="| intelliJ Ultimate | ${ideau_readmelinedescription} | Command \`ideau\`, silent alias for \`ideau\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
 
 inkscape_installationtype="packagemanager"
-inkscape_arguments=("inkscape" "ink_scape")
+inkscape_arguments=("ink_scape")
 inkscape_launchernames=("inkscape")
 inkscape_packagenames=("inkscape")
 inkscape_readmeline="| Inkscape | Vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format | Command \`inkscape\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -1522,7 +1522,7 @@ Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;P
 julia_readmeline="| Julia and IJulia| ${julia_readmelinedescription} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 jupyter_lab_installationtype="pythonvenv"
-jupyter_lab_arguments=("jupyter_lab" "jupyterlab")
+jupyter_lab_arguments=("jupyter_lab")
 jupyter_lab_bashfunctions=("alias lab=\"jupyter-lab\"")
 jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
 jupyter_lab_readmelinedescription="IDE with a lot of possible customization and usable for different programming languages."
@@ -1721,7 +1721,7 @@ nedit_launchernames=("nedit")
 nedit_readmeline="| NEdit | Multi-purpose text editor and source code editor | Command \`nedit\` desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 nemo_installationtype="packagemanager"
-nemo_arguments=("nemo" "nemo_desktop" "nemodesktop")
+nemo_arguments=("nemo" "nemo_desktop")
 nemo_bashfunctions=("
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons false
@@ -2090,7 +2090,7 @@ npm_compressedfileurl="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.
 npm_readmeline="| NodeJS npm | JavaScript packagemanager for the developers. | Command \`node\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 notepadqq_installationtype="packagemanager"
-notepadqq_arguments=("notepadqq")
+notepadqq_arguments=("notepad_qq")
 notepadqq_packagenames=("notepadqq")
 notepadqq_launchernames=("notepadqq")
 notepadqq_readmeline="| Notepadqq | Text editor that is designed by developers for the developers. It supports more than 100 programming languages | Command \`notepadqq\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -2111,7 +2111,7 @@ o_readmeline="| Function \`o\` | Alias for \`nemo-desktop\` | Alias \`o\` || <ul
 
 
 obs_studio_installationtype="packagemanager"
-obs_studio_arguments=("obs_studio" "obs" "obsstudio")
+obs_studio_arguments=("obs_studio" "obs")
 obs_studio_launchernames=("com.obsproject.Studio")
 obs_studio_packagedependencies=("ffmpeg")
 obs_studio_packagenames=("obs-studio")
@@ -2150,7 +2150,7 @@ Version=1.0
 onedrive_readmeline="| OneDrive | ${onedrive_readmelinedescription} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 openoffice_installationtype="packageinstall"
-openoffice_arguments=("openoffice" "open_office")
+openoffice_arguments=("open_office")
 openoffice_compressedfileurl="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 openoffice_compressedfiletype="z"
 openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-draw" "openoffice4-math" "openoffice4-writer")
@@ -2221,7 +2221,7 @@ pacman_packagenames=("pacman")
 pacman_readmeline="| Pac-man | Implementation of the classical arcade game | Command \`pacman\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 parallel_installationtype="packagemanager"
-parallel_arguments=("parallel" "gnu_parallel" "gnuparallel")
+parallel_arguments=("parallel" "gnu_parallel")
 parallel_packagenames=("parallel")
 parallel_readmeline="| GNUparallel | Command-line driven utility for Linux and other Unix-like operating systems which allows the user to execute shell scripts or commands in parallel | Command \`parallel\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
@@ -2441,7 +2441,7 @@ push()
 push_readmeline="| \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 pycharm_installationtype="userinherit"
-pycharm_arguments=("pycharm" "pycharmcommunity" "pycharm_community")
+pycharm_arguments=("pycharm" "pycharm_community")
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharm_bashfunctions=("alias pycharm=\"pycharm . &>/dev/null &\"")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
@@ -2477,7 +2477,7 @@ pycharm_readmeline="| Pycharm Community | ${pycharm_readmelinedescription} | Com
 
 
 pycharmpro_installationtype="userinherit"
-pycharmpro_arguments=("pycharmpro" "pycharm_pro")
+pycharmpro_arguments=("pycharm_pro")
 pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharmpro_bashfunctions=("alias pycharmpro=\"pycharmpro . &>/dev/null &\"")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
@@ -2758,7 +2758,7 @@ slack_launchernames=("slack")
 slack_readmeline="| Slack | Platform to coordinate your work with a team | Icon Launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 sonic_pi_installationtype="packagemanager"
-sonic_pi_arguments=("sonic_pi" "sonicpi")
+sonic_pi_arguments=("sonic_pi")
 sonic_pi_launchernames=("sonic-pi")
 sonic_pi_packagenames=("sonic-pi")
 sonic_pi_readmeline="| Sonic Pi | programming language that ouputs sounds as compilation product | Command \`sonic-pi\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
@@ -2808,7 +2808,7 @@ steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_readmeline="| Steam | Video game digital distribution service | Command \`steam\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 studio_installationtype="userinherit"
-studio_arguments=("studio" "androidstudio" "android_studio")
+studio_arguments=("studio" "android_studio")
 studio_bashfunctions=("alias studio=\"studio . &>/dev/null &\"")
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
 studio_compressedfiletype="z"
@@ -2836,7 +2836,7 @@ studio_readmeline="| Android Studio | ${studio_readmelinedescription} | Command 
 
 sublime_keybinds=("sublime;<Primary><Alt><Super>s;Sublime Text")
 sublime_installationtype="userinherit"
-sublime_arguments=("sublime" "sublime_text" "sublimetext")
+sublime_arguments=("sublime" "sublime_text")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
 sublime_bashfunctions=("alias sublime=\"sublime . &>/dev/null &\"")
 sublime_binariesinstalledpaths=("sublime_text;sublime")
@@ -2893,7 +2893,7 @@ sysmontask_readmeline="| Sysmontask | Control panel for linux | Command \`sysmon
 sysmontask_repositoryurl="https://github.com/KrispyCamel4u/SysMonTask.git"
 
 system_fonts_installationtype="environmental"
-system_fonts_arguments=("system_fonts" "systemfonts")
+system_fonts_arguments=("system_fonts")
 system_fonts_manualcontentavailable="0;1;0"
 system_fonts_readmeline="| Change default fonts | Sets pre-defined fonts to desktop environment. | A new set of fonts is updated in the system's screen. || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
 
@@ -3202,7 +3202,7 @@ tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.4
 tomcat_readmeline="| Apache Tomcat 9.0.43 | Open-source server to run web apps written in Jakarta Server Pages | Tomcat available in \${USER_BIN_FOLDER} to deploy web apps || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li>|"
 
 tor_installationtype="packagemanager"
-tor_arguments=("tor" "tor_browser" "torbrowser")
+tor_arguments=("tor" "tor_browser")
 tor_launchernames=("torbrowser")
 tor_packagenames=("torbrowser-launcher")
 tor_readmeline="| Tor browser | Software for enabling anonymous communication by directing Internet traffic. | Command \`tor\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -3266,7 +3266,7 @@ Version=1.0
 tumblr_readmeline="| Tumblr | ${tumblr_readmelinedescription} | Command \`tumblr\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 twitch_installationtype="environmental"
-twitch_arguments=("twitch" "twitchtv" "twitch_tv")
+twitch_arguments=("twitch" "twitch_tv")
 twitch_url="https://twitch.tv/"
 twitch_bashfunctions=("alias twitch=\"nohup xdg-open ${twitch_url} &>/dev/null &\"")
 twitch_downloads=("http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png;twitch_icon.svg")
@@ -3346,7 +3346,7 @@ uget_packagenames=("uget")
 uget_readmeline="| uget | GUI utility to manage downloads | Command \`uget\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 virtualbox_installationtype="packageinstall"
-virtualbox_arguments=("virtualbox" "virtual_box")
+virtualbox_arguments=("virtual_box")
 virtualbox_launchernames=("virtualbox")
 virtualbox_packagedependencies=("libqt5opengl5")
 virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb")
@@ -3618,7 +3618,7 @@ youtube_dl_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl"
 youtube_dl_readmeline="| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command \`youtube-dl\` in the PATH and alias \`youtube-wav\` to scratch a mp3 from youtube || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 youtubemusic_installationtype="environmental"
-youtubemusic_arguments=("youtubemusic" "youtube_music")
+youtubemusic_arguments=("youtube_music")
 youtubemusic_url="https://music.youtube.com"
 youtubemusic_bashfunctions="alias youtubemusic=\"nohup xdg-open ${youtubemusic_url} &>/dev/null &\""
 youtubemusic_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg;youtubemusic_icon.svg")
