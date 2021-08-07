@@ -1496,7 +1496,7 @@ j_bashfunctions=("alias j=\"jobs -l\"")
 j_readmeline="| Function \`j\` | alias for jobs -l | Commands \`j\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 java_installationtype="userinherit"
-java_arguments=("java" "javadevelopmentkit" "java_development_kit" "java_development_kit_11" "jdk")
+java_arguments=("java" "javadevelopmentkit" "java_development_kit" "java_development_kit_11" "jdk" "jdk11")
 java_bashfunctions=("export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\"")
 java_binariesinstalledpaths=("bin/java;java")
 java_compressedfiletype="z"
