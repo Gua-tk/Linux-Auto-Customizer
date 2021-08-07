@@ -7,7 +7,7 @@
 - [ ] `functions_common.sh`: redo auto help and auto readme
 - [ ] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
 - [ ] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
-
+- [ ] `functions_common`: check correctly the keyname with type, knowing that has _ but command names are usually with -
 ###### NEW FEATURES
 - [ ] `install.sh`: Move favorites subsystem and keybinding subsystem initializations to `~/.profile`, so it is not executed each time we create a terminal. --> Create another variable type for indirect expansion for features in .profile. program add_bash_initialization or refactor add bash function to handle .profile with an argument 
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
