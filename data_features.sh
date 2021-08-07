@@ -118,59 +118,59 @@ fi
 ########################################################################################################################
 
 a_installationtype="environmental"
-a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
 a_arguments=("a")
+a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
 #a_flagsoverride="2;;;;;"
 a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 add_installationtype="environmental"
-add_bashfunctions=("alias add=\"git add\"")
 add_arguments=("add" "add_function")
+add_bashfunctions=("alias add=\"git add\"")
 #add_flagsoverride="1;;;;;"
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 aisleriot_installationtype="packagemanager"
-aisleriot_packagenames=("aisleriot")
-aisleriot_launchernames=("sol")
 aisleriot_arguments=("aisleriot" "solitaire" "gnome-solitaire")
 #aisleriot_flagsoverride="0;;;;;"
+aisleriot_launchernames=("sol")
+aisleriot_packagenames=("aisleriot")
 aisleriot_readmeline="| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 # Line of the test. The Above is refactored (not yet!). The Below is not (of course).
 
 alert_installationtype="environmental"
+alert_arguments=("alert" "alert-alias" "alias-alert")
 alert_bashfunctions=("
 # Add an alert alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i \"\$([ \$? = 0 ] && echo terminal || echo error)\" \"\$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\\'')\"'
 ")
-alert_arguments=("alert" "alert-alias" "alias-alert")
 #alert_flagsoverride="0;;;;;"
 alert_readmeline="| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ansible_installationtype="packagemanager"
-ansible_packagenames=("ansible")
 ansible_arguments=("ansible")
 #ansible_flagsoverride="0;;;;;"
+ansible_packagenames=("ansible")
 ansible_readmeline="| Ansible | Automation of software | Command \`ansible\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ant_installationtype="userinherit"
-ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
-ant_compressedfiletype="z"
-ant_binariesinstalledpaths=("bin/ant;ant")
-ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/ant\"")
 ant_arguments=("ant" "apache_ant")
+ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/ant\"")
+ant_binariesinstalledpaths=("bin/ant;ant")
+ant_compressedfiletype="z"
+ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_flagsoverride="1;;;;;"
 ant_readmeline="| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
 
 anydesk_installationtype="userinherit"
-anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
-anydesk_compressedfiletype="z"
-anydesk_binariesinstalledpaths=("anydesk;anydesk")
-anydesk_readmelinedescription="Software to remote control other computers"
 anydesk_arguments=("any_desk")
-anydesk_readmeline="| Anydesk | ${anydesk_readmelinedescription} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 anydesk_bashfunctions=("alias anydesk=\"nohup anydesk &>/dev/null &\"")
+anydesk_binariesinstalledpaths=("anydesk;anydesk")
+anydesk_compressedfiletype="z"
+anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
+anydesk_readmelinedescription="Software to remote control other computers"
+anydesk_readmeline="| Anydesk | ${anydesk_readmelinedescription} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 anydesk_launchercontents=("
 [Desktop Entry]
 Categories=Remote;control;other;
@@ -217,7 +217,7 @@ axel_packagenames=("axel")
 axel_readmeline="| Axel | Download manager | Command \`axel\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 b_installationtype="environmental"
-b_alias="alias b=\"bash\""
+b_bashfunctions=("alias b=\"bash\"")
 b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 bashcolors_installationtype="environmental"
