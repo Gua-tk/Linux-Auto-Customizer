@@ -3581,7 +3581,6 @@ xclip_arguments=("x_clip")
 xclip_packagenames=("xclip")
 xclip_readmeline="| \`xclip\` | Utility for pasting. | Command \`xclip\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
-
 youtube_installationtype="environmental"
 youtube_arguments=("youtube")
 youtube_url="https://youtube.com/"

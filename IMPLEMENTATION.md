@@ -6,14 +6,11 @@
 
 - [ ] `functions_common.sh`: redo auto help and auto readme
 - [ ] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
-- [ ] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
 - [~] `functions_common`: check correctly the keyname with type, knowing that has _ but command names are usually with -
 ###### NEW FEATURES
-- [ ] `install.sh`: Move favorites subsystem and keybinding subsystem initializations to `~/.profile`, so it is not executed each time we create a terminal. --> Create another variable type for indirect expansion for features in .profile. program add_bash_initialization or refactor add bash function to handle .profile with an argument 
+- [ ] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions) # https://tldp.org/LDP/abs/html/tabexpansion.html
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `install.sh`, `uninstall.sh`: Add npm packagemanager installationtype
-- [ ] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions) # https://tldp.org/LDP/abs/html/tabexpansion.html
-- [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`...) depending on which is the main package-manager
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
@@ -25,10 +22,9 @@
                             - decompress in a folder optionally
                             - inform if the package needed is not present and installs it
                             - grow it with the code already in decompress which handles already most common cases ;)
-- [ ] `data_features.sh`: fix sysmontask, which cannot be installed being user (run setup.py). You can clone it and install it in portable mode as user, but the explicit instllation has to be done with root.  
 - [ ] `install.sh`: [Fix Nemo autostart](https://ubuntuforums.org/showthread.php?t=2400084)
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
-- [ ] `screenshots`: Screenshots need proper key bindings. --> probably the screenshots bashfunctions are not present in the same environment that 
+- [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
        system-wide, not only on the bash environment.
@@ -81,7 +77,8 @@
 - [ ] `uninstall.sh`: Rewrite `uninstall.sh` using generic_uninstall to uninstall the features.
 - [ ] `functions_uninstall.sh`: create functions to respond to the different installationtypes
 - [ ] `functions_uninstall.sh`: refactor to customizer standards the commentaries and headers of uninstall.
-- [ ] `functions_uninstall`: function to delete all installations and the common structures 
+- [ ] `functions_uninstall`: function to delete all installations and the common structures
+- [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`...) depending on which is the main package-manager
 - [ ] `uninstall.sh`: OpenOffice apt-get remove -y libreoffice-base-core libreoffice-impress libreoffice-calc
       libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport
       libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 

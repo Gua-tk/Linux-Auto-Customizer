@@ -91,6 +91,8 @@
 - [x] all: unset or set to local variables that are needed only locally
 - [ ] `functions_common.sh`: process argument validation in add program instead of execute_installation, to stop installation if a permission mismatch is found
 - [ ] `functions_common.sh`: Allow to match against arguments with different case and different - or _
+- [x] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
+- [x] `data_features.sh`: fix sysmontask, which cannot be installed being user (run setup.py). You can clone it and install it in portable mode as user, but the explicit instllation has to be done with root.  
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -171,3 +173,4 @@
 - [x] `install.sh`, `uninstall.sh`: Mdadm (raid manager)
 - [x] `data_features.sh`, `common_data.sh`: `autoclean` performs different automatic optimizations to release space and delete cluttering such as broken links or broken installations (?) # alias autoclean="sudo apt-get -y autoclean && sudo apt-get -y autoremove"  alias trash="rm -rf ${HOME}/.local/share/Trash/*"
 - [ ] `data_features.sh`, `data_common.sh`: move each readme line for every feature to the corresponding feature 
+- [x] `install.sh`: Move favorites subsystem and keybinding subsystem initializations to `~/.profile`, so it is not executed each time we create a terminal. --> Create another variable type for indirect expansion for features in .profile. program add_bash_initialization or refactor add bash function to handle .profile with an argument 
