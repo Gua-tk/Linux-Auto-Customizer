@@ -87,6 +87,7 @@ fi
 # - FEATUREKEYNAME_launchercontents: Array of contents of launchers to be created (all)
 # - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be added in .bashrc (all)
 # - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature.
+#   Optionally, with ; you can specify the chosen desktopn file without .desktop extension.
 # - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature (all). Each keybind has 3 fields separated
 #   from each other using ";": Command;key_combination;keybind_description. It needs a desktop launcher
 # - FEATUREKEYNAME_downloads: Array of links to avalid donwload file separated by ";" from the desired name for that file.
@@ -109,6 +110,7 @@ fi
 #   If we want to override permissions for being executed as root at all times:
 #   FEATUREKEYNAME_flagsoverride="0;;;;;"
 # - FEATUREKEYNAME_bashinitializations: Array containing scripts that are added to ${HOME_FOLDER}/.profile
+# - FEATUREKEYNAME_autostartlaunchers: Array containing autostart system properties of features
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
 ########################################################################################################################
@@ -1244,6 +1246,11 @@ googlecalendar_readmeline="| Google Calendar | ${googlecalendar_readmelinedescri
 
 google_chrome_installationtype="packageinstall"
 google_chrome_arguments=("google_chrome")
+google_chrome_bashfunctions=("
+google-chrome() {
+  nohup google-chrome &>/dev/null &
+}
+")
 google_chrome_flagsoverride=";;;;1;"
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
@@ -2043,6 +2050,7 @@ Name[zh_TW]=回收筒
 Exec=nemo trash:///
 ")
 nemo_readmeline="| Nemo Desktop | Access and organise files | Command \`nemo\` for the file manager, and \`nemo-desktop\` for the desktop manager service. Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+nemo_autostartlaunchers=("nemo-desktop")
 
 netflix_installationtype="environmental"
 netflix_arguments=("netflix")
@@ -2152,7 +2160,6 @@ openoffice_compressedfileurl="https://downloads.sourceforge.net/project/openoffi
 openoffice_compressedfiletype="z"
 openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-draw" "openoffice4-math" "openoffice4-writer")
 openoffice_readmeline="| OpenOffice | Office suite for open-source systems | Command \`openoffice4\` in PATH, desktop launchers for \`base\`, \`calc\`, \`draw\`, \`math\` and \`writer\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-#openoffice_associatedfiletypes=("")
 
 openssl102_installationtype="packageinstall"
 openssl102_arguments=("openssl102")

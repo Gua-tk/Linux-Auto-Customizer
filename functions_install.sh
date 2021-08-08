@@ -78,7 +78,7 @@ add_to_favorites() {
   for argument in "$@"; do
     if [ -z "$(cat "${PROGRAM_FAVORITES_PATH}" | grep -Eo "${argument}")" ]; then
       if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
-        echo "${argument}.desktop" >>"${PROGRAM_FAVORITES_PATH}"
+        echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
       else
         output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
         return
@@ -427,13 +427,13 @@ generic_install_functions() {
 }
 
 
-# - Description: Expands launcher names and add them to the favorites subsystem if FLAF_FAVORITES is set to 1.
+# - Description: Expands launcher names and add them to the favorites subsystem if FLAG_FAVORITES is set to 1.
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_launchernames
 #   and the name of the first argument in the common_data.sh table.
 generic_install_favorites() {
   local -r launchernames="$1_launchernames[@]"
-
+  
   # To add to favorites if the flag is set
   if [ "${FLAG_FAVORITES}" == "1" ]; then
     if [ ! -z "${!launchernames}" ]; then
@@ -444,7 +444,6 @@ generic_install_favorites() {
       add_to_favorites "$1"
     fi
   fi
-
 }
 
 
@@ -455,7 +454,12 @@ generic_install_favorites() {
 generic_install_file_associations() {
   local -r associated_file_types="$1_associatedfiletypes[@]"
   for associated_file_type in ${!associated_file_types}; do
-    register_file_associations "${associated_file_type}" "$1.desktop"
+    if [ ! -z "$(echo "${associated_file_type}" | grep -Fo ";")" ]; then
+      local associated_desktop="$(echo "${associated_file_type}" | cut -d ";" -f2)"
+    else
+      local associated_desktop="$1"
+    fi
+    register_file_associations "${associated_file_type}" "${associated_desktop}.desktop"
   done
 }
 
@@ -496,7 +500,7 @@ generic_install_downloads() {
 #   and associating it to all the launchers in $1_launchernames
 generic_install_autostart() {
   local -r launchernames="$1_launchernames[@]"
-
+  local -r autostartlaunchers="$1_autostartlaunchers[@]"
   if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
     if [ -n "${!launchernames}" ]; then
       for launchername in ${!launchernames}; do
@@ -504,16 +508,6 @@ generic_install_autostart() {
       done
     else
       autostart_program "$1"
-    fi
-  else
-    if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
-      if [ -n "${!launchernames}" ]; then
-        for launchername in ${!launchernames}; do
-          autostart_program "${launchername}"
-        done
-      else
-        autostart_program "$1"
-      fi
     fi
   fi
 }

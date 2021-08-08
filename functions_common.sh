@@ -194,7 +194,7 @@ add_program()
     if [ ! -z "${!flags_override_pointer}" ]; then  # If flagsoverride property is defined for this feature
       flags_override_stringbuild="${!flags_override_pointer}"
     else  # flagsoverride not defined, load template
-      flags_override_stringbuild="${flags_overrides_template}"
+      flags_override_stringbuild="${flagsoverride_template}"
     fi
 
     # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
@@ -291,6 +291,8 @@ add_program()
       flag_autostart=${FLAG_AUTOSTART}  # If not present in override, inherit from runtime flags
     fi
     flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "6" "${flag_autostart}")"
+    echo "${flags_override_stringbuild}"
+    echo mamaaaa
 
     # At this point flags_override_stringbuild have all flags merged inside (override and runtime)
 
