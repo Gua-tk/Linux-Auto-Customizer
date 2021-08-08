@@ -94,9 +94,8 @@ install_pypy3_mid() {
 
 install_sysmontask_mid() {
   (
-    :
-    #cd ${USR_BIN_FOLDER}/sysmontask
-    #python3 setup.py install
+    cd "${USR_BIN_FOLDER}/sysmontask"
+    python3 setup.py install
   )
 }
 

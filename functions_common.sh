@@ -33,11 +33,11 @@ output_proxy_executioner() {
     local echo_command_arguments="$(echo "$1" | sed '1 s@^echo @@')"
     local -r echo_message_type="$(echo "${echo_command_arguments}" | head -1 | cut -d ":" -f1)"
     if [ "${echo_message_type}" == "WARNING" ]; then
-      echo_processed_command+="\e[33m"  # Activate yellow colour
+      echo_processed_command+="\e[33m"  # Activate yellow color
     elif [ "${echo_message_type}" == "INFO" ]; then
-      echo_processed_command+="\e[36m"  # Activate cyan colour
+      echo_processed_command+="\e[36m"  # Activate cyan color
     elif [ "${echo_message_type}" == "ERROR" ]; then
-      echo_processed_command+="\e[91m"  # Activate red colour
+      echo_processed_command+="\e[91m"  # Activate red color
     fi
     # If we need to process an echo and we are not in full quietness mode print the prefix with date for each echo
     echo_processed_command+="$(date +%Y-%m-%d_%T) -- "

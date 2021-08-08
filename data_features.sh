@@ -2886,6 +2886,7 @@ StartupWMClass=synaptic
 
 sysmontask_installationtype="repositoryclone"
 sysmontask_arguments=("sysmontask")
+sysmontask_flagsoverride="0;;;;;"  # To install the cloned software it has to be run as root
 sysmontask_bashfunctions=("alias sysmontask=\"nohup sysmontask &>/dev/null &\"")
 sysmontask_launchernames=("SysMonTask")
 sysmontask_manualcontentavailable="0;1;0"
@@ -3579,7 +3580,7 @@ x() {
 x_readmeline="| Function \`x\` | Function to extract from a compressed file, no matter its format | Function \`x \"filename\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 xclip_installationtype="packagemanager"
-xclip_arguments=("xclip")
+xclip_arguments=("x_clip")
 xclip_packagenames=("xclip")
 xclip_readmeline="| \`xclip\` | Utility for pasting. | Command \`xclip\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
@@ -3618,9 +3619,14 @@ youtube_dl_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl"
 youtube_dl_readmeline="| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command \`youtube-dl\` in the PATH and alias \`youtube-wav\` to scratch a mp3 from youtube || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 youtubemusic_installationtype="environmental"
-youtubemusic_arguments=("youtube_music")
 youtubemusic_url="https://music.youtube.com"
-youtubemusic_bashfunctions="alias youtubemusic=\"nohup xdg-open ${youtubemusic_url} &>/dev/null &\""
+youtubemusic_filekeys=("youtubemusicscript")
+youtubemusic_youtubemusicscript_path="youtubemusic.sh"
+youtubemusic_youtubemusicscript_content="
+nohup xdg-open ${youtubemusic_url} &>/dev/null &
+"
+youtubemusic_binariesinstalledpaths=("youtubemusic.sh;youtubemusic")
+youtubemusic_arguments=("youtube_music")
 youtubemusic_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg;youtubemusic_icon.svg")
 youtubemusic_readmelinedescription="YouTube music opens in Chrome."
 youtubemusic_launchercontents=("

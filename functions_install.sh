@@ -111,11 +111,21 @@ autostart_program() {
 # - Permissions: This functions can be called as root or user.
 # Argument 1: Path to the file or directory whose permissions are changed.
 apply_permissions() {
-  if [ ${EUID} == 0 ]; then # root
-    chgrp "${SUDO_USER}" "$1"
-    chown "${SUDO_USER}" "$1"
+  if [ -f "$1" ]; then
+    if [ ${EUID} == 0 ]; then  # file
+      chgrp "${SUDO_USER}" "$1"
+      chown "${SUDO_USER}" "$1"
+    fi
+    chmod 755 "$1"
+  elif [ -d "$1" ]; then
+    if [ ${EUID} == 0 ]; then  # directory
+      chgrp "${SUDO_USER}" "$1"
+      chown "${SUDO_USER}" "$1"
+    fi
+    chmod 755 "$1"
+  else
+    output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." ${FLAG_QUIETNESS}
   fi
-  chmod 755 "$1"
 }
 
 
@@ -531,6 +541,19 @@ generic_install_files() {
 }
 
 
+# - Description: Expands $1_copy_launcher to obtain the name of the launcher to be copied explicitly
+#   from /usr/share/applications
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_launchernames
+generic_install_copy_launcher() {
+ # Name of the launchers to be used by copy_launcher
+  local -r launchernames="$1_launchernames[@]"
+  # Copy launchers if defined
+  for launchername in ${!launchernames}; do
+    copy_launcher "${launchername}.desktop"
+  done
+
+}
 # - Description: Installs a user program in a generic way relying on variables declared in data_features.sh and the name
 #   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
 #   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
@@ -545,7 +568,6 @@ generic_install() {
   local -r featurename=$(echo "$1" | sed "s@-@_@g")
   local -r installationtype=${featurename}_installationtype
   local -r manualcontentavailable="$1_manualcontentavailable"
-
   if [ ! -z "${!installationtype}" ]; then
 
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
@@ -588,12 +610,14 @@ generic_install() {
     generic_install_downloads "${featurename}"
     generic_install_files "${featurename}"
     generic_install_launchers "${featurename}"
+    generic_install_copy_launcher "${featurename}"
     generic_install_functions "${featurename}"
     generic_install_autostart "${featurename}"
     generic_install_favorites "${featurename}"
     generic_install_file_associations "${featurename}"
     generic_install_keybindings "${featurename}"
     generic_install_pathlinks "${featurename}"
+
 
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
       "install_$1_post"
@@ -644,8 +668,6 @@ repositoryclone_installation_type() {
 rootgeneric_installation_type() {
   # Declare name of variables for indirect expansion
 
-  # Name of the launchers to be used by copy_launcher
-  local -r launchernames="$1_launchernames[@]"
   # Other dependencies to install with the package manager before the main package of software if present
   local -r packagedependencies="$1_packagedependencies[@]"
   # Name of the package names to be installed with the package manager if present
@@ -679,11 +701,6 @@ rootgeneric_installation_type() {
       apt-get install -y "${packagename}"
     done
   fi
-
-  # Copy launchers if defined
-  for launchername in ${!launchernames}; do
-    copy_launcher "${launchername}.desktop"
-  done
 }
 
 
