@@ -5,7 +5,6 @@
 ###### UPDATES
 
 - [ ] `functions_common.sh`: redo auto help and auto readme
-- [ ] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
 - [~] `functions_common`: check correctly the keyname with type, knowing that has _ but command names are usually with -
 ###### NEW FEATURES
 - [ ] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions) # https://tldp.org/LDP/abs/html/tabexpansion.html
@@ -44,7 +43,7 @@
 - [ ] `install.sh`: Add VBox extension pack
 - [ ] `install.sh`: SublimeText-Markdown, & other plugins for programs...
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server: alias sshDisable="sudo systemctl disable sshd", alias sshEnable="sudo systemctl enable ssh", alias sshRestart="sudo systemctl restart sshd", alias sshStart="sudo systemctl start sshd", alias sshStatus="sudo systemctl status sshd", alias sshStop="sudo systemctl stop sshd"  
-- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client
+- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client user disposable environment features if possible
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: `Google`/`translator` internet shortcut launcher.
@@ -108,3 +107,4 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] Implement meaningful changelogs by following patterns in commit messages. Also squash commits that program a single feature
 - [ ] Creation of \`customizer.py\`file as an alternative endpoint for customizer.sh. We can use it to give to it a graphical interface (GUI)
 - [x] Server running programs / ports management localhost --> Jupyterlab is this kind of feature, which means this is already implemented.
+- [ ] Update repository list sourcing customizer's

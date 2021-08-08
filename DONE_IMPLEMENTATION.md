@@ -93,6 +93,7 @@
 - [ ] `functions_common.sh`: Allow to match against arguments with different case and different - or _
 - [x] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
 - [x] `data_features.sh`: fix sysmontask, which cannot be installed being user (run setup.py). You can clone it and install it in portable mode as user, but the explicit instllation has to be done with root.  
+- [x] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter

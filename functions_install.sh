@@ -433,11 +433,11 @@ generic_install_functions() {
 #   and the name of the first argument in the common_data.sh table.
 generic_install_favorites() {
   local -r launchernames="$1_launchernames[@]"
-  
+
   # To add to favorites if the flag is set
   if [ "${FLAG_FAVORITES}" == "1" ]; then
-    if [ ! -z "${!launchernames}" ]; then
-      for launchername in "${!launchernames}"; do
+    if [ -n "$(echo "${!launchernames}")" ]; then
+      for launchername in ${!launchernames}; do
         add_to_favorites "${launchername}"
       done
     else

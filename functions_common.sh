@@ -291,9 +291,6 @@ add_program()
       flag_autostart=${FLAG_AUTOSTART}  # If not present in override, inherit from runtime flags
     fi
     flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "6" "${flag_autostart}")"
-    echo "${flags_override_stringbuild}"
-    echo mamaaaa
-
     # At this point flags_override_stringbuild have all flags merged inside (override and runtime)
 
     # Declare runtime flags for accession in execute_feature
