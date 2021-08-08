@@ -70,12 +70,18 @@ declare -r USR_BIN_FOLDER=${HOME_FOLDER}/.bin
 declare -r BASH_FUNCTIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_functions
 # Path pointing to the folder containing all the scripts of the bash functions
 declare -r BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
+# Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start
+declare -r PROFILE_PATH=${HOME_FOLDER}/.profile
+# Path pointing to our internal file for initializations
+declare -r BASH_INITIALIZATIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_profile
+# Path pointing to the folder which contains the initialization bash scripts
+declare -r BASH_INITIALIZATIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
 # Path pointing to a folder that contains the desktop launchers of all users
 declare -r ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
 # File that contains the association of mime types with .desktop files
 declare -r MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
 # Default favorites list, data to set favorites
-declare -r PROGRAM_FAVORITES_PATH="${BASH_FUNCTIONS_FOLDER}/favorites.txt"
+declare -r PROGRAM_FAVORITES_PATH="${BASH_INITIALIZATIONS_FOLDER}/favorites.txt"
 # Default keybind list< data to set custom keybindings
 declare -r PROGRAM_KEYBIND_PATH="${BASH_FUNCTIONS_FOLDER}/keybinds.txt"
 # Default user's fonts folder
@@ -104,6 +110,12 @@ FLAG_SKIP_PRIVILEGES_CHECK=0
 #                 3                    4                5                 6
 # flags ${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
 
+bash_functions_import="
+source ${BASH_FUNCTIONS_PATH}
+"
+bash_initializations_import="
+source ${BASH_INITIALIZATIONS_PATH}
+"
 flagsoverride_template=";;;;;"
 flagsoverride_number=$(( ${#flagsoverride_template}+1 ))
 
@@ -374,7 +386,7 @@ declare -r help_common="\e[0m
 [sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|
                        [-e|--exit-on-error]]
 
-                       [[-f|--force]|[-o|--overwrite|--overwrite-if-present]|
+                       [[-f|--favorites|--set-favorites]|[-o|--overwrite|--overwrite-if-present]|
                        [-s|--skip|--skip-if-installed]]
 
                        [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]

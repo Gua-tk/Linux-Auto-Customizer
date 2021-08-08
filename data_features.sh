@@ -51,10 +51,6 @@ fi
 ################################### DATA FOR COMMON INSTALLATION CAPABILITIES ##########################################
 ########################################################################################################################
 
-
-bash_functions_import="
-source ${BASH_FUNCTIONS_PATH}
-"
 bash_functions_init="
 # If not running interactively, don't do anything
 case \$- in
@@ -93,7 +89,6 @@ fi
 # - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature.
 # - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature (all). Each keybind has 3 fields separated
 #   from each other using ";": Command;key_combination;keybind_description. It needs a desktop launcher
-# - FEATUREKEYNAME_autostart: Overrides the autostart flag. Set to "yes" in order to autostart the application.
 # - FEATUREKEYNAME_downloads: Array of links to avalid donwload file separated by ";" from the desired name for that file.
 #   It will downloaded in ${USR_BIN_FOLDER}/APPNAME/DESIREDFILENAME
 # - FEATUREKEYNAME_repositoryurl: Repository to be cloned. (repositoryclone)
@@ -113,6 +108,7 @@ fi
 #   ${FLAG_PERMISSION};${FLAG_IGNORE_ERRORS};${FLAG_OVERWRITE};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
 #   If we want to override permissions for being executed as root at all times:
 #   FEATUREKEYNAME_flagsoverride="0;;;;;"
+# - FEATUREKEYNAME_bashinitializations: Array containing scripts that are added to ${HOME_FOLDER}/.profile
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
 ########################################################################################################################
@@ -1248,6 +1244,7 @@ googlecalendar_readmeline="| Google Calendar | ${googlecalendar_readmelinedescri
 
 google_chrome_installationtype="packageinstall"
 google_chrome_arguments=("google_chrome")
+google_chrome_flagsoverride=";;;;1;"
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
 google_chrome_launchernames=("google-chrome")

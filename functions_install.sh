@@ -33,7 +33,26 @@ add_bash_function() {
 
   # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
   if [ -z "$(cat "${BASH_FUNCTIONS_PATH}" | grep -Fo "source ${BASH_FUNCTIONS_FOLDER}/$2")" ]; then
-    echo "source ${BASH_FUNCTIONS_FOLDER}/$2" >>"${BASH_FUNCTIONS_PATH}"
+    echo "source ${BASH_FUNCTIONS_FOLDER}/$2" >> "${BASH_FUNCTIONS_PATH}"
+  fi
+}
+
+
+# - Description: Installs a new bash feature into $BASH_INITIALIZATIONS_PATH is run once when the system starts.
+# - Permissions: Can be called as root or as normal user presumably with the same behaviour.
+# - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
+# - Argument 2: Name of the file.
+add_bash_initialization() {
+  # Write code to bash initializations folder with the name of the feature we want to install
+  create_file "${BASH_INITIALIZATIONS_FOLDER}/$2" "$1"
+  # If we are root apply permission to the file
+  if [ ${EUID} == 0 ]; then
+    apply_permissions "${BASH_INITIALIZATIONS_FOLDER}/$2"
+  fi
+
+  # Add import_line to .bash_profile (BASH_INITIALIZATIONS_PATH)
+  if [ -z "$(cat "${BASH_INITIALIZATIONS_PATH}" | grep -Fo "source ${BASH_INITIALIZATIONS_FOLDER}/$2")" ]; then
+    echo "source ${BASH_INITIALIZATIONS_FOLDER}/$2" >> "${BASH_INITIALIZATIONS_PATH}"
   fi
 }
 
@@ -44,7 +63,7 @@ add_bash_function() {
 # Argument 2: Set of keys with the right format to be binded.
 # Argument 3: Descriptive name of the keybinding.
 add_keybinding() {
-  echo "$1;$2;$3" >>"${PROGRAM_KEYBIND_PATH}"
+  echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
 }
 
 
@@ -416,7 +435,7 @@ generic_install_favorites() {
   local -r launchernames="$1_launchernames[@]"
 
   # To add to favorites if the flag is set
-  if [ "${favorite_bit}" == "1" ]; then
+  if [ "${FLAG_FAVORITES}" == "1" ]; then
     if [ ! -z "${!launchernames}" ]; then
       for launchername in "${!launchernames}"; do
         add_to_favorites "${launchername}"
@@ -476,10 +495,9 @@ generic_install_downloads() {
 # - Argument 1: Name of the feature to install, matching the variable $1_autostart
 #   and associating it to all the launchers in $1_launchernames
 generic_install_autostart() {
-  local -r autostart="$1_autostart"
   local -r launchernames="$1_launchernames[@]"
 
-  if [ "${!autostart}" == "yes" ]; then
+  if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
     if [ -n "${!launchernames}" ]; then
       for launchername in ${!launchernames}; do
         autostart_program "${launchername}"
@@ -488,7 +506,7 @@ generic_install_autostart() {
       autostart_program "$1"
     fi
   else
-    if [ "${autostart_bit}" == 1 ]; then
+    if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
       if [ -n "${!launchernames}" ]; then
         for launchername in ${!launchernames}; do
           autostart_program "${launchername}"
@@ -537,7 +555,6 @@ generic_install_files() {
       create_file "${USR_BIN_FOLDER}/$1/${!path}" "${!content}"
     fi
   done
-
 }
 
 
@@ -552,8 +569,23 @@ generic_install_copy_launcher() {
   for launchername in ${!launchernames}; do
     copy_launcher "${launchername}.desktop"
   done
-
 }
+
+
+# - Description: Expands function system initialization relative to ${HOME_FOLDER}/.profile
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_bashinitializations
+#   and the name of the first argument in the common_data.sh table
+generic_install_initializations() {
+  local -r bashinitializations="$1_bashinitializations[@]"
+  name_suffix_anticollision=""
+  for bashinit in "${!bashinitializations}"; do
+    add_bash_function "${bashinit}" "$1${name_suffix_anticollision}.sh"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
+}
+
+
 # - Description: Installs a user program in a generic way relying on variables declared in data_features.sh and the name
 #   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
 #   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
@@ -612,6 +644,7 @@ generic_install() {
     generic_install_launchers "${featurename}"
     generic_install_copy_launcher "${featurename}"
     generic_install_functions "${featurename}"
+    generic_install_initializations "${featurename}"
     generic_install_autostart "${featurename}"
     generic_install_favorites "${featurename}"
     generic_install_file_associations "${featurename}"
@@ -764,12 +797,15 @@ data_and_file_structures_initialization() {
   create_folder "${DIR_IN_PATH}"
   create_folder "${PERSONAL_LAUNCHERS_DIR}"
   create_folder "${FONTS_FOLDER}"
-
+  create_folder "${BASH_INITIALIZATIONS_FOLDER}"
   # Initialize bash functions
   if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
     create_file "${BASH_FUNCTIONS_PATH}"
   fi
-
+  # Initialize ${HOME_FOLDER}/.profile initializations
+  if [ ! -f "${BASH_INITIALIZATIONS_PATH}" ]; then
+    create_file "${BASH_INITIALIZATIONS_PATH}"
+  fi
   # Updates initializations
   # Avoid running bash functions non-interactively
   # Adds to the path the folder where we will put our soft links
@@ -778,7 +814,7 @@ data_and_file_structures_initialization() {
   if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
     create_file "${PROGRAM_FAVORITES_PATH}"
   fi
-  add_bash_function "${favorites_function}" "favorites.sh"
+  add_bash_initialization "${favorites_function}" "favorites.sh"
 
   # Create and / or update built-in keybinding subsystem
   if [ ! -f "${PROGRAM_KEYBIND_PATH}" ]; then
@@ -788,7 +824,11 @@ data_and_file_structures_initialization() {
 
   # Make sure that .bashrc sources .bash_functions
   if [ -z "$(cat "${BASHRC_PATH}" | grep -Fo "source "${BASH_FUNCTIONS_PATH}"")" ]; then
-    echo -e "${bash_functions_import}" >>${BASHRC_PATH}
+    echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
+  fi
+  # Make sure that .profile sources .bash_initializations
+  if [ -z "$(cat "${PROFILE_PATH}" | grep -Fo "source "${BASH_INITIALIZATIONS_PATH}"")" ]; then
+    echo -e "${bash_initializations_import}" >> ${PROFILE_PATH}
   fi
 }
 
