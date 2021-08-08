@@ -24,7 +24,8 @@
                             - do not rely only in extension
                             - decompress in a folder optionally
                             - inform if the package needed is not present and installs it
-                            - grow it with the code already in decompress which handles already most common cases ;) 
+                            - grow it with the code already in decompress which handles already most common cases ;)
+- [ ] `data_features.sh`: fix sysmontask, which cannot be installed being user (run setup.py). You can clone it and install it in portable mode as user, but the explicit instllation has to be done with root.  
 - [ ] `install.sh`: [Fix Nemo autostart](https://ubuntuforums.org/showthread.php?t=2400084)
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 - [ ] `screenshots`: Screenshots need proper key bindings. --> probably the screenshots bashfunctions are not present in the same environment that 

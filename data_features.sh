@@ -1522,7 +1522,7 @@ Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;P
 julia_readmeline="| Julia and IJulia| ${julia_readmelinedescription} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 jupyter_lab_installationtype="pythonvenv"
-jupyter_lab_arguments=("jupyter_lab")
+jupyter_lab_arguments=("jupyter_lab" "jupyter")
 jupyter_lab_bashfunctions=("alias lab=\"jupyter-lab\"")
 jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
 jupyter_lab_readmelinedescription="IDE with a lot of possible customization and usable for different programming languages."

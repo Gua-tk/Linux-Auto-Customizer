@@ -45,10 +45,10 @@ install_jupyter_lab_pre() {
 
 install_jupyter_lab_mid() {
   # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension install @telamonian/theme-darcula
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" labextension enable @telamonian/theme-darcula
+  "${USR_BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension install @telamonian/theme-darcula
+  "${USR_BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension enable @telamonian/theme-darcula
 
-  "${USR_BIN_FOLDER}/jupyter-lab/bin/jupyter" lab build
+  "${USR_BIN_FOLDER}/jupyter_lab/bin/jupyter" lab build
 
   # ijs legacy install
   npm config set prefix "${HOME_FOLDER}/.local"
@@ -56,12 +56,12 @@ install_jupyter_lab_mid() {
   ijsinstall
 
   # Set up IRKernel for R-jupyter
-  R -e "install.packages('IRkernel')
-install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
-                  repos = c('http://irkernel.github.io/',
-                  getOption('repos')),
-                  type = 'source')
-IRkernel::installspec()"
+  # R -e "install.packages('IRkernel')
+  # install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
+  #                repos = c('http://irkernel.github.io/',
+  #                getOption('repos')),
+  #                type = 'source')
+  # IRkernel::installspec()"
 
   # install jupyter-lab dependencies down
   julia -e '#!/.local/bin/julia
@@ -94,8 +94,9 @@ install_pypy3_mid() {
 
 install_sysmontask_mid() {
   (
-    cd ${USR_BIN_FOLDER}/sysmontask
-    python3 setup.py install
+    :
+    #cd ${USR_BIN_FOLDER}/sysmontask
+    #python3 setup.py install
   )
 }
 
