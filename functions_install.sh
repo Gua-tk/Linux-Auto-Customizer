@@ -466,7 +466,7 @@ generic_install_file_associations() {
 #   and the name of the first argument in the common_data.sh table
 generic_install_keybindings() {
   local -r keybinds="$1_keybinds[@]"
-  for keybind in ${!keybinds}; do
+  for keybind in "${!keybinds}"; do
     local command="$(echo "${keybind}" | cut -d ";" -f1)"
     local bind="$(echo "${keybind}" | cut -d ";" -f2)"
     local binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
@@ -811,16 +811,16 @@ data_and_file_structures_initialization() {
   # Adds to the path the folder where we will put our soft links
   add_bash_function "${bash_functions_init}" "init.sh"
   # Create and / or update built-in favourites subsystem
-  if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
-    create_file "${PROGRAM_FAVORITES_PATH}"
-  fi
-  add_bash_initialization "${favorites_function}" "favorites.sh"
+  #if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
+    #create_file "${PROGRAM_FAVORITES_PATH}"
+  #fi
+  #add_bash_initialization "${favorites_function}" "favorites.sh"
 
   # Create and / or update built-in keybinding subsystem
   if [ ! -f "${PROGRAM_KEYBIND_PATH}" ]; then
     create_file "${PROGRAM_KEYBIND_PATH}"
   fi
-  add_bash_function "${keybind_function}" "keybind.sh"
+  add_bash_initialization "${keybind_function}" "keybind.sh"
 
   # Make sure that .bashrc sources .bash_functions
   if [ -z "$(cat "${BASHRC_PATH}" | grep -Fo "source "${BASH_FUNCTIONS_PATH}"")" ]; then

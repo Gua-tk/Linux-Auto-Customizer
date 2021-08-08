@@ -83,7 +83,7 @@ declare -r MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
 # Default favorites list, data to set favorites
 declare -r PROGRAM_FAVORITES_PATH="${BASH_INITIALIZATIONS_FOLDER}/favorites.txt"
 # Default keybind list< data to set custom keybindings
-declare -r PROGRAM_KEYBIND_PATH="${BASH_FUNCTIONS_FOLDER}/keybinds.txt"
+declare -r PROGRAM_KEYBIND_PATH="${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt"
 # Default user's fonts folder
 declare -r FONTS_FOLDER=${HOME_FOLDER}/.fonts
 # Here we store the .desktop launchers of the programs we want to autostart
