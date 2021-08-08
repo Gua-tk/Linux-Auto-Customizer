@@ -215,7 +215,7 @@ add_program()
     # No need to pass to the execute installation the override, it can be processed here
     # Process flag_overwrite. if installation is already present show error
     if [ ${flag_overwrite} -eq 0 ]; then
-      type "${matched_keyname}" &>/dev/null
+      type "$(echo "${matched_keyname}" | tr "_" "-")" &>/dev/null  # Change of _ to - again to allow the matches of commands that have - in its name
       if [ $? -eq 0 ]; then
         output_proxy_executioner "echo WARNING: ${matched_keyname} is already installed. Continuing installation without this program... Use -o to overwrite this program" ${FLAG_QUIETNESS}
         return 1
