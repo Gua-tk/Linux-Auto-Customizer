@@ -919,7 +919,7 @@ fonts_alegreya_sans_installationtype="userinherit"
 fonts_alegreya_sans_arguments=("fonts_alegreya_sans")
 fonts_alegreya_sans_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_alegreya_sans_compressedfiletype="zip"
-fonts_alegreya_sans_compressedfileurls=("https://fonts.google.com/download?family=Alegreya%20Sans")
+fonts_alegreya_sans_compressedfileurl="https://fonts.google.com/download?family=Alegreya%20Sans"
 fonts_alegreya_sans_readmeline="| fonts-alegreya_sans | Installs font | Install alegreya font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_firacode_installationtype="packagemanager"
@@ -941,20 +941,20 @@ fonts_lato_installationtype="userinherit"
 fonts_lato_arguments=("fonts_lato")
 fonts_lato_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_lato_compressedfiletype="zip"
-fonts_lato_compressedfileurls=("https://fonts.google.com/download?family=Lato")
+fonts_lato_compressedfileurl="https://fonts.google.com/download?family=Lato"
 fonts_lato_readmeline="| fonts-lato | Installs font | Install lato font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_noto_sans_installationtype="userinherit"
 fonts_noto_sans_arguments=("fonts_noto_sans")
 fonts_noto_sans_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_noto_sans_compressedfiletype="zip"
-fonts_noto_sans_compressedfileurls=("https://fonts.google.com/download?family=Noto%20Sans")
+fonts_noto_sans_compressedfileurl="https://fonts.google.com/download?family=Noto%20Sans"
 fonts_noto_sans_readmeline="| fonts-noto_sans | Installs font| Install noto_sans font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fonts_oswald_installationtype="userinherit"
 fonts_oswald_arguments=("fonts_oswald")
 fonts_oswald_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_oswald_compressedfileurls=("https://fonts.google.com/download?family=Oswald")
+fonts_oswald_compressedfileurl="https://fonts.google.com/download?family=Oswald"
 fonts_oswald_compressedfiletype="zip"
 fonts_oswald_readmeline="| fonts-oswald | Installs font| Install oswald font || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 

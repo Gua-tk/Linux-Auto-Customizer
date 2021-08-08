@@ -551,7 +551,6 @@ generic_install() {
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
       "install_$1_pre"
     fi
-
     case ${!installationtype} in
       # Using package manager such as apt-get
       packagemanager)
@@ -582,7 +581,6 @@ generic_install() {
         exit 1
       ;;
     esac
-
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
       "install_$1_mid"
     fi
@@ -705,13 +703,10 @@ userinherit_installation_type() {
 
   if [ ! -z "${!compressedfilepathoverride}" ]; then
     create_folder "${!compressedfilepathoverride}"
-    defaultpath="${!compressedfilepathoverride}/"
-  else
-    defaultpath="${USR_BIN_FOLDER}/"
+    defaultpath="${!compressedfilepathoverride}"
   fi
-
-  download "${!compressedfileurl}" "${defaultpath}$1_downloading"
-  decompress "${!compressedfiletype}" "${defaultpath}$1_downloading" "$1"
+  download "${!compressedfileurl}" "${defaultpath}/$1_downloading"
+  decompress "${!compressedfiletype}" "${defaultpath}/$1_downloading" "$1"
 }
 
 
