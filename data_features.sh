@@ -2837,8 +2837,8 @@ sublime_arguments=("sublime" "sublime_text")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
 sublime_bashfunctions=("alias sublime=\"sublime . &>/dev/null &\"")
 sublime_binariesinstalledpaths=("sublime_text;sublime")
-sublime_compressedfiletype="j"
-sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2"
+sublime_compressedfiletype="J"
+sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_build_4113_x64.tar.xz"
 sublime_readmelinedescription="Source code editor with an emphasis on source code editing"
 sublime_launchercontents=("
 [Desktop Entry]

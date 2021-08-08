@@ -811,10 +811,10 @@ data_and_file_structures_initialization() {
   # Adds to the path the folder where we will put our soft links
   add_bash_function "${bash_functions_init}" "init.sh"
   # Create and / or update built-in favourites subsystem
-  #if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
-    #create_file "${PROGRAM_FAVORITES_PATH}"
-  #fi
-  #add_bash_initialization "${favorites_function}" "favorites.sh"
+  if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
+    create_file "${PROGRAM_FAVORITES_PATH}"
+  fi
+  add_bash_initialization "${favorites_function}" "favorites.sh"
 
   # Create and / or update built-in keybinding subsystem
   if [ ! -f "${PROGRAM_KEYBIND_PATH}" ]; then
@@ -880,12 +880,11 @@ fi
 # add_to_favorites instead, can be called as root or user, so root and user executions can be added
 
 favorites_function="
-if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
-  IFS=\$'\\n'
-  for line in \$(cat ${PROGRAM_FAVORITES_PATH}); do
+if [ -f ${PROGRAM_FAVORITES_PATH} ]; then
+  while IFS= read -r line; do
     favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
-    if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]]; then
-      if [[ -z \"\$(echo \$favorite_apps | grep -Fo \"[]\")\" ]]; then
+    if [ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]; then
+      if [ -z \"\$(echo \$favorite_apps | grep -Fo \"[]\")\" ]; then
         # List with at least an element
         gsettings set org.gnome.shell favorite-apps \"\$(echo \"\$favorite_apps\" | sed s/.\$//), '\$line']\"
       else
@@ -893,7 +892,7 @@ if [[ -f ${PROGRAM_FAVORITES_PATH} ]]; then
         gsettings set org.gnome.shell favorite-apps \"['\$line']\"
       fi
     fi
-  done
+  done < \"${PROGRAM_FAVORITES_PATH}\"
 fi
 "
 
