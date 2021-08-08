@@ -103,6 +103,48 @@ set_field()
 }
 
 
+add_programs_with_x_permissions()
+{
+  for keyname in "${feature_keynames[@]}"; do
+    local installationtype_pointer="${keyname}_installationtype"
+    if [ $1 -eq 0 ]; then
+      case ${!installationtype_pointer} in
+        packagemanager)
+          add_program "${keyname}"
+        ;;
+        packageinstall)
+          add_program "${keyname}"
+        ;;
+      esac
+    elif [ $1 -eq 1 ] ; then
+      case ${!installationtype_pointer} in
+        # Download and decompress a file that contains a folder
+        userinherit)
+          add_program "${keyname}"
+        ;;
+        # Clone a repository
+        repositoryclone)
+          add_program "${keyname}"
+        ;;
+        # Create a virtual environment to install the feature
+        pythonvenv)
+          add_program "${keyname}"
+        ;;
+        # Only uses the common part of the generic installation
+        environmental)
+          add_program "${keyname}"
+        ;;
+      esac
+    elif [ $1 -eq 2 ]; then
+      add_program "${keyname}"
+    else
+      output_proxy_executioner "echo ERROR: $1 is not a possible permission level." ${FLAG_QUIETNESS}
+      exit 1
+    fi
+  done
+}
+
+
 # - Description: Receives an argument and add or remove the corresponding feature for that argument to the installation
 #   list. Also, if adding the installation of a program, save the current state of the flags, taking in account the flag
 #   states that have to be overwritten.
@@ -255,7 +297,7 @@ add_program()
     # Declare runtime flags for accession in execute_feature
     declare -g ${matched_keyname}_flagsruntime="${flags_override_stringbuild}"
     # Add this feature in the result list
-    added_feature_keynames+="${matched_keyname}"
+    added_feature_keynames+=("${matched_keyname}")
   else
     # Deletion mode
 
@@ -281,7 +323,7 @@ execute_installation()
   for keyname in "${added_feature_keynames[@]}"; do
     local flags_pointer="${keyname}_flagsruntime"
 
-    local -r flag_ignore_errors="$(get_field "${!flags_pointer}" ";" "3")"  # local, processed here
+    local flag_ignore_errors="$(get_field "${!flags_pointer}" ";" "3")"  # local, processed here
     FLAG_QUIETNESS="$(get_field "${!flags_pointer}" ";" "4")"  # Global, so it can be accessed during installations
     FLAG_FAVORITES="$(get_field "${!flags_pointer}" ";" "5")"  # Global, accessed in generic_install
     FLAG_AUTOSTART="$(get_field "${!flags_pointer}" ";" "6")"  # Global, accessed in generic_install
@@ -530,10 +572,10 @@ argument_processing()
         add_wrapper "${iochem[@]}"
       ;;
       --user|--regular|--normal)
-        add_programs_with_x_permissions 0
+        add_programs_with_x_permissions 1
       ;;
       --root|--superuser|--su)
-        add_programs_with_x_permissions 1
+        add_programs_with_x_permissions 0
       ;;
       --ALL|--all|--All)
         add_programs_with_x_permissions 2
