@@ -346,9 +346,9 @@ download() {
   fi
 
   # Download in a subshell to avoid changing the working directory in the current shell
-  echo -e '\033[1;33m'
+  echo -en '\033[1;33m'
   wget --show-progress -qO "${dir_name}/${file_name}" "$1"
-  echo -e '\033[0m'
+  echo -en '\033[0m'
 
   # If we are root
   if [ ${EUID} == 0 ]; then
