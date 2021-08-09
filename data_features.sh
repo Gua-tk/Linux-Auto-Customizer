@@ -592,8 +592,9 @@ customizer_manualcontentavailable="0;0;1"
 customizer_flagsoverride="0;;;;;"
 customizer_bashfunctions=("
 _customizer-install() {
-  local word=\"\${COMP_WORDS[COMP_CWORD]}\"
-  COMPREPLY=(\"\$(compgen -W \"\$(customizer-install --commands)\")\" -- \"\$word\")
+  COMPREPLY=()
+  local arguments=\"a b c add\"
+  COMPREPLY=( \$(compgen -W \"\${arguments}\" -- \"\${COMP_WORDS[COMP_CWORD]}\") )
 }
 complete -F _customizer-install customizer-install
 ")

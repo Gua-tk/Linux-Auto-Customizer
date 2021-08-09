@@ -548,9 +548,9 @@ argument_processing()
       ;;
 
       --commands)
-        for featurekeyname in "${feature_keynames[@]}"; do
-          echo "${featurename}"
-        done
+        #for featurekeyname in "${feature_keynames[@]}"; do
+          echo "${feature_keynames[@]}"
+        #done
         exit 0
       ;;
 
