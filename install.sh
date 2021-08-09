@@ -152,8 +152,8 @@ main() {
 DIR="${BASH_SOURCE%/*}"
 if [ ! -d "${DIR}" ]; then
   DIR="${PWD}"
-  echo $DIR
 fi
+  echo $DIR
 
 if [ -f "${DIR}/functions_install.sh" ]; then
   source "${DIR}/functions_install.sh"
