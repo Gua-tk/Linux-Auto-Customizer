@@ -30,6 +30,11 @@ install_caffeine_post()
   wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
 }
 
+install_customizer_post()
+{
+  ln -sf "${USR_BIN_FOLDER}/customizer/install.sh" /usr/bin/customizer-install
+}
+
 install_jupyter_lab_pre() {
   local -r dependencies=("npm" "R" "julia")
   for dependency in ${dependencies[@]}; do
@@ -147,6 +152,7 @@ main() {
 DIR="${BASH_SOURCE%/*}"
 if [ ! -d "${DIR}" ]; then
   DIR="${PWD}"
+  echo $DIR
 fi
 
 if [ -f "${DIR}/functions_install.sh" ]; then

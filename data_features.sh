@@ -585,6 +585,19 @@ curl_arguments=("curl")
 curl_packagenames=("curl")
 curl_readmeline="| Curl | Curl is a CLI command for retrieving or sending data to a server | Command \`curl\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
+customizer_installationtype="repositoryclone"
+customizer_readmeline="| Linux Auto Customizer | System linux automation management | Command \`customizer\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+customizer_repositoryurl="https://github.com/AleixMT/Linux-Auto-Customizer"
+customizer_manualcontentavailable="0;0;1"
+customizer_flagsoverride="0;;;;;"
+customizer_bashfunctions=("
+_customizer-install() {
+  local word=\"\${COMP_WORDS[COMP_CWORD]}\"
+  COMPREPLY=(\"\$(compgen -W \"\$(customizer-install --commands)\")\" -- \"\$word\")
+}
+complete -F _customizer-install customizer-install
+")
+
 dbeaver_installationtype="packageinstall"
 dbeaver_arguments=("dbeaver")
 dbeaver_packageurls=("https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb")

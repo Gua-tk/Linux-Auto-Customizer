@@ -547,6 +547,11 @@ argument_processing()
         FLAG_SKIP_PRIVILEGES_CHECK=1
       ;;
 
+      --commands)
+        echo "${feature_keynames[@]}"
+        exit 0
+      ;;
+
       -h)
         output_proxy_executioner "echo ${help_common}${help_simple}" ${FLAG_QUIETNESS}
         exit 0

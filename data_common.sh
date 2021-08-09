@@ -181,6 +181,7 @@ declare -r feature_keynames=(
   "converters"
   "copyq"
   "curl"
+  "customizer"
   "dbeaver"
   "dconf_editor"
   "dia"

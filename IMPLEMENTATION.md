@@ -6,6 +6,7 @@
 
 - [ ] `functions_common.sh`: redo auto help and auto readme
 - [~] `functions_common`: check correctly the keyname with type, knowing that has _ but command names are usually with -
+- [ ] `functions_install`: Update create_links_in_path() so the links created as root are system-wide.
 ###### NEW FEATURES
 - [ ] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions) # https://tldp.org/LDP/abs/html/tabexpansion.html
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
