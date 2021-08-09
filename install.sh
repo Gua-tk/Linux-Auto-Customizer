@@ -149,17 +149,22 @@ main() {
 
 # Import file of common variables in a relative way, so customizer can be called system-wide
 # RF, necessary duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh
-DIR="${BASH_SOURCE%/*}"
-if [ ! -d "${DIR}" ]; then
-  DIR="${PWD}"
-fi
-  echo $DIR elpepe
-ls
-pwd
-echo
-echo
-echo mama
-echo
+
+PRG="$BASH_SOURCE"
+progname=`basename "$BASH_SOURCE"`
+
+while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+        PRG="$link"
+    else
+        PRG=`dirname "$PRG"`"/$link"
+    fi
+done
+
+DIR=$(dirname "$PRG")
+
 if [ -f "${DIR}/functions_install.sh" ]; then
   source "${DIR}/functions_install.sh"
 else
