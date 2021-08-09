@@ -365,29 +365,29 @@ autogen_help()
   true > help.md
 
   for program in "${feature_keynames[@]}"; do
-    local readme_line="$(echo "${program}" | cut -d ";" -f3-)"
-    local installation_type="$(echo "${program}" | cut -d ";" -f2)"
-    local program_arguments="$(echo "${program}" | cut -d ";" -f1)"
-    local program_argument="$(echo "${program_arguments}" | cut -d "|" -f1)"
-    local program_name="$(echo "${readme_line}" | cut -d "|" -f2 | sed 's/^ *//g')"
+    local readme_line_pointer="${program}_readmeline"
+    local installationtype_pointer="${program}_installationtype"
+    local arguments_pointer="${program}_arguments[@]"
+
+    local readme_line="$(echo "${!readme_line_pointer}")"
+    local installation_type="$(echo "${!installationtype_pointer}")"
+    local program_argument="$(echo "${program}")"
+
     local program_features="$(echo "${readme_line}" | cut -d "|" -f4)"
     local program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " " | sed "s/\.[a-z]*//g" | sed 's/^ *//g')"
-    local help_line="${program_argument};${program_name};${program_commands}"
+    local help_line="${program_argument};${program_commands}"
     case ${installation_type} in
-      0)
-        user_lines+=("${help_line}")
+      packagemanager|packageinstall)
+        root_lines+=("${help_line}")
         root_num=$(( root_num + 1 ))
       ;;
-      1)
-        root_lines+=("${help_line}")
+      repositoryclone|userinherit|environmental|pythonvenv)
+        user_lines+=("${help_line}")
         user_num=$(( user_num + 1 ))
-      ;;
-      packagemanager)
-        packagemanager_lines+=("${help_line}")
       ;;
     esac
   done
-  local program_headers=("ARGUMENT;FEATURE_NAME;COMMANDS")
+  local program_headers=("ARGUMENT;COMMANDS")
 
   local -r newline=$'\n'
   local user_lines_final=

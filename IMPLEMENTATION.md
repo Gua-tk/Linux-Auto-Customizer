@@ -3,31 +3,29 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 
 ###### UPDATES
-
-- [ ] `functions_common.sh`: redo auto help and auto readme
+- [ ] `--help`: needs some final review
 ###### NEW FEATURES
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
-- [ ] `install.sh`, `uninstall.sh`: fallback installationtype
-- [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
+- [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
 - [ ] `data_features.sh`: validate `promptcolors` function. Write custom color codes of gnome-terminal profile through gsettings or similar
 - [ ] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
-- [ ] `data_features.sh`: refactor extract function: 
+- [ ] `data_features.sh`: refactor `x` (extract) function: 
                             - do not rely only in extension
                             - decompress in a folder optionally
                             - inform if the package needed is not present and installs it
                             - grow it with the code already in decompress which handles already most common cases ;)
 - [ ] `install.sh`: [Fix Nemo autostart](https://ubuntuforums.org/showthread.php?t=2400084)
-- [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
        system-wide, not only on the bash environment.
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg
 - [ ] `data_features.sh`: Update history [optimization](https://unix.stackexchange.com/questions/6628/what-customizations-have-you-done-on-your-shell-profile-to-increase-productivity)
+- [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 
 ###### NEW FEATURES
 - [~] `data_features.sh`, `common_data.sh`: Add new installation `fastcommands` - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias up="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear"    
