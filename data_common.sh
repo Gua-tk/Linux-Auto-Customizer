@@ -88,7 +88,10 @@ declare -r PROGRAM_KEYBIND_PATH="${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt"
 declare -r FONTS_FOLDER=${HOME_FOLDER}/.fonts
 # Here we store the .desktop launchers of the programs we want to autostart
 declare -r AUTOSTART_FOLDER=${HOME_FOLDER}/.config/autostart
-
+# Directory which we store bash completions system-wide.
+declare -r BASH_COMPLETION_DIR=/etc/bash_completion.d
+# Bashrc for all users path variable system-wide.
+declare -r BASHRC_ALL_USERS_PATH=/etc/bash.bashrc
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
 FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed

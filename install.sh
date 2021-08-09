@@ -33,6 +33,9 @@ install_caffeine_post()
 install_customizer_post()
 {
   ln -sf "${USR_BIN_FOLDER}/customizer/install.sh" /usr/bin/customizer-install
+  if [ -z "$(cat "${BASHRC_ALL_USERS_PATH}" | grep -Fo "source ${BASH_FUNCTIONS_PATH}")" ]; then
+    echo "source ${BASH_FUNCTIONS_PATH}" >> "${BASHRC_ALL_USERS_PATH}"
+  fi
 }
 
 install_jupyter_lab_pre() {

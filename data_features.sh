@@ -591,6 +591,7 @@ customizer_readmeline="| Linux Auto Customizer | System linux automation managem
 customizer_repositoryurl="https://github.com/AleixMT/Linux-Auto-Customizer"
 customizer_manualcontentavailable="0;0;1"
 customizer_flagsoverride="0;;;;;"
+#customizer_filekeys=("completions")
 customizer_bashfunctions=("
 _customizer-install() {
   COMPREPLY=()
@@ -599,6 +600,8 @@ _customizer-install() {
 }
 complete -F _customizer-install customizer-install
 ")
+#customizer_bashfunctions=("source ")
+#customizer_completions_path="customizer_completions"
 
 dbeaver_installationtype="packageinstall"
 dbeaver_arguments=("dbeaver")
@@ -2537,7 +2540,7 @@ pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "l
 pypy3_dependencies_readmeline="| pypy3_dependencies | Dependencies to run pypy3 | Libraries \`pkg-config\`, \`libfreetype6-dev\`, \`libpng-dev\` and \`libffi-dev\` used when deploying \`pypy\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 python3_installationtype="packagemanager"
-python3_arguments=("python3")
+python3_arguments=("python_3" "python" "v")
 python3_bashfunctions=("
 # Create and source a venv with the given name passed as parameter.
 # If already exists, only sources activate
