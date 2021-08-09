@@ -586,6 +586,7 @@ curl_packagenames=("curl")
 curl_readmeline="| Curl | Curl is a CLI command for retrieving or sending data to a server | Command \`curl\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 customizer_installationtype="repositoryclone"
+customizer_arguments=("customizer" "linux_auto_customizer" "auto_customizer" "linux_customizer")
 customizer_readmeline="| Linux Auto Customizer | System linux automation management | Command \`customizer\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 customizer_repositoryurl="https://github.com/AleixMT/Linux-Auto-Customizer"
 customizer_manualcontentavailable="0;0;1"
@@ -593,7 +594,9 @@ customizer_flagsoverride="0;;;;;"
 customizer_bashfunctions=("
 _customizer-install() {
   COMPREPLY=()
-  local arguments=\"a b c add\"
+  #local arguments=\"a b c add\"
+  local arguments=\"\$(echo \"\$(customizer-install --commands)\")\"
+  #echo \"\${arguments}\"
   COMPREPLY=( \$(compgen -W \"\${arguments}\" -- \"\${COMP_WORDS[COMP_CWORD]}\") )
 }
 complete -F _customizer-install customizer-install
