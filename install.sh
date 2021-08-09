@@ -153,8 +153,13 @@ DIR="${BASH_SOURCE%/*}"
 if [ ! -d "${DIR}" ]; then
   DIR="${PWD}"
 fi
-  echo $DIR
-
+  echo $DIR elpepe
+ls
+pwd
+echo
+echo
+echo mama
+echo
 if [ -f "${DIR}/functions_install.sh" ]; then
   source "${DIR}/functions_install.sh"
 else
