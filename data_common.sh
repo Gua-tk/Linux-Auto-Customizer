@@ -60,6 +60,8 @@ fi
 
 # Path pointing to a directory that is included in the PATH variable
 declare -r DIR_IN_PATH=${HOME_FOLDER}/.local/bin
+# Path pointing to a directory that it is user system-wide
+declare -r ALL_USERS_DIR_IN_PATH=/usr/bin
 # Path pointing to a folder that contains the desktop launchers for the unity application launcher of the current user
 declare -r PERSONAL_LAUNCHERS_DIR=${HOME_FOLDER}/.local/share/applications
 # Path pointing to .bashrc file of the user

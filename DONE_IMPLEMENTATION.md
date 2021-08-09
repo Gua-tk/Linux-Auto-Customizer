@@ -94,6 +94,8 @@
 - [x] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
 - [x] `data_features.sh`: fix sysmontask, which cannot be installed being user (run setup.py). You can clone it and install it in portable mode as user, but the explicit instllation has to be done with root.  
 - [x] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
+- [x] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions) # https://tldp.org/LDP/abs/html/tabexpansion.html
+- [x] `functions_common`: check correctly the keyname with type, knowing that has _ but command names are usually with -
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -175,3 +177,4 @@
 - [x] `data_features.sh`, `common_data.sh`: `autoclean` performs different automatic optimizations to release space and delete cluttering such as broken links or broken installations (?) # alias autoclean="sudo apt-get -y autoclean && sudo apt-get -y autoremove"  alias trash="rm -rf ${HOME}/.local/share/Trash/*"
 - [ ] `data_features.sh`, `data_common.sh`: move each readme line for every feature to the corresponding feature 
 - [x] `install.sh`: Move favorites subsystem and keybinding subsystem initializations to `~/.profile`, so it is not executed each time we create a terminal. --> Create another variable type for indirect expansion for features in .profile. program add_bash_initialization or refactor add bash function to handle .profile with an argument 
+- [x] `functions_install`: Update create_links_in_path() so the links created as root are system-wide.

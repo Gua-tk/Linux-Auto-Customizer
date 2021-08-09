@@ -436,7 +436,7 @@ Version=1.0
 ")
 cmatrix_packagenames=("cmatrix")
 cmatrix_readmelinedescription="Terminal screensaver from The Matrix"
-cmatrix_readmeline="| Cmatrix |  | Command \`cmatrix\`, function \`matrix\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+cmatrix_readmeline="| Cmatrix | ${cmatrix_readmelinedescription} | Command \`cmatrix\`, function \`matrix\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 code_installationtype="userinherit"
 code_arguments=("code" "visual_studio_code" "visual_studio")
@@ -587,7 +587,6 @@ curl_readmeline="| Curl | Curl is a CLI command for retrieving or sending data t
 
 customizer_installationtype="repositoryclone"
 customizer_arguments=("customizer" "linux_auto_customizer" "auto_customizer" "linux_customizer")
-customizer_readmeline="| Linux Auto Customizer | System linux automation management | Command \`customizer\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 customizer_repositoryurl="https://github.com/AleixMT/Linux-Auto-Customizer"
 customizer_manualcontentavailable="0;0;1"
 customizer_flagsoverride="0;;;;;"
@@ -602,6 +601,7 @@ complete -F _customizer-install customizer-install
 ")
 #customizer_bashfunctions=("source ")
 #customizer_completions_path="customizer_completions"
+customizer_readmeline="| Linux Auto Customizer | Program and function management and automations | Command \`customizer-install\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 dbeaver_installationtype="packageinstall"
 dbeaver_arguments=("dbeaver")
@@ -1067,7 +1067,7 @@ gimp_installationtype="packagemanager"
 gimp_arguments=("gimp")
 gimp_launchernames=("gimp")
 gimp_packagenames=("gimp")
-gimp_reameline="| Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats. | Command \`gimp\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+gimp_readmeline="| Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats. | Command \`gimp\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 git_installationtype="packagemanager"
 git_arguments=("git")

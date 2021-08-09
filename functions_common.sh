@@ -157,7 +157,7 @@ add_program()
   # fast match against keynames
   local processed_argument="$(echo "$1" | tr "-" "_")"  # Convert - to _
   for keyname in "${feature_keynames[@]}"; do
-    if [ "${processed_argument}" == "${keyname}" ]; then
+    if [ "$(echo "${processed_argument}" | sed "s/^_*//g" )" == "${keyname}" ]; then
       matched_keyname="${keyname}"
       break
     fi
@@ -417,26 +417,27 @@ autogen_readme()
   local root_num=0
   local user_num=0
   for program in "${feature_keynames[@]}"; do
-    local readme_line="$(echo "${program}" | cut -d ";" -f3-)"
-    local installation_type="$(echo "${program}" | cut -d ";" -f2)"
-    local program_arguments="$(echo "${program}" | cut -d ";" -f1 | tr "|" " ")"
-    local program_name="$(echo "${program_arguments}" | cut -d "|" -f1 | cut -d "-" -f3-)"
+    local readme_line_pointer="${program}_readmeline"
+    local installationtype_pointer="${program}_installationtype"
+    local arguments_pointer="${program}_arguments[@]"
+
+    local readme_line="$(echo "${!readme_line_pointer}")"
+    local installation_type="$(echo "${!installationtype_pointer}")"
+    local program_arguments="$(echo "${!arguments_pointer}")"
+    local program_name="$(echo "${program}")"
 
     # Add arguments to readme
     local prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
     local suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
     local readme_line="${prefix}${program_arguments}${suffix}"
     case ${installation_type} in
-      0)
-        user_lines+=("${readme_line}")
+      packagemanager|packageinstall)
+        root_lines+=("${readme_line}")
         root_num=$(( root_num + 1 ))
       ;;
-      1)
-        root_lines+=("${readme_line}")
+      repositoryclone|userinherit|environmental|pythonvenv)
+        user_lines+=("${readme_line}")
         user_num=$(( user_num + 1 ))
-      ;;
-      packagemanager)
-        packagemanager_lines+=("${readme_line}")
       ;;
     esac
   done

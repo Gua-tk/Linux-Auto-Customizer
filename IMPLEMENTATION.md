@@ -5,12 +5,10 @@
 ###### UPDATES
 
 - [ ] `functions_common.sh`: redo auto help and auto readme
-- [~] `functions_common`: check correctly the keyname with type, knowing that has _ but command names are usually with -
-- [ ] `functions_install`: Update create_links_in_path() so the links created as root are system-wide.
 ###### NEW FEATURES
-- [ ] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions) # https://tldp.org/LDP/abs/html/tabexpansion.html
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
-- [ ] `install.sh`, `uninstall.sh`: Add npm packagemanager installationtype
+- [ ] `install.sh`, `uninstall.sh`: fallback installationtype
+- [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
@@ -78,7 +76,6 @@
 - [ ] `functions_uninstall.sh`: create functions to respond to the different installationtypes
 - [ ] `functions_uninstall.sh`: refactor to customizer standards the commentaries and headers of uninstall.
 - [ ] `functions_uninstall`: function to delete all installations and the common structures
-- [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different package managers (`apt-get`, `yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`...) depending on which is the main package-manager
 - [ ] `uninstall.sh`: OpenOffice apt-get remove -y libreoffice-base-core libreoffice-impress libreoffice-calc
       libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport
       libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 

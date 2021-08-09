@@ -203,11 +203,17 @@ copy_launcher() {
 # - Argument 2: Name of the command that will be added to your environment to execute the previous binary.
 # - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2.
 create_links_in_path() {
+  if [ ${EUID} -ne 0 ]; then  # user
+    local -r directory="${DIR_IN_PATH}"
+  else
+    local -r directory="${ALL_USERS_DIR_IN_PATH}"
+  fi
   while [ $# -gt 0 ]; do
-    ln -sf "$1" "${DIR_IN_PATH}/$2"
+    ln -sf "$1" "${directory}/$2"
     shift
     shift
   done
+
 }
 
 
