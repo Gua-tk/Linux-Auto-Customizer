@@ -594,9 +594,7 @@ customizer_flagsoverride="0;;;;;"
 customizer_bashfunctions=("
 _customizer-install() {
   COMPREPLY=()
-  #local arguments=\"a b c add\"
   local arguments=\"\$(echo \"\$(customizer-install --commands)\")\"
-  #echo \"\${arguments}\"
   COMPREPLY=( \$(compgen -W \"\${arguments}\" -- \"\${COMP_WORDS[COMP_CWORD]}\") )
 }
 complete -F _customizer-install customizer-install

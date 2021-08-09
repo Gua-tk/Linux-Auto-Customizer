@@ -549,7 +549,9 @@ argument_processing()
 
       --commands)
         #for featurekeyname in "${feature_keynames[@]}"; do
-          echo "${feature_keynames[@]}"
+          local all_arguments+=(${feature_keynames[@]})
+          all_arguments+=(${auxiliary_arguments[@]})
+          echo "${all_arguments[@]}"
         #done
         exit 0
       ;;

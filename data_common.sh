@@ -145,6 +145,8 @@ added_feature_keynames=()
 #     install_yes/no; forceness; quietness; overwrite; permissions; function_name
 #   - The rest
 
+declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C" "-k" "-u" "-U" "-f" "-z" "-a" "-r" "-n" "-y" "-p" "-P" "-h" "-H" "--debug" "--commands" "--custom1" "--iochem" "--user" "--root" "--ALL")
+
 # New features in this list must contain _ if the keyname contains _.
 declare -r feature_keynames=(
   "a"
