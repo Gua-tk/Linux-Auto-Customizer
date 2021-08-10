@@ -859,6 +859,44 @@ evolution_launchernames=("evolution-calendar")
 evolution_packagenames=("evolution" )
 evolution_readmeline="| evolution | User calendar agend, planning | Command \`evolution\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
+F_installationtype="environmental"
+F_arguments=("F")
+F_bashfunctions=("
+F() {
+  if [ \$# -eq 0 ]; then  # No arguments given
+    find / 2>/dev/null
+  elif [ \$# -eq 1 ]; then
+    if [ -f \"\$1\" ]; then  # Searches therm in a file
+      files=\"\$(find / 2>/dev/null)\"
+      for file_path in \"\$files\"; do
+        cat \"\$file_path\" | grep \"\$(cat \"\$1\")\"
+      done
+    elif [ -d \"\$1\" ]; then  # Searches files in directory
+      find \"\$1\"
+    else
+      more * | grep \"\$1\"
+    fi
+  elif [ \$# -gt 1 ]; then
+    local temp=\"\$1\"
+    while [ \$# -gt 1 ]; do
+      if [ -f \"\$temp\" ]; then  # Searches therm in a file
+        more \"\$temp\" | grep \"\$2\"
+      elif [ -d \"\$temp\" ]; then  # Searches file in directory
+        if [ -n \"\$(find \"\$temp\" -name \"\$2\")\" ]; then
+          more \$(find \"\$temp\" -name \"\$2\")
+        else
+          ls -lah \"\$temp\" | grep \"\$2\" #show list of other matching files in directory
+        fi
+      else
+        echo \"\$temp\" | grep \"\$2\"
+      fi
+      shift
+    done
+  fi
+}
+"
+F_readmeline="| Function \`F\` | Function to massively find content in files | Command \`F\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+
 f_installationtype="environmental"
 f_arguments=("f")
 f_bashfunctions=("
@@ -893,6 +931,7 @@ f() {
   fi
 }
 ")
+f_readmeline="| Function \`f\` | Function for finding strings in files, files in directories and show found files | Command \`f\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 f_irc_installationtype="packagemanager"
 f_irc_arguments=("f_irc")
