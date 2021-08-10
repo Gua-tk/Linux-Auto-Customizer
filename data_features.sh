@@ -862,6 +862,23 @@ evolution_launchernames=("evolution-calendar")
 evolution_packagenames=("evolution" )
 evolution_readmeline="| evolution | User calendar agend, planning | Command \`evolution\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
+f_installationtype="environmental"
+f_arguments=("f")
+f_bashfunctions=("
+f() {
+  if [ -f \"\$1\" ]; then #Searches therm in a file
+    cat \"\$1\" | grep \"\$2\"
+  fi
+  if [ -d \"\$1\" ]; then #Searches file in directory
+    if [ \$(find \"\$1\" -name \"\$2\") ]; then # \$3 matching file in directory
+      cat \$(find \"\$1\" -name \"\$2\")
+    else
+      ls \"\$1\" | grep \"\$2\" #show list of other matching files in directory
+    fi
+  fi
+}
+")
+
 f_irc_installationtype="packagemanager"
 f_irc_arguments=("f_irc")
 f_irc_packagenames=("f-irc")

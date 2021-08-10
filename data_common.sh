@@ -202,6 +202,7 @@ declare -r feature_keynames=(
   "e"
   "eclipse"
   "evolution"
+  "f"
   "f_irc"
   "facebook"
   "fastcommands"
