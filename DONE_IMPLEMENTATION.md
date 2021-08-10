@@ -96,6 +96,8 @@
 - [x] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
 - [x] `install.sh`, `uninstall.sh`, `customizer.sh`: [Autocompletion features](https://stuff-things.net/2016/05/11/bash-autocompletion/#:~:text=BASH%20autocompletion%20is%20a%20system,to%20complete%20filenames%20and%20paths.&text=You%20can%20override%20this%20behavior,a%20list%20of%20possible%20completions) # https://tldp.org/LDP/abs/html/tabexpansion.html
 - [x] `functions_common`: check correctly the keyname with type, knowing that has _ but command names are usually with -
+- [x] `testing.sh`: Tries a batch of functions conserving the output 
+- [x] Server running programs / ports management localhost --> Jupyterlab is this kind of feature, which means this is already implemented.
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter

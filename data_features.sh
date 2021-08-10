@@ -1748,11 +1748,15 @@ nemo_bashfunctions=("
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set org.nemo.desktop show-desktop-icons true
-""
-alias nemo=\"nohup nemo . &>/dev/null &\"
+"
+
+"
+nemo()
+{
+  nohup nemo \"\$1\" &>/dev/null &
+}
 ")
 nemo_packagedependencies=("dconf-editor" "gnome-tweak-tool")
-#nemo_flagsoverride="0;;;;;"
 nemo_readmelinedescription="File and desktop manager, usually with better options and less bugs than nautilus. *We recommend this explorer to view correctly the launchers*"
 nemo_launchercontents=("
 [Desktop Entry]
@@ -1847,7 +1851,7 @@ Comment[tr]=Dosyalara eriş ve düzenle
 Comment[uk]=Доступ до файлів та впорядковування файлів
 Comment[zh_CN]=访问和组织文件
 Comment[zh_HK]=存取與組織檔案
-Exec=nemo-desktop
+Exec=nemo
 Icon=folder
 # Translators: these are keywords of the file manager
 Keywords=folders;filesystem;explorer;
@@ -2068,7 +2072,18 @@ Name[zh_TW]=回收筒
 Exec=nemo trash:///
 ")
 nemo_readmeline="| Nemo Desktop | Access and organise files | Command \`nemo\` for the file manager, and \`nemo-desktop\` for the desktop manager service. Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-nemo_autostartlaunchers=("nemo-desktop")
+nemo_autostartlaunchers=("
+[Desktop Entry]
+Type=Application
+Name=Nemo
+Comment=Start Nemo desktop at log in
+Exec=nemo-desktop
+AutostartCondition=GSettings org.nemo.desktop show-desktop-icons
+X-GNOME-AutoRestart=true
+X-GNOME-Autostart-Delay=2
+NoDisplay=false
+")
+nemo_flagsoverride=";;;;;1"  # Always autostart
 
 netflix_installationtype="environmental"
 netflix_arguments=("netflix")
@@ -2659,7 +2674,7 @@ rstudio_readmeline="| RStudio | ${rstudio_readmelinedescription} | Commands \`rs
 
 rsync_installationtype="packagemanager"
 rsync_arguments=("rsync" "grsync")
-rsync_packagedependencies=("canberra-gtk-module")
+rsync_packagedependencies=("libcanberra-gtk-module" "libcanberra-gtk3-module" "libcanberra-gtk-module:i386")
 rsync_packagenames=("rsync" "grsync")
 rsync_launchernames=("grsync")
 rsync_bashfunctions=("alias rs=\"rsync -av --progress\"")

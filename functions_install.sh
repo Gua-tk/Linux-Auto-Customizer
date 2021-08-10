@@ -97,7 +97,7 @@ add_to_favorites() {
 autostart_program() {
   # If absolute path
   if [ -n "$(echo "$1" | grep -Eo "^/")" ]; then
-    # If it's a file, make it autostart
+    # If it is a file, make it autostart
     if [ -f "$1" ]; then
       cp "$1" "${AUTOSTART_FOLDER}"
       if [ ${EUID} -eq 0 ]; then
@@ -153,7 +153,7 @@ apply_permissions() {
 # to run this script.
 # - Permissions: This functions is expected to be called as root, or it will throw an error, since $SUDO_USER is not
 # defined in the the scope of the normal user.
-# - Argument 1: Path to the directory that we want to create.
+# - Argument 1: Path to the file that we want to create.
 # - Argument 2 (Optional): Content of the file we want to create.
 create_file() {
   local -r folder="$(echo "$1" | rev | cut -d "/" -f2- | rev)"
@@ -425,7 +425,7 @@ generic_install_launchers() {
 #   and the name of the first argument in the common_data.sh table
 generic_install_functions() {
   local -r bashfunctions="$1_bashfunctions[@]"
-  name_suffix_anticollision=""
+  local name_suffix_anticollision=""
   for bashfunction in "${!bashfunctions}"; do
     add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
     name_suffix_anticollision="${name_suffix_anticollision}_"
@@ -506,12 +506,22 @@ generic_install_downloads() {
 #   and associating it to all the launchers in $1_launchernames
 generic_install_autostart() {
   local -r launchernames="$1_launchernames[@]"
-  local -r autostartlaunchers="$1_autostartlaunchers[@]"
+  local -r autostartlaunchers_pointer="$1_autostartlaunchers[@]"
+
   if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
-    if [ -n "${!launchernames}" ]; then
+    # If we have autostart launchers use them
+    if [ -n "$(echo "${!autostartlaunchers_pointer}")" ]; then
+      local name_suffix_anticollision=""
+      for autostartlauncher in "${!autostartlaunchers_pointer}"; do
+        create_file "${AUTOSTART_FOLDER}/$1${name_suffix_anticollision}.desktop" "${autostartlauncher}"
+        name_suffix_anticollision="${name_suffix_anticollision}_"
+      done
+    # If not use the launchers that are already in the system
+    elif [ -n "${!launchernames}" ]; then
       for launchername in ${!launchernames}; do
         autostart_program "${launchername}"
       done
+    # Fallback to keyname to try if there is a desktop launcher in the system
     else
       autostart_program "$1"
     fi
@@ -578,7 +588,7 @@ generic_install_copy_launcher() {
 #   and the name of the first argument in the common_data.sh table
 generic_install_initializations() {
   local -r bashinitializations="$1_bashinitializations[@]"
-  name_suffix_anticollision=""
+  local name_suffix_anticollision=""
   for bashinit in "${!bashinitializations}"; do
     add_bash_function "${bashinit}" "$1${name_suffix_anticollision}.sh"
     name_suffix_anticollision="${name_suffix_anticollision}_"

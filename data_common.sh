@@ -58,42 +58,42 @@ else
   declare $(cat ${HOME_FOLDER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
 fi
 
-# Path pointing to a directory that is included in the PATH variable
-declare -r DIR_IN_PATH=${HOME_FOLDER}/.local/bin
-# Path pointing to a directory that it is user system-wide
-declare -r ALL_USERS_DIR_IN_PATH=/usr/bin
+# Path pointing to a directory that is included in the PATH variable of the current user
+declare -r DIR_IN_PATH="${HOME_FOLDER}/.local/bin"
+# Path pointing to a directory that it is in the PATH of all users
+declare -r ALL_USERS_DIR_IN_PATH="/usr/bin"
 # Path pointing to a folder that contains the desktop launchers for the unity application launcher of the current user
-declare -r PERSONAL_LAUNCHERS_DIR=${HOME_FOLDER}/.local/share/applications
-# Path pointing to .bashrc file of the user
-declare -r BASHRC_PATH=${HOME_FOLDER}/.bashrc
-# Folder where all the software will be installed
-declare -r USR_BIN_FOLDER=${HOME_FOLDER}/.bin
-# Path pointing to .bash_functions, which is the file used to control the installed features of the customizer
-declare -r BASH_FUNCTIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_functions
-# Path pointing to the folder containing all the scripts of the bash functions
-declare -r BASH_FUNCTIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
-# Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start
-declare -r PROFILE_PATH=${HOME_FOLDER}/.profile
-# Path pointing to our internal file for initializations
-declare -r BASH_INITIALIZATIONS_PATH=${USR_BIN_FOLDER}/bash-functions/.bash_profile
-# Path pointing to the folder which contains the initialization bash scripts
-declare -r BASH_INITIALIZATIONS_FOLDER=${USR_BIN_FOLDER}/bash-functions
+declare -r PERSONAL_LAUNCHERS_DIR="${HOME_FOLDER}/.local/share/applications"
 # Path pointing to a folder that contains the desktop launchers of all users
-declare -r ALL_USERS_LAUNCHERS_DIR=/usr/share/applications
+declare -r ALL_USERS_LAUNCHERS_DIR="/usr/share/applications"
+# Path pointing to .bashrc file of the user
+declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
+# Bashrc for all users path variable system-wide.
+declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
+# Folder where all the software will be installed
+declare -r USR_BIN_FOLDER="${HOME_FOLDER}/.bin"
+# Path pointing to .bash_functions, which is the file used to control the installed features of the customizer
+declare -r BASH_FUNCTIONS_PATH="${USR_BIN_FOLDER}/bash-functions/.bash_functions"
+# Path pointing to the folder containing all the scripts of the bash functions
+declare -r BASH_FUNCTIONS_FOLDER="${USR_BIN_FOLDER}/bash-functions"
+# Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start
+declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
+# Path pointing to our internal file for initializations
+declare -r BASH_INITIALIZATIONS_PATH="${USR_BIN_FOLDER}/bash-functions/.bash_profile"
+# Path pointing to the folder which contains the initialization bash scripts
+declare -r BASH_INITIALIZATIONS_FOLDER="${USR_BIN_FOLDER}/bash-functions"
 # File that contains the association of mime types with .desktop files
-declare -r MIME_ASSOCIATION_PATH=${HOME_FOLDER}/.config/mimeapps.list
+declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
 # Default favorites list, data to set favorites
 declare -r PROGRAM_FAVORITES_PATH="${BASH_INITIALIZATIONS_FOLDER}/favorites.txt"
 # Default keybind list< data to set custom keybindings
 declare -r PROGRAM_KEYBIND_PATH="${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt"
 # Default user's fonts folder
-declare -r FONTS_FOLDER=${HOME_FOLDER}/.fonts
+declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 # Here we store the .desktop launchers of the programs we want to autostart
-declare -r AUTOSTART_FOLDER=${HOME_FOLDER}/.config/autostart
-# Directory which we store bash completions system-wide.
-declare -r BASH_COMPLETION_DIR=/etc/bash_completion.d
-# Bashrc for all users path variable system-wide.
-declare -r BASHRC_ALL_USERS_PATH=/etc/bash.bashrc
+declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
+
+
 # The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
 # the same value until the end of the execution until another argument
 FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
@@ -122,7 +122,6 @@ bash_initializations_import="
 source ${BASH_INITIALIZATIONS_PATH}
 "
 flagsoverride_template=";;;;;"
-flagsoverride_number=$(( ${#flagsoverride_template}+1 ))
 
 # Array to store the keynames of the features that have been added for installation
 added_feature_keynames=()

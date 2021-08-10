@@ -19,6 +19,15 @@
                             - inform if the package needed is not present and installs it
                             - grow it with the code already in decompress which handles already most common cases ;)
 - [ ] `install.sh`: [Fix Nemo autostart](https://ubuntuforums.org/showthread.php?t=2400084)
+  
+# To remove nemo
+
+
+Error when opening inode direcotries with `xdg-open $HOME`
+** (nemo-desktop:8409): WARNING **: 13:16:20.491: Desktop already managed by another application, skipping desktop setup.
+To change this, modify org.nemo.desktop 'ignored-desktop-handlers'.
+
+
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
@@ -80,8 +89,10 @@
       libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us 
       libreoffice-writer --> this info goes to data_features.sh as packagenames. Even though install when using 
       a download package installationtype will not use it, uninstall will when removing the feature
-
-
+- [ ] `data_features.sh`: xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
+gsettings set org.gnome.desktop.background show-desktop-icons true
+sudo apt purge nemo nemo*
+sudo apt autoremove  
 
 # TO-DO customizer.sh and final endpoint for v1.0
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
@@ -92,7 +103,6 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 ###### NEW FEATURES
 - [ ] `customizer.sh`: If an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager
-- [x] `testing.sh`: Tries a batch of functions conserving the output 
 - [ ] `testing.sh`: extend to do the install and uninstall of each feature and start to checks that the behaviour is the correct.
 - [ ] `customizer.sh`: Create a unique endpoint for all the code in customizer `customizer.sh` which accepts the arguments install uninstall for the recognized features and make the corresponding calls to sudo uninstall.sh ..., sudo install.sh ... And Install.sh ...
 - [ ] `customizer.sh`: customizer.sh help, customizer install, customizer uninstall, customizer parallel, customizer status... basic commands
@@ -102,5 +112,3 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 - [ ] Switch from an extreme programming branching model to a less agile one
 - [ ] Implement meaningful changelogs by following patterns in commit messages. Also squash commits that program a single feature
 - [ ] Creation of \`customizer.py\`file as an alternative endpoint for customizer.sh. We can use it to give to it a graphical interface (GUI)
-- [x] Server running programs / ports management localhost --> Jupyterlab is this kind of feature, which means this is already implemented.
-- [ ] Update repository list sourcing customizer's
