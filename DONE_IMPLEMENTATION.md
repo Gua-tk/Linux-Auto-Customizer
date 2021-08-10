@@ -180,3 +180,4 @@
 - [ ] `data_features.sh`, `data_common.sh`: move each readme line for every feature to the corresponding feature 
 - [x] `install.sh`: Move favorites subsystem and keybinding subsystem initializations to `~/.profile`, so it is not executed each time we create a terminal. --> Create another variable type for indirect expansion for features in .profile. program add_bash_initialization or refactor add bash function to handle .profile with an argument 
 - [x] `functions_install`: Update create_links_in_path() so the links created as root are system-wide.
+- [x] `data_features.sh`, `common_data.sh`: Add new installation `fastcommands` - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias up="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear"    

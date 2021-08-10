@@ -862,6 +862,23 @@ evolution_launchernames=("evolution-calendar")
 evolution_packagenames=("evolution" )
 evolution_readmeline="| evolution | User calendar agend, planning | Command \`evolution\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
+f_installationtype="environmental"
+f_arguments=("f")
+f_bashfunctions=("
+f() {
+  if [ -f \"\$1\" ]; then #Searches therm in a file
+    cat \"\$1\" | grep \"\$2\"
+  fi
+  if [ -d \"\$1\" ]; then #Searches file in directory
+    if [ \$(find \"\$1\" -name \"\$2\") ]; then # \$3 matching file in directory
+      cat \$(find \"\$1\" -name \"\$2\")
+    else
+      ls \"\$1\" | grep \"\$2\" #show list of other matching files in directory
+    fi
+  fi
+}
+")
+
 f_irc_installationtype="packagemanager"
 f_irc_arguments=("f_irc")
 f_irc_packagenames=("f-irc")
@@ -909,6 +926,16 @@ Type=Application
 Version=1.0
 ")
 facebook_readmeline="| Facebook | ${facebook_readmelinedescription} | Command \`facebook\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+
+fastcommands_installationtype="environmental"
+fastcommands_arguments=("fast_commands")
+fastcommands_bashfunctions=("
+alias rip=\"sudo shutdown -h now\"
+alias update=\"sudo apt-get update -y\"
+alias up=\"sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove\"
+alias services=\"sudo systemctl --type=service\"
+alias cls=\"clear\"
+")
 
 fdupes_installationtype="packagemanager"
 fdupes_arguments=("fdupes")
@@ -1201,25 +1228,25 @@ gnome_calculator_packagenames=("gnome-calculator")
 gnome_calculator_readmeline="| Calculator | GUI calculator| Commmand \`calculator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_chess_installationtype="packagemanager"
-gnome_chess_arguments=("gnome_chess")
+gnome_chess_arguments=("gnome_chess" "chess")
 gnome_chess_launchernames=("org.gnome.Chess")
 gnome_chess_packagenames=("gnome-chess")
 gnome_chess_readmeline="| Chess | Plays a full game of chess against a human being or other computer program | Command \`gnome-chess\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_mahjongg_installationtype="packagemanager"
-gnome_mahjongg_arguments=("gnome_mahjongg")
+gnome_mahjongg_arguments=("gnome_mahjongg" "mahjongg")
 gnome_mahjongg_launchernames=("org.gnome.Mahjongg")
 gnome_mahjongg_packagenames=("gnome-mahjongg")
 gnome_mahjongg_readmeline="| Mahjongg | Implementation for GNU systems of the famous popular chinese game Mahjongg | Command \`gnome-mahjongg\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_mines_installationtype="packagemanager"
-gnome_mines_arguments=("gnome_mines")
+gnome_mines_arguments=("gnome_mines" "mines")
 gnome_mines_launchernames=("org.gnome.Mines")
 gnome_mines_packagenames=("gnome-mines")
 gnome_mines_readmeline="| Mines | Implementation for GNU systems of the famous game mines | Command \`gnome-mines\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 gnome_sudoku_installationtype="packagemanager"
-gnome_sudoku_arguments=("gnome_sudoku")
+gnome_sudoku_arguments=("gnome_sudoku" "sudoku")
 gnome_sudoku_launchernames=("org.gnome.Sudoku")
 gnome_sudoku_packagenames=("gnome-sudoku")
 gnome_sudoku_readmeline="| sudoku | Implementation for GNU systems of the famous popular mathematical game sudoku | Command \`gnome-sudoku\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
