@@ -151,6 +151,29 @@ added_feature_keynames=()
 
 declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C" "-k" "-u" "-U" "-f" "-z" "-a" "-r" "-n" "-y" "-p" "-P" "-h" "-H" "--debug" "--commands" "--custom1" "--iochem" "--user" "--root" "--ALL")
 
+####################
+##### WRAPPERS #####
+####################
+
+# Associates lists representing a wrapper containing a set of related features
+declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies")
+declare -r wrapper_programmingide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
+declare -r wrapper_programmingpro=("intellij_ultimate" "pycharm_professional" "clion")
+declare -r wrapper_texteditorcore=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
+declare -r wrapper_mediacore=("vlc" "gpaint" "okular" "clementine")
+declare -r wrapper_systemcore=("virtualbox" "gparted" "clonezilla")
+declare -r wrapper_internetcore=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
+declare -r wrapper_artcore=("audacity" "shotcut" "gimp" "obs" "inkscape")
+declare -r wrapper_gamesinstall=("steam" "cmatrix")
+declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
+declare -r wrapper_bashfunctions=("a" "b" "c" "e" "f" "h" "j" "k" "L" "l" "o" "q" "s" "u" "x")
+declare -r wrapper_desktopfunctions=("changebg" "screenshots" "system_fonts" "templates")
+declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters")
+
+# custom wrappers
+declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
+declare -r wrapper_iochem=("psql" "gcc" "java" "ant" "mvn")
+
 # New features in this list must contain _ if the keyname contains _.
 declare -r feature_keynames=(
   "a"
@@ -261,6 +284,7 @@ declare -r feature_keynames=(
   "java"
   "julia"
   "jupyter_lab"
+  "k"
   "keep"
   "L"
   "l"
@@ -307,6 +331,7 @@ declare -r feature_keynames=(
   "pypy3"
   "pypy3_dependencies"
   "python3"
+  "q"
   "R"
   "reddit"
   "remmina"
@@ -361,32 +386,6 @@ declare -r feature_keynames=(
   "youtubemusic"
   "zoom"
 )
-
-
-####################
-##### WRAPPERS #####
-####################
-
-# Associates lists representing a wrapper containing a set of related features
-
-declare -r programming_core=("python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies")
-declare -r programming_ide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
-declare -r programming_pro=("intellij_ultimate" "pycharm_professional" "clion")
-declare -r text_editor_core=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
-declare -r media_core=("vlc" "gpaint" "okular" "clementine")
-declare -r system_core=("virtualbox" "gparted" "clonezilla")
-declare -r internet_core=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
-declare -r art_core=("audacity" "shotcut" "gimp" "obs" "inkscape")
-declare -r games_install=("games" "steam" "cmatrix")
-declare -r standard_install=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
-
-# custom
-#custom1_system=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "chwlppr")
-#custom1_user=("sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley")
-#custom1_root=("megasync" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice")
-#dependencies=("gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
-declare -r custom1=("templates" "converters" "s" "l" "extract" "extract" "cheat" "history_optimization" "git_aliases" "shortcut" "prompt" "change-bg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
-declare -r iochem=("psql" "gcc" "java" "ant" "mvn")
 
 declare -r help_common="\e[0m
 12345678901234567890123456789012345678901234567890123456789012345678901234567890

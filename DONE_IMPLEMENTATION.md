@@ -98,6 +98,8 @@
 - [x] `functions_common`: check correctly the keyname with type, knowing that has _ but command names are usually with -
 - [x] `testing.sh`: Tries a batch of functions conserving the output 
 - [x] Server running programs / ports management localhost --> Jupyterlab is this kind of feature, which means this is already implemented.
+- [x] `install.sh`: [Fix Nemo autostart](https://ubuntuforums.org/showthread.php?t=2400084)
+- [x] `autocompletion` also works when calling installation manually in working customizer directory (sudo/bash install.sh -v auda[tab]...): now tab autocompletion only works when `customizer-install` it is locally installed.
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter

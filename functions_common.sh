@@ -46,19 +46,19 @@ output_proxy_executioner() {
   fi
 
   # Execute command with verbosity depending on quietness level and if the command_name is an echo or not
-  if [ $2 == 0 ]; then
+  if [ $2 -eq 0 ]; then
     if [ "${command_name}" == "echo" ]; then
       echo -e "$echo_processed_command"
     else
       $1
     fi
-  elif [ $2 == 1 ]; then
+  elif [ $2 -eq 1 ]; then
     if [ "${command_name}" == "echo" ]; then
       echo -e "$echo_processed_command"
     else
       $1 &>/dev/null
     fi
-  elif [ $2 == 2 ]; then
+  elif [ $2 -eq 2 ]; then
     $1 &>/dev/null
   fi
 }
@@ -182,8 +182,13 @@ add_program()
 
   # If we do not have a match after checking all args, this arg is not valid
   if [ -z "${matched_keyname}" ]; then
-    output_proxy_executioner "echo ERROR: $1 is not a recognized command. Skipping this argument..." ${FLAG_QUIETNESS}
-    exit 1
+    if [ ${FLAG_IGNORE_ERRORS} -eq 0 ]; then
+      output_proxy_executioner "echo ERROR: $1 is not a recognized command. Installation will abort." ${FLAG_QUIETNESS}
+      exit 1
+    else
+      output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument..." ${FLAG_QUIETNESS}
+      return
+    fi
   fi
 
   # Here matched_keyname matches a valid feature. Process its flagsoverride and add or remove from added_feature_keynames
@@ -293,6 +298,7 @@ add_program()
     flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "6" "${flag_autostart}")"
     # At this point flags_override_stringbuild have all flags merged inside (override and runtime)
 
+
     # Declare runtime flags for accession in execute_feature
     declare -g ${matched_keyname}_flagsruntime="${flags_override_stringbuild}"
     # Add this feature in the result list
@@ -321,12 +327,10 @@ execute_installation()
   # flagsruntime ${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
   for keyname in "${added_feature_keynames[@]}"; do
     local flags_pointer="${keyname}_flagsruntime"
-
     local flag_ignore_errors="$(get_field "${!flags_pointer}" ";" "3")"  # local, processed here
     FLAG_QUIETNESS="$(get_field "${!flags_pointer}" ";" "4")"  # Global, so it can be accessed during installations
     FLAG_FAVORITES="$(get_field "${!flags_pointer}" ";" "5")"  # Global, accessed in generic_install
     FLAG_AUTOSTART="$(get_field "${!flags_pointer}" ";" "6")"  # Global, accessed in generic_install
-
     # Process flag_ignore_errors
     if [ ${flag_ignore_errors} -eq 0 ]; then
       set -e
@@ -561,7 +565,6 @@ argument_processing()
         output_proxy_executioner "echo ${help_common}${help_simple}" ${FLAG_QUIETNESS}
         exit 0
       ;;
-
       -H|--help)
         autogen_help
 
@@ -573,13 +576,6 @@ argument_processing()
         customizer_prompt
       ;;
 
-      ### WRAPPER ARGUMENTS ###
-      --custom1)
-        add_wrapper "${custom1[@]}"
-      ;;
-      --iochem)
-        add_wrapper "${iochem[@]}"
-      ;;
       --user|--regular|--normal)
         add_programs_with_x_permissions 1
       ;;
@@ -591,7 +587,13 @@ argument_processing()
       ;;
 
       *)  # Individual argument
-        add_program ${key}
+        local wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
+        local set_of_features="wrapper_${wrapper_key}[@]"
+        if [ -z "$(echo "${!set_of_features}")" ]; then
+          add_program ${key}
+        else
+          add_programs "${!set_of_features}"
+        fi
       ;;
     esac
     shift

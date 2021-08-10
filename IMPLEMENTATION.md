@@ -4,14 +4,10 @@
 
 ###### UPDATES
 - [ ] `--help`: needs some final review
-- [ ] `prompt`: Fix it and put a random emoji at the left for each terminal [emojis](https://loige.co/random-emoji-in-your-prompt-how-and-why/)
-- [ ] `.profile`: migrate all possible sets of features to .profile such as terminal background, prompts (PS1, gitprompt declaration), bash colors, bash emojis list... Avoiding innecessary bashrc loadings making it to go faster.
-- [ ] `autocompletion` also works when calling installation manually in working customizer directory (sudo/bash install.sh -v auda[tab]...): now tab autocompletion only works when `customizer-install` it is locally installed.
 
 ###### NEW FEATURES
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
-- [ ] `prompt`: function to edit/update the emoji of the prompt to serve different informational purposes as well as aesthetic ones. Consider a command to randomly or manually change the emoji.
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
@@ -23,16 +19,8 @@
                             - decompress in a folder optionally
                             - inform if the package needed is not present and installs it
                             - grow it with the code already in decompress which handles already most common cases ;)
-- [ ] `install.sh`: [Fix Nemo autostart](https://ubuntuforums.org/showthread.php?t=2400084)
-  
-# To remove nemo
-
-
-Error when opening inode direcotries with `xdg-open $HOME`
-** (nemo-desktop:8409): WARNING **: 13:16:20.491: Desktop already managed by another application, skipping desktop setup.
-To change this, modify org.nemo.desktop 'ignored-desktop-handlers'.
-
-
+- [ ] `prompt`: Fix it and put a random emoji at the left for each terminal [emojis](https://loige.co/random-emoji-in-your-prompt-how-and-why/)
+- [ ] `.profile`: migrate all possible sets of features to .profile such as terminal background, prompts (PS1, gitprompt declaration), bash colors, bash emojis list... Avoiding innecessary bashrc loadings making it to go faster.
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 

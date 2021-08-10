@@ -863,15 +863,33 @@ f_installationtype="environmental"
 f_arguments=("f")
 f_bashfunctions=("
 f() {
-  if [ -f \"\$1\" ]; then #Searches therm in a file
-    cat \"\$1\" | grep \"\$2\"
-  fi
-  if [ -d \"\$1\" ]; then #Searches file in directory
-    if [ \$(find \"\$1\" -name \"\$2\") ]; then # \$3 matching file in directory
-      cat \$(find \"\$1\" -name \"\$2\")
+
+  if  [ \$# -eq 0 ]; then  # No arguments given
+    find . 2>/dev/null
+  elif [ \$# -eq 1 ]; then
+    if [ -f \"\$1\" ]; then  # Searches therm in a file
+      cat \"\$1\"
+    elif [ -d \"\$1\" ]; then  # Searches files in directory
+      find \"\$1\"
     else
-      ls \"\$1\" | grep \"\$2\" #show list of other matching files in directory
+      more * | grep \"\$1\"
     fi
+  elif [ \$# -gt 1 ]; then
+    local temp=\"\$1\"
+    while [ \$# -gt 1 ]; do
+      if [ -f \"\$temp\" ]; then  # Searches therm in a file
+        more \"\$temp\" | grep \"\$2\"
+      elif [ -d \"\$temp\" ]; then  # Searches file in directory
+        if [ -n \"\$(find \"\$temp\" -name \"\$2\")\" ]; then
+          more \$(find \"\$temp\" -name \"\$2\")
+        else
+          ls -lah \"\$temp\" | grep \"\$2\" #show list of other matching files in directory
+        fi
+      else
+        echo \"\$temp\" | grep \"\$2\"
+      fi
+      shift
+    done
   fi
 }
 ")
@@ -928,7 +946,6 @@ fastcommands_installationtype="environmental"
 fastcommands_arguments=("fast_commands")
 fastcommands_bashfunctions=("
 alias rip=\"sudo shutdown -h now\"
-alias update=\"sudo apt-get update -y\"
 alias up=\"sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove\"
 alias services=\"sudo systemctl --type=service\"
 alias cls=\"clear\"
@@ -937,12 +954,12 @@ alias cls=\"clear\"
 fdupes_installationtype="packagemanager"
 fdupes_arguments=("fdupes")
 fdupes_packagenames=("fdupes")
-fdupes_readmeline="| Fdupes| Searches for duplicated files within given directories | Command \`fdupes\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+fdupes_readmeline="| Fdupes | Searches for duplicated files within given directories | Command \`fdupes\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 fetch_installationtype="environmental"
 fetch_arguments=("fetch")
 fetch_bashfunctions=("alias fetch=\"git fetch\"")
-fetch_readmeline="| fetch| \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+fetch_readmeline="| fetch | \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ffmpeg_installationtype="packagemanager"
 ffmpeg_arguments=("ffmpeg" "youtube_dl_dependencies")
@@ -1568,9 +1585,11 @@ Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;P
 julia_readmeline="| Julia and IJulia| ${julia_readmelinedescription} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 jupyter_lab_installationtype="pythonvenv"
-jupyter_lab_arguments=("jupyter_lab" "jupyter")
+jupyter_lab_arguments=("jupyter_lab" "jupyter" "lab")
 jupyter_lab_bashfunctions=("alias lab=\"jupyter-lab\"")
 jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
+jupyter_lab_bashfunctions=("alias lab=\"jupyter-lab\"")
+jupyter_lab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies
 jupyter_lab_readmelinedescription="IDE with a lot of possible customization and usable for different programming languages."
 jupyter_lab_launchercontents=("
 [Desktop Entry]
@@ -1593,6 +1612,10 @@ jupyter_lab_manualcontentavailable="1;1;0"
 jupyter_lab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
 jupyter_lab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
 jupyter_lab_readmeline="| Jupyter Lab | ${jupyter_lab_readmelinedescription} | alias \`lab\`, commands \`jupyter-lab\`, \`jupyter-lab\`, \`ipython\`, \`ipython3\`, desktop launcher and dashboard launcher. Recognized programming languages: Python, Ansible, Bash, IArm, Kotlin, PowerShell, Vim. || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+
+k_installationtype="environmental"
+k_arguments=("k")
+k_bashfunctions=("alias q=\"exit\"")
 
 keep_installationtype="environmental"
 keep_arguments=("keep" "google_keep")
@@ -2619,6 +2642,10 @@ v()
 ")
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel" "python3.8-venv")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
 python3_readmeline="| Python3 | Interpreted, high-level and general-purpose programming language | Commands \`python\`, \`python3\`, \`pip3\` and Function \`v\` is for activate/deactivate python3 virtual environments (venv) can be used as default \`v\` as a command creates the /venv/ environment we can activate/deactivate new or existing virtual environments, command \`v namevenv\` creates /namevenv/ we can activate the virtual environment again using \`v namenv\` or deactivate same again, using \`v namenv\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> | "
+
+q_installationtype="environmental"
+q_arguments=("q")
+q_bashfunctions=("alias q=\"exit\"")
 
 R_installationtype="packagemanager"
 R_arguments=("R" "r_base")
