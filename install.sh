@@ -32,7 +32,8 @@ install_caffeine_post()
 
 install_customizer_post()
 {
-  ln -sf "${USR_BIN_FOLDER}/customizer/install.sh" /usr/bin/customizer-install
+  echo "${DIR}/install.sh"
+  ln -sf "${DIR}/install.sh" /usr/bin/customizer-install
   if [ -z "$(cat "${BASHRC_ALL_USERS_PATH}" | grep -Fo "source ${BASH_FUNCTIONS_PATH}")" ]; then
     echo "source ${BASH_FUNCTIONS_PATH}" >> "${BASHRC_ALL_USERS_PATH}"
   fi
@@ -150,23 +151,7 @@ main() {
   bell_sound
 }
 
-# Import file of common variables in a relative way, so customizer can be called system-wide
-# RF, necessary duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh
-
-PRG="$BASH_SOURCE"
-progname=`basename "$BASH_SOURCE"`
-
-while [ -h "$PRG" ] ; do
-    ls=`ls -ld "$PRG"`
-    link=`expr "$ls" : '.*-> \(.*\)$'`
-    if expr "$link" : '/.*' > /dev/null; then
-        PRG="$link"
-    else
-        PRG=`dirname "$PRG"`"/$link"
-    fi
-done
-
-DIR=$(dirname "$PRG")
+DIR=$(dirname "$(realpath "$0")")
 
 if [ -f "${DIR}/functions_install.sh" ]; then
   source "${DIR}/functions_install.sh"

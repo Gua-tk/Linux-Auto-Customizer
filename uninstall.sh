@@ -731,12 +731,19 @@ fi
 }
 
 # Import file of common variables in a relative way, so customizer can be called system-wide
-# RF, duplication in uninstall. Common extraction in the future in the common endpoint customizer.sh
-DIR="${BASH_SOURCE%/*}"
-if [[ ! -d "${DIR}" ]]; then
-  DIR="${PWD}"
-fi
-if [[ -f "${DIR}/functions_uninstall.sh" ]]; then
+local PRG="$BASH_SOURCE"
+while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+        PRG="$link"
+    else
+        PRG=`dirname "$PRG"`"/$link"
+    fi
+done
+DIR=$(dirname "$PRG")
+
+if [ -f "${DIR}/functions_uninstall.sh" ]; then
   source "${DIR}/functions_uninstall.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data

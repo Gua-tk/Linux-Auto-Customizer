@@ -585,12 +585,11 @@ curl_arguments=("curl")
 curl_packagenames=("curl")
 curl_readmeline="| Curl | Curl is a CLI command for retrieving or sending data to a server | Command \`curl\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
-customizer_installationtype="repositoryclone"
+customizer_installationtype="environmental"
 customizer_arguments=("customizer" "linux_auto_customizer" "auto_customizer" "linux_customizer")
 customizer_repositoryurl="https://github.com/AleixMT/Linux-Auto-Customizer"
 customizer_manualcontentavailable="0;0;1"
-customizer_flagsoverride="0;;;;;"
-#customizer_filekeys=("completions")
+customizer_flagsoverride="0;;;;;"  # Install always as root
 customizer_bashfunctions=("
 _customizer-install() {
   COMPREPLY=()
@@ -599,8 +598,6 @@ _customizer-install() {
 }
 complete -F _customizer-install customizer-install
 ")
-#customizer_bashfunctions=("source ")
-#customizer_completions_path="customizer_completions"
 customizer_readmeline="| Linux Auto Customizer | Program and function management and automations | Command \`customizer-install\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 dbeaver_installationtype="packageinstall"
