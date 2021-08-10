@@ -204,6 +204,7 @@ declare -r feature_keynames=(
   "evolution"
   "f_irc"
   "facebook"
+  "fastcommands"
   "fdupes"
   "fetch"
   "ffmpeg"

@@ -4,14 +4,19 @@
 
 ###### UPDATES
 - [ ] `--help`: needs some final review
+- [ ] `prompt`: Fix it and put a random emoji at the left for each terminal [emojis](https://loige.co/random-emoji-in-your-prompt-how-and-why/)
+- [ ] `.profile`: migrate all possible sets of features to .profile such as terminal background, prompts (PS1, gitprompt declaration), bash colors, bash emojis list... Avoiding innecessary bashrc loadings making it to go faster.
+- [ ] `autocompletion` also works when calling installation manually in working customizer directory (sudo/bash install.sh -v auda[tab]...): now tab autocompletion only works when `customizer-install` it is locally installed.
+
 ###### NEW FEATURES
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
+- [ ] `prompt`: function to edit/update the emoji of the prompt to serve different informational purposes as well as aesthetic ones. Consider a command to randomly or manually change the emoji.
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
-- [ ] `data_features.sh`: validate `promptcolors` function. Write custom color codes of gnome-terminal profile through gsettings or similar
+- [ ] `data_features.sh`: validate `promptcolors` function. Write custom color codes of gnome-terminal profile through gsettings or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
 - [ ] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
 - [ ] `data_features.sh`: refactor `x` (extract) function: 
                             - do not rely only in extension
@@ -28,7 +33,6 @@
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 
 ###### NEW FEATURES
-- [~] `data_features.sh`, `common_data.sh`: Add new installation `fastcommands` - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias up="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear"    
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
 - [ ] `data_features.sh`, `common_data.sh`: `port` function. It returns the name and PID of a process using the given port #  "lsof -i $1"  alias ports="lsof -Pan -i tcp -i udp"
 - [ ] `data_features.sh`, `common_data.sh`: `edit` functions. It edits a system or user configuration file by passing the argument of the name. By default with no parameters it should edit .bashrc.  alias editbashrc="editor ${HOME}/.bashrc"  alias editprofile="editor ${HOME}/.profile" alias editfunctions="editor ${HOME}/.bash_functions" sshConfig="pluma ${HOME}/.ssh/config" also edit shortcuts.sh if present, edit fastcommands if present favorites, keybindings...etc. whatever it is interesting 

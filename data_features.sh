@@ -910,6 +910,16 @@ Version=1.0
 ")
 facebook_readmeline="| Facebook | ${facebook_readmelinedescription} | Command \`facebook\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
+fastcommands_installationtype="environmental"
+fastcommands_arguments=("fast_commands")
+fastcommands_bashfunctions=("
+alias rip=\"sudo shutdown -h now\"
+alias update=\"sudo apt-get update -y\"
+alias up=\"sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove\"
+alias services=\"sudo systemctl --type=service\"
+alias cls=\"clear\"
+")
+
 fdupes_installationtype="packagemanager"
 fdupes_arguments=("fdupes")
 fdupes_packagenames=("fdupes")
