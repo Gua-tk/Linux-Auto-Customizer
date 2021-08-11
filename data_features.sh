@@ -24,22 +24,6 @@ else
   exit 1
 fi
 
-########################################################################################################################
-################################### DATA FOR COMMON INSTALLATION CAPABILITIES ##########################################
-########################################################################################################################
-
-bash_functions_init="
-# If not running interactively, don't do anything
-case \$- in
-    *i*) ;;
-      *) return;;
-esac
-
-# Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-if [ -z \"\$(echo \$PATH | grep -Eo \"${DIR_IN_PATH}\")\" ]; then
-  export PATH=\$PATH:${DIR_IN_PATH}
-fi
-"
 
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################

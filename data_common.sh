@@ -445,6 +445,18 @@ source ${BASH_INITIALIZATIONS_PATH}
 "
 declare -r flagsoverride_template=";;;;;"
 
+declare -r bash_functions_init="
+# If not running interactively, don't do anything
+case \$- in
+    *i*) ;;
+      *) return;;
+esac
+
+# Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
+if [ -z \"\$(echo \$PATH | grep -Eo \"${DIR_IN_PATH}\")\" ]; then
+  export PATH=\$PATH:${DIR_IN_PATH}
+fi
+"
 
 declare -r help_common="\e[0m
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
