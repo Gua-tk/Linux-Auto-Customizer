@@ -44,82 +44,84 @@ fi
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
 ########################################################################################################################
-
-# The variables in here follow a naming scheme that is required for each feature to obtain its data by variable indirect
-# expansion. The variables that are defined for an installation determine its behaviour.
-# Each installations has its own FEATUREKEYNAME, which is an string that matches an unique feature. This string must be
-# added to the array feature_keynames to be recognised by the customizer as an available installation.
-# The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY. Some variables can be defined in all features,
-# some are only used depending on the installation type and others have to be defined always for each feature.
-
-###### Available properties:
-
-### Mandatory properties:
-#  - FEATUREKEYNAME_arguments: Array containing the arguments for each feature. Each argument has to be in lower case
-#    and contain a _ in the possible parts of an argument where you could expect a separation with - or _. This is used
-#    to match arguments ignoring case and separation symbols.
-#  - FEATUREKEYNAME_installationtype. Define the type of installation, which sets a fixed behaviour that obtains its
-#    input from predefined sets of properties for each installation type (check next section Installation type dependent
-#    properties). This can be set to:
-#    * "packageinstall": Downloads a .deb package and installs it using dpkg.
-#    * "packagemanager": Uses de package manager such as apt-get to install packages and dependency packages.
-#    * "userinherit": Downloads a compressed file containing an unique folder.
-#    * "repositoryclone": Clone a repository inside the directory of the current feature installing.
-#    * "environmental": Uses only the common part of every installation type. Has no type-dependent properties.
-#  - FEATUREKEYNAME_readmeline: Contains the readme line of the table for each feature.
-
-### Optional properties
-#  - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder of the system. Used
-#    as fallback for autostart and associatedfiletypes.
-#  - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to
-#    binaries that will be added to the PATH. Its name in the PATH is added by using a ";" to separate it from the
-#    relative path: "binaries/common/handbreak.sh;handbreak".
-#  - FEATUREKEYNAME_launchercontents: Array of contents of launchers to be created in the desktop and dashboard.
-#    They are used as fallback for autostart too.
-#  - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be executed on the start of every terminal session,
-#    in our case .bashrc.
-#  - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature. Its launchers in
-#    launchercontents or the defined launchernames will be used as desktop launchers to associate the mime type.
-#    Optionally it can have a custom desktop launcher added after a ; of an associated file type to use a custom
-#    .desktop launcher: "text/x-chdr;sublime"
-#  - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature. Each keybind has 3 fields separated
-#    from each other using ";": Command;key_combination;keybind_description.
-#  - FEATUREKEYNAME_downloads: Array of links to a valid download file separated by ";" from the desired name or full
-#    pathfor that file.
-#    It will downloaded in ${USR_BIN_FOLDER}/APPNAME/DESIREDFILENAME
-#  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from a
-#    function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,
-#    install_FEATUREKEYNAME_post.
-#  - FEATUREKEYNAME_filekeys: Array contentaining the keys to indirect expand file to be created and its path
-#  - FEATUREKEYNAME_FILEKEY_content: Variable with the content of a file identified in each feature with a particular
-#    FILEKEY.
-#  - FEATUREKEYNAME_FILEKEY_path: Variable with the path where we need to store the file with that FILEKEY.
-#  - FEATUREKEYNAME_flagsoverride: Contains bits that will override the current state of the flags in the declared
-#    installations. Its format is the following:
-#    ${FLAG_PERMISSION};${FLAG_IGNORE_ERRORS};${FLAG_OVERWRITE};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
-#  - FEATUREKEYNAME_bashinitializations: Array containing bash scripts that executed on system boot, by default
-#    ${HOME_FOLDER}/.profile.
-#  - FEATUREKEYNAME_autostartlaunchers: Array containing autostart launchers explicitly to respond to FLAG_AUTOSTART and
-#    autostart on boot the feature where they are defined in.
-#
-### Installation type dependent properties
-#  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dpendencies of the
-#  feature. Used in: packageinstall, packagemanager.
-#  - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation.
-#    Used in: packageinstall, packagemanager
-#  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.
-#  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit.
-#  - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform the download and decompression.
-#    Used in: userinherit.
-#  - FEATUREKEYNAME_compressedfiletype: Compression format of the compressed file in FEATUREKEYNAME_compressedfileurl.
-#    Used in userinherit.
-#  - FEATUREKEYNAME_repositoryurl: Repository to be cloned. Used in: repositoryclone.
-#  - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if
-#    there is manual code for that feature to be executed or not. If it is in one, it will try to execute a function
-#    with its name following a certain pattern
-#  - FEATUREKEYNAME_pipinstallations: Array containing set of programs to be installed via pip. Used in: pythonvenv.
-#  - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3. Used
-#    in: pythonvenv.
+# The variables in here follow a naming scheme that is required for each feature to obtain its data by variable        #
+# indirect expansion. The variables that are defined for an installation determine its behaviour.                      #
+# Each installations has its own FEATUREKEYNAME, which is an string that matches an unique feature. This string must   #
+# be added to the array feature_keynames to be recognised by the customizer as an available installation.              #
+# The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY. Some variables can be defined in all features,  #
+# some are only used depending on the installation type and others have to be defined always for each feature.         #
+#                                                                                                                      #
+#                                                                                                                      #
+###### Available properties:                                                                                           #
+#                                                                                                                      #
+### Mandatory properties:                                                                                              #
+#  - FEATUREKEYNAME_arguments: Array containing the arguments for each feature. Each argument has to be in lower case  #
+#    and contain a _ in the possible parts of an argument where you could expect a separation with - or _. This is     #
+#    used to match arguments ignoring case and separation symbols.                                                     #
+#  - FEATUREKEYNAME_installationtype. Define the type of installation, which sets a fixed behaviour that obtains its   #
+#    input from predefined sets of properties for each installation type (check next section Installation type         #
+#    dependent properties). This can be set to:                                                                        #
+#    * "packageinstall": Downloads a .deb package and installs it using dpkg.                                          #
+#    * "packagemanager": Uses de package manager such as apt-get to install packages and dependency packages.          #
+#    * "userinherit": Downloads a compressed file containing an unique folder.                                         #
+#    * "repositoryclone": Clone a repository inside the directory of the current feature installing.                   #
+#    * "environmental": Uses only the common part of every installation type. Has no type-dependent properties.        #
+#  - FEATUREKEYNAME_readmeline: Contains the readme line of the table for each feature.                                #
+#                                                                                                                      #
+### Optional properties                                                                                                #
+#  - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder of the system.   #
+#    Used as fallback for autostart and associatedfiletypes.                                                           #
+#  - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to      #
+#    binaries that will be added to the PATH. Its name in the PATH is added by using a ";" to separate it from the     #
+#    relative path: "binaries/common/handbreak.sh;handbreak".                                                          #
+#  - FEATUREKEYNAME_launchercontents: Array of contents of launchers to be created in the desktop and dashboard.       #
+#    They are used as fallback for autostart too.                                                                      #
+#  - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be executed on the start of every terminal        #
+#    session, in our case .bashrc.                                                                                     #
+#  - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature. Its launchers in       #
+#    launchercontents or the defined launchernames will be used as desktop launchers to associate the mime type.       #
+#    Optionally it can have a custom desktop launcher added after a ; of an associated file type to use a custom       #
+#    .desktop launcher: "text/x-chdr;sublime"                                                                          #
+#  - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature. Each keybind has 3 fields separated #
+#    from each other using ";": Command;key_combination;keybind_description.                                           #
+#  - FEATUREKEYNAME_downloads: Array of links to a valid download file separated by ";" from the desired name or full  #
+#    pathfor that file.                                                                                                #
+#    It will downloaded in ${USR_BIN_FOLDER}/APPNAME/DESIREDFILENAME                                                   #
+#  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from  #
+#    a function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,               #
+#    install_FEATUREKEYNAME_post.                                                                                      #
+#  - FEATUREKEYNAME_filekeys: Array contentaining the keys to indirect expand file to be created and its path          #
+#  - FEATUREKEYNAME_FILEKEY_content: Variable with the content of a file identified in each feature with a particular  #
+#    FILEKEY.                                                                                                          #
+#  - FEATUREKEYNAME_FILEKEY_path: Variable with the path where we need to store the file with that FILEKEY.            #
+#  - FEATUREKEYNAME_flagsoverride: Contains bits that will override the current state of the flags in the declared     #
+#    installations. Its format is the following:                                                                       #
+#            1                  2                   3                    4                  5                 6        #
+#    ${FLAG_PERMISSION};${FLAG_OVERWRITE};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}  #
+#  - FEATUREKEYNAME_bashinitializations: Array containing bash scripts that executed on system boot, by default        #
+#    ${HOME_FOLDER}/.profile.                                                                                          #
+#  - FEATUREKEYNAME_autostartlaunchers: Array containing autostart launchers explicitly to respond to FLAG_AUTOSTART   #
+#    and autostart on boot the feature where they are defined in.                                                      #
+#                                                                                                                      #
+### Installation type dependent properties                                                                             #
+#  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dpendencies of the       #
+#    feature. Used in: packageinstall, packagemanager.                                                                 #
+#  - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation.    #
+#    Used in: packageinstall, packagemanager.                                                                          #
+#  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.                           #
+#  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit.                       #
+#  - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform the download and decompression.        #
+#    Used in: userinherit.                                                                                             #
+#  - FEATUREKEYNAME_compressedfiletype: Compression format of the compressed file in FEATUREKEYNAME_compressedfileurl. #
+#    Used in userinherit.                                                                                              #
+#  - FEATUREKEYNAME_repositoryurl: Repository to be cloned. Used in: repositoryclone.                                  #
+#  - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if  #
+#    there is manual code for that feature to be executed or not. If it is in one, it will try to execute a function   #
+#    with its name following a certain pattern.                                                                        #
+#  - FEATUREKEYNAME_pipinstallations: Array containing set of programs to be installed via pip. Used in: pythonvenv.   #
+#  - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3.     #
+#    Used in: pythonvenv.                                                                                              #
+########################################################################################################################
 
 
 

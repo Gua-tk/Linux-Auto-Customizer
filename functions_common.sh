@@ -474,7 +474,6 @@ autogen_readme()
 # - Argument 1, 2, 3... : Arguments for the whole program.
 argument_processing()
 {
-  output_proxy_executioner "echo INFO: Processing arguments" "${FLAG_QUIETNESS}"
   while [ $# -gt 0 ]; do
     key="$1"
 

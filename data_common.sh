@@ -17,164 +17,164 @@
 ########################################################################################################################
 
 
-############################
-##### COMMON VARIABLES #####
-############################
+########################################################################################################################
+################################################## CONSTANT PATHS ######################################################
+########################################################################################################################
+# Define constant paths that are privileged-independent to allow customizer to locate and use its resources and system #
+# resources to fulfill each installation requirements.                                                                 #
+# Default expected content of each constant:                                                                           #
+#                                                                                                                      #
+# * XDG constants (imported from ${HOME}/.config/user-dirs.dirs)                                                       #
+#   - XDG_DESKTOP_DIR: /home/username/Desktop                                                                          #
+#   - XDG_PICTURES_DIR: /home/username/Images                                                                          #
+#   - XDG_TEMPLATES_DIR: /home/username/Templates                                                                      #
+#                                                                                                                      #
+# * Customizer routes:                                                                                                 #
+#   - USR_BIN_FOLDER: /home/username/.bin                                                                              #
+#     Folder where all the software will be installed.                                                                 #
+#   - BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions                                                        #
+#     Path pointing to the folder containing all the scripts of the bash functions                                     #
+#   - BASH_FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions                                          #
+#     Path pointing to .bash_functions, which is the file used to control the installed features of the customizer.    #
+#   - BASH_INITIALIZATIONS_PATH: /home/username/.bin/bash-functions/.bash_profile                                      #
+#     Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start.                               #
+#   - BASH_INITIALIZATIONS_FOLDER: /home/username/.bin/bash_functions/.bash_functions                                  #
+#     Path pointing to the folder which contains the initialization bash scripts.                                      #
+#   - PROGRAM_FAVORITES_PATH: {BASH_INITIALIZATIONS_FOLDER}/favorites.txt                                              #
+#     Default favorites list, data to set favorites.                                                                   #
+#   - PROGRAM_KEYBIND_PATH: ${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt                                                #
+#     Default keybind list data to set custom keybindings.                                                             #
+#                                                                                                                      #
+# * System routes:                                                                                                     #
+#   - HOME_FOLDER: /home/username                                                                                      #
+#     Path pointing to the $HOME of the normal user who runs the installation or that is running sudo to run the       #
+#     installation.                                                                                                    #
+#   - PERSONAL_LAUNCHERS_DIR: /home/username/.local/share/applications                                                 #
+#     Path pointing to a folder that contains the desktop launchers for the unity application launcher of the current  #
+#     user.                                                                                                            #
+#   - ALL_USERS_LAUNCHERS_DIR: /usr/share/applications                                                                 #
+#     Path pointing to a folder that contains the desktop launchers of all users.                                      #
+#   - BASHRC_PATH: /home/username/.bashrc                                                                              #
+#     Path pointing to .bashrc file of the user.                                                                       #
+#   - BASHRC_ALL_USERS_PATH: /etc/bash.bashrc                                                                          #
+#     Bashrc for all users path variable system-wide.                                                                  #
+#   - PROFILE_PATH: ${HOME_FOLDER}/.profile                                                                            #
+#     Path pointing to our internal file for initializations.                                                          #
+#   - DIR_IN_PATH: /home/username/.local/bin                                                                           #
+#     Path pointing to a directory that is included in the PATH variable of the current user.                          #
+#   - ALL_USERS_DIR_IN_PATH: /usr/bin                                                                                  #
+#     Path pointing to a directory that it is in the PATH of all users.                                                #
+#   - MIME_ASSOCIATION_PATH: ${HOME_FOLDER}/.config/mimeapps.list                                                      #
+#     File that contains the association of mime types with .desktop files.                                            #
+#   - FONTS_FOLDER: ${HOME_FOLDER}/.fonts                                                                              #
+#     Default user's fonts folder.                                                                                     #
+#   - AUTOSTART_FOLDER: ${HOME_FOLDER}/.config/autostart                                                               #
+#     Here we store the .desktop launchers of the programs we want to autostart.                                       #
+########################################################################################################################
 
-### EXPECTED VARIABLE CONTENT (BY-DEFAULT) ###
-
-# PERSONAL_LAUNCHERS_DIR: /home/username/.local/share/applications
-# ALL_USERS_LAUNCHERS_DIR: /usr/share/applications
-# HOME_FOLDER: /home/username
-# USR_BIN_FOLDER: /home/username/.bin
-# BASHRC_PATH: /home/username/.bashrc
-# DIR_IN_PATH: /home/username/.local/bin
-# HOME_FOLDER: /home/username
-# BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions
-# BASH_FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions
-
-# Imported from ${HOME}/.config/user-dirs.dirs
-# XDG_DESKTOP_DIR: /home/username/Desktop
-# XDG_PICTURES_DIR: /home/username/Images
-# XDG_TEMPLATES_DIR: /home/username/Templates
-
-### VARIABLE DECLARATION ###
-# To avoid to be queried by apt-get or dpkg when installing such features such wireshark and sonic-pi.
-export DEBIAN_FRONTEND=noninteractive
 
 if [ ${EUID} != 0 ]; then
-  # Path pointing to $HOME
   declare -r HOME_FOLDER=${HOME}
 
   # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   source ${HOME_FOLDER}/.config/user-dirs.dirs
 else
-  # Path pointing to $HOME
   declare -r HOME_FOLDER=/home/${SUDO_USER}
 
   # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
-  # for /home/$SUDO_USER to be interpreted correctly as a root user.
-  declare "$(cat "${HOME_FOLDER}/.config/user-dirs.dirs" | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")"
+  # for /home/$SUDO_USER to be interpreted correctly as a root user. Also with declare we can declare all variables in
+  # the file in one line.
+  declare -r $(cat "${HOME_FOLDER}/.config/user-dirs.dirs" |
+  sed 's/#.*//g' |
+  sed "s|\$HOME|/home/$SUDO_USER|g" |
+  sed "s|\"||g")
 fi
 
-# Path pointing to a directory that is included in the PATH variable of the current user
 declare -r DIR_IN_PATH="${HOME_FOLDER}/.local/bin"
-# Path pointing to a directory that it is in the PATH of all users
 declare -r ALL_USERS_DIR_IN_PATH="/usr/bin"
-# Path pointing to a folder that contains the desktop launchers for the unity application launcher of the current user
 declare -r PERSONAL_LAUNCHERS_DIR="${HOME_FOLDER}/.local/share/applications"
-# Path pointing to a folder that contains the desktop launchers of all users
 declare -r ALL_USERS_LAUNCHERS_DIR="/usr/share/applications"
-# Path pointing to .bashrc file of the user
 declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
-# Bashrc for all users path variable system-wide.
 declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
-# Folder where all the software will be installed
 declare -r USR_BIN_FOLDER="${HOME_FOLDER}/.bin"
-# Path pointing to .bash_functions, which is the file used to control the installed features of the customizer
 declare -r BASH_FUNCTIONS_PATH="${USR_BIN_FOLDER}/bash-functions/.bash_functions"
-# Path pointing to the folder containing all the scripts of the bash functions
 declare -r BASH_FUNCTIONS_FOLDER="${USR_BIN_FOLDER}/bash-functions"
-# Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start
 declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
-# Path pointing to our internal file for initializations
 declare -r BASH_INITIALIZATIONS_PATH="${USR_BIN_FOLDER}/bash-functions/.bash_profile"
-# Path pointing to the folder which contains the initialization bash scripts
 declare -r BASH_INITIALIZATIONS_FOLDER="${USR_BIN_FOLDER}/bash-functions"
-# File that contains the association of mime types with .desktop files
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
-# Default favorites list, data to set favorites
 declare -r PROGRAM_FAVORITES_PATH="${BASH_INITIALIZATIONS_FOLDER}/favorites.txt"
-# Default keybind list< data to set custom keybindings
 declare -r PROGRAM_KEYBIND_PATH="${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt"
-# Default user's fonts folder
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
-# Here we store the .desktop launchers of the programs we want to autostart
 declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 
 
-# The variables that begin with FLAG_ can change the installation of a feature individually. They will continue holding
-# the same value until the end of the execution until another argument
-FLAG_OVERWRITE=0  # 0 --> Skips a feature if it is already installed, 1 --> Install a feature even if it is already installed
-FLAG_INSTALL=1  # 1 or more --> Install the feature provided to add_program. 0 --> DO NOT install the feature provided to add_program
-# Also, flag_install is the number used to determine the installation order
-FLAG_QUIETNESS=2  # 0 --> verbose mode, 1 --> only shows echoes from main script, 2 --> no output is shown
-FLAG_IGNORE_ERRORS=0  # 1 --> the script will continue its execution even if an error is found. 0 --> Abort execution on error
-FLAG_UPGRADE=1  # 0 --> no update, no upgrade; 1 --> update, no upgrade; 2 --> update and upgrade
-FLAG_AUTOCLEAN=2  # Clean caches after installation. 0 --> no clean; 1 --> perform autoremove; 2 --> perform autoremove and autoclean
-FLAG_FAVORITES=0  # 0 --> does nothing; 1 --> sets the program to favourites if there is a desktop launcher
-FLAG_MODE=  # Tells if code is running under install.sh or under uninstall.sh, 1 or 0, respectively
-FLAG_AUTOSTART=0  # 0 --> does nothing; 1 --> autostart program if possible
-# 0 --> in add_program, if flagsoverride is defined, control that matches our privileges;
-# 1 --> Does not check, allowing to install as root things forced as user and viceversa
+########################################################################################################################
+################################################## RUNTIME FLAGS #######################################################
+########################################################################################################################
+# Global variables used for the program to communicate different functions and modules with themselves. They also      #
+# record the internal state of the software, which in many cases change the way in which an installation is performed  #
+# or the general behaviour of the program. Some of the flags are saved for every installation in add_program to be     #
+# interpreted later in execute_installation. During the installation each flag will hold its default value until a     #
+# behavioural argument is supplied to change it.                                                                       #
+#                                                                                                                      #
+# * Static flags: Do not change during runtime and are used to obtain information:                                     #
+#   - FLAG_MODE: Can be set to "install" or "uninstall" to indicate in which state we are in.                          #
+#                                                                                                                      #
+# * Installation behaviour flags: Are used to determine which modifiers will be applied to the installation of each    #
+#   feature. Can be modified using behavioural arguments:                                                              #
+#   - FLAG_OVERWRITE: By default "0". Can be set to "0" or "1" with -s or -o, which will cause to skip a feature if it #
+#     is installed or install it anyway if it is already installed, respectively.                                      #
+#   - FLAG_INSTALL: By default "1". Can be set to "0" or "1" with -n or -y, which will remove or add the supplied      #
+#     features from the pull of features to install or uninstall, depending on the mode we are.                        #
+#   - FLAG_QUIETNESS: By default "0". Can be set to "0", "1" or "2" with -v, -q or -Q, which will cause the            #
+#     installation and general program to be fully verbose, show only echoes or by completely silent, respectively.    #
+#   - FLAG_IGNORE_ERRORS: By default "0". Can be set to "0" or "1" with -e or -i, which will cause to exit when        #
+#     finding an error during an installation or continue installation ignoring errors, respectively.                  #
+#   - FLAG_FAVORITES: By default "0". Can be set to "0" or "1" with -z or -f, which will cause to do nothing or add    #
+#     the installed programs to the favorite apps of the taskbar by using the desktop launchers of each feature.       #
+#   - FLAG_AUTOSTART: By default "0". Can be set to "0" or "1" with -a or -r, which will cause to do nothing or        #
+#     autostart the installed feature at system boot.                                                                  #
+#   - FLAG_SKIP_PRIVILEGES_CHECK: By default "0". Can be set to "0" or "1" with -p or -P to force the match of         #
+#     permissions when installing a feature or ignore this match checking.                                             #
+#                                                                                                                      #
+# * Common behaviour flags: Are used in the program to modify common behaviour. These flags are not saved and used for #
+#   every feature but can be also modified with a behavioural argument.                                                #
+#   - FLAG_UPGRADE: By default "1". Can be set to "0", "1" or "2" with -k, -u or -U, which will do nothing, update or  #
+#     update and upgrade, respectively.                                                                                #
+#   - FLAG_AUTOCLEAN: By default "2". Can be set to "0", "1" or "2" with -d, -c or -C, which will do nothing, do a     #
+#     cache auto-remove or do a cache auto-remove and auto-clean.                                                      #
+########################################################################################################################
+
+# Static flags
+FLAG_MODE=
+
+# Installation behaviour flags
+FLAG_OVERWRITE=0
+FLAG_INSTALL=1
+FLAG_QUIETNESS=2
+FLAG_IGNORE_ERRORS=0
+FLAG_FAVORITES=0
+FLAG_AUTOSTART=0
 FLAG_SKIP_PRIVILEGES_CHECK=0
 
-#                    1                      2                3                    4                  5                 6
-# flagsoverride ${FLAG_PERMISSION};${FLAG_OVERWRITE};${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
-#                 3                    4                5                 6
-# flags ${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
+# Common behaviour flags
+FLAG_UPGRADE=1
+FLAG_AUTOCLEAN=2
 
-bash_functions_import="
-source ${BASH_FUNCTIONS_PATH}
-"
-bash_initializations_import="
-source ${BASH_INITIALIZATIONS_PATH}
-"
-flagsoverride_template=";;;;;"
 
-# Array to store the keynames of the features that have been added for installation
-added_feature_keynames=()
+########################################################################################################################
+################################################ FEATURE KEYNAMES ######################################################
+########################################################################################################################
+# Array of keynames that match all available features in data_features.sh. The keynames are always in lower case and   #
+# have _ in the keyname position where a space or - could be written. This is used to match different argument formats #
+# like mixed cases or using - or _ against each keyname, allowing a greater number of arguments that the ones here     #
+# defined plus the ones defined in FEATUREKEYNAME_arguments, in data_features.sh. These keynames are used to expand    #
+# indirectly the different properties for each feature, which are used to know which properties have to be installed   #
+# for each installation.                                                                                               #
+########################################################################################################################
 
-### FEATURE_DATA ###
-
-# This pseudo-matrix contains different information for every feature available in this project.
-# * The first values of the two cells delimited with ; in each row are used to store dynamically the arguments desired
-#   for that function.
-#   - The first field contains all the arguments to call the program delimited with "|". It is very important to know
-#     that the first argument without the -- is a string that is also matched against a installing function in install
-#     or the corresponding variables in data_features.sh. Also, The name of the first argument without the -- is
-#     expected to be the binary used to detect if there is an installation present.
-#   - The second argument that now is a bit (0 or 1) between semicolons is the permissions needed to install each
-#     program. It is going to be changed to the installation type soon.
-#     Its format: 0 for user permissions, 1 for root permissions, 2 for indiferent. Soon will be the installationtype,
-#     such as "packagemanager"
-#   - In this each of the field of installation_data we would find other data during the runtime, since the rest of
-#     the data is removed.
-#   - Also other numeric data is added to store the desired behavioural flags for each program, such as:
-#     1.- If we are actually going to install the program.
-#     2.- If we should (or not) abort when finding errors.
-#     3.- What level of standard output is desired for that feature: 0 verbose, 1 quiet (only informative prints), 2 totally quiet
-#     4.- If we should reinstall the feature or not when we find that the desired feature already installed.
-#     install_yes/no; forceness; quietness; overwrite; permissions; function_name
-#   - The rest
-
-declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C" "-k" "-u" "-U" "-f" "-z" "-a" "-r" "-n" "-y" "-p" "-P" "-h" "-H" "--debug" "--commands" "--custom1" "--iochem" "--user" "--root" "--ALL")
-
-####################
-##### WRAPPERS #####
-####################
-
-# Associates lists representing a wrapper containing a set of related features
-declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies")
-declare -r wrapper_programmingide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
-declare -r wrapper_programmingpro=("intellij_ultimate" "pycharm_professional" "clion")
-declare -r wrapper_texteditorcore=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
-declare -r wrapper_mediacore=("vlc" "gpaint" "okular" "clementine")
-declare -r wrapper_systemcore=("virtualbox" "gparted" "clonezilla")
-declare -r wrapper_internetcore=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
-declare -r wrapper_artcore=("audacity" "shotcut" "gimp" "obs" "inkscape")
-declare -r wrapper_gamesinstall=("steam" "cmatrix")
-declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
-declare -r wrapper_bashfunctions=("a" "b" "c" "e" "f" "h" "j" "k" "L" "l" "o" "q" "s" "u" "x")
-declare -r wrapper_desktopfunctions=("changebg" "screenshots" "system_fonts" "templates")
-declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters")
-
-# custom wrappers
-declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
-declare -r wrapper_iochem=("psql" "gcc" "java" "ant" "mvn")
-
-# New features in this list must contain _ if the keyname contains _.
 declare -r feature_keynames=(
   "a"
   "add"
@@ -387,6 +387,65 @@ declare -r feature_keynames=(
   "zoom"
 )
 
+# Array to store the keynames of the features that have been added for installation
+added_feature_keynames=()
+
+########################################################################################################################
+############################################ BEHAVIOURAL ARGUMENTS #####################################################
+########################################################################################################################
+# Array containing all the possible auxiliary arguments that can be used to modify the behaviour of each installation  #
+# and the general behaviour of the program. This is used for the autocompletion of this script.                        #
+########################################################################################################################
+
+declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C" "-k" "-u" "-U" "-f" "-z" "-a" "-r" "-n" "-y" "-p" "-P" "-h" "-H" "--debug" "--commands" "--custom1" "--iochem" "--user" "--root" "--ALL")
+
+
+########################################################################################################################
+################################################ WRAPPER KEYNAMES ######################################################
+########################################################################################################################
+# Variables that contain sets of installation keynames that can be used as a multi-feature installation. These         #
+# variables are expanded and its content is supplied to add_program function in order to install all the features      #
+# contained in the wrapper. The text after the "wrapper_" prefix can be used as the argument to install the            #
+# multi-feature wrapper.                                                                                               #
+# Is preferable that the wrapper has the same installation privileges in all of its features.                          #
+########################################################################################################################
+
+# Thematic wrappers
+declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies")
+declare -r wrapper_programmingide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
+declare -r wrapper_programmingpro=("intellij_ultimate" "pycharm_professional" "clion")
+declare -r wrapper_texteditorcore=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
+declare -r wrapper_mediacore=("vlc" "gpaint" "okular" "clementine")
+declare -r wrapper_systemcore=("virtualbox" "gparted" "clonezilla")
+declare -r wrapper_internetcore=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
+declare -r wrapper_artcore=("audacity" "shotcut" "gimp" "obs" "inkscape")
+declare -r wrapper_gamesinstall=("steam" "cmatrix")
+declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
+declare -r wrapper_bashfunctions=("a" "b" "c" "e" "f" "h" "j" "k" "L" "l" "o" "q" "s" "u" "x")
+declare -r wrapper_desktopfunctions=("changebg" "screenshots" "system_fonts" "templates")
+declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters")
+
+# Custom wrappers
+declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
+declare -r wrapper_iochem=("psql" "gcc" "java" "ant" "mvn")
+
+
+########################################################################################################################
+############################################ COMMON DATA VARIABLES #####################################################
+########################################################################################################################
+# Variables that contain static data for both parts of the program (install.sh / uninstall.sh) but are not strictly    #
+# related to an installation feature. This include data templates, output messages, etc.                               #
+########################################################################################################################
+
+declare -r bash_functions_import="
+source ${BASH_FUNCTIONS_PATH}
+"
+declare -r bash_initializations_import="
+source ${BASH_INITIALIZATIONS_PATH}
+"
+declare -r flagsoverride_template=";;;;;"
+
+
 declare -r help_common="\e[0m
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
         10        20        30        40        50        60        70        80
@@ -552,3 +611,15 @@ declare -r help_wrappers="
   --ALL|--all|--All)
   --custom1
 "
+
+
+########################################################################################################################
+############################################ BEHAVIOURAL VARIABLES #####################################################
+########################################################################################################################
+# Variable that are not directly used. Instead, they are unset or set with special values to obtain a certain special  #
+# behaviour.                                                                                                           #
+########################################################################################################################
+
+# Behavioural variable, used to avoid to be queried by apt-get or dpkg when installing such features such wireshark and
+# sonic-pi.
+export DEBIAN_FRONTEND=noninteractive
