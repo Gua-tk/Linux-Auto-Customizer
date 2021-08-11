@@ -1,45 +1,22 @@
 ########################################################################################################################
-# - Name: Linux Auto-Customizer exclusive functions of install.sh.                                                     #
-# - Description: Contains the different pieces of data used to install and uninstall all features that can be generic.
-# Here we have all the data relating to each feature: desktop launchers, icon URLs, aliases, bash_functions, paths to
-# the binaries of each program, etc
+# - Name: Linux Auto Customizer data of features.                                                                      #
+# - Description: Defines all variables containing the data needed to install and uninstall all features.               #
 # - Creation Date: 28/5/19                                                                                             #
-# - Last Modified: 16/5/21                                                                                             #
+# - Last Modified: 11/8/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
 # - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
-# - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
-# imports. See the header of each function to see its privilege requirements                                           #
+# - Permissions: This script should not be executed directly, only sourced to import its variables.                    #
 # - Arguments: No arguments                                                                                            #
 # - Usage: Sourced from install.sh                                                                                     #
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
-# Here are the definition of most long strings, that are used in installation
-# functions. All the variables follow the same name convention:
-# 1 .- the first word is the name in the path, variable, function of the software
-# to be installed.
-# 2.- This is followed by a underscore _
-# 3.- Then the second word is the type of variable:
-#   * launcher: contains the contents of a desktop launcher file
-#   * icon: Contains a URL that points to a valid icon for that feature
-#   * url: Variables that contain an URL that is expected to be in the feature as-is
-#   * downloader: Variables that contains an URL that points to a file resource
-#   * alias: Contains code that will be integrated into the user environment. This
-#     code will be parsed by bash only when run manually by the user, that means that
-#     the variable with this suffix contains potentially harmless code such as alias or
-#     variable definitions...
-#   * function: Contains code that will be integrated into the user environment, but in
-#   this case, the code is parsed every time the user reloads its environment indirectly,
-#   that means that the variable with this suffix contains potentially harmful code, such
-#   as bash functions or code that does some tweaking to the environment
-#
-
 ########################################################################################################################
 ######################################### IMPORT COMMON VARIABLES ######################################################
 ########################################################################################################################
 
-if [[ -f "${DIR}/data_common.sh" ]]; then
+if [ -f "${DIR}/data_common.sh" ]; then
   source "${DIR}/data_common.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
@@ -64,77 +41,103 @@ if [ -z \"\$(echo \$PATH | grep -Eo \"${DIR_IN_PATH}\")\" ]; then
 fi
 "
 
-# The variables in here follow a naming scheme that is required for the code of each feature to obtain its data by
-# variable indirect expansion.
-# The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY.
-# The variables that are used by the code depend on the type of installation, defined as:
-# FEATUREKEYNAME_installationtype. This can be set to:
-# "environmental": Uses only the common part of the installation to install bash code in bashrc, desktop launchers...
-# "packageinstall": Downloads a .deb package and installs it using dpkg.
-# "packagemanager": Uses de package manager such as apt-get to install packages.
-# "userinherit": Downloads a compressed file containing an unique folder.
-# "repositoryclone": Clone a reposiotory inside the directory of the current feature installing.
-# Available properties
-# - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder. (packageinstall, packagemanager)
-# - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get. (packageinstall, packagemanager)
-# - FEATUREKEYNAME_packageurls: Link to the .deb file to download (packageinstall)
-# - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. (userinherit)
-# - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform the download and decompression (userinherit)
-# - FEATUREKEYNAME_compressedfiletype: Compression format of the the compressed file from FEATUREKEYNAME_compressedfileurl (userinherit)
-# - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to
-#   binaries that will be added to the PATH (userinherit) and its name in the path separated by ";"
-# - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation (packageinstall, packagemanager)
-# - FEATUREKEYNAME_launchercontents: Array of contents of launchers to be created (all)
-# - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be added in .bashrc (all)
-# - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature.
-#   Optionally, with ; you can specify the chosen desktopn file without .desktop extension.
-# - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature (all). Each keybind has 3 fields separated
-#   from each other using ";": Command;key_combination;keybind_description. It needs a desktop launcher
-# - FEATUREKEYNAME_downloads: Array of links to avalid donwload file separated by ";" from the desired name for that file.
-#   It will downloaded in ${USR_BIN_FOLDER}/APPNAME/DESIREDFILENAME
-# - FEATUREKEYNAME_repositoryurl: Repository to be cloned. (repositoryclone)
-# - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if
-#   there is manual code for that feature to be executed or not. If it is in one, it will try to execute a function
-#   with its name following a certain pattern
-# - FEATUREKEYNAME_pipinstallations: Array containing set of programs to be installed via pip (pythonvenv)
-# - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3 (pythonvenv)
-# - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from a
-#   function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid, install_FEATUREKEYNAME_post (pythonvenv)
-# - FEATUREKEYNAME_filekeys: Array contentaining the keys to indirect expand file to be created and its path
-# - FEATUREKEYNAME_FILEKEY_content: Variable with the content of a file
-# - FEATUREKEYNAME_FILEKEY_path: Variable with the path where we need to store the file with that FILEKEY
-
-# - FEATUREKEYNAME_flagsoverride: Contains bits that will override the current state fo the flags for that feature
-#   Its format is the following:
-#   ${FLAG_PERMISSION};${FLAG_IGNORE_ERRORS};${FLAG_OVERWRITE};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
-#   If we want to override permissions for being executed as root at all times:
-#   FEATUREKEYNAME_flagsoverride="0;;;;;"
-# - FEATUREKEYNAME_bashinitializations: Array containing scripts that are added to ${HOME_FOLDER}/.profile
-# - FEATUREKEYNAME_autostartlaunchers: Array containing autostart system properties of features
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
 ########################################################################################################################
 
+# The variables in here follow a naming scheme that is required for each feature to obtain its data by variable indirect
+# expansion. The variables that are defined for an installation determine its behaviour.
+# Each installations has its own FEATUREKEYNAME, which is an string that matches an unique feature. This string must be
+# added to the array feature_keynames to be recognised by the customizer as an available installation.
+# The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY. Some variables can be defined in all features,
+# some are only used depending on the installation type and others have to be defined always for each feature.
+
+###### Available properties:
+
+### Mandatory properties:
+#  - FEATUREKEYNAME_arguments: Array containing the arguments for each feature. Each argument has to be in lower case
+#    and contain a _ in the possible parts of an argument where you could expect a separation with - or _. This is used
+#    to match arguments ignoring case and separation symbols.
+#  - FEATUREKEYNAME_installationtype. Define the type of installation, which sets a fixed behaviour that obtains its
+#    input from predefined sets of properties for each installation type (check next section Installation type dependent
+#    properties). This can be set to:
+#    * "packageinstall": Downloads a .deb package and installs it using dpkg.
+#    * "packagemanager": Uses de package manager such as apt-get to install packages and dependency packages.
+#    * "userinherit": Downloads a compressed file containing an unique folder.
+#    * "repositoryclone": Clone a repository inside the directory of the current feature installing.
+#    * "environmental": Uses only the common part of every installation type. Has no type-dependent properties.
+#  - FEATUREKEYNAME_readmeline: Contains the readme line of the table for each feature.
+
+### Optional properties
+#  - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder of the system. Used
+#    as fallback for autostart and associatedfiletypes.
+#  - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to
+#    binaries that will be added to the PATH. Its name in the PATH is added by using a ";" to separate it from the
+#    relative path: "binaries/common/handbreak.sh;handbreak".
+#  - FEATUREKEYNAME_launchercontents: Array of contents of launchers to be created in the desktop and dashboard.
+#    They are used as fallback for autostart too.
+#  - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be executed on the start of every terminal session,
+#    in our case .bashrc.
+#  - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature. Its launchers in
+#    launchercontents or the defined launchernames will be used as desktop launchers to associate the mime type.
+#    Optionally it can have a custom desktop launcher added after a ; of an associated file type to use a custom
+#    .desktop launcher: "text/x-chdr;sublime"
+#  - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature. Each keybind has 3 fields separated
+#    from each other using ";": Command;key_combination;keybind_description.
+#  - FEATUREKEYNAME_downloads: Array of links to a valid download file separated by ";" from the desired name or full
+#    pathfor that file.
+#    It will downloaded in ${USR_BIN_FOLDER}/APPNAME/DESIREDFILENAME
+#  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from a
+#    function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,
+#    install_FEATUREKEYNAME_post.
+#  - FEATUREKEYNAME_filekeys: Array contentaining the keys to indirect expand file to be created and its path
+#  - FEATUREKEYNAME_FILEKEY_content: Variable with the content of a file identified in each feature with a particular
+#    FILEKEY.
+#  - FEATUREKEYNAME_FILEKEY_path: Variable with the path where we need to store the file with that FILEKEY.
+#  - FEATUREKEYNAME_flagsoverride: Contains bits that will override the current state of the flags in the declared
+#    installations. Its format is the following:
+#    ${FLAG_PERMISSION};${FLAG_IGNORE_ERRORS};${FLAG_OVERWRITE};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
+#  - FEATUREKEYNAME_bashinitializations: Array containing bash scripts that executed on system boot, by default
+#    ${HOME_FOLDER}/.profile.
+#  - FEATUREKEYNAME_autostartlaunchers: Array containing autostart launchers explicitly to respond to FLAG_AUTOSTART and
+#    autostart on boot the feature where they are defined in.
+#
+### Installation type dependent properties
+#  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dpendencies of the
+#  feature. Used in: packageinstall, packagemanager.
+#  - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation.
+#    Used in: packageinstall, packagemanager
+#  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.
+#  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit.
+#  - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform the download and decompression.
+#    Used in: userinherit.
+#  - FEATUREKEYNAME_compressedfiletype: Compression format of the compressed file in FEATUREKEYNAME_compressedfileurl.
+#    Used in userinherit.
+#  - FEATUREKEYNAME_repositoryurl: Repository to be cloned. Used in: repositoryclone.
+#  - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if
+#    there is manual code for that feature to be executed or not. If it is in one, it will try to execute a function
+#    with its name following a certain pattern
+#  - FEATUREKEYNAME_pipinstallations: Array containing set of programs to be installed via pip. Used in: pythonvenv.
+#  - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3. Used
+#    in: pythonvenv.
+
+
+
 a_installationtype="environmental"
 a_arguments=("a")
 a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
-#a_flagsoverride="2;;;;;"
 a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 add_installationtype="environmental"
 add_arguments=("add" "add_function")
 add_bashfunctions=("alias add=\"git add\"")
-#add_flagsoverride="1;;;;;"
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 aisleriot_installationtype="packagemanager"
 aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
-#aisleriot_flagsoverride="0;;;;;"
 aisleriot_launchernames=("sol")
 aisleriot_packagenames=("aisleriot")
 aisleriot_readmeline="| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-
-# Line of the test. The Above is refactored (not yet!). The Below is not (of course).
 
 alert_installationtype="environmental"
 alert_arguments=("alert" "alert_alias" "alias_alert")
@@ -143,12 +146,10 @@ alert_bashfunctions=("
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i \"\$([ \$? = 0 ] && echo terminal || echo error)\" \"\$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\\'')\"'
 ")
-#alert_flagsoverride="0;;;;;"
 alert_readmeline="| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 ansible_installationtype="packagemanager"
 ansible_arguments=("ansible")
-#ansible_flagsoverride="0;;;;;"
 ansible_packagenames=("ansible")
 ansible_readmeline="| Ansible | Automation of software | Command \`ansible\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
@@ -575,7 +576,6 @@ converters_repositoryurl="https://github.com/Axlfc/converters"
 
 copyq_installationtype="packagemanager"
 copyq_arguments=("copyq")
-#copyq_flagsoverride="0;;;;;"
 copyq_launchernames=("com.github.hluk.copyq")
 copyq_packagenames=("copyq")
 copyq_readmeline="| copyq | A clipboard manager application that comes with extra features such as editing and scripting | Command \`copyq\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
@@ -894,7 +894,7 @@ F() {
     done
   fi
 }
-"
+")
 F_readmeline="| Function \`F\` | Function to massively find content in files | Command \`F\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 f_installationtype="environmental"
