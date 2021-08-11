@@ -115,8 +115,8 @@ declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 ########################################################################################################################
 # Global variables used for the program to communicate different functions and modules with themselves. They also      #
 # record the internal state of the software, which in many cases change the way in which an installation is performed  #
-# or the general behaviour of the program. Some of the flags are saved for every installation in add_program to be     #
-# interpreted later in execute_installation. During the installation each flag will hold its default value until a     #
+# or the general behaviour of the program. Some of the flags are saved for every installation in add_program() to be   #
+# interpreted later in execute_installation(). During the installation each flag will hold its default value until a   #
 # behavioural argument is supplied to change it.                                                                       #
 #                                                                                                                      #
 # * Static flags: Do not change during runtime and are used to obtain information:                                     #

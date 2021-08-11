@@ -32,7 +32,6 @@ install_caffeine_post()
 
 install_customizer_post()
 {
-  echo "${DIR}/install.sh"
   ln -sf "${DIR}/install.sh" /usr/bin/customizer-install
   if [ -z "$(cat "${BASHRC_ALL_USERS_PATH}" | grep -Fo "source ${BASH_FUNCTIONS_PATH}")" ]; then
     echo "source ${BASH_FUNCTIONS_PATH}" >> "${BASHRC_ALL_USERS_PATH}"

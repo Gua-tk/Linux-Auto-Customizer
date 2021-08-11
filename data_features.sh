@@ -93,11 +93,12 @@ fi
 #  - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation.    #
 #    Used in: packageinstall, packagemanager.                                                                          #
 #  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.                           #
-#  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit.                       #
+#  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit and in packageinstall  #
+#    as fallback if no urls are supplied in packageurls; in that case will also need a compressedfiletype.             #
 #  - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform the download and decompression.        #
 #    Used in: userinherit.                                                                                             #
 #  - FEATUREKEYNAME_compressedfiletype: Compression format of the compressed file in FEATUREKEYNAME_compressedfileurl. #
-#    Used in userinherit.                                                                                              #
+#    Used in userinherit and in packageinstall if no packageurls are supplied.                                         #
 #  - FEATUREKEYNAME_repositoryurl: Repository to be cloned. Used in: repositoryclone.                                  #
 #  - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if  #
 #    there is manual code for that feature to be executed or not. If it is in one, it will try to execute a function   #
@@ -2474,7 +2475,8 @@ fi
 
 if [ \"\$color_prompt\" = yes ]; then
     # Colorful custom PS1
-    PS1=\"\\[\\\e[1;37m\\]\\\\\\d \\\\\\\t \\[\\\e[0;32m\\]\\\\\u\[\\\e[4;35m\\]@\\[\\\e[0;36m\\]\\\\\\H\\[\\\e[0;33m\\] \\\\\\w\\[\\\e[0;32m\\] \\\\\\\$ \\[\\033[0m\\]\"
+    PS1=\"\\[\\\e[1;37m\\]\\d \\t \\[\\\e[0;32m\\]\\u\[\\\e[4;35m\\]@\\[\\\e[0;36m\\]\\H\\[\\\e[0;33m\\] \\w\\[\\\e[0;32m\\]
+\\\\\\\$ \\[\\033[0m\\]\"
 else
     PS1='\${debian_chroot:+(\$debian_chroot)}\u@\h:\w\\$ '
 fi
@@ -2501,7 +2503,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -2510,6 +2511,16 @@ if ! shopt -oq posix; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
+  fi
+fi
+
+# Save and reload from history before prompt appears to be sure the prompt is being charged correctly because it conflicts with gitprompt.
+if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \"if [ ! -d .git ]; then source ${BASH_FUNCTIONS_FOLDER}/prompt.sh; fi\")\" ]; then
+  # Check if there is something inside PROMPT_COMMAND, so we put semicolon to separate or not
+  if [ -z \"\${PROMPT_COMMAND}\" ]; then
+    export PROMPT_COMMAND=\"if [ ! -d .git ]; then source ${BASH_FUNCTIONS_FOLDER}/prompt.sh; fi\"
+  else
+    export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; if [ ! -d .git ]; then source ${BASH_FUNCTIONS_FOLDER}/prompt.sh; fi\"
   fi
 fi
 ")
