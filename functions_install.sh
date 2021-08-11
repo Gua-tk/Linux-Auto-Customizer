@@ -590,7 +590,7 @@ generic_install_initializations() {
   local -r bashinitializations="$1_bashinitializations[@]"
   local name_suffix_anticollision=""
   for bashinit in "${!bashinitializations}"; do
-    add_bash_function "${bashinit}" "$1${name_suffix_anticollision}.sh"
+    add_bash_initialization "${bashinit}" "$1${name_suffix_anticollision}.sh"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
