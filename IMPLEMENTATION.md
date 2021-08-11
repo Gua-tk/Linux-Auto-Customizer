@@ -4,6 +4,7 @@
 
 ###### UPDATES
 - [ ] `--help`: needs some final review
+- [ ] `common_data.sh`: Sort the possible declaration in the corresponding order.
 
 ###### NEW FEATURES
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
@@ -30,6 +31,7 @@
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
 
 ###### NEW FEATURES
+- [ ]  function for emoji echo "${emojilist[slightly_smiling_face]}" and extend load_emoji function
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
 - [ ] `data_features.sh`, `common_data.sh`: `port` function. It returns the name and PID of a process using the given port #  "lsof -i $1"  alias ports="lsof -Pan -i tcp -i udp"
 - [ ] `data_features.sh`, `common_data.sh`: `edit` functions. It edits a system or user configuration file by passing the argument of the name. By default with no parameters it should edit .bashrc.  alias editbashrc="editor ${HOME}/.bashrc"  alias editprofile="editor ${HOME}/.profile" alias editfunctions="editor ${HOME}/.bash_functions" sshConfig="pluma ${HOME}/.ssh/config" also edit shortcuts.sh if present, edit fastcommands if present favorites, keybindings...etc. whatever it is interesting 
