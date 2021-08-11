@@ -55,7 +55,7 @@ else
   # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
   # for /home/$SUDO_USER to be interpreted correctly as a root user.
-  declare $(cat ${HOME_FOLDER}/.config/user-dirs.dirs | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")
+  declare "$(cat "${HOME_FOLDER}/.config/user-dirs.dirs" | sed 's/#.*//g' | sed "s|\$HOME|/home/$SUDO_USER|g" | sed "s|\"||g")"
 fi
 
 # Path pointing to a directory that is included in the PATH variable of the current user
