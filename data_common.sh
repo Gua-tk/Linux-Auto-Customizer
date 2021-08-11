@@ -223,6 +223,7 @@ declare -r feature_keynames=(
   "dummycommit"
   "e"
   "eclipse"
+  "emojis"
   "evolution"
   "f"
   "f_irc"
