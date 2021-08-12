@@ -3101,7 +3101,7 @@ google-chrome() {
 }
 ")
 google_chrome_flagsoverride=";;;;1;"
-google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7")
+google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
 google_chrome_launchernames=("google-chrome")
 google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
