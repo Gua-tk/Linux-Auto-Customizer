@@ -841,7 +841,8 @@ eclipse_readmeline="| Eclipse | ${eclipse_readmelinedescription} | Command \`ecl
 
 emojis_installationtype="environmental"
 emojis_arguments=("emojis")
-#
+emojis_packagedependencies=("fonts-symbola")
+emojis_readmeline=
 emojis_bashfunctions=("
 emoji() {
   if [ -z \"\$(echo \"\${EMOJIS[@]}\")\" ]; then
@@ -3505,7 +3506,7 @@ mdadm_readmeline="| mdadm | Manage RAID systems | Command \`mdadm\` ||  <ul><li>
 megasync_installationtype="packageinstall"
 megasync_arguments=("megasync" "mega")
 megasync_packagedependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
-megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.4.0-1.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb")
+megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.5.3-2.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nautilus-megasync_3.6.6_amd64.deb")
 megasync_launchernames=("megasync")
 megasync_readmeline="| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Command \`megasync\`, desktop launcher, dashboard launcher and integration with \`nemo\` file explorer ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 

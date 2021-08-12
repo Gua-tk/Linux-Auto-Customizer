@@ -382,7 +382,7 @@ download() {
 
   # Download in a subshell to avoid changing the working directory in the current shell
   echo -en '\033[1;33m'
-  wget --show-progress -qO "${dir_name}/${file_name}" "$1"
+  wget --show-progress -O "${dir_name}/${file_name}" "$1"
   echo -en '\033[0m'
 
   # If we are root
