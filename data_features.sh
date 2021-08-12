@@ -840,13 +840,13 @@ Version=4.2.2
 eclipse_readmeline="| Eclipse | ${eclipse_readmelinedescription} | Command \`eclipse\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 emojis_installationtype="environmental"
-emojis_arguments=("emojis")
+emojis_arguments=("emojis" "emoji")
 emojis_packagedependencies=("fonts-symbola")
 emojis_readmeline=
 emojis_bashfunctions=("
 emoji() {
   if [ -z \"\$(echo \"\${EMOJIS[@]}\")\" ]; then
-    declare -Agr EMOJIS=(
+    declare -Ar EMOJIS=(
       [grinning_face]=😀
       [grinning_face_with_big_eyes]=😃
       [grinning_face_with_smiling_eyes]=😄
@@ -2574,16 +2574,29 @@ emoji() {
     if [ -z \"\$(echo \"\${return_emoji}\")\" ]; then
       for i in \"\${!EMOJIS[@]}\"; do
         if [ \"\${EMOJIS[\${i}]}\" == \"\$1\" ]; then
-          echo \"\${i}\"
-          return
+          return_emoji=\"\${i}\"
+          break
         fi
       done
+      if [ -z \"\$(echo \"\${return_emoji}\")\" ]; then
+        if [ \"\$1\" == \"random\" ]; then
+          EMOJIS_arr=(\${EMOJIS[@]})
+          echo \"\${EMOJIS_arr[\$RANDOM % \${#EMOJIS_arr[@]}]}\"
+        elif [ \"\$1\" -ge 0 ]; then
+          EMOJIS_arr=(\${EMOJIS[@]})
+          echo \"\${EMOJIS_arr[\$1 % \${#EMOJIS_arr[@]}]}\"
+        else
+          echo \"ERROR Not recognised option\"
+        fi
+      else
+        echo \"\${return_emoji}\"
+      fi
     else
       echo \"\${return_emoji}\"
     fi
   else
     for i in \"\${!EMOJIS[@]}\"; do
-      echo \"\${i}:  \${EMOJIS[\${i}]}\"
+      echo \"\${i}:\${EMOJIS[\${i}]}\"
     done
   fi
 }

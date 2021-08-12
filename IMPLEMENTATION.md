@@ -3,8 +3,6 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 
 ###### UPDATES
-- [ ] `--help`: needs some final review
-- [ ] `common_data.sh`: Sort the possible declaration in the corresponding order.
 
 ###### NEW FEATURES
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
@@ -40,7 +38,6 @@
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
-- [ ] `install.sh`: Add VBox extension pack
 - [ ] `install.sh`: SublimeText-Markdown, & other plugins for programs...
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server: alias sshDisable="sudo systemctl disable sshd", alias sshEnable="sudo systemctl enable ssh", alias sshRestart="sudo systemctl restart sshd", alias sshStart="sudo systemctl start sshd", alias sshStatus="sudo systemctl status sshd", alias sshStop="sudo systemctl stop sshd"  
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client user disposable environment features if possible

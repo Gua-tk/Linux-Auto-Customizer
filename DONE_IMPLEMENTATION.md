@@ -100,6 +100,10 @@
 - [x] Server running programs / ports management localhost --> Jupyterlab is this kind of feature, which means this is already implemented.
 - [x] `install.sh`: [Fix Nemo autostart](https://ubuntuforums.org/showthread.php?t=2400084)
 - [x] `autocompletion` also works when calling installation manually in working customizer directory (sudo/bash install.sh -v auda[tab]...): now tab autocompletion only works when `customizer-install` it is locally installed.
+- [x] `--help`: needs some final review
+- [x] `emoji_function`: Emoji function that converts string identifyiung emoji to its emoji and viceversa
+- [ ] `common_data.sh`: Sort the possible declaration in the corresponding order. --> not possible tosort because they have dependencies between them
+
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
