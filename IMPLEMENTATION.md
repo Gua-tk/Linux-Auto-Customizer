@@ -11,25 +11,25 @@
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
-- [ ] `data_features.sh`: validate `promptcolors` function. Write custom color codes of gnome-terminal profile through gsettings or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
-- [ ] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
-- [ ] `data_features.sh`: refactor `x` (extract) function: 
-                            - do not rely only in extension
-                            - decompress in a folder optionally
-                            - inform if the package needed is not present and installs it
-                            - grow it with the code already in decompress which handles already most common cases ;)
-- [ ] `prompt`: Fix it and put a random emoji at the left for each terminal [emojis](https://loige.co/random-emoji-in-your-prompt-how-and-why/)
-- [ ] `.profile`: migrate all possible sets of features to .profile such as terminal background, prompts (PS1, gitprompt declaration), bash colors, bash emojis list... Avoiding innecessary bashrc loadings making it to go faster.
+
+- [ ] `data_features.sh`: Add readme line of emoji functions
+- [ ] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as comentary in bashcolors fcuntion).  Write custom color codes of gnome-terminal profile through gsettings  for dracula color schema or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
        system-wide, not only on the bash environment.
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg
 - [ ] `data_features.sh`: Update history [optimization](https://unix.stackexchange.com/questions/6628/what-customizations-have-you-done-on-your-shell-profile-to-increase-productivity)
-- [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.
-
+- [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.  
+- [ ] `.profile`: generate function to princ clock with hour. Preferably in python
+- [ ] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
+- [ ] `data_features.sh`: refactor `x` (extract) function: 
+                            - do not rely only in extension
+                            - decompress in a folder optionally
+                            - inform if the package needed is not present and installs it
+                            - grow it with the code already in decompress which handles already most common cases ;)
+  
 ###### NEW FEATURES
-- [ ]  function for emoji echo "${emojilist[slightly_smiling_face]}" and extend load_emoji function
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
 - [ ] `data_features.sh`, `common_data.sh`: `port` function. It returns the name and PID of a process using the given port #  "lsof -i $1"  alias ports="lsof -Pan -i tcp -i udp"
 - [ ] `data_features.sh`, `common_data.sh`: `edit` functions. It edits a system or user configuration file by passing the argument of the name. By default with no parameters it should edit .bashrc.  alias editbashrc="editor ${HOME}/.bashrc"  alias editprofile="editor ${HOME}/.profile" alias editfunctions="editor ${HOME}/.bash_functions" sshConfig="pluma ${HOME}/.ssh/config" also edit shortcuts.sh if present, edit fastcommands if present favorites, keybindings...etc. whatever it is interesting 
