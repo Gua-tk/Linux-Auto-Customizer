@@ -216,7 +216,37 @@ b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [
 bashcolors_installationtype="environmental"
 bashcolors_arguments=("bash_colors")
 bashcolors_bashfunctions=("
-# Consider dracula color palette
+paletteprofile=\"\$(echo \$(dconf list /org/gnome/terminal/legacy/profiles:/ | sed 's./..'))\"
+# make sure the profile is set to not use theme colors
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/${paletteprofile}/ use-theme-colors false # --> Don't use system color theme
+bold_color=\"#6E46A4\"
+background_color=\"#282A36\"
+foreground_color=\"#F8F8F2\"
+
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/${paletteprofile}/ bold-color ${bold_color}
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/${paletteprofile}/ background-color ${background_color}
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/${paletteprofile}/ foreground-color ${foreground_color}
+
+#gsettings get org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/${paletteprofile}/ palette
+palette_colors=\"
+#262626
+#E356A7
+#42E66C
+#E4F34A
+#9B6BDF
+#E64747
+#75D7EC
+#EFA554
+#7A7A7A
+#FF79C6
+#50FA7B
+#F1FA8C
+#BD93F9
+#FF5555
+#8BE9FD
+#FFB86C
+\"
+#gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/${paletteprofile}/ palette ${palette_colors}
 CLEAR='\033[0m' # No Color
 BLACK='\033[0;30m'
 RED='\033[0;31m'
