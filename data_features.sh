@@ -2601,7 +2601,7 @@ emoji() {
   fi
 }
 ")
-
+emojis_readmeline="| emojis | Print emojis name in terminal when passing an emoji and prints emoji name when an emoji is passed to it. | Command \`emoji\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 evolution_installationtype="packagemanager"
 evolution_arguments=("evolution")
