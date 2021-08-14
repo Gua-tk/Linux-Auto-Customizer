@@ -3057,6 +3057,7 @@ gnome_sudoku_readmeline="| sudoku | Implementation for GNU systems of the famous
 
 gnome_terminal_installationtype="packagemanager"
 gnome_terminal_arguments=("gnome_terminal")
+gnome_terminal_keybinds=("gnome-terminal;<Primary><Alt><Super>t;GNOME Terminal")
 gnome_terminal_launchernames=("org.gnome.Terminal")
 gnome_terminal_packagenames=("gnome-terminal")
 gnome_terminal_readmeline="| GNOME terminal | Terminal of the system | Command \`gnome-terminal\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
