@@ -12,7 +12,6 @@
 
 ###### UPDATES
 
-- [ ] `data_features.sh`: Add readme line of emoji functions
 - [ ] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as comentary in bashcolors fcuntion).  Write custom color codes of gnome-terminal profile through gsettings  for dracula color schema or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
