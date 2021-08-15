@@ -431,7 +431,7 @@ cmatrix_readmeline="| Cmatrix | ${cmatrix_readmelinedescription} | Command \`cma
 code_installationtype="userinherit"
 code_arguments=("code" "visual_studio_code" "visual_studio")
 code_bashfunctions=("alias code=\"nohup code . &>/dev/null &\"")
-code_binariesinstallpaths=("code;code")
+code_binariesinstalledpaths=("code;code")
 code_compressedfiletype="z"
 code_compressedfileurl="https://go.microsoft.com/fwlink/?LinkID=620884"
 code_launchercontents=("[Desktop Entry]
@@ -4147,6 +4147,7 @@ Exec=bash ${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh
 ")
 pgadmin_manualcontentavailable="0;1;0"
 pgadmin_pipinstallations=("pgadmin4")
+pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")
 pgadmin_readmeline="| pgAdmin | ${pgadmin_readmelinedescription} | Command \`pgadmin4\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 php_installationtype="packagemanager"
@@ -4159,7 +4160,16 @@ pluma_arguments=("pluma")
 pluma_bashfunctions=("
 pluma()
 {
-  nohup pluma \"\$1\" &>/dev/null &
+  if [ \$# -eq 0 ]; then
+    nohup pluma &>/dev/null &
+  else
+    if [ \$# -eq 1 ]; then
+      nohup pluma \"\$1\" &>/dev/null &
+    else
+      echo \"ERROR: Too many arguments\"
+      return
+    fi
+  fi
 }
 ")
 pluma_launchernames=("pluma")
@@ -4525,6 +4535,7 @@ TryExec=rstudio
 Type=Application
 Version=1.0
 ")
+rstudio_packagedependencies=("libssl-dev")
 rstudio_readmeline="| RStudio | ${rstudio_readmelinedescription} | Commands \`rstudio\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |  "
 
 rsync_installationtype="packagemanager"
@@ -4581,6 +4592,8 @@ screenshot-window()
   gnome-screenshot -w -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
 }
 ")
+screenshots_binariesinstalledpaths=("screenshots.sh;screenshots")
+screenshots_packagedependencies=("gnome-screenshot" "xclip")
 screenshots_readmeline="| Screenshots | Takes a screenshot and saves it to custom ~/Images/screenshots folder and save it to the clipboard for pasting | Commands \`screenshot-full\` \`screenshot-window\` \`screenshot-area\`||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 shortcuts_installationtype="environmental"
