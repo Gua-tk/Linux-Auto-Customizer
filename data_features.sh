@@ -215,25 +215,10 @@ b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [
 
 bashcolors_installationtype="environmental"
 bashcolors_arguments=("bash_colors")
-bashcolors_bashfunctions=("
-gnome_terminal_profile=\$(gsettings get org.gnome.Terminal.ProfilesList default)
-gnome_terminal_profile=\${gnome_terminal_profile:1:-1} # remove leading and trailing single quotes
-
-# make sure the profile is set to not use theme colors
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/\${gnome_terminal_profile}/ use-theme-colors false # --> Don't use system color theme
-bold_color=\"#6E46A4\"
-background_color=\"#282A36\"
-foreground_color=\"#F8F8F2\"
-
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ bold-color \${bold_color}
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ background-color \${background_color}
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ foreground-color \${foreground_color}
-
+bashcolors_bashinitializations=(" #############################################################################################grey#######pink#######green######yellow#####purple#####red#######cyan#######orange####lighgrey##lightpink##lightgreen#lightyellow#lightpurple#lightred#lightcyan##lightorange
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ palette \"['#262626', '#E356A7', '#42E66C', '#E4F34A', '#9B6BDF', '#E64747', '#75D7EC', '#EFA554', '#7A7A7A', '#FF79C6', '#50FA7B', '#F1FA8C', '#BD93F9', '#FF5555', '#8BE9FD', '#FFB86C']\"
-
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ use-transparent-background true
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ background-transparency-percent \"10\"
-
+")
+bashcolors_bashfunctions=("
 CLEAR='\033[0m' # No Color
 BLACK='\033[0;30m'
 RED='\033[0;31m'
@@ -5061,6 +5046,19 @@ terminal_background_installationtype="environmental"
 terminal_background_arguments=("terminal_background")
 terminal_background_manualcontentavailable="0;1;0"
 terminal_background_readmeline="| Terminal background | Change background of the terminal to black | Every time you open a terminal || <ul><li>- [ ] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+terminal_background_bashinitializations=("
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ use-transparent-background true
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ background-transparency-percent \"10\"
+gnome_terminal_profile=\$(gsettings get org.gnome.Terminal.ProfilesList default)
+gnome_terminal_profile=\${gnome_terminal_profile:1:-1} # remove leading and trailing single quotes
+
+# make sure the profile is set to not use theme colors
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/\${gnome_terminal_profile}/ use-theme-colors false # --> Don't use system color theme
+
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ bold-color \"#6E46A4\"
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ background-color \"#282A36\"
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ foreground-color \"#F8F8F2\"
+")
 
 terminator_installationtype="packagemanager"
 terminator_arguments=("terminator")
