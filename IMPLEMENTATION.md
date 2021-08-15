@@ -31,12 +31,9 @@
 ###### NEW FEATURES
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
 - [ ] `data_features.sh`, `common_data.sh`: `port` function. It returns the name and PID of a process using the given port #  "lsof -i $1"  alias ports="lsof -Pan -i tcp -i udp"
-- [ ] `data_features.sh`, `common_data.sh`: rewrite k as function: #alias k9="kill -9"# alias killbyport="k9 \`lsof -i:3000 -t\`"
-- [ ] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
-- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server: alias sshDisable="sudo systemctl disable sshd", alias sshEnable="sudo systemctl enable ssh", alias sshRestart="sudo systemctl restart sshd", alias sshStart="sudo systemctl start sshd", alias sshStatus="sudo systemctl status sshd", alias sshStop="sudo systemctl stop sshd"  
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client user disposable environment features if possible
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g

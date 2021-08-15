@@ -351,6 +351,7 @@ declare -r feature_keynames=(
   "sonic_pi"
   "spotify"
   "spreadsheets"
+  "sshservercommands"
   "status"
   "steam"
   "studio"

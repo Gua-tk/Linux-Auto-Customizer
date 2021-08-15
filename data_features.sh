@@ -2792,6 +2792,7 @@ alias rip=\"sudo shutdown -h now\"
 alias up=\"sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove\"
 alias services=\"sudo systemctl --type=service\"
 alias cls=\"clear\"
+alias services=\"sudo systemctl --type=service\"
 ")
 fastcommands_readmeline="| fast commands | Generic multi-purpose | Commands \`...\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -4763,6 +4764,18 @@ Type=Application
 Version=1.0
 ")
 spreadsheets_readmeline="| Spreadsheets | ${spreadsheets_readmelinedescription} | Command \`spreadsheets\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+
+sshservercommands_installationtype="environmental"
+sshservercommands_arguments=("ssh_commands")
+sshservercommands_bashfunctions=("
+alias sshDisable=\"sudo systemctl disable sshd\"
+alias sshEnable=\"sudo systemctl enable ssh\"
+alias sshRestart=\"sudo systemctl restart sshd\"
+alias sshStart=\"sudo systemctl start sshd\"
+alias sshStatus=\"sudo systemctl status sshd\"
+alias sshStop=\"sudo systemctl stop sshd\"
+")
+sshservercommands_readmeline="| ssh server commands | Comands to disable, enable, restart, start, status, stop \`sshd\` | Commands \`...\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 status_installationtype="environmental"
 status_arguments=("status")
