@@ -27,7 +27,7 @@
                             - inform if the package needed is not present and installs it
                             - grow it with the code already in decompress which handles already most common cases ;)
 - [ ] `pluma`, `edit` functions should be able to open multiple files at once
-
+- [ ] `prompt`: simplify PS1, change gnome-terminal title with useful information such as the current path [](https://askubuntu.com/questions/22413/how-to-change-gnome-terminal-title)
 ###### NEW FEATURES
 - [ ] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as comentary in bashcolors function).  Write custom color codes of gnome-terminal profile through gsettings  for dracula color schema or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"

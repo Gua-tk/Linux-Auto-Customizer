@@ -380,6 +380,15 @@ Version=1.0
 clion_readmelinedescription="Cross-platform C/C++ IDE"
 clion_readmeline="| Clion | ${clion_readmelinedescription} | Command \`clion\`, silent alias \`clion\`, desktop launcher, dashboard launcher, associated with mimetypes \`.c\`, \`.h\` and \`.cpp\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+clone_installationtype="environmental"
+clone_bashfunctions=("
+clone()
+{
+  git clone \$1
+}
+")
+clone_readmeline="| Function \`clone\` | Function for \`git clone \$1\`|  Command \`clone\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 clonezilla_installationtype="packagemanager"
 clonezilla_arguments=("clonezilla")
 clonezilla_packagenames=("clonezilla")
@@ -846,11 +855,14 @@ edit_bashfunctions=("
 edit() {
   if [ -n \"\$1\" ]; then
     case \"\$1\" in
-      bashrc)
+      allbashrc)
         pluma /etc/bash.bashrc
       ;;
       aliases)
         pluma ${HOME}/.bash_aliases
+      ;;
+      bashrc)
+        pluma ${HOME}/.bashrc
       ;;
       bashfunctions)
         pluma ${HOME}/.bin/bash-functions/.bash_functions
