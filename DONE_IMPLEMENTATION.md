@@ -189,3 +189,4 @@
 - [x] `functions_install`: Update create_links_in_path() so the links created as root are system-wide.
 - [x] `data_features.sh`, `common_data.sh`: Add new installation `fastcommands` - alias rip="sudo shutdown -h now - alias update="sudo apt-get update -y" - alias up="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove" - alias services="sudo systemctl --type=service" - alias cls="clear"    
 - [x] `data_features.sh`: Add readme line of emoji function
+- [x] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as comentary in bashcolors function).  Write custom color codes of gnome-terminal profile through gsettings  for dracula color schema or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)

@@ -12,7 +12,6 @@
 
 ###### UPDATES
 
-- [~] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as comentary in bashcolors function).  Write custom color codes of gnome-terminal profile through gsettings  for dracula color schema or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
@@ -27,7 +26,7 @@
                             - decompress in a folder optionally
                             - inform if the package needed is not present and installs it
                             - grow it with the code already in decompress which handles already most common cases ;)
-- [ ] `pluma` function should me able to open multiple files at once
+- [ ] `pluma` function should be able to open multiple files at once
 ###### NEW FEATURES
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
 - [ ] `data_features.sh`, `common_data.sh`: `port` function. It returns the name and PID of a process using the given port #  "lsof -i $1"  alias ports="lsof -Pan -i tcp -i udp"
@@ -59,8 +58,8 @@
 - [ ] `install.sh`, `uninstall.sh`: gobuster
 - [ ] `install.sh`, `uninstall.sh`: zenmap (nmap gui) (virtual environment)
 - [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/)
-- [~] `data_features.sh`: Rstudio split libssl-dev dependency 
-- [~] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
+- [ ] `data_features.sh`: Rstudio split libssl-dev dependency 
+- [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
 - [ ] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
 # TO-DO uninstall.sh and uninstall core for v1.0
 
