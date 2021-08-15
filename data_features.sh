@@ -841,6 +841,57 @@ Version=4.2.2
 ")
 eclipse_readmeline="| Eclipse | ${eclipse_readmelinedescription} | Command \`eclipse\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+edit_installationtype="environmental"
+edit_bashfunctions=("
+edit() {
+  if [ -n \"\$1\" ]; then
+    case \"\$1\" in
+      bashrc)
+        pluma /etc/bash.bashrc
+      ;;
+      aliases)
+        pluma ${HOME}/.bash_aliases
+      ;;
+      bashfunctions)
+        pluma ${HOME}/.bin/bash-functions/.bash_functions
+      ;;
+      allbashrc)
+        pluma /etc/bash.bashrc
+      ;;
+      favorites)
+        pluma ${HOME}/.bin/bash-initializations/favorites.txt
+      ;;
+      initializations)
+        pluma ${HOME}/.bin/bash-initializations/.bash_profile
+      ;;
+      sshconf)
+        pluma ${HOME}/.ssh/config
+      ;;
+      tmuxconf)
+        pluma ${HOME}/.tmux.conf
+      ;;
+      mime)
+        pluma ${HOME}/.config/mimeapps.list
+      ;;
+      profile)
+        pluma /home/axel/.profile
+      ;;
+
+      all) cd /usr/bin;;
+      allapplications) cd /usr/share/applications;;
+      autostart) cd ${HOME}/.config/autostart;;
+      bin) cd ${HOME}/.bin;;
+      bashfunctions) cd ${HOME}/.bin/bash-functions;;
+      fonts) cd ${HOME}/.fonts;;
+      initializations) cd ${HOME}/.bin/bash-initializations;;
+      localbin) cd ${HOME}/.local/bin;;
+      localapplications) cd ${HOME}/.local/share/applications;;
+    esac
+  fi
+}
+")
+edit_readmeline="| Function \`edit\` | Multi Function \`edit\` to edit system files and navigating to system folders | Function \`e\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 emojis_installationtype="environmental"
 emojis_arguments=("emojis" "emoji")
 emojis_packagedependencies=("fonts-symbola")
@@ -3409,7 +3460,18 @@ jupyter_lab_readmeline="| Jupyter Lab | ${jupyter_lab_readmelinedescription} | a
 
 k_installationtype="environmental"
 k_arguments=("k")
-k_bashfunctions=("alias q=\"exit\"")
+k_bashinitializations=("
+k() {
+  [ -n \"\$1\" ] && [ \"\$1\" -eq \"\$1\" ] 2>/dev/null
+  if [ ! \$? -gt 0 ]; then
+    sudo kill \`lsof -i:3000 -t\` \"\$1\" # kill by port
+  else
+    pkill \"\$1\"
+  fi
+}
+")
+k_readmeline="| Function \`k\` | Kill processes by PID and name of process | Command \`k\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
+
 
 keep_installationtype="environmental"
 keep_arguments=("keep" "google_keep")
