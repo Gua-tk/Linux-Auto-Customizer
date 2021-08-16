@@ -10,6 +10,7 @@
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
 - [ ]  list inner directories i function
 - [ ]  function r: translates hex values of colors to its natural name and reg(x,y,z) format...
+- [ ] gitbashfunctions: merge()
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
