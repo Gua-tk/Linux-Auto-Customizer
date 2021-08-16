@@ -5443,48 +5443,77 @@ x_installationtype="environmental"
 x_arguments=("x" "extract")
 x_bashfunctions=("
 x() {
-  if [ -f \"\$1\" ] ; then
-    case \"\$1\" in
-      *.tar.bz2)
-        tar xjf \"\$1\"
-      ;;
-      *.tar.gz)
-        tar xzf \"\$1\"
-      ;;
-      *.bz2)
-        bunzip2 \"\$1\"
-      ;;
-      *.rar)
-        rar x \"\$1\"
-      ;;
-      *.gz)
-        gunzip \"\$1\"
-      ;;
-      *.tar)
-        tar xf \"\$1\"
-      ;;
-      *.tbz2)
-        tar xjf \"\$1\"
-      ;;
-      *.tgz)
-        tar xzf \"\$1\"
-      ;;
-      *.zip)
-        unzip \"\$1\"
-      ;;
-      *.Z)
-        uncompress \"\$1\"
-      ;;
-      *.7z)
-        7z x \"\$1\"
-      ;;
-      *)
-        echo \"\$1 cannot be extracted via x\"
-      ;;
-    esac
-  else
-      echo \"'\$1' is not a valid file for x\"
+  local first_compressed_file_arg_pos=
+  if [ -d \"\$1\" ]; then
+    local -r decompression_folder=\"\$1\"
+    mkdir -p \"\${decompression_folder}\"
+    local old_folder=\"\$(pwd)\"
+    shift  # With this we expect files in \$1 and the following positions.
   fi
+
+  while [ -n \"\$1\" ]; then
+    local absolute_first_arg=
+    if [ -n \"\${decompression_folder}\" ]; then
+      if [ -n \"\$(echo \"\$1\" | grep -Eo \"^/\")\" ]; then  # Absolute path
+        absolute_first_arg=\"\$1\"
+      else  # relative path
+        absolute_first_arg=\"\$(pwd)/\$1\"
+      fi
+      cd \"\${decompression_folder}\"
+    else
+      absolute_first_arg=\"\$1\"
+    fi
+    if [ -f \"\${absolute_first_arg}\" ] ; then
+      case \"\${absolute_first_arg}\" in
+        *.tar.bz2)
+          tar xjf \"\${absolute_first_arg}\"
+        ;;
+        *.tar.gz)
+          tar xzf \"\${absolute_first_arg}\"
+        ;;
+        *.bz2)
+          bunzip2 \"\${absolute_first_arg}\"
+        ;;
+        *.rar)
+          rar x \"\${absolute_first_arg}\"
+        ;;
+        *.gz)
+          gunzip \"\${absolute_first_arg}\"
+        ;;
+        *.tar)
+          tar xf \"\${absolute_first_arg}\"
+        ;;
+        *.tbz2)
+          tar xjf \"\${absolute_first_arg}\"
+        ;;
+        *.tgz)
+          tar xzf \"\${absolute_first_arg}\"
+        ;;
+        *.zip)
+          unzip \"\${absolute_first_arg}\"
+        ;;
+        *.Z)
+          uncompress \"\${absolute_first_arg}\"
+        ;;
+        *.7z)
+          7z x \"\${absolute_first_arg}\"
+        ;;
+        *)
+          echo \"\${absolute_first_arg} cannot be extracted via x\"
+        ;;
+      esac
+    else
+      echo \"'\${absolute_first_arg}' is not a valid file for x\"
+    fi
+    if [ -n \"\${decompression_folder}\" ]; then
+      cd \"\${old_folder}\"
+    fi
+
+    shift
+  fi
+
+  local
+
 }
 ")
 x_readmeline="| Function \`x\` | Function to extract from a compressed file, no matter its format | Function \`x \"filename\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
