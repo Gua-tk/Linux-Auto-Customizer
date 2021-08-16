@@ -104,7 +104,7 @@
 - [x] `emoji_function`: Emoji function that converts string identifyiung emoji to its emoji and viceversa
 - [ ] `common_data.sh`: Sort the possible declaration in the corresponding order. --> not possible tosort because they have dependencies between them
 - [ ]  function for emoji echo "${emojilist[slightly_smiling_face]}" and extend load_emoji function
-
+- [ ] `decompress`: Do it in a folder optionally and for many files.
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter

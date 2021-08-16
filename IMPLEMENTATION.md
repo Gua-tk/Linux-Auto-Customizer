@@ -18,6 +18,12 @@
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
        system-wide, not only on the bash environment.
+- [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg
+- [x] `data_features.sh`: Update history
+- [x] `README.md`: Add badges `README.md` using codecov or another code analysis service.  
+- [ ] `.profile`: generate function to princ clock with hour. Preferably in python
+- [x] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
+- [ ] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype
 - [ ] `clone`: either access url without writing https://
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server install with the aliases
 - [x] `terminal_background`: Merge manual content into bash initialization. unset variable. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.

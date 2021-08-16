@@ -252,6 +252,7 @@ declare -r feature_keynames=(
   "ghostwriter"
   "gimp"
   "git"
+  "gitcm"
   "github"
   "github_desktop"
   "gitk"
@@ -389,6 +390,7 @@ declare -r feature_keynames=(
   "youtube"
   "youtube_dl"
   "youtubemusic"
+  "z"
   "zoom"
 )
 

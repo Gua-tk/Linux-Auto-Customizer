@@ -2955,6 +2955,15 @@ git_arguments=("git")
 git_packagenames=("git-all" "git-lfs")
 git_readmeline="| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Command \`git\` and \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+gitcm_installationtype="userinherit"
+gitcm_arguments=("git_c_m")
+gitcm_binariesinstalledpaths=("git-credential-manager-core;gitcm")
+gitcm_compressedfiletype="z"
+gitcm_compressedfileurl="https://github.com/microsoft/Git-Credential-Manager-Core/releases/download/v2.0.498/gcmcore-linux_amd64.2.0.498.54650.tar.gz"
+gitcm_compressedfilepathoverride="${USR_BIN_FOLDER}/gitcm"  # It has not a folder inside
+gitcm_readmeline="| Git Credentials Manager | Plug-in for git to automatically use personal tokens | Command \`gitcm\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+gitcm_manualcontentavailable="0;0;1"
+
 github_installationtype="environmental"
 github_arguments=("github")
 github_url="https://github.com/"
@@ -3507,31 +3516,43 @@ L_arguments=("L")
 L_bashfunctions=("
 L()
 {
-  NEW_LINE=\$'\\\n'
-  lsdisplay=\$(ls -lhA | tr -s \" \" | tail -n+2)
-  numfiles=\$(printf \"\$lsdisplay\" | wc -l)
-  dudisplay=\$(du -shxc .[!.]* * | sort -h | tr -s \"\\\t\" \" \")
-  totaldu=\$(echo \${dudisplay} | rev | cut -d \" \" -f2 | rev)
-  finaldisplay=\"\${totaldu} in \${numfiles} files and directories\$NEW_LINE\"
-  IFS=\$'\\\n'
+  # Work around because du options are hard to parametrize for a different directory that the current one for showing size of hiddent directories
+  if [ -n \"\$1\" ]; then
+    local -r current_path=\"\$(pwd)\"
+    cd \"\$1\"
+  fi
+  local -r NEW_LINE=\$'\\n'
+  local -r lsdisplay=\"\$(ls -lhA | tr -s \" \" | tail -n+2)\"  # Obtain ls data in list format
+  local -r numfiles=\"\$(echo \"\$lsdisplay\" | wc -l)\"  # Obtain number of elements in the folder
+  local -r dudisplay=\"\$(du -shxc .[!.]* * | sort -h | tr -s \"\\\t\" \" \" | head -n -1)\"  # Obtain du data for the real size of the directories, deleting the line of the total size
+  local -r totaldu=\"\$(echo \${dudisplay} | tail -1 | rev | cut -d \" \" -f2 | rev)\"  # Obtain the total size of the folder
+  local finaldisplay=\"\"
+  # Iterate over every line in ls and check if it is a directory in order to change the size shown in ls (4 KB) for the real size of directory from the output of du
+  local IFS=\$'\\n'
   for linels in \${lsdisplay}; do
-    if [[ \$linels =~ ^d.* ]]; then
-      foldername=\$(echo \$linels | cut -d ' ' -f9-)
-      for linedu in \${dudisplay}; do
-        if [[ \"\$(echo \${linedu} | cut -d ' ' -f2-)\" = \"\${foldername}\" ]]; then
-          currentline=\$(echo \${linels} | cut -d \" \" -f-4)
-          currentline=\"\$currentline \$(echo \${linedu} | cut -d ' ' -f1)\"
-          currentline=\"\$currentline \$(echo \${linels} | cut -d ' ' -f6-)\"
-          finaldisplay=\"\$finaldisplay\$NEW_LINE\$currentline\"
+    element_name=\"\$(echo \${linels} | cut -d ' ' -f9-)\"  # Obtain full name of the element that we are goind to add
+    if [[ \"\${linels}\" =~ ^d.* ]]; then  # If a directory, perform substitution of size
+      for linedu in \${dudisplay}; do  # Search for matching du line using name from both ls and du
+        if [[ \"\$(echo \${linedu} | cut -d ' ' -f2-)\" = \"\${element_name}\" ]]; then  # Search for match using directory name
+          currentline=\$(echo \${linels} | cut -d \" \" -f-4)  # Obtain prefix of line (before the column of the size in ls)
+          currentline=\"\${currentline} \$(echo \${linedu} | cut -d ' ' -f1)\"  # Obtain size from du and append
+          currentline=\"\${currentline} \$(echo \${linels} | cut -d ' ' -f6-)\"  # Obtain rest of the line
+          # Now add the semicolons in between columns in order to work with column command
+
+          finaldisplay=\"\$finaldisplay\$NEW_LINE\$(echo \"\${currentline}\" | cut -d ' ' -f-8 | tr \" \" \";\");\${element_name}\"
           break
         fi
       done
     else
-      finaldisplay=\"\$finaldisplay\$NEW_LINE\$linels\"
+      finaldisplay=\"\${finaldisplay}\${NEW_LINE}\$(echo \"\${linels}\" | cut -d ' ' -f-8 | tr \" \" \";\");\${element_name}\"  # Change spaces for semicolons for using column
     fi
   done
-  finaldisplay=\"\${finaldisplay}\"
-  echo \"\$finaldisplay\"
+  finaldisplay=\"\$(echo \"\${finaldisplay}\"  | column -ts \";\")\"  # Construct table by using column
+  finaldisplay=\"\${totaldu} in \${numfiles} files and directories\${NEW_LINE}\${finaldisplay}\"  # Prepend first line of output with general summary
+  echo \"\${finaldisplay}\"
+  if [ -n \"\${current_path}\" ]; then
+    cd \"\${current_path}\"
+  fi
 }
 ")
 L_readmeline="| Function \`L\` | Function that lists files in a directory, but listing the directory sizes | Function \`L\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -5542,51 +5563,82 @@ wireshark_packagenames=("wireshark")
 wireshark_readmeline="| Wireshark | Net sniffer | Command \`wireshark\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 x_installationtype="environmental"
-x_arguments=("x" "extract")
+x_arguments=("x" "extract" "extract_function")
 x_bashfunctions=("
 x() {
-  if [ -f \"\$1\" ] ; then
-    case \"\$1\" in
-      *.tar.bz2)
-        tar xjf \"\$1\"
-      ;;
-      *.tar.gz)
-        tar xzf \"\$1\"
-      ;;
-      *.bz2)
-        bunzip2 \"\$1\"
-      ;;
-      *.rar)
-        rar x \"\$1\"
-      ;;
-      *.gz)
-        gunzip \"\$1\"
-      ;;
-      *.tar)
-        tar xf \"\$1\"
-      ;;
-      *.tbz2)
-        tar xjf \"\$1\"
-      ;;
-      *.tgz)
-        tar xzf \"\$1\"
-      ;;
-      *.zip)
-        unzip \"\$1\"
-      ;;
-      *.Z)
-        uncompress \"\$1\"
-      ;;
-      *.7z)
-        7z x \"\$1\"
-      ;;
-      *)
-        echo \"\$1 cannot be extracted via x\"
-      ;;
-    esac
-  else
-      echo \"'\$1' is not a valid file for x\"
+  local first_compressed_file_arg_pos=
+  if [ -d \"\$1\" ]; then
+    local -r decompression_folder=\"\$1\"
+    mkdir -p \"\${decompression_folder}\"
+    local old_folder=\"\$(pwd)\"
+    shift  # With this we expect files in \$1 and the following positions.
   fi
+
+  while [ -n \"\$1\" ]; do
+    local absolute_first_arg=
+    if [ -n \"\${decompression_folder}\" ]; then
+      if [ -n \"\$(echo \"\$1\" | grep -Eo \"^/\")\" ]; then  # Absolute path
+        absolute_first_arg=\"\$1\"
+      else  # relative path
+        absolute_first_arg=\"\$(pwd)/\$1\"
+      fi
+      cd \"\${decompression_folder}\"
+    else
+      absolute_first_arg=\"\$1\"
+    fi
+    if [ -f \"\${absolute_first_arg}\" ] ; then
+      case \"\${absolute_first_arg}\" in
+        *.tar.bz2)
+          tar xjf \"\${absolute_first_arg}\"
+        ;;
+        *.tar.gz)
+          tar xzf \"\${absolute_first_arg}\"
+        ;;
+        *.bz2)
+          bunzip2 \"\${absolute_first_arg}\"
+        ;;
+        *.rar)
+          rar x \"\${absolute_first_arg}\"
+        ;;
+        *.gz)
+          gzip -dk \"\${absolute_first_arg}\"
+        ;;
+        *.tar)
+          tar xf \"\${absolute_first_arg}\"
+        ;;
+        *.tbz2)
+          tar xjf \"\${absolute_first_arg}\"
+        ;;
+        *.tgz)
+          tar xzf \"\${absolute_first_arg}\"
+        ;;
+        *.zip)
+          unzip \"\${absolute_first_arg}\"
+        ;;
+        *.Z)
+          uncompress \"\${absolute_first_arg}\"
+        ;;
+        *.7z)
+          7z x \"\${absolute_first_arg}\"
+        ;;
+        *)
+          echo \"\${absolute_first_arg} cannot be extracted via x\"
+        ;;
+      esac
+    else
+      echo \"'\${absolute_first_arg}' is not a valid file for x\"
+    fi
+    if [ -n \"\${decompression_folder}\" ]; then
+      cd \"\${old_folder}\"
+    fi
+
+    shift
+  done
+  if [ ! -n \"\$(echo \"\${absolute_first_arg}\")\" ]; then
+    echo \"ERROR: x needs at least an argument. The first arg can be a file or directory where compressed files will be extracted. The rest o arguments are paths to different compressed files.\"
+  fi
+
+
 }
 ")
 x_readmeline="| Function \`x\` | Function to extract from a compressed file, no matter its format | Function \`x \"filename\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -5659,6 +5711,89 @@ Type=Application
 Version=1.0
 ")
 youtubemusic_readmeline="| Youtube Music | ${youtubemusic_readmelinedescription} | Command \`youtubemusic\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+z_installationtype="environmental"
+z_arguments=("z" "z_function")
+z_readmeline="| z function | function to compress files given a type and a set of pats to files | Command \`z\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+z_bashfunctions=("
+z() {
+  local first_compressed_file_arg_pos=
+  if [ -d \"\$1\" ]; then
+    local -r decompression_folder=\"\$1\"
+    mkdir -p \"\${decompression_folder}\"
+    local old_folder=\"\$(pwd)\"
+    shift  # With this we expect files in \$1 and the following positions.
+  fi
+
+  while [ -n \"\$1\" ]; do
+    local absolute_first_arg=
+    if [ -n \"\${decompression_folder}\" ]; then
+      if [ -n \"\$(echo \"\$1\" | grep -Eo \"^/\")\" ]; then  # Absolute path
+        absolute_first_arg=\"\$1\"
+      else  # relative path
+        absolute_first_arg=\"\$(pwd)/\$1\"
+      fi
+      cd \"\${decompression_folder}\"
+    else
+      absolute_first_arg=\"\$1\"
+    fi
+
+    local compression_type=\"\$1\"
+    shift
+    if [ -f \"\${absolute_first_arg}\" ]; then
+      local first_arg_name=\"\$(echo \"\$1\" | rev | cut -d \"/\" -f1 | rev)\"
+      case \"\${compression_type}\" in
+        tar.bz2)
+          tar cvjf \"\${first_arg_name}.tar.bz2\" \"\${absolute_first_arg}\"
+        ;;
+        tar.gz)
+          tar cvzf \"\${first_arg_name}.tar.gz\" \"\${absolute_first_arg}\"
+        ;;
+        bz2)
+          bzip2 \"\${first_arg_name}.bz2\" \"\${absolute_first_arg}\"
+        ;;
+        rar)
+          rar a \"\${first_arg_name}.rar\" \"\${absolute_first_arg}\"
+        ;;
+        gz)
+          gzip -c \"\${absolute_first_arg}.gz\" > \"\${first_arg_name}\"
+        ;;
+        tar)
+          tar cf \"\${first_arg_name}.tar\" \"\${absolute_first_arg}\"
+        ;;
+        tbz2)
+          tar cvjf \"\${first_arg_name}.tbz2\" \"\${absolute_first_arg}\"
+        ;;
+        tgz)
+          tar cvzf \"\${first_arg_name}.tgz\" \"\${absolute_first_arg}\"
+        ;;
+        zip)
+          zip \"\${first_arg_name}.zip\" \"\${absolute_first_arg}\"
+        ;;
+        Z)
+          compress \"\${first_arg_name}.Z\" \"\${absolute_first_arg}\"
+        ;;
+        7z)
+          7z a \"\${first_arg_name}.7z\" \"\${absolute_first_arg}\"
+        ;;
+        *)
+          echo \"\${absolute_first_arg} cannot be extracted via x\"
+        ;;
+      esac
+    else
+      echo \"'\${absolute_first_arg}' is not a valid file for z\"
+    fi
+    if [ -n \"\${decompression_folder}\" ]; then
+      cd \"\${old_folder}\"
+    fi
+
+    shift
+  done
+  if [ ! -n \"\$(echo \"\${absolute_first_arg}\")\" ]; then
+    echo \"ERROR: z needs at least an argument. The first arg can be a file or directory where compressed files will be created. The rest o arguments are paths to different files that have to be compressed.\"
+  fi
+}
+")
 
 zoom_installationtype="userinherit"
 zoom_arguments=("zoom")
