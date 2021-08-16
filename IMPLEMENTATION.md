@@ -19,7 +19,7 @@
        system-wide, not only on the bash environment.
 - [ ] `clone`: either access url without writing https://
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server install with the aliases
-- [ ] `terminal_background`: Merge manual content into bash initialization. unset variables. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
+- [x] `terminal_background`: Merge manual content into bash initialization. unset variable. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
 - [ ]  `k`: rewrite or refactor code for not killing the session.
 - [x] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg -> This may need external ffmpeg processing of feature icons from .* to .svg convertion

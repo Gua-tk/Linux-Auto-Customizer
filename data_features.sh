@@ -2807,6 +2807,7 @@ ffmpeg_readmeline="| ffmpeg | Super fast video / audio encoder | Command \`ffmpe
 
 firefox_installationtype="packagemanager"
 firefox_arguments=("firefox")
+firefox_bashfunctions=("alias firefox=\"nohup firefox &>/dev/null &\"")
 firefox_launchernames=("firefox")
 firefox_packagenames=("firefox")
 firefox_readmeline="| Firefox | Free web browser | Command \`firefox\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -3457,7 +3458,7 @@ k_installationtype="environmental"
 k_arguments=("k")
 k_bashfunctions=("
 k() {
-  [ -n \"\$1\" ] && [ \"\$1\" -eq \"\$1\" ] 2>/dev/null
+  [ [ -n \"\$1\" ] && [ \"\$1\" -eq \"\$1\" ] ] || [ -z \"\$1\" ] 2>/dev/null
   if [ ! \$? -gt 0 ]; then
     sudo kill \`lsof -i:3000 -t\` \"\$1\" # kill by port
   else
