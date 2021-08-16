@@ -853,56 +853,39 @@ eclipse_readmeline="| Eclipse | ${eclipse_readmelinedescription} | Command \`ecl
 edit_installationtype="environmental"
 edit_bashfunctions=("
 edit() {
+  declare -Arl EDITABLEFILES=(
+    [aliases]=\"${HOME_FOLDER}/.bash_aliases\"
+    [allbashrc]=\"${BASHRC_ALL_USERS_PATH}\"
+    [bashfunctions]=\"${BASH_FUNCTIONS_PATH}\"
+    [bashrc]=\"${BASHRC_PATH}\"
+    [favorites]=\"${PROGRAM_FAVORITES_PATH}\"
+    [initializations]=\"${BASH_INITIALIZATIONS_PATH}\"
+    [keybindings]=\"${PROGRAM_KEYBIND_PATH}\"
+    [mime]=\"${MIME_ASSOCIATION_PATH}\"
+    [profile]=\"${PROFILE_PATH}\"
+    [sshconf]=\"${HOME_FOLDER}/.ssh/config\"
+    [tmuxconf]=\"${HOME_FOLDER}/.tmux.conf\"
+    )
   if [ -n \"\$1\" ]; then
-    case \"\$1\" in
-      allbashrc)
-        pluma /etc/bash.bashrc
-      ;;
-      aliases)
-        pluma ${HOME}/.bash_aliases
-      ;;
-      bashrc)
-        pluma ${HOME}/.bashrc
-      ;;
-      bashfunctions)
-        pluma ${HOME}/.bin/bash-functions/.bash_functions
-      ;;
-      allbashrc)
-        pluma /etc/bash.bashrc
-      ;;
-      favorites)
-        pluma ${HOME}/.bin/bash-initializations/favorites.txt
-      ;;
-      initializations)
-        pluma ${HOME}/.bin/bash-initializations/.bash_profile
-      ;;
-      sshconf)
-        pluma ${HOME}/.ssh/config
-      ;;
-      tmuxconf)
-        pluma ${HOME}/.tmux.conf
-      ;;
-      mime)
-        pluma ${HOME}/.config/mimeapps.list
-      ;;
-      profile)
-        pluma /home/axel/.profile
-      ;;
-
-      all) cd /usr/bin;;
-      allapplications) cd /usr/share/applications;;
-      autostart) cd ${HOME}/.config/autostart;;
-      bin) cd ${HOME}/.bin;;
-      bashfunctions) cd ${HOME}/.bin/bash-functions;;
-      fonts) cd ${HOME}/.fonts;;
-      initializations) cd ${HOME}/.bin/bash-initializations;;
-      localbin) cd ${HOME}/.local/bin;;
-      localapplications) cd ${HOME}/.local/share/applications;;
-    esac
+    local path_editable=\"\${EDITABLEFILES[\"\$1\"]}\"
+    if [ -z \"\${path_editable}\" ]; then
+      if [ -f \"\$1\" ]; then
+        editor \"\$1\"
+      else
+        echo \"\$1 is not a valid file or option.\"
+      fi
+    else
+      editor \"\${path_editable}\"
+    fi
+  else  # If not an argument show the dictionary structure
+    echo \"Recognised arguments to edit:\"
+    for i in \"\${!EDITABLEFILES[@]}\"; do
+      echo \"\${i}:\${EDITABLEFILES[\${i}]}\"
+    done
   fi
 }
 ")
-edit_readmeline="| Function \`edit\` | Multi Function \`edit\` to edit system files and navigating to system folders | Function \`e\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+edit_readmeline="| Function \`edit\` | Multi Function \`edit\` to edit a set of hardcoded key files using an argument | Function \`edit\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 emojis_installationtype="environmental"
 emojis_arguments=("emojis" "emoji")
@@ -2636,30 +2619,29 @@ emoji() {
 
   if [ -n \"\$1\" ]; then
     local return_emoji=\"\${EMOJIS[\$1]}\"
-    if [ -z \"\$(echo \"\${return_emoji}\")\" ]; then
-      for i in \"\${!EMOJIS[@]}\"; do
+    if [ -z \"\$(echo \"\${return_emoji}\")\" ]; then  # Not an emoji keyname
+      for i in \"\${!EMOJIS[@]}\"; do  # Search for emoji and return its keyname
         if [ \"\${EMOJIS[\${i}]}\" == \"\$1\" ]; then
           return_emoji=\"\${i}\"
-          break
+          echo \"\${return_emoji}\"
+          return
         fi
       done
-      if [ -z \"\$(echo \"\${return_emoji}\")\" ]; then
-        if [ \"\$1\" == \"random\" ]; then
-          EMOJIS_arr=(\${EMOJIS[@]})
-          echo \"\${EMOJIS_arr[\$RANDOM % \${#EMOJIS_arr[@]}]}\"
-        elif [ \"\$1\" -ge 0 ]; then
-          EMOJIS_arr=(\${EMOJIS[@]})
-          echo \"\${EMOJIS_arr[\$1 % \${#EMOJIS_arr[@]}]}\"
-        else
-          echo \"ERROR Not recognised option\"
-        fi
+      # At this point \$1 is not a keyname or emoji
+      if [ \"\$1\" == \"random\" ]; then  # Check for random emoji
+        EMOJIS_arr=(\${EMOJIS[@]})
+        echo \"\${EMOJIS_arr[\$RANDOM % \${#EMOJIS_arr[@]}]}\"
+      elif [ \"\$1\" -ge 0 ]; then  # If a natural number passed return an eoji indexing by number
+        EMOJIS_arr=(\${EMOJIS[@]})
+        echo \"\${EMOJIS_arr[\$1 % \${#EMOJIS_arr[@]}]}\"
       else
-        echo \"\${return_emoji}\"
+        echo \"ERROR Not recognised option\"
       fi
-    else
+    else  # Return emoji from indexing with dict
       echo \"\${return_emoji}\"
     fi
   else
+    # Not an argument, show all emojis with dictionary structure
     for i in \"\${!EMOJIS[@]}\"; do
       echo \"\${i}:\${EMOJIS[\${i}]}\"
     done
@@ -4674,23 +4656,27 @@ screenshots_readmeline="| Screenshots | Takes a screenshot and saves it to custo
 
 shortcuts_installationtype="environmental"
 shortcuts_arguments=("shortcuts")
-shortcuts_bashfunctions=("DESK=${XDG_DESKTOP_DIR}
-FONTS=${FONTS_FOLDER}
-AUTOSTART=${AUTOSTART_FOLDER}
-DOWNLOAD=${XDG_DOWNLOAD_DIR}
-DOCUMENTS=${XDG_DOCUMENTS_DIR}
-BIN=${USR_BIN_FOLDER}
-LAUNCHERS=${ALL_USERS_LAUNCHERS_DIR}
-PERSONAL_LAUNCHERS=${PERSONAL_LAUNCHERS_DIR}
-FUNCTIONSD=${BASH_FUNCTIONS_FOLDER}
-FUNCTIONS=${BASH_FUNCTIONS_PATH}
-PICTURES=${XDG_PICTURES_DIR}
-TEMPLATES=${XDG_TEMPLATES_DIR}
-MUSIC=${XDG_MUSIC_DIR}
-TRASH=${HOME_FOLDER}/.local/share/Trash/
-CUSTOMIZER=${DIR}
-VIDEOS=${XDG_VIDEOS_DIR}
-GIT=${XDG_DESKTOP_DIR}/git
+shortcuts_bashfunctions=("
+ALLBIN=\"${ALL_USERS_DIR_IN_PATH}\"
+AUTOSTART=\"${AUTOSTART_FOLDER}\"
+BIN=\"${USR_BIN_FOLDER}\"
+CUSTOMIZER=\"${DIR}\"
+DESK=\"${XDG_DESKTOP_DIR}\"
+DOCUMENTS=\"${XDG_DOCUMENTS_DIR}\"
+DOWNLOAD=\"${XDG_DOWNLOAD_DIR}\"
+FONTS=\"${FONTS_FOLDER}\"
+FUNCTIONSD=\"${BASH_FUNCTIONS_FOLDER}\"
+FUNCTIONS=\"${BASH_FUNCTIONS_PATH}\"
+GIT=\"${XDG_DESKTOP_DIR}/git\"
+LAUNCHERS=\"${ALL_USERS_LAUNCHERS_DIR}\"
+LOCALBIN=\"${DIR_IN_PATH}\"
+MUSIC=\"${XDG_MUSIC_DIR}\"
+PERSONAL_LAUNCHERS=\"${PERSONAL_LAUNCHERS_DIR}\"
+PICTURES=\"${XDG_PICTURES_DIR}\"
+TEMPLATES=\"${XDG_TEMPLATES_DIR}\"
+TRASH=\"${HOME_FOLDER}/.local/share/Trash/\"
+VIDEOS=\"${XDG_VIDEOS_DIR}\"
+INITIALIZATIONSD=\"${BASH_INITIALIZATIONS_FOLDER}\"
 if [ ! -d \$GIT ]; then
   mkdir -p \$GIT
 fi
