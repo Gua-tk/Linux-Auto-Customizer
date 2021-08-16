@@ -3457,12 +3457,19 @@ jupyter_lab_readmeline="| Jupyter Lab | ${jupyter_lab_readmelinedescription} | a
 k_installationtype="environmental"
 k_arguments=("k")
 k_bashfunctions=("
-k() {
-  [ [ -n \"\$1\" ] && [ \"\$1\" -eq \"\$1\" ] ] || [ -z \"\$1\" ] 2>/dev/null
-  if [ ! \$? -gt 0 ]; then
-    sudo kill \`lsof -i:3000 -t\` \"\$1\" # kill by port
+k() {    #sudo kill \`lsof -i:3000 -t\` \"\$1\"  # kill by port
+  [ \"\$1\" -eq \"\$1\" ] 2>/dev/null
+  if [ \$? -eq 0 ]; then
+    sudo kill -9 \"\$1\"
   else
-    pkill \"\$1\"
+    if [ -n \"\$1\" ]; then
+      pkill \"\$1\"
+    else
+      # Introduce port to be killed
+      echo \"Kill port nº:\"
+      read portkillnumber
+      sudo kill \`lsof -i:3000 -t\` \"\$portkillnumber\"
+    fi
   fi
 }
 ")
@@ -4014,7 +4021,7 @@ net_tools_installationtype="packagemanager"
 net_tools_arguments=("net_tools")
 net_tools_bashfunctions=("
 alias ports=\"netstat -tulanp\"
-alias nr=\"net-restart\
+alias nr=\"net-restart\"
 ")
 net_tools_packagenames=("net-tools")
 net_tools_readmeline="| net-tools | GUI network interfaces. *We recommend this explorer to view correctly the launchers* | Command \`net-tools\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
