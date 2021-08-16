@@ -5614,40 +5614,43 @@ z() {
     else
       absolute_first_arg=\"\$1\"
     fi
+
+    local compression_type=\"\$1\"
+    shift
     if [ -f \"\${absolute_first_arg}\" ]; then
-      local first_arg_name=\"\$(echo \"\${absolute_first_arg}\" | rev | cut -d \"/\" -f1 | rev)\"
-      case \"\${absolute_first_arg}\" in
-        *.tar.bz2)
+      local first_arg_name=\"\$(echo \"\$1\" | rev | cut -d \"/\" -f1 | rev)\"
+      case \"\${compression_type}\" in
+        tar.bz2)
           tar cvjf \"\${first_arg_name}.tar.bz2\" \"\${absolute_first_arg}\"
         ;;
-        *.tar.gz)
+        tar.gz)
           tar cvzf \"\${first_arg_name}.tar.gz\" \"\${absolute_first_arg}\"
         ;;
-        *.bz2)
+        bz2)
           bzip2 \"\${first_arg_name}.bz2\" \"\${absolute_first_arg}\"
         ;;
-        *.rar)
+        rar)
           rar a \"\${first_arg_name}.rar\" \"\${absolute_first_arg}\"
         ;;
-        *.gz)
-          gzip -c \"\${absolute_first_arg}\" > \"\${first_arg_name}.gz\"
+        gz)
+          gzip -c \"\${absolute_first_arg}.gz\" > \"\${first_arg_name}\"
         ;;
-        *.tar)
+        tar)
           tar cf \"\${first_arg_name}.tar\" \"\${absolute_first_arg}\"
         ;;
-        *.tbz2)
+        tbz2)
           tar cvjf \"\${first_arg_name}.tbz2\" \"\${absolute_first_arg}\"
         ;;
-        *.tgz)
+        tgz)
           tar cvzf \"\${first_arg_name}.tgz\" \"\${absolute_first_arg}\"
         ;;
-        *.zip)
+        zip)
           zip \"\${first_arg_name}.zip\" \"\${absolute_first_arg}\"
         ;;
-        *.Z)
+        Z)
           compress \"\${first_arg_name}.Z\" \"\${absolute_first_arg}\"
         ;;
-        *.7z)
+        7z)
           7z a \"\${first_arg_name}.7z\" \"\${absolute_first_arg}\"
         ;;
         *)
@@ -5655,7 +5658,7 @@ z() {
         ;;
       esac
     else
-      echo \"'\${absolute_first_arg}' is not a valid file for x\"
+      echo \"'\${absolute_first_arg}' is not a valid file for z\"
     fi
     if [ -n \"\${decompression_folder}\" ]; then
       cd \"\${old_folder}\"
@@ -5664,7 +5667,7 @@ z() {
     shift
   done
   if [ ! -n \"\$(echo \"\${absolute_first_arg}\")\" ]; then
-    echo \"ERROR: x needs at least an argument. The first arg can be a file or directory where compressed files will be extracted. The rest o arguments are paths to different compressed files.\"
+    echo \"ERROR: z needs at least an argument. The first arg can be a file or directory where compressed files will be created. The rest o arguments are paths to different files that have to be compressed.\"
   fi
 }
 ")
