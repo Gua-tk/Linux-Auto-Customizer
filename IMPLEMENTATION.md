@@ -5,12 +5,14 @@
 ###### UPDATES
 
 ###### NEW FEATURES
+- [ ] `install.sh`: Cache of downloads of customizer, add another flag to use / construct the cache (default) or to ignore it
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
+- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server install with the aliases
 - [ ] `terminal_background`: Merge manual content into bash initialization. unset variables. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
 - [ ]  `k`: rewrite or refactor code for not killing the session.
 - [x] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
@@ -37,7 +39,6 @@
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
-- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client user disposable environment features if possible
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: `Google`/`translator` internet shortcut launcher.
@@ -61,6 +62,7 @@
 - [ ] `data_features.sh`: Rstudio split libssl-dev dependency 
 - [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
 - [ ] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
+
 # TO-DO uninstall.sh and uninstall core for v1.0
 
 ###### UPDATES
