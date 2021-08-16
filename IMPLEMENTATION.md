@@ -8,8 +8,8 @@
 - [ ] `install.sh`: Cache of downloads of customizer, add another flag to use / construct the cache (default) or to ignore it
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
-- [ ]  list inner directories i function (example: i )
-
+- [ ]  list inner directories i function
+- [ ]  function r: translates hex values of colors to its natural name and reg(x,y,z) format...
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES

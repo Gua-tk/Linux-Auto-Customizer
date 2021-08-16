@@ -4097,6 +4097,23 @@ openssl102_arguments=("openssl102")
 openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
 openssl102_readmeline="| openssl1.0 | RStudio dependency | Used for running rstudio ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+ssh_installationtype="packagemanager"
+ssh_arguments=("ssh")
+ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+openssh_server_installationtype="packagemanager"
+openssh_server_arguments=("openssh_server")
+openssh_server_packagenames=("openssh-server")
+openssh_server_bashfunctions=("
+alias sshDisable=\"sudo systemctl disable sshd\"
+alias sshEnable=\"sudo systemctl enable ssh\"
+alias sshRestart=\"sudo systemctl restart sshd\"
+alias sshStart=\"sudo systemctl start sshd\"
+alias sshStatus=\"sudo systemctl status sshd\"
+alias sshStop=\"sudo systemctl stop sshd\"
+")
+openssh_server_readmeline="| openssh-server | SSH server | Used for running an SSH server ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 outlook_installationtype="environmental"
 outlook_arguments=("outlook")
 outlook_url="https://outlook.live.com"
@@ -4763,18 +4780,6 @@ Version=1.0
 ")
 spreadsheets_readmeline="| Spreadsheets | ${spreadsheets_readmelinedescription} | Command \`spreadsheets\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
-sshservercommands_installationtype="environmental"
-sshservercommands_arguments=("ssh_commands")
-sshservercommands_bashfunctions=("
-alias sshDisable=\"sudo systemctl disable sshd\"
-alias sshEnable=\"sudo systemctl enable ssh\"
-alias sshRestart=\"sudo systemctl restart sshd\"
-alias sshStart=\"sudo systemctl start sshd\"
-alias sshStatus=\"sudo systemctl status sshd\"
-alias sshStop=\"sudo systemctl stop sshd\"
-")
-sshservercommands_readmeline="| ssh server commands | Comands to disable, enable, restart, start, status, stop \`sshd\` | Commands \`...\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 status_installationtype="environmental"
 status_arguments=("status")
 status_bashfunctions=("alias status=\"git status\"")
@@ -5132,20 +5137,26 @@ templates_readmeline="| Templates | Different collection of templates for starti
 terminal_background_installationtype="environmental"
 terminal_background_arguments=("terminal_background")
 terminal_background_bashinitializations=("
-gnome_terminal_profile=\$(gsettings get org.gnome.Terminal.ProfilesList default)
-gnome_terminal_profile=\${gnome_terminal_profile:1:-1} # remove leading and trailing single quotes
+profile_uuid=\"\$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d \"'\" -f2)\"
+if [ -n \"\${profile_uuid}\" ]; then
+  # make sure the profile is set to not use theme colors
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/\${profile_uuid}/ use-theme-colors false # --> Don't use system color theme
 
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ use-transparent-background true
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ background-transparency-percent \"10\"
-# make sure the profile is set to not use theme colors
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/\${gnome_terminal_profile}/ use-theme-colors false # --> Don't use system color theme
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ use-transparent-background true
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ background-transparency-percent \"10\"
 
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ bold-color \"#6E46A4\"
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ background-color \"#282A36\"
-gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ foreground-color \"#F8F8F2\"
-unset gnome_terminal_profile
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ bold-color \"#6E46A4\"
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ background-color \"#282A36\"
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ foreground-color \"#F8F8F2\"
+
+  # Cursor like in a text editor
+  gsettings set org.gnome.Terminal.Legacy.Profile:/:\"\${profile_uuid}\"/ cursor-shape 'ibeam'
+
+  unset profile_uuid
+else
+  echo \"ERROR, non terminal default profile list found\"
+fi
 ")
-terminal_background_manualcontentavailable="0;1;0"
 terminal_background_readmeline="| Terminal background | Change background of the terminal to black | Every time you open a terminal || <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 terminator_installationtype="packagemanager"

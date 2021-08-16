@@ -120,20 +120,6 @@ install_system_fonts_mid() {
   gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
 }
 
-install_terminal_background_mid()
-{
-  local -r profile_uuid="$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d "'" -f2)"
-  if [ -n "${profile_uuid}" ]; then
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"${profile_uuid}"/ use-theme-colors false
-    # soft grey terminal background
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"${profile_uuid}"/ background-color 'rgb(43,54,60)'
-    # green text terminal
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"${profile_uuid}"/ foreground-color 'rgb(28,135,39)'
-    # Cursor like in a text editor
-    gsettings set org.gnome.Terminal.Legacy.Profile:/:"${profile_uuid}"/ cursor-shape 'ibeam'
-  fi
-}
-
 ##################
 ###### MAIN ######
 ##################
