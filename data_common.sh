@@ -250,6 +250,7 @@ declare -r feature_keynames=(
   "ghostwriter"
   "gimp"
   "git"
+  "gitcm"
   "github"
   "github_desktop"
   "gitk"

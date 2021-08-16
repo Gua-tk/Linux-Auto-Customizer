@@ -2905,6 +2905,15 @@ git_arguments=("git")
 git_packagenames=("git-all" "git-lfs")
 git_readmeline="| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Command \`git\` and \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
+gitcm_installationtype="userinherit"
+gitcm_arguments=("git_c_m")
+gitcm_binariesinstalledpaths=("git-credential-manager-core;gitcm")
+gitcm_compressedfiletype="z"
+gitcm_compressedfileurl="https://github.com/microsoft/Git-Credential-Manager-Core/releases/download/v2.0.498/gcmcore-linux_amd64.2.0.498.54650.tar.gz"
+gitcm_compressedfilepathoverride="${USR_BIN_FOLDER}/gitcm"  # It has not a folder inside
+gitcm_readmeline="| Git Credentials Manager | Plug-in for git to automatically use personal tokens | Command \`gitcm\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+gitcm_manualcontentavailable="0;0;1"
+
 github_installationtype="environmental"
 github_arguments=("github")
 github_url="https://github.com/"

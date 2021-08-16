@@ -38,6 +38,11 @@ install_customizer_post()
   fi
 }
 
+install_gitcm_post()
+{
+  git config --global credential.credentialStore plaintext
+}
+
 install_jupyter_lab_pre() {
   local -r dependencies=("npm" "R" "julia")
   for dependency in ${dependencies[@]}; do

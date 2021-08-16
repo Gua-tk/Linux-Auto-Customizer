@@ -1,3 +1,5 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9d77f6c73bab4a11b847d131146fc243)](https://www.codacy.com/gh/AleixMT/Linux-Auto-Customizer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AleixMT/Linux-Auto-Customizer&amp;utm_campaign=Badge_Grade)
+
 # Auto-Customizer
 
 `bash` scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
