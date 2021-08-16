@@ -12,18 +12,19 @@
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
-- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server install with the aliases
-- [ ] `terminal_background`: Merge manual content into bash initialization. unset variables. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
-- [ ]  `k`: rewrite or refactor code for not killing the session.
-- [x] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+- [ ] `.profile`: generate function to print clock with hour. Preferably in python [bash script](https://gitlab.com/Axlfc/clockmoji). intgrate clock in ps1 ?
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
        system-wide, not only on the bash environment.
+
+- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server install with the aliases
+- [ ] `terminal_background`: Merge manual content into bash initialization. unset variables. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
+- [ ]  `k`: rewrite or refactor code for not killing the session.
+- [x] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg -> This may need external ffmpeg processing of feature icons from .* to .svg convertion
 - [ ] `data_features.sh`: Update history [optimization](https://unix.stackexchange.com/questions/6628/what-customizations-have-you-done-on-your-shell-profile-to-increase-productivity)
 - [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.  
-- [ ] `.profile`: generate function to print clock with hour. Preferably in python [bash script](https://gitlab.com/Axlfc/clockmoji)
 - [ ] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
 - [ ] `data_features.sh`: refactor `x` (extract) function: 
                             - do not rely only in extension
