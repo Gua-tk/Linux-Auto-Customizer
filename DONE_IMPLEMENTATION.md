@@ -205,3 +205,5 @@
 - [x] `install.sh`, `uninstall.sh`, `common_data`: ssh, openssh-server install with the aliases
 - [x]  `k`: rewrite or refactor code for not killing the session.
 - [x] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work system-wide, not only on the bash environment.
+- [x] `prompt`: bashcolors with prompt fusion and adding a randomly colored @ to PS1 for each instruction putting it to green, red or yellow for interesting situations
+ 

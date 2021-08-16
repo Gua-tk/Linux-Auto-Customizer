@@ -220,24 +220,82 @@ bashcolors_bashinitializations=("
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${gnome_terminal_profile}/ palette \"['#262626', '#E356A7', '#42E66C', '#E4F34A', '#9B6BDF', '#E64747', '#75D7EC', '#EFA554', '#7A7A7A', '#FF79C6', '#50FA7B', '#F1FA8C', '#BD93F9', '#FF5555', '#8BE9FD', '#FFB86C']\"
 ")
 bashcolors_bashfunctions=("
-CLEAR='\033[0m' # No Color
-BLACK='\033[0;30m'
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0,35m'
-CYAN='\033[1;36m'
-LIGHTGREY='\033[0;37m'
-DARKGREY='\033[1;30m'
-LIGHTGREY='\033[0;37m'
-LIGHTRED='\033[1;31m'
-LIGHTGREEN='\033[1;32m'
-YELLOW='\033[1;33m'
-LIGHTBLUE='\033[1;34m'
-LIGHTPURPLE='\033[1;34m'
-LIGHTCYAN='\033[1;36m'
-WHITE='\033[1;37m'
+colors() {
+  if [ -z \"\$(echo \"\${COLORS[@]}\")\" ]; then
+    declare -Ar COLORS=(
+      [BLACK]='\e[0;30m'
+      [RED]='\e[0;31m'
+      [GREEN]='\e[0;32m'
+      [YELLOW]='\e[0;33m'
+      [BLUE]='\e[0;34m'
+      [PURPLE]='\e[0;35m'
+      [CYAN]='\e[0;36m'
+      [WHITE]='\e[0;37m'
+
+      [BOLD_BLACK]='\e[1;30m'
+      [BOLD_RED]='\e[1;31m'
+      [BOLD_GREEN]='\e[1;32m'
+      [BOLD_YELLOW]='\e[1;33m'
+      [BOLD_BLUE]='\e[1;34m'
+      [BOLD_PURPLE]='\e[1;35m'
+      [BOLD_CYAN]='\e[1;36m'
+      [BOLD_WHITE]='\e[1;37m'
+
+      [UNDERLINE_BLACK]='\e[4;30m'
+      [UNDERLINE_RED]='\e[4;31m'
+      [UNDERLINE_GREEN]='\e[4;32m'
+      [UNDERLINE_YELLOW]='\e[4;33m'
+      [UNDERLINE_BLUE]='\e[4;34m'
+      [UNDERLINE_PURPLE]='\e[4;35m'
+      [UNDERLINE_CYAN]='\e[4;36m'
+      [UNDERLINE_WHITE]='\e[4;37m'
+
+      [BACKGROUND_BLACK]='\e[40m'
+      [BACKGROUND_RED]='\e[41m'
+      [BACKGROUND_GREEN]='\e[42m'
+      [BACKGROUND_YELLOW]='\e[43m'
+      [BACKGROUND_BLUE]='\e[44m'
+      [BACKGROUND_PURPLE]='\e[45m'
+      [BACKGROUND_CYAN]='\e[46m'
+      [BACKGROUND_WHITE]='\e[47m'
+
+      [CLEAR]='\e[0m'
+    )
+  fi
+
+  if [ -n \"\$1\" ]; then
+    local return_color=\"\${COLORS[\$1]}\"
+    if [ -z \"\$(echo \"\${return_color}\")\" ]; then  # Not a color keyname
+      for i in \"\${!COLORS[@]}\"; do  # Search for color and return its keyname
+        if [ \"\${COLORS[\${i}]}\" == \"\$1\" ]; then
+          return_color=\"\${i}\"
+          echo \"\${return_color}\"
+          return
+        fi
+      done
+      # At this point \$1 is not a keyname or color
+      if [ \"\$1\" == \"random\" ]; then  # Check for random color
+        COLORS_arr=(\${COLORS[@]})
+        echo -e \"\${COLORS_arr[\$RANDOM % \${#COLORS_arr[@]}]}\"
+      elif [ \"\$1\" == \"randomkey\" ]; then
+        COLORS_arr=(\${!COLORS[@]})
+        echo \"\${COLORS_arr[\$RANDOM % \${#COLORS_arr[@]}]}\"
+      elif [ \"\$1\" -ge 0 ]; then  # If a natural number passed return a color indexing by number
+        COLORS_arr=(\${COLORS[@]})
+        echo -e \"\${COLORS_arr[\$1 % \${#COLORS_arr[@]}]}\"
+      else
+        echo \"ERROR Not recognised option\"
+      fi
+    else  # Return color from indexing with dict
+      echo -e \"\${return_color}\"
+    fi
+  else
+    # Not an argument, show all colors with dictionary structure
+    for i in \"\${!COLORS[@]}\"; do
+      echo \"\${i}:\${COLORS[\${i}]}\"
+    done
+  fi
+}
 ")
 bashcolors_readmeline="| bashcolors | bring color to terminal | Command \`bashcolors\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -2644,7 +2702,7 @@ emoji() {
       if [ \"\$1\" == \"random\" ]; then  # Check for random emoji
         EMOJIS_arr=(\${EMOJIS[@]})
         echo \"\${EMOJIS_arr[\$RANDOM % \${#EMOJIS_arr[@]}]}\"
-      elif [ \"\$1\" -ge 0 ]; then  # If a natural number passed return an eoji indexing by number
+      elif [ \"\$1\" -ge 0 ]; then  # If a natural number passed return an emoji indexing by number
         EMOJIS_arr=(\${EMOJIS[@]})
         echo \"\${EMOJIS_arr[\$1 % \${#EMOJIS_arr[@]}]}\"
       else
@@ -4377,9 +4435,31 @@ if [ -n \"\$force_color_prompt\" ]; then
 fi
 
 if [ \"\$color_prompt\" = yes ]; then
+  if [ ! -z \"\${GIT_PROMPT_LAST_COMMAND_STATE}\" ]; then
+    if [ \${GIT_PROMPT_LAST_COMMAND_STATE} -gt 0 ]; then  # Red color if error
+      color_arroba=\"\\[\\\e[4;35m\\]\"
+    else  # light green color if last command is ok
+      color_arroba=\"\\[\\\e[0;32m\\]\"
+    fi
+  else
+    type colors &>/dev/null
+    if [ \"\$?\" -eq 0 ]; then
+      color_arroba=\"\$(colors randomkey)\"
+    else
+      color_arroba=\"\\[\\\e[0;37m\\]\"
+    fi
+  fi
+
+  type colors &>/dev/null
+  if [ \"\$?\" -eq 0 ]; then
+    random_color_key_dollar=\"\$(colors randomkey | sed 's/BACKGROUND_//g' | sed 's/UNDERLINE_//g' | sed 's/BOLD_//g')\"
+    random_color_dollar=\"\$(colors \${random_color_key_dollar})\"
+  else
+    random_color_dollar=\"\\[\\\e[0;37m\\]\"
+  fi
     # Colorful custom PS1
-    PS1=\"\\[\\\e[1;37m\\]\\d \\t \\[\\\e[0;32m\\]\\u\[\\\e[4;35m\\]@\\[\\\e[0;36m\\]\\H\\[\\\e[0;33m\\] \\w\\[\\\e[0;32m\\]
-\\\\\\\$ \\[\\033[0m\\]\"
+    PS1=\"\\[\\\e[1;37m\\]\\d \\t \\[\\\e[0;36m\\]\\u\${color_arroba}@\\[\\\e[1;35m\\]\\H\\[\\\e[0;33m\\] \\w\${random_color_dollar}
+\\\\\\\$\\[\\033[0m\\]\\e[0m \"
 else
     PS1='\${debian_chroot:+(\$debian_chroot)}\u@\h:\w\\$ '
 fi
