@@ -386,6 +386,7 @@ declare -r feature_keynames=(
   "youtube"
   "youtube_dl"
   "youtubemusic"
+  "z"
   "zoom"
 )
 

@@ -5440,7 +5440,7 @@ wireshark_packagenames=("wireshark")
 wireshark_readmeline="| Wireshark | Net sniffer | Command \`wireshark\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 
 x_installationtype="environmental"
-x_arguments=("x" "extract")
+x_arguments=("x" "extract" "extract_function")
 x_bashfunctions=("
 x() {
   local first_compressed_file_arg_pos=
@@ -5478,7 +5478,7 @@ x() {
           rar x \"\${absolute_first_arg}\"
         ;;
         *.gz)
-          gunzip \"\${absolute_first_arg}\"
+          gzip -dk \"\${absolute_first_arg}\"
         ;;
         *.tar)
           tar xf \"\${absolute_first_arg}\"
@@ -5588,6 +5588,86 @@ Type=Application
 Version=1.0
 ")
 youtubemusic_readmeline="| Youtube Music | ${youtubemusic_readmelinedescription} | Command \`youtubemusic\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+
+z_installationtype="environmental"
+z_arguments=("z" "z_function")
+z_readmeline="| z function | function to compress files given a type and a set of pats to files | Command \`z\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+z_bashfunctions=("
+z() {
+  local first_compressed_file_arg_pos=
+  if [ -d \"\$1\" ]; then
+    local -r decompression_folder=\"\$1\"
+    mkdir -p \"\${decompression_folder}\"
+    local old_folder=\"\$(pwd)\"
+    shift  # With this we expect files in \$1 and the following positions.
+  fi
+
+  while [ -n \"\$1\" ]; do
+    local absolute_first_arg=
+    if [ -n \"\${decompression_folder}\" ]; then
+      if [ -n \"\$(echo \"\$1\" | grep -Eo \"^/\")\" ]; then  # Absolute path
+        absolute_first_arg=\"\$1\"
+      else  # relative path
+        absolute_first_arg=\"\$(pwd)/\$1\"
+      fi
+      cd \"\${decompression_folder}\"
+    else
+      absolute_first_arg=\"\$1\"
+    fi
+    if [ -f \"\${absolute_first_arg}\" ]; then
+      local first_arg_name=\"\$(echo \"\${absolute_first_arg}\" | rev | cut -d \"/\" -f1 | rev)\"
+      case \"\${absolute_first_arg}\" in
+        *.tar.bz2)
+          tar cvjf \"\${first_arg_name}.tar.bz2\" \"\${absolute_first_arg}\"
+        ;;
+        *.tar.gz)
+          tar cvzf \"\${first_arg_name}.tar.gz\" \"\${absolute_first_arg}\"
+        ;;
+        *.bz2)
+          bzip2 \"\${first_arg_name}.bz2\" \"\${absolute_first_arg}\"
+        ;;
+        *.rar)
+          rar a \"\${first_arg_name}.rar\" \"\${absolute_first_arg}\"
+        ;;
+        *.gz)
+          gzip -c \"\${absolute_first_arg}\" > \"\${first_arg_name}.gz\"
+        ;;
+        *.tar)
+          tar cf \"\${first_arg_name}.tar\" \"\${absolute_first_arg}\"
+        ;;
+        *.tbz2)
+          tar cvjf \"\${first_arg_name}.tbz2\" \"\${absolute_first_arg}\"
+        ;;
+        *.tgz)
+          tar cvzf \"\${first_arg_name}.tgz\" \"\${absolute_first_arg}\"
+        ;;
+        *.zip)
+          zip \"\${first_arg_name}.zip\" \"\${absolute_first_arg}\"
+        ;;
+        *.Z)
+          compress \"\${first_arg_name}.Z\" \"\${absolute_first_arg}\"
+        ;;
+        *.7z)
+          7z a \"\${first_arg_name}.7z\" \"\${absolute_first_arg}\"
+        ;;
+        *)
+          echo \"\${absolute_first_arg} cannot be extracted via x\"
+        ;;
+      esac
+    else
+      echo \"'\${absolute_first_arg}' is not a valid file for x\"
+    fi
+    if [ -n \"\${decompression_folder}\" ]; then
+      cd \"\${old_folder}\"
+    fi
+
+    shift
+  done
+  if [ ! -n \"\$(echo \"\${absolute_first_arg}\")\" ]; then
+    echo \"ERROR: x needs at least an argument. The first arg can be a file or directory where compressed files will be extracted. The rest o arguments are paths to different compressed files.\"
+  fi
+}
+")
 
 zoom_installationtype="userinherit"
 zoom_arguments=("zoom")
