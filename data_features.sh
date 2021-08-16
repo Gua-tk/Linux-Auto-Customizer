@@ -264,7 +264,7 @@ colors() {
   fi
 
   if [ -n \"\$1\" ]; then
-    local return_color=\"\${COLORS[\$1]}\"
+    local return_color=\"\${COLORS[\$(echo \"\$1\" | tr '[:lower:]' '[:upper:]')]}\"
     if [ -z \"\$(echo \"\${return_color}\")\" ]; then  # Not a color keyname
       for i in \"\${!COLORS[@]}\"; do  # Search for color and return its keyname
         if [ \"\${COLORS[\${i}]}\" == \"\$1\" ]; then
