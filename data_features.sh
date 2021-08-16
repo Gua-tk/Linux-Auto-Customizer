@@ -3524,7 +3524,7 @@ L()
   local -r NEW_LINE=\$'\\n'
   local -r lsdisplay=\"\$(ls -lhA | tr -s \" \" | tail -n+2)\"  # Obtain ls data in list format
   local -r numfiles=\"\$(echo \"\$lsdisplay\" | wc -l)\"  # Obtain number of elements in the folder
-  local -r dudisplay=\"\$(du -shxc .[!.]* * | sort -h | tr -s \"\\\t\" \" \" | head -n -1)\"  # Obtain du data for the real size of the directories, deleting the line of the total size
+  local -r dudisplay=\"\$(du -shxc .[!.]* * 2>/dev/null | sort -h | tr -s \"\\\t\" \" \" | head -n -1)\"  # Obtain du data for the real size of the directories, deleting the line of the total size
   local -r totaldu=\"\$(echo \${dudisplay} | tail -1 | rev | cut -d \" \" -f2 | rev)\"  # Obtain the total size of the folder
   local finaldisplay=\"\"
   # Iterate over every line in ls and check if it is a directory in order to change the size shown in ls (4 KB) for the real size of directory from the output of du
@@ -4674,29 +4674,27 @@ scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>
 
 screenshots_installationtype="environmental"
 screenshots_arguments=("screenshots")
-screenshots_bashfunctions=("
-screenshot-area()
-{
-  mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
-  local -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
-  gnome-screenshot -a -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
-}
-
-screenshot-full()
-{
-  mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
-  local -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
-  gnome-screenshot -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
-}
-
-screenshot-window()
-{
-  mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
-  local -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
-  gnome-screenshot -w -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
-}
-")
-screenshots_binariesinstalledpaths=("screenshots.sh;screenshots")
+screenshots_filekeys=("screenshotwindow" "screenshotarea" "screenshotfull")
+screenshots_keybinds=("scr-area;<Primary><Alt><Super>a;Screenshot Area" "scr-full;<Primary><Alt><Super>f;Screenshot Full" "scr-window;<Primary><Alt><Super>w;Screenshot Window")
+screenshots_screenshotwindow_path="screenshot_window.sh"
+screenshots_screenshotwindow_content="
+mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
+declare -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+gnome-screenshot -w -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+"
+screenshots_screenshotarea_path="screenshot_area.sh"
+screenshots_screenshotarea_content="
+mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
+declare -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+gnome-screenshot -a -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+"
+screenshots_screenshotfull_path="screenshot_full.sh"
+screenshots_screenshotfull_content="
+mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
+declare -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+gnome-screenshot -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+"
+screenshots_binariesinstalledpaths=("screenshot_area.sh;scr-area" "screenshot_window.sh;scr-window" "screenshot_full.sh;scr-full")
 screenshots_packagedependencies=("gnome-screenshot" "xclip")
 screenshots_readmeline="| Screenshots | Takes a screenshot and saves it to custom ~/Images/screenshots folder and save it to the clipboard for pasting | Commands \`screenshot-full\` \`screenshot-window\` \`screenshot-area\`||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 

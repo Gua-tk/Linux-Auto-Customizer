@@ -85,12 +85,12 @@
 - [x] `install.sh`, `uninstall.sh`: New argument in install.sh add to favorites -f / -n normal installation without favorites(?) also complementary flag in uninstall.sh
 - [x] `data_features.sh`: `e` convert to edit and echo function
 - [x] `functions_install`: Fix finished message after sourcing bashrc problem  
-- [ ] `functions_common.sh`: set_field $string $separator $position function 
-- [ ] `functions_common.sh`: get_field $string $separator $position function
-- [ ] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to generify the permissions of the installation. --> Delete the permission bit and "guess" needed permissions from the installationtype
+- [x] `functions_common.sh`: set_field $string $separator $position function 
+- [x] `functions_common.sh`: get_field $string $separator $position function
+- [x] `data_common.sh`, `install.sh`: Fusion key of permissions + installationtype in `data_common.sh` table to generify the permissions of the installation. --> Delete the permission bit and "guess" needed permissions from the installationtype
 - [x] all: unset or set to local variables that are needed only locally
-- [ ] `functions_common.sh`: process argument validation in add program instead of execute_installation, to stop installation if a permission mismatch is found
-- [ ] `functions_common.sh`: Allow to match against arguments with different case and different - or _
+- [x] `functions_common.sh`: process argument validation in add program instead of execute_installation, to stop installation if a permission mismatch is found
+- [x] `functions_common.sh`: Allow to match against arguments with different case and different - or _
 - [x] `data_features.sh`, `data_common.sh`: Migrate initialization commands from .bashrc to .profile redefining a bash_functions to a bash_profilefunctions, so they are installed in .profile. Define auxiliar var for that PATH
 - [x] `data_features.sh`: fix sysmontask, which cannot be installed being user (run setup.py). You can clone it and install it in portable mode as user, but the explicit instllation has to be done with root.  
 - [x] `install.sh`: register openoffice file associations --> Need to add different filetypes for different .desktop launchers
@@ -102,9 +102,16 @@
 - [x] `autocompletion` also works when calling installation manually in working customizer directory (sudo/bash install.sh -v auda[tab]...): now tab autocompletion only works when `customizer-install` it is locally installed.
 - [x] `--help`: needs some final review
 - [x] `emoji_function`: Emoji function that converts string identifyiung emoji to its emoji and viceversa
-- [ ] `common_data.sh`: Sort the possible declaration in the corresponding order. --> not possible tosort because they have dependencies between them
-- [ ]  function for emoji echo "${emojilist[slightly_smiling_face]}" and extend load_emoji function
-- [ ] `decompress`: Do it in a folder optionally and for many files.
+- [x] `common_data.sh`: Sort the possible declaration in the corresponding order. --> not possible tosort because they have dependencies between them
+- [x]  function for emoji echo "${emojilist[slightly_smiling_face]}" and extend load_emoji function
+- [x] `decompress`: Do it in a folder optionally and for many files.
+- [x] `data_features.sh`: Update history
+- [x] `README.md`: Add badges `README.md` using codecov or another code analysis service.
+- [x] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
+- [x] `README.md`: Add badges `README.md` using codecov or another code analysis service.  
+- [x] `data_features.sh`: Update history [optimization](https://unix.stackexchange.com/questions/6628/what-customizations-have-you-done-on-your-shell-profile-to-increase-productivity)
+- [x] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
+
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -192,3 +199,7 @@
 - [x] `data_features.sh`, `common_data.sh`: `edit` functions. It edits a system or user configuration file by passing the argument of the name. By default with no parameters it should edit .bashrc.  alias editbashrc="editor ${HOME}/.bashrc"  alias editprofile="editor ${HOME}/.profile" alias editfunctions="editor ${HOME}/.bash_functions" sshConfig="pluma ${HOME}/.ssh/config" also edit shortcuts.sh if present, edit fastcommands if present favorites, keybindings...etc. whatever it is interesting 
 - [x] `data_features.sh`, `common_data.sh`: rewrite k as function: #alias k9="kill -9"# alias killbyport="k9 \`lsof -i:3000 -t\`"
 - [x] `install.sh`, `uninstall.sh`, `common_data`: ssh server: alias sshDisable="sudo systemctl disable sshd", alias sshEnable="sudo systemctl enable ssh", alias sshRestart="sudo systemctl restart sshd", alias sshStart="sudo systemctl start sshd", alias sshStatus="sudo systemctl status sshd", alias sshStop="sudo systemctl stop sshd"  
+- [x] `terminal_background`: Merge manual content into bash initialization. unset variable. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
+- [x] `install.sh`, `uninstall.sh`, `common_data`: ssh, openssh-server install with the aliases
+- [x]  `k`: rewrite or refactor code for not killing the session.
+- [x] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work system-wide, not only on the bash environment.

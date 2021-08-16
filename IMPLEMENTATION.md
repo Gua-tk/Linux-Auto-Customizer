@@ -6,44 +6,20 @@
 
 ###### NEW FEATURES
 - [ ] `install.sh`: Cache of downloads of customizer, add another flag to use / construct the cache (default) or to ignore it
-- [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
-- [ ]  list inner directories i function
-- [ ]  function r: translates hex values of colors to its natural name and reg(x,y,z) format...
-- [ ] gitbashfunctions: merge()
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
-- [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
-       uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
-       The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
-       system-wide, not only on the bash environment.
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg
-- [x] `data_features.sh`: Update history
-- [x] `README.md`: Add badges `README.md` using codecov or another code analysis service.  
-- [ ] `.profile`: generate function to princ clock with hour. Preferably in python
-- [x] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
+
 - [ ] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype
 - [ ] `clone`: either access url without writing https://
-- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server install with the aliases
-- [x] `terminal_background`: Merge manual content into bash initialization. unset variable. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
-- [ ]  `k`: rewrite or refactor code for not killing the session.
-- [x] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg -> This may need external ffmpeg processing of feature icons from .* to .svg convertion
-- [ ] `data_features.sh`: Update history [optimization](https://unix.stackexchange.com/questions/6628/what-customizations-have-you-done-on-your-shell-profile-to-increase-productivity)
-- [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.  
-- [ ] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
-- [ ] `data_features.sh`: refactor `x` (extract) function: 
-                            - do not rely only in extension
-                            - decompress in a folder optionally
-                            - inform if the package needed is not present and installs it
-                            - grow it with the code already in decompress which handles already most common cases ;)
 - [ ] `pluma`, `edit` functions should be able to open multiple files at once
-- [ ] `prompt`: simplify PS1, change gnome-terminal title with useful information such as the current path? [](https://askubuntu.com/questions/22413/how-to-change-gnome-terminal-title)
-- [ ] `prompt`: Make prompt more similar to gitptompt, moving hour to second line of prompt and adding contidionally lolcat for changing the @ randomly
+- [ ] `prompt`: adding conditionally lolcat for changing the color @ randomly
 
 ###### NEW FEATURES
-- [ ] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as comentary in bashcolors function).  Write custom color codes of gnome-terminal profile through gsettings  for dracula color schema or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
+- [ ] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as commentary in bashcolors function). 
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
 - [ ] `data_features.sh`, `common_data.sh`: `port` function. It returns the name and PID of a process using the given port #  "lsof -i $1"  alias ports="lsof -Pan -i tcp -i udp"
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
@@ -72,6 +48,9 @@
 - [ ] `data_features.sh`: Rstudio split libssl-dev dependency 
 - [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
 - [ ] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
+- [ ]  list inner directories i function (tree -d $1)
+- [ ]  function r: translates hex values of colors to its natural name and rgb(x,y,z) format...
+- [ ] gitbashfunctions: merge()
 
 # TO-DO uninstall.sh and uninstall core for v1.0
 
