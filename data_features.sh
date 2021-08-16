@@ -870,12 +870,12 @@ edit() {
     local path_editable=\"\${EDITABLEFILES[\"\$1\"]}\"
     if [ -z \"\${path_editable}\" ]; then
       if [ -f \"\$1\" ]; then
-        editor \"\$1\"
+        nohup editor \"\$1\" &>/dev/null &
       else
         echo \"\$1 is not a valid file or option.\"
       fi
     else
-      editor \"\${path_editable}\"
+      nohup editor \"\${path_editable}\" &>/dev/null &
     fi
   else  # If not an argument show the dictionary structure
     echo \"Recognised arguments to edit:\"
