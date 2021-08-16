@@ -5451,7 +5451,7 @@ x() {
     shift  # With this we expect files in \$1 and the following positions.
   fi
 
-  while [ -n \"\$1\" ]; then
+  while [ -n \"\$1\" ]; do
     local absolute_first_arg=
     if [ -n \"\${decompression_folder}\" ]; then
       if [ -n \"\$(echo \"\$1\" | grep -Eo \"^/\")\" ]; then  # Absolute path
@@ -5510,9 +5510,11 @@ x() {
     fi
 
     shift
+  done
+  if [ ! -n \"\$(echo \"\${absolute_first_arg}\")\" ]; then
+    echo \"ERROR: x needs at least an argument. The first arg can be a file or directory where compressed files will be extracted. The rest o arguments are paths to different compressed files.\"
   fi
 
-  local
 
 }
 ")
