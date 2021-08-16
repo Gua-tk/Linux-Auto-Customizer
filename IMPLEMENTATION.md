@@ -11,7 +11,9 @@
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
-
+- [ ] `terminal_background`: Merge manual content into bash initialization. unset variables. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
+- [ ]  `k`: rewrite or refactor code for not killing the session.
+- [x] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
