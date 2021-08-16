@@ -8,16 +8,16 @@
 - [ ] `install.sh`: Cache of downloads of customizer, add another flag to use / construct the cache (default) or to ignore it
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
+- [ ]  list inner directories i function (example: i )
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
-- [ ] `.profile`: generate function to print clock with hour. Preferably in python [bash script](https://gitlab.com/Axlfc/clockmoji). intgrate clock in ps1 ?
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
        system-wide, not only on the bash environment.
-
+- [ ] `clone`: either access url without writing https://
 - [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server install with the aliases
 - [ ] `terminal_background`: Merge manual content into bash initialization. unset variables. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
 - [ ]  `k`: rewrite or refactor code for not killing the session.
@@ -32,7 +32,9 @@
                             - inform if the package needed is not present and installs it
                             - grow it with the code already in decompress which handles already most common cases ;)
 - [ ] `pluma`, `edit` functions should be able to open multiple files at once
-- [ ] `prompt`: simplify PS1, change gnome-terminal title with useful information such as the current path [](https://askubuntu.com/questions/22413/how-to-change-gnome-terminal-title)
+- [ ] `prompt`: simplify PS1, change gnome-terminal title with useful information such as the current path? [](https://askubuntu.com/questions/22413/how-to-change-gnome-terminal-title)
+- [ ] `prompt`: Make prompt more similar to gitptompt, moving hour to second line of prompt and adding contidionally lolcat for changing the @ randomly
+
 ###### NEW FEATURES
 - [ ] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as comentary in bashcolors function).  Write custom color codes of gnome-terminal profile through gsettings  for dracula color schema or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
