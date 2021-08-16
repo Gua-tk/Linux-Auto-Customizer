@@ -4452,8 +4452,7 @@ if [ \"\$color_prompt\" = yes ]; then
 
   type colors &>/dev/null
   if [ \"\$?\" -eq 0 ]; then
-    random_color_key_dollar=\"\$(colors randomkey | sed 's/BACKGROUND_//g' | sed 's/UNDERLINE_//g' | sed 's/BOLD_//g')\"
-    random_color_dollar=\"\$(colors \${random_color_key_dollar})\"
+    random_color_dollar=\"\$(colors \$(colors randomkey | sed 's/BACKGROUND_//g' | sed 's/UNDERLINE_//g' | sed 's/BOLD_//g'))\"
   else
     random_color_dollar=\"\\[\\\e[0;37m\\]\"
   fi
@@ -4463,7 +4462,7 @@ if [ \"\$color_prompt\" = yes ]; then
 else
     PS1='\${debian_chroot:+(\$debian_chroot)}\u@\h:\w\\$ '
 fi
-unset color_prompt force_color_prompt
+unset color_prompt force_color_prompt random_color_dollar color_arroba
 
 # If this is an xterm set the title to user@host:dir
 case \"\$TERM\" in
