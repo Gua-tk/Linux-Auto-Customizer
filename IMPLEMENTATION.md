@@ -5,15 +5,14 @@
 ###### UPDATES
 
 ###### NEW FEATURES
+- [ ] `install.sh`: Cache of downloads of customizer, add another flag to use / construct the cache (default) or to ignore it
 - [ ] `install.sh`, `uninstall.sh`: Program traps to intercept signals and respond against them. Show a warning when trying to stop a process in the middle of a critical operation like apt-get or dpkg.
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
-
+- [ ]  list inner directories i function
+- [ ]  function r: translates hex values of colors to its natural name and reg(x,y,z) format...
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
-
-- [ ] `data_features.sh`: Add readme line of emoji functions
-- [ ] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as comentary in bashcolors fcuntion).  Write custom color codes of gnome-terminal profile through gsettings  for dracula color schema or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
 - [ ] `screenshots`: Screenshots need proper key bindings converting to binary. --> probably the screenshots bashfunctions are not present in the same environment that 
        uses the keybinds ? Check bashrc and profile probably different environments. If not, the fastest way to make the functions executable from 
        The keybinds will be putting an executable on your path. This executable will have the code itself instead than in a function and will work 
@@ -24,20 +23,31 @@
 - [ ] `.profile`: generate function to princ clock with hour. Preferably in python
 - [x] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
 - [ ] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype
-                            
-  
+- [ ] `clone`: either access url without writing https://
+- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server install with the aliases
+- [x] `terminal_background`: Merge manual content into bash initialization. unset variable. Parametrize the repeated strings. Comment lines. declare variale of profileuuid in one line and using a subshell to trim the single quotes.
+- [ ]  `k`: rewrite or refactor code for not killing the session.
+- [x] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+- [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg -> This may need external ffmpeg processing of feature icons from .* to .svg convertion
+- [ ] `data_features.sh`: Update history [optimization](https://unix.stackexchange.com/questions/6628/what-customizations-have-you-done-on-your-shell-profile-to-increase-productivity)
+- [ ] `README.md`: Add badges `README.md` using codecov or another code analysis service.  
+- [ ] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
+- [ ] `data_features.sh`: refactor `x` (extract) function: 
+                            - do not rely only in extension
+                            - decompress in a folder optionally
+                            - inform if the package needed is not present and installs it
+                            - grow it with the code already in decompress which handles already most common cases ;)
+- [ ] `pluma`, `edit` functions should be able to open multiple files at once
+- [ ] `prompt`: simplify PS1, change gnome-terminal title with useful information such as the current path? [](https://askubuntu.com/questions/22413/how-to-change-gnome-terminal-title)
+- [ ] `prompt`: Make prompt more similar to gitptompt, moving hour to second line of prompt and adding contidionally lolcat for changing the @ randomly
+
 ###### NEW FEATURES
+- [ ] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as comentary in bashcolors function).  Write custom color codes of gnome-terminal profile through gsettings  for dracula color schema or similar [color palette gsettings](https://askubuntu.com/questions/803230/how-to-set-built-in-color-scheme-for-gnome-terminal-via-cli-in-ubuntu-16)
 - [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
 - [ ] `data_features.sh`, `common_data.sh`: `port` function. It returns the name and PID of a process using the given port #  "lsof -i $1"  alias ports="lsof -Pan -i tcp -i udp"
-- [ ] `data_features.sh`, `common_data.sh`: `edit` functions. It edits a system or user configuration file by passing the argument of the name. By default with no parameters it should edit .bashrc.  alias editbashrc="editor ${HOME}/.bashrc"  alias editprofile="editor ${HOME}/.profile" alias editfunctions="editor ${HOME}/.bash_functions" sshConfig="pluma ${HOME}/.ssh/config" also edit shortcuts.sh if present, edit fastcommands if present favorites, keybindings...etc. whatever it is interesting 
-- [ ] `data_features.sh`, `common_data.sh`: rewrite k as function: #alias k9="kill -9"# alias killbyport="k9 \`lsof -i:3000 -t\`"
-- [ ] `data_features.sh`: k function for killing process  --k;0;| Function \`k\` | \`Function for killing processes kill -9\` | Command \`k\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
-- [ ] `install.sh`: SublimeText-Markdown, & other plugins for programs...
-- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh server: alias sshDisable="sudo systemctl disable sshd", alias sshEnable="sudo systemctl enable ssh", alias sshRestart="sudo systemctl restart sshd", alias sshStart="sudo systemctl start sshd", alias sshStatus="sudo systemctl status sshd", alias sshStop="sudo systemctl stop sshd"  
-- [ ] `install.sh`, `uninstall.sh`, `common_data`: ssh client user disposable environment features if possible
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: `Google`/`translator` internet shortcut launcher.
@@ -61,6 +71,7 @@
 - [ ] `data_features.sh`: Rstudio split libssl-dev dependency 
 - [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
 - [ ] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
+
 # TO-DO uninstall.sh and uninstall core for v1.0
 
 ###### UPDATES

@@ -202,6 +202,7 @@ declare -r feature_keynames=(
   "clean"
   "clementine"
   "clion"
+  "clone"
   "clonezilla"
   "cmatrix"
   "code"
@@ -223,6 +224,7 @@ declare -r feature_keynames=(
   "dummycommit"
   "e"
   "eclipse"
+  "edit"
   "emojis"
   "evolution"
   "f"
@@ -314,6 +316,7 @@ declare -r feature_keynames=(
   "onedrive"
   "openoffice"
   "openssl102"
+  "openssh_server"
   "outlook"
   "overleaf"
   "pacman"
@@ -351,6 +354,7 @@ declare -r feature_keynames=(
   "sonic_pi"
   "spotify"
   "spreadsheets"
+  "ssh"
   "status"
   "steam"
   "studio"
@@ -431,7 +435,7 @@ declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background"
 # Custom wrappers
 declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
 declare -r wrapper_iochem=("psql" "gcc" "java" "ant" "mvn")
-
+declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch")
 
 ########################################################################################################################
 ############################################ COMMON DATA VARIABLES #####################################################
