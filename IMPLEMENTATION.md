@@ -13,7 +13,6 @@
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg
 
 - [ ] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype
-- [ ] `clone`: either access url without writing https://
 - [ ] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg -> This may need external ffmpeg processing of feature icons from .* to .svg convertion
 - [ ] `pluma`, `edit` functions should be able to open multiple files at once
 - [ ] `prompt`: adding conditionally lolcat for changing the color @ randomly

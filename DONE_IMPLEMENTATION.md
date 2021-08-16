@@ -111,6 +111,7 @@
 - [x] `README.md`: Add badges `README.md` using codecov or another code analysis service.  
 - [x] `data_features.sh`: Update history [optimization](https://unix.stackexchange.com/questions/6628/what-customizations-have-you-done-on-your-shell-profile-to-increase-productivity)
 - [x] `data_features.sh`: `L` function columns, also the alias alias totalusage="df -hl --total | grep total" can be rewritted as an alias or case `L /` of L because it uses du
+- [x] `clone`: either access url without writing https://
 
 
 ###### Axel

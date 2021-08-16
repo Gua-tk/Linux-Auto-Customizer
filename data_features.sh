@@ -381,10 +381,20 @@ clion_readmelinedescription="Cross-platform C/C++ IDE"
 clion_readmeline="| Clion | ${clion_readmelinedescription} | Command \`clion\`, silent alias \`clion\`, desktop launcher, dashboard launcher, associated with mimetypes \`.c\`, \`.h\` and \`.cpp\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 clone_installationtype="environmental"
+clone_arguments=("clone")
 clone_bashfunctions=("
 clone()
 {
-  git clone \$1
+  if [ \$# -eq 0 ]; then
+    echo \"ERROR: You need to provide at least one argument\"
+    return
+  else
+    if [ -n \"\$(echo \"\$1\" | grep -Eo \"^http.?://.+$\")\" ]; then
+      git clone \"\$1\"
+    else
+      git clone \"https://\$1\"
+    fi
+  fi
 }
 ")
 clone_readmeline="| Function \`clone\` | Function for \`git clone \$1\`|  Command \`clone\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -4267,12 +4277,10 @@ pluma()
   if [ \$# -eq 0 ]; then
     nohup pluma &>/dev/null &
   else
-    if [ \$# -eq 1 ]; then
+    while [ -n \"\$1\" ]; do
       nohup pluma \"\$1\" &>/dev/null &
-    else
-      echo \"ERROR: Too many arguments\"
-      return
-    fi
+      shift
+    done
   fi
 }
 ")
