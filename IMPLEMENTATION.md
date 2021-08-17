@@ -15,14 +15,12 @@
 - [ ] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype
 
 ###### NEW FEATURES
-- [ ] `data_features.sh`, `common_data.sh`: `f` function. Searches a therm in a file, a directory or in file names. It has many fallbacks. lg: ls | grep "$1"  fn: "find . -name"
-- [ ] `data_features.sh`, `common_data.sh`: `port` function. It returns the name and PID of a process using the given port #  "lsof -i $1"  alias ports="lsof -Pan -i tcp -i udp"
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
-- [ ] `install.sh`, `uninstall.sh`: `Google`/`translator` internet shortcut launcher.
+- [ ] `install.sh`, `uninstall.sh`: `Google`/`translator`/`soundcloud` internet shortcut launcher.
 - [ ] `install.sh`, `uninstall.sh`: gnu octave and or scilab
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
 - [ ] `install.sh`, `uninstall.sh`: sherlock

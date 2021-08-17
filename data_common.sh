@@ -227,6 +227,7 @@ declare -r feature_keynames=(
   "edit"
   "emojis"
   "evolution"
+  "F"
   "f"
   "f_irc"
   "facebook"
@@ -319,6 +320,7 @@ declare -r feature_keynames=(
   "openssh_server"
   "outlook"
   "overleaf"
+  "p"
   "pacman"
   "parallel"
   "pdfgrep"
@@ -430,10 +432,10 @@ declare -r wrapper_gamesinstall=("steam" "cmatrix")
 declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
 declare -r wrapper_bashfunctions=("a" "b" "c" "e" "f" "h" "j" "k" "L" "l" "o" "q" "s" "u" "x")
 declare -r wrapper_desktopfunctions=("changebg" "screenshots" "system_fonts" "templates")
-declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters")
+declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters" "bashcolors")
 
 # Custom wrappers
-declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
+declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
 declare -r wrapper_iochem=("psql" "gcc" "java" "ant" "mvn")
 declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch")
 

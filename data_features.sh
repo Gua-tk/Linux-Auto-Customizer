@@ -316,6 +316,7 @@ c_arguments=("c")
 c_bashfunctions=("
 c()
 {
+  bash
   clear
 	if [ -d \"\$1\" ]; then
 		cd \$1
@@ -2734,43 +2735,34 @@ F_bashfunctions=("
 F() {
   if [ \$# -eq 0 ]; then  # No arguments given
     find / 2>/dev/null
-  elif [ \$# -eq 1 ]; then
-    if [ -f \"\$1\" ]; then  # Searches therm in a file
-      files=\"\$(find / 2>/dev/null)\"
-      for file_path in \"\$files\"; do
-        cat \"\$file_path\" | grep \"\$(cat \"\$1\")\"
-      done
-    elif [ -d \"\$1\" ]; then  # Searches files in directory
-      find \"\$1\"
+  else
+    if [ -d \"\$1\" ]; then
+      first_argument=\"\$1\"
+      shift
     else
-      more * | grep \"\$1\"
+      first_argument=\".\"
     fi
-  elif [ \$# -gt 1 ]; then
-    local temp=\"\$1\"
-    while [ \$# -gt 1 ]; do
-      if [ -f \"\$temp\" ]; then  # Searches therm in a file
-        more \"\$temp\" | grep \"\$2\"
-      elif [ -d \"\$temp\" ]; then  # Searches file in directory
-        if [ -n \"\$(find \"\$temp\" -name \"\$2\")\" ]; then
-          more \$(find \"\$temp\" -name \"\$2\")
-        else
-          ls -lah \"\$temp\" | grep \"\$2\" #show list of other matching files in directory
-        fi
-      else
-        echo \"\$temp\" | grep \"\$2\"
-      fi
+    IFS=\$'\\n'
+    while [ -n \"\$1\" ]; do
+      for filename in \$(find \"\${first_argument}\" -type f 2>/dev/null); do
+        local result=\"\$(cat \"\${filename}\" | grep \"\$1\")\"
+        if [ -n \"\$(echo \"\${result}\")\" ]; then
+          echo
+          echo -e \"\\e[0;33m\${filename}\\e[0m\"
+          cat \"\${filename}\" | grep -hnI -B 3 -A 3 --color='auto' \"\$1\"
+         fi
+      done
       shift
     done
   fi
 }
 ")
-F_readmeline="| Function \`F\` | Function to massively find content in files | Command \`F\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+F_readmeline="| Function \`F\` | Function to find strings in files in the directory in the 1st argument | Command \`F\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 f_installationtype="environmental"
 f_arguments=("f")
 f_bashfunctions=("
 f() {
-
   if  [ \$# -eq 0 ]; then  # No arguments given
     find . 2>/dev/null
   elif [ \$# -eq 1 ]; then
@@ -2779,7 +2771,7 @@ f() {
     elif [ -d \"\$1\" ]; then  # Searches files in directory
       find \"\$1\"
     else
-      more * | grep \"\$1\"
+      more * | grep \"\$1\"  # Searches therm in all files
     fi
   elif [ \$# -gt 1 ]; then
     local temp=\"\$1\"
@@ -2787,12 +2779,12 @@ f() {
       if [ -f \"\$temp\" ]; then  # Searches therm in a file
         more \"\$temp\" | grep \"\$2\"
       elif [ -d \"\$temp\" ]; then  # Searches file in directory
-        if [ -n \"\$(find \"\$temp\" -name \"\$2\")\" ]; then
+        if [ -n \"\$(find \"\$temp\" -name \"\$2\")\" ]; then  # Show files matching argument
           more \$(find \"\$temp\" -name \"\$2\")
         else
-          ls -lah \"\$temp\" | grep \"\$2\" #show list of other matching files in directory
+          ls -lah \"\$temp\" | grep \"\$2\"  # Show list of other matching files in elements of directory
         fi
-      else
+      else  # Literal search in therm
         echo \"\$temp\" | grep \"\$2\"
       fi
       shift
@@ -3548,7 +3540,9 @@ k() {    #sudo kill \`lsof -i:3000 -t\` \"\$1\"  # kill by port
       # Introduce port to be killed
       echo \"Kill port nº:\"
       read portkillnumber
-      sudo kill \`lsof -i:3000 -t\` \"\$portkillnumber\"
+      for pid_program in \$(sudo lsof -i:\"\${portkillnumber}\" | tail -n+2 | tr -s \" \"  | cut -d \" \" -f2 | sort | uniq); do
+        sudo kill \${pid_program}
+      done
     fi
   fi
 }
@@ -4348,6 +4342,21 @@ pluma()
 pluma_launchernames=("pluma")
 pluma_packagenames=("pluma")
 pluma_readmeline="| pluma | Fork of gedit 2.0 that supports many plugins and new features | Command \`pluma\`, desktop launcjer and dashboard launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+p_installationtype="environmental"
+p_arguments=("p" "port" "port_function")
+p_bashfunctions=("
+p()
+{
+  if [ -n \"\$1\" ]; then
+    sudo lsof -i:\"\$1\" | tail -n+2 | tr -s \" \"  | cut -d \" \" -f-2 | sort | uniq | column -ts \" \"
+  else
+    sudo lsof -Pan -i tcp -i udp
+  fi
+}
+")
+port_readmeline="| Function \`port\` | Check processes names and PID's from given port | Command \`port\` ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 
 postman_installationtype="userinherit"
 postman_arguments=("postman")
