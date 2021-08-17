@@ -16,8 +16,15 @@
 
 ###### NEW FEATURES
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
-- [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the lines of code of a script
+- [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the total lines of code of a script
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
+- [ ] `data_features.sh`: Rstudio split libssl-dev dependency to a new feature
+- [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
+- [ ] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
+- [ ]  list inner directories i function (tree -d $1)
+- [ ] function r: translates hex values of colors to its natural name and rgb(x,y,z) format...
+- [ ] merge: git merge funtion()
+- [ ] `install.sh`: giff, a git diff alias
 - [ ] `install.sh`, `uninstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: `Google`/`translator`/`soundcloud` internet shortcut launcher.
@@ -38,12 +45,6 @@
 - [ ] `install.sh`, `uninstall.sh`: gobuster
 - [ ] `install.sh`, `uninstall.sh`: zenmap (nmap gui) (virtual environment)
 - [ ] `install.sh`, `uninstall.sh`: metasploit (https://apt.metasploit.com/)
-- [ ] `data_features.sh`: Rstudio split libssl-dev dependency 
-- [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
-- [ ] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
-- [ ]  list inner directories i function (tree -d $1)
-- [ ]  function r: translates hex values of colors to its natural name and rgb(x,y,z) format...
-- [ ] gitbashfunctions: merge()
 
 # TO-DO uninstall.sh and uninstall core for v1.0
 
