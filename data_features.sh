@@ -782,7 +782,7 @@ duckduckgo_installationtype="environmental"
 duckduckgo_arguments=("duckduckgo")
 duckduckgo_url="https://duckduckgo.com/"
 duckduckgo_bashfunctions=("alias duckduckgo=\"nohup xdg-open ${duckduckgo_url} &>/dev/null &\"")
-duckduckgo_downloads=("https://iconape.com/wp-content/png_logo_vector/cib-duckduckgo.png;duckduckgo_icon.png")
+duckduckgo_downloads=("https://icon-icons.com/downloadimage.php?id=67089&root=844/SVG/&file=DuckDuckGo_icon-icons.com_67089.svg;duckduckgo_icon.svg")
 duckduckgo_readmelinedescription="Opens DuckDuckGo in Chrome"
 duckduckgo_launchercontents=("
 [Desktop Entry]
@@ -790,7 +790,7 @@ Categories=Network;
 Comment=${duckduckgo_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${duckduckgo_url}
-Icon=${USR_BIN_FOLDER}/duckduckgo/duckduckgo_icon.png
+Icon=${USR_BIN_FOLDER}/duckduckgo/duckduckgo_icon.svg
 GenericName=DuckDuckGo
 Keywords=duckduckgo
 Name=DuckDuckGo
@@ -4675,7 +4675,7 @@ reddit_installationtype="environmental"
 reddit_arguments=("reddit")
 reddit_url="https://www.reddit.com/"
 reddit_bashfunctions=("alias reddit=\"nohup xdg-open ${reddit_url} &>/dev/null &\"")
-reddit_downloads=("https://duckduckgo.com/i/b6b8ccc2.png;reddit_icon.svg")
+reddit_downloads=("https://www.svgrepo.com/download/14413/reddit.svg;reddit_icon.svg")
 reddit_readmelinedescription="Opens Reddit in Chrome"
 reddit_launchercontents=("
 [Desktop Entry]
@@ -5339,7 +5339,7 @@ trello_installationtype="environmental"
 trello_arguments=("trello")
 trello_url="https://trello.com"
 trello_bashfunctions=("alias trello=\"nohup xdg-open ${trello_url} &>/dev/null &\"")
-trello_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Antu_trello.svg/512px-Antu_trello.svg.png;trello_icon.svg.png")
+trello_downloads=("https://en.wikipedia.org/wiki/File:Antu_trello.svg;trello_icon.svg")
 trello_readmelinedescription="Trello web opens in Chrome"
 trello_launchercontents=("
 [Desktop Entry]
@@ -5347,7 +5347,7 @@ Categories=Network;
 Comment=${trello_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${trello_url}
-Icon=${USR_BIN_FOLDER}/trello/trello_icon.svg.png
+Icon=${USR_BIN_FOLDER}/trello/trello_icon.svg
 GenericName=Trello
 Keywords=trello;
 MimeType=
@@ -5365,7 +5365,7 @@ tumblr_installationtype="environmental"
 tumblr_arguments=("tumblr")
 tumblr_url="https://www.tumblr.com/"
 tumblr_bashfunctions=("alias tumblr=\"nohup xdg-open ${tumblr_url} &>/dev/null &\"")
-tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tumblr.svg/1200px-Tumblr.svg.png;tumblr_icon.svg")
+tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/4/43/Tumblr.svg;tumblr_icon.svg")
 tumblr_readmelinedescription="Tumblr web opens in Chrome"
 tumblr_launchercontents=("
 [Desktop Entry]
@@ -5391,7 +5391,7 @@ twitch_installationtype="environmental"
 twitch_arguments=("twitch" "twitch_tv")
 twitch_url="https://twitch.tv/"
 twitch_bashfunctions=("alias twitch=\"nohup xdg-open ${twitch_url} &>/dev/null &\"")
-twitch_downloads=("http://img1.wikia.nocookie.net/__cb20140727180700/logopedia/images/thumb/8/83/Twitch_icon.svg/500px-Twitch_icon.svg.png;twitch_icon.svg")
+twitch_downloads=("https://commons.wikimedia.org/wiki/File:Twitch_Glitch_Logo_Purple.svg;twitch_icon.svg")
 twitch_readmelinedescription="Twitch web opens in Chrome"
 twitch_launchercontents=("
 [Desktop Entry]
@@ -5888,7 +5888,7 @@ zoom_arguments=("zoom")
 zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
 zoom_compressedfileurl="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
 zoom_compressedfiletype="J"
-zoom_downloads=("https://play-lh.googleusercontent.com/JgU6AIREDMsGLmrFSJ8OwLb-JJVw_jwqdwEZWUHemAj0V5Dl7i7GOpmranv2GsCKobM;zoom_icon.ico")
+zoom_downloads=("https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/zoom.svg;zoom_icon.svg")
 zoom_readmelinedescription="Live Video Streaming for Meetings"
 zoom_launchercontents=("
 [Desktop Entry]
@@ -5896,7 +5896,7 @@ Categories=Social;Communication;
 Comment=${zoom_readmelinedescription}
 Encoding=UTF-8
 GenericName=Video multiple calls
-Icon=${USR_BIN_FOLDER}/zoom/zoom_icon.ico
+Icon=${USR_BIN_FOLDER}/zoom/zoom_icon.svg
 Keywords=Social;VideoCalls;
 MimeType=
 Name=Zoom
