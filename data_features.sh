@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ########################################################################################################################
 # - Name: Linux Auto Customizer data of features.                                                                      #
 # - Description: Defines all variables containing the data needed to install and uninstall all features.               #

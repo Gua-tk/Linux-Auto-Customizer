@@ -74,10 +74,10 @@
 
 
 if [ ${EUID} != 0 ]; then
-  declare -r HOME_FOLDER=${HOME}
+  declare -r HOME_FOLDER="${HOME}"
 
   # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
-  source ${HOME_FOLDER}/.config/user-dirs.dirs
+  source "${HOME_FOLDER}/.config/user-dirs.dirs"
 else
   declare -r HOME_FOLDER=/home/${SUDO_USER}
 

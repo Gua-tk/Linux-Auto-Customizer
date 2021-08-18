@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ########################################################################################################################
 # - Name: Linux Auto-Customizer common functions between install.sh and uninstall.sh.                                  #
 # - Description: Set of functions used both in install.sh and uninstall.sh. Most of these functions are used to        #

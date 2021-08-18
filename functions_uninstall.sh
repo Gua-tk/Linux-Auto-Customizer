@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ########################################################################################################################
 # - Name: Linux Auto-Customizer exclusive functions of uninstall.sh.                                                   #
 # - Description: Set of functions used exclusively in uninstall.sh. Most of these functions are combined into other    #

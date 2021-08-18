@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ########################################################################################################################
 # - Name: Linux Auto-Customizer exclusive functions of install.sh                                                      #
 # - Description: Set of functions used exclusively in install.sh. Most of these functions are combined into other      #
