@@ -210,7 +210,7 @@ axel_packagenames=("axel")
 axel_readmeline="| Axel | Download manager | Command \`axel\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 b_installationtype="environmental"
-b_arguments=("b")
+b_arguments=("b" "b_function")
 b_bashfunctions=("alias b=\"bash\"")
 b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
