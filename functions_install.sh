@@ -269,7 +269,6 @@ decompress() {
       # The captured line ends with / so it is a valid directory
       if [ -n "$(echo "${internal_folder_name}" | grep -Eo "/$")" ]; then
         internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
-        echo $internal_folder_name
       else
         # Set the internal folder name empty if it is not detected
         internal_folder_name=""
