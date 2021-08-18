@@ -33,8 +33,8 @@ install_caffeine_post()
 install_customizer_post()
 {
   ln -sf "${DIR}/install.sh" /usr/bin/customizer-install
-  if [ -z "$(cat "${BASHRC_ALL_USERS_PATH}" | grep -Fo "source ${BASH_FUNCTIONS_PATH}")" ]; then
-    echo "source ${BASH_FUNCTIONS_PATH}" >> "${BASHRC_ALL_USERS_PATH}"
+  if ! grep -Fo "source \"${BASH_FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}"; then
+    echo "source \"${BASH_FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
   fi
 }
 
@@ -45,10 +45,10 @@ install_gitcm_post()
 
 install_jupyter_lab_pre() {
   local -r dependencies=("npm" "R" "julia")
-  for dependency in ${dependencies[@]}; do
-    which "${dependency}" &>/dev/null
-    if [ $? != 0 ]; then
-      output_proxy_executioner "echo ERROR: ${dependency} is not installed. You can installing using bash install.sh --npm --R --julia" ${FLAG_QUIETNESS}
+  for dependency in "${dependencies[@]}"; do
+
+    if ! which "${dependency}" &>/dev/null; then
+      output_proxy_executioner "echo ERROR: ${dependency} is not installed. You can installing using bash install.sh --npm --R --julia" "${FLAG_QUIETNESS}"
       exit 1
     fi
   done
@@ -94,18 +94,18 @@ install_pgadmin_mid() {
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 install_pypy3_mid() {
   # Install modules using pip
-  ${USR_BIN_FOLDER}/pypy3/bin/pypy3 -m ensurepip
+  "${USR_BIN_FOLDER}/pypy3/bin/pypy3" -m ensurepip
 
   # Forces download of pip and of modules
-  ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 --no-cache-dir -q install --upgrade pip
-  ${USR_BIN_FOLDER}/pypy3/bin/pip3.6 --no-cache-dir install cython numpy
+  "${USR_BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir -q install --upgrade pip
+  "${USR_BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir install cython numpy
   # Currently not supported
   # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
 }
 
 install_sysmontask_mid() {
   (
-    cd "${USR_BIN_FOLDER}/sysmontask"
+    cd "${USR_BIN_FOLDER}/sysmontask" || exit
     python3 setup.py install
   )
 }
