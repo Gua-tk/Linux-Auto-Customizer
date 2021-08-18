@@ -135,7 +135,7 @@ main() {
   pre_install_update
   execute_installation
   post_install_clean
-  update_environment
+  #update_environment
   bell_sound
 }
 

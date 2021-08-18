@@ -160,7 +160,7 @@ add_program()
   local processed_argument=
   processed_argument="$(echo "$1" | tr "-" "_")"  # Convert - to _
   for keyname in "${feature_keynames[@]}"; do
-    if [ "$(echo "${processed_argument}" | sed "s/^_*//g" )" == "${keyname}" ]; then
+    if [ "${processed_argument//^_*/}" == "${keyname}" ]; then
       matched_keyname="${keyname}"
       break
     fi
@@ -199,7 +199,7 @@ add_program()
     # Addition mode, we need to add keyname to added_feature_keynames and build flags
     local -r flags_override_pointer="${matched_keyname}_flagsoverride"
     local flags_override_stringbuild=""
-    if [ ! -z "${!flags_override_pointer}" ]; then  # If flagsoverride property is defined for this feature
+    if [ -n "${!flags_override_pointer}" ]; then  # If flagsoverride property is defined for this feature
       flags_override_stringbuild="${!flags_override_pointer}"
     else  # flagsoverride not defined, load template
       flags_override_stringbuild="${flagsoverride_template}"
@@ -267,8 +267,8 @@ add_program()
     # No need to pass to the execute installation the override, it can be processed here
     # Process flag_overwrite. if installation is already present show error
     if [ "${flag_overwrite}" -eq 0 ]; then
-      type "$(echo "${matched_keyname}" | tr "_" "-")" &>/dev/null  # Change of _ to - again to allow the matches of commands that have - in its name
-      if [ $? -eq 0 ]; then
+      # Change of _ to - again to allow the matches of commands that have - in its name
+      if type "$(echo "${matched_keyname}" | tr "_" "-")" &>/dev/null; then
         output_proxy_executioner "echo WARNING: ${matched_keyname} is already installed. Continuing installation without this program... Use -o to overwrite this program" "${FLAG_QUIETNESS}"
         return 1
       fi
@@ -577,8 +577,8 @@ argument_processing()
 
       --commands)
         #for featurekeyname in "${feature_keynames[@]}"; do
-          local all_arguments+=(${feature_keynames[@]})
-          all_arguments+=(${auxiliary_arguments[@]})
+          local all_arguments+=("${feature_keynames[@]}")
+          all_arguments+=("${auxiliary_arguments[@]}")
           echo "${all_arguments[@]}"
         #done
         exit 0
@@ -613,7 +613,7 @@ argument_processing()
         local wrapper_key=
         wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
         local set_of_features="wrapper_${wrapper_key}[@]"
-        if [ -z "$(echo "${!set_of_features}")" ]; then
+        if [ -z "${!set_of_features}" ]; then
           add_program "${key}"
         else
           add_programs "${!set_of_features}"

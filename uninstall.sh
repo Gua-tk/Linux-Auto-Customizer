@@ -637,111 +637,22 @@ main()
   #################################
   ###### ARGUMENT PROCESSING ######
   #################################
-
-  # If we don't receive arguments we try to install everything that we can given our permissions
-  if [[ -z "$@" ]]; then
-    uninstall_all
-  else
-    while [[ $# -gt 0 ]]; do
-      key="$1"
-
-      case ${key} in
-        ### BEHAVIOURAL ARGUMENTS ###
-      -v|--verbose)
-        FLAG_QUIETNESS=0
-      ;;
-      -q|--quiet)
-        FLAG_QUIETNESS=1
-      ;;
-      -Q|--Quiet)
-        FLAG_QUIETNESS=2
-      ;;
-
-      -f|--fear|--fearlessly)
-        FLAG_OVERWRITE=0
-      ;;
-      -u|--uninstall)
-        FLAG_OVERWRITE=1
-      ;;
-
-      -e|--exit|--exit-on-error)
-        FLAG_IGNORE_ERRORS=0
-      ;;
-      -i|--ignore|--ignore-errors)
-        FLAG_IGNORE_ERRORS=1
-      ;;
-
-
-      -d|--dirty|--no-autoclean)
-        FLAG_AUTOCLEAN=0
-      ;;
-      -c|--clean)
-        FLAG_AUTOCLEAN=1
-      ;;
-      -C|--Clean)
-        FLAG_AUTOCLEAN=2
-      ;;
-
-      -n|--not|-!)
-        FLAG_INSTALL=0
-      ;;
-      -y|--yes)
-        # To know the order of execution of programs
-        FLAG_INSTALL=${NUM_INSTALLATION}
-      ;;
-
-      -h)
-        output_proxy_executioner "echo ${help_common}${help_simple}" ${FLAG_QUIETNESS}
-        exit 0
-      ;;
-
-      -H|--help)
-        output_proxy_executioner "echo ${help_common}${help_arguments}" ${FLAG_QUIETNESS}
-        exit 0
-      ;;
-        
-        ### WRAPPER ARGUMENT(S) ###
-      -|--all)
-        add_programs_with_x_permissions 2
-      ;;
-
-
-      *)  # Individual arguments
-        add_program ${key}
-      ;;
-      esac
-    shift
-  done
-fi
+  argument_processing "$@"
 
   ####################
   ### INSTALLATION ###
   ####################
-
   execute_installation
-
 
   ###############################
   ### POST-INSTALLATION CLEAN ###
   ###############################
-
   post_install_clean
 
   bell_sound
 }
 
-# Import file of common variables in a relative way, so customizer can be called system-wide
-local PRG="$BASH_SOURCE"
-while [ -h "$PRG" ] ; do
-    ls=`ls -ld "$PRG"`
-    link=`expr "$ls" : '.*-> \(.*\)$'`
-    if expr "$link" : '/.*' > /dev/null; then
-        PRG="$link"
-    else
-        PRG=`dirname "$PRG"`"/$link"
-    fi
-done
-DIR=$(dirname "$PRG")
+DIR=$(dirname "$(realpath "$0")")
 
 if [ -f "${DIR}/functions_uninstall.sh" ]; then
   source "${DIR}/functions_uninstall.sh"
