@@ -488,7 +488,7 @@ uninstall_gitlab()
 
 uninstall_ideac()
 {
-  rm -Rf ${USR_BIN_FOLDER}/idea-IC
+  rm -Rf ${BIN_FOLDER}/idea-IC
   rm -f /home/${SUDO_USER}/.local/bin/ideac
   rm -f ${XDG_DESKTOP_DIR}/ideac.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/ideac.desktop
@@ -496,7 +496,7 @@ uninstall_ideac()
 
 uninstall_ideau()
 {
-  rm -Rf ${USR_BIN_FOLDER}/idea-IU
+  rm -Rf ${BIN_FOLDER}/idea-IU
   rm -f /home/${SUDO_USER}/.local/bin/ideau
   rm -f ${XDG_DESKTOP_DIR}/ideau.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/ideau.desktop
@@ -509,7 +509,7 @@ uninstall_java()
 
 uninstall_mendeley()
 {
-  rm -Rf ${USR_BIN_FOLDER}/mendeley
+  rm -Rf ${BIN_FOLDER}/mendeley
   rm -f /home/${SUDO_USER}/.local/bin/mendeley
   rm -f ${XDG_DESKTOP_DIR}/mendeleydesktop.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/mendeleydesktop.desktop
@@ -527,7 +527,7 @@ uninstall_studio()
 
 uninstall_pycharm()
 {
-  rm -Rf ${USR_BIN_FOLDER}/pycharm-community
+  rm -Rf ${BIN_FOLDER}/pycharm-community
   rm -f ${XDG_DESKTOP_DIR}/pycharm.desktop
   rm -f /home/${SUDO_USER}/.local/bin/pycharm
   rm -f /home/${SUDO_USER}/.local/share/applications/pycharm.desktop
@@ -535,7 +535,7 @@ uninstall_pycharm()
 
 uninstall_pycharmpro()
 {
-  rm -Rf ${USR_BIN_FOLDER}/pycharm-pro
+  rm -Rf ${BIN_FOLDER}/pycharm-pro
   rm -f ${XDG_DESKTOP_DIR}/pycharm-pro.desktop
   rm -f /home/${SUDO_USER}/.local/bin/pycharm-pro
   rm -f /home/${SUDO_USER}/.local/share/applications/pycharm-pro.desktop
@@ -543,14 +543,14 @@ uninstall_pycharmpro()
 
 uninstall_pypy3()
 {
-  rm -Rf ${USR_BIN_FOLDER}/pypy3
+  rm -Rf ${BIN_FOLDER}/pypy3
   rm -f /home/${SUDO_USER}/.local/bin/pypy3
   rm -f /home/${SUDO_USER}/.local/bin/pypy3-pip
 }
 
 uninstall_sublime()
 {
-  rm -Rf ${USR_BIN_FOLDER}/sublime
+  rm -Rf ${BIN_FOLDER}/sublime
   rm -f ${XDG_DESKTOP_DIR}/sublime.desktop
   rm -f /home/${SUDO_USER}/.local/bin/sublime
   rm -f /home/${SUDO_USER}/.local/share/applications/sublime.desktop
@@ -558,7 +558,7 @@ uninstall_sublime()
 
 uninstall_telegram()
 {
-  rm -Rf ${USR_BIN_FOLDER}/telegram
+  rm -Rf ${BIN_FOLDER}/telegram
   rm -f /home/${SUDO_USER}/.local/bin/telegram
   rm -f ${XDG_DESKTOP_DIR}/telegram.desktop
   rm -f /home/${SUDO_USER}/.local/share/applications/telegram.desktop
@@ -566,7 +566,7 @@ uninstall_telegram()
 
 uninstall_youtube-dl()
 {
-  rm -f ${USR_BIN_FOLDER}/youtube-dl
+  rm -f ${BIN_FOLDER}/youtube-dl
 }
 
 uninstall_zoom()
@@ -598,7 +598,7 @@ uninstall_cheat()
 {
   #there's a curl dependency for cht.sh
   apt-get purge -y curl
-  rm -f ${USR_BIN_FOLDER}/cht.sh
+  rm -f ${BIN_FOLDER}/cht.sh
   rm -f /home/${SUDO_USER}/.local/bin/cheat
 }
 
@@ -611,7 +611,7 @@ uninstall_shell_customization()
   
   # uninstall git bash prompt here
   # Rf
-  rm -Rf ${USR_BIN_FOLDER}/.bash-git-prompt
+  rm -Rf ${BIN_FOLDER}/.bash-git-prompt
   dconf write /org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color "'rgb(48,10,36)'"
 }
 

@@ -245,7 +245,7 @@ decompress() {
   local file_name=
   # capture directory where we have to decompress
   if [ -z "$2" ]; then
-    dir_name="${USR_BIN_FOLDER}"
+    dir_name="${BIN_FOLDER}"
     file_name="downloading_program"
   elif echo "$2" | grep -Eqo "^/"; then
     # Absolute path to a file
@@ -254,11 +254,11 @@ decompress() {
   else
     if echo "$2" | grep -Eqo "/"; then
       # Relative path to a file containing subfolders
-      dir_name="${USR_BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+      dir_name="${BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
       file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
     else
       # Only a filename
-      dir_name="${USR_BIN_FOLDER}"
+      dir_name="${BIN_FOLDER}"
       file_name="$2"
     fi
   fi
@@ -326,19 +326,19 @@ decompress() {
 
 
 # - Description: Downloads a file from the link provided in $1 and, if specified, with the location and name specified
-#   in $2. If $2 is not defined, download into ${USR_BIN_FOLDER}/downloading_program.
+#   in $2. If $2 is not defined, download into ${BIN_FOLDER}/downloading_program.
 # - Permissions: Can be called as root or normal user. If called as root changes the permissions and owner to the
 #   $SUDO_USER user, otherwise, needs permissions to create the file $2.
 # - Argument 1: Link to the file to download.
 # - Argument 2 (optional): Path to the created file, allowing to download in any location and use a different filename.
-#   By default the name of the file is downloading file and the PATH where is being downloaded is USR_BIN_FOLDER.
+#   By default the name of the file is downloading file and the PATH where is being downloaded is BIN_FOLDER.
 download() {
   local dir_name=
   local file_name=
   # Check if a path or name is specified
   if [ -z "$2" ]; then
     # default options
-    dir_name="${USR_BIN_FOLDER}"
+    dir_name="${BIN_FOLDER}"
     file_name=downloading_program
   else
     # Custom file or folder to download
@@ -374,8 +374,8 @@ download() {
           fi
         fi
       else
-        # It is just actually the name of the file downloaded to default USR_BIN_FOLDER
-        local -r dir_name="${USR_BIN_FOLDER}"
+        # It is just actually the name of the file downloaded to default BIN_FOLDER
+        local -r dir_name="${BIN_FOLDER}"
         local file_name="$2"
       fi
     fi
@@ -426,7 +426,7 @@ register_file_associations() {
 ################################## GENERIC INSTALL FUNCTIONS - OPTIONAL PROPERTIES #####################################
 ########################################################################################################################
 
-# - Description: Downloads a .deb package temporarily into USR_BIN_FOLDER from the provided link and installs it using
+# - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
 #   dpkg -i.
 # - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
 # - Argument 1: Link to the package file to download.
@@ -434,8 +434,8 @@ register_file_associations() {
 #   package.
 download_and_install_package() {
   download "$1" "$2"
-  dpkg -i "${USR_BIN_FOLDER}/$2"
-  rm -f "${USR_BIN_FOLDER}/$2"
+  dpkg -i "${BIN_FOLDER}/$2"
+  rm -f "${BIN_FOLDER}/$2"
 }
 
 
@@ -523,17 +523,17 @@ generic_install_keybindings() {
 }
 
 
-# - Description: Expands downloads and saves it to USR_BIN_FOLDER/FEATUREKEYNAME/NAME_OF_DOWNLOADED_FILE_i
+# - Description: Expands downloads and saves it to BIN_FOLDER/FEATUREKEYNAME/NAME_OF_DOWNLOADED_FILE_i
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_downloads
 #   and the name of the first argument in the common_data.sh table
 generic_install_downloads() {
   local -r downloads="$1_downloads[@]"
   for download in ${!downloads}; do
-    create_folder "${USR_BIN_FOLDER}/$1"
+    create_folder "${BIN_FOLDER}/$1"
     local -r url="$(echo "${download}" | cut -d ";" -f1)"
     local -r name="$(echo "${download}" | cut -d ";" -f2)"
-    download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
+    download "${url}" "${BIN_FOLDER}/$1/${name}"
   done
 }
 
@@ -584,7 +584,7 @@ generic_install_pathlinks() {
     if echo "${binary_name}" | grep -Eqo "^/"; then
       create_links_in_path "${binary_path}" "${binary_name}"
     else
-      create_links_in_path "${USR_BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
+      create_links_in_path "${BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
     fi
   done
 }
@@ -602,7 +602,7 @@ generic_install_files() {
     if echo "${!path}" | grep -Eqo "^/"; then
       create_file "${!path}" "${!content}"
     else
-      create_file "${USR_BIN_FOLDER}/$1/${!path}" "${!content}"
+      create_file "${BIN_FOLDER}/$1/${!path}" "${!content}"
     fi
   done
 }
@@ -645,31 +645,31 @@ generic_install_initializations() {
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
 pythonvenv_installation_type() {
-  rm -Rf "${USR_BIN_FOLDER:?}/$1"
-  python3 -m venv "${USR_BIN_FOLDER}/$1"
-  "${USR_BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
-  "${USR_BIN_FOLDER}/$1/bin/pip" install wheel
+  rm -Rf "${BIN_FOLDER:?}/$1"
+  python3 -m venv "${BIN_FOLDER}/$1"
+  "${BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
+  "${BIN_FOLDER}/$1/bin/pip" install wheel
 
   local -r pipinstallations="$1_pipinstallations[@]"
   local -r pythoncommands="$1_pythoncommands[@]"
   for pipinstallation in ${!pipinstallations}; do
-    "${USR_BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
+    "${BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
   done
   for pythoncommand in "${!pythoncommands}"; do
-    "${USR_BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
+    "${BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
   done
 }
 
 
-# - Description: Clones git repository in USR_BIN_FOLDER
+# - Description: Clones git repository in BIN_FOLDER
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
 repositoryclone_installation_type() {
   local -r repositoryurl="$1_repositoryurl"
-  rm -Rf "${USR_BIN_FOLDER:?}/$1"
-  create_folder "${USR_BIN_FOLDER}/$1"
-  git clone "${!repositoryurl}" "${USR_BIN_FOLDER}/$1"
+  rm -Rf "${BIN_FOLDER:?}/$1"
+  create_folder "${BIN_FOLDER}/$1"
+  git clone "${!repositoryurl}" "${BIN_FOLDER}/$1"
 }
 
 
@@ -701,10 +701,10 @@ rootgeneric_installation_type() {
   if [ "$2" == packageinstall ]; then
     # Use a compressed file that contains .debs
     if [ -n "${!compressedfileurl}" ]; then
-      download "${!compressedfileurl}" "${USR_BIN_FOLDER}/$1_downloading"
-      decompress "${!compressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "$1"
-      dpkg -Ri "${USR_BIN_FOLDER}/$1"
-      rm -Rf "${USR_BIN_FOLDER:?}/$1"
+      download "${!compressedfileurl}" "${BIN_FOLDER}/$1_downloading"
+      decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_downloading" "$1"
+      dpkg -Ri "${BIN_FOLDER}/$1"
+      rm -Rf "${BIN_FOLDER:?}/$1"
     else # Use directly a downloaded .deb
       for packageurl in "${!packageurls}"; do
         download_and_install_package "${packageurl}" "$1_downloading"
@@ -718,7 +718,7 @@ rootgeneric_installation_type() {
 }
 
 
-# - Description: Download a file into USR_BIN_FOLDER, decompress it assuming that there is a directory inside it.
+# - Description: Download a file into BIN_FOLDER, decompress it assuming that there is a directory inside it.
 # - Permissions: Expected to be run by normal user.
 # - Argument 1: String that matches a set of variables in data_features.
 userinherit_installation_type() {
@@ -730,7 +730,7 @@ userinherit_installation_type() {
   local -r compressedfiletype="$1_compressedfiletype"
   # Obtain override download location if present
   local -r compressedfilepathoverride="$1_compressedfilepathoverride"
-  local defaultpath="${USR_BIN_FOLDER}"
+  local defaultpath="${BIN_FOLDER}"
 
   if [ -n "${!compressedfilepathoverride}" ]; then
     create_folder "${!compressedfilepathoverride}"
@@ -824,7 +824,9 @@ generic_install() {
 # - Permissions: Same behaviour being root or normal user.
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
-  create_folder "${USR_BIN_FOLDER}"
+  create_folder "${CUSTOMIZER_FOLDER}"
+  create_folder "${DATA_FOLDER}"
+  create_folder "${BIN_FOLDER}"
   create_folder "${BASH_FUNCTIONS_FOLDER}"
   create_folder "${DIR_IN_PATH}"
   create_folder "${PERSONAL_LAUNCHERS_DIR}"

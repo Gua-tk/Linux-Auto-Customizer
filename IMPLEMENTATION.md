@@ -28,7 +28,7 @@ Organize core files
     keybinds.sh
     
 - [ ] Define a new folder variable for . Customizer and adapt the rest
-- [ ] ERROR messages should be sent to stderr. This is a way of showing errors even if quietness flag is on
+- [x] ERROR messages should be sent to stderr. This is a way of showing errors even if quietness flag is on
 - [ ] Change dir_in_path variable to PATH_POINTED_FOLDER to fit the naming schema
 
 ###### NEW FEATURES

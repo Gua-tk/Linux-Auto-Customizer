@@ -30,7 +30,9 @@
 #   - XDG_TEMPLATES_DIR: /home/username/Templates                                                                      #
 #                                                                                                                      #
 # * Customizer routes:                                                                                                 #
-#   - USR_BIN_FOLDER: /home/username/.bin                                                                              #
+#   - CUSTOMIZER_FOLDER: /home/username/.customizer                                                                    #
+#     Folder where we will put the different files installed by customizer.                                            #
+#   - BIN_FOLDER: /home/username/.bin                                                                              #
 #     Folder where all the software will be installed.                                                                 #
 #   - BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions                                                        #
 #     Path pointing to the folder containing all the scripts of the bash functions                                     #
@@ -103,6 +105,16 @@ if [ -z "${XDG_TEMPLATES_DIR}" ]; then
   declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
 fi
 
+declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
+declare -r BASH_FUNCTIONS_FOLDER="${CUSTOMIZER_FOLDER}/functions"
+declare -r BIN_FOLDER="${CUSTOMIZER_FOLDER}/bin"
+declare -r DATA_FOLDER="${CUSTOMIZER_FOLDER}/data"
+declare -r BASH_FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
+
+declare -r BASH_INITIALIZATIONS_FOLDER="${BIN_FOLDER}/initializations"
+declare -r BASH_INITIALIZATIONS_PATH="${BASH_INITIALIZATIONS_FOLDER}/.bash_profile"
+declare -r PROGRAM_FAVORITES_PATH="${BASH_INITIALIZATIONS_FOLDER}/favorites.txt"
+declare -r PROGRAM_KEYBIND_PATH="${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt"
 
 declare -r PATH_POINTED_FOLDER="${HOME_FOLDER}/.local/bin"
 declare -r ALL_USERS_PATH_POINTED_FOLDER="/usr/bin"
@@ -110,15 +122,8 @@ declare -r PERSONAL_LAUNCHERS_DIR="${HOME_FOLDER}/.local/share/applications"
 declare -r ALL_USERS_LAUNCHERS_DIR="/usr/share/applications"
 declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
 declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
-declare -r USR_BIN_FOLDER="${HOME_FOLDER}/.bin"
-declare -r BASH_FUNCTIONS_PATH="${USR_BIN_FOLDER}/bash-functions/.bash_functions"
-declare -r BASH_FUNCTIONS_FOLDER="${USR_BIN_FOLDER}/bash-functions"
 declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
-declare -r BASH_INITIALIZATIONS_FOLDER="${USR_BIN_FOLDER}/bash-initializations"
-declare -r BASH_INITIALIZATIONS_PATH="${BASH_INITIALIZATIONS_FOLDER}/.bash_profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
-declare -r PROGRAM_FAVORITES_PATH="${BASH_INITIALIZATIONS_FOLDER}/favorites.txt"
-declare -r PROGRAM_KEYBIND_PATH="${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt"
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 

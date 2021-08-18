@@ -19,8 +19,8 @@
 # - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 purge_all_features()
 {
-  # Remove the contents of USR_BIN_FOLDER
-  rm -Rf "${USR_BIN_FOLDER}"
+  # Remove the contents of BIN_FOLDER
+  rm -Rf "${BIN_FOLDER}"
   # Remove links in path
   for filename in ${ls "${PATH_POINTED_FOLDER}"}; do
     if [[ ! -e "${PATH_POINTED_FOLDER}/filename" ]]; then
@@ -75,7 +75,7 @@ remove_file_associations()
 # - Argument 1: program unified name
 remove_manual_feature()
 {
-  rm -Rf "${USR_BIN_FOLDER}/$1"
+  rm -Rf "${BIN_FOLDER}/$1"
   rm -f "${PATH_POINTED_FOLDER}/$1"
   rm -f "${XDG_DESKTOP_DIR}/$1.desktop"
   rm -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop"
