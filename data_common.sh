@@ -73,22 +73,23 @@
 ########################################################################################################################
 
 
-if [ ${EUID} != 0 ]; then
+if [ "${EUID}" != 0 ]; then
   declare -r HOME_FOLDER="${HOME}"
 
   # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   source "${HOME_FOLDER}/.config/user-dirs.dirs"
 else
-  declare -r HOME_FOLDER=/home/${SUDO_USER}
+  declare -r HOME_FOLDER="/home/${SUDO_USER}"
 
   # Declare lenguage specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
   # for /home/$SUDO_USER to be interpreted correctly as a root user. Also with declare we can declare all variables in
   # the file in one line.
-  declare -r $(cat "${HOME_FOLDER}/.config/user-dirs.dirs" |
-  sed 's/#.*//g' |
-  sed "s|\$HOME|/home/$SUDO_USER|g" |
-  sed "s|\"||g")
+  while IFS= read -r line; do
+    if ! echo "${line}" | grep -Eoq "^#"; then
+      declare -r "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
+    fi
+  done < "${HOME_FOLDER}/.config/user-dirs.dirs"
 fi
 
 declare -r DIR_IN_PATH="${HOME_FOLDER}/.local/bin"

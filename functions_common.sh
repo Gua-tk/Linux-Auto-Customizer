@@ -31,7 +31,8 @@ output_proxy_executioner() {
   local -r command_name=$(echo "$1" | head -1 | cut -d " " -f1)
   if [ "${command_name}" == "echo" ]; then
     local echo_processed_command=""
-    local echo_command_arguments="$(echo "$1" | sed '1 s@^echo @@')"
+    local echo_command_arguments=
+    echo_command_arguments="$(echo "$1" | sed '1 s@^echo @@')"
     local -r echo_message_type="$(echo "${echo_command_arguments}" | head -1 | cut -d ":" -f1)"
     if [ "${echo_message_type}" == "WARNING" ]; then
       echo_processed_command+="\e[33m"  # Activate yellow color
@@ -47,19 +48,19 @@ output_proxy_executioner() {
   fi
 
   # Execute command with verbosity depending on quietness level and if the command_name is an echo or not
-  if [ $2 -eq 0 ]; then
+  if [ "$2" -eq 0 ]; then
     if [ "${command_name}" == "echo" ]; then
       echo -e "$echo_processed_command"
     else
       $1
     fi
-  elif [ $2 -eq 1 ]; then
+  elif [ "$2" -eq 1 ]; then
     if [ "${command_name}" == "echo" ]; then
       echo -e "$echo_processed_command"
     else
       $1 &>/dev/null
     fi
-  elif [ $2 -eq 2 ]; then
+  elif [ "$2" -eq 2 ]; then
     $1 &>/dev/null
   fi
 }
@@ -70,8 +71,8 @@ output_proxy_executioner() {
 # - Permission: Can be run as root or user.
 customizer_prompt()
 {
-  while [ true ]; do
-    read -p "customizer-prompt $ " cmds
+  while true; do
+    read -pr "customizer-prompt $ " cmds
     eval "${cmds}"
   done
 }
@@ -108,7 +109,7 @@ add_programs_with_x_permissions()
 {
   for keyname in "${feature_keynames[@]}"; do
     local installationtype_pointer="${keyname}_installationtype"
-    if [ $1 -eq 0 ]; then
+    if [ "$1" -eq 0 ]; then
       case ${!installationtype_pointer} in
         packagemanager)
           add_program "${keyname}"
@@ -117,7 +118,7 @@ add_programs_with_x_permissions()
           add_program "${keyname}"
         ;;
       esac
-    elif [ $1 -eq 1 ] ; then
+    elif [ "$1" -eq 1 ] ; then
       case ${!installationtype_pointer} in
         # Download and decompress a file that contains a folder
         userinherit)
@@ -136,10 +137,10 @@ add_programs_with_x_permissions()
           add_program "${keyname}"
         ;;
       esac
-    elif [ $1 -eq 2 ]; then
+    elif [ "$1" -eq 2 ]; then
       add_program "${keyname}"
     else
-      output_proxy_executioner "echo ERROR: $1 is not a possible permission level." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo ERROR: $1 is not a possible permission level." "${FLAG_QUIETNESS}"
       exit 1
     fi
   done
@@ -156,7 +157,8 @@ add_program()
 {
   local matched_keyname=""
   # fast match against keynames
-  local processed_argument="$(echo "$1" | tr "-" "_")"  # Convert - to _
+  local processed_argument=
+  processed_argument="$(echo "$1" | tr "-" "_")"  # Convert - to _
   for keyname in "${feature_keynames[@]}"; do
     if [ "$(echo "${processed_argument}" | sed "s/^_*//g" )" == "${keyname}" ]; then
       matched_keyname="${keyname}"
@@ -183,17 +185,17 @@ add_program()
 
   # If we do not have a match after checking all args, this arg is not valid
   if [ -z "${matched_keyname}" ]; then
-    if [ ${FLAG_IGNORE_ERRORS} -eq 0 ]; then
-      output_proxy_executioner "echo ERROR: $1 is not a recognized command. Installation will abort." ${FLAG_QUIETNESS}
+    if [ "${FLAG_IGNORE_ERRORS}" -eq 0 ]; then
+      output_proxy_executioner "echo ERROR: $1 is not a recognized command. Installation will abort." "${FLAG_QUIETNESS}"
       exit 1
     else
-      output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument..." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument..." "${FLAG_QUIETNESS}"
       return
     fi
   fi
 
   # Here matched_keyname matches a valid feature. Process its flagsoverride and add or remove from added_feature_keynames
-  if [ ${FLAG_INSTALL} == 1 ]; then
+  if [ "${FLAG_INSTALL}" == 1 ]; then
     # Addition mode, we need to add keyname to added_feature_keynames and build flags
     local -r flags_override_pointer="${matched_keyname}_flagsoverride"
     local flags_override_stringbuild=""
@@ -204,7 +206,8 @@ add_program()
     fi
 
     # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
-    local flag_privileges="$(get_field "${flags_override_stringbuild}" ";" "1")"
+    local flag_privileges=
+    flag_privileges="$(get_field "${flags_override_stringbuild}" ";" "1")"
     if [ -z "${flag_privileges}" ]; then
       # If override not present, check installation type
       local -r installationtype_pointer="${matched_keyname}_installationtype"
@@ -242,13 +245,13 @@ add_program()
 
     fi
     # Process FLAG_SKIP_PRIVILEGES_CHECK. If 1 skip privilege check
-    if [ ${FLAG_SKIP_PRIVILEGES_CHECK} -eq 0 ] && [ ${flag_privileges} -ne 2 ]; then
-      if [ ${EUID} -eq 0 ] && [ ${flag_privileges} -eq 1 ]; then
-        output_proxy_executioner "echo ERROR: $1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." ${FLAG_QUIETNESS}
+    if [ "${FLAG_SKIP_PRIVILEGES_CHECK}" -eq 0 ] && [ "${flag_privileges}" -ne 2 ]; then
+      if [ "${EUID}" -eq 0 ] && [ "${flag_privileges}" -eq 1 ]; then
+        output_proxy_executioner "echo ERROR: $1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." "${FLAG_QUIETNESS}"
         exit 1
       fi
-      if [ ${EUID} -ne 0 ] && [ ${flag_privileges} -eq 0 ]; then
-        output_proxy_executioner "echo ERROR: $1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." ${FLAG_QUIETNESS}
+      if [ "${EUID}" -ne 0 ] && [ "${flag_privileges}" -eq 0 ]; then
+        output_proxy_executioner "echo ERROR: $1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." "${FLAG_QUIETNESS}"
         exit 1
       fi
     fi
@@ -256,52 +259,57 @@ add_program()
     # flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "1" "${flag_privileges}")"
 
     # Second flag overwrite bit
-    local flag_overwrite="$(get_field "${flags_override_stringbuild}" ";" "2")"
+    local flag_overwrite=
+    flag_overwrite="$(get_field "${flags_override_stringbuild}" ";" "2")"
     if [ -z "${flag_overwrite}" ]; then
-      flag_overwrite=${FLAG_OVERWRITE}  # If not present in override, inherit from runtime flags
+      flag_overwrite="${FLAG_OVERWRITE}"  # If not present in override, inherit from runtime flags
     fi
     # No need to pass to the execute installation the override, it can be processed here
     # Process flag_overwrite. if installation is already present show error
-    if [ ${flag_overwrite} -eq 0 ]; then
+    if [ "${flag_overwrite}" -eq 0 ]; then
       type "$(echo "${matched_keyname}" | tr "_" "-")" &>/dev/null  # Change of _ to - again to allow the matches of commands that have - in its name
       if [ $? -eq 0 ]; then
-        output_proxy_executioner "echo WARNING: ${matched_keyname} is already installed. Continuing installation without this program... Use -o to overwrite this program" ${FLAG_QUIETNESS}
+        output_proxy_executioner "echo WARNING: ${matched_keyname} is already installed. Continuing installation without this program... Use -o to overwrite this program" "${FLAG_QUIETNESS}"
         return 1
       fi
     fi
 
     # Third flag ignore errors
-    local flag_errors="$(get_field "${flags_override_stringbuild}" ";" "3")"
+    local flag_errors=
+    flag_errors="$(get_field "${flags_override_stringbuild}" ";" "3")"
     if [ -z "${flag_errors}" ]; then
-      flag_errors=${FLAG_IGNORE_ERRORS}  # If not present in override, inherit from runtime flags
+      flag_errors="${FLAG_IGNORE_ERRORS}"  # If not present in override, inherit from runtime flags
     fi
     flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "3" "${flag_errors}")"
 
     # Fourth flag quietness bit
-    local flag_quietness="$(get_field "${flags_override_stringbuild}" ";" "4")"
+    local flag_quietness=
+    flag_quietness="$(get_field "${flags_override_stringbuild}" ";" "4")"
     if [ -z "${flag_quietness}" ]; then
-      flag_quietness=${FLAG_QUIETNESS}  # If not present in override, inherit from runtime flags
+      flag_quietness="${FLAG_QUIETNESS}"  # If not present in override, inherit from runtime flags
     fi
     flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "4" "${flag_quietness}")"
 
     # Fifth flag favorites bit
-    local flag_favorites="$(get_field "${flags_override_stringbuild}" ";" "5")"
+    local flag_favorites=
+    flag_favorites="$(get_field "${flags_override_stringbuild}" ";" "5")"
     if [ -z "${flag_favorites}" ]; then
-      flag_favorites=${FLAG_FAVORITES}  # If not present in override, inherit from runtime flags
+      flag_favorites="${FLAG_FAVORITES}"  # If not present in override, inherit from runtime flags
     fi
     flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "5" "${flag_favorites}")"
 
     # Sixth flag autostart
-    local flag_autostart="$(get_field "${flags_override_stringbuild}" ";" "6")"
+    local flag_autostart=
+    flag_autostart="$(get_field "${flags_override_stringbuild}" ";" "6")"
     if [ -z "${flag_autostart}" ]; then
-      flag_autostart=${FLAG_AUTOSTART}  # If not present in override, inherit from runtime flags
+      flag_autostart="${FLAG_AUTOSTART}"  # If not present in override, inherit from runtime flags
     fi
     flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "6" "${flag_autostart}")"
     # At this point flags_override_stringbuild have all flags merged inside (override and runtime)
 
 
     # Declare runtime flags for accession in execute_feature
-    declare -g ${matched_keyname}_flagsruntime="${flags_override_stringbuild}"
+    declare -g "${matched_keyname}_flagsruntime=${flags_override_stringbuild}"
     # Add this feature in the result list
     added_feature_keynames+=("${matched_keyname}")
   else
@@ -313,7 +321,7 @@ add_program()
       if [ "${keyname}" == "${matched_keyname}" ]; then
         unset added_feature_keynames[${i}]
       fi
-      i=$(( ${i}+1 ))
+      i=$(( i+1 ))
     done
   fi
 }
@@ -328,18 +336,19 @@ execute_installation()
   # flagsruntime ${FLAG_IGNORE_ERRORS};${FLAG_QUIETNESS};${FLAG_FAVORITES};${FLAG_AUTOSTART}
   for keyname in "${added_feature_keynames[@]}"; do
     local flags_pointer="${keyname}_flagsruntime"
-    local flag_ignore_errors="$(get_field "${!flags_pointer}" ";" "3")"  # local, processed here
+    local flag_ignore_errors=
+    flag_ignore_errors="$(get_field "${!flags_pointer}" ";" "3")"  # local, processed here
     FLAG_QUIETNESS="$(get_field "${!flags_pointer}" ";" "4")"  # Global, so it can be accessed during installations
     FLAG_FAVORITES="$(get_field "${!flags_pointer}" ";" "5")"  # Global, accessed in generic_install
     FLAG_AUTOSTART="$(get_field "${!flags_pointer}" ";" "6")"  # Global, accessed in generic_install
     # Process flag_ignore_errors
-    if [ ${flag_ignore_errors} -eq 0 ]; then
+    if [ "${flag_ignore_errors}" -eq 0 ]; then
       set -e
     fi
 
-    output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${keyname}." ${FLAG_QUIETNESS}
-    output_proxy_executioner "generic_${FLAG_MODE} ${keyname}" ${FLAG_QUIETNESS}
-    output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${keyname}." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "generic_${FLAG_MODE} ${keyname}" "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." "${FLAG_QUIETNESS}"
 
     # Return flag errors to bash defaults (ignore errors)
     set +e
@@ -374,12 +383,17 @@ autogen_help()
     local installationtype_pointer="${program}_installationtype"
     local arguments_pointer="${program}_arguments[@]"
 
-    local readme_line="$(echo "${!readme_line_pointer}")"
-    local installation_type="$(echo "${!installationtype_pointer}")"
-    local program_argument="$(echo "${program}")"
+    local readme_line=
+    readme_line="${!readme_line_pointer}"
+    local installation_type=
+    installation_type="${!installationtype_pointer}"
+    local program_argument=
+    program_argument="${program}"
 
-    local program_features="$(echo "${readme_line}" | cut -d "|" -f4)"
-    local program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " " | sed "s/\.[a-z]*//g" | sed 's/^ *//g')"
+    local program_features=
+    program_features="$(echo "${readme_line}" | cut -d "|" -f4)"
+    local program_commands=
+    program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " " | sed "s/\.[a-z]*//g" | sed 's/^ *//g')"
     local help_line="${program_argument};${program_commands}"
     case ${installation_type} in
       packagemanager|packageinstall)
@@ -392,7 +406,7 @@ autogen_help()
       ;;
     esac
   done
-  local program_headers=("ARGUMENT;COMMANDS")
+  local program_headers="ARGUMENT;COMMANDS"
 
   local -r newline=$'\n'
   local user_lines_final=
@@ -417,8 +431,8 @@ autogen_help()
 autogen_readme()
 {
   local packagemanager_lines=
-  local user_lines=
-  local root_lines=
+  local user_lines=()
+  local root_lines=()
   local root_num=0
   local user_num=0
   for program in "${feature_keynames[@]}"; do
@@ -426,14 +440,20 @@ autogen_readme()
     local installationtype_pointer="${program}_installationtype"
     local arguments_pointer="${program}_arguments[@]"
 
-    local readme_line="$(echo "${!readme_line_pointer}")"
-    local installation_type="$(echo "${!installationtype_pointer}")"
-    local program_arguments="$(echo "${!arguments_pointer}")"
-    local program_name="$(echo "${program}")"
+    local readme_line=
+    readme_line="${!readme_line_pointer}"
+    local installation_type=
+    installation_type="${!installationtype_pointer}"
+    local program_arguments=
+    program_arguments="${!arguments_pointer}"
+    local program_name=
+    program_name="${program}"
 
     # Add arguments to readme
-    local prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
-    local suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
+    local prefix=
+    prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
+    local suffix=
+    suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
     local readme_line="${prefix}${program_arguments}${suffix}"
     case ${installation_type} in
       packagemanager|packageinstall)
@@ -447,18 +467,21 @@ autogen_readme()
     esac
   done
   local -r newline=$'\n'
-  true > "table.md"
-  echo "#### User programs" >> "table.md"
-  echo "| Name | Description | Execution | Arguments | Testing |" >> "table.md"
-  echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|" >> "table.md"
+  {
+    echo "#### User programs";
+    echo "| Name | Description | Execution | Arguments | Testing |";
+    echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
+  } >> "table.md"
   local user_lines_final=
   for line in "${user_lines[@]}"; do
     user_lines_final="${user_lines_final}${line}${newline}"
   done
-  echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort >> "table.md"
-  echo "#### Root Programs" >> "table.md"
-  echo "| Name | Description | Execution | Arguments | Testing |" >> "table.md"
-  echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|" >> "table.md"
+  {
+  echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort;
+  echo "#### Root Programs";
+  echo "| Name | Description | Execution | Arguments | Testing |";
+  echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
+  } >> "table.md"
   local root_lines_final=
   for line in "${root_lines[@]}"; do
     root_lines_final="${root_lines_final}${line}${newline}"
@@ -562,13 +585,13 @@ argument_processing()
       ;;
 
       -h)
-        output_proxy_executioner "echo ${help_common}${help_simple}" ${FLAG_QUIETNESS}
+        output_proxy_executioner "echo ${help_common}${help_simple}" "${FLAG_QUIETNESS}"
         exit 0
       ;;
       -H|--help)
         autogen_help
 
-        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" ${FLAG_QUIETNESS}
+        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" "${FLAG_QUIETNESS}"
         exit 0
       ;;
 
@@ -576,7 +599,7 @@ argument_processing()
         customizer_prompt
       ;;
 
-      --user|--regular|--normal)
+      --user|--normal)
         add_programs_with_x_permissions 1
       ;;
       --root|--superuser|--su)
@@ -587,10 +610,11 @@ argument_processing()
       ;;
 
       *)  # Individual argument
-        local wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
+        local wrapper_key=
+        wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
         local set_of_features="wrapper_${wrapper_key}[@]"
         if [ -z "$(echo "${!set_of_features}")" ]; then
-          add_program ${key}
+          add_program "${key}"
         else
           add_programs "${!set_of_features}"
         fi
@@ -601,8 +625,8 @@ argument_processing()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [ ${#added_feature_keynames[@]} -eq 0 ]; then
-    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." ${FLAG_QUIETNESS}
-    output_proxy_executioner "echo INFO: Displaying help ${help_common}" ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo INFO: Displaying help ${help_common}" "${FLAG_QUIETNESS}"
     exit 1
   fi
 }
@@ -611,16 +635,16 @@ argument_processing()
 # - Permission: Can be called as root or user.
 post_install_clean()
 {
-  if [ ${EUID} -eq 0 ]; then
-    if [ ${FLAG_AUTOCLEAN} -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoremove" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+  if [ "${EUID}" -eq 0 ]; then
+    if [ "${FLAG_AUTOCLEAN}" -gt 0 ]; then
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "apt-get -y autoremove" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
     fi
-    if [ ${FLAG_AUTOCLEAN} -eq 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y autoclean" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: Finished." ${FLAG_QUIETNESS}
+    if [ "${FLAG_AUTOCLEAN}" -eq 2 ]; then
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "apt-get -y autoclean" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
     fi
   fi
 }

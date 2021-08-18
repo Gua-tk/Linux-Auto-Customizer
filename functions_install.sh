@@ -105,7 +105,7 @@ autostart_program() {
         apply_permissions "$1"
       fi
     else
-      output_proxy_executioner "echo WARNING: The file $1 does not exist, skipping..." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo WARNING: The file $1 does not exist, skipping..." "${FLAG_QUIETNESS}"
       return
     fi
   else # Else relative path from ALL_USERS_LAUNCHERS_DIR or PERSONAL_LAUNCHERS_DIR
@@ -120,7 +120,7 @@ autostart_program() {
         apply_permissions "$1.desktop"
       fi
     else
-      output_proxy_executioner "echo WARNING: The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo WARNING: The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." "${FLAG_QUIETNESS}"
       return
     fi
   fi
@@ -144,7 +144,7 @@ apply_permissions() {
     fi
     chmod 755 "$1"
   else
-    output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." "${FLAG_QUIETNESS}"
   fi
 }
 
@@ -191,7 +191,7 @@ copy_launcher() {
     cp "${ALL_USERS_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}/$1"
     apply_permissions "${XDG_DESKTOP_DIR}/$1"
   else
-    output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." "${FLAG_QUIETNESS}"
   fi
 }
 
@@ -264,7 +264,8 @@ decompress() {
   fi
   if [ -n "$3" ]; then
     if [ "$1" == "zip" ]; then
-      local internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
+      local internal_folder_name=
+      internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
       # The captured line ends with / so it is a valid directory
       if [ -n "$(echo "${internal_folder_name}" | grep -Eo "/$")" ]; then
         internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
@@ -353,7 +354,7 @@ download() {
         dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
         file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
         if [ -z "${dir_name}" ]; then
-          output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" ${FLAG_QUIETNESS}
+          output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
           exit
         fi
       fi
@@ -369,7 +370,7 @@ download() {
           dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
           file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
           if [ -z "${dir_name}" ]; then
-            output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" ${FLAG_QUIETNESS}
+            output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
             exit
           fi
         fi
@@ -462,7 +463,8 @@ generic_install_file_associations() {
   local -r associated_file_types="$1_associatedfiletypes[@]"
   for associated_file_type in ${!associated_file_types}; do
     if [ ! -z "$(echo "${associated_file_type}" | grep -Fo ";")" ]; then
-      local associated_desktop="$(echo "${associated_file_type}" | cut -d ";" -f2)"
+      local associated_desktop=
+      associated_desktop="$(echo "${associated_file_type}" | cut -d ";" -f2)"
     else
       local associated_desktop="$1"
     fi
@@ -478,9 +480,12 @@ generic_install_file_associations() {
 generic_install_keybindings() {
   local -r keybinds="$1_keybinds[@]"
   for keybind in "${!keybinds}"; do
-    local command="$(echo "${keybind}" | cut -d ";" -f1)"
-    local bind="$(echo "${keybind}" | cut -d ";" -f2)"
-    local binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
+    local command=
+    command="$(echo "${keybind}" | cut -d ";" -f1)"
+    local bind=
+    bind="$(echo "${keybind}" | cut -d ";" -f2)"
+    local binding_name=
+    binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
     add_keybinding "${command}" "${bind}" "${binding_name}"
   done
 }
@@ -539,8 +544,10 @@ generic_install_pathlinks() {
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
-    local binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
-    local binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
+    local binary_path=
+    binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
+    local binary_name=
+    binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
     # Absolute path
     if [ -n "$(echo "${binary_name}" | grep -Eo "^/")" ]; then
       create_links_in_path "${binary_path}" "${binary_name}"
@@ -642,7 +649,7 @@ generic_install() {
         : # no-op
       ;;
       *)
-        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
+        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" "${FLAG_QUIETNESS}"
         exit 1
       ;;
     esac
@@ -675,7 +682,7 @@ generic_install() {
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
 pythonvenv_installation_type() {
-  rm -Rf "${USR_BIN_FOLDER}/$1"
+  rm -Rf "${USR_BIN_FOLDER:?}/$1"
   python3 -m venv "${USR_BIN_FOLDER}/$1"
   "${USR_BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
   "${USR_BIN_FOLDER}/$1/bin/pip" install wheel
@@ -697,7 +704,7 @@ pythonvenv_installation_type() {
 #   installation data.
 repositoryclone_installation_type() {
   local -r repositoryurl="$1_repositoryurl"
-  rm -Rf "${USR_BIN_FOLDER}/$1"
+  rm -Rf "${USR_BIN_FOLDER:?}/$1"
   create_folder "${USR_BIN_FOLDER}/$1"
   git clone "${!repositoryurl}" "${USR_BIN_FOLDER}/$1"
 }
@@ -834,28 +841,28 @@ data_and_file_structures_initialization() {
   add_bash_initialization "${keybind_function}" "keybind.sh"
 
   # Make sure that .bashrc sources .bash_functions
-  if [ -z "$(cat "${BASHRC_PATH}" | grep -Fo "source "${BASH_FUNCTIONS_PATH}"")" ]; then
-    echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
+  if [ -z "$(cat "${BASHRC_PATH}" | grep -Fo "${bash_functions_import}")" ]; then
+    echo -e "${bash_functions_import}" >> "${BASHRC_PATH}"
   fi
   # Make sure that .profile sources .bash_initializations
-  if [ -z "$(cat "${PROFILE_PATH}" | grep -Fo "source "${BASH_INITIALIZATIONS_PATH}"")" ]; then
-    echo -e "${bash_initializations_import}" >> ${PROFILE_PATH}
+  if [ -z "$(cat "${PROFILE_PATH}" | grep -Fo "${bash_initializations_import}")" ]; then
+    echo -e "${bash_initializations_import}" >> "${PROFILE_PATH}"
   fi
 }
 
 # - Description: Update the system using apt-get -y update or apt-get -y upgrade depending a
 # - Permissions: Can be called as root or user but user will not do anything.
 pre_install_update() {
-  if [ ${EUID} == 0 ]; then
-    if [ ${FLAG_UPGRADE} -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y update" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: System updated." ${FLAG_QUIETNESS}
+  if [ "${EUID}" == 0 ]; then
+    if [ "${FLAG_UPGRADE}" -gt 0 ]; then
+      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "apt-get -y update" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: System updated." "${FLAG_QUIETNESS}"
     fi
-    if [ ${FLAG_UPGRADE} == 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y upgrade" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: System upgraded." ${FLAG_QUIETNESS}
+    if [ "${FLAG_UPGRADE}" == 2 ]; then
+      output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "apt-get -y upgrade" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: System upgraded." "${FLAG_QUIETNESS}"
     fi
   fi
 }
@@ -863,17 +870,17 @@ pre_install_update() {
 # - Description: Performs update of system fonts and bash environment.
 # - Permissions: Same behaviour being root or normal user.
 update_environment() {
-  output_proxy_executioner "echo INFO: Rebuilding path cache" "${quietness_bit}"
-  output_proxy_executioner "hash -r" "${quietness_bit}"
-  output_proxy_executioner "echo INFO: Rebuilding font cache" "${quietness_bit}"
-  output_proxy_executioner "fc-cache -f" "${quietness_bit}"
-  output_proxy_executioner "echo INFO: Reloading bash features" "${quietness_bit}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
-  output_proxy_executioner "echo INFO: Finished execution" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Reloading bash features" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Finished execution" "${FLAG_QUIETNESS}"
 }
 
 
-if [[ -f "${DIR}/functions_common.sh" ]]; then
+if [ -f "${DIR}/functions_common.sh" ]; then
   source "${DIR}/functions_common.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
@@ -891,7 +898,7 @@ fi
 # add_to_favorites instead, can be called as root or user, so root and user executions can be added
 
 favorites_function="
-if [ -f ${PROGRAM_FAVORITES_PATH} ]; then
+if [ -f \"${PROGRAM_FAVORITES_PATH}\" ]; then
   while IFS= read -r line; do
     favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
     if [ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]; then
