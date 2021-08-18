@@ -4,19 +4,19 @@
 # - Description: Set of functions used exclusively in install.sh. Most of these functions are combined into other      #
 # higher-order functions to provide the generic installation of a feature.                                             #
 # - Creation Date: 28/5/19                                                                                             #
-# - Last Modified: 16/5/21                                                                                             #
+# - Last Modified: 18/8/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
 # - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
 # imports. See the header of each function to see its privilege requirements.                                          #
 # - Arguments: No arguments                                                                                            #
-# - Usage: Not executed directly, sourced from install.sh                                                                                     #
+# - Usage: Not executed directly, sourced from install.sh                                                              #
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
 ########################################################################################################################
-############################################ INSTALL AUXILIAR FUNCTIONS ################################################
+################################################ INSTALL API FUNCTIONS #################################################
 ########################################################################################################################
 
 # - Description: Installs a new bash feature into $BASH_FUNCTIONS_PATH which sources the script that contains the code
@@ -64,7 +64,9 @@ add_bash_initialization() {
 # Argument 2: Set of keys with the right format to be binded.
 # Argument 3: Descriptive name of the keybinding.
 add_keybinding() {
-  echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
+  if ! grep -Fqo "$1;$2;$3" "${PROGRAM_KEYBIND_PATH}"; then
+    echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
+  fi
 }
 
 
@@ -84,8 +86,6 @@ add_to_favorites() {
         output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
         return
       fi
-    else
-      output_proxy_executioner "echo WARNING: The program ${argument} is already added to the taskbar favorites. Skipping" "${FLAG_QUIETNESS}"
     fi
   done
 }
