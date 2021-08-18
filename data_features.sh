@@ -316,7 +316,6 @@ c_arguments=("c")
 c_bashfunctions=("
 c()
 {
-  bash
   clear
 	if [ -d \"\$1\" ]; then
 		cd \$1

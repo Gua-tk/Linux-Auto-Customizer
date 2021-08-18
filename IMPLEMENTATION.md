@@ -24,8 +24,8 @@
 - [ ]  list inner directories i function (tree -d $1)
 - [ ] function r: translates hex values of colors to its natural name and rgb(x,y,z) format...
 - [ ] merge: git merge funtion()
-- [ ] `install.sh`: giff, a git diff alias
-- [ ] `install.sh`, `uninstall.sh`: Cinebench
+- [ ] `install.sh`:  function d, a git diff and diff alias 
+- [ ] `install.sh`, `unnstall.sh`: Cinebench
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: `Google`/`translator`/`soundcloud` internet shortcut launcher.
 - [ ] `install.sh`, `uninstall.sh`: gnu octave and or scilab
