@@ -60,9 +60,9 @@
 #     Bashrc for all users path variable system-wide.                                                                  #
 #   - PROFILE_PATH: ${HOME_FOLDER}/.profile                                                                            #
 #     Path pointing to our internal file for initializations.                                                          #
-#   - DIR_IN_PATH: /home/username/.local/bin                                                                           #
+#   - PATH_POINTED_FOLDER: /home/username/.local/bin                                                                           #
 #     Path pointing to a directory that is included in the PATH variable of the current user.                          #
-#   - ALL_USERS_DIR_IN_PATH: /usr/bin                                                                                  #
+#   - ALL_USERS_PATH_POINTED_FOLDER: /usr/bin                                                                                  #
 #     Path pointing to a directory that it is in the PATH of all users.                                                #
 #   - MIME_ASSOCIATION_PATH: ${HOME_FOLDER}/.config/mimeapps.list                                                      #
 #     File that contains the association of mime types with .desktop files.                                            #
@@ -103,8 +103,9 @@ if [ -z "${XDG_TEMPLATES_DIR}" ]; then
   declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
 fi
 
-declare -r DIR_IN_PATH="${HOME_FOLDER}/.local/bin"
-declare -r ALL_USERS_DIR_IN_PATH="/usr/bin"
+
+declare -r PATH_POINTED_FOLDER="${HOME_FOLDER}/.local/bin"
+declare -r ALL_USERS_PATH_POINTED_FOLDER="/usr/bin"
 declare -r PERSONAL_LAUNCHERS_DIR="${HOME_FOLDER}/.local/share/applications"
 declare -r ALL_USERS_LAUNCHERS_DIR="/usr/share/applications"
 declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
@@ -473,9 +474,9 @@ case \$- in
       *) return;;
 esac
 
-# Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-if [ -z \"\$(echo \$PATH | grep -Eo \"${DIR_IN_PATH}\")\" ]; then
-  export PATH=\$PATH:${DIR_IN_PATH}
+# Make sure that PATH is pointing to ${PATH_POINTED_FOLDER} (where we will put our soft links to the software)
+if [ -z \"\$(echo \$PATH | grep -Eo \"${PATH_POINTED_FOLDER}\")\" ]; then
+  export PATH=\$PATH:${PATH_POINTED_FOLDER}
 fi
 "
 

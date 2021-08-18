@@ -29,7 +29,7 @@ Organize core files
     
 - [ ] Define a new folder variable for . Customizer and adapt the rest
 - [ ] ERROR messages should be sent to stderr. This is a way of showing errors even if quietness flag is on
-- [ ] Change dir_in_path variable to path_pointed_folder to fit the naming schema
+- [ ] Change dir_in_path variable to PATH_POINTED_FOLDER to fit the naming schema
 
 ###### NEW FEATURES
 - [ ] `install.sh`: Cache of downloads of customizer, add another flag to use / construct the cache (default) or to ignore it
