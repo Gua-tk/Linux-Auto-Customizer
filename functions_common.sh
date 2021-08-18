@@ -16,6 +16,9 @@
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
+########################################################################################################################
+############################################### COMMON API FUNCTIONS ###################################################
+########################################################################################################################
 
 # - Description: Execute the command received in the first argument and redirect the standard and error output depending
 #   on the quietness level. If the command in the first argument is an echo, adds the date, tries to detect what type
@@ -65,6 +68,14 @@ output_proxy_executioner() {
   fi
 }
 
+# - Description: Makes a bell sound.
+# - Permission: Can be called as root or as user.
+bell_sound()
+{
+  echo -en "\07"
+  echo -en "\07"
+  echo -en "\07"
+}
 
 # - Description: Sets up a prompt in the desired point of customizer, which is used for in-place debugging. You can
 #   input your desired bash commands for using variables of call functions.
@@ -102,6 +113,305 @@ set_field()
 {
   local -r value_in_pos="$(get_field "$1" "$2" "$3")"
   echo -n "$(echo "$1" | cut -d "$2" -f-"$3" | sed "s@${value_in_pos}\$@@g")$4$(echo "$1" | cut -d "$2" -f"$3"- | sed "s@^${value_in_pos}@@g")"
+}
+
+
+# - Description: Performs a post-install clean by using cleaning option of package manager
+# - Permission: Can be called as root or user.
+post_install_clean()
+{
+  if [ "${EUID}" -eq 0 ]; then
+    if [ "${FLAG_AUTOCLEAN}" -gt 0 ]; then
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "apt-get -y autoremove" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
+    fi
+    if [ "${FLAG_AUTOCLEAN}" -eq 2 ]; then
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "apt-get -y autoclean" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
+    fi
+  fi
+}
+
+
+# - Description: Updates the system by using the package manager
+# - Permission: Can be called as root or as user.
+update_environment()
+{
+  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Reload .bashrc shell environment" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+}
+
+
+autogen_help()
+{
+  local packagemanager_lines=
+  local user_lines=
+  local root_lines=
+  local root_num=0
+  local user_num=0
+  true > help.md
+
+  for program in "${feature_keynames[@]}"; do
+    local readme_line_pointer="${program}_readmeline"
+    local installationtype_pointer="${program}_installationtype"
+    local arguments_pointer="${program}_arguments[@]"
+
+    local readme_line=
+    readme_line="${!readme_line_pointer}"
+    local installation_type=
+    installation_type="${!installationtype_pointer}"
+    local program_argument=
+    program_argument="${program}"
+
+    local program_features=
+    program_features="$(echo "${readme_line}" | cut -d "|" -f4)"
+    local program_commands=
+    program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " " | sed "s/\.[a-z]*//g" | sed 's/^ *//g')"
+    local help_line="${program_argument};${program_commands}"
+    case ${installation_type} in
+      packagemanager|packageinstall)
+        root_lines+=("${help_line}")
+        root_num=$(( root_num + 1 ))
+      ;;
+      repositoryclone|userinherit|environmental|pythonvenv)
+        user_lines+=("${help_line}")
+        user_num=$(( user_num + 1 ))
+      ;;
+    esac
+  done
+  local program_headers="ARGUMENT;COMMANDS"
+
+  local -r newline=$'\n'
+  local user_lines_final=
+  for line in "${user_lines[@]}"; do
+    user_lines_final="${user_lines_final}${line}${newline}"
+  done
+  user_lines_final="$(echo "${user_lines_final}" | sort)"
+  column -ts ";" <<< "${program_headers}${newline}${user_lines_final}"
+
+  echo "${newline}" >> "help.md"
+
+  local root_lines_final=
+  for line in "${root_lines[@]}"; do
+    root_lines_final="${root_lines_final}${line}${newline}"
+  done
+  root_lines_final="$(echo "${root_lines_final}" | sort)"
+  column -ts ";" <<< "${program_headers}${newline}${root_lines_final}"
+
+  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total"
+}
+
+autogen_readme()
+{
+  local packagemanager_lines=
+  local user_lines=()
+  local root_lines=()
+  local root_num=0
+  local user_num=0
+  for program in "${feature_keynames[@]}"; do
+    local readme_line_pointer="${program}_readmeline"
+    local installationtype_pointer="${program}_installationtype"
+    local arguments_pointer="${program}_arguments[@]"
+
+    local readme_line=
+    readme_line="${!readme_line_pointer}"
+    local installation_type=
+    installation_type="${!installationtype_pointer}"
+    local program_arguments=
+    program_arguments="${!arguments_pointer}"
+    local program_name=
+    program_name="${program}"
+
+    # Add arguments to readme
+    local prefix=
+    prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
+    local suffix=
+    suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
+    local readme_line="${prefix}${program_arguments}${suffix}"
+    case ${installation_type} in
+      packagemanager|packageinstall)
+        root_lines+=("${readme_line}")
+        root_num=$(( root_num + 1 ))
+      ;;
+      repositoryclone|userinherit|environmental|pythonvenv)
+        user_lines+=("${readme_line}")
+        user_num=$(( user_num + 1 ))
+      ;;
+    esac
+  done
+  local -r newline=$'\n'
+  {
+    echo "#### User programs";
+    echo "| Name | Description | Execution | Arguments | Testing |";
+    echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
+  } >> "table.md"
+  local user_lines_final=
+  for line in "${user_lines[@]}"; do
+    user_lines_final="${user_lines_final}${line}${newline}"
+  done
+  {
+  echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort;
+  echo "#### Root Programs";
+  echo "| Name | Description | Execution | Arguments | Testing |";
+  echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
+  } >> "table.md"
+  local root_lines_final=
+  for line in "${root_lines[@]}"; do
+    root_lines_final="${root_lines_final}${line}${newline}"
+  done
+  echo "${root_lines_final[@]}" | sed -r '/^\s*$/d' | sort >> "table.md"
+
+  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total" >> table.md
+}
+
+
+########################################################################################################################
+############################################### COMMON MAIN FUNCTIONS ##################################################
+########################################################################################################################
+
+# - Description: Processes the arguments received from the outside and activates or deactivates flags and calls
+#   add_program to append a keyname to the list of features to install.
+# - Permission: Can be called as root or user.
+# - Argument 1, 2, 3... : Arguments for the whole program.
+argument_processing()
+{
+  while [ $# -gt 0 ]; do
+    key="$1"
+
+    case ${key} in
+      ### BEHAVIOURAL ARGUMENTS ###
+      -v|--verbose)
+        FLAG_QUIETNESS=0
+      ;;
+      -q|--quiet)
+        FLAG_QUIETNESS=1
+      ;;
+      -Q|--Quiet)
+        FLAG_QUIETNESS=2
+      ;;
+
+      -s|--skip|--skip-if-installed)
+        FLAG_OVERWRITE=0
+      ;;
+      -o|--overwrite|--overwrite-if-present)
+        FLAG_OVERWRITE=1
+      ;;
+
+      -e|--exit|--exit-on-error)
+        FLAG_IGNORE_ERRORS=0
+      ;;
+      -i|--ignore|--ignore-errors)
+        FLAG_IGNORE_ERRORS=1
+      ;;
+
+      -d|--dirty|--no-autoclean)
+        FLAG_AUTOCLEAN=0
+      ;;
+      -c|--clean)
+        FLAG_AUTOCLEAN=1
+      ;;
+      -C|--Clean)
+        FLAG_AUTOCLEAN=2
+      ;;
+
+      -k|--keep-system-outdated)
+        FLAG_UPGRADE=0
+      ;;
+      -u|--update)
+        FLAG_UPGRADE=1
+      ;;
+      -U|--upgrade|--Upgrade)
+        FLAG_UPGRADE=2
+      ;;
+
+      -f|--favorites|--set-favorites)
+        FLAG_FAVORITES=1
+      ;;
+      -z|--no-favorites)
+        FLAG_FAVORITES=0
+      ;;
+
+      -a|--autostart)
+        FLAG_AUTOSTART=1
+      ;;
+      -r|--regular)
+        FLAG_AUTOSTART=0
+      ;;
+
+      -n|--not)
+        FLAG_INSTALL=0
+      ;;
+      -y|--yes)
+        FLAG_INSTALL=1
+      ;;
+
+      -p|--privilege-check)
+        FLAG_SKIP_PRIVILEGES_CHECK=0
+      ;;
+      -P|--skip-privilege-check)
+        FLAG_SKIP_PRIVILEGES_CHECK=1
+      ;;
+
+      --commands)
+        #for featurekeyname in "${feature_keynames[@]}"; do
+          local all_arguments+=("${feature_keynames[@]}")
+          all_arguments+=("${auxiliary_arguments[@]}")
+          echo "${all_arguments[@]}"
+        #done
+        exit 0
+      ;;
+
+      -h)
+        output_proxy_executioner "echo ${help_common}${help_simple}" "${FLAG_QUIETNESS}"
+        exit 0
+      ;;
+      -H|--help)
+        autogen_help
+
+        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" "${FLAG_QUIETNESS}"
+        exit 0
+      ;;
+
+      --debug)
+        customizer_prompt
+      ;;
+
+      --user|--normal)
+        add_programs_with_x_permissions 1
+      ;;
+      --root|--superuser|--su)
+        add_programs_with_x_permissions 0
+      ;;
+      --ALL|--all|--All)
+        add_programs_with_x_permissions 2
+      ;;
+
+      *)  # Individual argument
+        local wrapper_key=
+        wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
+        local set_of_features="wrapper_${wrapper_key}[@]"
+        if [ -z "${!set_of_features}" ]; then
+          add_program "${key}"
+        else
+          add_programs "${!set_of_features}"
+        fi
+      ;;
+    esac
+    shift
+  done
+
+  # If we don't receive arguments we try to install everything that we can given our permissions
+  if [ ${#added_feature_keynames[@]} -eq 0 ]; then
+    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo INFO: Displaying help ${help_common}" "${FLAG_QUIETNESS}"
+    exit 1
+  fi
 }
 
 
@@ -143,6 +453,20 @@ add_programs_with_x_permissions()
       output_proxy_executioner "echo ERROR: $1 is not a possible permission level." "${FLAG_QUIETNESS}"
       exit 1
     fi
+  done
+}
+
+
+# - Description: Accepts N individual arguments representing feature keynames and adds them to the installation.
+#   Useful for adding many arguments at the same time, like with a wrapper.
+# - Permission: Can be called as root or as user.
+# - Argument 1: Feature keyname to be added.
+# - Argument 2, 3, 4... : Feature keyname to be added
+add_programs()
+{
+  while [ $# -gt 0 ]; do
+    add_program "$1"
+    shift
   done
 }
 
@@ -353,323 +677,6 @@ execute_installation()
     # Return flag errors to bash defaults (ignore errors)
     set +e
   done
-}
-
-
-# - Description: Accepts N individual arguments representing feature keynames and adds them to the installation.
-#   Useful for adding many arguments at the same time, like with a wrapper.
-# - Permission: Can be called as root or as user.
-# - Argument 1: Feature keyname to be added.
-# - Argument 2, 3, 4... : Feature keyname to be added
-add_programs()
-{
-  while [ $# -gt 0 ]; do
-    add_program "$1"
-    shift
-  done
-}
-
-autogen_help()
-{
-  local packagemanager_lines=
-  local user_lines=
-  local root_lines=
-  local root_num=0
-  local user_num=0
-  true > help.md
-
-  for program in "${feature_keynames[@]}"; do
-    local readme_line_pointer="${program}_readmeline"
-    local installationtype_pointer="${program}_installationtype"
-    local arguments_pointer="${program}_arguments[@]"
-
-    local readme_line=
-    readme_line="${!readme_line_pointer}"
-    local installation_type=
-    installation_type="${!installationtype_pointer}"
-    local program_argument=
-    program_argument="${program}"
-
-    local program_features=
-    program_features="$(echo "${readme_line}" | cut -d "|" -f4)"
-    local program_commands=
-    program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " " | sed "s/\.[a-z]*//g" | sed 's/^ *//g')"
-    local help_line="${program_argument};${program_commands}"
-    case ${installation_type} in
-      packagemanager|packageinstall)
-        root_lines+=("${help_line}")
-        root_num=$(( root_num + 1 ))
-      ;;
-      repositoryclone|userinherit|environmental|pythonvenv)
-        user_lines+=("${help_line}")
-        user_num=$(( user_num + 1 ))
-      ;;
-    esac
-  done
-  local program_headers="ARGUMENT;COMMANDS"
-
-  local -r newline=$'\n'
-  local user_lines_final=
-  for line in "${user_lines[@]}"; do
-    user_lines_final="${user_lines_final}${line}${newline}"
-  done
-  user_lines_final="$(echo "${user_lines_final}" | sort)"
-  column -ts ";" <<< "${program_headers}${newline}${user_lines_final}"
-
-  echo "${newline}" >> "help.md"
-
-  local root_lines_final=
-  for line in "${root_lines[@]}"; do
-    root_lines_final="${root_lines_final}${line}${newline}"
-  done
-  root_lines_final="$(echo "${root_lines_final}" | sort)"
-  column -ts ";" <<< "${program_headers}${newline}${root_lines_final}"
-
-  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total"
-}
-
-autogen_readme()
-{
-  local packagemanager_lines=
-  local user_lines=()
-  local root_lines=()
-  local root_num=0
-  local user_num=0
-  for program in "${feature_keynames[@]}"; do
-    local readme_line_pointer="${program}_readmeline"
-    local installationtype_pointer="${program}_installationtype"
-    local arguments_pointer="${program}_arguments[@]"
-
-    local readme_line=
-    readme_line="${!readme_line_pointer}"
-    local installation_type=
-    installation_type="${!installationtype_pointer}"
-    local program_arguments=
-    program_arguments="${!arguments_pointer}"
-    local program_name=
-    program_name="${program}"
-
-    # Add arguments to readme
-    local prefix=
-    prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
-    local suffix=
-    suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
-    local readme_line="${prefix}${program_arguments}${suffix}"
-    case ${installation_type} in
-      packagemanager|packageinstall)
-        root_lines+=("${readme_line}")
-        root_num=$(( root_num + 1 ))
-      ;;
-      repositoryclone|userinherit|environmental|pythonvenv)
-        user_lines+=("${readme_line}")
-        user_num=$(( user_num + 1 ))
-      ;;
-    esac
-  done
-  local -r newline=$'\n'
-  {
-    echo "#### User programs";
-    echo "| Name | Description | Execution | Arguments | Testing |";
-    echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
-  } >> "table.md"
-  local user_lines_final=
-  for line in "${user_lines[@]}"; do
-    user_lines_final="${user_lines_final}${line}${newline}"
-  done
-  {
-  echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort;
-  echo "#### Root Programs";
-  echo "| Name | Description | Execution | Arguments | Testing |";
-  echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
-  } >> "table.md"
-  local root_lines_final=
-  for line in "${root_lines[@]}"; do
-    root_lines_final="${root_lines_final}${line}${newline}"
-  done
-  echo "${root_lines_final[@]}" | sed -r '/^\s*$/d' | sort >> "table.md"
-
-  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total" >> table.md
-}
-
-
-# - Description: Processes the arguments received from the outside and activates or deactivates flags and calls
-#   add_program to append a keyname to the list of features to install.
-# - Permission: Can be called as root or user.
-# - Argument 1, 2, 3... : Arguments for the whole program.
-argument_processing()
-{
-  while [ $# -gt 0 ]; do
-    key="$1"
-
-    case ${key} in
-      ### BEHAVIOURAL ARGUMENTS ###
-      -v|--verbose)
-        FLAG_QUIETNESS=0
-      ;;
-      -q|--quiet)
-        FLAG_QUIETNESS=1
-      ;;
-      -Q|--Quiet)
-        FLAG_QUIETNESS=2
-      ;;
-
-      -s|--skip|--skip-if-installed)
-        FLAG_OVERWRITE=0
-      ;;
-      -o|--overwrite|--overwrite-if-present)
-        FLAG_OVERWRITE=1
-      ;;
-
-      -e|--exit|--exit-on-error)
-        FLAG_IGNORE_ERRORS=0
-      ;;
-      -i|--ignore|--ignore-errors)
-        FLAG_IGNORE_ERRORS=1
-      ;;
-
-      -d|--dirty|--no-autoclean)
-        FLAG_AUTOCLEAN=0
-      ;;
-      -c|--clean)
-        FLAG_AUTOCLEAN=1
-      ;;
-      -C|--Clean)
-        FLAG_AUTOCLEAN=2
-      ;;
-
-      -k|--keep-system-outdated)
-        FLAG_UPGRADE=0
-      ;;
-      -u|--update)
-        FLAG_UPGRADE=1
-      ;;
-      -U|--upgrade|--Upgrade)
-        FLAG_UPGRADE=2
-      ;;
-
-      -f|--favorites|--set-favorites)
-        FLAG_FAVORITES=1
-      ;;
-      -z|--no-favorites)
-        FLAG_FAVORITES=0
-      ;;
-
-      -a|--autostart)
-        FLAG_AUTOSTART=1
-      ;;
-      -r|--regular)
-        FLAG_AUTOSTART=0
-      ;;
-
-      -n|--not)
-        FLAG_INSTALL=0
-      ;;
-      -y|--yes)
-        FLAG_INSTALL=1
-      ;;
-
-      -p|--privilege-check)
-        FLAG_SKIP_PRIVILEGES_CHECK=0
-      ;;
-      -P|--skip-privilege-check)
-        FLAG_SKIP_PRIVILEGES_CHECK=1
-      ;;
-
-      --commands)
-        #for featurekeyname in "${feature_keynames[@]}"; do
-          local all_arguments+=("${feature_keynames[@]}")
-          all_arguments+=("${auxiliary_arguments[@]}")
-          echo "${all_arguments[@]}"
-        #done
-        exit 0
-      ;;
-
-      -h)
-        output_proxy_executioner "echo ${help_common}${help_simple}" "${FLAG_QUIETNESS}"
-        exit 0
-      ;;
-      -H|--help)
-        autogen_help
-
-        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" "${FLAG_QUIETNESS}"
-        exit 0
-      ;;
-
-      --debug)
-        customizer_prompt
-      ;;
-
-      --user|--normal)
-        add_programs_with_x_permissions 1
-      ;;
-      --root|--superuser|--su)
-        add_programs_with_x_permissions 0
-      ;;
-      --ALL|--all|--All)
-        add_programs_with_x_permissions 2
-      ;;
-
-      *)  # Individual argument
-        local wrapper_key=
-        wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
-        local set_of_features="wrapper_${wrapper_key}[@]"
-        if [ -z "${!set_of_features}" ]; then
-          add_program "${key}"
-        else
-          add_programs "${!set_of_features}"
-        fi
-      ;;
-    esac
-    shift
-  done
-
-  # If we don't receive arguments we try to install everything that we can given our permissions
-  if [ ${#added_feature_keynames[@]} -eq 0 ]; then
-    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." "${FLAG_QUIETNESS}"
-    output_proxy_executioner "echo INFO: Displaying help ${help_common}" "${FLAG_QUIETNESS}"
-    exit 1
-  fi
-}
-
-# - Description: Performs a post-install clean by using cleaning option of package manager
-# - Permission: Can be called as root or user.
-post_install_clean()
-{
-  if [ "${EUID}" -eq 0 ]; then
-    if [ "${FLAG_AUTOCLEAN}" -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "apt-get -y autoremove" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
-    fi
-    if [ "${FLAG_AUTOCLEAN}" -eq 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "apt-get -y autoclean" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
-    fi
-  fi
-}
-
-
-# - Description: Makes a bell sound.
-# - Permission: Can be called as root or as user.
-bell_sound()
-{
-  echo -en "\07"
-  echo -en "\07"
-  echo -en "\07"
-}
-
-
-# - Description: Updates the system by using the package manager
-# - Permission: Can be called as root or as user.
-update_environment()
-{
-  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Reload .bashrc shell environment" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
 }
 
 
