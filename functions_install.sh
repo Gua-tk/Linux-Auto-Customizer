@@ -1,21 +1,22 @@
+#!/usr/bin/env bash
 ########################################################################################################################
 # - Name: Linux Auto-Customizer exclusive functions of install.sh                                                      #
 # - Description: Set of functions used exclusively in install.sh. Most of these functions are combined into other      #
 # higher-order functions to provide the generic installation of a feature.                                             #
 # - Creation Date: 28/5/19                                                                                             #
-# - Last Modified: 16/5/21                                                                                             #
+# - Last Modified: 18/8/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
 # - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
 # imports. See the header of each function to see its privilege requirements.                                          #
 # - Arguments: No arguments                                                                                            #
-# - Usage: Not executed directly, sourced from install.sh                                                                                     #
+# - Usage: Not executed directly, sourced from install.sh                                                              #
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
 ########################################################################################################################
-############################################ INSTALL AUXILIAR FUNCTIONS ################################################
+################################################ INSTALL API FUNCTIONS #################################################
 ########################################################################################################################
 
 # - Description: Installs a new bash feature into $BASH_FUNCTIONS_PATH which sources the script that contains the code
@@ -27,12 +28,12 @@ add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
   create_file "${BASH_FUNCTIONS_FOLDER}/$2" "$1"
   # If we are root apply permission to the file
-  if [ ${EUID} == 0 ]; then
+  if [ "${EUID}" == 0 ]; then
     apply_permissions "${BASH_FUNCTIONS_FOLDER}/$2"
   fi
 
   # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
-  if [ -z "$(cat "${BASH_FUNCTIONS_PATH}" | grep -Fo "source ${BASH_FUNCTIONS_FOLDER}/$2")" ]; then
+  if ! grep -Fqo "source ${BASH_FUNCTIONS_FOLDER}/$2" "${BASH_FUNCTIONS_PATH}"; then
     echo "source ${BASH_FUNCTIONS_FOLDER}/$2" >> "${BASH_FUNCTIONS_PATH}"
   fi
 }
@@ -46,13 +47,13 @@ add_bash_initialization() {
   # Write code to bash initializations folder with the name of the feature we want to install
   create_file "${BASH_INITIALIZATIONS_FOLDER}/$2" "$1"
   # If we are root apply permission to the file
-  if [ ${EUID} == 0 ]; then
+  if [ "${EUID}" == 0 ]; then
     apply_permissions "${BASH_INITIALIZATIONS_FOLDER}/$2"
   fi
 
   # Add import_line to .bash_profile (BASH_INITIALIZATIONS_PATH)
-  if [ -z "$(cat "${BASH_INITIALIZATIONS_PATH}" | grep -Fo "source ${BASH_INITIALIZATIONS_FOLDER}/$2")" ]; then
-    echo "source ${BASH_INITIALIZATIONS_FOLDER}/$2" >> "${BASH_INITIALIZATIONS_PATH}"
+  if ! grep -Fqo "source \"${BASH_INITIALIZATIONS_FOLDER}/$2\"" "${BASH_INITIALIZATIONS_PATH}"; then
+    echo "source \"${BASH_INITIALIZATIONS_FOLDER}/$2\"" >> "${BASH_INITIALIZATIONS_PATH}"
   fi
 }
 
@@ -63,7 +64,9 @@ add_bash_initialization() {
 # Argument 2: Set of keys with the right format to be binded.
 # Argument 3: Descriptive name of the keybinding.
 add_keybinding() {
-  echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
+  if ! grep -Fqo "$1;$2;$3" "${PROGRAM_KEYBIND_PATH}"; then
+    echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
+  fi
 }
 
 
@@ -76,15 +79,13 @@ add_keybinding() {
 #   ALL_USERS_LAUNCHERS_DIR.
 add_to_favorites() {
   for argument in "$@"; do
-    if [ -z "$(cat "${PROGRAM_FAVORITES_PATH}" | grep -Eo "${argument}")" ]; then
+    if ! grep -Eqo "${argument}" "${PROGRAM_FAVORITES_PATH}"; then
       if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
         echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
       else
         output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
         return
       fi
-    else
-      output_proxy_executioner "echo WARNING: The program ${argument} is already added to the taskbar favorites. Skipping" "${FLAG_QUIETNESS}"
     fi
   done
 }
@@ -96,7 +97,7 @@ add_to_favorites() {
 # - Argument 1: Name of .desktop launcher of program file without the '.desktop' extension.
 autostart_program() {
   # If absolute path
-  if [ -n "$(echo "$1" | grep -Eo "^/")" ]; then
+  if echo "$1" | grep -Eqo "^/"; then
     # If it is a file, make it autostart
     if [ -f "$1" ]; then
       cp "$1" "${AUTOSTART_FOLDER}"
@@ -104,7 +105,7 @@ autostart_program() {
         apply_permissions "$1"
       fi
     else
-      output_proxy_executioner "echo WARNING: The file $1 does not exist, skipping..." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo WARNING: The file $1 does not exist, skipping..." "${FLAG_QUIETNESS}"
       return
     fi
   else # Else relative path from ALL_USERS_LAUNCHERS_DIR or PERSONAL_LAUNCHERS_DIR
@@ -119,7 +120,7 @@ autostart_program() {
         apply_permissions "$1.desktop"
       fi
     else
-      output_proxy_executioner "echo WARNING: The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." ${FLAG_QUIETNESS}
+      output_proxy_executioner "echo WARNING: The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." "${FLAG_QUIETNESS}"
       return
     fi
   fi
@@ -143,7 +144,7 @@ apply_permissions() {
     fi
     chmod 755 "$1"
   else
-    output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." "${FLAG_QUIETNESS}"
   fi
 }
 
@@ -190,7 +191,7 @@ copy_launcher() {
     cp "${ALL_USERS_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}/$1"
     apply_permissions "${XDG_DESKTOP_DIR}/$1"
   else
-    output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." "${FLAG_QUIETNESS}"
   fi
 }
 
@@ -246,12 +247,12 @@ decompress() {
   if [ -z "$2" ]; then
     dir_name="${USR_BIN_FOLDER}"
     file_name="downloading_program"
-  elif [ -n "$(echo "$2" | grep -Eo "^/")" ]; then
+  elif echo "$2" | grep -Eqo "^/"; then
     # Absolute path to a file
     dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
     file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
   else
-    if [ -n "$(echo "$2" | grep -Eo "/")" ]; then
+    if echo "$2" | grep -Eqo "/"; then
       # Relative path to a file containing subfolders
       dir_name="${USR_BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
       file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
@@ -263,11 +264,11 @@ decompress() {
   fi
   if [ -n "$3" ]; then
     if [ "$1" == "zip" ]; then
-      local internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
+      local internal_folder_name=
+      internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
       # The captured line ends with / so it is a valid directory
-      if [ -n "$(echo "${internal_folder_name}" | grep -Eo "/$")" ]; then
+      if echo "${internal_folder_name}" | grep -Eqo "/$"; then
         internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
-        echo $internal_folder_name
       else
         # Set the internal folder name empty if it is not detected
         internal_folder_name=""
@@ -341,7 +342,7 @@ download() {
     file_name=downloading_program
   else
     # Custom file or folder to download
-    if [ -n "$(echo "$2" | grep -Eo "^/")" ]; then
+    if echo "$2" | grep -Eqo "^/"; then
       # Absolute path
       if [ -d "$2" ]; then
         # is directory
@@ -352,12 +353,12 @@ download() {
         dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
         file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
         if [ -z "${dir_name}" ]; then
-          output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" ${FLAG_QUIETNESS}
+          output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
           exit
         fi
       fi
     else
-      if [ -n "$(echo "$2" | grep -Eo "/")" ]; then
+      if echo "$2" | grep -Eqo "/"; then
         # Relative path that contains subfolders
         if [ -d "$2" ]; then
           # Directory
@@ -368,7 +369,7 @@ download() {
           dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
           file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
           if [ -z "${dir_name}" ]; then
-            output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" ${FLAG_QUIETNESS}
+            output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
             exit
           fi
         fi
@@ -391,6 +392,39 @@ download() {
   fi
 }
 
+
+# - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
+# - Permissions: Same behaviour being root or normal user.
+# - Argument 1: File types. Example: application/x-shellscript.
+# - Argument 2: Application. Example: sublime_text.desktop.
+register_file_associations() {
+  # Check if mimeapps exists
+  if [ -f "${MIME_ASSOCIATION_PATH}" ]; then
+    # Check if the association between a mime type and desktop launcher is already existent
+    if ! grep -Eqo "$1=.*$2" "${MIME_ASSOCIATION_PATH}"; then
+      # If mime type is not even present we can add the hole line
+      if grep -Fqo "$1=" "${MIME_ASSOCIATION_PATH}"; then
+        sed -i "/\[Added Associations\]/a $1=$2;" "${MIME_ASSOCIATION_PATH}"
+      else
+        # If not, mime type is already registered. We need to register another application for it
+        if ! grep -Eqo "$1=.*;$" "${MIME_ASSOCIATION_PATH}"; then
+          # File type(s) is registered without comma. Add the program at the end of the line with comma
+          sed -i "s|$1=.*$|&;$2;|g" "${MIME_ASSOCIATION_PATH}"
+        else
+          # File type is registered with comma at the end. Just add program at end of line
+          sed -i "s|$1=.*;$|&$2;|g" "${MIME_ASSOCIATION_PATH}"
+        fi
+      fi
+    fi
+  else
+    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "${FLAG_QUIETNESS}"
+  fi
+}
+
+
+########################################################################################################################
+################################## GENERIC INSTALL FUNCTIONS - OPTIONAL PROPERTIES #####################################
+########################################################################################################################
 
 # - Description: Downloads a .deb package temporarily into USR_BIN_FOLDER from the provided link and installs it using
 #   dpkg -i.
@@ -442,7 +476,7 @@ generic_install_favorites() {
 
   # To add to favorites if the flag is set
   if [ "${FLAG_FAVORITES}" == "1" ]; then
-    if [ -n "$(echo "${!launchernames}")" ]; then
+    if [ -n "${!launchernames}" ]; then
       for launchername in ${!launchernames}; do
         add_to_favorites "${launchername}"
       done
@@ -460,8 +494,9 @@ generic_install_favorites() {
 generic_install_file_associations() {
   local -r associated_file_types="$1_associatedfiletypes[@]"
   for associated_file_type in ${!associated_file_types}; do
-    if [ ! -z "$(echo "${associated_file_type}" | grep -Fo ";")" ]; then
-      local associated_desktop="$(echo "${associated_file_type}" | cut -d ";" -f2)"
+    if echo "${associated_file_type}" | grep -Fo ";"; then
+      local associated_desktop=
+      associated_desktop="$(echo "${associated_file_type}" | cut -d ";" -f2)"
     else
       local associated_desktop="$1"
     fi
@@ -477,9 +512,12 @@ generic_install_file_associations() {
 generic_install_keybindings() {
   local -r keybinds="$1_keybinds[@]"
   for keybind in "${!keybinds}"; do
-    local command="$(echo "${keybind}" | cut -d ";" -f1)"
-    local bind="$(echo "${keybind}" | cut -d ";" -f2)"
-    local binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
+    local command=
+    command="$(echo "${keybind}" | cut -d ";" -f1)"
+    local bind=
+    bind="$(echo "${keybind}" | cut -d ";" -f2)"
+    local binding_name=
+    binding_name="$(echo "${keybind}" | cut -d ";" -f3)"
     add_keybinding "${command}" "${bind}" "${binding_name}"
   done
 }
@@ -510,7 +548,7 @@ generic_install_autostart() {
 
   if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
     # If we have autostart launchers use them
-    if [ -n "$(echo "${!autostartlaunchers_pointer}")" ]; then
+    if [ -n "${!autostartlaunchers_pointer}" ]; then
       local name_suffix_anticollision=""
       for autostartlauncher in "${!autostartlaunchers_pointer}"; do
         create_file "${AUTOSTART_FOLDER}/$1${name_suffix_anticollision}.desktop" "${autostartlauncher}"
@@ -538,10 +576,12 @@ generic_install_pathlinks() {
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
-    local binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
-    local binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
+    local binary_path=
+    binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
+    local binary_name=
+    binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
     # Absolute path
-    if [ -n "$(echo "${binary_name}" | grep -Eo "^/")" ]; then
+    if echo "${binary_name}" | grep -Eqo "^/"; then
       create_links_in_path "${binary_path}" "${binary_name}"
     else
       create_links_in_path "${USR_BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
@@ -559,7 +599,7 @@ generic_install_files() {
   for filekey in "${!filekeys}"; do
     local content="$1_${filekey}_content"
     local path="$1_${filekey}_path"
-    if [ -n "$(echo "${!path}" | grep -Eo "^/")" ]; then
+    if echo "${!path}" | grep -Eqo "^/"; then
       create_file "${!path}" "${!content}"
     else
       create_file "${USR_BIN_FOLDER}/$1/${!path}" "${!content}"
@@ -596,85 +636,16 @@ generic_install_initializations() {
 }
 
 
-# - Description: Installs a user program in a generic way relying on variables declared in data_features.sh and the name
-#   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
-#   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
-#   Depending on the properties set, some subfunctions will be activated to install related features.
-#   Also performs the manual execution of paths of the feature and calls generic functions to install the common
-#   part of the features such as desktop launchers, sourced .bashrc functions...
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
-#   name of the first argument in the common_data.sh table
-generic_install() {
-  # Substitute dashes for underscores. Dashes are not allowed in variable names
-  local -r featurename=$(echo "$1" | sed "s@-@_@g")
-  local -r installationtype=${featurename}_installationtype
-  local -r manualcontentavailable="$1_manualcontentavailable"
-  if [ ! -z "${!installationtype}" ]; then
-
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
-      "install_$1_pre"
-    fi
-    case ${!installationtype} in
-      # Using package manager such as apt-get
-      packagemanager)
-        rootgeneric_installation_type "${featurename}" packagemanager
-      ;;
-      # Downloading a package and installing it using a package manager such as dpkg
-      packageinstall)
-        rootgeneric_installation_type "${featurename}" packageinstall
-      ;;
-      # Download and decompress a file that contains a folder
-      userinherit)
-        userinherit_installation_type "${featurename}"
-      ;;
-      # Clone a repository
-      repositoryclone)
-        repositoryclone_installation_type "${featurename}"
-      ;;
-      # Create a virtual environment to install the feature
-      pythonvenv)
-        pythonvenv_installation_type "${featurename}"
-      ;;
-      # Only uses the common part of the generic installation
-      environmental)
-        : # no-op
-      ;;
-      *)
-        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" ${FLAG_QUIETNESS}
-        exit 1
-      ;;
-    esac
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
-      "install_$1_mid"
-    fi
-
-    generic_install_downloads "${featurename}"
-    generic_install_files "${featurename}"
-    generic_install_launchers "${featurename}"
-    generic_install_copy_launcher "${featurename}"
-    generic_install_functions "${featurename}"
-    generic_install_initializations "${featurename}"
-    generic_install_autostart "${featurename}"
-    generic_install_favorites "${featurename}"
-    generic_install_file_associations "${featurename}"
-    generic_install_keybindings "${featurename}"
-    generic_install_pathlinks "${featurename}"
-
-
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
-      "install_$1_post"
-    fi
-  fi
-}
-
+########################################################################################################################
+################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
+########################################################################################################################
 
 # - Description: Installs packages using python environment.
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
 pythonvenv_installation_type() {
-  rm -Rf "${USR_BIN_FOLDER}/$1"
+  rm -Rf "${USR_BIN_FOLDER:?}/$1"
   python3 -m venv "${USR_BIN_FOLDER}/$1"
   "${USR_BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
   "${USR_BIN_FOLDER}/$1/bin/pip" install wheel
@@ -696,7 +667,7 @@ pythonvenv_installation_type() {
 #   installation data.
 repositoryclone_installation_type() {
   local -r repositoryurl="$1_repositoryurl"
-  rm -Rf "${USR_BIN_FOLDER}/$1"
+  rm -Rf "${USR_BIN_FOLDER:?}/$1"
   create_folder "${USR_BIN_FOLDER}/$1"
   git clone "${!repositoryurl}" "${USR_BIN_FOLDER}/$1"
 }
@@ -729,7 +700,7 @@ rootgeneric_installation_type() {
   # Download package and install using manual package manager
   if [ "$2" == packageinstall ]; then
     # Use a compressed file that contains .debs
-    if [ ! -z "${!compressedfileurl}" ]; then
+    if [ -n "${!compressedfileurl}" ]; then
       download "${!compressedfileurl}" "${USR_BIN_FOLDER}/$1_downloading"
       decompress "${!compressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "$1"
       dpkg -Ri "${USR_BIN_FOLDER}/$1"
@@ -761,7 +732,7 @@ userinherit_installation_type() {
   local -r compressedfilepathoverride="$1_compressedfilepathoverride"
   local defaultpath="${USR_BIN_FOLDER}"
 
-  if [ ! -z "${!compressedfilepathoverride}" ]; then
+  if [ -n "${!compressedfilepathoverride}" ]; then
     create_folder "${!compressedfilepathoverride}"
     defaultpath="${!compressedfilepathoverride}"
   fi
@@ -769,34 +740,85 @@ userinherit_installation_type() {
   decompress "${!compressedfiletype}" "${defaultpath}/$1_downloading" "$1"
 }
 
+########################################################################################################################
+################################################## GENERIC INSTALL #####################################################
+########################################################################################################################
 
-# - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
-# - Permissions: Same behaviour being root or normal user.
-# - Argument 1: File types. Example: application/x-shellscript.
-# - Argument 2: Application. Example: sublime_text.desktop.
-register_file_associations() {
-  # Check if mimeapps exists
-  if [ -f "${MIME_ASSOCIATION_PATH}" ]; then
-    # Check if the association between a mime type and desktop launcher is already existent
-    if [ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*$2")" ]; then
-      # If mime type is not even present we can add the hole line
-      if [ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Fo "$1=")" ]; then
-        sed -i "/\[Added Associations\]/a $1=$2;" "${MIME_ASSOCIATION_PATH}"
-      else
-        # If not, mime type is already registered. We need to register another application for it
-        if [ -z "$(more "${MIME_ASSOCIATION_PATH}" | grep -Eo "$1=.*;$")" ]; then
-          # File type(s) is registered without comma. Add the program at the end of the line with comma
-          sed -i "s|$1=.*$|&;$2;|g" "${MIME_ASSOCIATION_PATH}"
-        else
-          # File type is registered with comma at the end. Just add program at end of line
-          sed -i "s|$1=.*;$|&$2;|g" "${MIME_ASSOCIATION_PATH}"
-        fi
-      fi
+# - Description: Installs a user program in a generic way relying on variables declared in data_features.sh and the name
+#   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
+#   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
+#   Depending on the properties set, some subfunctions will be activated to install related features.
+#   Also performs the manual execution of paths of the feature and calls generic functions to install the common
+#   part of the features such as desktop launchers, sourced .bashrc functions...
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
+#   name of the first argument in the common_data.sh table
+generic_install() {
+  # Substitute dashes for underscores. Dashes are not allowed in variable names
+  local -r featurename="${1//-/_}"
+  local -r installationtype=${featurename}_installationtype
+  local -r manualcontentavailable="$1_manualcontentavailable"
+  if [ -n "${!installationtype}" ]; then
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
+      "install_$1_pre"
     fi
-  else
-    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "${FLAG_QUIETNESS}"
+    case ${!installationtype} in
+      # Using package manager such as apt-get
+      packagemanager)
+        rootgeneric_installation_type "${featurename}" packagemanager
+      ;;
+      # Downloading a package and installing it using a package manager such as dpkg
+      packageinstall)
+        rootgeneric_installation_type "${featurename}" packageinstall
+      ;;
+      # Download and decompress a file that contains a folder
+      userinherit)
+        userinherit_installation_type "${featurename}"
+      ;;
+      # Clone a repository
+      repositoryclone)
+        repositoryclone_installation_type "${featurename}"
+      ;;
+      # Create a virtual environment to install the feature
+      pythonvenv)
+        pythonvenv_installation_type "${featurename}"
+      ;;
+      # Only uses the common part of the generic installation
+      environmental)
+        : # no-op
+      ;;
+      *)
+        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" "${FLAG_QUIETNESS}"
+        exit 1
+      ;;
+    esac
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
+      "install_$1_mid"
+    fi
+
+    generic_install_downloads "${featurename}"
+    generic_install_files "${featurename}"
+    generic_install_launchers "${featurename}"
+    generic_install_copy_launcher "${featurename}"
+    generic_install_functions "${featurename}"
+    generic_install_initializations "${featurename}"
+    generic_install_autostart "${featurename}"
+    generic_install_favorites "${featurename}"
+    generic_install_file_associations "${featurename}"
+    generic_install_keybindings "${featurename}"
+    generic_install_pathlinks "${featurename}"
+
+
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
+      "install_$1_post"
+    fi
   fi
 }
+
+
+########################################################################################################################
+############################################## INSTALL MAIN FUNCTIONS ##################################################
+########################################################################################################################
 
 # - Description: Initialize common subsystems and common subfeatures
 # - Permissions: Same behaviour being root or normal user.
@@ -833,28 +855,28 @@ data_and_file_structures_initialization() {
   add_bash_initialization "${keybind_function}" "keybind.sh"
 
   # Make sure that .bashrc sources .bash_functions
-  if [ -z "$(cat "${BASHRC_PATH}" | grep -Fo "source "${BASH_FUNCTIONS_PATH}"")" ]; then
-    echo -e "${bash_functions_import}" >> ${BASHRC_PATH}
+  if ! grep -Fqo "${bash_functions_import}" "${BASHRC_PATH}"; then
+    echo -e "${bash_functions_import}" >> "${BASHRC_PATH}"
   fi
   # Make sure that .profile sources .bash_initializations
-  if [ -z "$(cat "${PROFILE_PATH}" | grep -Fo "source "${BASH_INITIALIZATIONS_PATH}"")" ]; then
-    echo -e "${bash_initializations_import}" >> ${PROFILE_PATH}
+  if ! grep -Fqo "${bash_initializations_import}" "${PROFILE_PATH}"; then
+    echo -e "${bash_initializations_import}" >> "${PROFILE_PATH}"
   fi
 }
 
 # - Description: Update the system using apt-get -y update or apt-get -y upgrade depending a
 # - Permissions: Can be called as root or user but user will not do anything.
 pre_install_update() {
-  if [ ${EUID} == 0 ]; then
-    if [ ${FLAG_UPGRADE} -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y update" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: System updated." ${FLAG_QUIETNESS}
+  if [ "${EUID}" == 0 ]; then
+    if [ "${FLAG_UPGRADE}" -gt 0 ]; then
+      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "apt-get -y update" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: System updated." "${FLAG_QUIETNESS}"
     fi
-    if [ ${FLAG_UPGRADE} == 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." ${FLAG_QUIETNESS}
-      output_proxy_executioner "apt-get -y upgrade" ${FLAG_QUIETNESS}
-      output_proxy_executioner "echo INFO: System upgraded." ${FLAG_QUIETNESS}
+    if [ "${FLAG_UPGRADE}" == 2 ]; then
+      output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "apt-get -y upgrade" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: System upgraded." "${FLAG_QUIETNESS}"
     fi
   fi
 }
@@ -862,17 +884,17 @@ pre_install_update() {
 # - Description: Performs update of system fonts and bash environment.
 # - Permissions: Same behaviour being root or normal user.
 update_environment() {
-  output_proxy_executioner "echo INFO: Rebuilding path cache" "${quietness_bit}"
-  output_proxy_executioner "hash -r" "${quietness_bit}"
-  output_proxy_executioner "echo INFO: Rebuilding font cache" "${quietness_bit}"
-  output_proxy_executioner "fc-cache -f" "${quietness_bit}"
-  output_proxy_executioner "echo INFO: Reloading bash features" "${quietness_bit}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${quietness_bit}"
-  output_proxy_executioner "echo INFO: Finished execution" "${quietness_bit}"
+  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Reloading bash features" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Finished execution" "${FLAG_QUIETNESS}"
 }
 
 
-if [[ -f "${DIR}/functions_common.sh" ]]; then
+if [ -f "${DIR}/functions_common.sh" ]; then
   source "${DIR}/functions_common.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
@@ -880,6 +902,10 @@ else
   exit 1
 fi
 
+
+########################################################################################################################
+######################################### INSTALL SUBSYSTEMS FUNCTIONS #################################################
+########################################################################################################################
 
 # - Description: This functions is the basic piece of the favorites subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
@@ -890,7 +916,7 @@ fi
 # add_to_favorites instead, can be called as root or user, so root and user executions can be added
 
 favorites_function="
-if [ -f ${PROGRAM_FAVORITES_PATH} ]; then
+if [ -f \"${PROGRAM_FAVORITES_PATH}\" ]; then
   while IFS= read -r line; do
     favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
     if [ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]; then

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ########################################################################################################################
 # - Name: Linux Auto Customizer data of features.                                                                      #
 # - Description: Defines all variables containing the data needed to install and uninstall all features.               #
@@ -209,7 +210,7 @@ axel_packagenames=("axel")
 axel_readmeline="| Axel | Download manager | Command \`axel\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 b_installationtype="environmental"
-b_arguments=("b")
+b_arguments=("b" "b_function")
 b_bashfunctions=("alias b=\"bash\"")
 b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -331,7 +332,7 @@ caffeine_arguments=("caffeine" "coffee" "cafe")
 caffeine_launchernames=("caffeine-indicator")
 caffeine_manualcontentavailable="1;0;1"
 caffeine_packagenames=("caffeine")
-caffeine_readmeline="| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the “sleep” power saving mode. | Commands \`caffeine\`, \`caffeinate\` and \`caffeine-indicator\`, desktop launcher for \`caffeine\`, dashboard launcher for \`caffeine\` and \`caffeine-indicator\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+caffeine_readmeline="| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the sleep power saving mode. | Commands \`caffeine\`, \`caffeinate\` and \`caffeine-indicator\`, desktop launcher for \`caffeine\`, dashboard launcher for \`caffeine\` and \`caffeine-indicator\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 calibre_installationtype="packagemanager"
 calibre_arguments=("calibre")
