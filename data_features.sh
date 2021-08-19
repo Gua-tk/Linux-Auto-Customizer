@@ -177,6 +177,14 @@ Type=Application
 Version=1.0
 ")
 
+ardour_installationtype="packagemanager"
+ardour_arguments=("ardour")
+ardour_bashfunctions=("alias ardour=\"nohup ardour &>/dev/null &\"")
+ardour_packagenames=("ardour")
+ardour_launchernames=("ardour")
+ardour_readmeline="| Ardour | Software for music production | Commands \`ardour\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
+
+
 aspell_installationtype="packagemanager"
 aspell_arguments=("aspell")
 aspell_packagenames=("aspell-es" "aspell-ca")
@@ -4749,6 +4757,7 @@ remmina_readmeline="| Remmina | Remote Desktop Contol | Commands \`remmina\`, De
 
 rosegarden_installationtype="packagemanager"
 rosegarden_arguments=("rosegarden")
+rosegarden_bashfunctions=("alias rosegarden=\"nohup rosegarden &>/dev/null &\"")
 rosegarden_packagenames=("rosegarden")
 rosegarden_launchernames=("com.rosegardenmusic.rosegarden")
 rosegarden_readmeline="| Rosegarden | Software for music production | Commands \`rosegarden\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
@@ -4814,6 +4823,7 @@ scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>
 
 scilab_installationtype="userinherit"
 scilab_arguments=("scilab")
+scilab_bashfunctions=("alias scilab=\"nohup bash ${CUSTOMIZER_FOLDER}/bin/scilab/bin/scilab &>/dev/null &\"")
 scilab_binariesinstalledpaths=("scilab;scilab" "scilab-cli;scilab-cli")
 scilab_packagedependencies=("openjdk-8-jdk-headless" "libtinfo5")
 scilab_compressedfiletype="z"
@@ -4825,7 +4835,7 @@ Comment=Scientific software package for numerical computations
 Comment[fr]=Logiciel scientifique de calcul numérique
 Comment[de]=eine Wissenschaftssoftware für numerische Berechnungen
 Comment[ru]=Научная программа для численных расчётов
-Exec=bash /home/axel/.customizer/bin/scilab/bin/scilab
+Exec=bash ${CUSTOMIZER_FOLDER}/bin/scilab/bin/scilab
 GenericName=Scientific Software Package
 GenericName[fr]=Logiciel de calcul numérique
 GenericName[de]=Wissenschaftssoftware

@@ -204,6 +204,7 @@ declare -r feature_keynames=(
   "ansible"
   "ant"
   "anydesk"
+  "ardour"
   "aspell"
   "atom"
   "audacity"
