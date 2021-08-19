@@ -67,8 +67,8 @@ fi
 #    launchercontents or the defined launchernames will be used as desktop launchers to associate the mime type.       #
 #    Optionally it can have a custom desktop launcher added after a ; of an associated file type to use a custom       #
 #    .desktop launcher: "text/x-chdr;sublime"                                                                          #
-#  - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature. Each keybind has 3 fields separated #
-#    from each other using ";": Command;key_combination;keybind_description.                                           #
+#  - FEATUREKEYNAME_keybindings: Array of keybindings to be associated with the feature. Each keybinding has 3 fields  #
+#    separated. from each other using ";": Command;key_combination;keybinding_description.                             #
 #  - FEATUREKEYNAME_downloads: Array of links to a valid download file separated by ";" from the desired name or full  #
 #    pathfor that file.                                                                                                #
 #    It will downloaded in ${BIN_FOLDER}/APPNAME/DESIREDFILENAME                                                   #
@@ -929,8 +929,8 @@ edit() {
     [bashfunctions]=\"${FUNCTIONS_PATH}\"
     [bashrc]=\"${BASHRC_PATH}\"
     [favorites]=\"${PROGRAM_FAVORITES_PATH}\"
-    [initializations]=\"${BASH_INITIALIZATIONS_PATH}\"
-    [keybindings]=\"${PROGRAM_KEYBIND_PATH}\"
+    [initializations]=\"${INITIALIZATIONS_PATH}\"
+    [keybindings]=\"${PROGRAM_KEYBINDINGS_PATH}\"
     [mime]=\"${MIME_ASSOCIATION_PATH}\"
     [profile]=\"${PROFILE_PATH}\"
     [sshconf]=\"${HOME_FOLDER}/.ssh/config\"
@@ -3180,7 +3180,7 @@ gnome_sudoku_readmeline="| sudoku | Implementation for GNU systems of the famous
 
 gnome_terminal_installationtype="packagemanager"
 gnome_terminal_arguments=("gnome_terminal")
-gnome_terminal_keybinds=("gnome-terminal;<Primary><Alt><Super>t;GNOME Terminal")
+gnome_terminal_keybindings=("gnome-terminal;<Primary><Alt><Super>t;GNOME Terminal")
 gnome_terminal_launchernames=("org.gnome.Terminal")
 gnome_terminal_packagenames=("gnome-terminal")
 gnome_terminal_readmeline="| GNOME terminal | Terminal of the system | Command \`gnome-terminal\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -4549,7 +4549,7 @@ pycharm_bashfunctions=("alias pycharm=\"pycharm . &>/dev/null &\"")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_compressedfiletype="z"
 pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz"
-pycharm_keybinds=("pycharm;<Primary><Alt><Super>p;Pycharm")
+pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
 pycharm_readmelinedescription="Integrated development environment used in computer programming"
 pycharm_launchercontents=("
 [Desktop Entry]
@@ -4775,7 +4775,7 @@ scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>
 screenshots_installationtype="environmental"
 screenshots_arguments=("screenshots")
 screenshots_filekeys=("screenshotwindow" "screenshotarea" "screenshotfull")
-screenshots_keybinds=("scr-area;<Primary><Alt><Super>a;Screenshot Area" "scr-full;<Primary><Alt><Super>f;Screenshot Full" "scr-window;<Primary><Alt><Super>w;Screenshot Window")
+screenshots_keybindings=("scr-area;<Primary><Alt><Super>a;Screenshot Area" "scr-full;<Primary><Alt><Super>f;Screenshot Full" "scr-window;<Primary><Alt><Super>w;Screenshot Window")
 screenshots_screenshotwindow_path="screenshot_window.sh"
 screenshots_screenshotwindow_content="
 mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
@@ -4945,7 +4945,7 @@ Version=1.0
 ")
 studio_readmeline="| Android Studio | ${studio_readmelinedescription} | Command \`studio\`, alias \`studio\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-sublime_keybinds=("sublime;<Primary><Alt><Super>s;Sublime Text")
+sublime_keybindings=("sublime;<Primary><Alt><Super>s;Sublime Text")
 sublime_installationtype="userinherit"
 sublime_arguments=("sublime" "sublime_text")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")

@@ -39,7 +39,7 @@ add_bash_function() {
 }
 
 
-# - Description: Installs a new bash feature into $BASH_INITIALIZATIONS_PATH is run once when the system starts.
+# - Description: Installs a new bash feature into $INITIALIZATIONS_PATH is run once when the system starts.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
 # - Argument 2: Name of the file.
@@ -51,9 +51,9 @@ add_bash_initialization() {
     apply_permissions "${INITIALIZATIONS_FOLDER}/$2"
   fi
 
-  # Add import_line to .bash_profile (BASH_INITIALIZATIONS_PATH)
-  if ! grep -Fqo "source \"${INITIALIZATIONS_FOLDER}/$2\"" "${BASH_INITIALIZATIONS_PATH}"; then
-    echo "source \"${INITIALIZATIONS_FOLDER}/$2\"" >> "${BASH_INITIALIZATIONS_PATH}"
+  # Add import_line to .bash_profile (INITIALIZATIONS_PATH)
+  if ! grep -Fqo "source \"${INITIALIZATIONS_FOLDER}/$2\"" "${INITIALIZATIONS_PATH}"; then
+    echo "source \"${INITIALIZATIONS_FOLDER}/$2\"" >> "${INITIALIZATIONS_PATH}"
   fi
 }
 
@@ -64,8 +64,8 @@ add_bash_initialization() {
 # Argument 2: Set of keys with the right format to be binded.
 # Argument 3: Descriptive name of the keybinding.
 add_keybinding() {
-  if ! grep -Fqo "$1;$2;$3" "${PROGRAM_KEYBIND_PATH}"; then
-    echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
+  if ! grep -Fqo "$1;$2;$3" "${PROGRAM_KEYBINDINGS_PATH}"; then
+    echo "$1;$2;$3" >> "${PROGRAM_KEYBINDINGS_PATH}"
   fi
 }
 
@@ -510,7 +510,7 @@ generic_install_file_associations() {
 # - Argument 1: Name of the feature to install, matching the variable $1_keybinds
 #   and the name of the first argument in the common_data.sh table
 generic_install_keybindings() {
-  local -r keybinds="$1_keybinds[@]"
+  local -r keybinds="$1_keybindings[@]"
   for keybind in "${!keybinds}"; do
     local command=
     command="$(echo "${keybind}" | cut -d ";" -f1)"
@@ -828,7 +828,7 @@ data_and_file_structures_initialization() {
   create_folder "${DATA_FOLDER}"
   create_folder "${BIN_FOLDER}"
   create_folder "${FUNCTIONS_FOLDER}"
-  create_folder "${DIR_IN_PATH}"
+  create_folder "${PATH_POINTED_FOLDER}"
   create_folder "${PERSONAL_LAUNCHERS_DIR}"
   create_folder "${FONTS_FOLDER}"
   create_folder "${INITIALIZATIONS_FOLDER}"
@@ -837,8 +837,8 @@ data_and_file_structures_initialization() {
     create_file "${FUNCTIONS_PATH}"
   fi
   # Initialize ${HOME_FOLDER}/.profile initializations
-  if [ ! -f "${BASH_INITIALIZATIONS_PATH}" ]; then
-    create_file "${BASH_INITIALIZATIONS_PATH}"
+  if [ ! -f "${INITIALIZATIONS_PATH}" ]; then
+    create_file "${INITIALIZATIONS_PATH}"
   fi
   # Updates initializations
   # Avoid running bash functions non-interactively
@@ -851,10 +851,10 @@ data_and_file_structures_initialization() {
   add_bash_initialization "${favorites_function}" "favorites.sh"
 
   # Create and / or update built-in keybinding subsystem
-  if [ ! -f "${PROGRAM_KEYBIND_PATH}" ]; then
-    create_file "${PROGRAM_KEYBIND_PATH}"
+  if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
+    create_file "${PROGRAM_KEYBINDINGS_PATH}"
   fi
-  add_bash_initialization "${keybind_function}" "keybind.sh"
+  add_bash_initialization "${keybinding_function}" "keybinding.sh"
 
   # Make sure that .bashrc sources .bash_functions
   if ! grep -Fqo "${bash_functions_import}" "${BASHRC_PATH}"; then
@@ -935,23 +935,23 @@ fi
 "
 
 # https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal
-# - Description: This function is the basic piece of the keybind subsystem, but is not a function that it is
-# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBIND_PATH every time a terminal
-# is invoked. This function and its necessary files such as $PROGRAM_KEYBIND_PATH are always present during the
+# - Description: This function is the basic piece of the keybinding subsystem, but is not a function that it is
+# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBINDINGS_PATH every time a terminal
+# is invoked. This function and its necessary files such as $PROGRAM_KEYBINDINGS_PATH are always present during the
 # execution of install. Also, for simplicity, we consider that each keybinding
-# This function basically processes and applies the results of the call to add_custom_keybind function.
+# This function basically processes and applies the results of the call to add_custom_keybinding function.
 # - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
-# add_custom_keybind instead, can be called as root or user, so root and user executions can be added
+# add_custom_keybinding instead, can be called as root or user, so root and user executions can be added
 
 # Name, Command, Binding...
 # 1st argument Name of the feature
 # 2nd argument Command of the feature
 # 3rd argument Bind Key Combination of the feature ex(<Primary><Alt><Super>a)
 # 4th argument Number of the feature array position slot of the added custom command (custom0, custom1, custom2...)
-keybind_function="
-# Check if there are keybinds available
-if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
-  # regenerate list of active keybinds
+keybinding_function="
+# Check if there are keybindings available
+if [ -f \"${PROGRAM_KEYBINDINGS_PATH}\" ]; then
+  # regenerate list of active keybindings
   declare -a active_keybinds=\"\$(echo \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)\" | sed 's/@as //g' | tr -d \",\" | tr \"[\" \"(\" | tr \"]\" \")\" | tr \"'\" \"\\\"\")\"
 
   # Every iteration is a line. IFS (internal field separator) set to empty
@@ -1010,7 +1010,7 @@ if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
         active_keybinds+=(/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/)
       fi
     fi
-  done < \"${PROGRAM_KEYBIND_PATH}\"
+  done < \"${PROGRAM_KEYBINDINGS_PATH}\"
   # Build string for gsettings set for the active custom keybindings from the array of active keybinds that we have been building
   active_keybinds_str=\"[\"
   for active_keybind in \${active_keybinds[@]}; do

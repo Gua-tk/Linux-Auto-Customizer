@@ -38,14 +38,14 @@
 #     Path pointing to the folder containing all the scripts of the bash functions                                     #
 #   - FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions                                          #
 #     Path pointing to .bash_functions, which is the file used to control the installed features of the customizer.    #
-#   - BASH_INITIALIZATIONS_PATH: /home/username/.bin/bash-functions/.bash_profile                                      #
+#   - INITIALIZATIONS_PATH: /home/username/.bin/bash-functions/.bash_profile                                      #
 #     Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start.                               #
 #   - INITIALIZATIONS_FOLDER: /home/username/.bin/bash_functions/.bash_functions                                  #
 #     Path pointing to the folder which contains the initialization bash scripts.                                      #
 #   - PROGRAM_FAVORITES_PATH: {INITIALIZATIONS_FOLDER}/favorites.txt                                              #
 #     Default favorites list, data to set favorites.                                                                   #
-#   - PROGRAM_KEYBIND_PATH: ${INITIALIZATIONS_FOLDER}/keybinds.txt                                                #
-#     Default keybind list data to set custom keybindings.                                                             #
+#   - PROGRAM_KEYBIND_PATH: ${INITIALIZATIONS_FOLDER}/keybindings.txt                                                #
+#     Default keybinding list data to set custom keybindings.                                                             #
 #                                                                                                                      #
 # * System routes:                                                                                                     #
 #   - HOME_FOLDER: /home/username                                                                                      #
@@ -113,9 +113,9 @@ declare -r INITIALIZATIONS_FOLDER="${CUSTOMIZER_FOLDER}/initializations"
 declare -r DATA_FOLDER="${CUSTOMIZER_FOLDER}/data"
 
 declare -r FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
-declare -r BASH_INITIALIZATIONS_PATH="${DATA_FOLDER}/initializations.sh"
+declare -r INITIALIZATIONS_PATH="${DATA_FOLDER}/initializations.sh"
 declare -r PROGRAM_FAVORITES_PATH="${DATA_FOLDER}/favorites.txt"
-declare -r PROGRAM_KEYBIND_PATH="${DATA_FOLDER}/keybinds.txt"
+declare -r PROGRAM_KEYBINDINGS_PATH="${DATA_FOLDER}/keybindings.txt"
 
 declare -r PATH_POINTED_FOLDER="${HOME_FOLDER}/.local/bin"
 declare -r ALL_USERS_PATH_POINTED_FOLDER="/usr/bin"
@@ -465,12 +465,8 @@ declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "check
 # related to an installation feature. This include data templates, output messages, etc.                               #
 ########################################################################################################################
 
-declare -r bash_functions_import="
-source ${FUNCTIONS_PATH}
-"
-declare -r bash_initializations_import="
-source ${BASH_INITIALIZATIONS_PATH}
-"
+declare -r bash_functions_import="source \"${FUNCTIONS_PATH}\""
+declare -r bash_initializations_import="source \"${INITIALIZATIONS_PATH}\""
 declare -r flagsoverride_template=";;;;;"
 
 declare -r bash_functions_init="
