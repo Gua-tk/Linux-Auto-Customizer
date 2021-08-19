@@ -4824,7 +4824,7 @@ scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>
 scilab_installationtype="userinherit"
 scilab_arguments=("scilab")
 scilab_bashfunctions=("alias scilab=\"nohup bash ${CUSTOMIZER_FOLDER}/bin/scilab/bin/scilab &>/dev/null &\"")
-scilab_binariesinstalledpaths=("scilab;scilab" "scilab-cli;scilab-cli")
+scilab_binariesinstalledpaths=("scilab;scilab" "scilab-cli;scilab-cli" "scinotes;scinotes")
 scilab_packagedependencies=("openjdk-8-jdk-headless" "libtinfo5")
 scilab_compressedfiletype="z"
 scilab_compressedfileurl="https://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz"
@@ -4840,7 +4840,7 @@ GenericName=Scientific Software Package
 GenericName[fr]=Logiciel de calcul numérique
 GenericName[de]=Wissenschaftssoftware
 GenericName[ru]=Научный программный комплекс
-Icon=scilab
+Icon=${CUSTOMIZER_FOLDER}/bin/scilab/share/icons/hicolor/256x256/apps/scilab.png
 MimeType=application/x-scilab-sci;application/x-scilab-sce;application/x-scilab-tst;application/x-scilab-dem;application/x-scilab-sod;application/x-scilab-xcos;application/x-scilab-zcos;application/x-scilab-bin;application/x-scilab-cosf;application/x-scilab-cos;
 Name=Scilab
 StartupNotify=false
