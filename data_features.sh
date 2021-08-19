@@ -3696,6 +3696,13 @@ libxcb_xtest0_arguments=("libxcb_xtest0")
 libxcb_xtest0_packagenames=("libxcb-xtest0")
 libxcb_xtest0_readmeline="| libxcb-xtest0 | Zoom dependency | Used when Zoom is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+lmms_installationtype="packagemanager"
+lmms_arguments=("lmms")
+lmms_bashfunctions=("alias lmms=\"nohup lmms &>/dev/null &\"")
+lmms_packagenames=("lmms")
+lmms_launchernames=("lmms")
+lmms_readmeline="| lmms | Software for making music | command \`lmms\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 lolcat_installationtype="packagemanager"
 lolcat_arguments=("lolcat")
 lolcat_bashfunctions=("alias lol=\"lolcat\"")

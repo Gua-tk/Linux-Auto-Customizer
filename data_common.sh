@@ -320,6 +320,7 @@ declare -r feature_keynames=(
   "libgtkglext1"
   "libkrb5_dev"
   "libxcb_xtest0"
+  "lmms"
   "lolcat"
   "mdadm"
   "megasync"

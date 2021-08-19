@@ -221,3 +221,5 @@
   - [x] `soundcloud` 
 - [x] `install.sh`, `uninstall.sh`: gnu octave and or scilab
 - [x] `install.sh`, `uninstall.sh`: rosegarden (music edition)
+- [x] `install.sh`, `uninstall.sh`: Ardour (music edition)
+- [x] `install.sh`, `uninstall.sh`: LMMS (music edition)
