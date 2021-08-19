@@ -19,11 +19,12 @@
 ################################################ INSTALL API FUNCTIONS #################################################
 ########################################################################################################################
 
-# - Description: Installs a new bash feature into $FUNCTIONS_PATH which sources the script that contains the code
-# for this new feature.
+# - Description: Installs a bash feature into the environment by adding a bash script into $FUNCTIONS_FOLDER which will
+#   be sourced from $FUNCTIONS_PATH file by adding an import line for it. These structures are always present and
+#   $FUNCTIONS_PATH file is always sourced by bashrc, which is run every time a bash interpreter is invoked.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
-# - Argument 2: Name of the file.
+# - Argument 2: Name of the bash script file in $FUNCTIONS_FOLDER.
 add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
   create_file "${FUNCTIONS_FOLDER}/$2" "$1"
@@ -33,13 +34,15 @@ add_bash_function() {
   fi
 
   # Add import_line to .bash_functions (FUNCTIONS_PATH)
-  if ! grep -Fqo "source ${FUNCTIONS_FOLDER}/$2" "${FUNCTIONS_PATH}"; then
-    echo "source ${FUNCTIONS_FOLDER}/$2" >> "${FUNCTIONS_PATH}"
+  if ! grep -Fqo "source \"${FUNCTIONS_FOLDER}/$2\"" "${FUNCTIONS_PATH}"; then
+    echo "source \"${FUNCTIONS_FOLDER}/$2\"" >> "${FUNCTIONS_PATH}"
   fi
 }
 
 
-# - Description: Installs a new bash feature into $INITIALIZATIONS_PATH is run once when the system starts.
+# - Description: Installs a bash feature into the environment by adding a bash script into $INITIALIZATIONS_FOLDER which
+#   will be sourced from $INITIALIZATIONS_PATH file by adding to it an import line. These structures are always present
+#   and $INITIALIZATIONS_PATH file is always sourced by profile, which is run once when the system starts.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
 # - Argument 2: Name of the file.
@@ -58,11 +61,13 @@ add_bash_initialization() {
 }
 
 
-# Description: Sets keybinding adding keybinding for keybind_function bash function.
-# Permissions: can be executed indifferently as root or user.
-# Argument 1: Command to be run with the keyboard shortcut.
-# Argument 2: Set of keys with the right format to be binded.
-# Argument 3: Descriptive name of the keybinding.
+# - Description: Adds a new keybinding by adding its data to PROGRAM_KEYBINDINGS_PATH if not already present. This feeds
+#   the input for the keybinding subsystem, which is executed on system start to update the available keybindings. This
+#   subsystem is present for all every installation.
+# - Permissions: Can be executed indifferently as root or user.
+# - Argument 1: Command to be run with the keyboard shortcut.
+# - Argument 2: Set of keys with the right format to be bind.
+# - Argument 3: Descriptive name of the keybinding.
 add_keybinding() {
   if ! grep -Fqo "$1;$2;$3" "${PROGRAM_KEYBINDINGS_PATH}"; then
     echo "$1;$2;$3" >> "${PROGRAM_KEYBINDINGS_PATH}"
@@ -70,11 +75,11 @@ add_keybinding() {
 }
 
 
-# - Description: Add new program launcher to the task bar given its desktop launcher filename.
-#   This is done by writing in PROGRAM_FAVORITES_PATH the 1st argument.
-#   This file is the input for add_to_favorites functions which is always present in all installations and this function
-#   is executed each time we source ~/.bashrc.
-# - Permissions: This functions can be called indistinctly as root or user.
+# - Description: Add new program launcher to the task bar given its desktop launcher filename by using favorites
+#   subsystem. This is done by writing the first argument in PROGRAM_FAVORITES_PATH.
+#   This file is the input for the favorites subsystem which is always present in all installations. This subsystem
+#   is executed on system start to update the favorites in the taskbar.
+# - Permissions: This function can be called indistinctly as root or user.
 # - Argument 1: Name of the .desktop launcher without .desktop extension located in file in PERSONAL_LAUNCHERS_DIR or
 #   ALL_USERS_LAUNCHERS_DIR.
 add_to_favorites() {
@@ -91,10 +96,10 @@ add_to_favorites() {
 }
 
 
-# - Description: Sets a program to autostart by giving its launcher name without .desktop extension.
-#   This .desktop are searched at ALL_USERS_LAUNCHERS_DIR and PERSONAL_LAUNCHERS_DIR.
-# - Permissions: This functions can be called as root or as user.
-# - Argument 1: Name of .desktop launcher of program file without the '.desktop' extension.
+# - Description: Sets a program to autostart on every boot by giving its launcher name without .desktop extension as an
+#   argument. These .desktop files are searched in ALL_USERS_LAUNCHERS_DIR and PERSONAL_LAUNCHERS_DIR.
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Name of the .desktop launcher of program without the '.desktop' extension.
 autostart_program() {
   # If absolute path
   if echo "$1" | grep -Eqo "^/"; then

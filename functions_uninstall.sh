@@ -15,67 +15,81 @@
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
+########################################################################################################################
+############################################## UNINSTALL API FUNCTIONS #################################################
+########################################################################################################################
 
-# - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
-purge_all_features()
-{
-  # Remove the contents of BIN_FOLDER
-  rm -Rf "${BIN_FOLDER}"
-  # Remove links in path
-  for filename in ${ls "${PATH_POINTED_FOLDER}"}; do
-    if [[ ! -e "${PATH_POINTED_FOLDER}/filename" ]]; then
-      rm -f "${PATH_POINTED_FOLDER}/filename"
-    fi
-  done
-}
-
-# - [ ] Program function in `uninstall.sh` to remove bash functions
-# - Argument 1: Name of the filename sourced by own .bash_functions of customizer
+# - Description: Removes a bash feature from the environment by removing its bash script from $FUNCTIONS_FOLDER and its
+#   import line from $FUNCTIONS_PATH file.
+# - Permissions: Can be called as root or as normal user presumably with the same behaviour.
+# - Argument 1: Name of the bash script file in $FUNCTIONS_FOLDER.
 remove_bash_function()
 {
-  sed "s@source ${FUNCTIONS_FOLDER}/$1\$@@g" -i ${FUNCTIONS_PATH}
+  sed "s@^source \"${FUNCTIONS_FOLDER}/$1\"\$@@g" -i "${FUNCTIONS_PATH}"
   rm -f "${FUNCTIONS_FOLDER}/$1"
 }
 
-# - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
-remove_from_favorites()
-{
-  if [[ ${EUID} -eq 0 ]]; then
-    # This code search and export the variable DBUS_SESSIONS_BUS_ADDRESS for root access to gsettings and dconf
-    if [[ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]]; then
-      user=$(whoami)
-      fl=$(find /proc -maxdepth 2 -user $user -name environ -print -quit)
-      while [ -z $(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2- | tr -d '\000' ) ]
-      do
-        fl=$(find /proc -maxdepth 2 -user $user -name environ -newer "$fl" -print -quit)
-      done
-      export DBUS_SESSION_BUS_ADDRESS="$(grep -z DBUS_SESSION_BUS_ADDRESS "$fl" | cut -d= -f2-)"
-    fi
-  fi
-  if [[ -z $(echo "$(gsettings get org.gnome.shell favorite-apps)" | grep -Fo "$1.desktop") ]]; then
-    output_proxy_executioner "echo WARNING: $1 is not in favourites of the task-bar, so cannot be removed. Skipping..." ${FLAG_QUIETNESS}
-  else
-    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed "s@'google-chrome.desktop'@@g" | sed "s@, ,@,@g" | sed "s@\[, @[@g" | sed "s@, \]@]@g" | sed "s@@@g"sed "s@, \]@]@g")"
-  fi
+
+# - Description: Removes a bash feature from the environment by removing its bash script from $INITIALIZATIONS_FOLDER
+#   and its import line from $INITIALIZATIONS_PATH file.
+# - Permissions: Can be called as root or as normal user presumably with the same behaviour.
+# - Argument 1: Name of the bash script file in $INITIALIZATIONS_FOLDER.
+remove_bash_initialization() {
+  sed "s@^source \"${INITIALIZATIONS_FOLDER}/$1\"\$@@g" -i "${INITIALIZATIONS_PATH}"
+  rm -f "${INITIALIZATIONS_FOLDER}/$1"
 }
+
+
+# - Description: Removes keybinding by removing its data from PROGRAM_KEYBINDINGS_PATH. This feeds the input for
+#   keybinding subsystem, which is used to update the taskbar favorite elements on system start.
+# - Permissions: can be executed indifferently as root or user.
+# - Argument 1: Keybinding data to be removed
+remove_keybinding() {
+    sed "s@^$1\$@@g" -i "${PROGRAM_KEYBINDINGS_PATH}"
+}
+
+
+# - Description: Removes a program from the taskbar by using the favorites subsystem. This subsystem is executed in
+#   every log in to update the favorite programs in the taskbar.
+#   This is done by writing in PROGRAM_FAVORITES_PATH, which is the file used to feed this subsystem.
+# - Permissions: This functions can be called indistinctly as root or user.
+# - Argument 1: Name of the .desktop launcher without .desktop extension to be removed from $PROGRAM_FAVORITES_PATH.
+remove_favorite() {
+  sed "s@^${1}.desktop\$@@g" -i "${PROGRAM_FAVORITES_PATH}"
+}
+
+
+# - Description: Removes launcher that is making a program autostart. This is accomplished by removing the desktop
+#   launcher from $AUTOSTART_FOLDER, which is used by the operating system to read its autostart programs.
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Name of the .desktop launcher to be removed without the '.desktop' extension.
+remove_autostart_program() {
+  rm -f "${AUTOSTART_FOLDER}/$1.desktop"
+}
+
 
 # - [ ] Program function to unregister default opening applications on `uninstall.sh`
 # First argument: name of the .desktop whose associations will be removed
 remove_file_associations()
 {
-  if [[ -f "${MIME_ASSOCIATION_PATH}" ]]; then
-    if [[ ! -z "${MIME_ASSOCIATION_PATH}" ]]; then
+  if [ -f "${MIME_ASSOCIATION_PATH}" ]; then
+    if [ -n "${MIME_ASSOCIATION_PATH}" ]; then
       sed "s@^.*=$1@@g" -i "${MIME_ASSOCIATION_PATH}"
     fi
   else
-    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $1 cannot be removed from favourites. Skipping..." ${FLAG_QUIETNESS}
+    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $1 cannot be removed from favourites. Skipping..." "${FLAG_QUIETNESS}"
   fi
 }
+
+
+
+
+
 
 # - Argument 1: program unified name
 remove_manual_feature()
 {
-  rm -Rf "${BIN_FOLDER}/$1"
+  rm -Rf "${BIN_FOLDER:?}/$1"
   rm -f "${PATH_POINTED_FOLDER}/$1"
   rm -f "${XDG_DESKTOP_DIR}/$1.desktop"
   rm -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop"
@@ -84,10 +98,14 @@ remove_manual_feature()
   remove_bash_function "$1"
 }
 
-if [[ -f "${DIR}/functions_common.sh" ]]; then
+
+
+
+if [ -f "${DIR}/functions_common.sh" ]; then
   source "${DIR}/functions_common.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_common.sh not found. Aborting..."
   exit 1
 fi
+
