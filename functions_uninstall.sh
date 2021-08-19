@@ -33,7 +33,7 @@ purge_all_features()
 # - Argument 1: Name of the filename sourced by own .bash_functions of customizer
 remove_bash_function()
 {
-  sed "s@source ${FUNCTIONS_FOLDER}/$1\$@@g" -i ${BASH_FUNCTIONS_PATH}
+  sed "s@source ${FUNCTIONS_FOLDER}/$1\$@@g" -i ${FUNCTIONS_PATH}
   rm -f "${FUNCTIONS_FOLDER}/$1"
 }
 

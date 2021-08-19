@@ -144,7 +144,7 @@ update_environment()
   output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
   output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
   output_proxy_executioner "echo INFO: Reload .bashrc shell environment" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "source ${FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
 }
 
 

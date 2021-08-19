@@ -19,7 +19,7 @@
 ################################################ INSTALL API FUNCTIONS #################################################
 ########################################################################################################################
 
-# - Description: Installs a new bash feature into $BASH_FUNCTIONS_PATH which sources the script that contains the code
+# - Description: Installs a new bash feature into $FUNCTIONS_PATH which sources the script that contains the code
 # for this new feature.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
@@ -32,9 +32,9 @@ add_bash_function() {
     apply_permissions "${FUNCTIONS_FOLDER}/$2"
   fi
 
-  # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
-  if ! grep -Fqo "source ${FUNCTIONS_FOLDER}/$2" "${BASH_FUNCTIONS_PATH}"; then
-    echo "source ${FUNCTIONS_FOLDER}/$2" >> "${BASH_FUNCTIONS_PATH}"
+  # Add import_line to .bash_functions (FUNCTIONS_PATH)
+  if ! grep -Fqo "source ${FUNCTIONS_FOLDER}/$2" "${FUNCTIONS_PATH}"; then
+    echo "source ${FUNCTIONS_FOLDER}/$2" >> "${FUNCTIONS_PATH}"
   fi
 }
 
@@ -833,8 +833,8 @@ data_and_file_structures_initialization() {
   create_folder "${FONTS_FOLDER}"
   create_folder "${INITIALIZATIONS_FOLDER}"
   # Initialize bash functions
-  if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
-    create_file "${BASH_FUNCTIONS_PATH}"
+  if [ ! -f "${FUNCTIONS_PATH}" ]; then
+    create_file "${FUNCTIONS_PATH}"
   fi
   # Initialize ${HOME_FOLDER}/.profile initializations
   if [ ! -f "${BASH_INITIALIZATIONS_PATH}" ]; then
@@ -891,7 +891,7 @@ update_environment() {
   output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
   output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
   output_proxy_executioner "echo INFO: Reloading bash features" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "source ${FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
   output_proxy_executioner "echo INFO: Finished execution" "${FLAG_QUIETNESS}"
 }
 

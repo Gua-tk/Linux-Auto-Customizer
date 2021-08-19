@@ -36,7 +36,7 @@
 #     Folder where all the software will be installed.                                                                 #
 #   - FUNCTIONS_FOLDER: /home/username/.bin/bash-functions                                                        #
 #     Path pointing to the folder containing all the scripts of the bash functions                                     #
-#   - BASH_FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions                                          #
+#   - FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions                                          #
 #     Path pointing to .bash_functions, which is the file used to control the installed features of the customizer.    #
 #   - BASH_INITIALIZATIONS_PATH: /home/username/.bin/bash-functions/.bash_profile                                      #
 #     Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start.                               #
@@ -112,7 +112,7 @@ declare -r FUNCTIONS_FOLDER="${CUSTOMIZER_FOLDER}/functions"
 declare -r INITIALIZATIONS_FOLDER="${CUSTOMIZER_FOLDER}/initializations"
 declare -r DATA_FOLDER="${CUSTOMIZER_FOLDER}/data"
 
-declare -r BASH_FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
+declare -r FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
 declare -r BASH_INITIALIZATIONS_PATH="${DATA_FOLDER}/initializations.sh"
 declare -r PROGRAM_FAVORITES_PATH="${DATA_FOLDER}/favorites.txt"
 declare -r PROGRAM_KEYBIND_PATH="${DATA_FOLDER}/keybinds.txt"
@@ -466,7 +466,7 @@ declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "check
 ########################################################################################################################
 
 declare -r bash_functions_import="
-source ${BASH_FUNCTIONS_PATH}
+source ${FUNCTIONS_PATH}
 "
 declare -r bash_initializations_import="
 source ${BASH_INITIALIZATIONS_PATH}
