@@ -215,3 +215,7 @@
 - [x] `prompt`: bashcolors with prompt fusion and adding a randomly colored @ to PS1 for each instruction putting it to green, red or yellow for interesting situations
 - [x] `desktop launchers`: Change `.ico` & `.png` icon files to `.svg` to make desktop launcher icons more Debian friendly. --> unify url to svg -> This may need external ffmpeg processing of feature icons from .* to .svg convertion
 - [x] `data_features.sh`, `common_data.sh`: `F` function.
+- [x] `install.sh`, `uninstall.sh`: internet shortcut launcher.
+  - [x] `Google`/
+  - [x] `translator`/
+  - [x] `soundcloud` 

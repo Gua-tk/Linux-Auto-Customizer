@@ -3190,6 +3190,33 @@ gnome_tweak_tool_packagenames=("gnome-tweak-tool")
 gnome_tweak_tool_launchernames=("org.gnome.tweaks")
 gnome_tweak_tool_readmeline="| GNOME Tweaks | GUI for system customization | command and desktop launcher... ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+google_installationtype="environmental"
+google_arguments=("google")
+google_url="https://www.google.com/"
+google_bashfunctions=("alias google=\"nohup xdg-open ${google_url} &>/dev/null &\"")
+google_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/53/Google_\"G\"_Logo.svg;google_icon.svg")
+google_readmelinedescription="Google opening in Chrome"
+google_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=${google_readmelinedescription}
+Encoding=UTF-8
+Exec=xdg-open ${google_url}
+Icon=${BIN_FOLDER}/google/google_icon.svg
+GenericName=Google
+Keywords=google;
+MimeType=
+Name=Google
+StartupNotify=true
+StartupWMClass=Google
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0
+")
+google_readmeline="| Google | ${google_readmelinedescription} | Command \`google\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+
 googlecalendar_installationtype="environmental"
 googlecalendar_arguments=("google_calendar")
 googlecalendar_url="https://calendar.google.com/"
@@ -4878,6 +4905,33 @@ sonic_pi_launchernames=("sonic-pi")
 sonic_pi_packagenames=("sonic-pi")
 sonic_pi_readmeline="| Sonic Pi | programming language that ouputs sounds as compilation product | Command \`sonic-pi\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
+soundcloud_installationtype="environmental"
+soundcloud_arguments=("soundcloud")
+soundcloud_url="https://www.soundcloud.com/"
+soundcloud_bashfunctions=("alias soundcloud=\"nohup xdg-open ${soundcloud_url} &>/dev/null &\"")
+soundcloud_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a2/Antu_soundcloud.svg;soundcloud_icon.svg")
+soundcloud_readmelinedescription="SoundCloud opening in Chrome"
+soundcloud_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=${soundcloud_readmelinedescription}
+Encoding=UTF-8
+Exec=xdg-open ${soundcloud_url}
+Icon=${BIN_FOLDER}/soundcloud/soundcloud_icon.svg
+GenericName=Soundcloud
+Keywords=sound;
+MimeType=
+Name=SoundCloud
+StartupNotify=true
+StartupWMClass=Soundcloud
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0
+")
+soundcloud_readmeline="| Soundcloud | ${soundcloud_readmelinedescription} | Command \`soundcloud\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+
 spotify_installationtype="packageinstall"
 spotify_arguments=("spotify")
 spotify_bashfunctions=("alias spotify=\"spotify &>/dev/null &\"")
@@ -5342,6 +5396,32 @@ tor_arguments=("tor" "tor_browser")
 tor_launchernames=("torbrowser")
 tor_packagenames=("torbrowser-launcher")
 tor_readmeline="| Tor browser | Software for enabling anonymous communication by directing Internet traffic. | Command \`tor\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+translator_installationtype="environmental"
+translator_arguments=("translator")
+translator_url="https://translate.google.com/"
+translator_bashfunctions=("alias translator=\"nohup xdg-open ${translator_url} &>/dev/null &\"")
+translator_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png;translator_icon.png")
+translator_readmelinedescription="Google Translate opening in Chrome"
+translator_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=${translator_readmelinedescription}
+Encoding=UTF-8
+Exec=xdg-open ${translator_url}
+Icon=${BIN_FOLDER}/translator/translator_icon.png
+GenericName=Google Translator
+Keywords=google;
+MimeType=
+Name=Google Translate
+StartupNotify=true
+StartupWMClass=Google Translator
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=1.0
+")
+translator_readmeline="| Translator | ${google_readmelinedescription} | Command \`translator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 transmission_gtk_installationtype="packagemanager"
 transmission_gtk_arguments=("transmission_gtk" "transmission")
