@@ -3,7 +3,7 @@
 - [x] -v --verbose Verbose mode (make the software not verbose by default)
 - [x] Solve a bug of `PATH` addition in shell features. (it works, but it appends the export many times)
 - [x] To add more useful directory path variables in common_data.sh
-- [x] Make sure USR_BIN_FOLDER is present in any user roll
+- [x] Make sure BIN_FOLDER is present in any user roll
 - [x] Create a file and directory structure to add features to `.bashrc` without actually writing anything on it by using the wrapper in `.bash_functions`
 - [x] Name refactor of functions to make it coincide with what command is being thrown in order to determine if it is installed using which
 - [x] try refactoring the point above by using type, which recognizes alias and functions too
@@ -28,7 +28,7 @@
 - [x] Put Path declaration in common data, as a bash function  
 - [x] Add final & to alias of gitk  (git_aliases), pluma, VS code,  so is always launched in background
 - [x] Apply rule: no apt, the default way to install package in script is apt-get
-- [x] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $USR_BIN_FOLDER
+- [x] Change the default storing place for wallpapers. change from ~/Images to ~/Images/wallpapers or in a folder in $BIN_FOLDER
 - [x] Write date in all the messages that the customizer outputs (warning, info etc)
 - [x] Fusion create links in path with download and decompress
 - [x] Autofirma
@@ -58,12 +58,12 @@
 - [x] `install.sh`: Force that the non-interactive running and the path is the first line in .bash_functions, as a common feature
 - [x] `u` function needs a bit rework
 - [x] `v` function for python3 virtual environments
-- [x] `functions_install.sh`: Make download() and decompress() handle relative paths as paths from USR_BIN_FOLDER. if not absolute
+- [x] `functions_install.sh`: Make download() and decompress() handle relative paths as paths from BIN_FOLDER. if not absolute
 - [x] `data_features.sh`: Add favorite function that works when being root --> Root programs in user's favorites bar write to `.profile` or `.bashrc` to set custom favorites bar. move add to favorites to `.bash_profile`
 - [x] `install.sh`: Add debug mode, with a simple eval to inject code as a function
 - [x] `commmon_functions.sh`: Implement execute_installation as a function that only uses as parameter the name of the program, in order to detect it's permissions and way of install for expanding the necessary data for that type of installation. With that, we will distinguish between a fully generic install or it will try to call an existent hardcoded function to install that feature
 - [x] `README.md`: Refactor order of the table to follow the conventions on `install.sh`. (implement three sections)
-- [x] `functions_install.sh`: Extract creation of binaries to a common part of a generic install. Give extra logic to this functions to accept relative (from the created folder for the feature in USR_BIN_FOLDER) or absolute paths.
+- [x] `functions_install.sh`: Extract creation of binaries to a common part of a generic install. Give extra logic to this functions to accept relative (from the created folder for the feature in BIN_FOLDER) or absolute paths.
 - [x] `install.sh`, `data_fatures.sh`: Refactor functions of root to use the generic_install function. AutoFirma, OpenOffice, nemo, WireShark, gpaint, iqmol, remaining among others
 - [x] `functions_install.sh`, `data_features.sh`: Add parametrization in generic_install to clone a repository instead of downloading and decompressing
 - [x] `functions_install.sh`: Parametrize Autofirma: In the generic install of a packageinstall add the possibility of having a compressed file that contains a deb instead of directly a deb.. This
@@ -75,7 +75,7 @@
 - [x] `data_features.sh`: ttf-mscorefonts-installer autoaccept end user agreement or goes out (may `yes | apt install ttf...` work?) --> Added frontend non interactive needs to be tested
 - [x] `data_features.sh`: All features must be standarized to the default name and format of the variables for indirect expansion.
 - [x] `data_features.sh`: in net-tools installation: alias ports="netstat -tulanp" # alias nr="net-restart"
-- [x] `USR_BIN_FOLDER`: There should be no files in USR_BIN_FOLDER. features such as wallpapers, youtube-dl or cheat have to be moved
+- [x] `BIN_FOLDER`: There should be no files in BIN_FOLDER. features such as wallpapers, youtube-dl or cheat have to be moved
 - [x] `data_features.sh`: Post installation Search for a new version of caffeine or do the modifications in the actual version, but do not apply a patch #  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
 - [x] `install.sh`, `uninstall.sh`: Add fonts installationtype --> Parametrized via userinherit and packagemanager
 - [x] completed keybinds subsystem
@@ -115,7 +115,12 @@
 - [x] `pluma`, `edit` functions should be able to open multiple files at once
 - [x] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as commentary in bashcolors function). 
 - [x] `data_features.sh`, `common_data.sh`: `p` function. It returns the name and PID of a process using the given port
-
+- [x] `install.sh`: Cache of downloads of customizer, add another flag to use / construct the cache (default) or to ignore it
+- [x] `functions_install.sh`: Control the addition of kebindings to the txt data file.
+- [x] Organize core files
+- [x] Define a new folder variable for . Customizer and adapt the rest
+- [x] ERROR messages should be sent to stderr. This is a way of showing errors even if quietness flag is on
+- [x] Change dir_in_path variable to PATH_POINTED_FOLDER to fit the naming schema
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter

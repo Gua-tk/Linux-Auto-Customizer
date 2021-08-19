@@ -19,12 +19,12 @@
 # - [ ] Add special func in `uninstall` that uninstalls the file structures that the customizer creates (~/.bash_functions, ~/.bin, etc.) That cannot be removed directly using uninstall
 purge_all_features()
 {
-  # Remove the contents of USR_BIN_FOLDER
-  rm -Rf "${USR_BIN_FOLDER}"
+  # Remove the contents of BIN_FOLDER
+  rm -Rf "${BIN_FOLDER}"
   # Remove links in path
-  for filename in ${ls "${DIR_IN_PATH}"}; do
-    if [[ ! -e "${DIR_IN_PATH}/filename" ]]; then
-      rm -f "${DIR_IN_PATH}/filename"
+  for filename in ${ls "${PATH_POINTED_FOLDER}"}; do
+    if [[ ! -e "${PATH_POINTED_FOLDER}/filename" ]]; then
+      rm -f "${PATH_POINTED_FOLDER}/filename"
     fi
   done
 }
@@ -33,8 +33,8 @@ purge_all_features()
 # - Argument 1: Name of the filename sourced by own .bash_functions of customizer
 remove_bash_function()
 {
-  sed "s@source ${BASH_FUNCTIONS_FOLDER}/$1\$@@g" -i ${BASH_FUNCTIONS_PATH}
-  rm -f "${BASH_FUNCTIONS_FOLDER}/$1"
+  sed "s@source ${FUNCTIONS_FOLDER}/$1\$@@g" -i ${FUNCTIONS_PATH}
+  rm -f "${FUNCTIONS_FOLDER}/$1"
 }
 
 # - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
@@ -75,11 +75,11 @@ remove_file_associations()
 # - Argument 1: program unified name
 remove_manual_feature()
 {
-  rm -Rf "${USR_BIN_FOLDER}/$1"
-  rm -f "${DIR_IN_PATH}/$1"
+  rm -Rf "${BIN_FOLDER}/$1"
+  rm -f "${PATH_POINTED_FOLDER}/$1"
   rm -f "${XDG_DESKTOP_DIR}/$1.desktop"
   rm -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop"
-  rm -f "${BASH_FUNCTIONS_FOLDER}/$1.sh"
+  rm -f "${FUNCTIONS_FOLDER}/$1.sh"
 
   remove_bash_function "$1"
 }

@@ -144,7 +144,7 @@ update_environment()
   output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
   output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
   output_proxy_executioner "echo INFO: Reload .bashrc shell environment" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "source ${FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
 }
 
 
@@ -358,12 +358,17 @@ argument_processing()
         FLAG_SKIP_PRIVILEGES_CHECK=1
       ;;
 
-      --commands)
-        #for featurekeyname in "${feature_keynames[@]}"; do
-          local all_arguments+=("${feature_keynames[@]}")
-          all_arguments+=("${auxiliary_arguments[@]}")
-          echo "${all_arguments[@]}"
-        #done
+      -h|--not-cached)
+        FLAG_CACHE=0
+      ;;
+      -H|--cached|--cache|--use-cache)
+        FLAG_CACHE=1
+      ;;
+
+      --commands)  # Print list of possible arguments and finish the program
+        local all_arguments+=("${feature_keynames[@]}")
+        all_arguments+=("${auxiliary_arguments[@]}")
+        echo "${all_arguments[@]}"
         exit 0
       ;;
 

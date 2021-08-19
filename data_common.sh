@@ -30,20 +30,22 @@
 #   - XDG_TEMPLATES_DIR: /home/username/Templates                                                                      #
 #                                                                                                                      #
 # * Customizer routes:                                                                                                 #
-#   - USR_BIN_FOLDER: /home/username/.bin                                                                              #
+#   - CUSTOMIZER_FOLDER: /home/username/.customizer                                                                    #
+#     Folder where we will put the different files installed by customizer.                                            #
+#   - BIN_FOLDER: /home/username/.bin                                                                              #
 #     Folder where all the software will be installed.                                                                 #
-#   - BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions                                                        #
+#   - FUNCTIONS_FOLDER: /home/username/.bin/bash-functions                                                        #
 #     Path pointing to the folder containing all the scripts of the bash functions                                     #
-#   - BASH_FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions                                          #
+#   - FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions                                          #
 #     Path pointing to .bash_functions, which is the file used to control the installed features of the customizer.    #
-#   - BASH_INITIALIZATIONS_PATH: /home/username/.bin/bash-functions/.bash_profile                                      #
+#   - INITIALIZATIONS_PATH: /home/username/.bin/bash-functions/.bash_profile                                      #
 #     Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start.                               #
-#   - BASH_INITIALIZATIONS_FOLDER: /home/username/.bin/bash_functions/.bash_functions                                  #
+#   - INITIALIZATIONS_FOLDER: /home/username/.bin/bash_functions/.bash_functions                                  #
 #     Path pointing to the folder which contains the initialization bash scripts.                                      #
-#   - PROGRAM_FAVORITES_PATH: {BASH_INITIALIZATIONS_FOLDER}/favorites.txt                                              #
+#   - PROGRAM_FAVORITES_PATH: {INITIALIZATIONS_FOLDER}/favorites.txt                                              #
 #     Default favorites list, data to set favorites.                                                                   #
-#   - PROGRAM_KEYBIND_PATH: ${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt                                                #
-#     Default keybind list data to set custom keybindings.                                                             #
+#   - PROGRAM_KEYBIND_PATH: ${INITIALIZATIONS_FOLDER}/keybindings.txt                                                #
+#     Default keybinding list data to set custom keybindings.                                                             #
 #                                                                                                                      #
 # * System routes:                                                                                                     #
 #   - HOME_FOLDER: /home/username                                                                                      #
@@ -60,9 +62,9 @@
 #     Bashrc for all users path variable system-wide.                                                                  #
 #   - PROFILE_PATH: ${HOME_FOLDER}/.profile                                                                            #
 #     Path pointing to our internal file for initializations.                                                          #
-#   - DIR_IN_PATH: /home/username/.local/bin                                                                           #
+#   - PATH_POINTED_FOLDER: /home/username/.local/bin                                                                           #
 #     Path pointing to a directory that is included in the PATH variable of the current user.                          #
-#   - ALL_USERS_DIR_IN_PATH: /usr/bin                                                                                  #
+#   - ALL_USERS_PATH_POINTED_FOLDER: /usr/bin                                                                                  #
 #     Path pointing to a directory that it is in the PATH of all users.                                                #
 #   - MIME_ASSOCIATION_PATH: ${HOME_FOLDER}/.config/mimeapps.list                                                      #
 #     File that contains the association of mime types with .desktop files.                                            #
@@ -103,21 +105,27 @@ if [ -z "${XDG_TEMPLATES_DIR}" ]; then
   declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
 fi
 
-declare -r DIR_IN_PATH="${HOME_FOLDER}/.local/bin"
-declare -r ALL_USERS_DIR_IN_PATH="/usr/bin"
+declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
+declare -r BIN_FOLDER="${CUSTOMIZER_FOLDER}/bin"
+declare -r CACHE_FOLDER="${CUSTOMIZER_FOLDER}/cache"
+declare -r TEMP_FOLDER="${CUSTOMIZER_FOLDER}/temp"
+declare -r FUNCTIONS_FOLDER="${CUSTOMIZER_FOLDER}/functions"
+declare -r INITIALIZATIONS_FOLDER="${CUSTOMIZER_FOLDER}/initializations"
+declare -r DATA_FOLDER="${CUSTOMIZER_FOLDER}/data"
+
+declare -r FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
+declare -r INITIALIZATIONS_PATH="${DATA_FOLDER}/initializations.sh"
+declare -r PROGRAM_FAVORITES_PATH="${DATA_FOLDER}/favorites.txt"
+declare -r PROGRAM_KEYBINDINGS_PATH="${DATA_FOLDER}/keybindings.txt"
+
+declare -r PATH_POINTED_FOLDER="${HOME_FOLDER}/.local/bin"
+declare -r ALL_USERS_PATH_POINTED_FOLDER="/usr/bin"
 declare -r PERSONAL_LAUNCHERS_DIR="${HOME_FOLDER}/.local/share/applications"
 declare -r ALL_USERS_LAUNCHERS_DIR="/usr/share/applications"
 declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
 declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
-declare -r USR_BIN_FOLDER="${HOME_FOLDER}/.bin"
-declare -r BASH_FUNCTIONS_PATH="${USR_BIN_FOLDER}/bash-functions/.bash_functions"
-declare -r BASH_FUNCTIONS_FOLDER="${USR_BIN_FOLDER}/bash-functions"
 declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
-declare -r BASH_INITIALIZATIONS_FOLDER="${USR_BIN_FOLDER}/bash-initializations"
-declare -r BASH_INITIALIZATIONS_PATH="${BASH_INITIALIZATIONS_FOLDER}/.bash_profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
-declare -r PROGRAM_FAVORITES_PATH="${BASH_INITIALIZATIONS_FOLDER}/favorites.txt"
-declare -r PROGRAM_KEYBIND_PATH="${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt"
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 
@@ -157,6 +165,7 @@ declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 #     update and upgrade, respectively.                                                                                #
 #   - FLAG_AUTOCLEAN: By default "2". Can be set to "0", "1" or "2" with -d, -c or -C, which will do nothing, do a     #
 #     cache auto-remove or do a cache auto-remove and auto-clean.                                                      #
+#   - FLAG_CACHE: By default "1". Can be set to "0" or "1" with
 ########################################################################################################################
 
 # Static flags
@@ -174,7 +183,7 @@ FLAG_SKIP_PRIVILEGES_CHECK=0
 # Common behaviour flags
 FLAG_UPGRADE=1
 FLAG_AUTOCLEAN=2
-
+FLAG_CACHE=1
 
 ########################################################################################################################
 ################################################ FEATURE KEYNAMES ######################################################
@@ -458,12 +467,8 @@ declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "check
 # related to an installation feature. This include data templates, output messages, etc.                               #
 ########################################################################################################################
 
-declare -r bash_functions_import="
-source ${BASH_FUNCTIONS_PATH}
-"
-declare -r bash_initializations_import="
-source ${BASH_INITIALIZATIONS_PATH}
-"
+declare -r bash_functions_import="source \"${FUNCTIONS_PATH}\""
+declare -r bash_initializations_import="source \"${INITIALIZATIONS_PATH}\""
 declare -r flagsoverride_template=";;;;;"
 
 declare -r bash_functions_init="
@@ -473,9 +478,9 @@ case \$- in
       *) return;;
 esac
 
-# Make sure that PATH is pointing to ${DIR_IN_PATH} (where we will put our soft links to the software)
-if [ -z \"\$(echo \$PATH | grep -Eo \"${DIR_IN_PATH}\")\" ]; then
-  export PATH=\$PATH:${DIR_IN_PATH}
+# Make sure that PATH is pointing to ${PATH_POINTED_FOLDER} (where we will put our soft links to the software)
+if [ -z \"\$(echo \$PATH | grep -Eo \"${PATH_POINTED_FOLDER}\")\" ]; then
+  export PATH=\$PATH:${PATH_POINTED_FOLDER}
 fi
 "
 

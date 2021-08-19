@@ -19,41 +19,41 @@
 ################################################ INSTALL API FUNCTIONS #################################################
 ########################################################################################################################
 
-# - Description: Installs a new bash feature into $BASH_FUNCTIONS_PATH which sources the script that contains the code
+# - Description: Installs a new bash feature into $FUNCTIONS_PATH which sources the script that contains the code
 # for this new feature.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
 # - Argument 2: Name of the file.
 add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
-  create_file "${BASH_FUNCTIONS_FOLDER}/$2" "$1"
+  create_file "${FUNCTIONS_FOLDER}/$2" "$1"
   # If we are root apply permission to the file
   if [ "${EUID}" == 0 ]; then
-    apply_permissions "${BASH_FUNCTIONS_FOLDER}/$2"
+    apply_permissions "${FUNCTIONS_FOLDER}/$2"
   fi
 
-  # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
-  if ! grep -Fqo "source ${BASH_FUNCTIONS_FOLDER}/$2" "${BASH_FUNCTIONS_PATH}"; then
-    echo "source ${BASH_FUNCTIONS_FOLDER}/$2" >> "${BASH_FUNCTIONS_PATH}"
+  # Add import_line to .bash_functions (FUNCTIONS_PATH)
+  if ! grep -Fqo "source ${FUNCTIONS_FOLDER}/$2" "${FUNCTIONS_PATH}"; then
+    echo "source ${FUNCTIONS_FOLDER}/$2" >> "${FUNCTIONS_PATH}"
   fi
 }
 
 
-# - Description: Installs a new bash feature into $BASH_INITIALIZATIONS_PATH is run once when the system starts.
+# - Description: Installs a new bash feature into $INITIALIZATIONS_PATH is run once when the system starts.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
 # - Argument 2: Name of the file.
 add_bash_initialization() {
   # Write code to bash initializations folder with the name of the feature we want to install
-  create_file "${BASH_INITIALIZATIONS_FOLDER}/$2" "$1"
+  create_file "${INITIALIZATIONS_FOLDER}/$2" "$1"
   # If we are root apply permission to the file
   if [ "${EUID}" == 0 ]; then
-    apply_permissions "${BASH_INITIALIZATIONS_FOLDER}/$2"
+    apply_permissions "${INITIALIZATIONS_FOLDER}/$2"
   fi
 
-  # Add import_line to .bash_profile (BASH_INITIALIZATIONS_PATH)
-  if ! grep -Fqo "source \"${BASH_INITIALIZATIONS_FOLDER}/$2\"" "${BASH_INITIALIZATIONS_PATH}"; then
-    echo "source \"${BASH_INITIALIZATIONS_FOLDER}/$2\"" >> "${BASH_INITIALIZATIONS_PATH}"
+  # Add import_line to .bash_profile (INITIALIZATIONS_PATH)
+  if ! grep -Fqo "source \"${INITIALIZATIONS_FOLDER}/$2\"" "${INITIALIZATIONS_PATH}"; then
+    echo "source \"${INITIALIZATIONS_FOLDER}/$2\"" >> "${INITIALIZATIONS_PATH}"
   fi
 }
 
@@ -64,8 +64,8 @@ add_bash_initialization() {
 # Argument 2: Set of keys with the right format to be binded.
 # Argument 3: Descriptive name of the keybinding.
 add_keybinding() {
-  if ! grep -Fqo "$1;$2;$3" "${PROGRAM_KEYBIND_PATH}"; then
-    echo "$1;$2;$3" >> "${PROGRAM_KEYBIND_PATH}"
+  if ! grep -Fqo "$1;$2;$3" "${PROGRAM_KEYBINDINGS_PATH}"; then
+    echo "$1;$2;$3" >> "${PROGRAM_KEYBINDINGS_PATH}"
   fi
 }
 
@@ -205,9 +205,9 @@ copy_launcher() {
 # - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2.
 create_links_in_path() {
   if [ ${EUID} -ne 0 ]; then  # user
-    local -r directory="${DIR_IN_PATH}"
+    local -r directory="${PATH_POINTED_FOLDER}"
   else
-    local -r directory="${ALL_USERS_DIR_IN_PATH}"
+    local -r directory="${ALL_USERS_PATH_POINTED_FOLDER}"
   fi
   while [ $# -gt 0 ]; do
     ln -sf "$1" "${directory}/$2"
@@ -245,7 +245,7 @@ decompress() {
   local file_name=
   # capture directory where we have to decompress
   if [ -z "$2" ]; then
-    dir_name="${USR_BIN_FOLDER}"
+    dir_name="${BIN_FOLDER}"
     file_name="downloading_program"
   elif echo "$2" | grep -Eqo "^/"; then
     # Absolute path to a file
@@ -254,11 +254,11 @@ decompress() {
   else
     if echo "$2" | grep -Eqo "/"; then
       # Relative path to a file containing subfolders
-      dir_name="${USR_BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+      dir_name="${BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
       file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
     else
       # Only a filename
-      dir_name="${USR_BIN_FOLDER}"
+      dir_name="${BIN_FOLDER}"
       file_name="$2"
     fi
   fi
@@ -326,19 +326,19 @@ decompress() {
 
 
 # - Description: Downloads a file from the link provided in $1 and, if specified, with the location and name specified
-#   in $2. If $2 is not defined, download into ${USR_BIN_FOLDER}/downloading_program.
+#   in $2. If $2 is not defined, download into ${BIN_FOLDER}/downloading_program.
 # - Permissions: Can be called as root or normal user. If called as root changes the permissions and owner to the
 #   $SUDO_USER user, otherwise, needs permissions to create the file $2.
 # - Argument 1: Link to the file to download.
 # - Argument 2 (optional): Path to the created file, allowing to download in any location and use a different filename.
-#   By default the name of the file is downloading file and the PATH where is being downloaded is USR_BIN_FOLDER.
+#   By default the name of the file is downloading file and the PATH where is being downloaded is BIN_FOLDER.
 download() {
   local dir_name=
   local file_name=
   # Check if a path or name is specified
   if [ -z "$2" ]; then
     # default options
-    dir_name="${USR_BIN_FOLDER}"
+    dir_name="${BIN_FOLDER}"
     file_name=downloading_program
   else
     # Custom file or folder to download
@@ -352,7 +352,7 @@ download() {
         # maybe is the path to a file
         dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
         file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
-        if [ -z "${dir_name}" ]; then
+        if [ ! -d "${dir_name}" ]; then
           output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
           exit
         fi
@@ -360,35 +360,59 @@ download() {
     else
       if echo "$2" | grep -Eqo "/"; then
         # Relative path that contains subfolders
-        if [ -d "$2" ]; then
+        if [ -d "${BIN_FOLDER}/$2" ]; then
           # Directory
-          local -r dir_name="$2"
+          local -r dir_name="${BIN_FOLDER}/$2"
           local file_name=downloading_program
         else
           # maybe is a path to a file
-          dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+          dir_name="${BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
           file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
-          if [ -z "${dir_name}" ]; then
+          if [ ! -d "${dir_name}" ]; then
             output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
             exit
           fi
         fi
       else
-        # It is just actually the name of the file downloaded to default USR_BIN_FOLDER
-        local -r dir_name="${USR_BIN_FOLDER}"
+        # It is just actually the name of the file downloaded to default BIN_FOLDER
+        local -r dir_name="${BIN_FOLDER}"
         local file_name="$2"
       fi
     fi
   fi
 
-  # Download in a subshell to avoid changing the working directory in the current shell
-  echo -en '\033[1;33m'
-  wget --show-progress -O "${dir_name}/${file_name}" "$1"
-  echo -en '\033[0m'
+  # Check if it is cached
+  if [ -f "${CACHE_FOLDER}/${file_name}" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
+    cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
+    if [ "${EUID}" -eq 0 ]; then
+        apply_permissions "${dir_name}/${file_name}"
+    fi
+  else  # Not cached or we do not use cache: we have to download
+    echo -en '\033[1;33m'
+    wget --show-progress -O "${TEMP_FOLDER}/${file_name}" "$1"
+    echo -en '\033[0m'
 
-  # If we are root
-  if [ ${EUID} == 0 ]; then
-    apply_permissions "${dir_name}/${file_name}"
+    if [ "${FLAG_CACHE}" -eq 1 ]; then
+      # Move to cache folder to construct cache
+      mv "${TEMP_FOLDER}/${file_name}" "${CACHE_FOLDER}/${file_name}"
+      # If we are root change permissions
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions "${CACHE_FOLDER}/${file_name}"
+      fi
+      # Copy file to the desired place of download
+      cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions "${dir_name}/${file_name}"
+      fi
+    else
+      # Move directly to the desired place of download
+      mv "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
+      # If we are root change permissions
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions "${dir_name}/${file_name}"
+      fi
+    fi
+
   fi
 }
 
@@ -426,7 +450,7 @@ register_file_associations() {
 ################################## GENERIC INSTALL FUNCTIONS - OPTIONAL PROPERTIES #####################################
 ########################################################################################################################
 
-# - Description: Downloads a .deb package temporarily into USR_BIN_FOLDER from the provided link and installs it using
+# - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
 #   dpkg -i.
 # - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
 # - Argument 1: Link to the package file to download.
@@ -434,8 +458,8 @@ register_file_associations() {
 #   package.
 download_and_install_package() {
   download "$1" "$2"
-  dpkg -i "${USR_BIN_FOLDER}/$2"
-  rm -f "${USR_BIN_FOLDER}/$2"
+  dpkg -i "${BIN_FOLDER}/$2"
+  rm -f "${BIN_FOLDER}/$2"
 }
 
 
@@ -510,7 +534,7 @@ generic_install_file_associations() {
 # - Argument 1: Name of the feature to install, matching the variable $1_keybinds
 #   and the name of the first argument in the common_data.sh table
 generic_install_keybindings() {
-  local -r keybinds="$1_keybinds[@]"
+  local -r keybinds="$1_keybindings[@]"
   for keybind in "${!keybinds}"; do
     local command=
     command="$(echo "${keybind}" | cut -d ";" -f1)"
@@ -523,17 +547,17 @@ generic_install_keybindings() {
 }
 
 
-# - Description: Expands downloads and saves it to USR_BIN_FOLDER/FEATUREKEYNAME/NAME_OF_DOWNLOADED_FILE_i
+# - Description: Expands downloads and saves it to BIN_FOLDER/FEATUREKEYNAME/NAME_OF_DOWNLOADED_FILE_i
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_downloads
 #   and the name of the first argument in the common_data.sh table
 generic_install_downloads() {
   local -r downloads="$1_downloads[@]"
   for download in ${!downloads}; do
-    create_folder "${USR_BIN_FOLDER}/$1"
+    create_folder "${BIN_FOLDER}/$1"
     local -r url="$(echo "${download}" | cut -d ";" -f1)"
     local -r name="$(echo "${download}" | cut -d ";" -f2)"
-    download "${url}" "${USR_BIN_FOLDER}/$1/${name}"
+    download "${url}" "${BIN_FOLDER}/$1/${name}"
   done
 }
 
@@ -584,7 +608,7 @@ generic_install_pathlinks() {
     if echo "${binary_name}" | grep -Eqo "^/"; then
       create_links_in_path "${binary_path}" "${binary_name}"
     else
-      create_links_in_path "${USR_BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
+      create_links_in_path "${BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
     fi
   done
 }
@@ -602,7 +626,7 @@ generic_install_files() {
     if echo "${!path}" | grep -Eqo "^/"; then
       create_file "${!path}" "${!content}"
     else
-      create_file "${USR_BIN_FOLDER}/$1/${!path}" "${!content}"
+      create_file "${BIN_FOLDER}/$1/${!path}" "${!content}"
     fi
   done
 }
@@ -645,31 +669,31 @@ generic_install_initializations() {
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
 pythonvenv_installation_type() {
-  rm -Rf "${USR_BIN_FOLDER:?}/$1"
-  python3 -m venv "${USR_BIN_FOLDER}/$1"
-  "${USR_BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
-  "${USR_BIN_FOLDER}/$1/bin/pip" install wheel
+  rm -Rf "${BIN_FOLDER:?}/$1"
+  python3 -m venv "${BIN_FOLDER}/$1"
+  "${BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
+  "${BIN_FOLDER}/$1/bin/pip" install wheel
 
   local -r pipinstallations="$1_pipinstallations[@]"
   local -r pythoncommands="$1_pythoncommands[@]"
   for pipinstallation in ${!pipinstallations}; do
-    "${USR_BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
+    "${BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
   done
   for pythoncommand in "${!pythoncommands}"; do
-    "${USR_BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
+    "${BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
   done
 }
 
 
-# - Description: Clones git repository in USR_BIN_FOLDER
+# - Description: Clones git repository in BIN_FOLDER
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
 repositoryclone_installation_type() {
   local -r repositoryurl="$1_repositoryurl"
-  rm -Rf "${USR_BIN_FOLDER:?}/$1"
-  create_folder "${USR_BIN_FOLDER}/$1"
-  git clone "${!repositoryurl}" "${USR_BIN_FOLDER}/$1"
+  rm -Rf "${BIN_FOLDER:?}/$1"
+  create_folder "${BIN_FOLDER}/$1"
+  git clone "${!repositoryurl}" "${BIN_FOLDER}/$1"
 }
 
 
@@ -701,13 +725,15 @@ rootgeneric_installation_type() {
   if [ "$2" == packageinstall ]; then
     # Use a compressed file that contains .debs
     if [ -n "${!compressedfileurl}" ]; then
-      download "${!compressedfileurl}" "${USR_BIN_FOLDER}/$1_downloading"
-      decompress "${!compressedfiletype}" "${USR_BIN_FOLDER}/$1_downloading" "$1"
-      dpkg -Ri "${USR_BIN_FOLDER}/$1"
-      rm -Rf "${USR_BIN_FOLDER:?}/$1"
-    else # Use directly a downloaded .deb
+      download "${!compressedfileurl}" "${BIN_FOLDER}/$1_package_compressed_file"
+      decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_package_compressed_file" "$1"
+      dpkg -Ri "${BIN_FOLDER}/$1"
+      rm -Rf "${BIN_FOLDER:?}/$1"
+    else  # Use directly a downloaded .deb
+      local name_suffix_anticollision=""
       for packageurl in "${!packageurls}"; do
-        download_and_install_package "${packageurl}" "$1_downloading"
+        download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
+        name_suffix_anticollision="${name_suffix_anticollision}_"
       done
     fi
   else # Install with default package manager
@@ -718,7 +744,7 @@ rootgeneric_installation_type() {
 }
 
 
-# - Description: Download a file into USR_BIN_FOLDER, decompress it assuming that there is a directory inside it.
+# - Description: Download a file into BIN_FOLDER, decompress it assuming that there is a directory inside it.
 # - Permissions: Expected to be run by normal user.
 # - Argument 1: String that matches a set of variables in data_features.
 userinherit_installation_type() {
@@ -730,14 +756,14 @@ userinherit_installation_type() {
   local -r compressedfiletype="$1_compressedfiletype"
   # Obtain override download location if present
   local -r compressedfilepathoverride="$1_compressedfilepathoverride"
-  local defaultpath="${USR_BIN_FOLDER}"
+  local defaultpath="${BIN_FOLDER}"
 
   if [ -n "${!compressedfilepathoverride}" ]; then
     create_folder "${!compressedfilepathoverride}"
     defaultpath="${!compressedfilepathoverride}"
   fi
-  download "${!compressedfileurl}" "${defaultpath}/$1_downloading"
-  decompress "${!compressedfiletype}" "${defaultpath}/$1_downloading" "$1"
+  download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
+  decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file" "$1"
 }
 
 ########################################################################################################################
@@ -824,19 +850,25 @@ generic_install() {
 # - Permissions: Same behaviour being root or normal user.
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
-  create_folder "${USR_BIN_FOLDER}"
-  create_folder "${BASH_FUNCTIONS_FOLDER}"
-  create_folder "${DIR_IN_PATH}"
+
+  create_folder "${CUSTOMIZER_FOLDER}"
+  create_folder "${CACHE_FOLDER}"
+  create_folder "${TEMP_FOLDER}"
+  create_folder "${DATA_FOLDER}"
+  create_folder "${BIN_FOLDER}"
+  create_folder "${FUNCTIONS_FOLDER}"
+  create_folder "${INITIALIZATIONS_FOLDER}"
+
+  create_folder "${PATH_POINTED_FOLDER}"
   create_folder "${PERSONAL_LAUNCHERS_DIR}"
   create_folder "${FONTS_FOLDER}"
-  create_folder "${BASH_INITIALIZATIONS_FOLDER}"
   # Initialize bash functions
-  if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
-    create_file "${BASH_FUNCTIONS_PATH}"
+  if [ ! -f "${FUNCTIONS_PATH}" ]; then
+    create_file "${FUNCTIONS_PATH}"
   fi
   # Initialize ${HOME_FOLDER}/.profile initializations
-  if [ ! -f "${BASH_INITIALIZATIONS_PATH}" ]; then
-    create_file "${BASH_INITIALIZATIONS_PATH}"
+  if [ ! -f "${INITIALIZATIONS_PATH}" ]; then
+    create_file "${INITIALIZATIONS_PATH}"
   fi
   # Updates initializations
   # Avoid running bash functions non-interactively
@@ -849,10 +881,10 @@ data_and_file_structures_initialization() {
   add_bash_initialization "${favorites_function}" "favorites.sh"
 
   # Create and / or update built-in keybinding subsystem
-  if [ ! -f "${PROGRAM_KEYBIND_PATH}" ]; then
-    create_file "${PROGRAM_KEYBIND_PATH}"
+  if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
+    create_file "${PROGRAM_KEYBINDINGS_PATH}"
   fi
-  add_bash_initialization "${keybind_function}" "keybind.sh"
+  add_bash_initialization "${keybinding_function}" "keybinding.sh"
 
   # Make sure that .bashrc sources .bash_functions
   if ! grep -Fqo "${bash_functions_import}" "${BASHRC_PATH}"; then
@@ -889,7 +921,7 @@ update_environment() {
   output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
   output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
   output_proxy_executioner "echo INFO: Reloading bash features" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${BASH_FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "source ${FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
   output_proxy_executioner "echo INFO: Finished execution" "${FLAG_QUIETNESS}"
 }
 
@@ -933,23 +965,23 @@ fi
 "
 
 # https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal
-# - Description: This function is the basic piece of the keybind subsystem, but is not a function that it is
-# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBIND_PATH every time a terminal
-# is invoked. This function and its necessary files such as $PROGRAM_KEYBIND_PATH are always present during the
+# - Description: This function is the basic piece of the keybinding subsystem, but is not a function that it is
+# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBINDINGS_PATH every time a terminal
+# is invoked. This function and its necessary files such as $PROGRAM_KEYBINDINGS_PATH are always present during the
 # execution of install. Also, for simplicity, we consider that each keybinding
-# This function basically processes and applies the results of the call to add_custom_keybind function.
+# This function basically processes and applies the results of the call to add_custom_keybinding function.
 # - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
-# add_custom_keybind instead, can be called as root or user, so root and user executions can be added
+# add_custom_keybinding instead, can be called as root or user, so root and user executions can be added
 
 # Name, Command, Binding...
 # 1st argument Name of the feature
 # 2nd argument Command of the feature
 # 3rd argument Bind Key Combination of the feature ex(<Primary><Alt><Super>a)
 # 4th argument Number of the feature array position slot of the added custom command (custom0, custom1, custom2...)
-keybind_function="
-# Check if there are keybinds available
-if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
-  # regenerate list of active keybinds
+keybinding_function="
+# Check if there are keybindings available
+if [ -f \"${PROGRAM_KEYBINDINGS_PATH}\" ]; then
+  # regenerate list of active keybindings
   declare -a active_keybinds=\"\$(echo \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)\" | sed 's/@as //g' | tr -d \",\" | tr \"[\" \"(\" | tr \"]\" \")\" | tr \"'\" \"\\\"\")\"
 
   # Every iteration is a line. IFS (internal field separator) set to empty
@@ -1008,7 +1040,7 @@ if [ -f \"${PROGRAM_KEYBIND_PATH}\" ]; then
         active_keybinds+=(/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/)
       fi
     fi
-  done < \"${PROGRAM_KEYBIND_PATH}\"
+  done < \"${PROGRAM_KEYBINDINGS_PATH}\"
   # Build string for gsettings set for the active custom keybindings from the array of active keybinds that we have been building
   active_keybinds_str=\"[\"
   for active_keybind in \${active_keybinds[@]}; do

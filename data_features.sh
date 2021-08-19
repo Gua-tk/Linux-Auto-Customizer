@@ -67,11 +67,11 @@ fi
 #    launchercontents or the defined launchernames will be used as desktop launchers to associate the mime type.       #
 #    Optionally it can have a custom desktop launcher added after a ; of an associated file type to use a custom       #
 #    .desktop launcher: "text/x-chdr;sublime"                                                                          #
-#  - FEATUREKEYNAME_keybinds: Array of keybinds to be associated with the feature. Each keybind has 3 fields separated #
-#    from each other using ";": Command;key_combination;keybind_description.                                           #
+#  - FEATUREKEYNAME_keybindings: Array of keybindings to be associated with the feature. Each keybinding has 3 fields  #
+#    separated. from each other using ";": Command;key_combination;keybinding_description.                             #
 #  - FEATUREKEYNAME_downloads: Array of links to a valid download file separated by ";" from the desired name or full  #
 #    pathfor that file.                                                                                                #
-#    It will downloaded in ${USR_BIN_FOLDER}/APPNAME/DESIREDFILENAME                                                   #
+#    It will downloaded in ${BIN_FOLDER}/APPNAME/DESIREDFILENAME                                                       #
 #  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from  #
 #    a function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,               #
 #    install_FEATUREKEYNAME_post.                                                                                      #
@@ -143,7 +143,7 @@ ansible_readmeline="| Ansible | Automation of software | Command \`ansible\` || 
 
 ant_installationtype="userinherit"
 ant_arguments=("ant" "apache_ant")
-ant_bashfunctions=("export ANT_HOME=\"${USR_BIN_FOLDER}/ant\"")
+ant_bashfunctions=("export ANT_HOME=\"${BIN_FOLDER}/ant\"")
 ant_binariesinstalledpaths=("bin/ant;ant")
 ant_compressedfiletype="z"
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
@@ -165,7 +165,7 @@ Comment=${anydesk_readmelinedescription}
 Encoding=UTF-8
 Exec=anydesk
 GenericName=Remote desktop application
-Icon=${USR_BIN_FOLDER}/anydesk/icons/hicolor/scalable/apps/anydesk.svg
+Icon=${BIN_FOLDER}/anydesk/icons/hicolor/scalable/apps/anydesk.svg
 Keywords=IDE;programming;android;studio;dev;
 MimeType=
 Name=AnyDesk
@@ -355,7 +355,7 @@ if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
   done
   export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
 fi
-DIR=\"${USR_BIN_FOLDER}/changebg\"
+DIR=\"${BIN_FOLDER}/changebg\"
 PIC=\$(ls \${DIR} | shuf -n1)
 echo \"\$DIR/\$PIC\"
 dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
@@ -363,7 +363,7 @@ dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${P
 #gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
 "
 changebg_cronscript_path=".cronscript.sh"
-changebg_cronjob_content="*/5 * * * * ${USR_BIN_FOLDER}/changebg/.cronscript.sh"
+changebg_cronjob_content="*/5 * * * * ${BIN_FOLDER}/changebg/.cronscript.sh"
 changebg_cronjob_path=".cronjob"
 changebg_filekeys=("cronscript" "cronjob")
 changebg_manualcontentavailable="0;0;1"
@@ -425,7 +425,7 @@ Comment=${clion_readmelinedescription}
 Encoding=UTF-8
 Exec=clion %F
 GenericName=C Programing IDE
-Icon=${USR_BIN_FOLDER}/clion/bin/clion.png
+Icon=${BIN_FOLDER}/clion/bin/clion.png
 Keywords=IDE;programming;android;studio;dev;
 MimeType=
 Name=CLion
@@ -518,7 +518,7 @@ Comment=${code_readmelinedescription}
 Encoding=UTF-8
 Exec=code %f
 GenericName=IDE for programming
-Icon=${USR_BIN_FOLDER}/code/resources/app/resources/linux/code.png
+Icon=${BIN_FOLDER}/code/resources/app/resources/linux/code.png
 Keywords=code;
 MimeType=
 Name=Visual Studio Code
@@ -699,7 +699,7 @@ Comment=${discord_readmelinedescription}
 Encoding=UTF-8
 Exec=discord
 GenericName=Internet Messenger
-Icon=${USR_BIN_FOLDER}/discord/discord.png
+Icon=${BIN_FOLDER}/discord/discord.png
 Keywords=VoiceChat;Messaging;Social;
 MimeType=
 Name=Discord
@@ -732,7 +732,7 @@ Categories=Network;
 Comment=${documents_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${documents_url}
-Icon=${USR_BIN_FOLDER}/documents/documents_icon.svg
+Icon=${BIN_FOLDER}/documents/documents_icon.svg
 GenericName=Document
 Keywords=documents;
 MimeType=
@@ -765,7 +765,7 @@ StartupNotify=true
 StartupWMClass=Google Drive
 Terminal=false
 Exec=xdg-open ${drive_url}
-Icon=${USR_BIN_FOLDER}/drive/drive_icon.svg
+Icon=${BIN_FOLDER}/drive/drive_icon.svg
 TryExec=google-chrome
 Type=Application
 Version=1.0
@@ -791,7 +791,7 @@ Categories=Network;
 Comment=${duckduckgo_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${duckduckgo_url}
-Icon=${USR_BIN_FOLDER}/duckduckgo/duckduckgo_icon.svg
+Icon=${BIN_FOLDER}/duckduckgo/duckduckgo_icon.svg
 GenericName=DuckDuckGo
 Keywords=duckduckgo
 Name=DuckDuckGo
@@ -906,7 +906,7 @@ Comment=${eclipse_readmelinedescription}
 Encoding=UTF-8
 Exec=eclipse
 GenericName=IDE
-Icon=${USR_BIN_FOLDER}/eclipse/icon.xpm
+Icon=${BIN_FOLDER}/eclipse/icon.xpm
 Keywords=IDE;programming;
 MimeType=
 Name=Eclipse IDE
@@ -925,11 +925,11 @@ edit() {
   declare -Arl EDITABLEFILES=(
     [aliases]=\"${HOME_FOLDER}/.bash_aliases\"
     [allbashrc]=\"${BASHRC_ALL_USERS_PATH}\"
-    [bashfunctions]=\"${BASH_FUNCTIONS_PATH}\"
+    [bashfunctions]=\"${FUNCTIONS_PATH}\"
     [bashrc]=\"${BASHRC_PATH}\"
     [favorites]=\"${PROGRAM_FAVORITES_PATH}\"
-    [initializations]=\"${BASH_INITIALIZATIONS_PATH}\"
-    [keybindings]=\"${PROGRAM_KEYBIND_PATH}\"
+    [initializations]=\"${INITIALIZATIONS_PATH}\"
+    [keybindings]=\"${PROGRAM_KEYBINDINGS_PATH}\"
     [mime]=\"${MIME_ASSOCIATION_PATH}\"
     [profile]=\"${PROFILE_PATH}\"
     [sshconf]=\"${HOME_FOLDER}/.ssh/config\"
@@ -2745,11 +2745,11 @@ F() {
     IFS=\$'\\n'
     while [ -n \"\$1\" ]; do
       for filename in \$(find \"\${first_argument}\" -type f 2>/dev/null); do
-        local result=\"\$(cat \"\${filename}\" | grep \"\$1\")\"
+        local result=\"\$(cat \"\${filename}\" 2>/dev/null | grep \"\$1\")\"
         if [ -n \"\$(echo \"\${result}\")\" ]; then
           echo
           echo -e \"\\e[0;33m\${filename}\\e[0m\"
-          cat \"\${filename}\" | grep -hnI -B 3 -A 3 --color='auto' \"\$1\"
+          cat \"\${filename}\" 2>/dev/null | grep -hnI -B 3 -A 3 --color='auto' \"\$1\"
          fi
       done
       shift
@@ -2828,7 +2828,7 @@ Categories=Network;
 Comment=${facebook_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${facebook_url}
-Icon=${USR_BIN_FOLDER}/facebook/facebook_icon.svg
+Icon=${BIN_FOLDER}/facebook/facebook_icon.svg
 GenericName=Facebook
 Keywords=facebook;
 MimeType=
@@ -2941,7 +2941,7 @@ Categories=Network;
 Comment=${forms_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${forms_url}
-Icon=${USR_BIN_FOLDER}/forms/forms_icon.svg
+Icon=${BIN_FOLDER}/forms/forms_icon.svg
 GenericName=Document
 Keywords=forms;
 MimeType=
@@ -2988,7 +2988,7 @@ Comment=${geogebra_readmelinedescription}
 Encoding=UTF-8
 Exec=geogebra
 GenericName=Geometry visualization plotter
-Icon=${USR_BIN_FOLDER}/geogebra/geogebra_icon.svg
+Icon=${BIN_FOLDER}/geogebra/geogebra_icon.svg
 Keywords=GeoGebra;geogebra;
 MimeType=
 Name=GeoGebra
@@ -3023,7 +3023,7 @@ gitcm_arguments=("git_c_m")
 gitcm_binariesinstalledpaths=("git-credential-manager-core;gitcm")
 gitcm_compressedfiletype="z"
 gitcm_compressedfileurl="https://github.com/microsoft/Git-Credential-Manager-Core/releases/download/v2.0.498/gcmcore-linux_amd64.2.0.498.54650.tar.gz"
-gitcm_compressedfilepathoverride="${USR_BIN_FOLDER}/gitcm"  # It has not a folder inside
+gitcm_compressedfilepathoverride="${BIN_FOLDER}/gitcm"  # It has not a folder inside
 gitcm_readmeline="| Git Credentials Manager | Plug-in for git to automatically use personal tokens | Command \`gitcm\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 gitcm_manualcontentavailable="0;0;1"
 
@@ -3039,7 +3039,7 @@ Categories=Network;
 Comment=${github_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${github_url}
-Icon=${USR_BIN_FOLDER}/github/github_icon.svg
+Icon=${BIN_FOLDER}/github/github_icon.svg
 GenericName=GitHub
 Keywords=github;
 MimeType=
@@ -3078,7 +3078,7 @@ Categories=Network;
 Comment=${gitlab_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${gitlab_url}
-Icon=${USR_BIN_FOLDER}/gitlab/gitlab_icon.svg
+Icon=${BIN_FOLDER}/gitlab/gitlab_icon.svg
 GenericName=Code repository online
 Keywords=gitlab;
 MimeType=
@@ -3095,9 +3095,9 @@ gitlab_readmeline="| GitLab | ${gitlab_readmelinedescription} | Command || <ul><
 gitprompt_installationtype="repositoryclone"
 gitprompt_arguments=("git_prompt")
 gitprompt_bashfunctions=("
-if [ -f ${USR_BIN_FOLDER}/gitprompt/gitprompt.sh ]; then
+if [ -f ${BIN_FOLDER}/gitprompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
-    source ${USR_BIN_FOLDER}/gitprompt/gitprompt.sh
+    source ${BIN_FOLDER}/gitprompt/gitprompt.sh
 fi
 ")
 gitprompt_readmeline="| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -3115,7 +3115,7 @@ Categories=Network;
 Comment=${gmail_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${gmail_url}
-Icon=${USR_BIN_FOLDER}/gmail/gmail_icon.svg
+Icon=${BIN_FOLDER}/gmail/gmail_icon.svg
 GenericName=Gmail
 Keywords=gmail;
 MimeType=
@@ -3179,7 +3179,7 @@ gnome_sudoku_readmeline="| sudoku | Implementation for GNU systems of the famous
 
 gnome_terminal_installationtype="packagemanager"
 gnome_terminal_arguments=("gnome_terminal")
-gnome_terminal_keybinds=("gnome-terminal;<Primary><Alt><Super>t;GNOME Terminal")
+gnome_terminal_keybindings=("gnome-terminal;<Primary><Alt><Super>t;GNOME Terminal")
 gnome_terminal_launchernames=("org.gnome.Terminal")
 gnome_terminal_packagenames=("gnome-terminal")
 gnome_terminal_readmeline="| GNOME terminal | Terminal of the system | Command \`gnome-terminal\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -3202,7 +3202,7 @@ Categories=Network;
 Comment=${googlecalendar_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${googlecalendar_url}
-Icon=${USR_BIN_FOLDER}/googlecalendar/googlecalendar_icon.svg
+Icon=${BIN_FOLDER}/googlecalendar/googlecalendar_icon.svg
 GenericName=Google Calendar
 Keywords=google-calendar;
 MimeType=
@@ -3346,7 +3346,7 @@ Comment=${ideac_readmelinedescription}
 Encoding=UTF-8
 Exec=ideac %f
 GenericName=Java programming IDE
-Icon=${USR_BIN_FOLDER}/ideac/bin/idea.svg
+Icon=${BIN_FOLDER}/ideac/bin/idea.svg
 Keywords=IDE;programming;java;dev;
 MimeType=
 Name=IntelliJ IDEA Community Edition
@@ -3374,7 +3374,7 @@ Comment=${ideau_readmelinedescription}
 Encoding=UTF-8
 Exec=ideau %f
 GenericName=Java programing IDE
-Icon=${USR_BIN_FOLDER}/ideau/bin/idea.png
+Icon=${BIN_FOLDER}/ideau/bin/idea.png
 Keywords=IDE;programming;java;dev;
 MimeType=
 Name=IntelliJ IDEA Ultimate Edition
@@ -3405,7 +3405,7 @@ Categories=Network;
 Comment=${instagram_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${instagran_url}
-Icon=${USR_BIN_FOLDER}/instagram/instagram_icon.svg
+Icon=${BIN_FOLDER}/instagram/instagram_icon.svg
 GenericName=instagram
 Keywords=instagram
 MimeType=
@@ -3452,7 +3452,7 @@ Comment=${iqmol_readmelinedescription}
 Encoding=UTF-8
 Exec=iqmol
 GenericName=Molecule visualizer
-Icon=${USR_BIN_FOLDER}/iqmol/iqmol_icon.png
+Icon=${BIN_FOLDER}/iqmol/iqmol_icon.png
 Keywords=molecules;chemistry;3d;
 MimeType=
 Name=IQmol
@@ -3473,7 +3473,7 @@ j_readmeline="| Function \`j\` | alias for jobs -l | Commands \`j\` || <ul><li>-
 
 java_installationtype="userinherit"
 java_arguments=("java" "javadevelopmentkit" "java_development_kit" "java_development_kit_11" "jdk" "jdk11")
-java_bashfunctions=("export JAVA_HOME=\"${USR_BIN_FOLDER}/jdk8\"")
+java_bashfunctions=("export JAVA_HOME=\"${BIN_FOLDER}/jdk8\"")
 java_binariesinstalledpaths=("bin/java;java")
 java_compressedfiletype="z"
 java_compressedfileurl="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
@@ -3490,7 +3490,7 @@ julia_launchercontents=("
 Name=Julia
 Comment=${julia_readmelinedescription}
 Exec=julia
-Icon=${USR_BIN_FOLDER}/julia/share/icons/hicolor/scalable/apps/julia.svg
+Icon=${BIN_FOLDER}/julia/share/icons/hicolor/scalable/apps/julia.svg
 Terminal=true
 Type=Application
 Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;ParallelComputing;DataVisualization;ConsoleOnly;
@@ -3518,7 +3518,7 @@ StartupWMClass=jupyter
 Terminal=false
 Type=Application
 Version=1.0
-Icon=${USR_BIN_FOLDER}/jupyter_lab/share/icons/hicolor/scalable/apps/notebook.svg
+Icon=${BIN_FOLDER}/jupyter_lab/share/icons/hicolor/scalable/apps/notebook.svg
 Exec=jupyter-lab &
 ")
 jupyter_lab_manualcontentavailable="1;1;0"
@@ -3562,7 +3562,7 @@ Categories=Network;
 Comment=${keep_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${keep_url}
-Icon=${USR_BIN_FOLDER}/keep/keep_icon.svg
+Icon=${BIN_FOLDER}/keep/keep_icon.svg
 GenericName=Google Calendar
 Keywords=google-keep;keep;
 MimeType=
@@ -3696,7 +3696,7 @@ Name=Mendeley Desktop
 GenericName=Research Paper Manager
 Comment=${mendeley_readmelinedescription}
 Exec=mendeley %f
-Icon=${USR_BIN_FOLDER}/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png
+Icon=${BIN_FOLDER}/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png
 Terminal=false
 Type=Application
 Categories=Education;Literature;Qt;
@@ -4089,7 +4089,7 @@ Categories=Network;VideoStreaming;Film;
 Comment=${netflix_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${netflix_url}
-Icon=${USR_BIN_FOLDER}/netflix/netflix_icon.svg
+Icon=${BIN_FOLDER}/netflix/netflix_icon.svg
 GenericName=Netflix
 Keywords=netflix;
 MimeType=
@@ -4165,7 +4165,7 @@ Categories=Network;
 Comment=${onedrive_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${onedrive_url}
-Icon=${USR_BIN_FOLDER}/onedrive/onedrive_icon.svg
+Icon=${BIN_FOLDER}/onedrive/onedrive_icon.svg
 GenericName=OneDrive
 Keywords=onedrive;
 MimeType=
@@ -4220,7 +4220,7 @@ Categories=Network;
 Comment=${outlook_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${outlook_url}
-Icon=${USR_BIN_FOLDER}/outlook/outlook_icon.svg
+Icon=${BIN_FOLDER}/outlook/outlook_icon.svg
 GenericName=Outlook
 Keywords=outlook;
 MimeType=
@@ -4246,7 +4246,7 @@ Categories=Network;
 Comment=${overleaf_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${overleaf_url}
-Icon=${USR_BIN_FOLDER}/overleaf/overleaf_icon.svg
+Icon=${BIN_FOLDER}/overleaf/overleaf_icon.svg
 GenericName=Overleaf
 Keywords=overleaf;
 MimeType=
@@ -4282,7 +4282,7 @@ pgadmin_binariesinstalledpaths=("lib/python3.8/site-packages/pgadmin4/pgAdmin4.p
 pgadmin_confoverride_path="lib/python3.8/site-packages/pgadmin4/config_local.py"
 pgadmin_confoverride_content=("
 import os
-DATA_DIR = os.path.realpath(os.path.expanduser(u'${USR_BIN_FOLDER}/pgadmin'))
+DATA_DIR = os.path.realpath(os.path.expanduser(u'${BIN_FOLDER}/pgadmin'))
 LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
 SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
 SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
@@ -4311,8 +4311,8 @@ StartupWMClass=pgadmin
 Terminal=false
 Type=Application
 Version=1.0
-Icon=${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
-Exec=bash ${USR_BIN_FOLDER}/pgadmin/pgadmin_exec.sh
+Icon=${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Exec=bash ${BIN_FOLDER}/pgadmin/pgadmin_exec.sh
 ")
 pgadmin_manualcontentavailable="0;1;0"
 pgadmin_pipinstallations=("pgadmin4")
@@ -4370,7 +4370,7 @@ Encoding=UTF-8
 Name=Postman
 Exec=postman
 Comment=${postman_readmelinedescription}
-Icon=${USR_BIN_FOLDER}/postman/app/resources/app/assets/icon.png
+Icon=${BIN_FOLDER}/postman/app/resources/app/assets/icon.png
 Terminal=false
 Type=Application
 Categories=Development;
@@ -4389,7 +4389,7 @@ Categories=Network;
 Comment=D${presentation_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${presentation_url}
-Icon=${USR_BIN_FOLDER}/presentation/presentation_icon.svg
+Icon=${BIN_FOLDER}/presentation/presentation_icon.svg
 GenericName=Document
 Keywords=presentations;
 MimeType=
@@ -4405,18 +4405,8 @@ presentation_readmeline="| Presentation | ${presentation_readmelinedescription} 
 
 prompt_installationtype="environmental"
 prompt_arguments=("prompt")
-prompt_bashinitializations=("
-# Save and reload from history before prompt appears to be sure the prompt is being charged correctly because it conflicts with gitprompt.
-if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \"if [ ! -d .git ]; then source ${BASH_FUNCTIONS_FOLDER}/prompt.sh; fi\")\" ]; then
-  # Check if there is something inside PROMPT_COMMAND, so we put semicolon to separate or not
-  if [ -z \"\${PROMPT_COMMAND}\" ]; then
-    export PROMPT_COMMAND=\"if [ ! -d .git ]; then source ${BASH_FUNCTIONS_FOLDER}/prompt.sh; fi\"
-  else
-    export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; if [ ! -d .git ]; then source ${BASH_FUNCTIONS_FOLDER}/prompt.sh; fi\"
-  fi
-fi
-")
-prompt_bashfunctions=("
+prompt_bashfunctions=(
+"
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z \"\${debian_chroot:-}\" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=\$(cat /etc/debian_chroot)
@@ -4444,18 +4434,18 @@ if [ -n \"\$force_color_prompt\" ]; then
 fi
 
 if [ \"\$color_prompt\" = yes ]; then
-  if [ ! -z \"\${GIT_PROMPT_LAST_COMMAND_STATE}\" ]; then
+  if [ -n \"\${GIT_PROMPT_LAST_COMMAND_STATE}\" ]; then
     if [ \${GIT_PROMPT_LAST_COMMAND_STATE} -gt 0 ]; then  # Red color if error
-      color_arroba=\"\\[\\\e[4;35m\\]\"
+      color_arroba=\"\\[\\e[4;35m\\]\"
     else  # light green color if last command is ok
-      color_arroba=\"\\[\\\e[0;32m\\]\"
+      color_arroba=\"\\[\\e[3;32m\\]\"
     fi
   else
     type colors &>/dev/null
     if [ \"\$?\" -eq 0 ]; then
       color_arroba=\"\$(colors randomkey)\"
     else
-      color_arroba=\"\\[\\\e[0;37m\\]\"
+      color_arroba=\"\\[\\e[2;32m\\]\"
     fi
   fi
 
@@ -4463,11 +4453,12 @@ if [ \"\$color_prompt\" = yes ]; then
   if [ \"\$?\" -eq 0 ]; then
     random_color_dollar=\"\$(colors \$(colors randomkey | sed 's/BACKGROUND_//g' | sed 's/UNDERLINE_//g' | sed 's/BOLD_//g'))\"
   else
-    random_color_dollar=\"\\[\\\e[0;37m\\]\"
+    random_color_dollar=\"\\[\\e[0;32m\\]\"
   fi
     # Colorful custom PS1
-    PS1=\"\\[\\\e[1;37m\\]\\d \\t \\[\\\e[0;36m\\]\\u\${color_arroba}@\\[\\\e[1;35m\\]\\H\\[\\\e[0;33m\\] \\w\${random_color_dollar}
-\\\\\\\$\\[\\033[0m\\]\\e[0m \"
+
+    PS1=\"\\[\\\e[1;37m\\]\\d \\t \\[\\e[0;32m\\]\\u\${color_arroba}@\\[\\e[0;36m\\]\\H \\[\\e[0;33m\\]\\w
+\${random_color_dollar}$ \"
 else
     PS1='\${debian_chroot:+(\$debian_chroot)}\u@\h:\w\\$ '
 fi
@@ -4476,6 +4467,7 @@ unset color_prompt force_color_prompt random_color_dollar color_arroba
 # If this is an xterm set the title to user@host:dir
 case \"\$TERM\" in
 xterm*|rxvt*)
+    :
     PS1=\"\$PS1\\[\\\e]0;\${debian_chroot:+(\$debian_chroot)}\u@\h: \w\\\a\]\"
     ;;
 *)
@@ -4504,7 +4496,20 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+"
+
+"
+# Save and reload from history before prompt appears to be sure the prompt is being charged correctly because it conflicts with gitprompt.
+if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \" [ ! -d .git ] && source \"${FUNCTIONS_FOLDER}/prompt.sh\"\")\" ]; then
+  # Check if there is something inside PROMPT_COMMAND, so we put semicolon to separate or not
+  if [ -z \"\${PROMPT_COMMAND}\" ]; then
+    export PROMPT_COMMAND=\" [ ! -d .git ] && source \"${FUNCTIONS_FOLDER}/prompt.sh\"\"
+  else
+    export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; [ ! -d .git ] && source \"${FUNCTIONS_FOLDER}/prompt.sh\"\"
+  fi
+fi
 ")
+
 prompt_readmeline="| prompt | Installs a new colourful prompt on terminal window including and upgrading the default ones in Ubuntu | Adds a personalized prompt that shows the date, return code of last executed program, user, group and working directory. It also changes the prompt colour of introduced text to green. It changes the terminal windows title, adds colourful aliases and ensures completion || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 psql_installationtype="packagemanager"
@@ -4548,7 +4553,7 @@ pycharm_bashfunctions=("alias pycharm=\"pycharm . &>/dev/null &\"")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_compressedfiletype="z"
 pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz"
-pycharm_keybinds=("pycharm;<Primary><Alt><Super>p;Pycharm")
+pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
 pycharm_readmelinedescription="Integrated development environment used in computer programming"
 pycharm_launchercontents=("
 [Desktop Entry]
@@ -4558,7 +4563,7 @@ Comment=${pycharm_readmelinedescription}
 Encoding=UTF-8
 Exec=pycharm %F
 GenericName=Pycharm
-Icon=${USR_BIN_FOLDER}/pycharm/bin/pycharm.png
+Icon=${BIN_FOLDER}/pycharm/bin/pycharm.png
 Keywords=dev;programming;python;
 MimeType=
 Name=PyCharm
@@ -4572,7 +4577,7 @@ Version=1.0
 [Desktop Action NewWindow]
 Name=Pycharm New Window
 Exec=pycharm
-Icon=${USR_BIN_FOLDER}/pycharm/bin/pycharm.png
+Icon=${BIN_FOLDER}/pycharm/bin/pycharm.png
 ")
 pycharm_readmeline="| Pycharm Community | ${pycharm_readmelinedescription} | Command \`pycharm\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files  || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -4592,7 +4597,7 @@ Comment=${pycharmpro_readmelinedescription}
 Encoding=UTF-8
 Exec=pycharmpro %F
 GenericName=Pycharm Pro
-Icon=${USR_BIN_FOLDER}/pycharmpro/bin/pycharm.png
+Icon=${BIN_FOLDER}/pycharmpro/bin/pycharm.png
 Keywords=dev;programming;python;
 MimeType=
 Name=PyCharm Professional
@@ -4692,7 +4697,7 @@ Categories=Network;
 Comment=${reddit_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${reddit_url}
-Icon=${USR_BIN_FOLDER}/reddit/reddit_icon.svg
+Icon=${BIN_FOLDER}/reddit/reddit_icon.svg
 GenericName=reddit
 Keywords=reddit
 MimeType=
@@ -4727,7 +4732,7 @@ Comment=${rstudio_readmelinedescription}
 Encoding=UTF-8
 Exec=rstudio
 GenericName=RStudio
-Icon=${USR_BIN_FOLDER}/rstudio/www/images/favicon.ico
+Icon=${BIN_FOLDER}/rstudio/www/images/favicon.ico
 Keywords=rstudio
 MimeType=text/plain;
 Name=RStudio
@@ -4774,7 +4779,7 @@ scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>
 screenshots_installationtype="environmental"
 screenshots_arguments=("screenshots")
 screenshots_filekeys=("screenshotwindow" "screenshotarea" "screenshotfull")
-screenshots_keybinds=("scr-area;<Primary><Alt><Super>a;Screenshot Area" "scr-full;<Primary><Alt><Super>f;Screenshot Full" "scr-window;<Primary><Alt><Super>w;Screenshot Window")
+screenshots_keybindings=("scr-area;<Primary><Alt><Super>a;Screenshot Area" "scr-full;<Primary><Alt><Super>f;Screenshot Full" "scr-window;<Primary><Alt><Super>w;Screenshot Window")
 screenshots_screenshotwindow_path="screenshot_window.sh"
 screenshots_screenshotwindow_content="
 mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
@@ -4800,26 +4805,26 @@ screenshots_readmeline="| Screenshots | Takes a screenshot and saves it to custo
 shortcuts_installationtype="environmental"
 shortcuts_arguments=("shortcuts")
 shortcuts_bashfunctions=("
-ALLBIN=\"${ALL_USERS_DIR_IN_PATH}\"
+ALLBIN=\"${ALL_USERS_PATH_POINTED_FOLDER}\"
 AUTOSTART=\"${AUTOSTART_FOLDER}\"
-BIN=\"${USR_BIN_FOLDER}\"
+BIN=\"${BIN_FOLDER}\"
 CUSTOMIZER=\"${DIR}\"
 DESK=\"${XDG_DESKTOP_DIR}\"
 DOCUMENTS=\"${XDG_DOCUMENTS_DIR}\"
 DOWNLOAD=\"${XDG_DOWNLOAD_DIR}\"
 FONTS=\"${FONTS_FOLDER}\"
-FUNCTIONSD=\"${BASH_FUNCTIONS_FOLDER}\"
-FUNCTIONS=\"${BASH_FUNCTIONS_PATH}\"
+FUNCTIONSD=\"${FUNCTIONS_FOLDER}\"
+FUNCTIONS=\"${FUNCTIONS_PATH}\"
 GIT=\"${XDG_DESKTOP_DIR}/git\"
 LAUNCHERS=\"${ALL_USERS_LAUNCHERS_DIR}\"
-LOCALBIN=\"${DIR_IN_PATH}\"
+LOCALBIN=\"${PATH_POINTED_FOLDER}\"
 MUSIC=\"${XDG_MUSIC_DIR}\"
 PERSONAL_LAUNCHERS=\"${PERSONAL_LAUNCHERS_DIR}\"
 PICTURES=\"${XDG_PICTURES_DIR}\"
 TEMPLATES=\"${XDG_TEMPLATES_DIR}\"
 TRASH=\"${HOME_FOLDER}/.local/share/Trash/\"
 VIDEOS=\"${XDG_VIDEOS_DIR}\"
-INITIALIZATIONSD=\"${BASH_INITIALIZATIONS_FOLDER}\"
+INITIALIZATIONSD=\"${INITIALIZATIONS_FOLDER}\"
 if [ ! -d \$GIT ]; then
   mkdir -p \$GIT
 fi
@@ -4892,7 +4897,7 @@ Categories=Network;
 Comment=${spreadsheets_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${spreadsheets_url}
-Icon=${USR_BIN_FOLDER}/spreadsheets/spreadsheets_icon.svg
+Icon=${BIN_FOLDER}/spreadsheets/spreadsheets_icon.svg
 GenericName=Spreadsheets
 Keywords=spreadsheets;
 MimeType=
@@ -4931,7 +4936,7 @@ Comment=${studio_readmelinedescription}
 Encoding=UTF-8
 Exec=studio %F
 GenericName=studio
-Icon=${USR_BIN_FOLDER}/studio/bin/studio.svg
+Icon=${BIN_FOLDER}/studio/bin/studio.svg
 Keywords=IDE;programming;android;studio;dev;
 MimeType=
 Name=Android Studio
@@ -4944,7 +4949,7 @@ Version=1.0
 ")
 studio_readmeline="| Android Studio | ${studio_readmelinedescription} | Command \`studio\`, alias \`studio\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-sublime_keybinds=("sublime;<Primary><Alt><Super>s;Sublime Text")
+sublime_keybindings=("sublime;<Primary><Alt><Super>s;Sublime Text")
 sublime_installationtype="userinherit"
 sublime_arguments=("sublime" "sublime_text")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
@@ -5034,7 +5039,7 @@ Comment=${telegram_readmelinedescription}
 Encoding=UTF-8
 Exec=telegram -- %u
 GenericName=Telegram
-Icon=${USR_BIN_FOLDER}/telegram/telegram_icon.svg
+Icon=${BIN_FOLDER}/telegram/telegram_icon.svg
 Keywords=telegram;
 MimeType=x-scheme-handler/tg;
 Name=Telegram
@@ -5356,7 +5361,7 @@ Categories=Network;
 Comment=${trello_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${trello_url}
-Icon=${USR_BIN_FOLDER}/trello/trello_icon.svg
+Icon=${BIN_FOLDER}/trello/trello_icon.svg
 GenericName=Trello
 Keywords=trello;
 MimeType=
@@ -5382,7 +5387,7 @@ Categories=Network;
 Comment=${tumblr_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${tumblr_url}
-Icon=${USR_BIN_FOLDER}/tumblr/tumblr_icon.svg
+Icon=${BIN_FOLDER}/tumblr/tumblr_icon.svg
 GenericName=tumblr
 Keywords=tumblr
 MimeType=
@@ -5408,7 +5413,7 @@ Categories=Network;
 Comment=${twitch_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${twitch_url}
-Icon=${USR_BIN_FOLDER}/twitch/twitch_icon.svg
+Icon=${BIN_FOLDER}/twitch/twitch_icon.svg
 GenericName=Twitch.tv
 Keywords=twitch;Twitch;
 MimeType=
@@ -5434,7 +5439,7 @@ Categories=Network;
 Comment=${twitter_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${twitter_url}
-Icon=${USR_BIN_FOLDER}/twitter/twitter_icon.svg
+Icon=${BIN_FOLDER}/twitter/twitter_icon.svg
 GenericName=Twitter
 Keywords=twitter
 MimeType=
@@ -5501,7 +5506,7 @@ Categories=Network;
 Comment=${whatsapp_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${whatsapp_url}
-Icon=${USR_BIN_FOLDER}/whatsapp/whatsapp_icon.svg
+Icon=${BIN_FOLDER}/whatsapp/whatsapp_icon.svg
 GenericName=WhatsApp Web
 Keywords=whatsapp;
 MimeType=
@@ -5527,7 +5532,7 @@ Categories=Network;
 Comment=${wikipedia_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${wikipedia_url}
-Icon=${USR_BIN_FOLDER}/wikipedia/wikipedia_icon.svg
+Icon=${BIN_FOLDER}/wikipedia/wikipedia_icon.svg
 GenericName=reddit
 Keywords=wikipedia
 MimeType=
@@ -5757,7 +5762,7 @@ Categories=Network;
 Comment=${youtube_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${youtube_url}
-Icon=${USR_BIN_FOLDER}/youtube/youtube_icon.svg
+Icon=${BIN_FOLDER}/youtube/youtube_icon.svg
 GenericName=YouTube
 Keywords=youtube;
 MimeType=
@@ -5795,7 +5800,7 @@ Categories=Network;
 Comment=${youtubemusic_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${youtubemusic_url}
-Icon=${USR_BIN_FOLDER}/youtubemusic/youtubemusic_icon.svg
+Icon=${BIN_FOLDER}/youtubemusic/youtubemusic_icon.svg
 GenericName=YouTube Music
 Keywords=youtubemusic;
 MimeType=
@@ -5905,7 +5910,7 @@ Categories=Social;Communication;
 Comment=${zoom_readmelinedescription}
 Encoding=UTF-8
 GenericName=Video multiple calls
-Icon=${USR_BIN_FOLDER}/zoom/zoom_icon.svg
+Icon=${BIN_FOLDER}/zoom/zoom_icon.svg
 Keywords=Social;VideoCalls;
 MimeType=
 Name=Zoom
