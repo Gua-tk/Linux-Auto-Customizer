@@ -2746,11 +2746,11 @@ F() {
     IFS=\$'\\n'
     while [ -n \"\$1\" ]; do
       for filename in \$(find \"\${first_argument}\" -type f 2>/dev/null); do
-        local result=\"\$(cat \"\${filename}\" | grep \"\$1\")\"
+        local result=\"\$(cat \"\${filename}\" 2>/dev/null | grep \"\$1\")\"
         if [ -n \"\$(echo \"\${result}\")\" ]; then
           echo
           echo -e \"\\e[0;33m\${filename}\\e[0m\"
-          cat \"\${filename}\" | grep -hnI -B 3 -A 3 --color='auto' \"\$1\"
+          cat \"\${filename}\" 2>/dev/null | grep -hnI -B 3 -A 3 --color='auto' \"\$1\"
          fi
       done
       shift
@@ -4406,18 +4406,8 @@ presentation_readmeline="| Presentation | ${presentation_readmelinedescription} 
 
 prompt_installationtype="environmental"
 prompt_arguments=("prompt")
-prompt_bashinitializations=("
-# Save and reload from history before prompt appears to be sure the prompt is being charged correctly because it conflicts with gitprompt.
-if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \"if [ ! -d .git ]; then source ${FUNCTIONS_FOLDER}/prompt.sh; fi\")\" ]; then
-  # Check if there is something inside PROMPT_COMMAND, so we put semicolon to separate or not
-  if [ -z \"\${PROMPT_COMMAND}\" ]; then
-    export PROMPT_COMMAND=\"if [ ! -d .git ]; then source ${FUNCTIONS_FOLDER}/prompt.sh; fi\"
-  else
-    export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; if [ ! -d .git ]; then source ${FUNCTIONS_FOLDER}/prompt.sh; fi\"
-  fi
-fi
-")
-prompt_bashfunctions=("
+prompt_bashfunctions=(
+"
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z \"\${debian_chroot:-}\" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=\$(cat /etc/debian_chroot)
@@ -4445,18 +4435,18 @@ if [ -n \"\$force_color_prompt\" ]; then
 fi
 
 if [ \"\$color_prompt\" = yes ]; then
-  if [ ! -z \"\${GIT_PROMPT_LAST_COMMAND_STATE}\" ]; then
+  if [ -n \"\${GIT_PROMPT_LAST_COMMAND_STATE}\" ]; then
     if [ \${GIT_PROMPT_LAST_COMMAND_STATE} -gt 0 ]; then  # Red color if error
-      color_arroba=\"\\[\\\e[4;35m\\]\"
+      color_arroba=\"\\[\\e[4;35m\\]\"
     else  # light green color if last command is ok
-      color_arroba=\"\\[\\\e[0;32m\\]\"
+      color_arroba=\"\\[\\e[3;32m\\]\"
     fi
   else
     type colors &>/dev/null
     if [ \"\$?\" -eq 0 ]; then
       color_arroba=\"\$(colors randomkey)\"
     else
-      color_arroba=\"\\[\\\e[0;37m\\]\"
+      color_arroba=\"\\[\\e[2;32m\\]\"
     fi
   fi
 
@@ -4464,11 +4454,12 @@ if [ \"\$color_prompt\" = yes ]; then
   if [ \"\$?\" -eq 0 ]; then
     random_color_dollar=\"\$(colors \$(colors randomkey | sed 's/BACKGROUND_//g' | sed 's/UNDERLINE_//g' | sed 's/BOLD_//g'))\"
   else
-    random_color_dollar=\"\\[\\\e[0;37m\\]\"
+    random_color_dollar=\"\\[\\e[0;32m\\]\"
   fi
     # Colorful custom PS1
-    PS1=\"\\[\\\e[1;37m\\]\\d \\t \\[\\\e[0;36m\\]\\u\${color_arroba}@\\[\\\e[1;35m\\]\\H\\[\\\e[0;33m\\] \\w\${random_color_dollar}
-\\\\\\\$\\[\\033[0m\\]\\e[0m \"
+
+    PS1=\"\\[\\\e[1;37m\\]\\d \\t \\[\\e[0;32m\\]\\u\${color_arroba}@\\[\\e[0;36m\\]\\H \\[\\e[0;33m\\]\\w
+\${random_color_dollar}$ \"
 else
     PS1='\${debian_chroot:+(\$debian_chroot)}\u@\h:\w\\$ '
 fi
@@ -4477,6 +4468,7 @@ unset color_prompt force_color_prompt random_color_dollar color_arroba
 # If this is an xterm set the title to user@host:dir
 case \"\$TERM\" in
 xterm*|rxvt*)
+    :
     PS1=\"\$PS1\\[\\\e]0;\${debian_chroot:+(\$debian_chroot)}\u@\h: \w\\\a\]\"
     ;;
 *)
@@ -4505,7 +4497,20 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+"
+
+"
+# Save and reload from history before prompt appears to be sure the prompt is being charged correctly because it conflicts with gitprompt.
+if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \" [ ! -d .git ] && source \"${FUNCTIONS_FOLDER}/prompt.sh\"\")\" ]; then
+  # Check if there is something inside PROMPT_COMMAND, so we put semicolon to separate or not
+  if [ -z \"\${PROMPT_COMMAND}\" ]; then
+    export PROMPT_COMMAND=\" [ ! -d .git ] && source \"${FUNCTIONS_FOLDER}/prompt.sh\"\"
+  else
+    export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; [ ! -d .git ] && source \"${FUNCTIONS_FOLDER}/prompt.sh\"\"
+  fi
+fi
 ")
+
 prompt_readmeline="| prompt | Installs a new colourful prompt on terminal window including and upgrading the default ones in Ubuntu | Adds a personalized prompt that shows the date, return code of last executed program, user, group and working directory. It also changes the prompt colour of introduced text to green. It changes the terminal windows title, adds colourful aliases and ensures completion || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 psql_installationtype="packagemanager"

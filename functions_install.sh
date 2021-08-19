@@ -205,9 +205,9 @@ copy_launcher() {
 # - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2.
 create_links_in_path() {
   if [ ${EUID} -ne 0 ]; then  # user
-    local -r directory="${DIR_IN_PATH}"
+    local -r directory="${PATH_POINTED_FOLDER}"
   else
-    local -r directory="${ALL_USERS_DIR_IN_PATH}"
+    local -r directory="${ALL_USERS_PATH_POINTED_FOLDER}"
   fi
   while [ $# -gt 0 ]; do
     ln -sf "$1" "${directory}/$2"
@@ -383,7 +383,10 @@ download() {
 
   # Check if it is cached
   if [ -f "${CACHE_FOLDER}/${file_name}" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
-    mv "${CACHE_FOLDER}/${file_name}" "${dir_name}"
+    cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
+    if [ "${EUID}" -eq 0 ]; then
+        apply_permissions "${dir_name}/${file_name}"
+    fi
   else  # Not cached or we do not use cache: we have to download
     echo -en '\033[1;33m'
     wget --show-progress -O "${TEMP_FOLDER}/${file_name}" "$1"
@@ -391,13 +394,16 @@ download() {
 
     if [ "${FLAG_CACHE}" -eq 1 ]; then
       # Move to cache folder to construct cache
-      mv "${TEMP_FOLDER}/${file_name}" "${CACHE_FOLDER}"
+      mv "${TEMP_FOLDER}/${file_name}" "${CACHE_FOLDER}/${file_name}"
       # If we are root change permissions
       if [ "${EUID}" -eq 0 ]; then
         apply_permissions "${CACHE_FOLDER}/${file_name}"
       fi
       # Copy file to the desired place of download
-      cp -p "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
+      cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions "${dir_name}/${file_name}"
+      fi
     else
       # Move directly to the desired place of download
       mv "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
@@ -844,15 +850,18 @@ generic_install() {
 # - Permissions: Same behaviour being root or normal user.
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
+
   create_folder "${CUSTOMIZER_FOLDER}"
+  create_folder "${CACHE_FOLDER}"
   create_folder "${TEMP_FOLDER}"
   create_folder "${DATA_FOLDER}"
   create_folder "${BIN_FOLDER}"
   create_folder "${FUNCTIONS_FOLDER}"
+  create_folder "${INITIALIZATIONS_FOLDER}"
+
   create_folder "${PATH_POINTED_FOLDER}"
   create_folder "${PERSONAL_LAUNCHERS_DIR}"
   create_folder "${FONTS_FOLDER}"
-  create_folder "${INITIALIZATIONS_FOLDER}"
   # Initialize bash functions
   if [ ! -f "${FUNCTIONS_PATH}" ]; then
     create_file "${FUNCTIONS_PATH}"
