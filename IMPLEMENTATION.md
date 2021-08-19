@@ -4,10 +4,15 @@
 
 ###### UPDATES
 - [ ] parametrize generic install
+- [ ] Extract pakage dependencies to a optional property, so even "user" programs can have its dependencies on the same installation:
+  * [ ] `data_features.sh`: Rstudio split libssl-dev dependency to a new feature
+  * [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
+  * [ ] `data_features.sh`: bring features that are pure dependencies to the installation that they depend. example: mendeley  
 ###### NEW FEATURES
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
-- [ ] remove line uninstall api function
+- [ ] implement `remove line` uninstall api function 
+
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
@@ -21,8 +26,6 @@
 - [ ] merge: git merge funtion()
 - [ ] `install.sh`: d, a git diff and diff function
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
-- [ ] `data_features.sh`: Rstudio split libssl-dev dependency to a new feature
-- [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
 - [ ] restore codium ? With a user inherit and a path override
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
