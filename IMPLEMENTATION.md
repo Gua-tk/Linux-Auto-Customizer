@@ -3,18 +3,18 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 
 ###### UPDATES
-
+- [ ] parametrize generic install
 ###### NEW FEATURES
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
-
+- [ ] remove line uninstall api function
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
 ###### UPDATES
 - [ ] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype
 
 ###### NEW FEATURES
-
+- [ ] `data_features.sh`: New function B which by default sources .bashrc and .profile. Using arguments can also update the font cache or other
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the total lines of code of a script
 - [x] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
 - [ ]  list inner directories i function (tree -d $1)

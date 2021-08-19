@@ -421,6 +421,17 @@ download() {
   fi
 }
 
+# - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
+#   dpkg -i.
+# - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
+# - Argument 1: Link to the package file to download.
+# - Argument 2 (Optional): Tho show the name of the program downloading and thus change the name of the downloaded
+#   package.
+download_and_install_package() {
+  download "$1" "$2"
+  dpkg -i "${BIN_FOLDER}/$2"
+  rm -f "${BIN_FOLDER}/$2"
+}
 
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
 # - Permissions: Same behaviour being root or normal user.
@@ -454,18 +465,6 @@ register_file_associations() {
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - OPTIONAL PROPERTIES #####################################
 ########################################################################################################################
-
-# - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
-#   dpkg -i.
-# - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
-# - Argument 1: Link to the package file to download.
-# - Argument 2 (Optional): Tho show the name of the program downloading and thus change the name of the downloaded
-#   package.
-download_and_install_package() {
-  download "$1" "$2"
-  dpkg -i "${BIN_FOLDER}/$2"
-  rm -f "${BIN_FOLDER}/$2"
-}
 
 
 # - Description: Expands launcher contents and add them to the desktop and dashboard.
