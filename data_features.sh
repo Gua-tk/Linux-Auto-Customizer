@@ -2313,6 +2313,7 @@ emoji() {
       [check_mark]=✔
       [multiplication_sign]=✖
       [cross_mark]=❌
+      [missing_mark]=✘
       [cross_mark_button]=❎
       [plus_sign]=➕
       [minus_sign]=➖
@@ -2704,7 +2705,7 @@ emoji() {
       if [ \"\$1\" == \"random\" ]; then  # Check for random emoji
         EMOJIS_arr=(\${EMOJIS[@]})
         echo \"\${EMOJIS_arr[\$RANDOM % \${#EMOJIS_arr[@]}]}\"
-      elif [ \"\$1\" -ge 0 ]; then  # If a natural number passed return an emoji indexing by number
+      elif [[ \"\$1\" =~ ^[0-9]+$ ]] && [ \"\$1\" -ge 0 ]; then  # If a natural number passed return an emoji indexing by number
         EMOJIS_arr=(\${EMOJIS[@]})
         echo \"\${EMOJIS_arr[\$1 % \${#EMOJIS_arr[@]}]}\"
       else
