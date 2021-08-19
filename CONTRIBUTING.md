@@ -15,6 +15,29 @@
 - [ ] help lines in 80 characters.
 - [ ] The tests used in the conditional ifs must be with [ ] instead of [[ ]] when possible. The last one is a bash exclusive feature that we can not find in other shells.
 
+(Everything here is by default)
+~/.customizer/
+  bin/ # decompressed files in directories, venvs and manual downloads of icons or other.
+    studio/
+    clion/
+    ...
+  cache/ # download will download here and move or copy the download to it's destination depending on the flag
+    clion_downloading
+    mendeley_downloading
+    studio_downloading
+    ...
+  data/
+    favorites.txt
+    keybinds.txt
+    bash_functions.sh
+    bash_initializations.sh
+  functions/
+    a.sh
+    b.sh
+    ...
+  initializations/
+    keybinds.sh
+
 ###### Behavioural
 - [x] Each feature is expected to be executed with certain permissions (root / normal user). So the script will skip a feature that needs to be installed with different permissions from the ones that currently has.
 - [x] No unprotected `cd` commands. `cd` must be avoided and never change the working directory given from the outside, that is why they must be called from the inside of a subshell if present.

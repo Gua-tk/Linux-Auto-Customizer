@@ -115,7 +115,12 @@
 - [x] `pluma`, `edit` functions should be able to open multiple files at once
 - [x] `data_features.sh`: validate `bashcolors` function. Write a single echo -e line that tests and shows all the colors (can be added as commentary in bashcolors function). 
 - [x] `data_features.sh`, `common_data.sh`: `p` function. It returns the name and PID of a process using the given port
-
+- [x] `install.sh`: Cache of downloads of customizer, add another flag to use / construct the cache (default) or to ignore it
+- [x] `functions_install.sh`: Control the addition of kebindings to the txt data file.
+- [x] Organize core files
+- [x] Define a new folder variable for . Customizer and adapt the rest
+- [x] ERROR messages should be sent to stderr. This is a way of showing errors even if quietness flag is on
+- [x] Change dir_in_path variable to PATH_POINTED_FOLDER to fit the naming schema
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter

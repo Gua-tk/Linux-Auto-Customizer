@@ -3,36 +3,8 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 
 ###### UPDATES
-Organize core files
-(Everything here is by default)
-~/.customizer/
-  bin/ # decompressed files in directories, venvs and manual downloads of icons or other.
-    studio/
-    clion/
-    ...
-  cache/ # download will download here and move or copy the download to it's destination depending on the flag
-    clion_downloading
-    mendeley_downloading
-    studio_downloading
-    ...
-  data/
-    favorites.txt
-    keybinds.txt
-    bash_functions.sh
-    bash_initializations.sh
-  functions/
-    a.sh
-    b.sh
-    ...
-  initializations/
-    keybinds.sh
-    
-- [ ] Define a new folder variable for . Customizer and adapt the rest
-- [x] ERROR messages should be sent to stderr. This is a way of showing errors even if quietness flag is on
-- [ ] Change dir_in_path variable to PATH_POINTED_FOLDER to fit the naming schema
 
 ###### NEW FEATURES
-- [ ] `install.sh`: Cache of downloads of customizer, add another flag to use / construct the cache (default) or to ignore it
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
 
