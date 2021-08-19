@@ -4823,8 +4823,8 @@ scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>
 
 scilab_installationtype="userinherit"
 scilab_arguments=("scilab")
-scilab_bashfunctions=("alias scilab=\"nohup bash ${CUSTOMIZER_FOLDER}/bin/scilab/bin/scilab &>/dev/null &\"")
-scilab_binariesinstalledpaths=("scilab;scilab" "scilab-cli;scilab-cli" "scinotes;scinotes")
+scilab_bashfunctions=("alias scilab=\"nohup scilab &>/dev/null &\"" "alias scinotes=\"nohup scinotes &>/dev/null &\"")
+scilab_binariesinstalledpaths=("bin/scilab;scilab" "bin/scilab-cli;scilab-cli" "bin/scinotes;scinotes")
 scilab_packagedependencies=("openjdk-8-jdk-headless" "libtinfo5")
 scilab_compressedfiletype="z"
 scilab_compressedfileurl="https://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz"
