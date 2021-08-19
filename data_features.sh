@@ -4438,33 +4438,20 @@ fi
 if [ \"\$color_prompt\" = yes ]; then
   if [ -n \"\${GIT_PROMPT_LAST_COMMAND_STATE}\" ]; then
     if [ \${GIT_PROMPT_LAST_COMMAND_STATE} -gt 0 ]; then  # Red color if error
-      color_arroba=\"\\[\\e[4;35m\\]\"
+      color_dollar=\"\\[\\e[1;31m\\]\"
     else  # light green color if last command is ok
-      color_arroba=\"\\[\\e[3;32m\\]\"
+      color_dollar=\"\\[\\e[1;32m\\]\"
     fi
   else
-    type colors &>/dev/null
-    if [ \"\$?\" -eq 0 ]; then
-      color_arroba=\"\$(colors randomkey)\"
-    else
-      color_arroba=\"\\[\\e[2;32m\\]\"
-    fi
+    color_dollar=\"\\[\\e[2;32m\\]\"
   fi
 
-  type colors &>/dev/null
-  if [ \"\$?\" -eq 0 ]; then
-    random_color_dollar=\"\$(colors \$(colors randomkey | sed 's/BACKGROUND_//g' | sed 's/UNDERLINE_//g' | sed 's/BOLD_//g'))\"
-  else
-    random_color_dollar=\"\\[\\e[0;32m\\]\"
-  fi
-    # Colorful custom PS1
-
-    PS1=\"\\[\\\e[1;37m\\]\\d \\t \\[\\e[0;32m\\]\\u\${color_arroba}@\\[\\e[0;36m\\]\\H \\[\\e[0;33m\\]\\w
-\${random_color_dollar}$ \"
+    PS1=\"\\[\\e[1;33m\\]\$(date \"+%a %d %b %Y\") \\[\\e[0;35m\\]\\u\\[\\e[0;0m\\]@\\[\\e[0;36m\\]\\H \\[\\e[0;33m\\]\\w
+\\[\\e[0;37m\\]\\t \${color_dollar}\\$ \\[\\e[0;0m\\]\"
 else
     PS1='\${debian_chroot:+(\$debian_chroot)}\u@\h:\w\\$ '
 fi
-unset color_prompt force_color_prompt random_color_dollar color_arroba
+unset color_prompt force_color_prompt color_dollar
 
 # If this is an xterm set the title to user@host:dir
 case \"\$TERM\" in
