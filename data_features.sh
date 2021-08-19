@@ -4747,6 +4747,12 @@ remmina_packagenames=("remmina")
 remmina_launchernames=("org.remmina.Remmina")
 remmina_readmeline="| Remmina | Remote Desktop Contol | Commands \`remmina\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
+rosegarden_installationtype="packagemanager"
+rosegarden_arguments=("rosegarden")
+rosegarden_packagenames=("rosegarden")
+rosegarden_launchernames=("com.rosegardenmusic.rosegarden")
+rosegarden_readmeline="| Rosegarden | Software for music production | Commands \`rosegarden\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
+
 rstudio_installationtype="userinherit"
 rstudio_arguments=("r_studio")
 rstudio_associatedfiletypes=("text/plain")
@@ -4806,13 +4812,12 @@ scala_arguments=("scala")
 scala_packagenames=("scala")
 scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-scilab_installationtype="packagemanager"
+scilab_installationtype="userinherit"
 scilab_arguments=("scilab")
-scilab_launchernames=("scilab")
-scilab_bashfunctions=("alias scilab=\"nohup bash /home/axel/.customizer/bin/scilab/bin/scilab &>/dev/null &\"")
+scilab_binariesinstalledpaths=("scilab;scilab" "scilab-cli;scilab-cli")
 scilab_packagedependencies=("openjdk-8-jdk-headless" "libtinfo5")
-#scilab_compressedfiletype="z"
-#scilab_compressedfileurl="https://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz"
+scilab_compressedfiletype="z"
+scilab_compressedfileurl="https://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz"
 scilab_packagenames=("scilab")
 scilab_launchercontents=("
 [Desktop Entry]

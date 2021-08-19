@@ -26,7 +26,7 @@
 - [ ] restore codium ? With a user inherit and a path override
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
-- [ ] `install.sh`, `uninstall.sh`: sherlock
+- [ ] `install.sh`, `uninstall.sh`: sherlock https://github.com/sherlock-project/sherlock#installation
 - [ ] `install.sh`, `uninstall.sh`: rosegarden (music edition)
 - [ ] `install.sh`, `uninstall.sh`: Ardour (music edition)
 - [ ] `install.sh`, `uninstall.sh`: LMMS (music edition)

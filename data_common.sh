@@ -365,6 +365,7 @@ declare -r feature_keynames=(
   "R"
   "reddit"
   "remmina"
+  "rosegarden"
   "rstudio"
   "rsync"
   "rustc"
