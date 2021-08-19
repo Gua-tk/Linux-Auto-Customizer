@@ -352,7 +352,7 @@ download() {
         # maybe is the path to a file
         dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
         file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
-        if [ -z "${dir_name}" ]; then
+        if [ ! -d "${dir_name}" ]; then
           output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
           exit
         fi
@@ -360,15 +360,15 @@ download() {
     else
       if echo "$2" | grep -Eqo "/"; then
         # Relative path that contains subfolders
-        if [ -d "$2" ]; then
+        if [ -d "${BIN_FOLDER}/$2" ]; then
           # Directory
-          local -r dir_name="$2"
+          local -r dir_name="${BIN_FOLDER}/$2"
           local file_name=downloading_program
         else
           # maybe is a path to a file
-          dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+          dir_name="${BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
           file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
-          if [ -z "${dir_name}" ]; then
+          if [ ! -d "${dir_name}" ]; then
             output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
             exit
           fi
@@ -381,14 +381,32 @@ download() {
     fi
   fi
 
-  # Download in a subshell to avoid changing the working directory in the current shell
-  echo -en '\033[1;33m'
-  wget --show-progress -O "${dir_name}/${file_name}" "$1"
-  echo -en '\033[0m'
+  # Check if it is cached
+  if [ -f "${CACHE_FOLDER}/${file_name}" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
+    mv "${CACHE_FOLDER}/${file_name}" "${dir_name}"
+  else  # Not cached or we do not use cache: we have to download
+    echo -en '\033[1;33m'
+    wget --show-progress -O "${TEMP_FOLDER}/${file_name}" "$1"
+    echo -en '\033[0m'
 
-  # If we are root
-  if [ ${EUID} == 0 ]; then
-    apply_permissions "${dir_name}/${file_name}"
+    if [ "${FLAG_CACHE}" -eq 1 ]; then
+      # Move to cache folder to construct cache
+      mv "${TEMP_FOLDER}/${file_name}" "${CACHE_FOLDER}"
+      # If we are root change permissions
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions "${CACHE_FOLDER}/${file_name}"
+      fi
+      # Copy file to the desired place of download
+      cp -p "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
+    else
+      # Move directly to the desired place of download
+      mv "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
+      # If we are root change permissions
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions "${dir_name}/${file_name}"
+      fi
+    fi
+
   fi
 }
 
@@ -701,13 +719,15 @@ rootgeneric_installation_type() {
   if [ "$2" == packageinstall ]; then
     # Use a compressed file that contains .debs
     if [ -n "${!compressedfileurl}" ]; then
-      download "${!compressedfileurl}" "${BIN_FOLDER}/$1_downloading"
-      decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_downloading" "$1"
+      download "${!compressedfileurl}" "${BIN_FOLDER}/$1_package_compressed_file"
+      decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_package_compressed_file" "$1"
       dpkg -Ri "${BIN_FOLDER}/$1"
       rm -Rf "${BIN_FOLDER:?}/$1"
-    else # Use directly a downloaded .deb
+    else  # Use directly a downloaded .deb
+      local name_suffix_anticollision=""
       for packageurl in "${!packageurls}"; do
-        download_and_install_package "${packageurl}" "$1_downloading"
+        download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
+        name_suffix_anticollision="${name_suffix_anticollision}_"
       done
     fi
   else # Install with default package manager
@@ -736,8 +756,8 @@ userinherit_installation_type() {
     create_folder "${!compressedfilepathoverride}"
     defaultpath="${!compressedfilepathoverride}"
   fi
-  download "${!compressedfileurl}" "${defaultpath}/$1_downloading"
-  decompress "${!compressedfiletype}" "${defaultpath}/$1_downloading" "$1"
+  download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
+  decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file" "$1"
 }
 
 ########################################################################################################################
@@ -825,6 +845,7 @@ generic_install() {
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
   create_folder "${CUSTOMIZER_FOLDER}"
+  create_folder "${TEMP_FOLDER}"
   create_folder "${DATA_FOLDER}"
   create_folder "${BIN_FOLDER}"
   create_folder "${FUNCTIONS_FOLDER}"

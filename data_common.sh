@@ -108,6 +108,7 @@ fi
 declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
 declare -r BIN_FOLDER="${CUSTOMIZER_FOLDER}/bin"
 declare -r CACHE_FOLDER="${CUSTOMIZER_FOLDER}/cache"
+declare -r TEMP_FOLDER="${CUSTOMIZER_FOLDER}/temp"
 declare -r FUNCTIONS_FOLDER="${CUSTOMIZER_FOLDER}/functions"
 declare -r INITIALIZATIONS_FOLDER="${CUSTOMIZER_FOLDER}/initializations"
 declare -r DATA_FOLDER="${CUSTOMIZER_FOLDER}/data"
@@ -164,6 +165,7 @@ declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 #     update and upgrade, respectively.                                                                                #
 #   - FLAG_AUTOCLEAN: By default "2". Can be set to "0", "1" or "2" with -d, -c or -C, which will do nothing, do a     #
 #     cache auto-remove or do a cache auto-remove and auto-clean.                                                      #
+#   - FLAG_CACHE: By default "1". Can be set to "0" or "1" with
 ########################################################################################################################
 
 # Static flags
@@ -181,7 +183,7 @@ FLAG_SKIP_PRIVILEGES_CHECK=0
 # Common behaviour flags
 FLAG_UPGRADE=1
 FLAG_AUTOCLEAN=2
-
+FLAG_CACHE=1
 
 ########################################################################################################################
 ################################################ FEATURE KEYNAMES ######################################################

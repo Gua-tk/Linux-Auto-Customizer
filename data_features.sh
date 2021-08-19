@@ -71,7 +71,7 @@ fi
 #    separated. from each other using ";": Command;key_combination;keybinding_description.                             #
 #  - FEATUREKEYNAME_downloads: Array of links to a valid download file separated by ";" from the desired name or full  #
 #    pathfor that file.                                                                                                #
-#    It will downloaded in ${BIN_FOLDER}/APPNAME/DESIREDFILENAME                                                   #
+#    It will downloaded in ${BIN_FOLDER}/APPNAME/DESIREDFILENAME                                                       #
 #  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from  #
 #    a function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,               #
 #    install_FEATUREKEYNAME_post.                                                                                      #
