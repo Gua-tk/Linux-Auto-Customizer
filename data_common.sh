@@ -40,11 +40,11 @@
 #     Path pointing to .bash_functions, which is the file used to control the installed features of the customizer.    #
 #   - BASH_INITIALIZATIONS_PATH: /home/username/.bin/bash-functions/.bash_profile                                      #
 #     Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start.                               #
-#   - BASH_INITIALIZATIONS_FOLDER: /home/username/.bin/bash_functions/.bash_functions                                  #
+#   - INITIALIZATIONS_FOLDER: /home/username/.bin/bash_functions/.bash_functions                                  #
 #     Path pointing to the folder which contains the initialization bash scripts.                                      #
-#   - PROGRAM_FAVORITES_PATH: {BASH_INITIALIZATIONS_FOLDER}/favorites.txt                                              #
+#   - PROGRAM_FAVORITES_PATH: {INITIALIZATIONS_FOLDER}/favorites.txt                                              #
 #     Default favorites list, data to set favorites.                                                                   #
-#   - PROGRAM_KEYBIND_PATH: ${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt                                                #
+#   - PROGRAM_KEYBIND_PATH: ${INITIALIZATIONS_FOLDER}/keybinds.txt                                                #
 #     Default keybind list data to set custom keybindings.                                                             #
 #                                                                                                                      #
 # * System routes:                                                                                                     #
@@ -109,7 +109,7 @@ declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
 declare -r BIN_FOLDER="${CUSTOMIZER_FOLDER}/bin"
 declare -r CACHE_FOLDER="${CUSTOMIZER_FOLDER}/cache"
 declare -r FUNCTIONS_FOLDER="${CUSTOMIZER_FOLDER}/functions"
-declare -r BASH_INITIALIZATIONS_FOLDER="${CUSTOMIZER_FOLDER}/initializations"
+declare -r INITIALIZATIONS_FOLDER="${CUSTOMIZER_FOLDER}/initializations"
 declare -r DATA_FOLDER="${CUSTOMIZER_FOLDER}/data"
 
 declare -r BASH_FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"

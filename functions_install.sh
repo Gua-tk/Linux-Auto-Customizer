@@ -45,15 +45,15 @@ add_bash_function() {
 # - Argument 2: Name of the file.
 add_bash_initialization() {
   # Write code to bash initializations folder with the name of the feature we want to install
-  create_file "${BASH_INITIALIZATIONS_FOLDER}/$2" "$1"
+  create_file "${INITIALIZATIONS_FOLDER}/$2" "$1"
   # If we are root apply permission to the file
   if [ "${EUID}" == 0 ]; then
-    apply_permissions "${BASH_INITIALIZATIONS_FOLDER}/$2"
+    apply_permissions "${INITIALIZATIONS_FOLDER}/$2"
   fi
 
   # Add import_line to .bash_profile (BASH_INITIALIZATIONS_PATH)
-  if ! grep -Fqo "source \"${BASH_INITIALIZATIONS_FOLDER}/$2\"" "${BASH_INITIALIZATIONS_PATH}"; then
-    echo "source \"${BASH_INITIALIZATIONS_FOLDER}/$2\"" >> "${BASH_INITIALIZATIONS_PATH}"
+  if ! grep -Fqo "source \"${INITIALIZATIONS_FOLDER}/$2\"" "${BASH_INITIALIZATIONS_PATH}"; then
+    echo "source \"${INITIALIZATIONS_FOLDER}/$2\"" >> "${BASH_INITIALIZATIONS_PATH}"
   fi
 }
 
@@ -831,7 +831,7 @@ data_and_file_structures_initialization() {
   create_folder "${DIR_IN_PATH}"
   create_folder "${PERSONAL_LAUNCHERS_DIR}"
   create_folder "${FONTS_FOLDER}"
-  create_folder "${BASH_INITIALIZATIONS_FOLDER}"
+  create_folder "${INITIALIZATIONS_FOLDER}"
   # Initialize bash functions
   if [ ! -f "${BASH_FUNCTIONS_PATH}" ]; then
     create_file "${BASH_FUNCTIONS_PATH}"
