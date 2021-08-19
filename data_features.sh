@@ -4174,6 +4174,13 @@ obs_studio_packagedependencies=("ffmpeg")
 obs_studio_packagenames=("obs-studio")
 obs_studio_readmeline="| OBS | Streaming and recording program | Command \`obs\`, desktop launcher and dashboard launcher. ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+octave_installationtype="packagemanager"
+octave_arguments=("octave" "gnu_octave" "octave_cli")
+octave_bashfunctions=("alias octave=\"nohup /usr/bin/octave --gui %f &>/dev/null &\"")
+octave_packagenames=("octave")
+octave_launchernames=("org.octave.Octave")
+octave_readmeline="| GNU Octave | Programming language and IDE | Command \`octave\`, desktop launcher and dashboard launcher. ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 okular_installationtype="packagemanager"
 okular_arguments=("okular")
 okular_launchernames=("org.kde.okular")
@@ -4217,10 +4224,6 @@ openssl102_installationtype="packageinstall"
 openssl102_arguments=("openssl102")
 openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
 openssl102_readmeline="| openssl1.0 | RStudio dependency | Used for running rstudio ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-ssh_installationtype="packagemanager"
-ssh_arguments=("ssh")
-ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 openssh_server_installationtype="packagemanager"
 openssh_server_arguments=("openssh_server")
@@ -4803,6 +4806,36 @@ scala_arguments=("scala")
 scala_packagenames=("scala")
 scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+scilab_installationtype="packagemanager"
+scilab_arguments=("scilab")
+scilab_launchernames=("scilab")
+scilab_bashfunctions=("alias scilab=\"nohup bash /home/axel/.customizer/bin/scilab/bin/scilab &>/dev/null &\"")
+scilab_packagedependencies=("openjdk-8-jdk-headless" "libtinfo5")
+#scilab_compressedfiletype="z"
+#scilab_compressedfileurl="https://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz"
+scilab_packagenames=("scilab")
+scilab_launchercontents=("
+[Desktop Entry]
+Comment=Scientific software package for numerical computations
+Comment[fr]=Logiciel scientifique de calcul numérique
+Comment[de]=eine Wissenschaftssoftware für numerische Berechnungen
+Comment[ru]=Научная программа для численных расчётов
+Exec=bash /home/axel/.customizer/bin/scilab/bin/scilab
+GenericName=Scientific Software Package
+GenericName[fr]=Logiciel de calcul numérique
+GenericName[de]=Wissenschaftssoftware
+GenericName[ru]=Научный программный комплекс
+Icon=scilab
+MimeType=application/x-scilab-sci;application/x-scilab-sce;application/x-scilab-tst;application/x-scilab-dem;application/x-scilab-sod;application/x-scilab-xcos;application/x-scilab-zcos;application/x-scilab-bin;application/x-scilab-cosf;application/x-scilab-cos;
+Name=Scilab
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Science;Math;
+Keywords=Science;Math;Numerical;Simulation
+")
+scilab_readmeline="| Scilab | Programming language | Command \`scala\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 screenshots_installationtype="environmental"
 screenshots_arguments=("screenshots")
 screenshots_filekeys=("screenshotwindow" "screenshotarea" "screenshotfull")
@@ -4931,7 +4964,6 @@ Version=1.0
 ")
 soundcloud_readmeline="| Soundcloud | ${soundcloud_readmelinedescription} | Command \`soundcloud\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-
 spotify_installationtype="packageinstall"
 spotify_arguments=("spotify")
 spotify_bashfunctions=("alias spotify=\"spotify &>/dev/null &\"")
@@ -4964,6 +4996,11 @@ Type=Application
 Version=1.0
 ")
 spreadsheets_readmeline="| Spreadsheets | ${spreadsheets_readmelinedescription} | Command \`spreadsheets\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+
+ssh_installationtype="packagemanager"
+ssh_arguments=("ssh")
+ssh_packagenames=("ssh")
+ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 status_installationtype="environmental"
 status_arguments=("status")
