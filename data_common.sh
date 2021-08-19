@@ -34,7 +34,7 @@
 #     Folder where we will put the different files installed by customizer.                                            #
 #   - BIN_FOLDER: /home/username/.bin                                                                              #
 #     Folder where all the software will be installed.                                                                 #
-#   - BASH_FUNCTIONS_FOLDER: /home/username/.bin/bash-functions                                                        #
+#   - FUNCTIONS_FOLDER: /home/username/.bin/bash-functions                                                        #
 #     Path pointing to the folder containing all the scripts of the bash functions                                     #
 #   - BASH_FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions                                          #
 #     Path pointing to .bash_functions, which is the file used to control the installed features of the customizer.    #
@@ -106,15 +106,16 @@ if [ -z "${XDG_TEMPLATES_DIR}" ]; then
 fi
 
 declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
-declare -r BASH_FUNCTIONS_FOLDER="${CUSTOMIZER_FOLDER}/functions"
 declare -r BIN_FOLDER="${CUSTOMIZER_FOLDER}/bin"
+declare -r CACHE_FOLDER="${CUSTOMIZER_FOLDER}/cache"
+declare -r FUNCTIONS_FOLDER="${CUSTOMIZER_FOLDER}/functions"
+declare -r BASH_INITIALIZATIONS_FOLDER="${CUSTOMIZER_FOLDER}/initializations"
 declare -r DATA_FOLDER="${CUSTOMIZER_FOLDER}/data"
-declare -r BASH_FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
 
-declare -r BASH_INITIALIZATIONS_FOLDER="${BIN_FOLDER}/initializations"
-declare -r BASH_INITIALIZATIONS_PATH="${BASH_INITIALIZATIONS_FOLDER}/.bash_profile"
-declare -r PROGRAM_FAVORITES_PATH="${BASH_INITIALIZATIONS_FOLDER}/favorites.txt"
-declare -r PROGRAM_KEYBIND_PATH="${BASH_INITIALIZATIONS_FOLDER}/keybinds.txt"
+declare -r BASH_FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
+declare -r BASH_INITIALIZATIONS_PATH="${DATA_FOLDER}/initializations.sh"
+declare -r PROGRAM_FAVORITES_PATH="${DATA_FOLDER}/favorites.txt"
+declare -r PROGRAM_KEYBIND_PATH="${DATA_FOLDER}/keybinds.txt"
 
 declare -r PATH_POINTED_FOLDER="${HOME_FOLDER}/.local/bin"
 declare -r ALL_USERS_PATH_POINTED_FOLDER="/usr/bin"

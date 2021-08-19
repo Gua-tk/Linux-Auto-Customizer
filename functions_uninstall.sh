@@ -33,8 +33,8 @@ purge_all_features()
 # - Argument 1: Name of the filename sourced by own .bash_functions of customizer
 remove_bash_function()
 {
-  sed "s@source ${BASH_FUNCTIONS_FOLDER}/$1\$@@g" -i ${BASH_FUNCTIONS_PATH}
-  rm -f "${BASH_FUNCTIONS_FOLDER}/$1"
+  sed "s@source ${FUNCTIONS_FOLDER}/$1\$@@g" -i ${BASH_FUNCTIONS_PATH}
+  rm -f "${FUNCTIONS_FOLDER}/$1"
 }
 
 # - [ ] Program function to remove desktop icons from the bar's favorite in `uninstall.sh`
@@ -79,7 +79,7 @@ remove_manual_feature()
   rm -f "${PATH_POINTED_FOLDER}/$1"
   rm -f "${XDG_DESKTOP_DIR}/$1.desktop"
   rm -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop"
-  rm -f "${BASH_FUNCTIONS_FOLDER}/$1.sh"
+  rm -f "${FUNCTIONS_FOLDER}/$1.sh"
 
   remove_bash_function "$1"
 }

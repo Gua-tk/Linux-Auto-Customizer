@@ -4408,12 +4408,12 @@ prompt_installationtype="environmental"
 prompt_arguments=("prompt")
 prompt_bashinitializations=("
 # Save and reload from history before prompt appears to be sure the prompt is being charged correctly because it conflicts with gitprompt.
-if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \"if [ ! -d .git ]; then source ${BASH_FUNCTIONS_FOLDER}/prompt.sh; fi\")\" ]; then
+if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \"if [ ! -d .git ]; then source ${FUNCTIONS_FOLDER}/prompt.sh; fi\")\" ]; then
   # Check if there is something inside PROMPT_COMMAND, so we put semicolon to separate or not
   if [ -z \"\${PROMPT_COMMAND}\" ]; then
-    export PROMPT_COMMAND=\"if [ ! -d .git ]; then source ${BASH_FUNCTIONS_FOLDER}/prompt.sh; fi\"
+    export PROMPT_COMMAND=\"if [ ! -d .git ]; then source ${FUNCTIONS_FOLDER}/prompt.sh; fi\"
   else
-    export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; if [ ! -d .git ]; then source ${BASH_FUNCTIONS_FOLDER}/prompt.sh; fi\"
+    export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; if [ ! -d .git ]; then source ${FUNCTIONS_FOLDER}/prompt.sh; fi\"
   fi
 fi
 ")
@@ -4809,7 +4809,7 @@ DESK=\"${XDG_DESKTOP_DIR}\"
 DOCUMENTS=\"${XDG_DOCUMENTS_DIR}\"
 DOWNLOAD=\"${XDG_DOWNLOAD_DIR}\"
 FONTS=\"${FONTS_FOLDER}\"
-FUNCTIONSD=\"${BASH_FUNCTIONS_FOLDER}\"
+FUNCTIONSD=\"${FUNCTIONS_FOLDER}\"
 FUNCTIONS=\"${BASH_FUNCTIONS_PATH}\"
 GIT=\"${XDG_DESKTOP_DIR}/git\"
 LAUNCHERS=\"${ALL_USERS_LAUNCHERS_DIR}\"

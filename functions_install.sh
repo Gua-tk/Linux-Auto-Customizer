@@ -26,15 +26,15 @@
 # - Argument 2: Name of the file.
 add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
-  create_file "${BASH_FUNCTIONS_FOLDER}/$2" "$1"
+  create_file "${FUNCTIONS_FOLDER}/$2" "$1"
   # If we are root apply permission to the file
   if [ "${EUID}" == 0 ]; then
-    apply_permissions "${BASH_FUNCTIONS_FOLDER}/$2"
+    apply_permissions "${FUNCTIONS_FOLDER}/$2"
   fi
 
   # Add import_line to .bash_functions (BASH_FUNCTIONS_PATH)
-  if ! grep -Fqo "source ${BASH_FUNCTIONS_FOLDER}/$2" "${BASH_FUNCTIONS_PATH}"; then
-    echo "source ${BASH_FUNCTIONS_FOLDER}/$2" >> "${BASH_FUNCTIONS_PATH}"
+  if ! grep -Fqo "source ${FUNCTIONS_FOLDER}/$2" "${BASH_FUNCTIONS_PATH}"; then
+    echo "source ${FUNCTIONS_FOLDER}/$2" >> "${BASH_FUNCTIONS_PATH}"
   fi
 }
 
@@ -827,7 +827,7 @@ data_and_file_structures_initialization() {
   create_folder "${CUSTOMIZER_FOLDER}"
   create_folder "${DATA_FOLDER}"
   create_folder "${BIN_FOLDER}"
-  create_folder "${BASH_FUNCTIONS_FOLDER}"
+  create_folder "${FUNCTIONS_FOLDER}"
   create_folder "${DIR_IN_PATH}"
   create_folder "${PERSONAL_LAUNCHERS_DIR}"
   create_folder "${FONTS_FOLDER}"
