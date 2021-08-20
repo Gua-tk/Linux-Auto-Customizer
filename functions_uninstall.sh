@@ -25,8 +25,8 @@
 # - Argument 1: Name of the bash script file in $FUNCTIONS_FOLDER.
 remove_bash_function()
 {
-  sed "s@^source \"${FUNCTIONS_FOLDER}/$1\"\$@@g" -i "${FUNCTIONS_PATH}"
-  rm -f "${FUNCTIONS_FOLDER}/$1"
+  remove_line "^source \"${FUNCTIONS_FOLDER}/$1\"\$" "${FUNCTIONS_PATH}"
+  remove_file "${FUNCTIONS_FOLDER}/$1"
 }
 
 
@@ -35,8 +35,8 @@ remove_bash_function()
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Name of the bash script file in $INITIALIZATIONS_FOLDER.
 remove_bash_initialization() {
-  sed "s@^source \"${INITIALIZATIONS_FOLDER}/$1\"\$@@g" -i "${INITIALIZATIONS_PATH}"
-  rm -f "${INITIALIZATIONS_FOLDER}/$1"
+  remove_line "^source \"${INITIALIZATIONS_FOLDER}/$1\"\$" "${INITIALIZATIONS_PATH}"
+  remove_file "${INITIALIZATIONS_FOLDER}/$1"
 }
 
 
@@ -45,7 +45,20 @@ remove_bash_initialization() {
 # - Permissions: can be executed indifferently as root or user.
 # - Argument 1: Keybinding data to be removed
 remove_keybinding() {
-    sed "s@^$1\$@@g" -i "${PROGRAM_KEYBINDINGS_PATH}"
+    remove_line "^$1\$" "${PROGRAM_KEYBINDINGS_PATH}"
+}
+
+
+# - Description: Function to delete a concrete line of a file.
+# - Permissions: can be executed indifferently as root or user.
+# - Argument 1: Text to be removed.
+# - Argument 2: Path to the file which contains the text to be removed.
+remove_line() {
+  if [ -f "$2" ]; then
+    sed -i "^$1\$/d" "$2"
+  else
+    output_proxy_executioner "echo WARNING: file $2 is not present, so the text $1 cannot be removed from the file. Skipping..." "${FLAG_QUIETNESS}"
+  fi
 }
 
 
@@ -55,7 +68,7 @@ remove_keybinding() {
 # - Permissions: This functions can be called indistinctly as root or user.
 # - Argument 1: Name of the .desktop launcher without .desktop extension to be removed from $PROGRAM_FAVORITES_PATH.
 remove_favorite() {
-  sed "s@^${1}.desktop\$@@g" -i "${PROGRAM_FAVORITES_PATH}"
+  remove_line "^$1.desktop\$" "${PROGRAM_FAVORITES_PATH}"
 }
 
 
@@ -64,28 +77,61 @@ remove_favorite() {
 # - Permissions: This function can be called as root or as user.
 # - Argument 1: Name of the .desktop launcher to be removed without the '.desktop' extension.
 remove_autostart_program() {
-  rm -f "${AUTOSTART_FOLDER}/$1.desktop"
+  remove_file "${AUTOSTART_FOLDER}/$1.desktop"
 }
 
+
+# - Description: Removes file from system
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Absolute path of the file to be removed
 remove_file() {
-  :
+  rm -f "$1"
 }
 
+
+# - Description: Remove folder from system
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Absolute path of folder to be removed
 remove_folder() {
-  :
+  rm -Rf "$1"
 }
 
+
+# - Description: Remove launcher from system
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Absolute path of folder to be removed
 remove_copied_launcher() {
-  :
+  if [ ${EUID} == 0 ]; then
+    remove_file "${ALL_USERS_LAUNCHERS_DIR}/$1"
+  fi
+  remove_file "${XDG_DESKTOP_DIR}/$1"
 }
 
+
+# - Description: Remove links from path pointed folder.
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Name of the command
 remove_links_in_path() {
-  :
+  if [ -f "${PATH_POINTED_FOLDER}/$1" ]; then
+    remove_file "${PATH_POINTED_FOLDER}/$1"
+  else
+    remove_file "${ALL_USERS_PATH_POINTED_FOLDER}/$1"
+  fi
 }
 
+
+# - Description: Removes manual launchers.
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Launcher name.
 remove_manual_launcher() {
-  :
+  if [ ${EUID} == 0 ]; then  # root
+    remove_file "${ALL_USERS_LAUNCHERS_DIR}/$1"
+  else
+    remove_file "${PERSONAL_LAUNCHERS_DIR}/$1"
+  fi
+  remove_file "${XDG_DESKTOP_DIR}/$1"
 }
+
 
 # - [ ] Program function to unregister default opening applications on `uninstall.sh`
 # First argument: name of the .desktop whose associations will be removed
@@ -93,12 +139,13 @@ remove_file_associations()
 {
   if [ -f "${MIME_ASSOCIATION_PATH}" ]; then
     if [ -n "${MIME_ASSOCIATION_PATH}" ]; then
-      sed "s@^.*=$1@@g" -i "${MIME_ASSOCIATION_PATH}"
+      remove_line "^.*=$1" "${MIME_ASSOCIATION_PATH}"
     fi
   else
     output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $1 cannot be removed from favourites. Skipping..." "${FLAG_QUIETNESS}"
   fi
 }
+
 
 ########################################################################################################################
 #################################### GENERIC UNINSTALL FUNCTIONS - OPTIONAL PROPERTIES #################################
