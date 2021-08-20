@@ -19,6 +19,7 @@
 - [ ] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype
 
 ###### NEW FEATURES
+- [ ] xslt html css js Template folder
 - [ ] `data_features.sh`: New function B which by default sources .bashrc and .profile. Using arguments can also update the font cache or other
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the total lines of code of a script
 - [x] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
@@ -70,7 +71,9 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 ###### UPDATES
 . [ ] `install.sh`, `customizer.sh`: Install & Uninstall Customizerself installation #FUNCTION alias Install="sudo apt-get install -y" alias `CUSTOMIZER`= `cd ...?` ...
-- [ ] `customizer.sh`, `common_data.sh`: Move high-level wrappers from `install.sh` for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint associate all the features that are needed such as sudo install Nemo and sudo uninstall nautilus
+- [ ] `customizer.sh`, `common_data.sh`: Move high-level wrappers from `install.sh` for a set of features, such as "minimal", "custom", "git_customization" etc. in this new endpoint associate all the features that are needed such as sudo install 
+- [ ]  Nemo and sudo uninstall nautilus   apt install -y nautilus gnome-shell-extension-desktop-icons
+
 
 ###### NEW FEATURES
 - [ ] `customizer.sh`: If an argument is provided but not recognized, customizer will try luck by using apt-get to install it --> parametrize the use of package manager

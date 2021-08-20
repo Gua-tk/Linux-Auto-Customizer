@@ -676,12 +676,87 @@ execute_installation()
     fi
 
     output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${keyname}." "${FLAG_QUIETNESS}"
-    output_proxy_executioner "generic_${FLAG_MODE} ${keyname}" "${FLAG_QUIETNESS}"
+    output_proxy_executioner "generic_installation ${keyname}" "${FLAG_QUIETNESS}"
     output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." "${FLAG_QUIETNESS}"
 
     # Return flag errors to bash defaults (ignore errors)
     set +e
   done
+}
+
+########################################################################################################################
+################################################## GENERIC INSTALL #####################################################
+########################################################################################################################
+
+# - Description: Installs a user program in a generic way relying on variables declared in data_features.sh and the name
+#   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
+#   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
+#   Depending on the properties set, some subfunctions will be activated to install related features.
+#   Also performs the manual execution of paths of the feature and calls generic functions to install the common
+#   part of the features such as desktop launchers, sourced .bashrc functions...
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
+#   name of the first argument in the common_data.sh table
+generic_installation() {
+  # Substitute dashes for underscores. Dashes are not allowed in variable names
+  local -r featurename="${1//-/_}"
+  local -r installationtype=${featurename}_installationtype
+  local -r manualcontentavailable="$1_manualcontentavailable"
+  if [ -n "${!installationtype}" ]; then
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
+      "${FLAG_MODE}_$1_pre"
+    fi
+    case ${!installationtype} in
+      # Using package manager such as apt-get
+      packagemanager)
+        "rootgeneric_${FLAG_MODE}ation_type" "${featurename}" packagemanager
+      ;;
+      # Downloading a package and installing it using a package manager such as dpkg
+      packageinstall)
+        "rootgeneric_${FLAG_MODE}ation_type" "${featurename}" packageinstall
+      ;;
+      # Download and decompress a file that contains a folder
+      userinherit)
+        "userinherit_${FLAG_MODE}ation_type" "${featurename}"
+      ;;
+      # Clone a repository
+      repositoryclone)
+        "repositoryclone_${FLAG_MODE}ation_type" "${featurename}"
+      ;;
+      # Create a virtual environment to install the feature
+      pythonvenv)
+        "pythonvenv_${FLAG_MODE}ation_type" "${featurename}"
+      ;;
+      # Only uses the common part of the generic installation
+      environmental)
+        : # no-op
+      ;;
+      *)
+        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" "${FLAG_QUIETNESS}"
+        exit 1
+      ;;
+    esac
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
+      "${FLAG_MODE}_$1_mid"
+    fi
+
+    generic_${FLAG_MODE}_downloads "${featurename}"
+    generic_${FLAG_MODE}_files "${featurename}"
+    generic_${FLAG_MODE}_manual_launchers "${featurename}"
+    generic_${FLAG_MODE}_copy_launcher "${featurename}"
+    generic_${FLAG_MODE}_functions "${featurename}"
+    generic_${FLAG_MODE}_initializations "${featurename}"
+    generic_${FLAG_MODE}_autostart "${featurename}"
+    generic_${FLAG_MODE}_favorites "${featurename}"
+    generic_${FLAG_MODE}_file_associations "${featurename}"
+    generic_${FLAG_MODE}_keybindings "${featurename}"
+    generic_${FLAG_MODE}_pathlinks "${featurename}"
+
+
+    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
+      "${FLAG_MODE}_$1_post"
+    fi
+  fi
 }
 
 

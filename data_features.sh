@@ -200,7 +200,7 @@ audacity_installationtype="packagemanager"
 audacity_arguments=("audacity")
 audacity_bashfunctions=("alias audacity=\"nohup audacity &>/dev/null &\"")
 audacity_launchernames=("audacity")
-audacity_packagenames=("audacity")
+audacity_packagenames=("audacity" "audacity-data")
 audacity_readmeline="| Audacity | Digital audio editor and recording | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 AutoFirma_installationtype="packageinstall"
@@ -210,6 +210,7 @@ AutoFirma_compressedfiletype="zip"
 AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip"
 AutoFirma_launchernames=("afirma")
 AutoFirma_packagedependencies=("libnss3-tools")
+AutoFirma_packagenames=("AutoFirma")
 AutoFirma_readmeline="| AutoFirma | Electronic signature recognition | Command \`AutoFirma\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 axel_installationtype="packagemanager"
@@ -782,6 +783,7 @@ drive_readmeline="| Google Drive | ${drive_readmelinedescription} | Command \`dr
 
 dropbox_installationtype="packageinstall"
 dropbox_arguments=("dropbox")
+dropbox_packagenames=("dropbox")
 dropbox_launchernames=("dropbox")
 dropbox_packagedependencies=("python3-gpg")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
@@ -3260,6 +3262,7 @@ google-chrome() {
 }
 ")
 google_chrome_flagsoverride=";;;;1;"
+google_chrome_packagenames=("google-chrome-stable")
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
 google_chrome_launchernames=("google-chrome")
@@ -3678,7 +3681,7 @@ Categories=Settings;
 Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png")
 latex_launchernames=("texmaker")
 latex_packagedependencies=("perl-tk" )
-latex_packagenames=("texlive-latex-extra" "texmaker")
+latex_packagenames=("texlive-latex-extra" "texmaker" "perl-tk")
 latex_readmeline="| LaTeX | ${latex_readmelinedescription} | Command \`tex\` (LaTeX compiler) and \`texmaker\` (LaTeX IDE), desktop launchers for \`texmaker\` and LaTeX documentation ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 libgtkglext1_installationtype="packagemanager"
@@ -3719,6 +3722,7 @@ megasync_arguments=("megasync" "mega")
 megasync_packagedependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
 megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.5.3-2.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nautilus-megasync_3.6.6_amd64.deb")
 megasync_launchernames=("megasync")
+megasync_packagenames=("nautilus-megasync" "megasync")
 megasync_readmeline="| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Command \`megasync\`, desktop launcher, dashboard launcher and integration with \`nemo\` file explorer ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 mendeley_dependencies_installationtype="packagemanager"
@@ -4231,6 +4235,7 @@ onedrive_readmeline="| OneDrive | ${onedrive_readmelinedescription} | Command \`
 
 openoffice_installationtype="packageinstall"
 openoffice_arguments=("open_office")
+openoffice_packagenames=("openoffice*.*")
 openoffice_compressedfileurl="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
 openoffice_compressedfiletype="z"
 openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-draw" "openoffice4-math" "openoffice4-writer")
@@ -4932,12 +4937,14 @@ shotwell_readmeline="| Shotwell | Cross-platform video editing | Command \`shotw
 
 skype_installationtype="packageinstall"
 skype_arguments=("skype")
+skype_packagenames=("skype")
 skype_launchernames=("skypeforlinux")
 skype_packageurls=("https://go.skype.com/skypeforlinux-64.deb")
 skype_readmeline="| Skype | Call & conversation tool service | Icon Launcher... ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 slack_installationtype="packageinstall"
 slack_arguments=("slack")
+slack_packagenames=("slack-desktop")
 slack_packageurls=("https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb")
 slack_launchernames=("slack")
 slack_readmeline="| Slack | Platform to coordinate your work with a team | Icon Launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -4979,6 +4986,7 @@ spotify_arguments=("spotify")
 spotify_bashfunctions=("alias spotify=\"spotify &>/dev/null &\"")
 spotify_launchernames=("spotify")
 spotify_packageurls=("http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb")
+spotify_packagenames=("spotify-desktop")
 spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 spreadsheets_installationtype="environmental"
@@ -5020,6 +5028,7 @@ status_readmeline="| status | \`git status\` | Command \`status\` || <ul><li>- [
 steam_installationtype="packageinstall"
 steam_arguments=("steam")
 steam_launchernames=("steam")
+steam_packagenames=("steam-launcher")
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_readmeline="| Steam | Video game digital distribution service | Command \`steam\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -5052,7 +5061,7 @@ studio_readmeline="| Android Studio | ${studio_readmelinedescription} | Command 
 
 sublime_keybindings=("sublime;<Primary><Alt><Super>s;Sublime Text")
 sublime_installationtype="userinherit"
-sublime_arguments=("sublime" "sublime_text")
+sublime_arguments=("sublime" "sublime_text" "subl")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
 sublime_bashfunctions=("alias sublime=\"sublime . &>/dev/null &\"")
 sublime_binariesinstalledpaths=("sublime_text;sublime")
@@ -5123,6 +5132,7 @@ teamviewer_readmeline="| Team Viewer | Video remote pc control | Command \`teamv
 teams_installationtype="packageinstall"
 teams_arguments=("teams" "microsoftteams")
 teams_launchernames=("teams")
+teams_packagenames=("teams")
 teams_packageurls=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")
 teams_readmeline="| Microsoft Teams | Video Conference, calls and meetings | Command \`teams\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
@@ -5612,6 +5622,7 @@ virtualbox_installationtype="packageinstall"
 virtualbox_arguments=("virtual_box")
 virtualbox_launchernames=("virtualbox")
 virtualbox_packagedependencies=("libqt5opengl5")
+virtualbox_packagenames=("virtualbox-6.1")
 virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb")
 virtualbox_readmeline="| VirtualBox | Hosted hypervisor for x86 virtualization | Command \`virtualbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
