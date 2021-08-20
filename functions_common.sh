@@ -401,7 +401,7 @@ argument_processing()
         local wrapper_key=
         wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
         local set_of_features="wrapper_${wrapper_key}[@]"
-        if [ -z "${!set_of_features}" ]; then
+        if [ -z "$(echo "${!set_of_features}")" ]; then
           add_program "${key}"
         else
           add_programs "${!set_of_features}"
