@@ -121,6 +121,8 @@
 - [x] Define a new folder variable for . Customizer and adapt the rest
 - [x] ERROR messages should be sent to stderr. This is a way of showing errors even if quietness flag is on
 - [x] Change dir_in_path variable to PATH_POINTED_FOLDER to fit the naming schema
+- [x] parametrize generic install
+- [x] `functions_uninstall.sh`: create functions to respond to the different installationtypes
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -223,3 +225,8 @@
 - [x] `install.sh`, `uninstall.sh`: rosegarden (music edition)
 - [x] `install.sh`, `uninstall.sh`: Ardour (music edition)
 - [x] `install.sh`, `uninstall.sh`: LMMS (music edition)
+- [x] implement `remove line` uninstall api function 
+- [x] `uninstall.sh`: OpenOffice apt-get remove -y  --> this info goes to data_features.sh as packagenames. Even though install when using 
+      a download package installationtype will not use it, uninstall will when removing the feature
+- [x] `uninstall.sh`: Rewrite `uninstall.sh` using generic_uninstall to uninstall the features.
+  

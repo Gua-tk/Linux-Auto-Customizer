@@ -3,7 +3,6 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 
 ###### UPDATES
-- [ ] parametrize generic install
 - [ ] Extract pakage dependencies to a optional property, so even "user" programs can have its dependencies on the same installation:
   * [ ] `data_features.sh`: Rstudio split libssl-dev dependency to a new feature
   * [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
@@ -11,7 +10,6 @@
 ###### NEW FEATURES
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
 - [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
-- [ ] implement `remove line` uninstall api function 
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 
@@ -50,16 +48,8 @@
 - [ ] protect with if always when reading from common filed of customizer
 ###### NEW FEATURES
 - [ ] `functions_commo.sh`: program specific arguments for uninstall for removing all structures, empty keybinds files, etc
-- [ ] `uninstall.sh`: Rewrite `uninstall.sh` using generic_uninstall to uninstall the features.
-- [ ] `functions_uninstall.sh`: create functions to respond to the different installationtypes
 - [ ] `functions_uninstall.sh`: refactor to customizer standards the commentaries and headers of uninstall.
 - [ ] `functions_uninstall`: function to delete all installations and the common structures
-- [ ] `uninstall.sh`: OpenOffice apt-get remove -y libreoffice-base-core libreoffice-impress libreoffice-calc
-      libreoffice-math libreoffice-common libreoffice-ogltrans libreoffice-core libreoffice-pdfimport
-      libreoffice-draw libreoffice-style-breeze libreoffice-gnome libreoffice-style-colibre libreoffice-gtk3 
-      libreoffice-style-elementary libreoffice-help-common libreoffice-style-tango libreoffice-help-en-us 
-      libreoffice-writer --> this info goes to data_features.sh as packagenames. Even though install when using 
-      a download package installationtype will not use it, uninstall will when removing the feature
 - [ ] `data_features.sh`: xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons true
 sudo apt purge nemo nemo*
