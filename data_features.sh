@@ -4880,24 +4880,27 @@ scilab_readmeline="| Scilab | Programming language | Command \`scala\` || <ul><l
 screenshots_installationtype="environmental"
 screenshots_arguments=("screenshots")
 screenshots_filekeys=("screenshotwindow" "screenshotarea" "screenshotfull")
-screenshots_keybindings=("scr-area;<Primary><Alt><Super>a;Screenshot Area" "scr-full;<Primary><Alt><Super>f;Screenshot Full" "scr-window;<Primary><Alt><Super>w;Screenshot Window")
+screenshots_keybindings=("scr-area;<Primary><Alt><Super>a;Screenshot Area" "scr-full;<Primary><Alt><Super>s;Screenshot Full" "scr-window;<Primary><Alt><Super>w;Screenshot Window")
 screenshots_screenshotwindow_path="screenshot_window.sh"
 screenshots_screenshotwindow_content="
 mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
-declare -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
-gnome-screenshot -w -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+gnome-screenshot -w -f \"${XDG_PICTURES_DIR}/screenshots/\${screenshotname}\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+unset screenshotname
 "
 screenshots_screenshotarea_path="screenshot_area.sh"
 screenshots_screenshotarea_content="
 mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
-declare -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
-gnome-screenshot -a -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+gnome-screenshot -a -f \"${XDG_PICTURES_DIR}/screenshots/\${screenshotname}\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+unset screenshotname
 "
 screenshots_screenshotfull_path="screenshot_full.sh"
 screenshots_screenshotfull_content="
 mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
-declare -r screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
-gnome-screenshot -f \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
+gnome-screenshot -f \"${XDG_PICTURES_DIR}/screenshots/\${screenshotname}\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
+unset screenshotname
 "
 screenshots_binariesinstalledpaths=("screenshot_area.sh;scr-area" "screenshot_window.sh;scr-window" "screenshot_full.sh;scr-full")
 screenshots_packagedependencies=("gnome-screenshot" "xclip")
@@ -5085,7 +5088,7 @@ Version=1.0
 ")
 studio_readmeline="| Android Studio | ${studio_readmelinedescription} | Command \`studio\`, alias \`studio\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-sublime_keybindings=("sublime;<Primary><Alt><Super>s;Sublime Text")
+sublime_keybindings=("sublime;<Primary><Alt><Super>e;Sublime Text")
 sublime_installationtype="userinherit"
 sublime_arguments=("sublime" "sublime_text" "subl")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
