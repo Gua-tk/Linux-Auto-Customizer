@@ -9,7 +9,7 @@
   * [ ] `data_features.sh`: bring features that are pure dependencies to the installation that they depend. example: mendeley  
 ###### NEW FEATURES
 - [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
-  * [ ] Parametrized $DEFAULT_PACKAGE_MANAGER
+  * [x] Parametrized $DEFAULT_PACKAGE_MANAGER
   * [ ] uninstall using apt-get instead of dpkg
   * [ ] function to detect the preferred package manager by OS by looking at /etc/os-release
   * [ ] For each Linux OS, how to unpacking, install, uninstall, update, upgrade, autoclean...

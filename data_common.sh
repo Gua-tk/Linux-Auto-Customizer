@@ -236,6 +236,7 @@ declare -r feature_keynames=(
   "cmatrix"
   "code"
   "codeblocks"
+  "codium"
   "commit"
   "converters"
   "copyq"

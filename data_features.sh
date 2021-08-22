@@ -554,6 +554,22 @@ codeblocks_launchernames=("codeblocks")
 codeblocks_packagenames=("codeblocks")
 codeblocks_readmeline="| Code::Blocks | IDE for programming  | Command \`codeblocks\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+codium_installationtype="userinherit"
+codium_compressedfilepathoverride="${BIN_FOLDER}"
+codium_compressedfiletype="z"
+codium_binariesinstalledpaths=("bin/codium;codium")
+codium_compressedfileurl="https://github.com/VSCodium/vscodium/releases/download/1.59.1/VSCodium-linux-x64-1.59.1.tar.gz"
+codium_launchercontents=("[Desktop Entry]
+Name=VSCodium
+StartupWMClass=codium
+Comment=Community-driven distribution of Microsoft’s editor VSCode.
+GenericName=codium
+Exec=codium
+Icon=${BIN_FOLDER}/codium/resources/app/resources/linux/code.png
+Type=Application
+Categories=IDE;Programming;
+")
+
 commit_installationtype="environmental"
 commit_arguments=("commit")
 commit_bashfunctions=("
