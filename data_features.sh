@@ -107,6 +107,7 @@ fi
 #  - FEATUREKEYNAME_pipinstallations: Array containing set of programs to be installed via pip. Used in: pythonvenv.   #
 #  - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3.     #
 #    Used in: pythonvenv.                                                                                              #
+# - FEATUREKEYNAME_donotinherit: It does not expect a directory into a compressed file only to decompress in place.    #
 ########################################################################################################################
 
 
@@ -555,7 +556,8 @@ codeblocks_packagenames=("codeblocks")
 codeblocks_readmeline="| Code::Blocks | IDE for programming  | Command \`codeblocks\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 codium_installationtype="userinherit"
-codium_compressedfilepathoverride="${BIN_FOLDER}"
+codium_donotinherit="yes"
+codium_compressedfilepathoverride="${BIN_FOLDER}/codium"
 codium_compressedfiletype="z"
 codium_binariesinstalledpaths=("bin/codium;codium")
 codium_compressedfileurl="https://github.com/VSCodium/vscodium/releases/download/1.59.1/VSCodium-linux-x64-1.59.1.tar.gz"

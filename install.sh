@@ -20,10 +20,9 @@
 ######################################### USER SOFTWARE FUNCTIONS ######################################################
 ########################################################################################################################
 
-install_codium()
+install_codium_pre()
 {
-  download_and_decompress ${codium_downloader} "codium" "z" "bin/codium" "codium"
-  create_manual_launcher "${codium_launcher}" "codium"
+  :
 }
 
 install_caffeine_pre()

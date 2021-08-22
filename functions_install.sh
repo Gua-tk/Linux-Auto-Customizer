@@ -292,6 +292,7 @@ decompress() {
       dir_name="${dir_name}/$3"
     else
       # Clean to avoid conflicts with previously installed software or aborted installation
+      echo "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
       rm -Rf "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
     fi
   fi
@@ -760,14 +761,22 @@ userinherit_installation_type() {
   local -r compressedfiletype="$1_compressedfiletype"
   # Obtain override download location if present
   local -r compressedfilepathoverride="$1_compressedfilepathoverride"
+  # Pointer for expanding inheritance
+  local -r donotinherit_pointer="$1_donotinherit"
   local defaultpath="${BIN_FOLDER}"
 
   if [ -n "${!compressedfilepathoverride}" ]; then
     create_folder "${!compressedfilepathoverride}"
     defaultpath="${!compressedfilepathoverride}"
   fi
+
+  create_folder "${defaultpath}"
   download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
-  decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file" "$1"
+  if [ "${!donotinherit_pointer}" == "yes" ]; then
+    decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file"
+  else
+    decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file" "$1"
+  fi
 }
 
 
