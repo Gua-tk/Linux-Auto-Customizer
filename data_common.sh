@@ -105,6 +105,8 @@ if [ -z "${XDG_TEMPLATES_DIR}" ]; then
   declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
 fi
 
+declare -r DEFAULT_PACKAGE_MANAGER="apt-get"
+
 declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
 declare -r BIN_FOLDER="${CUSTOMIZER_FOLDER}/bin"
 declare -r CACHE_FOLDER="${CUSTOMIZER_FOLDER}/cache"

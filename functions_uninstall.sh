@@ -147,6 +147,48 @@ remove_file_associations()
 }
 
 
+remove_all_favorites() {
+  remove_file "${PROGRAM_FAVORITES_PATH}"
+}
+
+
+remove_all_keybindings() {
+  remove_file "${PROGRAM_KEYBINDINGS_PATH}"
+}
+
+
+remove_all_functions() {
+  remove_file "${FUNCTIONS_PATH}"
+}
+
+
+remove_all_initializations() {
+  remove_file "${INITIALIZATIONS_PATH}"
+}
+
+
+# - Description: Removes all structures customizer has installed.
+# - Permissions: This function can be called as root or as user.
+remove_structures() {
+  remove_folder "${CUSTOMIZER_FOLDER}"
+  remove_folder "${BIN_FOLDER}"
+  remove_folder "${CACHE_FOLDER}"
+  remove_folder "${TEMP_FOLDER}"
+  remove_folder "${FUNCTIONS_FOLDER}"
+  remove_folder "${INITIALIZATIONS_FOLDER}"
+  remove_folder "${DATA_FOLDER}"
+
+  remove_all_favorites
+  remove_all_keybindings
+
+  remove_line "${bash_functions_import}" "${BASHRC_PATH}"
+  remove_line "${bash_initializations_import}" "${PROFILE_PATH}"
+
+
+  export PROMPT_COMMAND=""
+}
+
+
 ########################################################################################################################
 #################################### GENERIC UNINSTALL FUNCTIONS - OPTIONAL PROPERTIES #################################
 ########################################################################################################################
@@ -290,7 +332,7 @@ generic_uninstall_files() {
 }
 
 # - Description: Creates a valid launcher for the normal user in the desktop using an already created launcher from an
-# automatic install (for example using apt-get or dpkg).
+# automatic install (for example using $DEFAULT_PACKAGE_MANAGER or dpkg).
 # - Permissions: This function expects to be called as root since it uses the variable $SUDO_USER.
 # - Argument 1: name of the desktop launcher in ALL_USERS_LAUNCHERS_DIR.
 generic_uninstall_copy_launcher() {
@@ -334,7 +376,7 @@ repositoryclone_uninstallation_type() {
   remove_folder "${BIN_FOLDER}/$1"
 }
 
-# - Description: Removes packages using apt-get purge or ) + dpkg.
+# - Description: Removes packages using $DEFAULT_PACKAGE_MANAGER purge or ) + dpkg.
 #   Also performs file decompression to obtain .deb if the corresponding variables are defined.
 # - Permissions: Needs root permissions, but is expected to be called always as root by install.sh logic.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
@@ -349,7 +391,7 @@ rootgeneric_uninstallation_type() {
   local -r packagenames="$1_packagenames[@]"
   # Uninstall dependency packages
   for packagedependency in ${!packagedependencies}; do
-    apt-get purge -y "${packagedependency}"
+    "${DEFAULT_PACKAGE_MANAGER}" purge -y "${packagedependency}"
   done
 
   if [ "$2" == packageinstall ]; then
@@ -359,7 +401,7 @@ rootgeneric_uninstallation_type() {
     done
   else # Install with default package manager
     for packagename in ${!packagenames}; do
-      apt-get purge -y "${packagename}"
+      "${DEFAULT_PACKAGE_MANAGER}" purge -y "${packagename}"
     done
   fi
 }

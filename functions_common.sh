@@ -122,13 +122,13 @@ post_install_clean()
 {
   if [ "${EUID}" -eq 0 ]; then
     if [ "${FLAG_AUTOCLEAN}" -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via apt-get autoremove." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "apt-get -y autoremove" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via ${DEFAULT_PACKAGE_MANAGER} autoremove." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y autoremove" "${FLAG_QUIETNESS}"
       output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
     fi
     if [ "${FLAG_AUTOCLEAN}" -eq 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via apt-get autoremove." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "apt-get -y autoclean" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via ${DEFAULT_PACKAGE_MANAGER} autoremove." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y autoclean" "${FLAG_QUIETNESS}"
       output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
     fi
   fi
@@ -284,7 +284,7 @@ argument_processing()
   while [ $# -gt 0 ]; do
     key="$1"
 
-    case ${key} in
+    case "${key}" in
       ### BEHAVIOURAL ARGUMENTS ###
       -v|--verbose)
         FLAG_QUIETNESS=0
@@ -398,6 +398,36 @@ argument_processing()
       ;;
 
       *)  # Individual argument
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          case "${key}" in
+            --flush=favorites)
+              remove_all_favorites
+              shift
+              continue
+            ;;
+            --flush=keybindings)
+              remove_all_keybindings
+              shift
+              continue
+            ;;
+            --flush=functions)
+              remove_all_functions
+              shift
+              continue
+            ;;
+            --flush=initializations)
+              remove_all_initializations
+              shift
+              continue
+            ;;
+            --flush=structures)
+              remove_structures
+              shift
+              continue
+            ;;
+          esac
+        fi
+
         local wrapper_key=
         wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
         local set_of_features="wrapper_${wrapper_key}[@]"
@@ -413,8 +443,7 @@ argument_processing()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [ ${#added_feature_keynames[@]} -eq 0 ]; then
-    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Displaying help and finishing..." "${FLAG_QUIETNESS}"
-    output_proxy_executioner "echo INFO: Displaying help ${help_common}" "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo ERROR: No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "${FLAG_QUIETNESS}"
     exit 1
   fi
 }
@@ -542,7 +571,7 @@ add_program()
       local -r installationtype_pointer="${matched_keyname}_installationtype"
 
       case ${!installationtype_pointer} in
-        # Using package manager such as apt-get
+        # Using default package manager such as $DEFAULT_PACKAGE_MANAGER
         packagemanager)
           flag_privileges=0
         ;;
@@ -707,7 +736,7 @@ generic_installation() {
       "${FLAG_MODE}_$1_pre"
     fi
     case ${!installationtype} in
-      # Using package manager such as apt-get
+      # Using package manager such as $DEFAULT_PACKAGE_MANAGER
       packagemanager)
         "rootgeneric_${FLAG_MODE}ation_type" "${featurename}" packagemanager
       ;;

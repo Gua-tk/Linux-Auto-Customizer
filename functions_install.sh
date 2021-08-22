@@ -188,7 +188,7 @@ create_folder() {
 
 
 # - Description: Creates a valid launcher for the normal user in the desktop using an already created launcher from an
-# automatic install (for example using apt-get or dpkg).
+# automatic install (for example using $DEFAULT_PACKAGE_MANAGER or dpkg).
 # - Permissions: This function expects to be called as root since it uses the variable $SUDO_USER.
 # - Argument 1: name of the desktop launcher in ALL_USERS_LAUNCHERS_DIR.
 copy_launcher() {
@@ -701,7 +701,7 @@ repositoryclone_installation_type() {
 }
 
 
-# - Description: Installs packages using apt-get or ) + dpkg.
+# - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER or ) + dpkg.
 #   Also performs file decompression to obtain .deb if the corresponding variables are defined.
 # - Permissions: Needs root permissions, but is expected to be called always as root by install.sh logic.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
@@ -722,7 +722,7 @@ rootgeneric_installation_type() {
 
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
-    apt-get install -y "${packagedependency}"
+    "${DEFAULT_PACKAGE_MANAGER}" install -y "${packagedependency}"
   done
 
   # Download package and install using manual package manager
@@ -742,7 +742,7 @@ rootgeneric_installation_type() {
     fi
   else # Install with default package manager
     for packagename in ${!packagenames}; do
-      apt-get install -y "${packagename}"
+      "${DEFAULT_PACKAGE_MANAGER}" install -y "${packagename}"
     done
   fi
 }
@@ -825,18 +825,18 @@ data_and_file_structures_initialization() {
   fi
 }
 
-# - Description: Update the system using apt-get -y update or apt-get -y upgrade depending a
+# - Description: Update the system using $DEFAULT_PACKAGE_MANAGER -y update or $DEFAULT_PACKAGE_MANAGER -y upgrade depending a
 # - Permissions: Can be called as root or user but user will not do anything.
 pre_install_update() {
   if [ "${EUID}" == 0 ]; then
     if [ "${FLAG_UPGRADE}" -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to update system via apt-get." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "apt-get -y update" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y update" "${FLAG_QUIETNESS}"
       output_proxy_executioner "echo INFO: System updated." "${FLAG_QUIETNESS}"
     fi
     if [ "${FLAG_UPGRADE}" == 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to upgrade system via apt-get." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "apt-get -y upgrade" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: Attempting to upgrade system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y upgrade" "${FLAG_QUIETNESS}"
       output_proxy_executioner "echo INFO: System upgraded." "${FLAG_QUIETNESS}"
     fi
   fi

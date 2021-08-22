@@ -123,6 +123,8 @@
 - [x] Change dir_in_path variable to PATH_POINTED_FOLDER to fit the naming schema
 - [x] parametrize generic install
 - [x] `functions_uninstall.sh`: create functions to respond to the different installationtypes
+- [x] repair cronjob of changebg
+
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
