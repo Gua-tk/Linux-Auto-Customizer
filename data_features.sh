@@ -365,8 +365,14 @@ if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
   export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
 fi
 DIR=\"${BIN_FOLDER}/changebg\"
-PIC=\$(ls \${DIR} | shuf -n1)
-echo \"\$DIR/\$PIC\"
+PIC=\"\"
+while [ -z \"\${PIC}\" ]; do
+  PIC=\"\$(ls \"\${DIR}\" | shuf -n1)\"
+  if [ \"\${PIC}\" == \".git\" ] || [ \"\${PIC}\" == \".gitattributes\" ] || [ \"\${PIC}\" == \".cronscript.sh\" ] || [ \"\${PIC}\" == \".cronjob\" ]; then
+    PIC=\"\"
+  fi
+done
+
 dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
 
 #gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
