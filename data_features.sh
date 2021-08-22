@@ -353,6 +353,7 @@ calibre_readmeline="| Calibre | e-book reader| Commmand \`calibre\`, desktop lau
 
 changebg_installationtype="repositoryclone"
 changebg_arguments=("change_bg" "wallpaper" "wallpapers")
+changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES_DIR}/wallpapers")
 changebg_binariesinstalledpaths=".cronscript.sh;changebg"
 changebg_cronscript_content="
 #!/bin/bash
@@ -365,7 +366,7 @@ if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
   done
   export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
 fi
-DIR=\"${BIN_FOLDER}/changebg\"
+DIR=\"${XDG_PICTURES_DIR}/wallpapers\"
 PIC=\"\"
 while [ -z \"\${PIC}\" ]; do
   PIC=\"\$(ls \"\${DIR}\" | shuf -n1)\"

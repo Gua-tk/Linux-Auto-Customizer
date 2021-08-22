@@ -665,6 +665,30 @@ generic_install_initializations() {
 }
 
 
+# - Description: Expands function system initialization relative to moving files
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_movefiles
+generic_install_movefiles() {
+  local -r movefiles="$1_movefiles[@]"
+  local origin_files=""
+  local destiny_directory=""
+  for movedata in "${!movefiles}"; do
+    origin_files="$(echo "${movedata}" | cut -d ";" -f1)"
+    destiny_directory="$(echo "${movedata}" | cut -d ";" -f2)"
+    create_folder "${destiny_directory}"
+    if echo "${origin_files}" | grep -q '*' ; then
+      origin_files="$(echo "${origin_files}" | tr -d '*')"
+      for filename in $(ls -c1 -A "${BIN_FOLDER}/$1"); do
+        if echo "${filename}" | grep -q "${origin_files}\$" ; then
+          mv "${BIN_FOLDER}/$1/${filename}" "${destiny_directory}"
+        fi
+      done
+    else
+      mv "${BIN_FOLDER}/$1/${origin_files}" "${destiny_directory}"
+    fi 
+  done
+}
+
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
 ########################################################################################################################

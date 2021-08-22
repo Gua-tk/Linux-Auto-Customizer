@@ -61,10 +61,10 @@ install_jupyter_lab_pre() {
 
 install_jupyter_lab_mid() {
   # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
-  "${USR_BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension install @telamonian/theme-darcula
-  "${USR_BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension enable @telamonian/theme-darcula
+  "${BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension install @telamonian/theme-darcula
+  "${BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension enable @telamonian/theme-darcula
 
-  "${USR_BIN_FOLDER}/jupyter_lab/bin/jupyter" lab build
+  "${BIN_FOLDER}/jupyter_lab/bin/jupyter" lab build
 
   # ijs legacy install
   npm config set prefix "${HOME_FOLDER}/.local"
@@ -92,31 +92,31 @@ install_pgadmin_mid() {
   # information on how to call the script
 
   # Prepend shebang line to python3 interpreter of the venv
-  echo "#!${USR_BIN_FOLDER}/pgadmin/bin/python3" | cat - "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" >"${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
-  chmod +x "${USR_BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  echo "#!${BIN_FOLDER}/pgadmin/bin/python3" | cat - "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" >"${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  chmod +x "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
 }
 
 # Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 install_pypy3_mid() {
   # Install modules using pip
-  "${USR_BIN_FOLDER}/pypy3/bin/pypy3" -m ensurepip
+  "${BIN_FOLDER}/pypy3/bin/pypy3" -m ensurepip
 
   # Forces download of pip and of modules
-  "${USR_BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir -q install --upgrade pip
-  "${USR_BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir install cython numpy
+  "${BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir -q install --upgrade pip
+  "${BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir install cython numpy
   # Currently not supported
-  # ${USR_BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
+  # ${BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
 }
 
 install_sysmontask_mid() {
   (
-    cd "${USR_BIN_FOLDER}/sysmontask" || exit
+    cd "${BIN_FOLDER}/sysmontask" || exit
     python3 setup.py install
   )
 }
 
 install_changebg_post() {
-  crontab "${USR_BIN_FOLDER}/changebg/.cronjob"
+  crontab "${BIN_FOLDER}/changebg/.cronjob"
 }
 
 install_system_fonts_mid() {

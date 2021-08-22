@@ -780,7 +780,7 @@ generic_installation() {
     generic_${FLAG_MODE}_file_associations "${featurename}"
     generic_${FLAG_MODE}_keybindings "${featurename}"
     generic_${FLAG_MODE}_pathlinks "${featurename}"
-
+    generic_${FLAG_MODE}_movefiles "${featurename}"
 
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
       "${FLAG_MODE}_$1_post"
