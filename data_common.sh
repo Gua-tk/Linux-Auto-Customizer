@@ -105,6 +105,11 @@ if [ -z "${XDG_TEMPLATES_DIR}" ]; then
   declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
 fi
 
+if [ -f "/etc/os-release" ]; then
+  declare -r OS_NAME="$(cat "/etc/os-release" | grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"')"
+else
+  declare -r OS_NAME="Ubuntu"
+fi
 declare -r DEFAULT_PACKAGE_MANAGER="apt-get"
 
 declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
