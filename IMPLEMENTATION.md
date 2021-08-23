@@ -23,14 +23,12 @@
 
 ###### NEW FEATURES
 - [ ] xslt html css js Template folder
-- [ ] `data_features.sh`: New function B which by default sources .bashrc and .profile. Using arguments can also update the font cache or other
 - [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the total lines of code of a script
 - [x] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
 - [ ]  list inner directories i function (tree -d $1)
 - [ ] merge: git merge funtion()
-- [ ] `install.sh`: d, a git diff and diff function
+- [ ] `install.sh`: d, a git diff and color diff function head tail
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
-- [ ] restore codium ? With a user inherit and a path override
 - [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz
 - [ ] `install.sh`, `uninstall.sh`: sherlock https://github.com/sherlock-project/sherlock#installation
@@ -87,4 +85,4 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
 
 - [ ] Start using GitHub issues to keep this to-do
 - [ ] Creation of \`customizer.py\`file as an alternative endpoint for customizer.sh. We can use it to give to it a graphical interface (GUI)
-- [ ] automatically solve customizer self dependències, like jupyer with Julia.
+- [ ] automatically solve customizer self dependencies, like jupyer with Julia.

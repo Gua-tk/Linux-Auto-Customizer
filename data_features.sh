@@ -220,6 +220,33 @@ axel_arguments=("axel")
 axel_packagenames=("axel")
 axel_readmeline="| Axel | Download manager | Command \`axel\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+B_installationtype="environmental"
+B_arguments=("B" "B_function")
+B_bashfunctions=("
+B() {
+  clear
+  source "${BASHRC_PATH}" 
+  source "${PROFILE_PATH}"
+  while [ -n \"\$1\" ]; do
+    case \"\$1\" in 
+      fonts)
+        fc-cache -f
+      ;;
+      path)
+        hash -r
+      ;;
+      *) 
+        echo \"ERROR: Not recognized argument. Exiting...\"
+        exit 1
+      ;;
+    esac
+    shift
+  done
+}
+")
+B_readmeline="| Function \`B\` | Alias for \`bash\` | Alias \`B\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+
 b_installationtype="environmental"
 b_arguments=("b" "b_function")
 b_bashfunctions=("alias b=\"bash\"")
@@ -955,9 +982,9 @@ Version=4.2.2
 ")
 eclipse_readmeline="| Eclipse | ${eclipse_readmelinedescription} | Command \`eclipse\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-edit_installationtype="environmental"
-edit_bashfunctions=("
-edit() {
+E_installationtype="environmental"
+E_bashfunctions=("
+E() {
   declare -Arl EDITABLEFILES=(
     [aliases]=\"${HOME_FOLDER}/.bash_aliases\"
     [allbashrc]=\"${BASHRC_ALL_USERS_PATH}\"
@@ -993,7 +1020,7 @@ edit() {
   fi
 }
 ")
-edit_readmeline="| Function \`edit\` | Multi Function \`edit\` to edit a set of hardcoded key files using an argument | Function \`edit\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+E_readmeline="| Function \`E\` | Multi Function \`E\` to edit a set of hardcoded key files using an argument | Function \`E\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 emojis_installationtype="environmental"
 emojis_arguments=("emojis" "emoji")

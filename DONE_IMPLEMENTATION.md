@@ -124,7 +124,8 @@
 - [x] parametrize generic install
 - [x] `functions_uninstall.sh`: create functions to respond to the different installationtypes
 - [x] repair cronjob of changebg
-
+- [x] restore codium ? With a user inherit and a path override
+- [x] `data_features.sh`: New function B which by default sources .bashrc and .profile. Using arguments can also update the font cache or other
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
