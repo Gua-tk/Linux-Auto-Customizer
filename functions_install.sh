@@ -677,8 +677,8 @@ generic_install_movefiles() {
     create_folder "${destiny_directory}"
     if echo "${origin_files}" | grep -q '*' ; then
       origin_files="$(echo "${origin_files}" | tr -d '*')"
-      for filename in $(ls -c1 -A "${BIN_FOLDER}/$1")"; do
-        if echo "${filename}" | grep -q "${origin_files}\$" ; then
+      for filename in $(ls -c1 -A "${BIN_FOLDER}/$1"); do
+        if echo "${filename}" | grep -q "${origin_files}\$"; then
           mv "${BIN_FOLDER}/$1/${filename}" "${destiny_directory}"
         fi
       done
