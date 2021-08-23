@@ -108,6 +108,7 @@ fi
 #  - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3.     #
 #    Used in: pythonvenv.                                                                                              #
 # - FEATUREKEYNAME_donotinherit: It does not expect a directory into a compressed file only to decompress in place.    #
+# - FEATUREKEYNAME_movefiles: Allows file moving from installation point to other ones in the system, matching *       #
 ########################################################################################################################
 
 

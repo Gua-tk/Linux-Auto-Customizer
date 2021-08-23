@@ -292,7 +292,6 @@ decompress() {
       dir_name="${dir_name}/$3"
     else
       # Clean to avoid conflicts with previously installed software or aborted installation
-      echo "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
       rm -Rf "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
     fi
   fi
@@ -678,7 +677,7 @@ generic_install_movefiles() {
     create_folder "${destiny_directory}"
     if echo "${origin_files}" | grep -q '*' ; then
       origin_files="$(echo "${origin_files}" | tr -d '*')"
-      for filename in $(ls -c1 -A "${BIN_FOLDER}/$1"); do
+      for filename in $(ls -c1 -A "${BIN_FOLDER}/$1")"; do
         if echo "${filename}" | grep -q "${origin_files}\$" ; then
           mv "${BIN_FOLDER}/$1/${filename}" "${destiny_directory}"
         fi
