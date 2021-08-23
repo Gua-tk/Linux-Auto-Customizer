@@ -195,8 +195,11 @@ copy_launcher() {
   if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1" ]; then
     cp "${ALL_USERS_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}/$1"
     apply_permissions "${XDG_DESKTOP_DIR}/$1"
+  elif [ -f "${PERSONAL_LAUNCHERS_DIR}/$1" ]; then
+    cp "${PERSONAL_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}/$1"
+    apply_permissions "${XDG_DESKTOP_DIR}/$1"
   else
-    output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR}." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo WARNING: Can't find $1 launcher in "${ALL_USERS_LAUNCHERS_DIR}" "${PERSONAL_LAUNCHERS_DIR}" and ." "${FLAG_QUIETNESS}"
   fi
 }
 

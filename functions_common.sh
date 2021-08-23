@@ -771,6 +771,7 @@ generic_installation() {
 
     generic_${FLAG_MODE}_downloads "${featurename}"
     generic_${FLAG_MODE}_files "${featurename}"
+    generic_${FLAG_MODE}_movefiles "${featurename}"
     generic_${FLAG_MODE}_manual_launchers "${featurename}"
     generic_${FLAG_MODE}_copy_launcher "${featurename}"
     generic_${FLAG_MODE}_functions "${featurename}"
@@ -780,7 +781,6 @@ generic_installation() {
     generic_${FLAG_MODE}_file_associations "${featurename}"
     generic_${FLAG_MODE}_keybindings "${featurename}"
     generic_${FLAG_MODE}_pathlinks "${featurename}"
-    generic_${FLAG_MODE}_movefiles "${featurename}"
 
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
       "${FLAG_MODE}_$1_post"

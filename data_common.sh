@@ -79,7 +79,9 @@ if [ "${EUID}" != 0 ]; then
   declare -r HOME_FOLDER="${HOME}"
 
   # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
-  source "${HOME_FOLDER}/.config/user-dirs.dirs"
+  if [ -f "${USER_DIRS_PATH}" ]; then
+    source "${USER_DIRS_PATH}"
+  fi 
 else
   declare -r HOME_FOLDER="/home/${SUDO_USER}"
 
@@ -87,11 +89,13 @@ else
   # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
   # for /home/$SUDO_USER to be interpreted correctly as a root user. Also with declare we can declare all variables in
   # the file in one line.
-  while IFS= read -r line; do
-    if ! echo "${line}" | grep -Eoq "^#"; then
-      declare -r "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
-    fi
-  done < "${HOME_FOLDER}/.config/user-dirs.dirs"
+  if [ -f "${USER_DIRS_PATH}" ]; then
+    while IFS= read -r line; do
+      if ! echo "${line}" | grep -Eoq "^#"; then
+        declare -r "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
+      fi
+    done < "${HOME_FOLDER}/.config/user-dirs.dirs"
+  fi
 fi
 
 # Define fallbacks if user-dirs.dirs is not present
@@ -135,7 +139,7 @@ declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
-
+declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
 
 ########################################################################################################################
 ################################################## RUNTIME FLAGS #######################################################
@@ -206,6 +210,7 @@ FLAG_CACHE=1
 declare -r feature_keynames=(
   "a"
   "add"
+  "aircrack_ng"
   "aisleriot"
   "alert"
   "ansible"
@@ -220,6 +225,7 @@ declare -r feature_keynames=(
   "B"
   "b"
   "bashcolors"
+  "blender"
   "branch"
   "brasero"
   "c"
@@ -234,6 +240,7 @@ declare -r feature_keynames=(
   "clion"
   "clone"
   "clonezilla"
+  "cmake"
   "cmatrix"
   "code"
   "codeblocks"
@@ -243,6 +250,7 @@ declare -r feature_keynames=(
   "copyq"
   "curl"
   "customizer"
+  "d"
   "dbeaver"
   "dconf_editor"
   "dia"
@@ -304,12 +312,14 @@ declare -r feature_keynames=(
   "google_chrome"
   "gpaint"
   "gparted"
+  "guake"
   "gvim"
   "h"
   "handbrake"
   "hard"
   "hardinfo"
   "history_optimization"
+  "i"
   "ideac"
   "ideau"
   "inkscape"
@@ -335,9 +345,11 @@ declare -r feature_keynames=(
   "megasync"
   "mendeley_dependencies"
   "mendeley"
+  "merge"
   "msttcorefonts"
   "mvn"
   "nautilus"
+  "ncat"
   "nedit"
   "nemo"
   "netflix"

@@ -126,6 +126,12 @@
 - [x] repair cronjob of changebg
 - [x] restore codium ? With a user inherit and a path override
 - [x] `data_features.sh`: New function B which by default sources .bashrc and .profile. Using arguments can also update the font cache or other
+- [x]  merge: git merge funtion()
+- [x] `install.sh`, `uninstall.sh`: z Compressing function (Have sense having this function if we have `x` function to decompress any compressed file)
+- [x]  list inner directories i function (tree -d $1)
+- [x] `install.sh`: d, a git diff and color grep diff function
+- [x] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1.tar.gz
+
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -232,4 +238,7 @@
 - [x] `uninstall.sh`: OpenOffice apt-get remove -y  --> this info goes to data_features.sh as packagenames. Even though install when using 
       a download package installationtype will not use it, uninstall will when removing the feature
 - [x] `uninstall.sh`: Rewrite `uninstall.sh` using generic_uninstall to uninstall the features.
-  
+- [x] `install.sh`, `uninstall.sh`: ncat
+- [x] `install.sh`, `uninstall.sh`: aircrack-ng
+- [x] `install.sh`, `uninstall.sh`: guake (terminal at F12 key)
+- [x] `install.sh`, `uninstall.sh`: Blender3D (image edition)

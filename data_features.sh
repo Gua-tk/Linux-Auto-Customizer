@@ -123,6 +123,11 @@ add_arguments=("add" "add_function")
 add_bashfunctions=("alias add=\"git add\"")
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+aircrack_ng_installationtype="packagemanager"
+aircrack_ng_packagenames=("aircrack-ng")
+aircrack_ng_arguents=("aircrack_ng" "aircrackng")
+aircrack_ng_readmeline="| aircrack-ng | Security tools for audition | Command \`aircrack-ng\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 aisleriot_installationtype="packagemanager"
 aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
 aisleriot_launchernames=("sol")
@@ -338,6 +343,100 @@ colors() {
 ")
 bashcolors_readmeline="| bashcolors | bring color to terminal | Command \`bashcolors\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+blender_installationtype="userinherit"
+blender_compressedfileurl="https://ftp.nluug.nl/pub/graphics/blender/release/Blender2.93/blender-2.93.3-linux-x64.tar.xz"
+blender_compressedfiletype="J"
+blender_arguments=("blender" "blender_3d")
+blender_binariesinstalledpaths=("blender;blender")
+blender_readmeline="| Blender | 2D and 3D image and animation, fx, video edit... | Command \`blender\`, desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+blender_launchercontents=("[Desktop Entry]
+Name=Blender
+GenericName=3D modeler
+GenericName[ar]=3D المنمذج ثلاثي الأبعاد
+GenericName[ca]=Modelador 3D
+GenericName[cs]=3D modelování
+GenericName[da]=3D-modellering
+GenericName[de]=3D-Modellierer
+GenericName[el]=Μοντελοποιητής 3D
+GenericName[es]=Modelador 3D
+GenericName[et]=3D modelleerija
+GenericName[fi]=3D-mallintaja
+GenericName[fr]=Modeleur 3D
+GenericName[gl]=Modelador 3D
+GenericName[hu]=3D modellező
+GenericName[it]=Modellatore 3D
+GenericName[ja]=3D モデラー
+GenericName[lt]=3D modeliavimas
+GenericName[nb]=3D-modellering
+GenericName[nl]=3D-modeller
+GenericName[pl]=Modelowanie 3D
+GenericName[pt_BR]=Modelador 3D
+GenericName[ro]=Arhitect 3D
+GenericName[ru]=Редактор 3D-моделей
+GenericName[tr]=3D modelleyici
+GenericName[uk]=Редактор 3D-моделей
+GenericName[wa]=Modeleu 3D
+GenericName[zh_CN]=3D 建模
+GenericName[zh_TW]=3D 模型
+Comment=3D modeling, animation, rendering and post-production
+Comment[ar]=3D النمذجة، الرسوم المتحركة، والتجسيد، وما بعد الإنتاج
+Comment[ast]=Modeláu 3D, animación, renderizáu y postproducción
+Comment[eu]=3D modelatzea, animazioa, errendatzea eta post-produkzioa
+Comment[be]=Праграма прасторавага мадэлявання, анімацыі, апрацоўкі відэа і давядзення відэапрадукцыі
+Comment[bn]=ত্রিমাত্রিক মডেল, অ্যানিমেশন, রেন্ডারিং এবং পোস্ট-উৎপাদন
+Comment[bs]=3D modeliranje, animacija, obrada i postprodukcija
+Comment[bg]=3D моделиране, анимиране, рендиране и пост-продукция
+Comment[ca]=Modelat 3D, animació, renderització i post-producció
+Comment[ca@valencia]=Modelat 3D, animació, renderització i post-producció
+Comment[crh]=3B modelleme, animasyon, işleme ve son üretim
+Comment[cs]=3D modelování, animace, rederování a postprodukce
+Comment[da]=3D-modellering, animation, rendering og efterbehandling
+Comment[de]=3D-Modellierung, Animation, Rendering und Nachbearbeitung
+Comment[nl]=3d-modelleren, animeren, renderen en post-productie
+Comment[el]=Μοντελοποίηση 3D, κινούμενα σχέδια, αποτύπωση και οργάνωση διαδικασίας μετά-την-παραγωγή
+Comment[eo]=3D-modelado, animacio, renderado kaj postproduktado
+Comment[es]=Modelado 3D, animación, renderizado y post-producción
+Comment[et]=Kolmemõõtmeline modelleerimine, animeerimine, esitlemine ja järeltöötlemine
+Comment[fi]=3D-mallinnus, -animaatiot, -renderöinti ja -tuotanto
+Comment[fr]=Modélisation 3D, animation, rendu et post-production
+Comment[fr_CA]=Modélisation 3D, animation, rendu et post-production
+Comment[gl]=Modelado 3D, animación, renderizado e postprodución
+Comment[hu]=3D modellek és animációk létrehozása és szerkesztése
+Comment[is]=Þrívíddarmódel, hreyfimyndir, myndgerð og frágangur myndskeiða
+Comment[it]=Modellazione 3D, animazione, rendering e post-produzione
+Comment[ja]=3Dモデリング、アニメーション、レンダリング、ポストプロダクションのツール
+Comment[ko]=3D 모델링, 애니메이션, 렌더링과 포스트 프로덕션
+Comment[lt]=3D modeliavimas, animacijų kūrimas, atvaizdavimas ir tobulinimas
+Comment[lv]=3D modelēšana, animācija, renderēšana un pēcapstrāde
+Comment[ms]=Pemodelan, animasi, penerapan dan post-produksi 3D
+Comment[nb]=3D-modellering, animasjon, rendering og postproduksjon
+Comment[oc]=Modelizacion 3D, animacion, rendut e post-produccion
+Comment[pl]=Modelowanie 3D, animacja, renderowanie i postprodukcja
+Comment[pt]=Modelação 3D, animação, renderização e pós-produção
+Comment[pt_BR]=Modelagem 3D, animação, renderização e pós-produção
+Comment[ro]=Modelare, animare, afișare și post-producție 3D
+Comment[ru]=3D-моделирование, анимация, рендеринг и компоновка
+Comment[sl]=3D modeliranje, animacija, izrisovanje in nadaljnje obdelovanje
+Comment[sq]=Animacion i modeleve 3D, rregullim dhe më pas prodhim
+Comment[sr]=3Д моделовање, анимација, исцртавање и постпродукција
+Comment[sv]=3d-modellering, animering, rendering och efterbehandling
+Comment[ta]=முப்பரிமாண ஒப்புருவாக்கம், அசைவூட்டம், காட்சியாக்கம் மற்றும் உருவாக்கத்துக்கு பிந்தைய செயல்பாடுகள்
+Comment[tg]=Моделсозии 3D, аниматсия, пешниҳод ва истеҳсоли баъдӣ
+Comment[tr]=3B modelleme, animasyon, işleme ve son üretim
+Comment[uk]=Програма просторового моделювання, анімації, обробки відео та доведення відеопродуктів
+Comment[vi]=Tạo hình mẫu 3D, hoạt họa, dựng hình và các công việc hậu kỳ
+Comment[wa]=Modelaedje 3D, animåcion, rindou eyet après-produccion
+Comment[zh_HK]=3D 模型、動畫、算圖和後製
+Comment[zh_CN]=3D 建模、动画、渲染和后期制作
+Comment[zh_TW]=3D 模型、動畫、算圖和後製
+Keywords=3d;cg;modeling;animation;painting;sculpting;texturing;video editing;video tracking;rendering;render engine;cycles;game engine;python;
+Exec=blender %f
+Icon=${BIN_FOLDER}/blender/blender.svg
+Terminal=false
+Type=Application
+Categories=Graphics;3DGraphics;
+MimeType=application/x-blender;")
+
 branch_installationtype="environmental"
 branch_arguments=("branch")
 branch_bashfunctions=("alias branch=\"git branch\"")
@@ -525,6 +624,13 @@ Version=1.0
 ")
 clonezilla_readmelinedescription="Disk cloning, disk imaging, data recovery, and deployment"
 clonezilla_readmeline="| CloneZilla | ${clonezilla_readmelinedescription} | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+cmake_installationtype="userinherit"
+cmake_binariesinstalledpaths=("bin/ccmake;ccmake" "bin/cmake;cmake" "bin/cmake-gui;cmake-gui" "bin/cpack;cpack" "bin/ctest;ctest")
+cmake_compressedfiletype="z"
+cmake_compressedfileurl="https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-linux-x86_64.tar.gz"
+cmake_arguments=("cmake" "c_make")
+cmake_readmeline="| Cmake | Compile C and c make | Command \`cmake\`, \`ccmake\`, \`cmake-gui\`, \`cpack\`, \`ctest\`  ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 cmatrix_installationtype="packagemanager"
 cmatrix_arguments=("cmatrix")
@@ -728,6 +834,45 @@ _customizer-install() {
 complete -F _customizer-install customizer-install
 ")
 customizer_readmeline="| Linux Auto Customizer | Program and function management and automations | Command \`customizer-install\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+#      diff --color=auto \"\$1\" \"\$2\"
+
+d_installationtype="environmental"
+d_arguments=("d")
+d_bashfunctions=("
+d()
+{ # d, a git diff and color grep dif
+  if [ \$# -eq 2 ]; then
+    if [ -d \".git\" ]; then
+      git diff --color-words \"\$1\" \"\$2\"
+    else
+      git diff --color-words --no-index \"\$1\" \"\$2\"
+    fi
+  elif [ \$# -eq 1 ]; then
+    if [ -d \".git\" ]; then
+      git diff --color-words \"\$1\"
+    else
+      echo \"ERROR: If this is not a git directory you need at least two arguments to see any differences.\"
+    fi
+  elif [ \$# -eq 0 ]; then
+    if [ -d \".git\" ]; then
+      git diff --color-words
+    else
+      echo \"ERROR: If this is not a git directory you need at least two arguments to see any differences.\"
+    fi
+  else
+    if [ -d \".git\" ]; then
+      while [ -n \"\$1\" ]; do
+        git diff --color-words \"\$1\"
+        shift
+      done
+    else
+      echo \"ERROR: If this is not a git directory you need at least two arguments to see any differences.\"
+    fi
+  fi
+}
+")
+d_readmeline="| Function \`d\` | Function for \`diff\` and \`git diff\` usage | Command \`diff\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 
 dbeaver_installationtype="packageinstall"
 dbeaver_arguments=("dbeaver")
@@ -3345,6 +3490,13 @@ gparted_launchernames=("gparted")
 gparted_packagenames=("gparted")
 gparted_readmeline="| GParted | Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems | Command \`gparted\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+guake_installationtype="packagemanager"
+guake_arguments=("guake")
+guake_bashfunctions=("alias guake=\"nohup guake &>/dev/null &\"")
+guake_packagenames=("guake")
+guake_launchernames=("guake")
+guake_readmeline="| guake | Press F12 to display a terminal | Command \`guake\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 gvim_installationtype="packagemanager"
 gvim_arguments=("gvim" "vim_gtk3")
 gvim_launchernames=("gvim")
@@ -3422,6 +3574,30 @@ if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \"history -a; history -r\")\
 fi
 ")
 history_optimization_readmeline="| history optimization | Increased the size of bash history, store multiline commands in just one line, force append and not overwrite to history, ignore repeated commands when appending to history, deleted tracking history of some simple commands: \`ls\`, \`cd\`, \`gitk\`... | <-- || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+i_installationtype="environmental"
+i_arguments=("i" "i_function")
+i_bashfunctions=("
+i()
+{
+  if [ \$# -eq 0 ]; then
+    tree -d \"\$(pwd)\"
+  else
+    while [ -n \"\$1\" ]; do
+      if [ -d \"\$1\" ]; then
+        echo
+        tree -d \"\$1\"
+        echo
+      else
+        echo \"ERROR: A valid path to a folder is expected, skipping argument\"
+      fi
+      shift
+    done
+  fi
+}
+")
+i_readmeline="| Function \`i\` | Shows folder structures | Command \`i\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 
 ideac_installationtype="userinherit"
 ideac_arguments=("ideac" "intellij_community")
@@ -3805,6 +3981,16 @@ MimeType=x-scheme-handler/mendeley;application/pdf;text/x-bibtex;
 X-Mendeley-Version=1
 ")
 
+merge_installationtype="environmental"
+merge_bashfunctions=("
+merge() {
+  git merge \"\$@\"
+}
+")
+merge_arguments=("merge" "function_merge")
+merge_readmeline="| \`merge\` | Function for \`git merge\`|  Command \`merge\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_arguments=("msttcorefonts")
 msttcorefonts_packagenames=("msttcorefonts")
@@ -3827,6 +4013,11 @@ xdg-mime default org.gnome.Nautilus.desktop inode/directory
 nautilus_launchernames=("org.gnome.Nautilus")
 nautilus_packagenames=("nautilus")
 nautilus_readmeline="| Nautilus | Standard file and desktop manager | Command \`nautilus\` Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+ncat_installationtype="packagemanager"
+ncat_packagenames=("ncat")
+ncat_arguments=("ncat")
+ncat_readmeline="| ncat | Reads and writes across the network | Command \`ncat\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 nedit_installationtype="packagemanager"
 nedit_arguments=("nedit")
