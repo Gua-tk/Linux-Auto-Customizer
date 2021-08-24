@@ -3,12 +3,11 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 
 ###### UPDATES
-- [ ] Extract pakage dependencies to a optional property, so even "user" programs can have its dependencies on the same installation:
-  * [ ] `data_features.sh`: Rstudio split libssl-dev dependency to a new feature
-  * [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
-  * [ ] `data_features.sh`: bring features that are pure dependencies to the installation that they depend. example: mendeley  
+- [ ] Extract generic install of dependencies in root generic to a common property function. --> (This is done to have all programs having its own dependencies in place in self package installation)
+- [ ] Create new property in data_features.sh which allows to override default package manager being used and some way to recover package manager configurations.
+
 ###### NEW FEATURES
-- [ ] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
+- [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
   * [x] Parametrized $DEFAULT_PACKAGE_MANAGER
   * [ ] uninstall using apt-get instead of dpkg
   * [ ] function to detect the preferred package manager by OS by looking at /etc/os-release
@@ -20,12 +19,16 @@
 
 ###### UPDATES
 - [ ] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype
+- [ ] Extract pakage dependencies to a optional property, so even "user" programs can have its dependencies on the same installation:
+  * [ ] `data_features.sh`: Rstudio split libssl-dev dependency to a new feature
+  * [ ] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
+  * [ ] `data_features.sh`: bring features that are pure dependencies to the installation that they depend. example: mendeley  
+
+
 
 ###### NEW FEATURES
-- [ ] xslt html css js Template folder
-- [ ] `data_features.sh`: Create or integrate loc function bash feature which displays the total lines of code of a script
+- [~] `data_features.sh`: Create or integrate loc function bash feature which displays the total lines of code of a script
 - [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
-- [ ] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
 - [ ] `install.sh`, `uninstall.sh`: sherlock https://github.com/sherlock-project/sherlock#installation
 
 

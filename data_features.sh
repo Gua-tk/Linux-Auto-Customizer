@@ -3935,6 +3935,16 @@ lmms_packagenames=("lmms")
 lmms_launchernames=("lmms")
 lmms_readmeline="| lmms | Software for making music | command \`lmms\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+loc_installationtype="environmental"
+loc_arguments=("loc" "function_loc")
+loc_bashfunctions=("
+loc() {
+  :
+  #find \"\$1\" -name \"*\" | xargs wc -l | column -t | head -n -1
+}
+")
+loc_readmeline="| loc | Counts lines of code | command \`loc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 lolcat_installationtype="packagemanager"
 lolcat_arguments=("lolcat")
 lolcat_bashfunctions=("alias lol=\"lolcat\"")
@@ -5934,6 +5944,11 @@ Type=Application
 Version=1.0
 ")
 wikipedia_readmeline="| Wikipedia | ${wikipedia_readmelinedescription} | Command \`wikipedia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+wikit_installationtype="environmental"
+wikit_manualcontentavailable=";1;"
+wikit_arguments=("wikit")
+wikit_readmeline="| Wikit | Wikipedia search inside terminal | Command \`wikit\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 wireshark_installationtype="packagemanager"
 wireshark_arguments=("wireshark")

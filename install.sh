@@ -130,6 +130,11 @@ install_system_fonts_mid() {
   gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
 }
 
+install_wikit_mid() {
+  npm install wikit -g
+}
+
+
 ##################
 ###### MAIN ######
 ##################

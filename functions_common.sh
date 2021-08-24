@@ -297,6 +297,9 @@ argument_processing()
       ;;
 
       -s|--skip|--skip-if-installed)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          output_proxy_executioner "echo ERROR: You have set to not overwrite features in uninstall mode, this will uninstall only the features that are not installed." "${FLAG_QUIETNESS}"
+        fi
         FLAG_OVERWRITE=0
       ;;
       -o|--overwrite|--overwrite-if-present)
@@ -627,7 +630,7 @@ add_program()
     if [ "${flag_overwrite}" -eq 0 ]; then
       # Change of _ to - again to allow the matches of commands that have - in its name
       if type "$(echo "${matched_keyname}" | tr "_" "-")" &>/dev/null; then
-        output_proxy_executioner "echo WARNING: ${matched_keyname} is already installed. Continuing installation without this program... Use -o to overwrite this program" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "echo WARNING: ${matched_keyname} is installed. Continuing installation without selecting this feature... Use -o to skip this behaviour and select this feature." "${FLAG_QUIETNESS}"
         return 1
       fi
     fi

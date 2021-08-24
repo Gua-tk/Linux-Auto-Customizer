@@ -242,3 +242,4 @@
 - [x] `install.sh`, `uninstall.sh`: aircrack-ng
 - [x] `install.sh`, `uninstall.sh`: guake (terminal at F12 key)
 - [x] `install.sh`, `uninstall.sh`: Blender3D (image edition)
+- [x] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
