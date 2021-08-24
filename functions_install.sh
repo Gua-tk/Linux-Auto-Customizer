@@ -815,6 +815,7 @@ userinherit_installation_type() {
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
 
+  # Customizer inner folders
   create_folder "${CUSTOMIZER_FOLDER}"
   create_folder "${CACHE_FOLDER}"
   create_folder "${TEMP_FOLDER}"
@@ -823,9 +824,14 @@ data_and_file_structures_initialization() {
   create_folder "${FUNCTIONS_FOLDER}"
   create_folder "${INITIALIZATIONS_FOLDER}"
 
+  # PATHs used to install subfeatures of each installation
   create_folder "${PATH_POINTED_FOLDER}"
   create_folder "${PERSONAL_LAUNCHERS_DIR}"
   create_folder "${FONTS_FOLDER}"
+  create_folder "${XDG_DESKTOP_DIR}"
+  create_folder "${XDG_PICTURES_DIR}"
+  create_folder "${XDG_TEMPLATES_DIR}"
+
   # Initialize bash functions
   if [ ! -f "${FUNCTIONS_PATH}" ]; then
     create_file "${FUNCTIONS_PATH}"
