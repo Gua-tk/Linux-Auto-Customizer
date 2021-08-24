@@ -4368,6 +4368,7 @@ X-GNOME-Autostart-Delay=2
 NoDisplay=false
 ")
 nemo_flagsoverride=";;;;;1"  # Always autostart
+nemo_keybindings=("nemo;<Super>e;Nemo Fie Explorer")
 
 netflix_installationtype="environmental"
 netflix_arguments=("netflix")
