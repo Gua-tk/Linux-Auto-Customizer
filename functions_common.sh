@@ -121,14 +121,9 @@ set_field()
 post_install_clean()
 {
   if [ "${EUID}" -eq 0 ]; then
-    if [ "${FLAG_AUTOCLEAN}" -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies via ${DEFAULT_PACKAGE_MANAGER} autoremove." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y autoremove" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
-    fi
     if [ "${FLAG_AUTOCLEAN}" -eq 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to delete useless files in cache via ${DEFAULT_PACKAGE_MANAGER} autoremove." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y autoclean" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${PACKAGE_MANAGER_CLEAN}" "${FLAG_QUIETNESS}"
       output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
     fi
   fi
@@ -315,9 +310,6 @@ argument_processing()
       ;;
       -c|--clean)
         FLAG_AUTOCLEAN=1
-      ;;
-      -C|--Clean)
-        FLAG_AUTOCLEAN=2
       ;;
 
       -k|--keep-system-outdated)

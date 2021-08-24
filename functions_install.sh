@@ -432,7 +432,7 @@ download() {
 #   package.
 download_and_install_package() {
   download "$1" "$2"
-  dpkg -i "${BIN_FOLDER}/$2"
+  ${PACKAGE_MANAGER_INSTALLPACKAGE} "${BIN_FOLDER}/$2"
   rm -f "${BIN_FOLDER}/$2"
 }
 
@@ -749,7 +749,7 @@ rootgeneric_installation_type() {
 
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
-    "${DEFAULT_PACKAGE_MANAGER}" install -y "${packagedependency}"
+    ${PACKAGE_MANAGER_INSTALL} "${packagedependency}"
   done
 
   # Download package and install using manual package manager
@@ -758,7 +758,7 @@ rootgeneric_installation_type() {
     if [ -n "${!compressedfileurl}" ]; then
       download "${!compressedfileurl}" "${BIN_FOLDER}/$1_package_compressed_file"
       decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_package_compressed_file" "$1"
-      dpkg -Ri "${BIN_FOLDER}/$1"
+      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"
       rm -Rf "${BIN_FOLDER:?}/$1"
     else  # Use directly a downloaded .deb
       local name_suffix_anticollision=""
@@ -769,7 +769,7 @@ rootgeneric_installation_type() {
     fi
   else # Install with default package manager
     for packagename in ${!packagenames}; do
-      "${DEFAULT_PACKAGE_MANAGER}" install -y "${packagename}"
+      ${PACKAGE_MANAGER_INSTALL} install -y "${packagename}"
     done
   fi
 }
@@ -866,12 +866,12 @@ pre_install_update() {
   if [ "${EUID}" == 0 ]; then
     if [ "${FLAG_UPGRADE}" -gt 0 ]; then
       output_proxy_executioner "echo INFO: Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y update" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPDATE}" "${FLAG_QUIETNESS}"
       output_proxy_executioner "echo INFO: System updated." "${FLAG_QUIETNESS}"
     fi
     if [ "${FLAG_UPGRADE}" == 2 ]; then
       output_proxy_executioner "echo INFO: Attempting to upgrade system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y upgrade" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPGRADE}" "${FLAG_QUIETNESS}"
       output_proxy_executioner "echo INFO: System upgraded." "${FLAG_QUIETNESS}"
     fi
   fi

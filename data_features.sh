@@ -3460,6 +3460,7 @@ google-chrome() {
 }
 ")
 google_chrome_flagsoverride=";;;;1;"
+google_chrome_arguments=("chrome" "google_chrome" "googlechrome")
 google_chrome_packagenames=("google-chrome-stable")
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
