@@ -403,6 +403,7 @@ declare -r feature_keynames=(
   "nemo"
   "netflix"
   "net_tools"
+  "nmap"
   "npm"
   "notepadqq"
   "o"
