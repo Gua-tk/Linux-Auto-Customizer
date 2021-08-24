@@ -74,6 +74,19 @@
 #     Here we store the .desktop launchers of the programs we want to autostart.                                       #
 ########################################################################################################################
 
+initialize_package_manager_apt() {
+  DEFAULT_PACKAGE_MANAGER="apt-get"
+  PACKAGE_MANAGER_INSTALL="apt-get -y install"
+  PACKAGE_MANAGER_UNINSTALL="apt-get -y purge"
+  PACKAGE_MANAGER_UPDATE="apt-get -y update"
+  PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
+  PACKAGE_MANAGER_INSTALLPACKAGE="dpkg -i"
+  PACKAGE_MANAGER_INSTALLPACKAGES="dpkg -Ri"
+  PACKAGE_MANAGER_REMOVEPACKAGE="apt-get -y purge"
+  PACKAGE_MANAGER_CLEAN="apt-get -y autoremove && apt-get -y autoclean"
+  PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
+}
+
 
 if [ "${EUID}" != 0 ]; then
   declare -r HOME_FOLDER="${HOME}"
@@ -124,40 +137,13 @@ fi
 case ${OS_NAME} in
   # Using default package manager such as $DEFAULT_PACKAGE_MANAGER
   Ubuntu)
-    DEFAULT_PACKAGE_MANAGER="apt-get"
-    PACKAGE_MANAGER_INSTALL="apt-get -y install"
-    PACKAGE_MANAGER_UNINSTALL="apt-get -y purge"
-    PACKAGE_MANAGER_UPDATE="apt-get -y update"
-    PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
-    PACKAGE_MANAGER_INSTALLPACKAGE="dpkg -i"
-    PACKAGE_MANAGER_INSTALLPACKAGES="dpkg -Ri"
-    PACKAGE_MANAGER_REMOVEPACKAGE="apt-get -y purge"
-    PACKAGE_MANAGER_CLEAN="apt-get -y autoremove && apt-get -y autoclean"
-    PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
+    initialize_package_manager_apt
   ;;
   Debian)
-    DEFAULT_PACKAGE_MANAGER="apt-get"
-    PACKAGE_MANAGER_INSTALL="apt-get -y install"
-    PACKAGE_MANAGER_UNINSTALL="apt-get -y purge"
-    PACKAGE_MANAGER_UPDATE="apt-get -y update"
-    PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
-    PACKAGE_MANAGER_INSTALLPACKAGE="dpkg -i"
-    PACKAGE_MANAGER_INSTALLPACKAGES="dpkg -Ri"
-    PACKAGE_MANAGER_REMOVEPACKAGE="apt-get -y purge"
-    PACKAGE_MANAGER_CLEAN="apt-get -y autoremove && apt-get -y autoclean"
-    PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
+    initialize_package_manager_apt
   ;;
   ElementaryOS)
-    DEFAULT_PACKAGE_MANAGER="apt-get"
-    PACKAGE_MANAGER_INSTALL="apt-get -y install"
-    PACKAGE_MANAGER_UNINSTALL="apt-get -y purge"
-    PACKAGE_MANAGER_UPDATE="apt-get -y update"
-    PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
-    PACKAGE_MANAGER_INSTALLPACKAGE="dpkg -i"
-    PACKAGE_MANAGER_INSTALLPACKAGES="dpkg -Ri"
-    PACKAGE_MANAGER_REMOVEPACKAGE="apt-get -y purge"
-    PACKAGE_MANAGER_CLEAN="apt-get -y autoremove && apt-get -y autoclean"
-    PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
+    initialize_package_manager_apt
   ;;
   Fedora)
     DEFAULT_PACKAGE_MANAGER="yum"
