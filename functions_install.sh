@@ -432,7 +432,7 @@ download() {
 #   package.
 download_and_install_package() {
   download "$1" "$2"
-  dpkg -i "${BIN_FOLDER}/$2"
+  ${PACKAGE_MANAGER_INSTALLPACKAGE} "${BIN_FOLDER}/$2"
   rm -f "${BIN_FOLDER}/$2"
 }
 
@@ -749,7 +749,7 @@ rootgeneric_installation_type() {
 
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
-    "${DEFAULT_PACKAGE_MANAGER}" install -y "${packagedependency}"
+    ${PACKAGE_MANAGER_INSTALL} "${packagedependency}"
   done
 
   # Download package and install using manual package manager
@@ -758,18 +758,21 @@ rootgeneric_installation_type() {
     if [ -n "${!compressedfileurl}" ]; then
       download "${!compressedfileurl}" "${BIN_FOLDER}/$1_package_compressed_file"
       decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_package_compressed_file" "$1"
-      dpkg -Ri "${BIN_FOLDER}/$1"
+      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"
       rm -Rf "${BIN_FOLDER:?}/$1"
+      ${PACKAGE_MANAGER_FIXBROKEN}
     else  # Use directly a downloaded .deb
       local name_suffix_anticollision=""
       for packageurl in "${!packageurls}"; do
         download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
+        ${PACKAGE_MANAGER_FIXBROKEN}
         name_suffix_anticollision="${name_suffix_anticollision}_"
       done
     fi
   else # Install with default package manager
     for packagename in ${!packagenames}; do
-      "${DEFAULT_PACKAGE_MANAGER}" install -y "${packagename}"
+      ${PACKAGE_MANAGER_INSTALL} "${packagename}"
+      ${PACKAGE_MANAGER_FIXBROKEN}
     done
   fi
 }
@@ -815,6 +818,7 @@ userinherit_installation_type() {
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
 
+  # Customizer inner folders
   create_folder "${CUSTOMIZER_FOLDER}"
   create_folder "${CACHE_FOLDER}"
   create_folder "${TEMP_FOLDER}"
@@ -823,9 +827,14 @@ data_and_file_structures_initialization() {
   create_folder "${FUNCTIONS_FOLDER}"
   create_folder "${INITIALIZATIONS_FOLDER}"
 
+  # PATHs used to install subfeatures of each installation
   create_folder "${PATH_POINTED_FOLDER}"
   create_folder "${PERSONAL_LAUNCHERS_DIR}"
   create_folder "${FONTS_FOLDER}"
+  create_folder "${XDG_DESKTOP_DIR}"
+  create_folder "${XDG_PICTURES_DIR}"
+  create_folder "${XDG_TEMPLATES_DIR}"
+
   # Initialize bash functions
   if [ ! -f "${FUNCTIONS_PATH}" ]; then
     create_file "${FUNCTIONS_PATH}"
@@ -866,12 +875,12 @@ pre_install_update() {
   if [ "${EUID}" == 0 ]; then
     if [ "${FLAG_UPGRADE}" -gt 0 ]; then
       output_proxy_executioner "echo INFO: Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y update" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPDATE}" "${FLAG_QUIETNESS}"
       output_proxy_executioner "echo INFO: System updated." "${FLAG_QUIETNESS}"
     fi
     if [ "${FLAG_UPGRADE}" == 2 ]; then
       output_proxy_executioner "echo INFO: Attempting to upgrade system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${DEFAULT_PACKAGE_MANAGER} -y upgrade" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPGRADE}" "${FLAG_QUIETNESS}"
       output_proxy_executioner "echo INFO: System upgraded." "${FLAG_QUIETNESS}"
     fi
   fi

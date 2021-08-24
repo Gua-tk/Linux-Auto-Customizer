@@ -32,20 +32,20 @@
 # * Customizer routes:                                                                                                 #
 #   - CUSTOMIZER_FOLDER: /home/username/.customizer                                                                    #
 #     Folder where we will put the different files installed by customizer.                                            #
-#   - BIN_FOLDER: /home/username/.bin                                                                              #
+#   - BIN_FOLDER: /home/username/.bin                                                                                  #
 #     Folder where all the software will be installed.                                                                 #
-#   - FUNCTIONS_FOLDER: /home/username/.bin/bash-functions                                                        #
+#   - FUNCTIONS_FOLDER: /home/username/.bin/bash-functions                                                             #
 #     Path pointing to the folder containing all the scripts of the bash functions                                     #
-#   - FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions                                          #
+#   - FUNCTIONS_PATH: /home/username/.bin/bash_functions/.bash_functions                                               #
 #     Path pointing to .bash_functions, which is the file used to control the installed features of the customizer.    #
-#   - INITIALIZATIONS_PATH: /home/username/.bin/bash-functions/.bash_profile                                      #
+#   - INITIALIZATIONS_PATH: /home/username/.bin/bash-functions/.bash_profile                                           #
 #     Path pointing to the ${HOME_FOLDER}/.profile of bash which is run at system start.                               #
-#   - INITIALIZATIONS_FOLDER: /home/username/.bin/bash_functions/.bash_functions                                  #
+#   - INITIALIZATIONS_FOLDER: /home/username/.bin/bash_functions/.bash_functions                                       #
 #     Path pointing to the folder which contains the initialization bash scripts.                                      #
-#   - PROGRAM_FAVORITES_PATH: {INITIALIZATIONS_FOLDER}/favorites.txt                                              #
+#   - PROGRAM_FAVORITES_PATH: {INITIALIZATIONS_FOLDER}/favorites.txt                                                   #
 #     Default favorites list, data to set favorites.                                                                   #
-#   - PROGRAM_KEYBIND_PATH: ${INITIALIZATIONS_FOLDER}/keybindings.txt                                                #
-#     Default keybinding list data to set custom keybindings.                                                             #
+#   - PROGRAM_KEYBIND_PATH: ${INITIALIZATIONS_FOLDER}/keybindings.txt                                                  #
+#     Default keybinding list data to set custom keybindings.                                                          #
 #                                                                                                                      #
 # * System routes:                                                                                                     #
 #   - HOME_FOLDER: /home/username                                                                                      #
@@ -62,9 +62,9 @@
 #     Bashrc for all users path variable system-wide.                                                                  #
 #   - PROFILE_PATH: ${HOME_FOLDER}/.profile                                                                            #
 #     Path pointing to our internal file for initializations.                                                          #
-#   - PATH_POINTED_FOLDER: /home/username/.local/bin                                                                           #
+#   - PATH_POINTED_FOLDER: /home/username/.local/bin                                                                   #
 #     Path pointing to a directory that is included in the PATH variable of the current user.                          #
-#   - ALL_USERS_PATH_POINTED_FOLDER: /usr/bin                                                                                  #
+#   - ALL_USERS_PATH_POINTED_FOLDER: /usr/bin                                                                          #
 #     Path pointing to a directory that it is in the PATH of all users.                                                #
 #   - MIME_ASSOCIATION_PATH: ${HOME_FOLDER}/.config/mimeapps.list                                                      #
 #     File that contains the association of mime types with .desktop files.                                            #
@@ -74,9 +74,26 @@
 #     Here we store the .desktop launchers of the programs we want to autostart.                                       #
 ########################################################################################################################
 
+initialize_package_manager_apt() {
+  DEFAULT_PACKAGE_MANAGER="apt-get"
+  PACKAGE_MANAGER_INSTALL="apt-get -y install"
+  PACKAGE_MANAGER_FIXBROKEN="apt-get install -y --fix-broken"
+  PACKAGE_MANAGER_UNINSTALL="apt-get -y purge"
+  PACKAGE_MANAGER_UPDATE="apt-get -y update"
+  PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
+  PACKAGE_MANAGER_INSTALLPACKAGE="dpkg -i"
+  PACKAGE_MANAGER_INSTALLPACKAGES="dpkg -Ri"
+  PACKAGE_MANAGER_REMOVEPACKAGE="apt-get -y purge"
+  PACKAGE_MANAGER_AUTOREMOVE="apt-get -y autoremove"
+  PACKAGE_MANAGER_AUTOCLEAN="apt-get -y autoclean"
+  PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
+}
+
 
 if [ "${EUID}" != 0 ]; then
   declare -r HOME_FOLDER="${HOME}"
+
+  declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
 
   # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   if [ -f "${USER_DIRS_PATH}" ]; then
@@ -84,6 +101,8 @@ if [ "${EUID}" != 0 ]; then
   fi 
 else
   declare -r HOME_FOLDER="/home/${SUDO_USER}"
+
+  declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
 
   # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
@@ -109,12 +128,43 @@ if [ -z "${XDG_TEMPLATES_DIR}" ]; then
   declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
 fi
 
+# Search the current OS in order to determine the default package manager and its main
 if [ -f "/etc/os-release" ]; then
-  declare -r OS_NAME="$(cat "/etc/os-release" | grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"')"
+  declare OS_NAME
+  OS_NAME=$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )
 else
   declare -r OS_NAME="Ubuntu"
 fi
-declare -r DEFAULT_PACKAGE_MANAGER="apt-get"
+
+case ${OS_NAME} in
+  # Using default package manager such as $DEFAULT_PACKAGE_MANAGER
+  Ubuntu)
+    initialize_package_manager_apt
+  ;;
+  Debian)
+    initialize_package_manager_apt
+  ;;
+  ElementaryOS)
+    initialize_package_manager_apt
+  ;;
+  Fedora)
+    DEFAULT_PACKAGE_MANAGER="yum"
+    PACKAGE_MANAGER_INSTALL="yum -y install"
+    PACKAGE_MANAGER_UNINSTALL="yum -y purge"
+    PACKAGE_MANAGER_UPDATE="yum -y update"
+    PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
+    PACKAGE_MANAGER_INSTALLPACKAGE="yum -y install"
+    PACKAGE_MANAGER_INSTALLPACKAGES="yum -y install"
+    PACKAGE_MANAGER_REMOVEPACKAGE="yum -y purge"
+    PACKAGE_MANAGER_CLEAN="yum -y autoremove && apt-get -y autoclean"
+    PACKAGE_MANAGER_ENSUREDEPENDENCIES="yum -y install -f"
+  ;;
+  *)
+    output_proxy_executioner "ERROR: ${OS_NAME} is not a recognised OS. Aborting"
+    exit 1
+  ;;
+esac
+
 
 declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
 declare -r BIN_FOLDER="${CUSTOMIZER_FOLDER}/bin"
@@ -139,7 +189,6 @@ declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
-declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
 
 ########################################################################################################################
 ################################################## RUNTIME FLAGS #######################################################
@@ -174,7 +223,7 @@ declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
 #   every feature but can be also modified with a behavioural argument.                                                #
 #   - FLAG_UPGRADE: By default "1". Can be set to "0", "1" or "2" with -k, -u or -U, which will do nothing, update or  #
 #     update and upgrade, respectively.                                                                                #
-#   - FLAG_AUTOCLEAN: By default "2". Can be set to "0", "1" or "2" with -d, -c or -C, which will do nothing, do a     #
+#   - FLAG_AUTOCLEAN: By default "1". Can be set to "0", "1" or "2" with -d, -c or -C, which will do nothing, do a     #
 #     cache auto-remove or do a cache auto-remove and auto-clean.                                                      #
 #   - FLAG_CACHE: By default "1". Can be set to "0" or "1" with
 ########################################################################################################################
@@ -355,6 +404,7 @@ declare -r feature_keynames=(
   "nemo"
   "netflix"
   "net_tools"
+  "nmap"
   "npm"
   "notepadqq"
   "o"

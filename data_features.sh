@@ -3460,6 +3460,7 @@ google-chrome() {
 }
 ")
 google_chrome_flagsoverride=";;;;1;"
+google_chrome_arguments=("chrome" "google_chrome" "googlechrome")
 google_chrome_packagenames=("google-chrome-stable")
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
@@ -4377,6 +4378,7 @@ X-GNOME-Autostart-Delay=2
 NoDisplay=false
 ")
 nemo_flagsoverride=";;;;;1"  # Always autostart
+nemo_keybindings=("nemo;<Super>e;Nemo Fie Explorer")
 
 netflix_installationtype="environmental"
 netflix_arguments=("netflix")
@@ -4412,6 +4414,10 @@ alias nr=\"net-restart\"
 ")
 net_tools_packagenames=("net-tools")
 net_tools_readmeline="| net-tools | GUI network interfaces. *We recommend this explorer to view correctly the launchers* | Command \`net-tools\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+nmap_installationtype="packagemanager"
+nmap_arguments=("nmap")
+nmap_readmeline="| nmap | Scan and network security used for port scanning. | Command \`nmap\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 npm_installationtype="userinherit"
 npm_arguments=("npm")

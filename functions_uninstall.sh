@@ -356,6 +356,14 @@ generic_uninstall_initializations() {
   done
 }
 
+generic_uninstall_movefiles() {
+  local -r movedfiles_pointer="$1_movedfiles[@]"
+  for movedfiles_data in "${!movedfiles_pointer}"; do
+    destinationpath="$(echo "${movedfiles_data}" | cut -d ";" -f2)"
+    remove_file "${destinationpath}"
+  done
+}
+
 ########################################################################################################################
 #################################### GENERIC UNINSTALL FUNCTIONS - INSTALLATION TYPES ##################################
 ########################################################################################################################
