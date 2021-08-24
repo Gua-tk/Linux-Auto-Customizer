@@ -760,16 +760,19 @@ rootgeneric_installation_type() {
       decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_package_compressed_file" "$1"
       ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"
       rm -Rf "${BIN_FOLDER:?}/$1"
+      ${PACKAGE_MANAGER_FIXBROKEN}
     else  # Use directly a downloaded .deb
       local name_suffix_anticollision=""
       for packageurl in "${!packageurls}"; do
         download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
+        ${PACKAGE_MANAGER_FIXBROKEN}
         name_suffix_anticollision="${name_suffix_anticollision}_"
       done
     fi
   else # Install with default package manager
     for packagename in ${!packagenames}; do
-      ${PACKAGE_MANAGER_INSTALL} install -y "${packagename}"
+      ${PACKAGE_MANAGER_INSTALL} "${packagename}"
+      ${PACKAGE_MANAGER_FIXBROKEN}
     done
   fi
 }

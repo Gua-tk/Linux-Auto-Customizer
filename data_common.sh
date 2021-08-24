@@ -77,13 +77,15 @@
 initialize_package_manager_apt() {
   DEFAULT_PACKAGE_MANAGER="apt-get"
   PACKAGE_MANAGER_INSTALL="apt-get -y install"
+  PACKAGE_MANAGER_FIXBROKEN="apt-get install -y --fix-broken"
   PACKAGE_MANAGER_UNINSTALL="apt-get -y purge"
   PACKAGE_MANAGER_UPDATE="apt-get -y update"
   PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
   PACKAGE_MANAGER_INSTALLPACKAGE="dpkg -i"
   PACKAGE_MANAGER_INSTALLPACKAGES="dpkg -Ri"
   PACKAGE_MANAGER_REMOVEPACKAGE="apt-get -y purge"
-  PACKAGE_MANAGER_CLEAN="apt-get -y autoremove && apt-get -y autoclean"
+  PACKAGE_MANAGER_AUTOREMOVE="apt-get -y autoremove"
+  PACKAGE_MANAGER_AUTOCLEAN="apt-get -y autoclean"
   PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
 }
 
@@ -240,7 +242,7 @@ FLAG_SKIP_PRIVILEGES_CHECK=0
 
 # Common behaviour flags
 FLAG_UPGRADE=1
-FLAG_AUTOCLEAN=1
+FLAG_AUTOCLEAN=2
 FLAG_CACHE=1
 
 ########################################################################################################################
