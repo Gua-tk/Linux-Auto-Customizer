@@ -178,6 +178,7 @@ declare -r FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
 declare -r INITIALIZATIONS_PATH="${DATA_FOLDER}/initializations.sh"
 declare -r PROGRAM_FAVORITES_PATH="${DATA_FOLDER}/favorites.txt"
 declare -r PROGRAM_KEYBINDINGS_PATH="${DATA_FOLDER}/keybindings.txt"
+declare -r INSTALLED_FEATURES="${DATA_FOLDER}/installed_features.txt"
 
 declare -r PATH_POINTED_FOLDER="${HOME_FOLDER}/.local/bin"
 declare -r ALL_USERS_PATH_POINTED_FOLDER="/usr/bin"

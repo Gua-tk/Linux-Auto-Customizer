@@ -629,7 +629,7 @@ add_program()
     # Process flag_overwrite. if installation is already present show error
     if [ "${flag_overwrite}" -eq 0 ]; then
       # Change of _ to - again to allow the matches of commands that have - in its name
-      if type "$(echo "${matched_keyname}" | tr "_" "-")" &>/dev/null; then
+      if grep -qE "^${matched_keyname}\$" < "${INSTALLED_FEATURES}"; then
         output_proxy_executioner "echo WARNING: ${matched_keyname} is installed. Continuing installation without selecting this feature... Use -o to skip this behaviour and select this feature." "${FLAG_QUIETNESS}"
         return 1
       fi
@@ -787,6 +787,13 @@ generic_installation() {
 
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
       "${FLAG_MODE}_$1_post"
+    fi
+    if [ "${FLAG_MODE}" == "install" ]; then
+      if ! grep -qE "^$1\$" < "${INSTALLED_FEATURES}"; then
+        echo "$1" >> "${INSTALLED_FEATURES}"
+      fi
+    elif [ "${FLAG_MODE}" == "uninstall" ]; then
+      remove_line "$1" "${INSTALLED_FEATURES}"
     fi
   fi
 }

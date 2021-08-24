@@ -166,7 +166,7 @@ create_file() {
   local -r filename="$(echo "$1" | rev | cut -d "/" -f1 | rev)"
   if [ -n "${filename}" ]; then
     mkdir -p "${folder}"
-    echo "$2" >"$1"
+    echo -n "$2" > "$1"
     apply_permissions "$1"
   else
     output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "${FLAG_QUIETNESS}"
@@ -843,6 +843,12 @@ data_and_file_structures_initialization() {
   if [ ! -f "${INITIALIZATIONS_PATH}" ]; then
     create_file "${INITIALIZATIONS_PATH}"
   fi
+
+  # Initialize INSTALLED_FEATURES file pointing $DATA_FOLDER/installed_features.txt
+  if [ ! -f "${INSTALLED_FEATURES}" ]; then
+    create_file "${INSTALLED_FEATURES}"
+  fi
+
   # Updates initializations
   # Avoid running bash functions non-interactively
   # Adds to the path the folder where we will put our soft links
