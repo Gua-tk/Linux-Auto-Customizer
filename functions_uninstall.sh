@@ -356,6 +356,10 @@ generic_uninstall_initializations() {
   done
 }
 
+
+# - Description: Expands function system initialization relative to moving files
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_movefiles
 generic_uninstall_movefiles() {
   local -r movedfiles_pointer="$1_movedfiles[@]"
   for movedfiles_data in "${!movedfiles_pointer}"; do
@@ -363,6 +367,21 @@ generic_uninstall_movefiles() {
     remove_file "${destinationpath}"
   done
 }
+
+
+# - Description: Expands dependency installation
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the array $1_packagedependencies
+generic_uninstall_dependencies() {
+# Other dependencies to install with the package manager before the main package of software if present
+  local -r packagedependencies="$1_packagedependencies[@]"
+
+  # Uninstall dependency packages
+  for packagedependency in ${!packagedependencies}; do
+    ${PACKAGE_MANAGER_UNINSTALL} "${packagedependency}"
+  done
+}
+
 
 ########################################################################################################################
 #################################### GENERIC UNINSTALL FUNCTIONS - INSTALLATION TYPES ##################################
@@ -392,24 +411,18 @@ repositoryclone_uninstallation_type() {
 # - Argument 2: Selects the type of installation between [packagemanager|packageinstall]
 rootgeneric_uninstallation_type() {
    # Declare name of variables for indirect expansion
-
-  # Other dependencies to uninstall with the package manager before the main package of software if present
-  local -r packagedependencies="$1_packagedependencies[@]"
+   
   # Name of the package names to be uninstalled with the package manager if present
   local -r packagenames="$1_packagenames[@]"
-  # Uninstall dependency packages
-  for packagedependency in ${!packagedependencies}; do
-    "${DEFAULT_PACKAGE_MANAGER}" purge -y "${packagedependency}"
-  done
 
   if [ "$2" == packageinstall ]; then
     # Use a compressed file that contains .debs
     for packagename in ${!packagenames}; do
-      dpkg -P "${packagename}"
+      ${PACKAGE_MANAGER_UNINSTALLPACKAGE} "${packagename}"
     done
   else # Install with default package manager
     for packagename in ${!packagenames}; do
-      "${DEFAULT_PACKAGE_MANAGER}" purge -y "${packagename}"
+      ${PACKAGE_MANAGER_UNINSTALL} "${packagename}"
     done
   fi
 }

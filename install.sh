@@ -20,11 +20,6 @@
 ######################################### USER SOFTWARE FUNCTIONS ######################################################
 ########################################################################################################################
 
-install_codium_pre()
-{
-  :
-}
-
 install_caffeine_pre()
 {
   apt-get purge -y caffeine
@@ -38,8 +33,8 @@ install_caffeine_post()
 install_customizer_post()
 {
   ln -sf "${DIR}/install.sh" /usr/bin/customizer-install
-  if ! grep -Fo "source \"${BASH_FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}"; then
-    echo "source \"${BASH_FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
+  if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}"; then
+    echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
   fi
 }
 
@@ -106,6 +101,10 @@ install_pypy3_mid() {
   "${BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir install cython numpy
   # Currently not supported
   # ${BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
+}
+
+install_sherlock_post() {
+  python3 -m pip install -r "${BIN_FOLDER}/sherlock/requirements.txt"
 }
 
 install_sysmontask_mid() {

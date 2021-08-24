@@ -83,7 +83,7 @@ initialize_package_manager_apt() {
   PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
   PACKAGE_MANAGER_INSTALLPACKAGE="dpkg -i"
   PACKAGE_MANAGER_INSTALLPACKAGES="dpkg -Ri"
-  PACKAGE_MANAGER_REMOVEPACKAGE="apt-get -y purge"
+  PACKAGE_MANAGER_UNINSTALLPACKAGE="apt-get -y purge"
   PACKAGE_MANAGER_AUTOREMOVE="apt-get -y autoremove"
   PACKAGE_MANAGER_AUTOCLEAN="apt-get -y autoclean"
   PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
@@ -155,7 +155,7 @@ case ${OS_NAME} in
     PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
     PACKAGE_MANAGER_INSTALLPACKAGE="yum -y install"
     PACKAGE_MANAGER_INSTALLPACKAGES="yum -y install"
-    PACKAGE_MANAGER_REMOVEPACKAGE="yum -y purge"
+    PACKAGE_MANAGER_UNINSTALLPACKAGE="yum -y purge"
     PACKAGE_MANAGER_CLEAN="yum -y autoremove && apt-get -y autoclean"
     PACKAGE_MANAGER_ENSUREDEPENDENCIES="yum -y install -f"
   ;;
@@ -394,7 +394,6 @@ declare -r feature_keynames=(
   "lolcat"
   "mdadm"
   "megasync"
-  "mendeley_dependencies"
   "mendeley"
   "merge"
   "msttcorefonts"
@@ -434,7 +433,6 @@ declare -r feature_keynames=(
   "pycharm"
   "pycharmpro"
   "pypy3"
-  "pypy3_dependencies"
   "python3"
   "q"
   "R"
@@ -448,6 +446,7 @@ declare -r feature_keynames=(
   "scala"
   "scilab"
   "screenshots"
+  "sherlock"
   "shortcuts"
   "shotcut"
   "shotwell"
@@ -523,7 +522,7 @@ declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C
 ########################################################################################################################
 
 # Thematic wrappers
-declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel" "pypy3_dependencies")
+declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel")
 declare -r wrapper_programmingide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
 declare -r wrapper_programmingpro=("intellij_ultimate" "pycharm_professional" "clion")
 declare -r wrapper_texteditorcore=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
@@ -532,13 +531,13 @@ declare -r wrapper_systemcore=("virtualbox" "gparted" "clonezilla")
 declare -r wrapper_internetcore=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
 declare -r wrapper_artcore=("audacity" "shotcut" "gimp" "obs" "inkscape")
 declare -r wrapper_gamesinstall=("steam" "cmatrix")
-declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley_dependencies" "mendeley" "GNU_parallel" "pypy3_dependencies" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
+declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley" "GNU_parallel" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
 declare -r wrapper_bashfunctions=("a" "b" "c" "e" "f" "h" "j" "k" "L" "l" "o" "q" "s" "u" "x")
 declare -r wrapper_desktopfunctions=("changebg" "screenshots" "system_fonts" "templates")
 declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters" "bashcolors")
 
 # Custom wrappers
-declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "pypy3_dependencies" "curl" "git" "ffmpeg" "mendeley_dependencies" "java" "python3")
+declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "curl" "git" "ffmpeg" "java" "python3")
 declare -r wrapper_iochem=("psql" "gcc" "java" "ant" "mvn")
 declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch")
 

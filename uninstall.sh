@@ -66,6 +66,10 @@ uninstall_pypy3_mid() {
   :
 }
 
+uninstall_sherlock_post() {
+  :
+}
+
 uninstall_sysmontask_mid() {
   :
 }

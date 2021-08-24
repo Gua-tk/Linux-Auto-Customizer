@@ -131,7 +131,11 @@
 - [x]  list inner directories i function (tree -d $1)
 - [x] `install.sh`: d, a git diff and color grep diff function
 - [x] `install.sh`, `uninstall.sh`: CMake https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1.tar.gz
-
+- [x] Extract package dependencies to a optional property, so even "user" programs can have its dependencies on the same installation:
+* [x] Parametrized $DEFAULT_PACKAGE_MANAGER
+* [x] function to detect the preferred package manager by OS by looking at /etc/os-release
+* [x] For each Linux OS, how to unpacking, install, uninstall, update, upgrade, autoclean...
+- [x] Extract generic install of dependencies in root generic to a common property function. --> (This is done to have all programs having its own dependencies in place in self package installation)
 
 ###### Axel
 - [x] Delete / rearrange arguments of one letter
@@ -243,3 +247,8 @@
 - [x] `install.sh`, `uninstall.sh`: guake (terminal at F12 key)
 - [x] `install.sh`, `uninstall.sh`: Blender3D (image edition)
 - [x] `install.sh`, `uninstall.sh`: Search in wikipedia from terminal # alias wiki="wikit" # npm install wikit -g
+* [x] `data_features.sh`: Rstudio split libssl-dev dependency to a new feature
+* [x] `data_features.sh`: split pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")  # //RF not used
+* [x] `data_features.sh`: bring features that are pure dependencies to the installation that they depend. example: mendeley  
+- [x] `install.sh`, `uninstall.sh`: sherlock https://github.com/sherlock-project/sherlock#installation
+- [x] `functions_common.sh`, `uninstall.sh`: Show warning in uninstall when activating -o flag

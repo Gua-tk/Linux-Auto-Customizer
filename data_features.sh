@@ -87,12 +87,13 @@ fi
 #    ${HOME_FOLDER}/.profile.                                                                                          #
 #  - FEATUREKEYNAME_autostartlaunchers: Array containing autostart launchers explicitly to respond to FLAG_AUTOSTART   #
 #    and autostart on boot the feature where they are defined in.                                                      #
+#  - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation.    #
+#    Used in: packageinstall, packagemanager.                                                                          #
+# - FEATUREKEYNAME_movefiles: Allows file moving from installation point to other ones in the system, matching *       #
 #                                                                                                                      #
 ### Installation type dependent properties                                                                             #
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dpendencies of the       #
-#    feature. Used in: packageinstall, packagemanager.                                                                 #
-#  - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation.    #
-#    Used in: packageinstall, packagemanager.                                                                          #
+#    feature. Used in: packageinstall, packagemanager.                                                                 #                                                                         #
 #  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.                           #
 #  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit and in packageinstall  #
 #    as fallback if no urls are supplied in packageurls; in that case will also need a compressedfiletype.             #
@@ -108,7 +109,6 @@ fi
 #  - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3.     #
 #    Used in: pythonvenv.                                                                                              #
 # - FEATUREKEYNAME_donotinherit: It does not expect a directory into a compressed file only to decompress in place.    #
-# - FEATUREKEYNAME_movefiles: Allows file moving from installation point to other ones in the system, matching *       #
 ########################################################################################################################
 
 
@@ -3965,16 +3965,12 @@ megasync_launchernames=("megasync")
 megasync_packagenames=("nautilus-megasync" "megasync")
 megasync_readmeline="| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Command \`megasync\`, desktop launcher, dashboard launcher and integration with \`nemo\` file explorer ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-mendeley_dependencies_installationtype="packagemanager"
-mendeley_dependencies_arguments=("mendeley_dependencies" "mendeley_desktop_dependencies")
-mendeley_dependencies_packagedependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
-mendeley_dependencies_readmeline="| MendeleyDependencies | Installs Mendeley Desktop dependencies \`gconf2\`, \`qt5-default\`, \`qt5-doc\`, \`qt5-doc-html\`, \`qtbase5-examples\` and \`qml-module-qtwebengine\` | Used when installing Mendeley and other dependent software || <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 mendeley_installationtype="userinherit"
 mendeley_arguments=("mendeley")
 mendeley_compressedfileurl="https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming"
 mendeley_compressedfiletype="j"
 mendeley_binariesinstalledpaths="bin/mendeleydesktop;mendeley"
+mendeley_packagedependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
 mendeley_readmelinedescription="It is most known for its reference manager which is used to manage and share research papers and generate bibliographies for scholarly articles"
 mendeley_readmeline="| Mendeley | ${mendeley_readmelinedescription} | Command \`mendeley\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 mendeley_launchercontents=("
@@ -4919,11 +4915,7 @@ pypy3_compressedfiletype="j"
 pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
 pypy3_manualcontentavailable="0;1;0"
 pypy3_readmeline="| pypy3 | Faster interpreter for the Python3 programming language | Commands \`pypy3\` and \`pypy3-pip\` in the PATH || <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-pypy3_dependencies_installationtype="packagemanager"
-pypy3_dependencies_arguments=("pypy3_dependencies" "pypy_dependencies")
-pypy3_dependencies_packagenames=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
-pypy3_dependencies_readmeline="| pypy3_dependencies | Dependencies to run pypy3 | Libraries \`pkg-config\`, \`libfreetype6-dev\`, \`libpng-dev\` and \`libffi-dev\` used when deploying \`pypy\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+pypy3_packagedependencies=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
 
 python3_installationtype="packagemanager"
 python3_arguments=("python_3" "python" "v")
@@ -5052,7 +5044,7 @@ TryExec=rstudio
 Type=Application
 Version=1.0
 ")
-#rstudio_packagedependencies=("libssl-dev")
+rstudio_packagedependencies=("libssl-dev")
 rstudio_readmeline="| RStudio | ${rstudio_readmelinedescription} | Commands \`rstudio\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
 rsync_installationtype="packagemanager"
@@ -5143,6 +5135,13 @@ unset screenshotname
 screenshots_binariesinstalledpaths=("screenshot_area.sh;scr-area" "screenshot_window.sh;scr-window" "screenshot_full.sh;scr-full")
 screenshots_packagedependencies=("gnome-screenshot" "xclip")
 screenshots_readmeline="| Screenshots | Takes a screenshot and saves it to custom ~/Images/screenshots folder and save it to the clipboard for pasting | Commands \`screenshot-full\` \`screenshot-window\` \`screenshot-area\`||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+sherlock_installationtype="repositoryclone"
+sherlock_arguments=("sherlock")
+sherlock_bashfunctions=("alias sherlock=\"python3 \"${BIN_FOLDER}/sherlock/sherlock/sherlock.py\"\"")
+sherlock_repositoryurl="https://github.com/sherlock-project/sherlock.git"
+sherlock_manualcontentavailable="0;0;1"
+sherlock_readmeline="| Sherlock | Tool to obtain linked social media accounts using user name | Commands \`sherlock\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 shortcuts_installationtype="environmental"
 shortcuts_arguments=("shortcuts")

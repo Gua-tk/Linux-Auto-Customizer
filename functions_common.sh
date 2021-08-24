@@ -738,6 +738,9 @@ generic_installation() {
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
       "${FLAG_MODE}_$1_pre"
     fi
+
+    generic_${FLAG_MODE}_dependencies "${featurename}"
+
     case ${!installationtype} in
       # Using package manager such as $DEFAULT_PACKAGE_MANAGER
       packagemanager)

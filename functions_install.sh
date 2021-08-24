@@ -691,6 +691,21 @@ generic_install_movefiles() {
   done
 }
 
+
+# - Description: Expands dependency installation
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the array $1_packagedependencies
+generic_install_dependencies() {
+# Other dependencies to install with the package manager before the main package of software if present
+  local -r packagedependencies="$1_packagedependencies[@]"
+
+  # Install dependency packages
+  for packagedependency in ${!packagedependencies}; do
+    ${PACKAGE_MANAGER_INSTALL} "${packagedependency}"
+  done
+}
+
+
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
 ########################################################################################################################
@@ -737,8 +752,6 @@ repositoryclone_installation_type() {
 rootgeneric_installation_type() {
   # Declare name of variables for indirect expansion
 
-  # Other dependencies to install with the package manager before the main package of software if present
-  local -r packagedependencies="$1_packagedependencies[@]"
   # Name of the package names to be installed with the package manager if present
   local -r packagenames="$1_packagenames[@]"
   # Used to download .deb and install it if present
@@ -746,11 +759,6 @@ rootgeneric_installation_type() {
   # Used to download a compressed package where the .deb are located.
   local -r compressedfileurl="$1_compressedfileurl"
   local -r compressedfiletype="$1_compressedfiletype"
-
-  # Install dependency packages
-  for packagedependency in ${!packagedependencies}; do
-    ${PACKAGE_MANAGER_INSTALL} "${packagedependency}"
-  done
 
   # Download package and install using manual package manager
   if [ "$2" == packageinstall ]; then
