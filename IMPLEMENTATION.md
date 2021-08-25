@@ -7,12 +7,14 @@
 - [ ] customizer status gives a per system status of the features currently being installed and shows if they have autostart, favorites, keybindings...
 - [~] User environmental features should be also be installed as root user or use flag overwrite for the user. --> There is already some functioning but further testing is required.
 - [ ] Create a data structure to store the necessary permissions for each installation type.
-- [ ] New property to check some dependencies --> It will be used by features as jupyter.
+- [ ] protects exits for flag ignore errors.
 
 ###### NEW FEATURES
 - [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
-  * [ ] Packageinstall determine the type of installation that is going to be used.
-- [ ] `CONTRIBUTING.md`: Write down the command dependencies of the different features. 
+  * [ ] Packageinstall determine the type of installation that is going to be used. 
+- [ ] New property to check some dependencies --> It will be used by features as jupyter. 
+- [ ] New property to indicate the package manager to use to install de package, and thus, its corresponding command
+- [ ] Move features table from readme to FEATURES.sh
 
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
@@ -26,7 +28,7 @@
 
 # TO-DO uninstall.sh and uninstall core for v1.0
 ###### UPDATES
-- [ ] protect with if always when reading from common filed of customizer
+- [ ] protect with if always when reading from common files of customizer
 
 ###### NEW FEATURES
 - [ ] `functions_commo.sh`: program specific arguments for uninstall for removing all structures, empty keybinds files, etc
@@ -56,12 +58,13 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
   [ ] * customizer status --> List of features being currently installed and its properties. (favorites, keybinds...) (customizertesting) It relies in customizerhealth
   [ ] * customizer update --> Updates the current customizer installation
   [ ] * customizer upgrade --> Updates the current features installed via customizer. Checking for major stable versions of the same features. It relies in customizerhealth
-
+- [ ] create new folder structure in the repo with the classical folders: src, doc...
+- [ ] Create license file LICENSE.md 
 
 ### TO-DO v2.0
 - [ ] Switch from an extreme programming branching model to a less agile one
 - [ ] Implement meaningful changelogs by following patterns in commit messages. Also squash commits that program a single feature
-- [ ] Document code using a Wikipedia
+- [ ] Document code using a Wiki
 - document functions_install.sh, uninstall, and common API. --> use function headers
 - document declarable priperties of each installation --> use guide in data features
 - document all functions that are installed as a feature and the different subsystems installed
