@@ -3948,7 +3948,7 @@ loc() {
     local total_lines_in_directory=0
     for file_route in \$(find \"\$1\" -type f -name \"*\" 2>/dev/null); do
       loc_table+=\"\${file_route};\"
-      local lines_file=\"\$(cat \"\${file_route}\" | sed '/^\$/d' | wc -l 2>/dev/null)\"
+      local lines_file=\"\$(cat \"\${file_route}\" 2>/dev/null | sed '/^\$/d' | wc -l)\"
       total_lines_in_directory=\$(( \${total_lines_in_directory} + \${lines_file} ))
       loc_table+=\"\${lines_file}\"
       loc_table+=\"\${NEW_LINE}\"
@@ -3962,7 +3962,7 @@ loc() {
     while [ -n \"\$1\" ]; do
       if [ -f \"\$1\" ]; then
         loc_table+=\"\${1};\"
-        local_lines_in_file=\"\$(cat \"\$1\" | sed '/^\$/d' | wc -l 2>/dev/null)\"
+        local_lines_in_file=\"\$(cat \"\$1\"  2>/dev/null | sed '/^\$/d' | wc -l)\"
         loc_table+=\"\${local_lines_in_file}\"
         total_lines=\$(( \${total_lines} + \${local_lines_in_file} ))
         loc_table+=\"\${NEW_LINE}\"     
@@ -3971,7 +3971,7 @@ loc() {
 
         for file_route in \$(find \"\$1\" -type f -name \"*\" 2>/dev/null); do
           loc_table+=\"\${file_route};\"
-          local lines_file=\"\$(cat \"\${file_route}\" | sed '/^\$/d' | wc -l 2>/dev/null)\"
+          local lines_file=\"\$(cat \"\${file_route}\" 2>/dev/null | sed '/^\$/d' | wc -l)\"
           total_lines_in_directory=\$(( \${total_lines_in_directory} + \${lines_file} ))
           loc_table+=\"\${lines_file}\"
           loc_table+=\"\${NEW_LINE}\"
