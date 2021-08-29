@@ -5386,7 +5386,16 @@ sysmontask_repositoryurl="https://github.com/KrispyCamel4u/SysMonTask.git"
 
 system_fonts_installationtype="environmental"
 system_fonts_arguments=("system_fonts")
-system_fonts_manualcontentavailable="0;1;0"
+system_fonts_bashinitializations=("
+  # Interface text
+  gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 11'
+  # Document text //RF
+  gsettings set org.gnome.desktop.interface document-font-name 'Fira Code weight=453 10'
+  # Monospaced text
+  gsettings set org.gnome.desktop.interface monospace-font-name 'Hack Regular 12'
+  # Inherited window titles
+  gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
+")
 system_fonts_readmeline="| Change default fonts | Sets pre-defined fonts to desktop environment. | A new set of fonts is updated in the system's screen. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 teamviewer_installationtype="packageinstall"
@@ -5952,6 +5961,7 @@ wikipedia_readmeline="| Wikipedia | ${wikipedia_readmelinedescription} | Command
 
 wikit_installationtype="environmental"
 wikit_manualcontentavailable=";1;"
+wikit_flagsoverride="1;;;;;"  # Install always as user
 wikit_arguments=("wikit")
 wikit_readmeline="| Wikit | Wikipedia search inside terminal | Command \`wikit\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 

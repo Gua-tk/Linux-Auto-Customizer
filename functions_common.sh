@@ -596,7 +596,7 @@ add_program()
         ;;
         # Only uses the common part of the generic installation
         environmental)
-          flag_privileges=1
+          flag_privileges=2
         ;;
         # If not recognized put 2, so we do not care
         *)

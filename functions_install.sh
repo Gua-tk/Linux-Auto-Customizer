@@ -697,8 +697,13 @@ generic_install_movefiles() {
 # - Argument 1: Name of the feature to install, matching the array $1_packagedependencies
 generic_install_dependencies() {
 # Other dependencies to install with the package manager before the main package of software if present
-  local -r packagedependencies="$1_packagedependencies[@]"
-
+  local -r packagedependencies="$1_packagedependencies[*]"
+  if [ "${EUID}" -ne 0 ]; then
+    if [ -n "${!packagedependencies}" ]; then
+      output_proxy_executioner "echo WARNING: $1 has this dependencies: ${!packagedependencies} but are not going to be installed because you are not root. To install them, rerun installation with sudo." "${FLAG_QUIETNESS}"
+      return
+    fi
+  fi
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
     ${PACKAGE_MANAGER_INSTALL} "${packagedependency}"
