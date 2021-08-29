@@ -4,16 +4,15 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 ###### UPDATES
 - [ ] Create new property in data_features.sh which allows to override default package manager being used and some way to recover package manager configurations.
-- [ ] customizer status gives a per system status of the features currently being installed and shows if they have autostart, favorites, keybindings...
 - [~] User environmental features should be also be installed as root user or use flag overwrite for the user. --> There is already some functioning but further testing is required.
-- [ ] Create a data structure to store the necessary permissions for each installation type.
+- [x] Create a data structure to store the necessary permissions for each installation type.
 - [ ] protects exits for flag ignore errors.
 
 ###### NEW FEATURES
 - [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
   * [ ] Packageinstall determine the type of installation that is going to be used. 
 - [ ] New property to check some dependencies --> It will be used by features as jupyter. 
-- [ ] New property to indicate the package manager to use to install de package, and thus, its corresponding command
+- [ ] New property to indicate the package manager to use to install the package, and thus, its corresponding command
 - [ ] Move features table from readme to FEATURES.sh
 
 
@@ -23,7 +22,6 @@
 
 ###### NEW FEATURES
 - [~] `data_features.sh`: Create or integrate loc function bash feature which displays the total lines of code of a script
-- [ ] `data_features.sh`: Flatten function, which narrows branches of the file system by deleting a folder that contains only another folder.
 
 
 # TO-DO uninstall.sh and uninstall core for v1.0
@@ -60,6 +58,8 @@ Have to be completed after (AFTER!) having all the auxiliar structures into v1.0
   [ ] * customizer upgrade --> Updates the current features installed via customizer. Checking for major stable versions of the same features. It relies in customizerhealth
 - [ ] create new folder structure in the repo with the classical folders: src, doc...
 - [ ] Create license file LICENSE.md 
+- [ ] customizer status gives a per system status of the features currently being installed and shows if they have autostart, favorites, keybindings...
+
 
 ### TO-DO v2.0
 - [ ] Switch from an extreme programming branching model to a less agile one

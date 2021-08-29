@@ -3940,8 +3940,39 @@ loc_installationtype="environmental"
 loc_arguments=("loc" "function_loc")
 loc_bashfunctions=("
 loc() {
-  :
-  #find \"\$1\" -name \"*\" | xargs wc -l | column -t | head -n -1
+  if [ -z \"\$1\" ]; then
+    echo \"\$(find \"\$1\" -type f -name \"*\" | xargs cat | sed '/^\$/d' | wc -l) lines in code.\"
+  else
+    local -r NEW_LINE=\$'\\n'
+    local total_lines=0
+    local loc_table=\"\"
+    while [ -n \"\$1\" ]; do
+      if [ -f \"\$1\" ]; then
+        loc_table+=\"\${1};\"
+        loc_table+=\"\$(cat \"\$1\" | sed '/^\$/d' | wc -l)\"
+        loc_table+=\"\${NEW_LINE}\"     
+      elif [ -d \"\$1\" ]; then
+        local total_lines_in_directory=0
+
+        for file_route in \$(find \"\$1\" -type f -name \"*\"); do
+          loc_table+=\"\${file_route};\"
+          local lines_file=\"\$(cat \"\${file_route}\" | sed '/^\$/d' | wc -l)\"
+          total_lines_in_directory=\$(( \${total_lines_in_directory} + \${lines_file} ))
+          loc_table+=\"\${lines_file}\"
+          loc_table+=\"\${NEW_LINE}\"
+        done
+        loc_table+=\"\${1};\"
+        loc_table+=\"\${total_lines_in_directory}\"
+        loc_table+=\"\${NEW_LINE}\"
+      else
+        loc_table+=\"argument;\"
+        loc_table+=\"\$(echo \"\$1\" | sed '/^\$/d' | wc -l)\"
+        loc_table+=\"\${NEW_LINE}\"
+      fi
+      shift
+    done
+    echo \"\${loc_table}\" | column -ts \";\"
+  fi
 }
 ")
 loc_readmeline="| loc | Counts lines of code | command \`loc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
