@@ -6161,38 +6161,41 @@ x() {
       absolute_first_arg=\"\$1\"
     fi
     if [ -f \"\${absolute_first_arg}\" ] ; then
-      case \"\${absolute_first_arg}\" in
-        *.tar.bz2)
+      local mime_type=\"\$(mimetype \"\${absolute_first_arg}\" | cut -d \":\" -f2 | tr -d \" \")\"
+
+      echo \$mime_type
+      case \"\${mime_type}\" in
+        application/x-bzip-compressed-tar)
           tar xjf \"\${absolute_first_arg}\"
         ;;
-        *.tar.gz)
+        application/x-compressed-tar)
           tar xzf \"\${absolute_first_arg}\"
         ;;
-        *.bz2)
+        application/x-bzip)
           bunzip2 \"\${absolute_first_arg}\"
         ;;
-        *.rar)
+        application/vnd.rar)
+          if ! which rar 2>/dev/null; then
+            ${PACKAGE_MANAGER_INSTALL} rar
+          fi
           rar x \"\${absolute_first_arg}\"
         ;;
-        *.gz)
+        application/gzip)
           gzip -dk \"\${absolute_first_arg}\"
         ;;
-        *.tar)
+        application/x-tar)
           tar xf \"\${absolute_first_arg}\"
         ;;
-        *.tbz2)
+        application/x-bzip-compressed-tar)
           tar xjf \"\${absolute_first_arg}\"
         ;;
-        *.tgz)
-          tar xzf \"\${absolute_first_arg}\"
-        ;;
-        *.zip)
+        application/zip)
           unzip \"\${absolute_first_arg}\"
         ;;
-        *.Z)
+        application/x-compress)
           uncompress \"\${absolute_first_arg}\"
         ;;
-        *.7z)
+        application/x-7z-compressed)
           7z x \"\${absolute_first_arg}\"
         ;;
         *)

@@ -7,6 +7,7 @@
 - [~] User environmental features should be also be installed as root user or use flag overwrite for the user. --> There is already some functioning but further testing is required.
 - [x] Create a data structure to store the necessary permissions for each installation type.
 - [ ] protects exits for flag ignore errors.
+- [ ] repositoryclone installations also are being cached
 
 ###### NEW FEATURES
 - [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
@@ -14,7 +15,7 @@
 - [ ] New property to check some dependencies --> It will be used by features as jupyter. 
 - [ ] New property to indicate the package manager to use to install the package, and thus, its corresponding command
 - [ ] Move features table from readme to FEATURES.sh
-
+- [ ] Install go language
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 ###### UPDATES
