@@ -254,3 +254,4 @@
 * [x] `data_features.sh`: bring features that are pure dependencies to the installation that they depend. example: mendeley  
 - [x] `install.sh`, `uninstall.sh`: sherlock https://github.com/sherlock-project/sherlock#installation
 - [x] `functions_common.sh`, `uninstall.sh`: Show warning in uninstall when activating -o flag
+- [x] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype

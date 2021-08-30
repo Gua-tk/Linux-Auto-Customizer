@@ -19,7 +19,7 @@
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 ###### UPDATES
-- [ ] `data_features.sh`: refactor `x` (extract) function do not rely only in extension. Inform if the package needed is not present and installs it. --> Depends on compression function, after completion use file -b --mime-type image.png to detect mimetype
+
 
 ###### NEW FEATURES
 

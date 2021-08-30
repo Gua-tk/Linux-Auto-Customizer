@@ -6172,15 +6172,21 @@ x() {
           tar xzf \"\${absolute_first_arg}\"
         ;;
         application/x-bzip)
+          if ! which bunzip2 2>/dev/null; then
+            sudo ${PACKAGE_MANAGER_INSTALL} bunzip2
+          fi
           bunzip2 \"\${absolute_first_arg}\"
         ;;
         application/vnd.rar)
           if ! which rar 2>/dev/null; then
-            ${PACKAGE_MANAGER_INSTALL} rar
+            sudo ${PACKAGE_MANAGER_INSTALL} rar
           fi
           rar x \"\${absolute_first_arg}\"
         ;;
         application/gzip)
+          if ! which gzip 2>/dev/null; then
+            sudo ${PACKAGE_MANAGER_INSTALL} gzip
+          fi
           gzip -dk \"\${absolute_first_arg}\"
         ;;
         application/x-tar)
@@ -6190,12 +6196,21 @@ x() {
           tar xjf \"\${absolute_first_arg}\"
         ;;
         application/zip)
+          if ! which unzip 2>/dev/null; then
+            sudo ${PACKAGE_MANAGER_INSTALL} unzip
+          fi
           unzip \"\${absolute_first_arg}\"
         ;;
         application/x-compress)
+          if ! which uncompress 2>/dev/null; then
+            sudo ${PACKAGE_MANAGER_INSTALL} uncompress
+          fi
           uncompress \"\${absolute_first_arg}\"
         ;;
         application/x-7z-compressed)
+          if ! which 7z 2>/dev/null; then
+            sudo ${PACKAGE_MANAGER_INSTALL} 7z
+          fi
           7z x \"\${absolute_first_arg}\"
         ;;
         *)
