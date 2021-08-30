@@ -357,6 +357,7 @@ declare -r feature_keynames=(
   "gnome_sudoku"
   "gnome_terminal"
   "gnome_tweak_tool"
+  "go"
   "google"
   "googlecalendar"
   "google_chrome"

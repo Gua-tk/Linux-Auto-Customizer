@@ -132,6 +132,18 @@ autostart_program() {
 }
 
 
+apply_permissions_recursively() {
+  if [ -d "$1" ]; then
+    if [ ${EUID} == 0 ]; then  # directory
+      chgrp -R "${SUDO_USER}" "$1"
+      chown -R "${SUDO_USER}" "$1"
+    fi
+    chmod 755 -R "$1"
+  else
+    output_proxy_executioner "echo WARNING: This functions only accepts a directory as an argument, Skipping..." "${FLAG_QUIETNESS}"
+  fi
+}
+
 # - Description: Apply standard permissions and set owner and group to the user who called root.
 # - Permissions: This functions can be called as root or user.
 # Argument 1: Path to the file or directory whose permissions are changed.
@@ -682,11 +694,17 @@ generic_install_movefiles() {
       origin_files="$(echo "${origin_files}" | tr -d '*')"
       for filename in $(ls -c1 -A "${BIN_FOLDER}/$1"); do
         if echo "${filename}" | grep -q "${origin_files}\$"; then
-          mv "${BIN_FOLDER}/$1/${filename}" "${destiny_directory}"
+          mv -f "${BIN_FOLDER}/$1/${filename}" "${destiny_directory}"
+          if [ ${EUID} -eq 0 ]; then
+            apply_permissions "${destiny_directory}/${filename}"
+          fi
         fi
       done
     else
       mv "${BIN_FOLDER}/$1/${origin_files}" "${destiny_directory}"
+      if [ ${EUID} -eq 0 ]; then
+        apply_permissions "${destiny_directory}/${origin_files}"
+      fi
     fi 
   done
 }
@@ -745,6 +763,9 @@ repositoryclone_installation_type() {
   rm -Rf "${BIN_FOLDER:?}/$1"
   create_folder "${BIN_FOLDER}/$1"
   git clone "${!repositoryurl}" "${BIN_FOLDER}/$1"
+  if [ ${EUID} -eq 0 ]; then
+    apply_permissions_recursively "${BIN_FOLDER}/$1"
+  fi
 }
 
 
@@ -819,6 +840,8 @@ userinherit_installation_type() {
   else
     decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file" "$1"
   fi
+
+  apply_permissions_recursively "${defaultpath}/$1" 
 }
 
 

@@ -584,7 +584,7 @@ add_program()
         ;;
         # Download and decompress a file that contains a folder
         userinherit)
-          flag_privileges=1
+          flag_privileges=2
         ;;
         # Clone a repository
         repositoryclone)

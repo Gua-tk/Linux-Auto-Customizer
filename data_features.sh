@@ -504,10 +504,10 @@ done
 
 dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
 
-#gsettings set org.gnome.desktop.background picture-uri \"'file://\${DIR}/\${PIC}'\"
 "
 changebg_cronscript_path=".cronscript.sh"
-changebg_cronjob_content="*/5 * * * * ${BIN_FOLDER}/changebg/.cronscript.sh"
+changebg_cronjob_content="*/5 * * * * ${BIN_FOLDER}/changebg/.cronscript.sh
+"
 changebg_cronjob_path=".cronjob"
 changebg_filekeys=("cronscript" "cronjob")
 changebg_manualcontentavailable="0;0;1"
@@ -3398,6 +3398,18 @@ gnome_tweak_tool_arguments=("gnome_tweak_tool" "tweaks" "gnome_tweak" "gnome_twe
 gnome_tweak_tool_packagenames=("gnome-tweak-tool")
 gnome_tweak_tool_launchernames=("org.gnome.tweaks")
 gnome_tweak_tool_readmeline="| GNOME Tweaks | GUI for system customization | command and desktop launcher... ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+go_installationtype="userinherit"
+go_arguments=("go" "go_lang")
+go_compressedfileurl="https://golang.org/dl/go1.17.linux-amd64.tar.gz"
+go_compressedfiletype="z"
+go_compressedfilepathoverride="/usr/local"
+go_flagsoverride="0;;;;;"  # Install always as root
+go_bashinitializations=("
+export GOPATH=${HOME_FOLDER}/goWorkspace
+export PATH=\$PATH:/usr/local/go/bin:\$GOPATH/bin
+")
+go_readmeline="| go | programming language | command \`go\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 google_installationtype="environmental"
 google_arguments=("google")

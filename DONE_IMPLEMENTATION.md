@@ -137,6 +137,7 @@
 * [x] For each Linux OS, how to unpacking, install, uninstall, update, upgrade, autoclean...
 - [x] Extract generic install of dependencies in root generic to a common property function. --> (This is done to have all programs having its own dependencies in place in self package installation)
 - [x] `data_features.sh`: Create or integrate loc function bash feature which displays the total lines of code of a script
+- [x] Install go language
 
 
 ###### Axel
