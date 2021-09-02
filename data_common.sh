@@ -395,6 +395,7 @@ declare -r feature_keynames=(
   "lolcat"
   "mdadm"
   "megasync"
+  "meld"
   "mendeley"
   "merge"
   "msttcorefonts"
