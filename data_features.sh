@@ -558,7 +558,7 @@ clion_associatedfiletypes=("text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x
 clion_bashfunctions=("alias clion=\"nohup clion . &>/dev/null &\"")
 clion_binariesinstalledpaths=("bin/clion.sh;clion")
 clion_compressedfiletype="z"
-clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2020.1.tar.gz"
+clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2021.2.1.tar.gz"
 clion_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
 Comment=${clion_readmelinedescription}
@@ -3615,7 +3615,7 @@ ideac_associatedfiletypes=("text/x-java")
 ideac_bashfunctions="alias ideac=\"nohup ideac . &>/dev/null &\""
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
 ideac_compressedfiletype="z"
-ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.1.2.tar.gz"
+ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.2.1.tar.gz"
 ideac_readmelinedescription="Integrated development environment written in Java for developing computer software"
 ideac_launchercontents=("
 [Desktop Entry]
@@ -3643,7 +3643,7 @@ ideau_associatedfiletypes=("text/x-java")
 ideau_bashfunctions=("alias ideau=\"nohup ideau . &>/dev/null &\"")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
 ideau_compressedfiletype="z"
-ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.1.2.tar.gz"
+ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.2.1.tar.gz"
 ideau_readmelinedescription="Integrated development environment written in Java for developing computer software"
 ideau_launchercontents=("
 [Desktop Entry]
@@ -5115,7 +5115,7 @@ pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharm_bashfunctions=("alias pycharm=\"pycharm . &>/dev/null &\"")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_compressedfiletype="z"
-pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz"
+pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.2.1.tar.gz"
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
 pycharm_readmelinedescription="Integrated development environment used in computer programming"
 pycharm_launchercontents=("
@@ -5151,7 +5151,7 @@ pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharmpro_bashfunctions=("alias pycharmpro=\"pycharmpro . &>/dev/null &\"")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
 pycharmpro_compressedfiletype="z"
-pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2020.3.2.tar.gz"
+pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2021.2.1.tar.gz"
 pycharmpro_readmelinedescription="Integrated development environment used in computer programming"
 pycharmpro_launchercontents=("
 [Desktop Entry]
