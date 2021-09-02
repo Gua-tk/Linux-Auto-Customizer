@@ -5480,6 +5480,13 @@ slack_packageurls=("https://downloads.slack-edge.com/linux_releases/slack-deskto
 slack_launchernames=("slack")
 slack_readmeline="| Slack | Platform to coordinate your work with a team | Icon Launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+sonarqube_installationtype="userinherit"
+sonarqube_arguments=("sonarqube")
+sonarqube_binariesinstalledpaths=("bin/linux-x86-64/sonar.sh;sonar")
+sonarqube_compressedfiletype="zip"
+sonarqube_compressedfileurl="https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.0.1.46107.zip"
+sonarqube_readmeline="| Sonarqube | Platform to evaluate source code | Command Icon Launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 sonic_pi_installationtype="packagemanager"
 sonic_pi_arguments=("sonic_pi")
 sonic_pi_launchernames=("sonic-pi")

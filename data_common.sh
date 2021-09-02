@@ -454,6 +454,7 @@ declare -r feature_keynames=(
   "shotwell"
   "skype"
   "slack"
+  "sonarqube"
   "sonic_pi"
   "soundcloud"
   "spotify"

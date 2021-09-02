@@ -16,12 +16,14 @@
 - [ ] New property to indicate the package manager to use to install the package, and thus, its corresponding command
 - [ ] Move features table from readme to FEATURES.sh
 
-
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 ###### UPDATES
 
 
 ###### NEW FEATURES
+- [ ] Autopsy (forensics disk analyzer)
+- [x] sonarqube (sonar command)
+- [x] meld (GUI diff)
 
 # TO-DO uninstall.sh and uninstall core for v1.0
 ###### UPDATES

@@ -403,29 +403,22 @@ repositoryclone_uninstallation_type() {
   remove_folder "${BIN_FOLDER}/$1"
 }
 
-# - Description: Removes packages using $DEFAULT_PACKAGE_MANAGER purge or ) + dpkg.
-#   Also performs file decompression to obtain .deb if the corresponding variables are defined.
-# - Permissions: Needs root permissions, but is expected to be called always as root by install.sh logic.
-# - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
-#   installation data.
-# - Argument 2: Selects the type of installation between [packagemanager|packageinstall]
-rootgeneric_uninstallation_type() {
-   # Declare name of variables for indirect expansion
-   
-  # Name of the package names to be uninstalled with the package manager if present
-  local -r packagenames="$1_packagenames[@]"
 
-  if [ "$2" == packageinstall ]; then
-    # Use a compressed file that contains .debs
-    for packagename in ${!packagenames}; do
-      ${PACKAGE_MANAGER_UNINSTALLPACKAGE} "${packagename}"
-    done
-  else # Install with default package manager
-    for packagename in ${!packagenames}; do
-      ${PACKAGE_MANAGER_UNINSTALL} "${packagename}"
-    done
-  fi
+packageinstall_uninstallation_type() {
+  local -r packagenames="$1_packagenames[@]"
+  for packagename in ${!packagenames}; do
+    ${PACKAGE_MANAGER_UNINSTALLPACKAGE} "${packagename}"
+  done
 }
+
+
+packagemanager_uninstallation_type() {
+  local -r packagenames="$1_packagenames[@]"
+  for packagename in ${!packagenames}; do
+    ${PACKAGE_MANAGER_UNINSTALL} "${packagename}"
+  done
+}
+
 
 # - Description: Remove file from BIN_FOLDER
 # - Permissions: Expected to be run by normal user.

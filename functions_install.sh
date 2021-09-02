@@ -769,46 +769,44 @@ repositoryclone_installation_type() {
 }
 
 
-# - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER or ) + dpkg.
-#   Also performs file decompression to obtain .deb if the corresponding variables are defined.
-# - Permissions: Needs root permissions, but is expected to be called always as root by install.sh logic.
-# - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
-#   installation data.
-# - Argument 2: Selects the type of installation between [packagemanager|packageinstall]
-rootgeneric_installation_type() {
-  # Declare name of variables for indirect expansion
-
-  # Name of the package names to be installed with the package manager if present
-  local -r packagenames="$1_packagenames[@]"
-  # Used to download .deb and install it if present
+# - Description: Installs packages using dpkg
+# - Permissions: Expected to be run by root.
+# - Argument 1: String that matches a set of variables in data_features.
+packageinstall_installation_type() {
   local -r packageurls="$1_packageurls[@]"
   # Used to download a compressed package where the .deb are located.
   local -r compressedfileurl="$1_compressedfileurl"
   local -r compressedfiletype="$1_compressedfiletype"
 
-  # Download package and install using manual package manager
-  if [ "$2" == packageinstall ]; then
-    # Use a compressed file that contains .debs
-    if [ -n "${!compressedfileurl}" ]; then
-      download "${!compressedfileurl}" "${BIN_FOLDER}/$1_package_compressed_file"
-      decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_package_compressed_file" "$1"
-      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"
-      rm -Rf "${BIN_FOLDER:?}/$1"
+  # Use a compressed file that contains .debs
+  if [ -n "${!compressedfileurl}" ]; then
+    download "${!compressedfileurl}" "${BIN_FOLDER}/$1_package_compressed_file"
+    decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_package_compressed_file" "$1"
+    ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"
+    rm -Rf "${BIN_FOLDER:?}/$1"
+    ${PACKAGE_MANAGER_FIXBROKEN}
+  else  # Use directly a downloaded .deb
+    local name_suffix_anticollision=""
+    for packageurl in "${!packageurls}"; do
+      download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
       ${PACKAGE_MANAGER_FIXBROKEN}
-    else  # Use directly a downloaded .deb
-      local name_suffix_anticollision=""
-      for packageurl in "${!packageurls}"; do
-        download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
-        ${PACKAGE_MANAGER_FIXBROKEN}
-        name_suffix_anticollision="${name_suffix_anticollision}_"
-      done
-    fi
-  else # Install with default package manager
-    for packagename in ${!packagenames}; do
-      ${PACKAGE_MANAGER_INSTALL} "${packagename}"
-      ${PACKAGE_MANAGER_FIXBROKEN}
+      name_suffix_anticollision="${name_suffix_anticollision}_"
     done
   fi
+}
+
+
+# - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER
+# - Permissions: Expected to be run by normal user.
+# - Argument 1: String that matches a variable in data_features.
+packagemanager_installation_type() {
+  # Name of the package names to be installed with the package manager if present
+  local -r packagenames="$1_packagenames[@]"
+
+  for packagename in ${!packagenames}; do
+    ${PACKAGE_MANAGER_INSTALL} "${packagename}"
+    ${PACKAGE_MANAGER_FIXBROKEN}
+  done
 }
 
 
