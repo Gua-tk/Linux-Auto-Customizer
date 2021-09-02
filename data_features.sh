@@ -6173,8 +6173,6 @@ x() {
     fi
     if [ -f \"\${absolute_first_arg}\" ] ; then
       local mime_type=\"\$(mimetype \"\${absolute_first_arg}\" | cut -d \":\" -f2 | tr -d \" \")\"
-
-      echo \$mime_type
       case \"\${mime_type}\" in
         application/x-bzip-compressed-tar)
           tar xjf \"\${absolute_first_arg}\"
@@ -6199,6 +6197,9 @@ x() {
             sudo ${PACKAGE_MANAGER_INSTALL} gzip
           fi
           gzip -dk \"\${absolute_first_arg}\"
+        ;;
+        application/x-xz-compressed-tar)
+          tar xf \"\${absolute_first_arg}\"
         ;;
         application/x-tar)
           tar xf \"\${absolute_first_arg}\"
@@ -6240,7 +6241,6 @@ x() {
   if [ ! -n \"\$(echo \"\${absolute_first_arg}\")\" ]; then
     echo \"ERROR: x needs at least an argument. The first arg can be a file or directory where compressed files will be extracted. The rest o arguments are paths to different compressed files.\"
   fi
-
 
 }
 ")
