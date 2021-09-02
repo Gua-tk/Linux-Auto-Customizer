@@ -688,6 +688,7 @@ codeblocks_readmeline="| Code::Blocks | IDE for programming  | Command \`codeblo
 
 codium_installationtype="userinherit"
 codium_donotinherit="yes"
+codium_bashfunctions=("alias codium=\"nohup codium &>/dev/null &\"")
 codium_compressedfilepathoverride="${BIN_FOLDER}/codium"
 codium_compressedfiletype="z"
 codium_binariesinstalledpaths=("bin/codium;codium")
@@ -4028,6 +4029,7 @@ megasync_readmeline="| MegaSync | Synchronises folders between your computer and
 
 meld_installationtype="userinherit"
 meld_arguments=("meld")
+meld_bashfunctions=("alias meld=\"nohup meld &>/dev/null &\"")
 meld_binariesinstalledpaths=("bin/meld;meld")
 meld_compressedfiletype="J"
 meld_compressedfileurl="https://download.gnome.org/sources/meld/3.20/meld-3.20.4.tar.xz"
