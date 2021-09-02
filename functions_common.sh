@@ -428,6 +428,11 @@ argument_processing()
               shift
               continue
             ;;
+            --flush=cache)
+              rm -f "${CACHE_FOLDER}/"*
+              shift
+              continue
+            ;;
           esac
         fi
 
