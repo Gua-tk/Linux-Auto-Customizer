@@ -141,7 +141,7 @@ case ${OS_NAME} in
   Ubuntu)
     initialize_package_manager_apt
   ;;
-  Debian)
+  "Debian GNU/Linux")
     initialize_package_manager_apt
   ;;
   ElementaryOS)
