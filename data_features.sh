@@ -4274,6 +4274,9 @@ mvn_binariesinstalledpaths=("bin/mvn;mvn")
 mvn_compressedfiletype="z"
 mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 mvn_readmeline="| Maven | Build automation tool used primarily for Java projects | Command \`mvn\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
+mvn_bashfunctions=("
+export M2_HOME=\"${BIN_FOLDER}/mvn\"
+")
 
 nautilus_installationtype="packagemanager"
 nautilus_arguments=("nautilus")
