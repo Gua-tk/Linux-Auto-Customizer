@@ -18,7 +18,7 @@
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 ###### UPDATES
-- [ ] codium function for opening folders, files...
+- [ ] codium, eclipse, text editors in general that don't have a bash function for opening folders, files...
 - [ ] use axel instead of wget if it is installed, actually wget does not come installed in Debian by default.
 - [ ] add dummy -am argument to commit function which does nothing.
 
