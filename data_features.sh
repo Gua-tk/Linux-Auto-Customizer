@@ -476,7 +476,7 @@ calibre_readmeline="| Calibre | e-book reader| Commmand \`calibre\`, desktop lau
 
 changebg_installationtype="repositoryclone"
 changebg_arguments=("change_bg" "wallpaper" "wallpapers")
-changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES_DIR}/wallpapers")
+changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES_DIR}/wallpapers" "*.jpeg;${XDG_PICTURES_DIR}/wallpapers" )
 changebg_binariesinstalledpaths=".cronscript.sh;changebg"
 changebg_cronscript_content="
 #!/bin/bash
@@ -555,7 +555,16 @@ clementine_readmeline="| Clementine | Modern music player and library organizer 
 clion_installationtype="userinherit"
 clion_arguments=("clion")
 clion_associatedfiletypes=("text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc")
-clion_bashfunctions=("alias clion=\"nohup clion . &>/dev/null &\"")
+clion_bashfunctions=("
+clion() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup clion \${args} &>/dev/null &
+}
+")
 clion_binariesinstalledpaths=("bin/clion.sh;clion")
 clion_compressedfiletype="z"
 clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2021.2.1.tar.gz"
@@ -688,7 +697,16 @@ codeblocks_readmeline="| Code::Blocks | IDE for programming  | Command \`codeblo
 
 codium_installationtype="userinherit"
 codium_donotinherit="yes"
-codium_bashfunctions=("alias codium=\"nohup codium &>/dev/null &\"")
+codium_bashfunctions=("
+codium() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup codium \${args} &>/dev/null &
+}
+")
 codium_compressedfilepathoverride="${BIN_FOLDER}/codium"
 codium_compressedfiletype="z"
 codium_binariesinstalledpaths=("bin/codium;codium")
@@ -1100,7 +1118,16 @@ e_readmeline="| Function \`e\` | Multi Function \`e\` to edit a file or project 
 
 eclipse_installationtype="userinherit"
 eclipse_arguments=("eclipse")
-eclipse_bashfunctions="alias=\"nobup eclips &>/dev/null &\""
+eclipse_bashfunctions="
+eclipse() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup eclipse \${args} &>/dev/null &
+}
+"
 eclipse_binariesinstalledpaths=("eclipse;eclipse")
 eclipse_compressedfiletype="z"
 eclipse_compressedfileurl="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
@@ -3612,7 +3639,16 @@ i_readmeline="| Function \`i\` | Shows folder structures | Command \`i\` ||  <ul
 ideac_installationtype="userinherit"
 ideac_arguments=("ideac" "intellij_community")
 ideac_associatedfiletypes=("text/x-java")
-ideac_bashfunctions="alias ideac=\"nohup ideac . &>/dev/null &\""
+ideac_bashfunctions="
+ideac() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup ideac \${args} &>/dev/null &
+}
+"
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
 ideac_compressedfiletype="z"
 ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.2.1.tar.gz"
@@ -3640,7 +3676,16 @@ ideac_readmeline="| intelliJ Community | ${ideac_readmelinedescription} | Comman
 ideau_installationtype="userinherit"
 ideau_arguments=("ideau" "intellij_ultimate")
 ideau_associatedfiletypes=("text/x-java")
-ideau_bashfunctions=("alias ideau=\"nohup ideau . &>/dev/null &\"")
+ideau_bashfunctions=("
+ideau() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup ideau \${args} &>/dev/null &
+}
+")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
 ideau_compressedfiletype="z"
 ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.2.1.tar.gz"
@@ -5115,7 +5160,16 @@ push_readmeline="| \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul>
 pycharm_installationtype="userinherit"
 pycharm_arguments=("pycharm" "pycharm_community")
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
-pycharm_bashfunctions=("alias pycharm=\"pycharm . &>/dev/null &\"")
+pycharm_bashfunctions=("
+pycharm() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup pycharm \${args} &>/dev/null &
+}
+")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_compressedfiletype="z"
 pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.2.1.tar.gz"
@@ -5151,7 +5205,16 @@ pycharm_readmeline="| Pycharm Community | ${pycharm_readmelinedescription} | Com
 pycharmpro_installationtype="userinherit"
 pycharmpro_arguments=("pycharm_pro")
 pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
-pycharmpro_bashfunctions=("alias pycharmpro=\"pycharmpro . &>/dev/null &\"")
+pycharmpro_bashfunctions=("
+pycharmpro() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup pycharmpro \${args} &>/dev/null &
+}
+")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
 pycharmpro_compressedfiletype="z"
 pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2021.2.1.tar.gz"
@@ -5526,7 +5589,7 @@ spotify_installationtype="packageinstall"
 spotify_arguments=("spotify")
 spotify_bashfunctions=("alias spotify=\"spotify &>/dev/null &\"")
 spotify_launchernames=("spotify")
-spotify_packageurls=("http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.56.595.g2d2da0de_amd64.deb")
+spotify_packageurls=("https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.67.586.gbb5ef64e_amd64.deb")
 spotify_packagenames=("spotify-desktop")
 spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
@@ -5604,7 +5667,16 @@ sublime_keybindings=("sublime;<Primary><Alt><Super>e;Sublime Text")
 sublime_installationtype="userinherit"
 sublime_arguments=("sublime" "sublime_text" "subl")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
-sublime_bashfunctions=("alias sublime=\"sublime . &>/dev/null &\"")
+sublime_bashfunctions=("
+sublime() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup sublime \${args} &>/dev/null &
+}
+")
 sublime_binariesinstalledpaths=("sublime_text;sublime")
 sublime_compressedfiletype="J"
 sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_build_4113_x64.tar.xz"

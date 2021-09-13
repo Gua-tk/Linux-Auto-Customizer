@@ -6,8 +6,8 @@
 - [ ] Create new property in data_features.sh which allows to override default package manager being used and some way to recover package manager configurations.
 - [~] User environmental features should be also be installed as root user or use flag overwrite for the user. --> There is already some functioning but further testing is required.
 - [x] Create a data structure to store the necessary permissions for each installation type.
-- [ ] protects exits for flag ignore errors.
-- [ ] repositoryclone installations also are being cached
+- [x] protects exits for flag ignore errors.
+- [x] repositoryclone installations also are being cached
 
 ###### NEW FEATURES
 - [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
@@ -21,6 +21,7 @@
 - [ ] codium, eclipse, text editors in general that don't have a bash function for opening folders, files...
 - [ ] use axel instead of wget if it is installed, actually wget does not come installed in Debian by default.
 - [ ] add dummy -am argument to commit function which does nothing.
+- [x] Update Spotify fallen url
 
 ###### NEW FEATURES
 - [ ] Autopsy (forensics disk analyzer)
@@ -32,7 +33,7 @@
 - [ ] protect with if always when reading from common files of customizer
 
 ###### NEW FEATURES
-- [ ] `functions_commo.sh`: program specific arguments for uninstall for removing all structures, empty keybinds files, etc
+- [ ] `functions_common.sh`: program specific arguments for uninstall for removing all structures, empty keybinds files, etc
 - [ ] `functions_uninstall.sh`: refactor to customizer standards the commentaries and headers of uninstall.
 - [~] `functions_uninstall`: function to delete all installations and the common structures
 - [ ] `data_features.sh`: xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search

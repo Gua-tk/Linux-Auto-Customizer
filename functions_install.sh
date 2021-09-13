@@ -426,7 +426,7 @@ download() {
       fi
     else
       # Move directly to the desired place of download
-      mv "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
+      mv "${TEMP_FOLDER}/${file_name}" "${dir_name}/${file_name}"
       # If we are root change permissions
       if [ "${EUID}" -eq 0 ]; then
         apply_permissions "${dir_name}/${file_name}"
@@ -760,11 +760,48 @@ pythonvenv_installation_type() {
 #   installation data.
 repositoryclone_installation_type() {
   local -r repositoryurl="$1_repositoryurl"
-  rm -Rf "${BIN_FOLDER:?}/$1"
-  create_folder "${BIN_FOLDER}/$1"
-  git clone "${!repositoryurl}" "${BIN_FOLDER}/$1"
-  if [ ${EUID} -eq 0 ]; then
-    apply_permissions_recursively "${BIN_FOLDER}/$1"
+  # Check if it is cached
+  if [ -d "${CACHE_FOLDER}/$1_repository" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
+    rm -Rf "${BIN_FOLDER:?}/$1"
+    cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+    if [ "${EUID}" -eq 0 ]; then
+      apply_permissions_recursively "${BIN_FOLDER}/$1"
+    fi
+  else  # Not cached or we do not use cache: we have to download
+    
+    rm -Rf "${TEMP_FOLDER}/$1_repository"
+    create_folder "${TEMP_FOLDER}/$1_repository"
+    
+    echo -en '\033[1;33m'
+    git clone "${!repositoryurl}" "${TEMP_FOLDER}/$1_repository"
+    echo -en '\033[0m'
+
+    if [ "${FLAG_CACHE}" -eq 1 ]; then
+      # Move to cache folder to construct cache
+      rm -Rf "${CACHE_FOLDER}/$1_repository"
+      cp -r "${TEMP_FOLDER}/$1_repository" "${CACHE_FOLDER}"
+      rm -Rf "${TEMP_FOLDER}/$1_repository"
+      # If we are root change permissions
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions_recursively "${CACHE_FOLDER}/$1_repository"
+      fi
+
+      # Copy file to the desired place of download
+      cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions_recursively "${BIN_FOLDER}/$1"
+      fi
+    else
+      # Move directly to the desired place of download
+      rm -Rf "${BIN_FOLDER:?}/$1"
+      cp -r "${TEMP_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+      rm -Rf "${TEMP_FOLDER}/$1_repository"
+
+      # If we are root change permissions
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions_recursively "${BIN_FOLDER}/$1"
+      fi
+    fi
   fi
 }
 
