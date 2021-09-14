@@ -1,4 +1,8 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9d77f6c73bab4a11b847d131146fc243)](https://www.codacy.com/gh/AleixMT/Linux-Auto-Customizer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AleixMT/Linux-Auto-Customizer&amp;utm_campaign=Badge_Grade)
+[![Codacy grade](https://img.shields.io/codacy/grade/9d77f6c73bab4a11b847d131146fc243?style=plastic&logo=codacy)](https://www.codacy.com/gh/AleixMT/Linux-Auto-Customizer/dashboard?utm_source=github.com)
+[![GitHub top language](https://img.shields.io/github/languages/top/AleixMT/Linux-Auto-Customizer?style=plastic&color=green&logo=gnu)](https://www.gnu.org/software/bash)
+[![Lines of code](https://img.shields.io/tokei/lines/github/AleixMT/Linux-Auto-Customizer?style=plastic&logo=gitlab)](https://gitlab.com/AleixMT/Linux-Auto-Customizer)
+[![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/AleixMT/Linux-Auto-Customizer?style=plastic&logo=github)](https://github.com/AleixMT/Linux-Auto-Customizer/commits/master)
+![GitHub Repo stars](https://img.shields.io/github/stars/AleixMT/Linux-Auto-Customizer?style=social)
 
 # Auto-Customizer
 
