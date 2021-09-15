@@ -83,7 +83,7 @@ bell_sound()
 customizer_prompt()
 {
   while true; do
-    read -pr "customizer-prompt $ " cmds
+    read -p "customizer-prompt $ " -r cmds
     eval "${cmds}"
   done
 }
@@ -372,6 +372,11 @@ argument_processing()
         local all_arguments+=("${feature_keynames[@]}")
         all_arguments+=("${auxiliary_arguments[@]}")
         echo "${all_arguments[@]}"
+        exit 0
+      ;;
+
+      --readme)  # Print list of possible arguments and finish the program
+        autogen_readme
         exit 0
       ;;
 

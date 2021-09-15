@@ -1,12 +1,14 @@
-[![Codacy grade](https://img.shields.io/codacy/grade/9d77f6c73bab4a11b847d131146fc243?style=plastic&logo=codacy)](https://www.codacy.com/gh/AleixMT/Linux-Auto-Customizer/dashboard?utm_source=github.com)
-[![GitHub top language](https://img.shields.io/github/languages/top/AleixMT/Linux-Auto-Customizer?style=plastic&color=green&logo=gnu)](https://www.gnu.org/software/bash)
+[![Codacy grade](https://img.shields.io/codacy/grade/9d77f6c73bab4a11b847d131146fc243?style=plastic&logo=codacy&color=blue)](https://www.codacy.com/gh/AleixMT/Linux-Auto-Customizer/dashboard?utm_source=github.com)
+[![GitHub top language](https://img.shields.io/github/languages/top/AleixMT/Linux-Auto-Customizer?style=plastic&color=blue&logo=gnu)](https://www.gnu.org/software/bash)
 [![Lines of code](https://img.shields.io/tokei/lines/github/AleixMT/Linux-Auto-Customizer?style=plastic&logo=gitlab)](https://gitlab.com/AleixMT/Linux-Auto-Customizer)
-[![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/AleixMT/Linux-Auto-Customizer?style=plastic&logo=github)](https://github.com/AleixMT/Linux-Auto-Customizer/commits/master)
+![GitHub commits since tagged version](https://img.shields.io/github/commits-since/AleixMT/Linux-Auto-Customizer/v0.1.0?style=plastic&logo=github)
+[![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/AleixMT/Linux-Auto-Customizer?style=plastic&logo=linux)](https://github.com/AleixMT/Linux-Auto-Customizer/commits/master)
+![GitHub last commit](https://img.shields.io/github/last-commit/AleixMT/Linux-Auto-Customizer?&style=plastic&color=blue)
 ![GitHub Repo stars](https://img.shields.io/github/stars/AleixMT/Linux-Auto-Customizer?style=social)
 
-# Auto-Customizer
+# Customizer
 
-`bash` scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
+[`bash`](https://www.gnu.org/software/bash) scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
 
 ## Description
 
@@ -60,33 +62,36 @@ Now that the current directory is the repository we can call the main scripts di
 We need to check if the program needs root or user permision, if it is needed use sudo at the start of the command.
 ### Installing individual features
 ```
-bash install name_of_feature
+bash install.sh name_of_feature
+
+Example:
+bash install.sh -v discord
 ```
+
 ### Installing sets of features
 ```
-bash install name_of_set_of_custom_features
-```
+bash install.sh name_of_set_of_custom_features
+
 Example:
-```
-bash install -v discord
+bash install.sh -v discord
 ```
 ### Behavioural arguments
 Verbose mode
 Examples:
 ```
-bash install -v telegram
+bash install.sh -v telegram
 ```
 Quiet mode
 ```
-sudo bash install -q firefox gpaint
+sudo bash install.sh -q firefox gpaint
 ```
 Alternation
 ```
-sudo bash install -q firefox -v gpaint
+sudo bash install.sh -q cheese -v spotify
 ```
 Silent Desktop icons for apps of the system
 ```
-sudo bash install -q -o cheese
+bash install.sh -q -o discord
 ```
 
 ### Full installation / uninstallation

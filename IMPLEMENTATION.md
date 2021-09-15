@@ -8,6 +8,9 @@
 - [x] Create a data structure to store the necessary permissions for each installation type.
 - [x] protects exits for flag ignore errors.
 - [x] repositoryclone installations also are being cached
+- [ ] Investigate if GetOpts is needed
+- [ ] Check headers
+- [ ] Move cache clone to an API function not a generic
 
 ###### NEW FEATURES
 - [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
@@ -15,6 +18,9 @@
 - [ ] New property to check some dependencies --> It will be used by features as jupyter. 
 - [ ] New property to indicate the package manager to use to install the package, and thus, its corresponding command
 - [ ] Move features table from readme to FEATURES.sh
+- [ ] Function m() #{man $1 | cat | grep "$2"}
+- [ ] Pidgin, Audacious, Timemachine (audio recorder), Qjackctl, leafpad (simple text editor)
+- [ ] Music software: hydrogen drum machine, Rakarrack, QSynth, zynaddsub fx, Grip, soundKonverter, SooperLooper, Freqtweak Wavbreaker File Slitt, ReZound, mhWaveEdit, Mixxx, JACK Rack, fmit, Calf Plugin Pack for J, JAMin, QTractor, Gnome Wave Cle...
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 ###### UPDATES
@@ -40,7 +46,11 @@
 gsettings set org.gnome.desktop.background show-desktop-icons true
 sudo apt purge nemo nemo*
 sudo apt autoremove  
-
+- [ ] Customizer wiki --> enciclopedic explanations and definitions
+  * features 
+  * capabilities
+  * tasks
+  * properties
 
 # TO-DO customizer.sh and final endpoint for v1.0
 Have to be completed after (AFTER!) having all the auxiliar structures into v1.0 of uninstall / install (root functions are already in this point):
