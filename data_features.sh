@@ -230,8 +230,8 @@ B_arguments=("B" "B_function")
 B_bashfunctions=("
 B() {
   clear
-  source "${BASHRC_PATH}" 
-  source "${PROFILE_PATH}"
+  source \"${BASHRC_PATH}\"
+  source \"${PROFILE_PATH}\"
   while [ -n \"\$1\" ]; do
     case \"\$1\" in 
       fonts)

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Install all programs, show output and save it to a file, ignore errors, overwrite already existent features
-sudo bash install.sh -v -o -i --root &>customizersudoall.outerr.txt &
+sudo bash install.sh -v -o -i --root | tee customizersudoall.outerr.txt &
 PID_ROOT=$!
 # wait 10 seconds to write the password with nothing on the screen
 sleep 10

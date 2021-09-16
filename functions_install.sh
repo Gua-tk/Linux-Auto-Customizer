@@ -690,14 +690,11 @@ generic_install_movefiles() {
     origin_files="$(echo "${movedata}" | cut -d ";" -f1)"
     destiny_directory="$(echo "${movedata}" | cut -d ";" -f2)"
     create_folder "${destiny_directory}"
-    if echo "${origin_files}" | grep -q '*' ; then
-      origin_files="$(echo "${origin_files}" | tr -d '*')"
-      for filename in $(ls -c1 -A "${BIN_FOLDER}/$1"); do
-        if echo "${filename}" | grep -q "${origin_files}\$"; then
-          mv -f "${BIN_FOLDER}/$1/${filename}" "${destiny_directory}"
-          if [ ${EUID} -eq 0 ]; then
-            apply_permissions "${destiny_directory}/${filename}"
-          fi
+    if echo "${origin_files}" | grep -q '\*' ; then
+      for filename in "${BIN_FOLDER}/$1/"${origin_files}; do
+        mv -f "${filename}" "${destiny_directory}"
+        if [ ${EUID} -eq 0 ]; then
+          apply_permissions "${filename}"
         fi
       done
     else
@@ -977,6 +974,7 @@ update_environment() {
 
 
 if [ -f "${DIR}/functions_common.sh" ]; then
+  # shellcheck source=./functions_common.sh
   source "${DIR}/functions_common.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data

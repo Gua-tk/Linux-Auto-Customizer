@@ -97,6 +97,7 @@ if [ "${EUID}" != 0 ]; then
 
   # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   if [ -f "${USER_DIRS_PATH}" ]; then
+    # shellcheck source=$HOME/.config/user-dirs.dirs
     source "${USER_DIRS_PATH}"
   fi 
 else
@@ -745,3 +746,9 @@ declare -r help_wrappers="
 # Behavioural variable, used to avoid to be queried by apt-get or dpkg when installing such features such wireshark and
 # sonic-pi.
 export DEBIAN_FRONTEND=noninteractive
+# Treat all * as globs, even if there is nothing to be matched (which usually means that bash treats * as a literal).
+# This is mainly used in the movefiles property, because we can use * to match files that have to be moved in a for loop
+# but ensuring that we will not enter the loop if the * does not match anything (and thus bash entering the loop with a
+# literal *.
+# https://stackoverflow.com/questions/47702490/shellcheck-warning-iterating-over-ls-output-is-fragile-use-globs-sc2045
+shopt -s nullglob

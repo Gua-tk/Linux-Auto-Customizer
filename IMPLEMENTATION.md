@@ -3,14 +3,21 @@
 
 #### CORE CODE NEW FEATURES AND UPDATES
 ###### UPDATES
-- [ ] Create new property in data_features.sh which allows to override default package manager being used and some way to recover package manager configurations.
+
+- [ ] Handle different package managers:
+  * [ ] Create associative arrays for each package manager containing the different instructions to install packages using that concrete package manager.
+  * [ ] Create new property in data_features.sh which allows to override default package manager being used and some way to recover package manager configurations.
+
+
+- [ ] Use cat << EOF ... EOF to write long echoes such as the help ones: (cat << EOF text EOF)  
 - [~] User environmental features should be also be installed as root user or use flag overwrite for the user. --> There is already some functioning but further testing is required.
 - [x] Create a data structure to store the necessary permissions for each installation type.
 - [x] protects exits for flag ignore errors.
 - [x] repositoryclone installations also are being cached
-- [ ] Investigate if GetOpts is needed
+- [ ] Investigate GetOpts. Apply getopts use at least for the flag argument if it is an improvement
 - [ ] Check headers
 - [ ] Move cache clone to an API function not a generic
+- [ ] In debug mode define different variables that contain debug options such as wget_debug="-d" that are applied to different commands to obtain a simple debug mode
 
 ###### NEW FEATURES
 - [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
@@ -24,6 +31,8 @@
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 ###### UPDATES
+- [ ] readmelinedescription of internet launchers is not 'FEATUREKEYNAME opening in google chrome' since it uses xdg-open not chrome directly.
+- [ ] tryexec of internet shortcut launchers is not google-chrome since it does use xdg-open, so I guess the tryExec is xdg-open or nothing, but not google-chrome, since it is not used nor mentioned directly.
 - [ ] codium, eclipse, text editors in general that don't have a bash function for opening folders, files...
 - [ ] use axel instead of wget if it is installed, actually wget does not come installed in Debian by default.
 - [ ] add dummy -am argument to commit function which does nothing.

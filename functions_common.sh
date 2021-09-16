@@ -361,10 +361,10 @@ argument_processing()
         FLAG_SKIP_PRIVILEGES_CHECK=1
       ;;
 
-      -h|--not-cached)
+      -t|--not-cached)
         FLAG_CACHE=0
       ;;
-      -H|--cached|--cache|--use-cache)
+      -T|--cached|--cache|--use-cache)
         FLAG_CACHE=1
       ;;
 
@@ -444,6 +444,8 @@ argument_processing()
         local wrapper_key=
         wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
         local set_of_features="wrapper_${wrapper_key}[@]"
+        # Useless echo? usually yes shellcheck, but not when you are indirect expanding an array
+        # shellcheck disable=SC2116
         if [ -z "$(echo "${!set_of_features}")" ]; then
           add_program "${key}"
         else
