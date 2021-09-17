@@ -141,7 +141,7 @@ alert_bashfunctions=("
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i \"\$([ \$? = 0 ] && echo terminal || echo error)\" \"\$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\\'')\"'
 ")
-alert_readmeline="| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li><li>- [ ] Debian</li></ul> |"
+alert_readmeline="| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ansible_installationtype="packagemanager"
 ansible_arguments=("ansible")
@@ -155,7 +155,7 @@ ant_binariesinstalledpaths=("bin/ant;ant")
 ant_compressedfiletype="z"
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_flagsoverride="1;;;;;"
-ant_readmeline="| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
+ant_readmeline="| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 
 anydesk_installationtype="userinherit"
 anydesk_arguments=("any_desk")
@@ -3676,7 +3676,7 @@ TryExec=ideac
 Type=Application
 Version=13.0
 ")
-ideac_readmeline="| intelliJ Community | ${ideac_readmelinedescription} | Command \`ideac\`, silent alias for \`ideac\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
+ideac_readmeline="| intelliJ Community | ${ideac_readmelinedescription} | Command \`ideac\`, silent alias for \`ideac\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 
 ideau_installationtype="userinherit"
 ideau_arguments=("ideau" "intellij_ultimate")
@@ -3713,7 +3713,7 @@ TryExec=ideau
 Type=Application
 Version=1.0
 ")
-ideau_readmeline="| intelliJ Ultimate | ${ideau_readmelinedescription} | Command \`ideau\`, silent alias for \`ideau\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
+ideau_readmeline="| intelliJ Ultimate | ${ideau_readmelinedescription} | Command \`ideau\`, silent alias for \`ideau\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 
 inkscape_installationtype="packagemanager"
 inkscape_arguments=("ink_scape")
@@ -4325,7 +4325,7 @@ mvn_arguments=("mvn")
 mvn_binariesinstalledpaths=("bin/mvn;mvn")
 mvn_compressedfiletype="z"
 mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
-mvn_readmeline="| Maven | Build automation tool used primarily for Java projects | Command \`mvn\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li> |"
+mvn_readmeline="| Maven | Build automation tool used primarily for Java projects | Command \`mvn\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 mvn_bashfunctions=("
 export M2_HOME=\"${BIN_FOLDER}/mvn\"
 ")
@@ -4864,7 +4864,7 @@ TryExec=google-chrome
 Type=Application
 Version=1.0
 ")
-outlook_readmeline="| Outlook | ${outlook_readmelinedescription} | Command \`outlook\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+outlook_readmeline="| Outlook | ${outlook_readmelinedescription} | Command \`outlook\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 overleaf_installationtype="environmental"
 overleaf_arguments=("overleaf")
@@ -6084,7 +6084,7 @@ tomcat_installationtype="userinherit"
 tomcat_arguments=("tomcat" "apache_tomcat" "tomcat_server")
 tomcat_compressedfiletype="z"
 tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
-tomcat_readmeline="| Apache Tomcat 9.0.43 | Open-source server to run web apps written in Jakarta Server Pages | Tomcat available in \${USER_BIN_FOLDER} to deploy web apps || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul><li>- [x] Fedora</li>|"
+tomcat_readmeline="| Apache Tomcat 9.0.43 | Open-source server to run web apps written in Jakarta Server Pages | Tomcat available in \${USER_BIN_FOLDER} to deploy web apps || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul>|"
 
 tor_installationtype="packagemanager"
 tor_arguments=("tor" "tor_browser")

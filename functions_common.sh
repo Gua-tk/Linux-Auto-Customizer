@@ -427,7 +427,7 @@ argument_processing()
         exit 0
       ;;
 
-      --readme|readme)  # Print list of possible arguments and finish the program
+      --readme|readme|features|FEATURES|FEATURES.sh|features.sh)  # Print list of possible arguments and finish the program
         autogen_readme
         exit 0
       ;;
