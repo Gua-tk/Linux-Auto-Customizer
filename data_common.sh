@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ########################################################################################################################
-# - Name: Linux Auto-Customizer data of features.                                                                      #
+# - Name: Linux Auto-Customizer data of core.                                                                      #
 # - Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop          #
 # features... collected in a simple portable shell script to customize a Linux working environment.                    #
 # - Creation Date: 28/5/19                                                                                             #
@@ -18,9 +18,76 @@
 
 
 ########################################################################################################################
+##################################### OS-DEPENDENT PACKAGE MANAGER CALLS ###############################################
+########################################################################################################################
+initialize_package_manager_apt-get() {
+  DEFAULT_PACKAGE_MANAGER="apt-get"
+  PACKAGE_MANAGER_INSTALL="apt-get -y install"
+  PACKAGE_MANAGER_FIXBROKEN="apt-get install -y --fix-broken"
+  PACKAGE_MANAGER_UNINSTALL="apt-get -y purge"
+  PACKAGE_MANAGER_UPDATE="apt-get -y update"
+  PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
+  PACKAGE_MANAGER_INSTALLPACKAGE="dpkg -i"
+  PACKAGE_MANAGER_INSTALLPACKAGES="dpkg -Ri"
+  PACKAGE_MANAGER_UNINSTALLPACKAGE="apt-get -y purge"
+  PACKAGE_MANAGER_AUTOREMOVE="apt-get -y autoremove"
+  PACKAGE_MANAGER_AUTOCLEAN="apt-get -y autoclean"
+  PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
+}
+
+initialize_package_manager_yum() {
+  DEFAULT_PACKAGE_MANAGER="yum"
+  PACKAGE_MANAGER_INSTALL="yum -y install"
+  PACKAGE_MANAGER_UNINSTALL="yum -y purge"
+  PACKAGE_MANAGER_UPDATE="yum -y update"
+  PACKAGE_MANAGER_UPGRADE="yum -y upgrade"
+  PACKAGE_MANAGER_INSTALLPACKAGE="yum -y install"
+  PACKAGE_MANAGER_INSTALLPACKAGES="yum -y install"
+  PACKAGE_MANAGER_UNINSTALLPACKAGE="yum -y purge"
+  PACKAGE_MANAGER_CLEAN="yum -y autoremove && apt-get -y autoclean"
+  PACKAGE_MANAGER_ENSUREDEPENDENCIES="yum -y install -f"
+}
+
+# Search the current OS in order to determine the default package manager and its main
+if [ -f "/etc/os-release" ]; then
+  declare OS_NAME=$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )
+else
+  echo "WARNING: /etc/os-release can not be read. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager"
+  declare OS_NAME="Ubuntu"
+fi
+
+# Load the call to the package manager corresponding to the previously detected OS
+case ${OS_NAME} in
+  Ubuntu)
+    initialize_package_manager_apt-get
+  ;;
+  "Debian GNU/Linux")
+    initialize_package_manager_apt-get
+  ;;
+  ElementaryOS)
+    initialize_package_manager_apt-get
+  ;;
+  Fedora)
+    initialize_package_manager_yum
+  ;;
+  *)
+    output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager"
+    OS_NAME="Ubuntu"
+    initialize_package_manager_apt-get
+  ;;
+esac
+
+# Variable used for saving the default package manager in case that we load another one, so we can restore it later.
+declare STACKED_PACKAGE_MANAGER
+# Variable used to indicate if we need to reload an stacked package manager at the end of an installation.
+declare POP_PACKAGE_MANAGER=0
+# List of recognised package managers
+declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum")
+
+########################################################################################################################
 ################################################## CONSTANT PATHS ######################################################
 ########################################################################################################################
-# Define constant paths that are privileged-independent to allow customizer to locate and use its resources and system #
+# Define constant paths that are privilege-independent to allow customizer to locate and use its resources and system  #
 # resources to fulfill each installation requirements.                                                                 #
 # Default expected content of each constant:                                                                           #
 #                                                                                                                      #
@@ -74,22 +141,7 @@
 #     Here we store the .desktop launchers of the programs we want to autostart.                                       #
 ########################################################################################################################
 
-initialize_package_manager_apt() {
-  DEFAULT_PACKAGE_MANAGER="apt-get"
-  PACKAGE_MANAGER_INSTALL="apt-get -y install"
-  PACKAGE_MANAGER_FIXBROKEN="apt-get install -y --fix-broken"
-  PACKAGE_MANAGER_UNINSTALL="apt-get -y purge"
-  PACKAGE_MANAGER_UPDATE="apt-get -y update"
-  PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
-  PACKAGE_MANAGER_INSTALLPACKAGE="dpkg -i"
-  PACKAGE_MANAGER_INSTALLPACKAGES="dpkg -Ri"
-  PACKAGE_MANAGER_UNINSTALLPACKAGE="apt-get -y purge"
-  PACKAGE_MANAGER_AUTOREMOVE="apt-get -y autoremove"
-  PACKAGE_MANAGER_AUTOCLEAN="apt-get -y autoclean"
-  PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
-}
-
-
+# User variables
 if [ "${EUID}" != 0 ]; then
   declare -r HOME_FOLDER="${HOME}"
 
@@ -97,10 +149,11 @@ if [ "${EUID}" != 0 ]; then
 
   # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
   if [ -f "${USER_DIRS_PATH}" ]; then
+    # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
     # shellcheck source=$HOME/.config/user-dirs.dirs
     source "${USER_DIRS_PATH}"
   fi 
-else
+else  # Root variables
   declare -r HOME_FOLDER="/home/${SUDO_USER}"
 
   declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
@@ -118,7 +171,7 @@ else
   fi
 fi
 
-# Define fallbacks if user-dirs.dirs is not present
+# Define fallbacks for the used variables if USER_DIRS_PATH is not present
 if [ -z "${XDG_DESKTOP_DIR}" ]; then
   declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
 fi
@@ -128,43 +181,6 @@ fi
 if [ -z "${XDG_TEMPLATES_DIR}" ]; then
   declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
 fi
-
-# Search the current OS in order to determine the default package manager and its main
-if [ -f "/etc/os-release" ]; then
-  declare OS_NAME
-  OS_NAME=$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )
-else
-  declare -r OS_NAME="Ubuntu"
-fi
-
-case ${OS_NAME} in
-  # Using default package manager such as $DEFAULT_PACKAGE_MANAGER
-  Ubuntu)
-    initialize_package_manager_apt
-  ;;
-  "Debian GNU/Linux")
-    initialize_package_manager_apt
-  ;;
-  ElementaryOS)
-    initialize_package_manager_apt
-  ;;
-  Fedora)
-    DEFAULT_PACKAGE_MANAGER="yum"
-    PACKAGE_MANAGER_INSTALL="yum -y install"
-    PACKAGE_MANAGER_UNINSTALL="yum -y purge"
-    PACKAGE_MANAGER_UPDATE="yum -y update"
-    PACKAGE_MANAGER_UPGRADE="apt-get -y upgrade"
-    PACKAGE_MANAGER_INSTALLPACKAGE="yum -y install"
-    PACKAGE_MANAGER_INSTALLPACKAGES="yum -y install"
-    PACKAGE_MANAGER_UNINSTALLPACKAGE="yum -y purge"
-    PACKAGE_MANAGER_CLEAN="yum -y autoremove && apt-get -y autoclean"
-    PACKAGE_MANAGER_ENSUREDEPENDENCIES="yum -y install -f"
-  ;;
-  *)
-    output_proxy_executioner "ERROR: ${OS_NAME} is not a recognised OS. Aborting"
-    exit 1
-  ;;
-esac
 
 
 declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
@@ -236,11 +252,12 @@ FLAG_MODE=
 # Installation behaviour flags
 FLAG_OVERWRITE=0
 FLAG_INSTALL=1
-FLAG_QUIETNESS=2
+FLAG_QUIETNESS=1
 FLAG_IGNORE_ERRORS=0
 FLAG_FAVORITES=0
 FLAG_AUTOSTART=0
 FLAG_SKIP_PRIVILEGES_CHECK=0
+FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES=0
 
 # Common behaviour flags
 FLAG_UPGRADE=1

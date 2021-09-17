@@ -270,6 +270,35 @@ autogen_readme()
   echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total" >> table.md
 }
 
+# - Description: Loads another set of calls for a certain package manager defined in $1_package_manager_override
+generic_package_manager_override() {
+  # Other dependencies to install with the package manager before the main package of software if present
+  local -r package_manager_override="$1_package_manager_override"
+  if [ -n "${!package_manager_override}" ]; then
+    # An override is defined
+    if [ "${!package_manager_override}" == "${DEFAULT_PACKAGE_MANAGER}" ]; then
+      # The override is the same package manager that we have, skip loading config
+      return
+    else
+      # Check if the desired package to override is in the supported package managers list
+      for recognised_package_manager in ${RECOGNISED_PACKAGE_MANAGERS[@]}; do
+        if [ "${recognised_package_manager}" == "${!package_manager_override}" ]; then
+          # Load config for the package manager and save the previous conf, also raise the flag to undo this changes at
+          # the end of this installation
+          STACKED_PACKAGE_MANAGER="${DEFAULT_PACKAGE_MANAGER}"
+          POP_PACKAGE_MANAGER=1
+          initialize_package_manager_${!package_manager_override}
+          return
+        fi
+      done
+      output_proxy_executioner "echo ERROR: ${!package_manager_override} is not a recognised package manager, so its
+  configuration will not be loaded. Variable $1_package_manager_override needs to be one of the following elements:
+  ${RECOGNISED_PACKAGE_MANAGERS[@]}" "${FLAG_QUIETNESS}"
+      exit 1
+    fi
+  fi
+}
+
 
 ########################################################################################################################
 ############################################### COMMON MAIN FUNCTIONS ##################################################
@@ -367,6 +396,14 @@ argument_processing()
       -T|--cached|--cache|--use-cache)
         FLAG_CACHE=1
       ;;
+
+      -O|--Overrides|--allow-overrides)
+        FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES=1
+      ;;
+      -x)
+        FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES=0
+      ;;
+
 
       --commands)  # Print list of possible arguments and finish the program
         local all_arguments+=("${feature_keynames[@]}")
@@ -573,6 +610,22 @@ add_program()
 
   # Here matched_keyname matches a valid feature. Process its flagsoverride and add or remove from added_feature_keynames
   if [ "${FLAG_INSTALL}" == 1 ]; then
+    # First process FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES, which is not included in the flagsoverride
+    if [ ${FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES} -eq 0 ]; then
+      # Check if there is an override and if it is different from the current package manager
+      local -r package_manager_override="${matched_keyname}_package_manager_override"
+      if [ -n "${!package_manager_override}" ] && [ "${!package_manager_override}" != "${DEFAULT_PACKAGE_MANAGER}" ]; then
+        if [ ${FLAG_IGNORE_ERRORS} -eq 1 ]; then
+          output_proxy_executioner "echo WARNING: A change in the default package managers to perform installations is required to install ${matched_keyname}, use -O to allow overrides. Skipping this feature..." "${FLAG_QUIETNESS}"
+          return
+        else
+          output_proxy_executioner "echo ERROR: A change in the default package managers to perform installations is required to install ${matched_keyname}, use -O to allow overrides." "${FLAG_QUIETNESS}"
+          exit 1
+        fi
+      fi
+    fi
+
+
     # Addition mode, we need to add keyname to added_feature_keynames and build flags
     local -r flags_override_pointer="${matched_keyname}_flagsoverride"
     local flags_override_stringbuild=""
@@ -682,8 +735,8 @@ add_program()
       flag_autostart="${FLAG_AUTOSTART}"  # If not present in override, inherit from runtime flags
     fi
     flags_override_stringbuild="$(set_field "${flags_override_stringbuild}" ";" "6" "${flag_autostart}")"
-    # At this point flags_override_stringbuild have all flags merged inside (override and runtime)
 
+    # At this point flags_override_stringbuild have all flags merged inside (override and runtime)
 
     # Declare runtime flags for accession in execute_feature
     declare -g "${matched_keyname}_flagsruntime=${flags_override_stringbuild}"
@@ -751,6 +804,8 @@ generic_installation() {
   local -r installationtype=${featurename}_installationtype
   local -r manualcontentavailable="$1_manualcontentavailable"
   if [ -n "${!installationtype}" ]; then
+    generic_package_manager_override "${featurename}"
+
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
       "${FLAG_MODE}_$1_pre"
     fi
@@ -813,6 +868,11 @@ generic_installation() {
       fi
     elif [ "${FLAG_MODE}" == "uninstall" ]; then
       remove_line "$1" "${INSTALLED_FEATURES}"
+    fi
+
+    if [ "${POP_PACKAGE_MANAGER}" == 1 ]; then
+      initialize_package_manager_${STACKED_PACKAGE_MANAGER}
+      POP_PACKAGE_MANAGER=0
     fi
   fi
 }

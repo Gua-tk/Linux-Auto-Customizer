@@ -89,10 +89,12 @@ fi
 #    and autostart on boot the feature where they are defined in.                                                      #
 #  - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation.    #
 #    Used in: packageinstall, packagemanager.                                                                          #
-# - FEATUREKEYNAME_movefiles: Allows file moving from installation point to other ones in the system, matching *       #
+#  - FEATUREKEYNAME_movefiles: Allows file moving from installation folder to other ones in the system, matching *     #
+#  - FEATUREKEYNAME_package_manager_override: Allows to load another package manager and its calls for a certain       #
+#    feature, reloading it back after its installation.                                                                #
 #                                                                                                                      #
 ### Installation type dependent properties                                                                             #
-#  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dpendencies of the       #
+#  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
 #    feature. Used in: packageinstall, packagemanager.                                                                 #                                                                         #
 #  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.                           #
 #  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit and in packageinstall  #
@@ -110,7 +112,6 @@ fi
 #    Used in: pythonvenv.                                                                                              #
 # - FEATUREKEYNAME_donotinherit: It does not expect a directory into a compressed file only to decompress in place.    #
 ########################################################################################################################
-
 
 
 a_installationtype="environmental"
@@ -892,7 +893,8 @@ d_readmeline="| Function \`d\` | Function for \`diff\` and \`git diff\` usage | 
 dbeaver_installationtype="packageinstall"
 dbeaver_arguments=("dbeaver")
 dbeaver_packageurls=("https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb")
-dbeaver_launchernames=("dbeaver")
+dbeaver_package_manager_override="apt-get"
+dbeaver_launchernames=("dbeaver-ce")
 dbeaver_readmeline="| DBeaver | SQL Client IDE | Command \`dbeaver\` desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 dconf_editor_installationtype="packagemanager"
@@ -1000,6 +1002,7 @@ dropbox_packagenames=("dropbox")
 dropbox_launchernames=("dropbox")
 dropbox_packagedependencies=("python3-gpg")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
+dropbox_package_manager_override="apt-get"
 dropbox_readmeline="| Dropbox | File hosting service | Command \`dropbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 duckduckgo_installationtype="environmental"
@@ -3291,6 +3294,7 @@ github_desktop_arguments=("github_desktop")
 github_desktop_launchernames=("github-desktop")
 github_desktop_packagenames=("github")
 github_desktop_packageurls=("https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb")
+github_desktop__package_manager_override="apt-get"
 github_desktop_readmeline="| GitHub Desktop | GitHub Application | Command \`github-desktop\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gitk_installationtype="packagemanager"
@@ -3500,6 +3504,7 @@ google_chrome_arguments=("chrome" "google_chrome" "googlechrome")
 google_chrome_packagenames=("google-chrome-stable")
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
 google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
+google_chrome_package_manager_override="apt-get"
 google_chrome_launchernames=("google-chrome")
 google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
 google_chrome_readmeline="| Google Chrome | Cross-platform web browser | Command \`google-chrome\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -3787,6 +3792,7 @@ Type=Application
 Version=1.0
 ")
 iqmol_packageurls=("http://www.iqmol.org/download.php?get=iqmol_2.14.deb")
+iqmol__package_manager_override="apt-get"
 iqmol_readmeline="| IQmol | ${iqmol_readmelinedescription} | Command \`iqmol\`, silent alias, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 j_installationtype="environmental"
@@ -4068,6 +4074,7 @@ megasync_installationtype="packageinstall"
 megasync_arguments=("megasync" "mega")
 megasync_packagedependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
 megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.5.3-2.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nautilus-megasync_3.6.6_amd64.deb")
+megasync_package_manager_override="apt-get"
 megasync_launchernames=("megasync")
 megasync_packagenames=("nautilus-megasync" "megasync")
 megasync_readmeline="| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Command \`megasync\`, desktop launcher, dashboard launcher and integration with \`nemo\` file explorer ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -4803,7 +4810,7 @@ Version=1.0
 onedrive_readmeline="| OneDrive | ${onedrive_readmelinedescription} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 openoffice_installationtype="packageinstall"
-openoffice_arguments=("open_office")
+openoffice_arguments=("open_office" "office")
 openoffice_packagenames=("libreoffice-base-core" "libreoffice-impress" "libreoffice-calc"
       "libreoffice-math" "libreoffice-common" "libreoffice-ogltrans" "libreoffice-core" "libreoffice-pdfimport"
       "libreoffice-draw" "libreoffice-style-breeze" "libreoffice-gnome" "libreoffice-style-colibre" "libreoffice-gtk3"
@@ -4817,6 +4824,7 @@ openoffice_readmeline="| OpenOffice | Office suite for open-source systems | Com
 openssl102_installationtype="packageinstall"
 openssl102_arguments=("openssl102")
 openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
+opensll102_package_manager_override="apt-get"
 openssl102_readmeline="| openssl1.0 | RStudio dependency | Used for running rstudio ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 openssh_server_installationtype="packagemanager"
@@ -5537,12 +5545,14 @@ skype_arguments=("skype")
 skype_packagenames=("skype")
 skype_launchernames=("skypeforlinux")
 skype_packageurls=("https://go.skype.com/skypeforlinux-64.deb")
+skype_package_manager_override="apt-get"
 skype_readmeline="| Skype | Call & conversation tool service | Icon Launcher... ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 slack_installationtype="packageinstall"
 slack_arguments=("slack")
 slack_packagenames=("slack-desktop")
 slack_packageurls=("https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb")
+slack_package_manager_override="apt-get"
 slack_launchernames=("slack")
 slack_readmeline="| Slack | Platform to coordinate your work with a team | Icon Launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -5590,6 +5600,7 @@ spotify_arguments=("spotify")
 spotify_bashfunctions=("alias spotify=\"spotify &>/dev/null &\"")
 spotify_launchernames=("spotify")
 spotify_packageurls=("https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.67.586.gbb5ef64e_amd64.deb")
+spotify_package_manager_override="apt-get"
 spotify_packagenames=("spotify-desktop")
 spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
@@ -5634,6 +5645,7 @@ steam_arguments=("steam")
 steam_launchernames=("steam")
 steam_packagenames=("steam-launcher")
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
+steam_package_manager_override="apt-get"
 steam_readmeline="| Steam | Video game digital distribution service | Command \`steam\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 studio_installationtype="userinherit"
@@ -5749,6 +5761,7 @@ teamviewer_installationtype="packageinstall"
 teamviewer_arguments=("teamviewer")
 teamviewer_launchernames=("com.teamviewer.TeamViewer")
 teamviewer_packageurls=("https://download.teamviewer.com/download/linux/teamviewer_amd64.deb")
+teamviewer_package_manager_override="apt-get"
 teamviewer_readmeline="| Team Viewer | Video remote pc control | Command \`teamviewer\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 teams_installationtype="packageinstall"
@@ -6249,6 +6262,7 @@ virtualbox_launchernames=("virtualbox")
 virtualbox_packagedependencies=("libqt5opengl5")
 virtualbox_packagenames=("virtualbox-6.1")
 virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb")
+virtualbox_package_manager_override="apt-get"
 virtualbox_readmeline="| VirtualBox | Hosted hypervisor for x86 virtualization | Command \`virtualbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 vlc_installationtype="packagemanager"
