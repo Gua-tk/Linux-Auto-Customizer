@@ -3251,7 +3251,7 @@ gimp_readmeline="| Gimp | Raster graphics editor used for image manipulation and
 
 git_installationtype="packagemanager"
 git_arguments=("git")
-git_packagenames=("git-all" "git-lfs")
+git_packagenames=("git" "git-all" "git-lfs")
 git_readmeline="| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Command \`git\` and \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gitcm_installationtype="userinherit"
