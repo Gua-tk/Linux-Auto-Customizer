@@ -138,6 +138,14 @@
 - [x] Extract generic install of dependencies in root generic to a common property function. --> (This is done to have all programs having its own dependencies in place in self package installation)
 - [x] `data_features.sh`: Create or integrate loc function bash feature which displays the total lines of code of a script
 - [x] Install go language
+- [x] Handle different package managers:
+  * [x] Create associative arrays for each package manager containing the different instructions to install packages using that concrete package manager.
+  * [x] Create new property in data_features.sh which allows to override default package manager being used and some way to recover package manager configurations.
+- [x] Create a data structure to store the necessary permissions for each installation type.
+- [x] protects exits for flag ignore errors.
+- [x] repositoryclone installations also are being cached
+- [ ] New property to indicate the package manager to use to install the package, and thus, its corresponding command
+- [ ] Move cache clone to an API function not a generic
 
 
 ###### Axel

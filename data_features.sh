@@ -5,7 +5,6 @@
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 11/8/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: This script should not be executed directly, only sourced to import its variables.                    #
 # - Arguments: No arguments                                                                                            #
@@ -2956,7 +2955,7 @@ emoji() {
   fi
 }
 ")
-emojis_readmeline="| emojis | Print emojis name in terminal when passing an emoji and prints emoji name when an emoji is passed to it. | Command \`emoji\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+emojis_readmeline="| Function \`emojis\` | Print emojis name in terminal when passing an emoji and prints emoji name when an emoji is passed to it. | Command \`emoji\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 evolution_installationtype="packagemanager"
 evolution_arguments=("evolution")
@@ -3097,7 +3096,7 @@ fdupes_readmeline="| Fdupes | Searches for duplicated files within given directo
 fetch_installationtype="environmental"
 fetch_arguments=("fetch")
 fetch_bashfunctions=("alias fetch=\"git fetch\"")
-fetch_readmeline="| fetch | \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+fetch_readmeline="| Function \`fetch\` | \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ffmpeg_installationtype="packagemanager"
 ffmpeg_arguments=("ffmpeg" "youtube_dl_dependencies")
@@ -3756,7 +3755,7 @@ ipe()
   dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print \$2 }';
 }
 ")
-ipe_readmeline="| ipe function | Returns the public IP | Command \`ipe\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+ipe_readmeline="| Function \`ipe\` | Returns the public IP | Command \`ipe\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ipi_installationtype="environmental"
 ipi_arguments=("ipi")
@@ -3766,7 +3765,7 @@ ipi()
   hostname -I | awk '{print \$1}'
 }
 ")
-ipi_readmeline="| ipi function | Returns the private IP | Command \`ipi\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+ipi_readmeline="| Function \`ipi\` | Returns the private IP | Command \`ipi\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 
 iqmol_installationtype="packageinstall"
@@ -4058,7 +4057,7 @@ loc() {
   fi
 }
 ")
-loc_readmeline="| loc | Counts lines of code | command \`loc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+loc_readmeline="| Function \`loc\` | Counts lines of code | command \`loc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 lolcat_installationtype="packagemanager"
 lolcat_arguments=("lolcat")
@@ -4313,7 +4312,7 @@ merge() {
 }
 ")
 merge_arguments=("merge" "function_merge")
-merge_readmeline="| \`merge\` | Function for \`git merge\`|  Command \`merge\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+merge_readmeline="| Function \`merge\` | Function for \`git merge\`|  Command \`merge\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 
 msttcorefonts_installationtype="packagemanager"
@@ -4988,7 +4987,7 @@ p()
   fi
 }
 ")
-port_readmeline="| Function \`port\` | Check processes names and PID's from given port | Command \`port\` ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+p_readmeline="| Function \`port\` | Check processes names and PID's from given port | Command \`port\` ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 
 postman_installationtype="userinherit"
@@ -5150,7 +5149,7 @@ pull()
 	fi
 }
 ")
-pull_readmeline="| \`pull\` | Alias for \`git pull\`|  Command \`pull\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+pull_readmeline="| Function \`pull\` | Alias for \`git pull\`|  Command \`pull\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 push_installationtype="environmental"
 push_arguments=("push")
@@ -5164,7 +5163,7 @@ push()
 	fi
 }
 ")
-push_readmeline="| \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+push_readmeline="| Function \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 pycharm_installationtype="userinherit"
 pycharm_arguments=("pycharm" "pycharm_community")
@@ -5639,7 +5638,7 @@ ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubu
 status_installationtype="environmental"
 status_arguments=("status")
 status_bashfunctions=("alias status=\"git status\"")
-status_readmeline="| status | \`git status\` | Command \`status\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+status_readmeline="| Functions \`status\` | \`git status\` | Command \`status\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 steam_installationtype="packageinstall"
 steam_arguments=("steam")
@@ -6618,7 +6617,7 @@ youtubemusic_readmeline="| Youtube Music | ${youtubemusic_readmelinedescription}
 
 z_installationtype="environmental"
 z_arguments=("z" "z_function")
-z_readmeline="| z function | function to compress files given a type and a set of pats to files | Command \`z\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+z_readmeline="| Function \`z\`| function to compress files given a type and a set of pats to files | Command \`z\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 z_bashfunctions=("
 z() {
   local first_compressed_file_arg_pos=

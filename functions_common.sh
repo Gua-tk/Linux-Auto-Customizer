@@ -1,34 +1,35 @@
 #!/usr/bin/env bash
 ########################################################################################################################
 # - Name: Linux Auto-Customizer common functions between install.sh and uninstall.sh.                                  #
-# - Description: Set of functions used both in install.sh and uninstall.sh. Most of these functions are used to        #
-# manipulate and interpret the common data structures. Others are here to avoid code duplications between install.sh   #
-# and uninstall.sh.                                                                                                    #
+# - Description: Set of functions used both in install.sh and uninstall.sh. Some of these functions are used to        #
+#   manipulate and interpret the common data structures, others are auxiliar functions used by install.sh and          #
+#   uninstall.sh.                                                                                                      #
 # - Creation Date: 28/5/19                                                                                             #
-# - Last Modified: 16/5/21                                                                                             #
+# - Last Modified: 17/9/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
-# imports. See the header of each function to see its privilege requirements                                           #
+#   imports. See the header of each function to see its privilege requirements.                                        #
 # - Arguments: No arguments                                                                                            #
-# - Usage: Sourced from install.sh                                                                                     #
+# - Usage: Sourced from functions_install.sh or functions_uninstall.sh                                                 #
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
+
 
 ########################################################################################################################
 ############################################### COMMON API FUNCTIONS ###################################################
 ########################################################################################################################
 
 # - Description: Execute the command received in the first argument and redirect the standard and error output depending
-#   on the quietness level. If the command in the first argument is an echo, adds the date, tries to detect what type
-#   of message contains this echo, which can be INFO, WARNING or ERROR. Each message type has an associated colour.
+#   on the quietness level defined in the second argument. If the command in the first argument is an echo, adds the
+#   date to the echo and tries to detect what type of message contains this echo: INFO, WARNING or ERROR. Each message
+#   type has an associated colour which will be printed by this function.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Bash command to execute.
 # - Argument 2: Quietness level [0, 1, 2]:
 #   * 0: Full verbose: Display echoes and output from other commands
 #   * 1: Quiet: Display echoes but silences output from other commands
-#   * 2: Full quiet: No output from executed commands
+#   * 2: Full quiet: No output any executed commands
 output_proxy_executioner() {
   # If the command to execute is an echo, capture echo type and apply format to it depending on the message type
   local -r command_name=$(echo "$1" | head -1 | cut -d " " -f1)
@@ -77,8 +78,10 @@ bell_sound()
   echo -en "\07"
 }
 
+
 # - Description: Sets up a prompt in the desired point of customizer, which is used for in-place debugging. You can
-#   input your desired bash commands for using variables of call functions.
+#   input your desired bash statements to run commands, declare installations or call functions defined in the runtime
+#   environment of the customizer.
 # - Permission: Can be run as root or user.
 customizer_prompt()
 {
@@ -102,7 +105,7 @@ get_field()
 
 # - Description: Receives an string, a separator and a position and returns the same string with the selected field
 #   changed with the desired value. To do that obtains the value in position and cuts from that position to the
-#   beginning and from that position to the end. Them delete the old value from these two substrings and joins them
+#   beginning and from that position to the end. Then, delete the old value from these two substrings and joins them
 #   with the desired value in between. Returns the new string via stdout.
 # - Permission: Can be called as root or user.
 # - Argument 1: String containing fields
@@ -148,6 +151,9 @@ update_environment()
 }
 
 
+# - Description: Prints to standard output a table that contains all the arguments that customizer accepts along with
+#   the commands that installs.
+# - Permissions: Can be called as root or user with the same behaviour.
 autogen_help()
 {
   local packagemanager_lines=
@@ -155,7 +161,6 @@ autogen_help()
   local root_lines=
   local root_num=0
   local user_num=0
-  true > help.md
 
   for program in "${feature_keynames[@]}"; do
     local readme_line_pointer="${program}_readmeline"
@@ -195,7 +200,7 @@ autogen_help()
   user_lines_final="$(echo "${user_lines_final}" | sort)"
   column -ts ";" <<< "${program_headers}${newline}${user_lines_final}"
 
-  echo "${newline}" >> "help.md"
+  echo "${newline}"
 
   local root_lines_final=
   for line in "${root_lines[@]}"; do
@@ -207,6 +212,12 @@ autogen_help()
   echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total"
 }
 
+
+# - Description: Generates the file table.md in the pwd directory. This table contains all the readme lines property of
+#   each feature. This lines are previously processed and filled with the arguments, which are defined in another
+#   property.
+# - Privileges: Can be called as root or user and will generate the same file but with the corresponding chmod
+#   permissions to a privileges or non-privileged user.
 autogen_readme()
 {
   local packagemanager_lines=
@@ -214,6 +225,7 @@ autogen_readme()
   local root_lines=()
   local root_num=0
   local user_num=0
+  true > "FEATURES.md"
   for program in "${feature_keynames[@]}"; do
     local readme_line_pointer="${program}_readmeline"
     local installationtype_pointer="${program}_installationtype"
@@ -250,25 +262,28 @@ autogen_readme()
     echo "#### User programs";
     echo "| Name | Description | Execution | Arguments | Testing |";
     echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
-  } >> "table.md"
+  } >> "FEATURES.md"
   local user_lines_final=
   for line in "${user_lines[@]}"; do
     user_lines_final="${user_lines_final}${line}${newline}"
   done
   {
   echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort;
+  echo "${newline}${newline}"
   echo "#### Root Programs";
   echo "| Name | Description | Execution | Arguments | Testing |";
   echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
-  } >> "table.md"
+  } >> "FEATURES.md"
   local root_lines_final=
   for line in "${root_lines[@]}"; do
     root_lines_final="${root_lines_final}${line}${newline}"
   done
-  echo "${root_lines_final[@]}" | sed -r '/^\s*$/d' | sort >> "table.md"
+  echo "${root_lines_final[@]}" | sed -r '/^\s*$/d' | sort >> "FEATURES.md"
 
-  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total" >> table.md
+  # Prepend line
+  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total${newline}" | cat - FEATURES.md > FEATURES.md.bak && mv FEATURES.md.bak FEATURES.md
 }
+
 
 # - Description: Loads another set of calls for a certain package manager defined in $1_package_manager_override
 generic_package_manager_override() {
@@ -412,7 +427,7 @@ argument_processing()
         exit 0
       ;;
 
-      --readme)  # Print list of possible arguments and finish the program
+      --readme|readme)  # Print list of possible arguments and finish the program
         autogen_readme
         exit 0
       ;;
@@ -422,8 +437,6 @@ argument_processing()
         exit 0
       ;;
       -H|--help)
-        autogen_help
-
         output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" "${FLAG_QUIETNESS}"
         exit 0
       ;;
@@ -563,7 +576,8 @@ add_programs()
 
 # - Description: Receives an argument and add or remove the corresponding feature for that argument to the installation
 #   list. Also, if adding the installation of a program, save the current state of the flags, taking in account the flag
-#   states that have to be overwritten.
+#   states that have to be overwritten. Some flags are processed in here, while others are "passed" indirectly to
+#   execute_installation.
 # - Permission: Can be called indistinctly as root or user with same behaviour.
 # - Argument 1: Outside argument that can match a feature keyname (fast match with binary search) or an argument (slow
 #   match looping through all the arguments, obtained by indirect expansion using every feature keyname)
@@ -784,6 +798,7 @@ execute_installation()
     set +e
   done
 }
+
 
 ########################################################################################################################
 ################################################## GENERIC INSTALL #####################################################

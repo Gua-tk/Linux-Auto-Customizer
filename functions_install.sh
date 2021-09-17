@@ -4,9 +4,8 @@
 # - Description: Set of functions used exclusively in install.sh. Most of these functions are combined into other      #
 # higher-order functions to provide the generic installation of a feature.                                             #
 # - Creation Date: 28/5/19                                                                                             #
-# - Last Modified: 18/8/21                                                                                             #
+# - Last Modified: 17/9/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
 # imports. See the header of each function to see its privilege requirements.                                          #
@@ -132,6 +131,11 @@ autostart_program() {
 }
 
 
+# - Description: Applies the user permissions recursively on all the files and directories contained recursively in the
+#   folder received by argument.
+# - Permissions: Can be called as root or user. It will put chmod 755 to all the files recursively in the received
+#   directory, but as root it will also change their group and owner to the one invoking sudo, by consulting variable
+#   SUDO_USER.
 apply_permissions_recursively() {
   echo $1
   if [ -d "$1" ]; then
@@ -437,6 +441,7 @@ download() {
   fi
 }
 
+
 # - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
 #   dpkg -i.
 # - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
@@ -448,6 +453,7 @@ download_and_install_package() {
   ${PACKAGE_MANAGER_INSTALLPACKAGE} "${BIN_FOLDER}/$2"
   rm -f "${BIN_FOLDER}/$2"
 }
+
 
 # - Description: Associate a file type (mime type) to a certain application using its desktop launcher.
 # - Permissions: Same behaviour being root or normal user.

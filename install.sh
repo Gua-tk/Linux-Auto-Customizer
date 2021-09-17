@@ -2,11 +2,11 @@
 ########################################################################################################################
 # - Name: Linux Auto-Customizer installation of features.                                                              #
 # - Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop          #
-# features... collected in a simple portable shell script to customize a Linux working environment.                    #
+# features... with an automatic installation collected in a simple portable shell script to customize a Linux          #
+# environment.                                                                                                         #
 # - Creation Date: 28/5/19                                                                                             #
-# - Last Modified: 19/5/21                                                                                             #
+# - Last Modified: 17/9/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Tester: Axel Fernandez Curros                                                                                      #
 # - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
 # - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
 # logged as root) to install some of the features.                                                                     #
