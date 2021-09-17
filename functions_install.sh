@@ -137,7 +137,6 @@ autostart_program() {
 #   directory, but as root it will also change their group and owner to the one invoking sudo, by consulting variable
 #   SUDO_USER.
 apply_permissions_recursively() {
-  echo $1
   if [ -d "$1" ]; then
     if [ ${EUID} == 0 ]; then  # directory
       chgrp -R "${SUDO_USER}" "$1"
@@ -814,7 +813,7 @@ pythonvenv_installation_type() {
 #   installation data.
 repositoryclone_installation_type() {
   local -r repositoryurl="$1_repositoryurl"
-  generic_install_clone $1 "${!repositoryurl}"
+  generic_install_clone "$1" "${!repositoryurl}"
 }
 
 

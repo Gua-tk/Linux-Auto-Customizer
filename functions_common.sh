@@ -302,7 +302,7 @@ generic_package_manager_override() {
           # the end of this installation
           STACKED_PACKAGE_MANAGER="${DEFAULT_PACKAGE_MANAGER}"
           POP_PACKAGE_MANAGER=1
-          initialize_package_manager_${!package_manager_override}
+          "initialize_package_manager_${!package_manager_override}"
           return
         fi
       done
@@ -886,7 +886,7 @@ generic_installation() {
     fi
 
     if [ "${POP_PACKAGE_MANAGER}" == 1 ]; then
-      initialize_package_manager_${STACKED_PACKAGE_MANAGER}
+      "initialize_package_manager_${STACKED_PACKAGE_MANAGER}"
       POP_PACKAGE_MANAGER=0
     fi
   fi
