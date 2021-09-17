@@ -133,6 +133,7 @@ autostart_program() {
 
 
 apply_permissions_recursively() {
+  echo $1
   if [ -d "$1" ]; then
     if [ ${EUID} == 0 ]; then  # directory
       chgrp -R "${SUDO_USER}" "$1"
@@ -869,11 +870,11 @@ userinherit_installation_type() {
   download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
   if [ "${!donotinherit_pointer}" == "yes" ]; then
     decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file"
+    apply_permissions_recursively "${defaultpath}"
   else
     decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file" "$1"
+    apply_permissions_recursively "${defaultpath}/$1"
   fi
-
-  apply_permissions_recursively "${defaultpath}/$1" 
 }
 
 

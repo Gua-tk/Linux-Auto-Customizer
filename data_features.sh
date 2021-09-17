@@ -3260,6 +3260,7 @@ gitcm_binariesinstalledpaths=("git-credential-manager-core;gitcm")
 gitcm_compressedfiletype="z"
 gitcm_compressedfileurl="https://github.com/microsoft/Git-Credential-Manager-Core/releases/download/v2.0.498/gcmcore-linux_amd64.2.0.498.54650.tar.gz"
 gitcm_compressedfilepathoverride="${BIN_FOLDER}/gitcm"  # It has not a folder inside
+gitcm_donotinherit="yes"
 gitcm_readmeline="| Git Credentials Manager | Plug-in for git to automatically use personal tokens | Command \`gitcm\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 gitcm_manualcontentavailable="0;0;1"
 
