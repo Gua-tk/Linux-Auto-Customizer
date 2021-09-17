@@ -727,6 +727,56 @@ generic_install_dependencies() {
 }
 
 
+# - Description: Clones a repository in the desired place and caches it if the bit is active.
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Keyname of the feature to install
+# - Argument 2: URL to clone
+generic_install_clone() {
+   # Check if it is cached
+  if [ -d "${CACHE_FOLDER}/$1_repository" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
+    rm -Rf "${BIN_FOLDER:?}/$1"
+    cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+    if [ "${EUID}" -eq 0 ]; then
+      apply_permissions_recursively "${BIN_FOLDER}/$1"
+    fi
+  else  # Not cached or we do not use cache: we have to download
+
+    rm -Rf "${TEMP_FOLDER}/$1_repository"
+    create_folder "${TEMP_FOLDER}/$1_repository"
+
+    echo -en '\033[1;33m'
+    git clone "$2" "${TEMP_FOLDER}/$1_repository"
+    echo -en '\033[0m'
+
+    if [ "${FLAG_CACHE}" -eq 1 ]; then
+      # Move to cache folder to construct cache
+      rm -Rf "${CACHE_FOLDER}/$1_repository"
+      cp -r "${TEMP_FOLDER}/$1_repository" "${CACHE_FOLDER}"
+      rm -Rf "${TEMP_FOLDER}/$1_repository"
+      # If we are root change permissions
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions_recursively "${CACHE_FOLDER}/$1_repository"
+      fi
+
+      # Copy file to the desired place of download
+      cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions_recursively "${BIN_FOLDER}/$1"
+      fi
+    else
+      # Move directly to the desired place of download
+      rm -Rf "${BIN_FOLDER:?}/$1"
+      cp -r "${TEMP_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+      rm -Rf "${TEMP_FOLDER}/$1_repository"
+
+      # If we are root change permissions
+      if [ "${EUID}" -eq 0 ]; then
+        apply_permissions_recursively "${BIN_FOLDER}/$1"
+      fi
+    fi
+  fi
+}
+
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
 ########################################################################################################################
@@ -758,49 +808,7 @@ pythonvenv_installation_type() {
 #   installation data.
 repositoryclone_installation_type() {
   local -r repositoryurl="$1_repositoryurl"
-  # Check if it is cached
-  if [ -d "${CACHE_FOLDER}/$1_repository" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
-    rm -Rf "${BIN_FOLDER:?}/$1"
-    cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
-    if [ "${EUID}" -eq 0 ]; then
-      apply_permissions_recursively "${BIN_FOLDER}/$1"
-    fi
-  else  # Not cached or we do not use cache: we have to download
-    
-    rm -Rf "${TEMP_FOLDER}/$1_repository"
-    create_folder "${TEMP_FOLDER}/$1_repository"
-    
-    echo -en '\033[1;33m'
-    git clone "${!repositoryurl}" "${TEMP_FOLDER}/$1_repository"
-    echo -en '\033[0m'
-
-    if [ "${FLAG_CACHE}" -eq 1 ]; then
-      # Move to cache folder to construct cache
-      rm -Rf "${CACHE_FOLDER}/$1_repository"
-      cp -r "${TEMP_FOLDER}/$1_repository" "${CACHE_FOLDER}"
-      rm -Rf "${TEMP_FOLDER}/$1_repository"
-      # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
-        apply_permissions_recursively "${CACHE_FOLDER}/$1_repository"
-      fi
-
-      # Copy file to the desired place of download
-      cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
-      if [ "${EUID}" -eq 0 ]; then
-        apply_permissions_recursively "${BIN_FOLDER}/$1"
-      fi
-    else
-      # Move directly to the desired place of download
-      rm -Rf "${BIN_FOLDER:?}/$1"
-      cp -r "${TEMP_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
-      rm -Rf "${TEMP_FOLDER}/$1_repository"
-
-      # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
-        apply_permissions_recursively "${BIN_FOLDER}/$1"
-      fi
-    fi
-  fi
+  generic_install_clone $1 "${!repositoryurl}"
 }
 
 
