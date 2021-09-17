@@ -40,7 +40,8 @@ file containing the repository from github clicking [here](https://github.com/Al
 Decompress the file and open a terminal in that directory.
 
 You can also clone the repository using directly terminal. To do the last option, you must have installed 
-`git`. If you don't have it, you can install it if you have sudo access by opening a terminal and typing the following:
+`git`. If you don't have it, you can install it if you have `sudo` access by opening a terminal and typing the 
+following:
 ```
 sudo apt install git
 ```
