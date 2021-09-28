@@ -29,6 +29,7 @@ a flag override for user permissions should be defined for that features
 - [ ] codium, eclipse, text editors in general that don't have a bash function for opening folders, files...
 - [ ] use axel instead of wget if it is installed, actually wget does not come installed in Debian by default.
 - [ ] add dummy -am argument to commit function which does nothing.
+- [ ] k function does not care about upper case and lower case to kill the process efficiently.
 - [x] Update Spotify fallen url
 
 ###### NEW FEATURES
