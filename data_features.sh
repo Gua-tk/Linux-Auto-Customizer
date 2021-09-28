@@ -6018,7 +6018,7 @@ terminal_background_bashinitializations=("
 profile_uuid=\"\$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d \"'\" -f2)\"
 if [ -n \"\${profile_uuid}\" ]; then
   # make sure the profile is set to not use theme colors
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/\${profile_uuid}/ use-theme-colors false # --> Don't use system color theme
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ use-theme-colors false # --> Don't use system color theme
 
   gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ use-transparent-background true
   gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ background-transparency-percent \"10\"
