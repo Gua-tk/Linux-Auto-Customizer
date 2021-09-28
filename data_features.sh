@@ -533,14 +533,14 @@ clean_arguments=("clean")
 clean_bashfunctions=("
 clean()
 {
-  if [ \${EUID} -eq 0 ]; then
+  if [ ${EUID} -eq 0 ]; then
     apt-get -y --fix-broken install
     apt-get update -y --fix-missing
     apt-get -y autoclean
     apt-get -y autoremove
   fi
+  rm -rf ${HOME}/.local/share/Trash/* 2>/dev/null
   echo \"The recycle bin has been emptied\"
-  rm -rf ${HOME}/.local/share/Trash/*
 }
 ")
 clean_readmeline="| Function \`clean\` | Remove files and contents from the trash bin and performs \`sudo apt-get -y autoclean\` and \`sudo apt-get -y autoremove\`. | Command \`clean\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"

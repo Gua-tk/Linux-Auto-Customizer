@@ -34,8 +34,7 @@ a flag override for user permissions should be defined for that features
 
 ###### NEW FEATURES
 - [ ] Autopsy (forensics disk analyzer)
-- [x] sonarqube (sonar command)
-- [x] meld (GUI diff)
+
 
 # TO-DO uninstall.sh and uninstall core for v1.0
 ###### UPDATES
