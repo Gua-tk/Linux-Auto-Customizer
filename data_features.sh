@@ -5774,9 +5774,10 @@ teams_readmeline="| Microsoft Teams | Video Conference, calls and meetings | Com
 telegram_installationtype="userinherit"
 telegram_arguments=("telegram")
 telegram_binariesinstalledpaths=("Telegram;telegram")
+telegram_bashfunctions=("alias telegram=\"nohup telegram &>/dev/null &\"")
 telegram_compressedfiletype="J"
 telegram_compressedfileurl="https://telegram.org/dl/desktop/linux"
-telegram_downloads=("https://telegram.org/img/t_logo.svg?1;telegram_icon.svg")
+telegram_downloads=("https://telegram.org/img/t_logo.svg;telegram_icon.svg")
 telegram_readmelinedescription="Cloud-based instant messaging software and application service"
 telegram_launchercontents=("
 [Desktop Entry]
