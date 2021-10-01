@@ -258,7 +258,7 @@ b_bashfunctions=("alias b=\"bash\"")
 b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 bashcolors_installationtype="environmental"
-bashcolors_arguments=("bash_colors")
+bashcolors_arguments=("bash_colors" "colors" "colours")
 bashcolors_bashfunctions=("
 colors() {
   if [ -z \"\$(echo \"\${COLORS[@]}\")\" ]; then
