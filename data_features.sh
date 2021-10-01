@@ -710,7 +710,7 @@ codium() {
 codium_compressedfilepathoverride="${BIN_FOLDER}/codium"
 codium_compressedfiletype="z"
 codium_binariesinstalledpaths=("bin/codium;codium")
-codium_compressedfileurl="https://github.com/VSCodium/vscodium/releases/download/1.59.1/VSCodium-linux-x64-1.59.1.tar.gz"
+codium_compressedfileurl="https://github.com/VSCodium/vscodium/releases/download/1.60.2/VSCodium-linux-x64-1.60.2.tar.gz"
 codium_launchercontents=("[Desktop Entry]
 Name=VSCodium
 StartupWMClass=codium
