@@ -6259,6 +6259,7 @@ uget_readmeline="| uget | GUI utility to manage downloads | Command \`uget\`, de
 
 virtualbox_installationtype="packageinstall"
 virtualbox_arguments=("virtual_box")
+virtualbox_bashfunctions=("alias virtualbox=\"nohup virtualbox &>/dev/null &\"")
 virtualbox_launchernames=("virtualbox")
 virtualbox_packagedependencies=("libqt5opengl5" "make" "gcc" "perl" "virtualbox-guest-utils" "virtualbox-guest-dkms" "linux-headers-$(uname -r)")
 virtualbox_packagenames=("virtualbox-6.1")
