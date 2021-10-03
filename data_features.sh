@@ -5650,10 +5650,19 @@ steam_readmeline="| Steam | Video game digital distribution service | Command \`
 
 studio_installationtype="userinherit"
 studio_arguments=("studio" "android_studio")
-studio_bashfunctions=("alias studio=\"studio . &>/dev/null &\"")
+studio_bashfunctions=("
+studio() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup studio \${args} &>/dev/null &
+}
+")
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
 studio_compressedfiletype="z"
-studio_compressedfileurl="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/4.1.2.0/android-studio-ide-201.7042882-linux.tar.gz"
+studio_compressedfileurl="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2020.3.1.24/android-studio-2020.3.1.24-linux.tar.gz"
 studio_readmelinedescription="Development environment for Google's Android operating system"
 studio_launchercontents=("
 [Desktop Entry]
