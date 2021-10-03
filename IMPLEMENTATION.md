@@ -12,13 +12,15 @@ a flag override for user permissions should be defined for that features
 
 - [ ] Investigate GetOpts. Apply getopts use at least for the flag argument if it is an improvement
 - [ ] Check headers
+- [ ] git bash functions compgen completion tab interaction showing repo branches list
+- [ ] define precise wrappers for features
 
 ###### NEW FEATURES
 - [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
-  * [ ] Packageinstall determine the type of installation that is going to be used. 
-- [ ] New property to check some dependencies --> It will be used by features as jupyter. 
+  * [ ] Packageinstall determine the type of installation that is going to be used.
+- [ ] New property to check some dependencies --> It will be used by features as jupyter.
 - [ ] Move features table from readme to FEATURES.sh
-- [ ] Function m() #{man $1 | cat | grep "$2"}
+- [ ] Function m() #{man $1 | cat | grep "$2"}  
 - [ ] Pidgin, Audacious, Timemachine (audio recorder), Qjackctl, leafpad (simple text editor)
 - [ ] Music software: hydrogen drum machine, Rakarrack, QSynth, zynaddsub fx, Grip, soundKonverter, SooperLooper, Freqtweak Wavbreaker File Slitt, ReZound, mhWaveEdit, Mixxx, JACK Rack, fmit, Calf Plugin Pack for J, JAMin, QTractor, Gnome Wave Cle...
 

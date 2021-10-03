@@ -6260,9 +6260,9 @@ uget_readmeline="| uget | GUI utility to manage downloads | Command \`uget\`, de
 virtualbox_installationtype="packageinstall"
 virtualbox_arguments=("virtual_box")
 virtualbox_launchernames=("virtualbox")
-virtualbox_packagedependencies=("libqt5opengl5")
+virtualbox_packagedependencies=("libqt5opengl5" "make" "gcc" "perl" "virtualbox-guest-utils" "virtualbox-guest-dkms" "linux-headers-$(uname -r)")
 virtualbox_packagenames=("virtualbox-6.1")
-virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.22/virtualbox-6.1_6.1.22-144080~Ubuntu~eoan_amd64.deb")
+virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.26/virtualbox-6.1_6.1.26-145957~Ubuntu~eoan_amd64.deb")
 virtualbox_package_manager_override="apt-get"
 virtualbox_readmeline="| VirtualBox | Hosted hypervisor for x86 virtualization | Command \`virtualbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
