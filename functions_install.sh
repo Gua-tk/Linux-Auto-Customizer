@@ -113,6 +113,7 @@ autostart_program() {
       return
     fi
   else # Else relative path from ALL_USERS_LAUNCHERS_DIR or PERSONAL_LAUNCHERS_DIR
+  echo "${AUTOSTART_FOLDER}"
     if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]; then
       cp "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
       if [ ${EUID} -eq 0 ]; then
@@ -121,7 +122,7 @@ autostart_program() {
     elif [ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]; then
       cp "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
       if [ ${EUID} -eq 0 ]; then
-        apply_permissions "$1.desktop"
+        apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
       fi
     else
       output_proxy_executioner "echo WARNING: The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." "${FLAG_QUIETNESS}"
@@ -594,17 +595,16 @@ generic_install_downloads() {
 generic_install_autostart() {
   local -r launchernames="$1_launchernames[@]"
   local -r autostartlaunchers_pointer="$1_autostartlaunchers[@]"
-
   if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
     # If we have autostart launchers use them
-    if [ -n "${!autostartlaunchers_pointer}" ]; then
+    if [ -n "${!autostartlaunchers_pointer-}" ]; then
       local name_suffix_anticollision=""
       for autostartlauncher in "${!autostartlaunchers_pointer}"; do
         create_file "${AUTOSTART_FOLDER}/$1${name_suffix_anticollision}.desktop" "${autostartlauncher}"
         name_suffix_anticollision="${name_suffix_anticollision}_"
       done
     # If not use the launchers that are already in the system
-    elif [ -n "${!launchernames}" ]; then
+    elif [ -n "${!launchernames-}" ]; then
       for launchername in ${!launchernames}; do
         autostart_program "${launchername}"
       done

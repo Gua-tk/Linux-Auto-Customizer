@@ -296,7 +296,7 @@ generic_package_manager_override() {
       return
     else
       # Check if the desired package to override is in the supported package managers list
-      for recognised_package_manager in ${RECOGNISED_PACKAGE_MANAGERS[@]}; do
+      for recognised_package_manager in "${RECOGNISED_PACKAGE_MANAGERS[@]}"; do
         if [ "${recognised_package_manager}" == "${!package_manager_override}" ]; then
           # Load config for the package manager and save the previous conf, also raise the flag to undo this changes at
           # the end of this installation
@@ -308,7 +308,7 @@ generic_package_manager_override() {
       done
       output_proxy_executioner "echo ERROR: ${!package_manager_override} is not a recognised package manager, so its
   configuration will not be loaded. Variable $1_package_manager_override needs to be one of the following elements:
-  ${RECOGNISED_PACKAGE_MANAGERS[@]}" "${FLAG_QUIETNESS}"
+  ${RECOGNISED_PACKAGE_MANAGERS[*]}" "${FLAG_QUIETNESS}"
       exit 1
     fi
   fi
