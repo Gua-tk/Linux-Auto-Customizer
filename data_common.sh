@@ -394,6 +394,7 @@ declare -r feature_keynames=(
   "instagram"
   "ipe"
   "ipi"
+  "ips"
   "iqmol"
   "j"
   "java"

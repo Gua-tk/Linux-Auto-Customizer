@@ -3767,6 +3767,10 @@ ipi()
 ")
 ipi_readmeline="| Function \`ipi\` | Returns the private IP | Command \`ipi\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+ips_installationtype="environmental"
+ips_arguments=("ipi")
+ips_bashfunctions=("alias ips=\"ip -4 addr | grep -oP '(?<=inet\s)\d+(\.\d+){3}'\"")
+ips_readmeline="| Function \`ips\` | Returns the IP information | Command \`ips\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 iqmol_installationtype="packageinstall"
 iqmol_arguments=("iqmol")
