@@ -4337,6 +4337,12 @@ export M2_HOME=\"${BIN_FOLDER}/mvn\"
 nautilus_installationtype="packagemanager"
 nautilus_arguments=("nautilus")
 nautilus_bashfunctions=("
+# Check if gsettings command is available
+if ! command -v gsettings &> /dev/null
+then
+  return
+fi
+
 xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons true
 xdg-mime default org.gnome.Nautilus.desktop inode/directory
@@ -4359,6 +4365,12 @@ nedit_readmeline="| NEdit | Multi-purpose text editor and source code editor | C
 nemo_installationtype="packagemanager"
 nemo_arguments=("nemo" "nemo_desktop")
 nemo_bashfunctions=("
+# Check if gsettings command is available
+if ! command -v gsettings &> /dev/null
+then
+  return
+fi
+
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set org.nemo.desktop show-desktop-icons true
@@ -5759,6 +5771,12 @@ sysmontask_repositoryurl="https://github.com/KrispyCamel4u/SysMonTask.git"
 system_fonts_installationtype="environmental"
 system_fonts_arguments=("system_fonts")
 system_fonts_bashinitializations=("
+  # Check if gsettings command is available
+  if ! command -v gsettings &> /dev/null
+  then
+    return
+  fi
+
   # Interface text
   gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 11'
   # Document text //RF
@@ -6028,6 +6046,12 @@ templates_readmeline="| Templates | Different collection of templates for starti
 terminal_background_installationtype="environmental"
 terminal_background_arguments=("terminal_background")
 terminal_background_bashinitializations=("
+# Check if gsettings command is available
+if ! command -v gsettings &> /dev/null
+then
+  return
+fi
+
 profile_uuid=\"\$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d \"'\" -f2)\"
 if [ -n \"\${profile_uuid}\" ]; then
   # make sure the profile is set to not use theme colors

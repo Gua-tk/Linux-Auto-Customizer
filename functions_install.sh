@@ -1010,6 +1010,12 @@ fi
 # add_to_favorites instead, can be called as root or user, so root and user executions can be added
 
 favorites_function="
+# Check if gsettings command is available
+if ! command -v gsettings &> /dev/null
+then
+  return
+fi
+
 if [ -f \"${PROGRAM_FAVORITES_PATH}\" ]; then
   while IFS= read -r line; do
     favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
@@ -1041,6 +1047,12 @@ fi
 # 3rd argument Bind Key Combination of the feature ex(<Primary><Alt><Super>a)
 # 4th argument Number of the feature array position slot of the added custom command (custom0, custom1, custom2...)
 keybinding_function="
+# Check if gsettings command is available
+if ! command -v gsettings &> /dev/null
+then
+  return
+fi
+
 # Check if there are keybindings available
 if [ -f \"${PROGRAM_KEYBINDINGS_PATH}\" ]; then
   # regenerate list of active keybindings
