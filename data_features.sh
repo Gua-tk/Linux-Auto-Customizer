@@ -3385,7 +3385,7 @@ gnat_gps_readmeline="| GNAT | ${gnat_gps_readmelinedescription} | Command \`gnat
 
 
 gnome_calculator_installationtype="packagemanager"
-gnome_calculator_arguments=("gnome_calculator")
+gnome_calculator_arguments=("gnome_calculator" "calculator" "calc")
 gnome_calculator_launchernames=("org.gnome.Calculator")
 gnome_calculator_packagenames=("gnome-calculator")
 gnome_calculator_readmeline="| Calculator | GUI calculator| Commmand \`calculator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -6119,7 +6119,7 @@ tmux_packagenames=("tmux")
 tmux_readmeline="| Tmux | ${tmux_readmelinedescription} | Command \`tmux\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 tomcat_installationtype="userinherit"
-tomcat_arguments=("tomcat" "apache_tomcat" "tomcat_server")
+tomcat_arguments=("tomcat" "apache_tomcat" "tomcat_server" "apache")
 tomcat_compressedfiletype="z"
 tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
 tomcat_readmeline="| Apache Tomcat 9.0.43 | Open-source server to run web apps written in Jakarta Server Pages | Tomcat available in \${USER_BIN_FOLDER} to deploy web apps || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul>|"
