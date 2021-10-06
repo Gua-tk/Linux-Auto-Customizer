@@ -6298,7 +6298,7 @@ virtualbox_installationtype="packageinstall"
 virtualbox_arguments=("virtual_box")
 virtualbox_bashfunctions=("alias virtualbox=\"nohup virtualbox &>/dev/null &\"")
 virtualbox_launchernames=("virtualbox")
-virtualbox_packagedependencies=("libqt5opengl5" "make" "gcc" "perl" "virtualbox-guest-utils" "virtualbox-guest-dkms" "linux-headers-$(uname -r)")
+virtualbox_packagedependencies=("make" "gcc" "perl" "python" "build-essential" "dkms" "libsdl1.2debian" "virtualbox-guest-utils" "libqt5printsupport5" "libqt5x11extras5" "libcurl4" "virtualbox-guest-dkms" "linux-headers-$(uname -r)" "libqt5opengl5")
 virtualbox_packagenames=("virtualbox-6.1")
 virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.26/virtualbox-6.1_6.1.26-145957~Ubuntu~eoan_amd64.deb")
 virtualbox_package_manager_override="apt-get"

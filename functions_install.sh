@@ -450,6 +450,7 @@ download() {
 #   package.
 download_and_install_package() {
   download "$1" "$2"
+  ${PACKAGE_MANAGER_FIXBROKEN}
   ${PACKAGE_MANAGER_INSTALLPACKAGE} "${BIN_FOLDER}/$2"
   rm -f "${BIN_FOLDER}/$2"
 }
@@ -727,6 +728,7 @@ generic_install_dependencies() {
   fi
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
+    ${PACKAGE_MANAGER_ENSUREDEPENDENCIES}
     ${PACKAGE_MANAGER_INSTALL} "${packagedependency}"
   done
 }
@@ -831,6 +833,7 @@ packageinstall_installation_type() {
 
   # Use a compressed file that contains .debs
   if [ -n "${!compressedfileurl}" ]; then
+    ${PACKAGE_MANAGER_ENSUREDEPENDENCIES}
     download "${!compressedfileurl}" "${BIN_FOLDER}/$1_package_compressed_file"
     decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_package_compressed_file" "$1"
     ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"

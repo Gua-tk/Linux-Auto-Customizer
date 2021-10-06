@@ -31,20 +31,21 @@ initialize_package_manager_apt-get() {
   PACKAGE_MANAGER_UNINSTALLPACKAGE="apt-get -y purge"
   PACKAGE_MANAGER_AUTOREMOVE="apt-get -y autoremove"
   PACKAGE_MANAGER_AUTOCLEAN="apt-get -y autoclean"
-  PACKAGE_MANAGER_ENSUREDEPENDENCIES="apt-get -y install -f"
 }
 
 initialize_package_manager_yum() {
   DEFAULT_PACKAGE_MANAGER="yum"
   PACKAGE_MANAGER_INSTALL="yum -y install"
+  PACKAGE_MANAGER_FIXBROKEN="yum -y install -f"
   PACKAGE_MANAGER_UNINSTALL="yum -y purge"
   PACKAGE_MANAGER_UPDATE="yum -y update"
   PACKAGE_MANAGER_UPGRADE="yum -y upgrade"
   PACKAGE_MANAGER_INSTALLPACKAGE="yum -y install"
   PACKAGE_MANAGER_INSTALLPACKAGES="yum -y install"
   PACKAGE_MANAGER_UNINSTALLPACKAGE="yum -y purge"
-  PACKAGE_MANAGER_CLEAN="yum -y autoremove && apt-get -y autoclean"
-  PACKAGE_MANAGER_ENSUREDEPENDENCIES="yum -y install -f"
+  PACKAGE_MANAGER_AUTOREMOVE="yum -y autoremove"
+  PACKAGE_MANAGER_AUTOCLEAN=";"
+
 }
 
 # Search the current OS in order to determine the default package manager and its main
