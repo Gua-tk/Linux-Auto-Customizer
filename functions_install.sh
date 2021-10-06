@@ -763,6 +763,8 @@ generic_install_clone() {
         apply_permissions_recursively "${CACHE_FOLDER}/$1_repository"
       fi
 
+      # Avoid collisions
+      rm -Rf "${BIN_FOLDER:?}/$1"
       # Copy file to the desired place of download
       cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
       if [ "${EUID}" -eq 0 ]; then
@@ -772,6 +774,7 @@ generic_install_clone() {
       # Move directly to the desired place of download
       rm -Rf "${BIN_FOLDER:?}/$1"
       cp -r "${TEMP_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+      # Do not construct cache
       rm -Rf "${TEMP_FOLDER}/$1_repository"
 
       # If we are root change permissions
