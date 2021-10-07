@@ -159,6 +159,7 @@ ant_readmeline="| Apache Ant | Software tool for automating software build proce
 
 anydesk_installationtype="userinherit"
 anydesk_arguments=("any_desk")
+anydesk_packagedependencies=("libminizip1" "libgtkglext1")
 anydesk_bashfunctions=("alias anydesk=\"nohup anydesk &>/dev/null &\"")
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_compressedfiletype="z"
@@ -4086,6 +4087,7 @@ megasync_packagenames=("nautilus-megasync" "megasync")
 megasync_readmeline="| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Command \`megasync\`, desktop launcher, dashboard launcher and integration with \`nemo\` file explorer ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 meld_installationtype="userinherit"
+meld_packagedependencies=("libgtksourceview-4-dev")
 meld_arguments=("meld")
 meld_bashfunctions=("alias meld=\"nohup meld &>/dev/null &\"")
 meld_binariesinstalledpaths=("bin/meld;meld")
