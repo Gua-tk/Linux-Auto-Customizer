@@ -10,6 +10,16 @@
 
 `bash` scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
 
+#### Table of Contents of [README.md](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/README.md) 
+- [⌨️ Description](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/README.md#%EF%B8%8F-description)
+- [🛠️ Configuration](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/README.md#%EF%B8%8F-configuration)
+- [🚀 Usage](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/README.md#-usage)
+- [📌 Capabilities](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/README.md#-capabilities)
+- [📖 Motivation](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/README.md#-motivation)
+- [✒️ Credits](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/README.md#%EF%B8%8F-credits)
+- [🖇️ Contributing ](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/README.md#%EF%B8%8F-contributing)
+- [📋 Licensing](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/README.md#-licensing)
+
 <p align="center">
 <img src="https://i.imgur.com/N7Hp7H1.png" width="250" height="290"/>
 </p>
@@ -221,7 +231,7 @@ where you have all your customizations:
 - We do not take any responsibility of the usage of this software or any harm that could be derived from it.
 - Have a look at the file [LICENSE.md](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/LICENSE.md) for more details.
 
-## ⭐ Give us a star in GitHub! 
+## [⭐ Give us a star in GitHub!](https://github.com/AleixMT/Linux-Auto-Customizer/stargazers)
 
 * 📢Tell others about this project 
 * Invite a 🍺 beer or a ☕ coffee <code>(more than one might be accepted)</code> to the members of this team.
