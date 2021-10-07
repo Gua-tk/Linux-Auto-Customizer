@@ -10,8 +10,7 @@
 
 `bash` scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
 
-![alt text](https://i.imgur.com/53QkidL.png)
-
+<center><img src="https://i.imgur.com/u8DX8ig.png" width="250" height="290"/></center>
 
 # Customizer
 Customizer is a software to automatize installations and customizations in a Linux environment. It is purely written in
@@ -170,6 +169,7 @@ sudo bash uninstall.sh --root && bash uninstall.sh --user
 This command will uninstall all root features first while asking for elevated privileges,
 and then it will uninstall all the local user features. 
 
+![alt text](https://i.imgur.com/53QkidL.png)
 
 ## 📌 Capabilities 
 All features available follow a common behaviour:
