@@ -10,7 +10,9 @@
 
 `bash` scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
 
-<p style="text-align:center;"><img src="https://i.imgur.com/u8DX8ig.png" width="250" height="290"/></p>
+<p align="center">
+<img src="https://i.imgur.com/u8DX8ig.png" width="250" height="290"/>
+</p>
 
 # Customizer
 Customizer is a software to automatize installations and customizations in a Linux environment. It is purely written in
