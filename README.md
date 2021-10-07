@@ -1,11 +1,11 @@
-[![Codacy grade](https://img.shields.io/codacy/grade/9d77f6c73bab4a11b847d131146fc243?style=plastic&logo=codacy&color=blue)](https://www.codacy.com/gh/AleixMT/Linux-Auto-Customizer/dashboard?utm_source=github.com)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7e05bb0ed08b4d57ac2f46de3f4f0c56)](https://app.codacy.com/gh/AleixMT/Linux-Auto-Customizer?utm_source=github.com&utm_medium=referral&utm_content=AleixMT/Linux-Auto-Customizer&utm_campaign=Badge_Grade_Settings)
+[![Codacy grade](https://img.shields.io/codacy/grade/9d77f6c73bab4a11b847d131146fc243?style=plastic&logo=codacy&color=blue)](https://www.codacy.com/gh/AleixMT/Linux-Auto-Customizer/dashboard?utm_source=github.com)
 [![GitHub top language](https://img.shields.io/github/languages/top/AleixMT/Linux-Auto-Customizer?style=plastic&color=blue&logo=gnu)](https://www.gnu.org/software/bash)
 [![Lines of code](https://img.shields.io/tokei/lines/github/AleixMT/Linux-Auto-Customizer?style=plastic&logo=gitlab)](https://gitlab.com/AleixMT/Linux-Auto-Customizer)
-![GitHub commits since tagged version](https://img.shields.io/github/commits-since/AleixMT/Linux-Auto-Customizer/v0.1.0?style=plastic&logo=github)
-[![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/AleixMT/Linux-Auto-Customizer?style=plastic&logo=linux)](https://github.com/AleixMT/Linux-Auto-Customizer/commits/master)
-![GitHub last commit](https://img.shields.io/github/last-commit/AleixMT/Linux-Auto-Customizer?&style=plastic&color=blue)
-![GitHub Repo stars](https://img.shields.io/github/stars/AleixMT/Linux-Auto-Customizer?style=social)
+[![GitHub commits since tagged version](https://img.shields.io/github/commits-since/AleixMT/Linux-Auto-Customizer/v0.1.0?style=plastic&logo=github)](https://github.com/AleixMT/Linux-Auto-Customizer/issues)
+[![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/AleixMT/Linux-Auto-Customizer?style=plastic&logo=linux)](https://github.com/AleixMT/Linux-Auto-Customizer/graphs/commit-activity)
+[![GitHub last commit](https://img.shields.io/github/last-commit/AleixMT/Linux-Auto-Customizer?&style=plastic&color=blue)](https://github.com/AleixMT/Linux-Auto-Customizer/commits/master)
+[![GitHub Repo stars](https://img.shields.io/github/stars/AleixMT/Linux-Auto-Customizer?style=social)](https://github.com/AleixMT/Linux-Auto-Customizer)
 
 
 `bash` scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
@@ -19,7 +19,7 @@ Customizer is a software to automatize installations and customizations in a Lin
 installed. Enjoy! 🤖
 
 
-## Description
+## ⌨️ Description 
 These `bash` scripts can automatize the installation and uninstallation of a batch of preset 
 features in most Linux environments. These features include GNU software, programming languages, 
 IDEs, text editors, media players, games, Internet applications, file templates, wallpapers, 
@@ -36,7 +36,7 @@ autorun programs at system start, add automatically a program to dashboard or as
 for a command.
 
 
-## Configuration
+## 🛠️ Configuration 
 To install this software you must begin cloning this repository to you computer. You can either
 download a `.zip`
 file containing the repository from github clicking [here](https://github.com/AleixMT/Linux-Auto-Customizer/archive/master.zip).
@@ -68,7 +68,7 @@ This will give you the global command `customizer-install` that you can use anyw
 features in `install.sh`. This command has autocompletion features.
 
 
-## Usage
+## 🚀 Usage 
 The scripts `install.sh` and `uninstall.sh` have the same identical arguments, but behave in 
 the opposite way: 
 `install.sh` will install the features selected by the arguments while `uninstall.sh` will
@@ -83,7 +83,7 @@ bash install.sh -H
 ```
 
 
-#### Feature arguments
+#### ⚙️ Feature arguments 
 You can install or uninstall features easily by passing the feature keynames by argument:
 ```
 bash install.sh discord
@@ -106,7 +106,7 @@ bash uninstall.sh pycharmpro intellijultimate
 ```
 
 
-#### Wrapper arguments (for selecting multiple features)
+#### ⚙️ Wrapper arguments (for selecting multiple features)
 There are some special arguments called wrappers that select the installation / uninstallation of a set of features:
 ```
 bash install.sh gitbashfunctions bashfunctions
@@ -119,7 +119,7 @@ bash uninstall.sh pull push dummycommit commit checkout clone branch status add 
 ```
 
 
-#### Behavioural arguments
+#### ⚙️ Behavioural arguments
 You can use different arguments to change the way in which each installation behaves, including verbosity, error 
 tolerance, checking if the installation is already present.
 
@@ -139,7 +139,7 @@ verbose mode.
 sudo bash install.sh -q cheese dia -v spotify
 ```
 
-#### Full installation / uninstallation
+#### 🔧 Full installation / uninstallation 
 To install ALL the features available for the root user in the script you must type in a terminal:
 ```
 sudo bash install.sh --root
@@ -148,7 +148,7 @@ To install ALL the features available for the normal user in the script you must
 ```
 bash install.sh --user
 ```
-Summarizing: to install ALL the features available in the script you must type in a terminal:
+📄 Summarizing: to install ALL the features available in the script you must type in a terminal:
 ```
 sudo bash install.sh --root && bash install.sh --user  
 ```
@@ -163,7 +163,7 @@ To uninstall ALL the features available for the normal user in the script you mu
 ```
 bash uninstall.sh --user
 ```
-Summarizing: to uninstall ALL the features available in the script you must type in a terminal:
+📄 Summarizing: to uninstall ALL the features available in the script you must type in a terminal:
 ```
 sudo bash uninstall.sh --root && bash uninstall.sh --user  
 ```
@@ -171,7 +171,7 @@ This command will uninstall all root features first while asking for elevated pr
 and then it will uninstall all the local user features. 
 
 
-## Capabilities
+## 📌 Capabilities 
 All features available follow a common behaviour:
 * The permissions needed for the features to be installed are the minimum. As such, we have many installation 
   available even if you do not have `root` permissions on your machine. 
@@ -187,7 +187,7 @@ All features available follow a common behaviour:
 * The code is written following the [Google Bash Style Guide](https://google.github.io/styleguide/shellguide.html) to standardize the code.
 
 
-## Motivation 
+## 📖 Motivation 
 If you are a developer that uses a lot of software (most of us do) this tool can save you a lot of time: Usually 
 we need to set up new programming or production environments in Linux losing a lot of time installing 
 manually all of our programs and personal customizations. With this software you just need to write your
@@ -204,14 +204,28 @@ where you have all your customizations:
 - Easy and clean uninstallation to avoid cluttering and disk space consumption.
 
 
-## Credits
+## ✒️ Credits 
 * Author & Maintainer: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)
 * Tester & Feature requester: **Axel Fernández** - [Axlfc](https://github.com/Axlfc) [axelfernandezcurros@gmail.com](axelfernandezcurros@gmail.com)
 
+## 🖇️ Contributing
 
-## Licensing
+- Please read [CONTRIBUTING.md](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/CONTRIBUTING.md) for more details about our code of conduct, and the process for submitting pull requests. 
+
+## 📋 Licensing
 - You can use this software **for free**.
 - You can not sell or redistribute this software.
 - You may fork this software, but you have to maintain the same therms stated in this license and give credit to the original author(s).
 - We do not take any responsibility of the usage of this software or any harm that could be derived from it.
+- Have a look at the file [LICENSE.md](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/LICENSE.md) for more details
 
+## ⭐ Give us a star in GitHub! 
+
+* 📢Tell others about this project 
+* Invite a 🍺 beer or a ☕ coffee <code>(more than one might be accepted)</code> to the members of this team.
+* We cannot thank you enough for your attention, enjoy your customized Linux system and don't doubt contacting our team with any trouble 🤓.
+<br></br>
+
+**Best regards, and happy coding** :)
+
+\- *The Linux-Auto-Customizer Team*
