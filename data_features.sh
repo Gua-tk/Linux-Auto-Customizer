@@ -829,6 +829,7 @@ copyq_arguments=("copyq")
 copyq_launchernames=("com.github.hluk.copyq")
 copyq_packagenames=("copyq")
 copyq_readmeline="| copyq | A clipboard manager application that comes with extra features such as editing and scripting | Command \`copyq\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+copyq_flagsoverride=";;;;;1"  # Always autostart
 
 curl_installationtype="packagemanager"
 curl_arguments=("curl")
@@ -3538,6 +3539,7 @@ guake_bashfunctions=("alias guake=\"nohup guake &>/dev/null &\"")
 guake_packagenames=("guake")
 guake_launchernames=("guake")
 guake_readmeline="| guake | Press F12 to display a terminal | Command \`guake\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+guake_flagsoverride=";;;;;1"  # Always autostart
 
 gvim_installationtype="packagemanager"
 gvim_arguments=("gvim" "vim_gtk3")
