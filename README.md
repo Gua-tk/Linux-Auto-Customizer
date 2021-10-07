@@ -206,7 +206,7 @@ where you have all your customizations:
 
 ## ✒️ Credits 
 * Author & Maintainer: **Aleix Mariné** - [AleixMT](https://github.com/AleixMT) [aleix.marine@estudiants.urv.cat](aleix.marine@estudiants.urv.cat)
-* Tester & Feature requester: **Axel Fernández** - [Axlfc](https://github.com/Axlfc) [axelfernandezcurros@gmail.com](axelfernandezcurros@gmail.com)
+* Tester & Feature requester: **Axel Fernandez** - [Axlfc](https://github.com/Axlfc) [axelfernandezcurros@gmail.com](axelfernandezcurros@gmail.com)
 
 ## 🖇️ Contributing
 
@@ -217,13 +217,13 @@ where you have all your customizations:
 - You can not sell or redistribute this software.
 - You may fork this software, but you have to maintain the same therms stated in this license and give credit to the original author(s).
 - We do not take any responsibility of the usage of this software or any harm that could be derived from it.
-- Have a look at the file [LICENSE.md](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/LICENSE.md) for more details
+- Have a look at the file [LICENSE.md](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/LICENSE.md) for more details.
 
 ## ⭐ Give us a star in GitHub! 
 
 * 📢Tell others about this project 
 * Invite a 🍺 beer or a ☕ coffee <code>(more than one might be accepted)</code> to the members of this team.
-* We cannot thank you enough for your attention, enjoy your customized Linux system and don't doubt contacting our team with any trouble 🤓.
+* We cannot thank you enough for your attention, enjoy your customized Linux system and don't doubt contacting our team with any trouble using this software 🤓.
 <br></br>
 
 **Best regards, and happy coding** :)
