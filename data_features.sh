@@ -3301,6 +3301,7 @@ github_desktop_readmeline="| GitHub Desktop | GitHub Application | Command \`git
 
 gitk_installationtype="packagemanager"
 gitk_arguments=("gitk")
+gitk_packagedependencies=("unifont")
 gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
 gitk_packagenames=("gitk")
 gitk_readmeline="| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
