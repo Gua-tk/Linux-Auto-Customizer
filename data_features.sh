@@ -5527,9 +5527,6 @@ TEMPLATES=\"${XDG_TEMPLATES_DIR}\"
 TRASH=\"${HOME_FOLDER}/.local/share/Trash/\"
 VIDEOS=\"${XDG_VIDEOS_DIR}\"
 INITIALIZATIONSD=\"${INITIALIZATIONS_FOLDER}\"
-if [ ! -d \$GIT ]; then
-  mkdir -p \$GIT
-fi
 ")
 shortcuts_readmeline="| shortcuts | Installs custom key commands | variables... (\$DESK...) || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
