@@ -4088,12 +4088,12 @@ megasync_packagenames=("nautilus-megasync" "megasync")
 megasync_readmeline="| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Command \`megasync\`, desktop launcher, dashboard launcher and integration with \`nemo\` file explorer ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 meld_installationtype="userinherit"
-meld_packagedependencies=("libgtksourceview-4-dev")
+meld_packagedependencies=("libgtksourceview-4-dev" "libgtksourceview-3.0-1")
 meld_arguments=("meld")
 meld_bashfunctions=("alias meld=\"nohup meld &>/dev/null &\"")
 meld_binariesinstalledpaths=("bin/meld;meld")
 meld_compressedfiletype="J"
-meld_compressedfileurl="https://download.gnome.org/sources/meld/3.20/meld-3.20.4.tar.xz"
+meld_compressedfileurl="https://download.gnome.org/sources/meld/3.21/meld-3.21.0.tar.xz"
 meld_launchercontents=("
 [Desktop Entry]
 Name=Meld
@@ -5527,9 +5527,6 @@ TEMPLATES=\"${XDG_TEMPLATES_DIR}\"
 TRASH=\"${HOME_FOLDER}/.local/share/Trash/\"
 VIDEOS=\"${XDG_VIDEOS_DIR}\"
 INITIALIZATIONSD=\"${INITIALIZATIONS_FOLDER}\"
-if [ ! -d \$GIT ]; then
-  mkdir -p \$GIT
-fi
 ")
 shortcuts_readmeline="| shortcuts | Installs custom key commands | variables... (\$DESK...) || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -6745,7 +6742,9 @@ z() {
 
 zoom_installationtype="userinherit"
 zoom_arguments=("zoom")
+zoom_packagedependencies=("libxcb-xtest0" "libqt5quickwidgets5")
 zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
+
 zoom_compressedfileurl="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
 zoom_compressedfiletype="J"
 zoom_downloads=("https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/zoom.svg;zoom_icon.svg")
