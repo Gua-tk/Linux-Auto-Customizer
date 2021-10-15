@@ -4388,7 +4388,7 @@ nemo()
 }
 ")
 nemo_packagenames=("nemo")
-nemo_packagedependencies=("dconf-editor" "gnome-tweak-tool")
+nemo_packagedependencies=("dconf-editor")
 nemo_readmelinedescription="File and desktop manager, usually with better options and less bugs than nautilus. *We recommend this explorer to view correctly the launchers*"
 nemo_launchercontents=("
 [Desktop Entry]
