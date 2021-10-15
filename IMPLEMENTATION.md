@@ -4,53 +4,50 @@
 #### CORE CODE NEW FEATURES AND UPDATES
 ###### UPDATES
 
-- [~] User environmental features should be able to be installed also as root user. 
---> features userinherit and environmental already are in thi state, missing pythonvenv and repositoryclone
---> To achieve this, change the bit value in add program for these two installationtypes to 2, to allow them to be more
-permissive, and thus all features of that type needs to be testes as root, if they can not be installed as root, then 
-a flag override for user permissions should be defined for that features
+# - [~] User environmental features should be able to be installed also as root user. 
+#--> features userinherit and environmental already are in thi state, missing pythonvenv and repositoryclone
+#--> To achieve this, change the bit value in add program for these two installationtypes to 2, to allow them to be more
+#permissive, and thus all features of that type needs to be testes as root, if they can not be installed as root, then a flag override for user permissions should be defined for that features
 
-- [ ] Investigate GetOpts. Apply getopts use at least for the flag argument if it is an improvement
-- [ ] Check headers
-- [ ] git bash functions compgen completion tab interaction showing repo branches list
-- [ ] define precise wrappers for features
+# - [ ] Investigate GetOpts. Apply getopts use at least for the flag argument if it is an improvement
+- [x] Check headers
+- [x] define precise wrappers for features
 
 ###### NEW FEATURES
-- [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
-  * [ ] Packageinstall determine the type of installation that is going to be used.
-- [ ] New property to check some dependencies --> It will be used by features as jupyter.
-- [ ] Move features table from readme to FEATURES.sh
-- [ ] Function m() #{man $1 | cat | grep "$2"}  
-- [ ] Pidgin, Audacious, Timemachine (audio recorder), Qjackctl, leafpad (simple text editor)
-- [ ] Music software: hydrogen drum machine, Rakarrack, QSynth, zynaddsub fx, Grip, soundKonverter, SooperLooper, Freqtweak Wavbreaker File Slitt, ReZound, mhWaveEdit, Mixxx, JACK Rack, fmit, Calf Plugin Pack for J, JAMin, QTractor, Gnome Wave Cle...
+#- [~] `functions_install.sh`: When installing features using package manager in  (by default `apt-get`) it will try to install them with different fallback package managers (`yum`, `pacman`, `pkg`, `rpm`, `winget`, `brew`, `pkg`, `snap`, `flatpak`, `chocolatey`, `pip`, `npm`...) depending on which is the main package-manager
+#  * [ ] Packageinstall determine the type of installation that is going to be used.
+#- [ ] New property to check some dependencies --> It will be used by features as jupyter.
 
 #### NEW INSTALLATIONS AND INSTALLATION UPDATES
 ###### UPDATES
-- [ ] readmelinedescription of internet launchers is not 'FEATUREKEYNAME opening in google chrome' since it uses xdg-open not chrome directly.
-- [ ] tryexec of internet shortcut launchers is not google-chrome since it does use xdg-open, so I guess the tryExec is xdg-open or nothing, but not google-chrome, since it is not used nor mentioned directly.
-- [ ] codium, eclipse, text editors in general that don't have a bash function for opening folders, files...
-- [ ] use axel instead of wget if it is installed, actually wget does not come installed in Debian by default.
+#- [ ] tryexec of internet shortcut launchers is not google-chrome since it does use xdg-open, so I guess the tryExec is xdg-open or nothing, but not google-chrome, since it is not used nor mentioned directly.
+- [x] codium, eclipse, text editors in general that don't have a bash function for opening folders, files...
+- [wontfix] use axel instead of wget if it is installed, actually wget does not come installed in Debian by default.
 - [ ] add dummy -am argument to commit function which does nothing.
-- [ ] k function does not care about upper case and lower case to kill the process efficiently.
+- [???] k function does not care about upper case and lower case to kill the process efficiently.
 - [x] Update Spotify fallen url
+- [ ] git bash functions compgen completion tab interaction showing repo branches list
 
 ###### NEW FEATURES
 - [ ] Autopsy (forensics disk analyzer)
+#- [ ] Function m() #{man $1 | cat | grep "$2"}  
+- [ ] Pidgin, Audacious, Timemachine (audio recorder), Qjackctl, leafpad (simple text editor)
+- [ ] Music software: hydrogen drum machine, Rakarrack, QSynth, zynaddsub fx, Grip, soundKonverter, SooperLooper, Freqtweak Wavbreaker File Slitt, ReZound, mhWaveEdit, Mixxx, JACK Rack, fmit, Calf Plugin Pack for J, JAMin, QTractor, Gnome Wave Cle...
 
 
 # TO-DO uninstall.sh and uninstall core for v1.0
 ###### UPDATES
-- [ ] protect with if always when reading from common files of customizer
+- [x] protect with if always when reading from common files of customizer
 
 ###### NEW FEATURES
-- [ ] `functions_common.sh`: program specific arguments for uninstall for removing all structures, empty keybinds files, etc
-- [ ] `functions_uninstall.sh`: refactor to customizer standards the commentaries and headers of uninstall.
-- [~] `functions_uninstall`: function to delete all installations and the common structures
-- [ ] `data_features.sh`: xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
+- [x] `functions_uninstall.sh`: refactor to customizer standards the commentaries and headers of uninstall.
+- [x] `functions_uninstall`: function to delete all installations and the common structures
+- [x] `data_features.sh`: in nautilus install.
+xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons true
 sudo apt purge nemo nemo*
 sudo apt autoremove  
-- [ ] Customizer wiki --> enciclopedic explanations and definitions
+- [x] Customizer wiki --> enciclopedic explanations and definitions
   * features 
   * capabilities
   * tasks
