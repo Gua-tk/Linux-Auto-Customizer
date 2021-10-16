@@ -1,13 +1,3 @@
-** Bug file **
----
-Number: ''
-name: Name of the bug
-about: Create a report to help us improve
-labels: ''
-assignees: ''
-
----
-
 **Describe the bug**
 A clear and concise description of what the bug is.
 
@@ -21,9 +11,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Platform (please complete the following information):**
- - OS: [e.g. iOS]
+ - OS: [e.g. Ubuntu 20, Windows 10]
  - bash version: [e.g. v2.3]
- - Desktop Manager (if available) [e.g. none, nemo, nautilus, gnome...]
+ - Desktop Manager (if available) [e.g. none, nemo, nautilus, gnome]
 
 **Additional context**
 Add any other context about the problem here.
