@@ -1,5 +1,4 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7e05bb0ed08b4d57ac2f46de3f4f0c56)](https://app.codacy.com/gh/AleixMT/Linux-Auto-Customizer?utm_source=github.com&utm_medium=referral&utm_content=AleixMT/Linux-Auto-Customizer&utm_campaign=Badge_Grade_Settings)
-[![Codacy grade](https://img.shields.io/codacy/grade/9d77f6c73bab4a11b847d131146fc243?style=plastic&logo=codacy&color=blue)](https://www.codacy.com/gh/AleixMT/Linux-Auto-Customizer/dashboard?utm_source=github.com)
 [![GitHub top language](https://img.shields.io/github/languages/top/AleixMT/Linux-Auto-Customizer?style=plastic&color=blue&logo=gnu)](https://www.gnu.org/software/bash)
 [![Lines of code](https://img.shields.io/tokei/lines/github/AleixMT/Linux-Auto-Customizer?style=plastic&logo=gitlab)](https://gitlab.com/AleixMT/Linux-Auto-Customizer)
 [![GitHub commits since tagged version](https://img.shields.io/github/commits-since/AleixMT/Linux-Auto-Customizer/v0.1.0?style=plastic&logo=github)](https://github.com/AleixMT/Linux-Auto-Customizer/issues)
