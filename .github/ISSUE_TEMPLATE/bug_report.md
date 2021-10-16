@@ -1,9 +1,10 @@
-** 
+** Bug file **
 ---
+Number: ''
 name: Name of the bug
 about: Create a report to help us improve
 labels: ''
-assignees: 
+assignees: ''
 
 ---
 
