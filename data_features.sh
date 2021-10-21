@@ -3832,7 +3832,7 @@ Terminal=true
 Type=Application
 Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;ParallelComputing;DataVisualization;ConsoleOnly;
 ")
-julia_readmeline="| Julia and IJulia| ${julia_readmelinedescription} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+julia_readmeline="| Julia and IJulia | ${julia_readmelinedescription} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 jupyter_lab_installationtype="pythonvenv"
 jupyter_lab_arguments=("jupyter_lab" "jupyter" "lab")
@@ -6659,7 +6659,7 @@ youtubemusic_readmeline="| Youtube Music | ${youtubemusic_readmelinedescription}
 
 z_installationtype="environmental"
 z_arguments=("z" "z_function")
-z_readmeline="| Function \`z\`| function to compress files given a type and a set of pats to files | Command \`z\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+z_readmeline="| Function \`z\` | function to compress files given a type and a set of pats to files | Command \`z\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 z_bashfunctions=("
 z() {
   local first_compressed_file_arg_pos=
