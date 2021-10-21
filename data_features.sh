@@ -6617,7 +6617,7 @@ TryExec=google-chrome
 Type=Application
 Version=1.0
 ")
-youtube_readmeline="| Youtube| ${youtube_readmelinedescription} | Command \`youtube\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+youtube_readmeline="| Youtube | ${youtube_readmelinedescription} | Command \`youtube\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 youtube_dl_installationtype="environmental"
 youtube_dl_arguments=("youtube_dl")
