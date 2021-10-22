@@ -114,7 +114,11 @@ remove_links_in_path() {
   if [ -f "${PATH_POINTED_FOLDER}/$1" ]; then
     remove_file "${PATH_POINTED_FOLDER}/$1"
   else
-    remove_file "${ALL_USERS_PATH_POINTED_FOLDER}/$1"
+    # We leave a dangling link in path unremoved if a feature has been installed as root but uninstalled as user.
+    # We can not change the permissions of a symlink in order to allow uninstall as user a posteriori remove the symlink
+    if [ ${EUID} == 0 ]; then  # root
+      remove_file "${ALL_USERS_PATH_POINTED_FOLDER}/$1"
+    fi
   fi
 }
 
@@ -305,7 +309,7 @@ generic_uninstall_pathlinks() {
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
     local binary_name=
     binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
-    # Absolute path
+    # If absolute path
     if echo "${binary_name}" | grep -Eqo "^/"; then
       remove_links_in_path "${binary_name}"
     else
@@ -373,8 +377,14 @@ generic_uninstall_movefiles() {
 # - Argument 1: Name of the feature to install, matching the array $1_packagedependencies
 generic_uninstall_dependencies() {
 # Other dependencies to install with the package manager before the main package of software if present
-  local -r packagedependencies="$1_packagedependencies[@]"
+  local -r packagedependencies="$1_packagedependencies[*]"
 
+  if [ "${EUID}" -ne 0 ]; then
+    if [ -n "${!packagedependencies}" ]; then
+      output_proxy_executioner "echo WARNING: $1 has this dependencies: ${!packagedependencies} but are not going to be uninstalled because you are not root. To uninstall them, rerun uninstallation with sudo." "${FLAG_QUIETNESS}"
+      return
+    fi
+  fi
   # Uninstall dependency packages
   for packagedependency in ${!packagedependencies}; do
     ${PACKAGE_MANAGER_UNINSTALL} "${packagedependency}"

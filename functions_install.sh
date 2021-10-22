@@ -229,13 +229,14 @@ copy_launcher() {
 # - Argument 2: Name of the command that will be added to your environment to execute the previous binary.
 # - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2.
 create_links_in_path() {
-  if [ ${EUID} -ne 0 ]; then  # user
-    local -r directory="${PATH_POINTED_FOLDER}"
-  else
+  if [ ${EUID} == 0 ]; then  # user
     local -r directory="${ALL_USERS_PATH_POINTED_FOLDER}"
+  else
+    local -r directory="${PATH_POINTED_FOLDER}"
   fi
   while [ $# -gt 0 ]; do
     ln -sf "$1" "${directory}/$2"
+    apply_permissions "${directory}/$2"
     shift
     shift
   done
@@ -809,6 +810,11 @@ pythonvenv_installation_type() {
   for pythoncommand in "${!pythoncommands}"; do
     "${BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
   done
+
+  # If we are root change permissions
+  if [ "${EUID}" -eq 0 ]; then
+    apply_permissions_recursively "${BIN_FOLDER:?}/$1"
+  fi
 }
 
 
