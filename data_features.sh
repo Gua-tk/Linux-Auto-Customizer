@@ -94,7 +94,7 @@ fi
 #                                                                                                                      #
 ### Installation type dependent properties                                                                             #
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
-#    feature. Used in: packageinstall, packagemanager.                                                                 #                                                                         #
+#    feature. Used in: packageinstall, packagemanager.                                                                 #
 #  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.                           #
 #  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit and in packageinstall  #
 #    as fallback if no urls are supplied in packageurls; in that case will also need a compressedfiletype.             #
@@ -215,7 +215,7 @@ AutoFirma_installationtype="packageinstall"
 AutoFirma_arguments=("auto_firma")
 AutoFirma_bashfunctions=("alias autofirma=\"nohup AutoFirma &>/dev/null &\"")
 AutoFirma_compressedfiletype="zip"
-AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip"
+AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip"
 AutoFirma_launchernames=("afirma")
 AutoFirma_packagedependencies=("libnss3-tools")
 AutoFirma_packagenames=("AutoFirma")

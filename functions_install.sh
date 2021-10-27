@@ -415,7 +415,7 @@ download() {
     fi
   else  # Not cached or we do not use cache: we have to download
     echo -en '\033[1;33m'
-    wget --show-progress -O "${TEMP_FOLDER}/${file_name}" "$1"
+    wget --show-progress --no-check-certificate -O "${TEMP_FOLDER}/${file_name}" "$1"
     echo -en '\033[0m'
 
     if [ "${FLAG_CACHE}" -eq 1 ]; then
