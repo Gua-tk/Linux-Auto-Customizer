@@ -560,6 +560,8 @@ declare -r wrapper_desktopfunctions=("changebg" "screenshots" "system_fonts" "te
 declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters" "bashcolors" "fastcommands" "emojis")
 declare -r wrapper_network=("ipe" "ipi" "ips")
 declare -r wrapper_networks=("net-tools")
+declare -r wrapper_fontsuser=("fonts-alegreya-sans", "fonts-lato", "fonts-noto-sans", "fonts-oswald", "fonts-oxygen")
+declare -r wrapper_fontsroot=("fonts-firacode", "fonts-hack", "fonts-hermit", "fonts-roboto")
 # Custom wrappers
 declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "curl" "git" "ffmpeg" "java" "python3")
 declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch")
