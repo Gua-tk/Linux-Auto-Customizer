@@ -675,7 +675,7 @@ add_program()
         ;;
         # Create a virtual environment to install the feature
         pythonvenv)
-          flag_privileges=1
+          flag_privileges=2
         ;;
         # Only uses the common part of the generic installation
         environmental)
@@ -873,7 +873,6 @@ generic_installation() {
     "generic_${FLAG_MODE}_file_associations" "${featurename}"
     "generic_${FLAG_MODE}_keybindings" "${featurename}"
     "generic_${FLAG_MODE}_pathlinks" "${featurename}"
-
     if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
       "${FLAG_MODE}_$1_post"
     fi

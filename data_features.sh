@@ -3839,7 +3839,7 @@ jupyter_lab_arguments=("jupyter_lab" "jupyter" "lab")
 jupyter_lab_bashfunctions=("alias lab=\"jupyter-lab\"")
 jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
 jupyter_lab_bashfunctions=("alias lab=\"jupyter-lab\"")
-jupyter_lab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies
+jupyter_lab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
 jupyter_lab_readmelinedescription="IDE with a lot of possible customization and usable for different programming languages."
 jupyter_lab_launchercontents=("
 [Desktop Entry]
