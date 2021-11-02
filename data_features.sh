@@ -5663,6 +5663,7 @@ steam_installationtype="packageinstall"
 steam_arguments=("steam")
 steam_launchernames=("steam")
 steam_packagenames=("steam-launcher")
+steam_packagedependencies=("curl")
 steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_package_manager_override="apt-get"
 steam_readmeline="| Steam | Video game digital distribution service | Command \`steam\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
