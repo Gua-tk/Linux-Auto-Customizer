@@ -100,8 +100,6 @@ fi
 #    as fallback if no urls are supplied in packageurls; in that case will also need a compressedfiletype.             #
 #  - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform the download and decompression.        #
 #    Used in: userinherit.                                                                                             #
-#  - FEATUREKEYNAME_compressedfiletype: Compression format of the compressed file in FEATUREKEYNAME_compressedfileurl. #
-#    Used in userinherit and in packageinstall if no packageurls are supplied.                                         #
 #  - FEATUREKEYNAME_repositoryurl: Repository to be cloned. Used in: repositoryclone.                                  #
 #  - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if  #
 #    there is manual code for that feature to be executed or not. If it is in one, it will try to execute a function   #
@@ -152,7 +150,6 @@ ant_installationtype="userinherit"
 ant_arguments=("ant" "apache_ant")
 ant_bashfunctions=("export ANT_HOME=\"${BIN_FOLDER}/ant\"")
 ant_binariesinstalledpaths=("bin/ant;ant")
-ant_compressedfiletype="z"
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_flagsoverride="1;;;;;"
 ant_readmeline="| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
@@ -162,7 +159,6 @@ anydesk_arguments=("any_desk")
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")
 anydesk_bashfunctions=("alias anydesk=\"nohup anydesk &>/dev/null &\"")
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
-anydesk_compressedfiletype="z"
 anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
 anydesk_readmelinedescription="Software to remote control other computers"
 anydesk_readmeline="| Anydesk | ${anydesk_readmelinedescription} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -214,7 +210,6 @@ audacity_readmeline="| Audacity | Digital audio editor and recording | Command \
 AutoFirma_installationtype="packageinstall"
 AutoFirma_arguments=("auto_firma")
 AutoFirma_bashfunctions=("alias autofirma=\"nohup AutoFirma &>/dev/null &\"")
-AutoFirma_compressedfiletype="zip"
 AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip"
 AutoFirma_launchernames=("afirma")
 AutoFirma_packagedependencies=("libnss3-tools")
@@ -342,7 +337,6 @@ bashcolors_readmeline="| bashcolors | bring color to terminal | Command \`bashco
 
 blender_installationtype="userinherit"
 blender_compressedfileurl="https://ftp.nluug.nl/pub/graphics/blender/release/Blender2.93/blender-2.93.3-linux-x64.tar.xz"
-blender_compressedfiletype="J"
 blender_arguments=("blender" "blender_3d")
 blender_binariesinstalledpaths=("blender;blender")
 blender_readmeline="| Blender | 2D and 3D image and animation, fx, video edit... | Command \`blender\`, desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -567,7 +561,6 @@ clion() {
 }
 ")
 clion_binariesinstalledpaths=("bin/clion.sh;clion")
-clion_compressedfiletype="z"
 clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2021.2.1.tar.gz"
 clion_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
@@ -633,7 +626,6 @@ clonezilla_readmeline="| CloneZilla | ${clonezilla_readmelinedescription} | Comm
 
 cmake_installationtype="userinherit"
 cmake_binariesinstalledpaths=("bin/ccmake;ccmake" "bin/cmake;cmake" "bin/cmake-gui;cmake-gui" "bin/cpack;cpack" "bin/ctest;ctest")
-cmake_compressedfiletype="z"
 cmake_compressedfileurl="https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-linux-x86_64.tar.gz"
 cmake_arguments=("cmake" "c_make")
 cmake_readmeline="| Cmake | Compile C and c make | Command \`cmake\`, \`ccmake\`, \`cmake-gui\`, \`cpack\`, \`ctest\`  ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -667,7 +659,6 @@ code_installationtype="userinherit"
 code_arguments=("code" "visual_studio_code" "visual_studio")
 code_bashfunctions=("alias code=\"nohup code . &>/dev/null &\"")
 code_binariesinstalledpaths=("code;code")
-code_compressedfiletype="z"
 code_compressedfileurl="https://go.microsoft.com/fwlink/?LinkID=620884"
 code_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
@@ -709,7 +700,6 @@ codium() {
 }
 ")
 codium_compressedfilepathoverride="${BIN_FOLDER}/codium"
-codium_compressedfiletype="z"
 codium_binariesinstalledpaths=("bin/codium;codium")
 codium_compressedfileurl="https://github.com/VSCodium/vscodium/releases/download/1.60.2/VSCodium-linux-x64-1.60.2.tar.gz"
 codium_launchercontents=("[Desktop Entry]
@@ -915,7 +905,6 @@ discord_installationtype="userinherit"
 discord_arguments=("discord")
 discord_bashfunctions=("alias discord=\"nohup discord &>/dev/null &\"")
 discord_binariesinstalledpaths=("Discord;discord")
-discord_compressedfiletype="z"
 discord_compressedfileurl="https://discord.com/api/download?platform=linux&format=tar.gz"
 discord_launchercontents=("
 [Desktop Entry]
@@ -940,7 +929,6 @@ discord_readmeline="| Discord | ${discord_readmelinedescription} | Command \`dis
 
 docker_installationtype="userinherit"
 docker_arguments=("docker")
-docker_compressedfiletype="z"
 docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 docker_readmeline="| Docker | Containerization service | Command \`docker\`, \`containerd\`, \`containerd-shim\`, \`containerd-shim-runc-v2\`, \`ctr\`, \`dockerd\`, \`docker-init\`, \`docker-proxy\`, \`runc\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -1133,7 +1121,6 @@ eclipse() {
 }
 "
 eclipse_binariesinstalledpaths=("eclipse;eclipse")
-eclipse_compressedfiletype="z"
 eclipse_compressedfileurl="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
 eclipse_readmelinedescription="IDE for Java"
 eclipse_launchercontents=("[Desktop Entry]
@@ -3115,7 +3102,6 @@ firefox_readmeline="| Firefox | Free web browser | Command \`firefox\`, desktop 
 fonts_alegreya_sans_installationtype="userinherit"
 fonts_alegreya_sans_arguments=("fonts_alegreya_sans")
 fonts_alegreya_sans_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_alegreya_sans_compressedfiletype="zip"
 fonts_alegreya_sans_compressedfileurl="https://fonts.google.com/download?family=Alegreya%20Sans"
 fonts_alegreya_sans_readmeline="| fonts-alegreya_sans | Installs font | Install alegreya font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -3137,14 +3123,12 @@ fonts_hermit_readmeline="| fonts-hermit | Installs font | Install hermit font ||
 fonts_lato_installationtype="userinherit"
 fonts_lato_arguments=("fonts_lato")
 fonts_lato_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_lato_compressedfiletype="zip"
 fonts_lato_compressedfileurl="https://fonts.google.com/download?family=Lato"
 fonts_lato_readmeline="| fonts-lato | Installs font | Install lato font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 fonts_noto_sans_installationtype="userinherit"
 fonts_noto_sans_arguments=("fonts_noto_sans")
 fonts_noto_sans_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_noto_sans_compressedfiletype="zip"
 fonts_noto_sans_compressedfileurl="https://fonts.google.com/download?family=Noto%20Sans"
 fonts_noto_sans_readmeline="| fonts-noto_sans | Installs font| Install noto_sans font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -3152,14 +3136,12 @@ fonts_oswald_installationtype="userinherit"
 fonts_oswald_arguments=("fonts_oswald")
 fonts_oswald_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_oswald_compressedfileurl="https://fonts.google.com/download?family=Oswald"
-fonts_oswald_compressedfiletype="zip"
 fonts_oswald_readmeline="| fonts-oswald | Installs font| Install oswald font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 fonts_oxygen_installationtype="userinherit"
 fonts_oxygen_arguments=("fonts_oxygen")
 fonts_oxygen_compressedfilepathoverride="${FONTS_FOLDER}"
 fonts_oxygen_compressedfileurl="https://fonts.google.com/download?family=Oxygen"
-fonts_oxygen_compressedfiletype="zip"
 fonts_oxygen_readmeline="| fonts-oxygen | Installs font | Install oxygen font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 fonts_roboto_installationtype="packagemanager"
@@ -3215,7 +3197,6 @@ geany_readmeline="| Geany | Lightweight GUI text editor using Scintilla and GTK,
 geogebra_installationtype="userinherit"
 geogebra_arguments=("geogebra" "geogebra_classic_6" "geogebra_6")
 geogebra_binariesinstalledpaths=("GeoGebra;geogebra")
-geogebra_compressedfiletype="zip"
 geogebra_compressedfileurl="https://download.geogebra.org/package/linux-port6"
 geogebra_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg;geogebra_icon.svg")
 geogebra_readmelinedescription="Geometry calculator GUI"
@@ -3258,7 +3239,6 @@ git_readmeline="| git | Software for tracking changes in any set of files, usual
 gitcm_installationtype="userinherit"
 gitcm_arguments=("git_c_m")
 gitcm_binariesinstalledpaths=("git-credential-manager-core;gitcm")
-gitcm_compressedfiletype="z"
 gitcm_compressedfileurl="https://github.com/microsoft/Git-Credential-Manager-Core/releases/download/v2.0.498/gcmcore-linux_amd64.2.0.498.54650.tar.gz"
 gitcm_compressedfilepathoverride="${BIN_FOLDER}/gitcm"  # It has not a folder inside
 gitcm_donotinherit="yes"
@@ -3433,7 +3413,6 @@ gnome_tweak_tool_readmeline="| GNOME Tweaks | GUI for system customization | com
 go_installationtype="userinherit"
 go_arguments=("go" "go_lang")
 go_compressedfileurl="https://golang.org/dl/go1.17.linux-amd64.tar.gz"
-go_compressedfiletype="z"
 go_compressedfilepathoverride="/usr/local"
 go_flagsoverride="0;;;;;"  # Install always as root
 go_bashinitializations=("
@@ -3659,7 +3638,6 @@ ideac() {
 }
 "
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
-ideac_compressedfiletype="z"
 ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.2.1.tar.gz"
 ideac_readmelinedescription="Integrated development environment written in Java for developing computer software"
 ideac_launchercontents=("
@@ -3696,7 +3674,6 @@ ideau() {
 }
 ")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
-ideau_compressedfiletype="z"
 ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.2.1.tar.gz"
 ideau_readmelinedescription="Integrated development environment written in Java for developing computer software"
 ideau_launchercontents=("
@@ -3812,14 +3789,12 @@ java_installationtype="userinherit"
 java_arguments=("java" "java_development_kit" "java_development" "java_development_kit_8" "jdk" "jdk_8")
 java_bashfunctions=("export JAVA_HOME=\"${BIN_FOLDER}/java\"")
 java_binariesinstalledpaths=("bin/java;java")
-java_compressedfiletype="z"
 java_compressedfileurl="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
 java_readmeline="| Java Development Kit 8 | Implementation of version 8 of the Java (programming language) SE Platform | Commands \`java\`, \`javac\` and \`jar\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 julia_installationtype="userinherit"
 julia_arguments=("julia")
 julia_binariesinstalledpaths=("bin/julia;julia")
-julia_compressedfiletype="z"
 julia_compressedfileurl="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
 julia_readmelinedescription="High-level, high-performance dynamic language for technical computing"
 julia_launchercontents=("
@@ -4092,7 +4067,6 @@ meld_packagedependencies=("libgtksourceview-4-dev" "libgtksourceview-3.0-1")
 meld_arguments=("meld")
 meld_bashfunctions=("alias meld=\"nohup meld &>/dev/null &\"")
 meld_binariesinstalledpaths=("bin/meld;meld")
-meld_compressedfiletype="J"
 meld_compressedfileurl="https://download.gnome.org/sources/meld/3.21/meld-3.21.0.tar.xz"
 meld_launchercontents=("
 [Desktop Entry]
@@ -4294,7 +4268,6 @@ meld_readmeline="| Meld | Visual diff and merge tool for developers | Command \`
 mendeley_installationtype="userinherit"
 mendeley_arguments=("mendeley")
 mendeley_compressedfileurl="https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming"
-mendeley_compressedfiletype="j"
 mendeley_binariesinstalledpaths="bin/mendeleydesktop;mendeley"
 mendeley_packagedependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
 mendeley_readmelinedescription="It is most known for its reference manager which is used to manage and share research papers and generate bibliographies for scholarly articles"
@@ -4332,7 +4305,6 @@ msttcorefonts_readmeline="| font Msttcorefonts | Windows classic fonts | Install
 mvn_installationtype="userinherit"
 mvn_arguments=("mvn")
 mvn_binariesinstalledpaths=("bin/mvn;mvn")
-mvn_compressedfiletype="z"
 mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 mvn_readmeline="| Maven | Build automation tool used primarily for Java projects | Command \`mvn\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 mvn_bashfunctions=("
@@ -4760,7 +4732,6 @@ nmap_readmeline="| nmap | Scan and network security used for port scanning. | Co
 npm_installationtype="userinherit"
 npm_arguments=("npm")
 npm_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
-npm_compressedfiletype="J"
 npm_compressedfileurl="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
 npm_readmeline="| NodeJS npm | JavaScript packagemanager for the developers. | Command \`node\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -4839,7 +4810,6 @@ openoffice_packagenames=("libreoffice-base-core" "libreoffice-impress" "libreoff
       "libreoffice-style-elementary" "libreoffice-help-common" "libreoffice-style-tango" "libreoffice-help-en-us"
       "libreoffice-writer")
 openoffice_compressedfileurl="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
-openoffice_compressedfiletype="z"
 openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-draw" "openoffice4-math" "openoffice4-writer")
 openoffice_readmeline="| OpenOffice | Office suite for open-source systems | Command \`openoffice4\` in PATH, desktop launchers for \`base\`, \`calc\`, \`draw\`, \`math\` and \`writer\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -5015,7 +4985,6 @@ p_readmeline="| Function \`port\` | Check processes names and PID's from given p
 postman_installationtype="userinherit"
 postman_arguments=("postman")
 postman_binariesinstalledpaths=("Postman;postman")
-postman_compressedfiletype="z"
 postman_compressedfileurl="https://dl.pstmn.io/download/latest/linux64"
 postman_readmelinedescription="Application to maintain and organize collections of REST API calls"
 postman_launchercontents=("
@@ -5201,7 +5170,6 @@ pycharm() {
 }
 ")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
-pycharm_compressedfiletype="z"
 pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.2.1.tar.gz"
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
 pycharm_readmelinedescription="Integrated development environment used in computer programming"
@@ -5246,7 +5214,6 @@ pycharmpro() {
 }
 ")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
-pycharmpro_compressedfiletype="z"
 pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2021.2.1.tar.gz"
 pycharmpro_readmelinedescription="Integrated development environment used in computer programming"
 pycharmpro_launchercontents=("
@@ -5272,7 +5239,6 @@ pycharmpro_readmeline="| Pycharm Pro | ${pycharmpro_readmelinedescription} | Com
 pypy3_installationtype="userinherit"
 pypy3_arguments=("pypy3" "pypy")
 pypy3_binariesinstalledpaths=("bin/pypy3;pypy3" "bin/pip3.6;pypy3-pip")
-pypy3_compressedfiletype="j"
 pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
 pypy3_manualcontentavailable="0;1;0"
 pypy3_readmeline="| pypy3 | Faster interpreter for the Python3 programming language | Commands \`pypy3\` and \`pypy3-pip\` in the PATH || <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -5384,7 +5350,6 @@ rstudio_arguments=("r_studio")
 rstudio_associatedfiletypes=("text/plain")
 rstudio_bashfunctions=("alias rstudio=\"nohup rstudio &>/dev/null &\"")
 rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
-rstudio_compressedfiletype="z"
 rstudio_compressedfileurl="https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz"
 rstudio_readmelinedescription="Default application for .R files "
 rstudio_launchercontents=("
@@ -5443,7 +5408,6 @@ scilab_arguments=("scilab")
 scilab_bashfunctions=("alias scilab=\"nohup scilab &>/dev/null &\"" "alias scinotes=\"nohup scinotes &>/dev/null &\"")
 scilab_binariesinstalledpaths=("bin/scilab;scilab" "bin/scilab-cli;scilab-cli" "bin/scinotes;scinotes")
 scilab_packagedependencies=("openjdk-8-jdk-headless" "libtinfo5")
-scilab_compressedfiletype="z"
 scilab_compressedfileurl="https://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz"
 scilab_packagenames=("scilab")
 scilab_launchercontents=("
@@ -5578,7 +5542,6 @@ slack_readmeline="| Slack | Platform to coordinate your work with a team | Icon 
 sonarqube_installationtype="userinherit"
 sonarqube_arguments=("sonarqube")
 sonarqube_binariesinstalledpaths=("bin/linux-x86-64/sonar.sh;sonar")
-sonarqube_compressedfiletype="zip"
 sonarqube_compressedfileurl="https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.0.1.46107.zip"
 sonarqube_readmeline="| Sonarqube | Platform to evaluate source code | Command Icon Launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -5681,7 +5644,6 @@ studio() {
 }
 ")
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
-studio_compressedfiletype="z"
 studio_compressedfileurl="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2020.3.1.24/android-studio-2020.3.1.24-linux.tar.gz"
 studio_readmelinedescription="Development environment for Google's Android operating system"
 studio_launchercontents=("
@@ -5719,7 +5681,6 @@ sublime() {
 }
 ")
 sublime_binariesinstalledpaths=("sublime_text;sublime")
-sublime_compressedfiletype="J"
 sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_build_4113_x64.tar.xz"
 sublime_readmelinedescription="Source code editor with an emphasis on source code editing"
 sublime_launchercontents=("
@@ -5810,7 +5771,6 @@ telegram_installationtype="userinherit"
 telegram_arguments=("telegram")
 telegram_binariesinstalledpaths=("Telegram;telegram")
 telegram_bashfunctions=("alias telegram=\"nohup telegram &>/dev/null &\"")
-telegram_compressedfiletype="J"
 telegram_compressedfileurl="https://telegram.org/dl/desktop/linux"
 telegram_downloads=("https://telegram.org/img/t_logo.svg;telegram_icon.svg")
 telegram_readmelinedescription="Cloud-based instant messaging software and application service"
@@ -6124,7 +6084,6 @@ tmux_readmeline="| Tmux | ${tmux_readmelinedescription} | Command \`tmux\`, desk
 
 tomcat_installationtype="userinherit"
 tomcat_arguments=("tomcat" "apache_tomcat" "tomcat_server" "apache")
-tomcat_compressedfiletype="z"
 tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
 tomcat_readmeline="| Apache Tomcat 9.0.43 | Open-source server to run web apps written in Jakarta Server Pages | Tomcat available in \${USER_BIN_FOLDER} to deploy web apps || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul>|"
 
@@ -6747,7 +6706,6 @@ zoom_packagedependencies=("libxcb-xtest0" "libqt5quickwidgets5")
 zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
 
 zoom_compressedfileurl="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
-zoom_compressedfiletype="J"
 zoom_downloads=("https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/zoom.svg;zoom_icon.svg")
 zoom_readmelinedescription="Live Video Streaming for Meetings"
 zoom_launchercontents=("

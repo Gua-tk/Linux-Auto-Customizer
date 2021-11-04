@@ -260,91 +260,135 @@ create_manual_launcher() {
 }
 
 
-# - Description:
-# Argument 1: Type of decompression [zip, J, j, z].
-# Argument 2: Absolute path to the file that is going to be decompressed in place. It will be deleted after the
-# decompression.
-# Argument 3 (optional): If argument 3 is set, it will try to get the name of a directory that is in the root of the
-# compressed file. Then, after the decompressing, it will rename that directory to $3
+# - Description: This function guesses the mimetype of a file and decompresses it accordingly. Currently it recognises
+#   zip, tar.gz, tar.bz2, tar.xz. The function can receive a path to the desired file to decompress:
+#     * Absolute path to a file: (path beginning with /) This file will be decompressed.
+#     * Empty argument: The file $USR_BIN_FOLDER/downloading_program will be decompressed.
+#     * Relative path to a file: Relative from $USR_BIN_FOLDER, so the file $USR_BIN_FOLDER/$1 will be decompressed,
+#       where $1 is a sub-path that can contain folders.
+#     * Only a filename: Relative from $USR_BIN_FOLDER, so the file file $USR_BIN_FOLDER/$1 will be decompressed.
+# - Arguments:
+#   * Argument 1: Path to the file to decompress.
+#   * Argument 2 (optional): If argument 2 is set, it will try to get the name of a directory that is in the root of the
+#     compressed file. Then, after the decompressing, it will rename that directory to $2.
 decompress() {
   local dir_name=
   local file_name=
   # capture directory where we have to decompress
-  if [ -z "$2" ]; then
+  if [ -z "$1" ]; then
     dir_name="${BIN_FOLDER}"
     file_name="downloading_program"
-  elif echo "$2" | grep -Eqo "^/"; then
+  elif echo "$1" | grep -Eqo "^/"; then
     # Absolute path to a file
-    dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
-    file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+    dir_name="$(echo "$1" | rev | cut -d "/" -f2- | rev)"
+    file_name="$(echo "$1" | rev | cut -d "/" -f1 | rev)"
   else
-    if echo "$2" | grep -Eqo "/"; then
+    if echo "$1" | grep -Eqo "/"; then
       # Relative path to a file containing subfolders
-      dir_name="${BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
-      file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
+      dir_name="${BIN_FOLDER}/$(echo "$1" | rev | cut -d "/" -f2- | rev)"
+      file_name="$(echo "$1" | rev | cut -d "/" -f1 | rev)"
     else
       # Only a filename
       dir_name="${BIN_FOLDER}"
-      file_name="$2"
+      file_name="$1"
     fi
   fi
-  if [ -n "$3" ]; then
-    if [ "$1" == "zip" ]; then
-      local internal_folder_name=
-      internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
-      # The captured line ends with / so it is a valid directory
-      if echo "${internal_folder_name}" | grep -Eqo "/$"; then
-        internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
-      else
-        # Set the internal folder name empty if it is not detected
-        internal_folder_name=""
-      fi
-    else
-      # Capture root folder name
-      local -r internal_folder_name=$( (tar -t"$1"f - | head -1 | cut -d "/" -f1) <"${dir_name}/${file_name}")
-    fi
-    # Check that variable program_folder_name is set, if not, decompress in a made up folder.
+
+  # We have to inherit if $3 is set. Try to capture the name of the internal folder in the compressed file
+  if [ -n "$2" ]; then
+    # Detect compression mimetype
+    local mime_type=
+    mime_type="$(mimetype "${dir_name}/${file_name}" | cut -d ":" -f2 | tr -d " ")"
+    case "${mime_type}" in
+      "application/zip")
+        local internal_folder_name=
+        internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -4 | tail -1 | tr -s " " | cut -d " " -f5)"
+        # The captured line ends with / so it is a valid directory
+        if echo "${internal_folder_name}" | grep -Eqo "/$"; then
+          internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
+        else
+          # Set the internal folder name empty if it is not detected
+          internal_folder_name=""
+        fi
+      ;;
+      "application/x-bzip-compressed-tar")
+        local -r internal_folder_name=$( (tar -tjf - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
+      ;;
+      "application/gzip")
+        local -r internal_folder_name=$( (tar -tzf - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
+      ;;
+      "application/x-xz")
+        local -r internal_folder_name=$( (tar -tJf - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
+      ;;
+      *)
+        output_proxy_executioner "ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
+        exit 1
+      ;;
+    esac
+
+    # Check that variable internal_folder_name is set, if not, decompress in a made up folder.
     if [ -z "${internal_folder_name}" ]; then
       # Create a folder where we will decompress the compressed file that has no directory in the root
-      rm -Rf "${dir_name:?}/$3"
-      create_folder "${dir_name}/$3"
-      mv "${dir_name}/${file_name}" "${dir_name}/$3"
-      # Reset the location of the compressed file.
-      dir_name="${dir_name}/$3"
+      rm -Rf "${dir_name:?}/$2"
+      create_folder "${dir_name}/$2"
+      mv "${dir_name}/${file_name}" "${dir_name}/$2"  # Move compressed file to a folder where we will decompress it
+      # Reset the directory location of the compressed file.
+      dir_name="${dir_name}/$2"
     else
       # Clean to avoid conflicts with previously installed software or aborted installation
       rm -Rf "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
     fi
   fi
+
   if [ -f "${dir_name}/${file_name}" ]; then
-    if [ "$1" == "zip" ]; then
-      (
-        cd "${dir_name}" || exit
-        unzip -o "${file_name}"
-      )
-    else
+    case "${mime_type}" in
+      "application/zip")
+        (
+          cd "${dir_name}" || exit
+          unzip -o "${file_name}"
+        )
+      ;;
+      "application/x-bzip-compressed-tar")
       # Decompress in a subshell to avoid changing the working directory in the current shell
-      (
-        cd "${dir_name}" || exit
-        tar -x"$1"f -
-      ) <"${dir_name}/${file_name}"
-    fi
+        (
+          cd "${dir_name}" || exit
+          tar -xjf -
+        ) < "${dir_name}/${file_name}"
+      ;;
+      "application/gzip")
+        (
+          cd "${dir_name}" || exit
+          tar -xzf -
+        ) < "${dir_name}/${file_name}"
+      ;;
+      "application/x-xz")
+        (
+          cd "${dir_name}" || exit
+          tar -xJf -
+        ) < "${dir_name}/${file_name}"
+      ;;
+      *)
+        output_proxy_executioner "ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
+        exit 1
+      ;;
+    esac
   else
     output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist." "${FLAG_QUIETNESS}"
     exit 1
   fi
-  # Delete file now that is has been decompressed trash
+  # Delete file. Now that it has been decompressed is just trash
   rm -f "${dir_name}/${file_name}"
 
   # Only enter here if they are different, if not skip since it is pointless because the folder already has the desired
   # name
   if [ -n "${internal_folder_name}" ]; then
-    if [ "$3" != "${internal_folder_name}" ]; then
-      # Rename folder to $3 if the argument is set
-      if [ -n "$3" ]; then
+    # Check if we know the name of the folder that is in the root of the compressed file.
+    if [ "$2" != "${internal_folder_name}" ]; then
+      # If the name of the internal folder of the compressed is not $3, then rename to $3
+      if [ -n "$2" ]; then
         # Delete the folder that we are going to move to avoid collisions
-        rm -Rf "${dir_name:?}/$3"
-        mv "${dir_name}/${internal_folder_name}" "${dir_name}/$3"
+        rm -Rf "${dir_name:?}/$2"
+        mv "${dir_name}/${internal_folder_name}" "${dir_name}/$2"
       fi
     fi
   fi
@@ -834,14 +878,13 @@ repositoryclone_installation_type() {
 packageinstall_installation_type() {
   local -r packageurls="$1_packageurls[@]"
   # Used to download a compressed package where the .deb are located.
-  local -r compressedfileurl="$1_compressedfileurl"
   local -r compressedfiletype="$1_compressedfiletype"
 
   # Use a compressed file that contains .debs
   if [ -n "${!compressedfileurl}" ]; then
     ${PACKAGE_MANAGER_ENSUREDEPENDENCIES}
     download "${!compressedfileurl}" "${BIN_FOLDER}/$1_package_compressed_file"
-    decompress "${!compressedfiletype}" "${BIN_FOLDER}/$1_package_compressed_file" "$1"
+    decompress "${BIN_FOLDER}/$1_package_compressed_file" "$1"
     ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"
     rm -Rf "${BIN_FOLDER:?}/$1"
     ${PACKAGE_MANAGER_FIXBROKEN}
@@ -894,10 +937,10 @@ userinherit_installation_type() {
   create_folder "${defaultpath}"
   download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
   if [ "${!donotinherit_pointer}" == "yes" ]; then
-    decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file"
+    decompress "${defaultpath}/$1_compressed_file"
     apply_permissions_recursively "${defaultpath}"
   else
-    decompress "${!compressedfiletype}" "${defaultpath}/$1_compressed_file" "$1"
+    decompress "${defaultpath}/$1_compressed_file" "$1"
     apply_permissions_recursively "${defaultpath}/$1"
   fi
 }
