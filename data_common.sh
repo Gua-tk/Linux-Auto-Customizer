@@ -44,7 +44,7 @@ initialize_package_manager_yum() {
   PACKAGE_MANAGER_INSTALLPACKAGES="yum -y install"
   PACKAGE_MANAGER_UNINSTALLPACKAGE="yum -y purge"
   PACKAGE_MANAGER_AUTOREMOVE="yum -y autoremove"
-  PACKAGE_MANAGER_AUTOCLEAN=";"
+  PACKAGE_MANAGER_AUTOCLEAN=":"
 
 }
 

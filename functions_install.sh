@@ -240,7 +240,6 @@ create_links_in_path() {
     shift
     shift
   done
-
 }
 
 
@@ -270,7 +269,9 @@ create_manual_launcher() {
 # - Arguments:
 #   * Argument 1: Path to the file to decompress.
 #   * Argument 2 (optional): If argument 2 is set, it will try to get the name of a directory that is in the root of the
-#     compressed file. Then, after the decompressing, it will rename that directory to $2.
+#     compressed file. Then, after the decompressing, it will rename that directory to $2. If a single directory is
+#     not detected inside of the root of the decompressed file, it will be created manually and the decompressed file
+#     will be extracted INSIDE of this created directory.
 decompress() {
   local dir_name=
   local file_name=
@@ -336,10 +337,11 @@ decompress() {
       dir_name="${dir_name}/$2"
     else
       # Clean to avoid conflicts with previously installed software or aborted installation
-      rm -Rf "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured"}"
+      rm -Rf "${dir_name}/${internal_folder_name:?"ERROR: The name of the installed program could not been captured."}"
     fi
   fi
 
+  # Use mimetype for extraction
   if [ -f "${dir_name}/${file_name}" ]; then
     case "${mime_type}" in
       "application/zip")
@@ -373,16 +375,17 @@ decompress() {
       ;;
     esac
   else
-    output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist" "${FLAG_QUIETNESS}"
     exit 1
   fi
   # Delete file. Now that it has been decompressed is just trash
   rm -f "${dir_name}/${file_name}"
 
-  # Only enter here if they are different, if not skip since it is pointless because the folder already has the desired
-  # name
+  # Now we need to change the name of the decompressed folder and the existence of $2 in order to change the name of the
+  # decompressed folder. We only enter here if they are different, if not skip since it is pointless because the
+  # folder already has the desired name.
   if [ -n "${internal_folder_name}" ]; then
-    # Check if we know the name of the folder that is in the root of the compressed file.
+    # Check if we know the name of the folder that is in the root of the compressed file
     if [ "$2" != "${internal_folder_name}" ]; then
       # If the name of the internal folder of the compressed is not $3, then rename to $3
       if [ -n "$2" ]; then
@@ -396,12 +399,12 @@ decompress() {
 
 
 # - Description: Downloads a file from the link provided in $1 and, if specified, with the location and name specified
-#   in $2. If $2 is not defined, download into ${BIN_FOLDER}/downloading_program.
+#   in $2. If $2 is not defined, the file is downloaded into ${BIN_FOLDER}/downloading_program.
 # - Permissions: Can be called as root or normal user. If called as root changes the permissions and owner to the
 #   $SUDO_USER user, otherwise, needs permissions to create the file $2.
 # - Argument 1: Link to the file to download.
 # - Argument 2 (optional): Path to the created file, allowing to download in any location and use a different filename.
-#   By default the name of the file is downloading file and the PATH where is being downloaded is BIN_FOLDER.
+#   By default the name of the file is "downloading_file" and the PATH where is being downloaded is $BIN_FOLDER.
 download() {
   local dir_name=
   local file_name=
@@ -421,6 +424,8 @@ download() {
       else
         # maybe is the path to a file
         dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
+        echo "download AAAAAAAAAAAAAAAA: $2, dirname $dirname "
+        echo $dir_name
         file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
         if [ ! -d "${dir_name}" ]; then
           output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
@@ -484,20 +489,6 @@ download() {
     fi
 
   fi
-}
-
-
-# - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
-#   dpkg -i.
-# - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
-# - Argument 1: Link to the package file to download.
-# - Argument 2 (Optional): Tho show the name of the program downloading and thus change the name of the downloaded
-#   package.
-download_and_install_package() {
-  download "$1" "$2"
-  ${PACKAGE_MANAGER_FIXBROKEN}
-  ${PACKAGE_MANAGER_INSTALLPACKAGE} "${BIN_FOLDER}/$2"
-  rm -f "${BIN_FOLDER}/$2"
 }
 
 
@@ -773,7 +764,7 @@ generic_install_dependencies() {
   fi
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
-    ${PACKAGE_MANAGER_ENSUREDEPENDENCIES}
+    ${PACKAGE_MANAGER_FIXBROKEN}
     ${PACKAGE_MANAGER_INSTALL} "${packagedependency}"
   done
 }
@@ -832,9 +823,63 @@ generic_install_clone() {
   fi
 }
 
+
+# - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
+#   dpkg -i.
+# - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
+# - Argument 1: Link to the package file to download.
+# - Argument 2 (Optional): Tho show the name of the program downloading and thus change the name of the downloaded
+#   package.
+download_and_install_package() {
+  if [ -z "$2" ]; then
+    local file_name="${RANDOM}_package_file"
+  else
+    local file_name="$2"
+  fi
+  download "$1" "${BIN_FOLDER}/${file_name}"
+
+  local mime_type=
+  mime_type="$(mimetype "${BIN_FOLDER}/${file_name}" | cut -d ":" -f2 | tr -d " ")"
+  case "${mime_type}" in
+    "application/zip"|"application/x-bzip-compressed-tar"|"application/gzip"|"application/x-xz")
+    echo "${file_name}"compressedAAAAAAAAAAAAAAAA
+      decompress "${BIN_FOLDER}/${file_name}" "${file_name}_decompressed"  # Decompressing
+      ${PACKAGE_MANAGER_FIXBROKEN}
+      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"  # Notice the S at the end of this variable...
+      ${PACKAGE_MANAGER_FIXBROKEN}
+      # Remove decompressed folder that contains the installable packages
+      rm -Rf "${BIN_FOLDER:?}/${file_name}_decompressed"
+    ;;
+    "application/vnd.debian.binary-package")
+      ${PACKAGE_MANAGER_FIXBROKEN}
+      ${PACKAGE_MANAGER_INSTALLPACKAGE} "${BIN_FOLDER}/${file_name}"  # ...is not the same as this variable.
+      ${PACKAGE_MANAGER_FIXBROKEN}
+    ;;
+    *)
+      output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the package file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
+      exit 1
+    ;;
+  esac
+}
+
+
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
 ########################################################################################################################
+
+# - Description: Installs packages using the default low-level package installation transparently. In the case of
+#   apt-get it will be dpkg, and in the case of yum it will be rpm.
+# - Permissions: Expected to be run by root.
+# - Argument 1: String that matches a set of variables in data_features.
+packageinstall_installation_type() {
+  local -r packageurls="$1_packageurls[@]"
+  local name_suffix_anticollision=""
+  for packageurl in "${!packageurls}"; do
+    download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
+
+}
 
 # - Description: Installs packages using python environment.
 # - Permissions: It is expected to be called as user.
@@ -871,32 +916,6 @@ repositoryclone_installation_type() {
   generic_install_clone "$1" "${!repositoryurl}"
 }
 
-
-# - Description: Installs packages using dpkg
-# - Permissions: Expected to be run by root.
-# - Argument 1: String that matches a set of variables in data_features.
-packageinstall_installation_type() {
-  local -r packageurls="$1_packageurls[@]"
-  # Used to download a compressed package where the .deb are located.
-  local -r compressedfiletype="$1_compressedfiletype"
-
-  # Use a compressed file that contains .debs
-  if [ -n "${!compressedfileurl}" ]; then
-    ${PACKAGE_MANAGER_ENSUREDEPENDENCIES}
-    download "${!compressedfileurl}" "${BIN_FOLDER}/$1_package_compressed_file"
-    decompress "${BIN_FOLDER}/$1_package_compressed_file" "$1"
-    ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"
-    rm -Rf "${BIN_FOLDER:?}/$1"
-    ${PACKAGE_MANAGER_FIXBROKEN}
-  else  # Use directly a downloaded .deb
-    local name_suffix_anticollision=""
-    for packageurl in "${!packageurls}"; do
-      download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
-      ${PACKAGE_MANAGER_FIXBROKEN}
-      name_suffix_anticollision="${name_suffix_anticollision}_"
-    done
-  fi
-}
 
 
 # - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER
