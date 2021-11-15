@@ -1127,6 +1127,11 @@ then
   return
 fi
 
+if ! gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings &> /dev/null; then
+  return
+fi
+
+
 # Check if there are keybindings available
 if [ -f \"${PROGRAM_KEYBINDINGS_PATH}\" ]; then
   # regenerate list of active keybindings
