@@ -701,7 +701,7 @@ codium() {
 ")
 codium_compressedfilepathoverride="${BIN_FOLDER}/codium"
 codium_binariesinstalledpaths=("bin/codium;codium")
-codium_compressedfileurl="https://github.com/VSCodium/vscodium/releases/download/1.60.2/VSCodium-linux-x64-1.60.2.tar.gz"
+codium_compressedfileurl="https://github.com/VSCodium/vscodium/releases/download/1.62.2/VSCodium-linux-x64-1.62.2.tar.gz"
 codium_launchercontents=("[Desktop Entry]
 Name=VSCodium
 StartupWMClass=codium
@@ -6263,7 +6263,7 @@ virtualbox_bashfunctions=("alias virtualbox=\"nohup virtualbox &>/dev/null &\"")
 virtualbox_launchernames=("virtualbox")
 virtualbox_packagedependencies=("make" "gcc" "perl" "python" "build-essential" "dkms" "libsdl1.2debian" "virtualbox-guest-utils" "libqt5printsupport5" "libqt5x11extras5" "libcurl4" "virtualbox-guest-dkms" "linux-headers-$(uname -r)" "libqt5opengl5" "linux-headers-generic" "linux-source" "linux-generic" "linux-signed-generic")
 virtualbox_packagenames=("virtualbox-6.1")
-virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.26/virtualbox-6.1_6.1.26-145957~Ubuntu~eoan_amd64.deb")
+virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.28/virtualbox-6.1_6.1.28-147628~Ubuntu~eoan_amd64.deb")
 virtualbox_package_manager_override="apt-get"
 virtualbox_readmeline="| VirtualBox | Hosted hypervisor for x86 virtualization | Command \`virtualbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
