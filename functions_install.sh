@@ -268,7 +268,7 @@ create_manual_launcher() {
 #     * Only a filename: Relative from $USR_BIN_FOLDER, so the file file $USR_BIN_FOLDER/$1 will be decompressed.
 # - Arguments:
 #   * Argument 1: Path to the file to decompress.
-#   * Argument 2 (optional): If argument 2 is set, it will try to get the name of a directory that is in the root of the
+#   * Argument 2: If argument 2 is set, it will try to get the name of a directory that is in the root of the
 #     compressed file. Then, after the decompressing, it will rename that directory to $2. If a single directory is
 #     not detected inside of the root of the decompressed file, it will be created manually and the decompressed file
 #     will be extracted INSIDE of this created directory.
@@ -295,11 +295,11 @@ decompress() {
     fi
   fi
 
-  # We have to inherit if $3 is set. Try to capture the name of the internal folder in the compressed file
+  # We have to inherit if $2 is set. Try to capture the name of the internal folder in the compressed fileho
+  local mime_type=
+  mime_type="$(file --mime-type "${dir_name}/${file_name}" | cut -d ":" -f2 | tr -d " ")"
   if [ -n "$2" ]; then
-    # Detect compression mimetype
-    local mime_type=
-    mime_type="$(mimetype "${dir_name}/${file_name}" | cut -d ":" -f2 | tr -d " ")"
+    # Detect internal_folder_name
     case "${mime_type}" in
       "application/zip")
         local internal_folder_name=
@@ -322,7 +322,7 @@ decompress() {
         local -r internal_folder_name=$( (tar -tJf - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
       ;;
       *)
-        output_proxy_executioner "ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
         exit 1
       ;;
     esac
@@ -370,7 +370,7 @@ decompress() {
         ) < "${dir_name}/${file_name}"
       ;;
       *)
-        output_proxy_executioner "ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
         exit 1
       ;;
     esac
@@ -424,8 +424,6 @@ download() {
       else
         # maybe is the path to a file
         dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
-        echo "download AAAAAAAAAAAAAAAA: $2, dirname $dirname "
-        echo $dir_name
         file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
         if [ ! -d "${dir_name}" ]; then
           output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
@@ -842,7 +840,6 @@ download_and_install_package() {
   mime_type="$(mimetype "${BIN_FOLDER}/${file_name}" | cut -d ":" -f2 | tr -d " ")"
   case "${mime_type}" in
     "application/zip"|"application/x-bzip-compressed-tar"|"application/gzip"|"application/x-xz")
-    echo "${file_name}"compressedAAAAAAAAAAAAAAAA
       decompress "${BIN_FOLDER}/${file_name}" "${file_name}_decompressed"  # Decompressing
       ${PACKAGE_MANAGER_FIXBROKEN}
       ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"  # Notice the S at the end of this variable...
@@ -955,13 +952,13 @@ userinherit_installation_type() {
 
   create_folder "${defaultpath}"
   download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
-  if [ "${!donotinherit_pointer}" == "yes" ]; then
-    decompress "${defaultpath}/$1_compressed_file"
-    apply_permissions_recursively "${defaultpath}"
-  else
+  #if [ "${!donotinherit_pointer}" == "yes" ]; then
+  #  decompress "${defaultpath}/$1_compressed_file"
+  #  apply_permissions_recursively "${defaultpath}"
+  #else
     decompress "${defaultpath}/$1_compressed_file" "$1"
     apply_permissions_recursively "${defaultpath}/$1"
-  fi
+  #fi
 }
 
 
