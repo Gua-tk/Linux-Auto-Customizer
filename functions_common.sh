@@ -574,6 +574,24 @@ add_programs()
 }
 
 
+# - Description: Receives a list of commands separated by spaces and returns 1 if any of the received commands is  not
+#   installed, returns 0 otherwise.
+# - Permission: Can be called as root or user, but it will have different behaviours since the environment of the root
+#   user is presumably not the same as a normal user, and consequently it will have different behaviour.
+# - Argument 1, 2, 3, 4...: Each of the command that will be checked for existence.
+check_dependency()
+{
+  while [ $# -gt 0 ]; do
+    if command -v "$1" &>/dev/null; then
+      shift
+    else
+      return 1
+    fi
+  done
+  return 0
+}
+
+
 # - Description: Receives an argument and add or remove the corresponding feature for that argument to the installation
 #   list. Also, if adding the installation of a program, save the current state of the flags, taking in account the flag
 #   states that have to be overwritten. Some flags are processed in here, while others are "passed" indirectly to
