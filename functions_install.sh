@@ -952,13 +952,13 @@ userinherit_installation_type() {
 
   create_folder "${defaultpath}"
   download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
-  #if [ "${!donotinherit_pointer}" == "yes" ]; then
-  #  decompress "${defaultpath}/$1_compressed_file"
-  #  apply_permissions_recursively "${defaultpath}"
-  #else
+  if [ "${!donotinherit_pointer}" == "yes" ]; then
+    decompress "${defaultpath}/$1_compressed_file"
+    apply_permissions_recursively "${defaultpath}"
+  else
     decompress "${defaultpath}/$1_compressed_file" "$1"
     apply_permissions_recursively "${defaultpath}/$1"
-  #fi
+  fi
 }
 
 
