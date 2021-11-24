@@ -6052,6 +6052,7 @@ thunderbird_arguments=("thunderbird")
 thunderbird_launchernames=("thunderbird")
 thunderbird_packagenames=("thunderbird")
 thunderbird_readmeline="| Thunderbird | Email, personal information manager, news, RSS and chat client | Command \`thunderbird\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+thunderbird_bashfunctions=("alias thunderbird=\"nohup thunderbird &>/dev/null &\"")
 
 tilix_installationtype="packagemanager"
 tilix_arguments=("tilix")
