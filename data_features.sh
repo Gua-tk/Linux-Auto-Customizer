@@ -4166,7 +4166,6 @@ matlab_compressedfilepathoverride="${TEMP_FOLDER}"
 # when creating these links in the path.
 matlab_binariesinstalledpaths=("bin/matlab;matlab" "bin/mex;mex")
 matlab_downloads=('https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png;matlab_icon.svg')
-# Exec=matlab -desktop -prefersoftwareopengl
 matlab_launchercontents=(
 "[Desktop Entry]
 Version=1.0
