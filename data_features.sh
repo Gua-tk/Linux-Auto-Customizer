@@ -4172,7 +4172,7 @@ Version=1.0
 Type=Application
 Name=MATLAB R2021a
 Icon=${BIN_FOLDER}/matlab/matlab_icon.svg
-Exec=matlab
+Exec=matlab -desktop
 Terminal=false
 ")
 matlab_manualcontentavailable="0;1;0"
