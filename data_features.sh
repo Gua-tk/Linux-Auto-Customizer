@@ -4148,8 +4148,11 @@ matlab_bashfunctions=("alias matlab=\"nohup matlab &>/dev/null\"")
 matlab_compressedfileurl="https://es.mathworks.com/downloads/web_downloads"
 # It is an installer. Decompress in temporal folder to install and remove afterwards
 matlab_compressedfilepathoverride="${TEMP_FOLDER}"
+# When following the graphical installation of matlab, install it in $BIN_FOLDER/matlab in order to find the executables
+# when creating these links in the path.
+matlab_binariesinstalledpaths=("bin/matlab;matlab" "bin/mex;mex")
 matlab_manualcontentavailable="0;1;0"
-matlab_readmeline="| Matlab | IDE + programming language specialized in matrix operations | command \`matlab\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [x] Debian</li></ul> |"
+matlab_readmeline="| Matlab | IDE + programming language specialized in matrix operations | command \`matlab\`, \'mex\' ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [x] Debian</li></ul> |"
 install_matlab_mid()
 {
   "${TEMP_FOLDER}/matlab/install"  # Execute installer
