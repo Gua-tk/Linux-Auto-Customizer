@@ -4176,10 +4176,20 @@ Exec=matlab
 Terminal=false
 ")
 matlab_manualcontentavailable="0;1;0"
+matlab_bashfunctions=("
+matlab() {
+  if [ \$# -eq 0 ]; then
+    args=\".\"
+  else
+    args=\"\$@\"
+  fi
+  nohup matlab \${args} &>/dev/null &
+}
+")
 matlab_readmeline="| Matlab | IDE + programming language specialized in matrix operations | command \`matlab\`, \'mex\' ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [x] Debian</li></ul> |"
 install_matlab_mid()
 {
-  #"${TEMP_FOLDER}/matlab/install"  # Execute installer
+  "${TEMP_FOLDER}/matlab/install"  # Execute installer
   rm -Rf "${TEMP_FOLDER}/matlab"
 }
 uninstall_matlab_mid()
