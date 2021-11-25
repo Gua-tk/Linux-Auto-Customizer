@@ -4165,7 +4165,7 @@ matlab_compressedfilepathoverride="${TEMP_FOLDER}"
 # When following the graphical installation of matlab, install it in $BIN_FOLDER/matlab in order to find the executables
 # when creating these links in the path.
 matlab_binariesinstalledpaths=("bin/matlab;matlab" "bin/mex;mex")
-matlab_downloads=('https://icon-icons.com/downloadimage.php?id=130398&root=2107/SVG/&file=file_type_matlab_icon_130398.svg;matlab_icon.svg')
+matlab_downloads=('https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png;matlab_icon.svg')
 # Exec=matlab -desktop -prefersoftwareopengl
 matlab_launchercontents=(
 "[Desktop Entry]
