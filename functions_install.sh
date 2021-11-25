@@ -454,6 +454,8 @@ download() {
     fi
   fi
 
+  echo "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdownloading ${dir_name}/${file_name}"
+  sleep 2
   # Check if it is cached
   if [ -f "${CACHE_FOLDER}/${file_name}" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
     cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
@@ -614,10 +616,18 @@ generic_install_keybindings() {
 #   and the name of the first argument in the common_data.sh table
 generic_install_downloads() {
   local -r downloads="$1_downloads[@]"
-  for download in ${!downloads}; do
+      echo "AAA${!downloads}AA"
+    sleep 2
+  for each_download in ${!downloads}; do
+    echo XQ$each_download
+  done
+
+  for each_download in ${!downloads}; do
+    echo jhjhvvvvvvvvvvvvvvvvvvASAAAA
+    sleep 2
     create_folder "${BIN_FOLDER}/$1"
-    local -r url="$(echo "${download}" | cut -d ";" -f1)"
-    local -r name="$(echo "${download}" | cut -d ";" -f2)"
+    local -r url="$(echo "${each_download}" | cut -d ";" -f1)"
+    local -r name="$(echo "${each_download}" | cut -d ";" -f2)"
     download "${url}" "${BIN_FOLDER}/$1/${name}"
   done
 }
@@ -659,6 +669,7 @@ generic_install_autostart() {
 generic_install_pathlinks() {
   # Path to the binaries to be added, with a ; with the desired name in the path
   local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
+  echo "AAAAAAAAAAAAAAAAAAAAAAAAAAA${!binariesinstalledpaths}"
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
     local binary_path=
     binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"

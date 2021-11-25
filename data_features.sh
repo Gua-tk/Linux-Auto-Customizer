@@ -30,8 +30,9 @@ fi
 ########################################################################################################################
 # The variables in here follow a naming scheme that is required for each feature to obtain its data by variable        #
 # indirect expansion. The variables that are defined for an installation determine its behaviour.                      #
-# Each installations has its own FEATUREKEYNAME, which is an string that matches an unique feature. This string must   #
-# be added to the array feature_keynames to be recognised by the customizer as an available installation.              #
+# Each installations has its own FEATUREKEYNAME, which is an string that matches an unique feature. We use the name of #
+# the main terminal command installed by the feature used to run it. This string must be added to the array            #
+# feature_keynames in data_common.sh to be recognised by the customizer as an available installation.                  #
 # The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY. Some variables can be defined in all features,  #
 # some are only used depending on the installation type and others have to be defined always for each feature.         #
 #                                                                                                                      #
@@ -39,9 +40,20 @@ fi
 ###### Available properties:                                                                                           #
 #                                                                                                                      #
 ### Mandatory properties:                                                                                              #
-#  - FEATUREKEYNAME_arguments: Array containing the arguments for each feature. Each argument has to be in lower case  #
-#    and contain a _ in the possible parts of an argument where you could expect a separation with - or _. This is     #
-#    used to match arguments ignoring case and separation symbols.                                                     #
+#  - FEATUREKEYNAME_arguments: Array containing the arguments recognized to select the current feature. The arguments  #
+#    are the "name" of the feature, which for third-party software is the known name of the software itself and for    #
+#    functionalities is usually a description of what the function does in one or two words. Also, for historical and  #
+#    practical reasons we keep the first argument as the main command that the feature installs, which coincides with  #
+#    the FEATUREKEYNAME of the feature itself.                                                                         #
+#    The arguments have to be in lower case and in the case of a possible separation by any symbol, use underscore (_).#
+#    This will cause multiple argument matching in install.sh and uninstall.sh by ignoring case and interpreting       #
+#    underscores as a possible separation with multiple underscores or multiple hyphens.                               #
+#    For example, the feature with FEATUREKEYNAME "code" is the software Visual Studio Code which has the arguments    #
+#    "code", "visual_studio_code" and "visual_studio". This matches the string itself plus their variants with         #
+#    different casing or different separation, such as matching "Visual_Studio", "VISUAL-studio", "Code", "--code",    #
+#    "--viSual_Studio", etc.                                                                                           #
+#    The list of FEATUREKEYNAMEs is also used as first source of arguments, since it should contain the names of the   #
+#    commands that are going to be installed, which is something that we can suppose unique.                           #
 #  - FEATUREKEYNAME_installationtype. Define the type of installation, which sets a fixed behaviour that obtains its   #
 #    input from predefined sets of properties for each installation type (check next section Installation type         #
 #    dependent properties). This can be set to:                                                                        #
@@ -74,10 +86,12 @@ fi
 #  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from  #
 #    a function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,               #
 #    install_FEATUREKEYNAME_post.                                                                                      #
-#  - FEATUREKEYNAME_filekeys: Array contentaining the keys to indirect expand file to be created and its path          #
-#  - FEATUREKEYNAME_FILEKEY_content: Variable with the content of a file identified in each feature with a particular  #
+#  - FEATUREKEYNAME_filekeys: Array containing the FILEKEYs to indirect expand file content and file path to create    #
+#    a new file. Content and path of the file can be set using the two following variables:                            #
+#    - FEATUREKEYNAME_FILEKEY_content: Variable with the content of a file identified in each feature with a particular#
 #    FILEKEY.                                                                                                          #
-#  - FEATUREKEYNAME_FILEKEY_path: Variable with the path where we need to store the file with that FILEKEY.            #
+#    - FEATUREKEYNAME_FILEKEY_path: Variable with the path where we need to store the file with that FILEKEY.          #
+#                                                                                                                      #
 #  - FEATUREKEYNAME_flagsoverride: Contains bits that will override the current state of the flags in the declared     #
 #    installations. Its format is the following:                                                                       #
 #            1                  2                   3                    4                  5                 6        #
@@ -98,7 +112,7 @@ fi
 #  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.                           #
 #  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit and in packageinstall  #
 #    as fallback if no urls are supplied in packageurls; in that case will also need a compressedfiletype.             #
-#  - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform the download and decompression.        #
+#  - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform download and decompression.            #
 #    Used in: userinherit.                                                                                             #
 #  - FEATUREKEYNAME_repositoryurl: Repository to be cloned. Used in: repositoryclone.                                  #
 #  - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if  #
@@ -107,7 +121,7 @@ fi
 #  - FEATUREKEYNAME_pipinstallations: Array containing set of programs to be installed via pip. Used in: pythonvenv.   #
 #  - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3.     #
 #    Used in: pythonvenv.                                                                                              #
-# - FEATUREKEYNAME_donotinherit: It does not expect a directory into a compressed file only to decompress in place.    #
+#  - FEATUREKEYNAME_donotinherit: It does not expect a directory into a compressed file only to decompress in place.   #
 ########################################################################################################################
 
 
@@ -4151,7 +4165,7 @@ matlab_compressedfilepathoverride="${TEMP_FOLDER}"
 # When following the graphical installation of matlab, install it in $BIN_FOLDER/matlab in order to find the executables
 # when creating these links in the path.
 matlab_binariesinstalledpaths=("bin/matlab;matlab" "bin/mex;mex")
-matlab_downloads=("https://icon-icons.com/downloadimage.php?id=130398&root=2107/SVG/&file=file_type_matlab_icon_130398.svg;matlab_icon.svg")
+matlab_downloads=('https://icon-icons.com/downloadimage.php?id=130398&root=2107/SVG/&file=file_type_matlab_icon_130398.svg;matlab_icon.svg')
 # Exec=matlab -desktop -prefersoftwareopengl
 matlab_launchercontents=(
 "[Desktop Entry]
@@ -4166,7 +4180,7 @@ matlab_manualcontentavailable="0;1;0"
 matlab_readmeline="| Matlab | IDE + programming language specialized in matrix operations | command \`matlab\`, \'mex\' ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [x] Debian</li></ul> |"
 install_matlab_mid()
 {
-  "${TEMP_FOLDER}/matlab/install"  # Execute installer
+  #"${TEMP_FOLDER}/matlab/install"  # Execute installer
   rm -Rf "${TEMP_FOLDER}/matlab"
 }
 uninstall_matlab_mid()
