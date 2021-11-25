@@ -245,7 +245,7 @@ autogen_readme()
     prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
     local suffix=
     suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
-    local readme_line="${prefix}${program_arguments}${suffix}"
+    local readme_line="${prefix} ${program_arguments} ${suffix}"
     case ${installation_type} in
       packagemanager|packageinstall)
         root_lines+=("${readme_line}")
