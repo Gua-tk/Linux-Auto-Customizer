@@ -107,7 +107,6 @@ cd32379  UPDATED: A table of contents have been added to README.md (Axlfc)
 e40bfe3  FIXED: Bug in clonerepository installation type. There was an rm missing for avoiding collisions (AleixMT)
 ```
 
-
 ## Semmantic versioning
 
 We do use semmantic versioning as defined in [here](https://semver.org/). 
