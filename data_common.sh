@@ -412,6 +412,7 @@ declare -r feature_keynames=(
   "lmms"
   "loc"
   "lolcat"
+  "matlab"
   "mdadm"
   "megasync"
   "meld"

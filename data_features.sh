@@ -461,6 +461,23 @@ caffeine_launchernames=("caffeine-indicator")
 caffeine_manualcontentavailable="1;0;1"
 caffeine_packagenames=("caffeine")
 caffeine_readmeline="| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the sleep power saving mode. | Commands \`caffeine\`, \`caffeinate\` and \`caffeine-indicator\`, desktop launcher for \`caffeine\`, dashboard launcher for \`caffeine\` and \`caffeine-indicator\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+install_caffeine_pre()
+{
+  apt-get purge -y caffeine
+}
+install_caffeine_post()
+{
+  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
+}
+uninstall_caffeine_pre()
+{
+ :
+}
+
+uninstall_caffeine_post()
+{
+ :
+}
 
 calibre_installationtype="packagemanager"
 calibre_arguments=("calibre")
@@ -504,6 +521,13 @@ changebg_filekeys=("cronscript" "cronjob")
 changebg_manualcontentavailable="0;0;1"
 changebg_readmeline="| Function \`changebg\` | Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes | Function \`changebg\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
+install_changebg_post() {
+  crontab "${BIN_FOLDER}/changebg/.cronjob"
+}
+install_changebg_post() {
+  :
+  #crontab "${USR_BIN_FOLDER}/changebg/.cronjob"
+}
 
 cheat_installationtype="environmental"
 cheat_arguments=("cheat" "cht.sh")
@@ -841,7 +865,18 @@ _customizer-install() {
 complete -F _customizer-install customizer-install
 ")
 customizer_readmeline="| Linux Auto Customizer | Program and function management and automations | Command \`customizer-install\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-#      diff --color=auto \"\$1\" \"\$2\"
+install_customizer_post()
+{
+  ln -sf "${DIR}/install.sh" /usr/bin/customizer-install
+  if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}"; then
+    echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
+  fi
+}
+uninstall_customizer_post()
+{
+  remove_file /usr/bin/customizer-uninstall
+  remove_line "source \"${BASH_FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}"
+}
 
 d_installationtype="environmental"
 d_arguments=("d")
@@ -3244,6 +3279,15 @@ gitcm_compressedfilepathoverride="${BIN_FOLDER}/gitcm"  # It has not a folder in
 gitcm_donotinherit="yes"
 gitcm_readmeline="| Git Credentials Manager | Plug-in for git to automatically use personal tokens | Command \`gitcm\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 gitcm_manualcontentavailable="0;0;1"
+install_gitcm_post()
+{
+  git config --global credential.credentialStore plaintext
+}
+uninstall_gitcm_post()
+{
+  :
+  #git config --global credential.credentialStore plaintext
+}
 
 github_installationtype="environmental"
 github_arguments=("github")
@@ -3446,7 +3490,6 @@ Type=Application
 Version=1.0
 ")
 google_readmeline="| Google | ${google_readmelinedescription} | Command \`google\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 googlecalendar_installationtype="environmental"
 googlecalendar_arguments=("google_calendar")
@@ -3837,6 +3880,54 @@ jupyter_lab_manualcontentavailable="1;1;0"
 jupyter_lab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
 jupyter_lab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
 jupyter_lab_readmeline="| Jupyter Lab | ${jupyter_lab_readmelinedescription} | alias \`lab\`, commands \`jupyter-lab\`, \`jupyter-lab\`, \`ipython\`, \`ipython3\`, desktop launcher and dashboard launcher. Recognized programming languages: Python, Ansible, Bash, IArm, Kotlin, PowerShell, Vim. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+install_jupyter_lab_pre() {
+  local -r dependencies=("npm" "R" "julia")
+  for dependency in "${dependencies[@]}"; do
+
+    if ! which "${dependency}" &>/dev/null; then
+      output_proxy_executioner "echo ERROR: ${dependency} is not installed. You can installing using bash install.sh --npm --R --julia" "${FLAG_QUIETNESS}"
+      exit 1
+    fi
+  done
+}
+install_jupyter_lab_mid() {
+  # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
+  "${BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension install @telamonian/theme-darcula
+  "${BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension enable @telamonian/theme-darcula
+
+  "${BIN_FOLDER}/jupyter_lab/bin/jupyter" lab build
+
+  # ijs legacy install
+  npm config set prefix "${HOME_FOLDER}/.local"
+  npm install -g ijavascript
+  ijsinstall
+
+  # Set up IRKernel for R-jupyter
+  # R -e "install.packages('IRkernel')
+  # install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
+  #                repos = c('http://irkernel.github.io/',
+  #                getOption('repos')),
+  #                type = 'source')
+  # IRkernel::installspec()"
+
+  # install jupyter-lab dependencies down
+  julia -e '#!/.local/bin/julia
+  using Pkg
+  Pkg.add("IJulia")
+  Pkg.build("IJulia")'
+}
+uninstall_jupyter_lab_pre() {
+  :
+}
+uninstall_jupyter_lab_mid() {
+
+  # install jupyter-lab dependencies down
+  #julia -e '#!/.local/bin/julia
+  #using Pkg
+  #Pkg.add("IJulia")
+  #Pkg.build("IJulia")'
+  :
+}
 
 k_installationtype="environmental"
 k_arguments=("k")
@@ -4047,6 +4138,27 @@ lolcat_arguments=("lolcat")
 lolcat_bashfunctions=("alias lol=\"lolcat\"")
 lolcat_packagenames=("lolcat")
 lolcat_readmeline="| lolcat | Same as the command \`cat\` but outputting the text in rainbow color and concatenate string | command \`lolcat\`, alias \`lol\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+matlab_installationtype="userinherit"
+matlab_arguments=("matlab" "mat_lab" "math_works")
+matlab_bashfunctions=("alias matlab=\"nohup matlab &>/dev/null\"")
+# Matlab can only be downloaded by creating an account, making it impossible to download the file programmatically.
+# Instead, download the linux installation file of matlab and manually cache it into customizer cache in order to
+# install matlab. To do so, put this file into $CACHE_FOLDER and rename it to "matlab_compressed_file"
+matlab_compressedfileurl="https://es.mathworks.com/downloads/web_downloads"
+# It is an installer. Decompress in temporal folder to install and remove afterwards
+matlab_compressedfilepathoverride="${TEMP_FOLDER}"
+matlab_manualcontentavailable="0;1;0"
+matlab_readmeline="| Matlab | IDE + programming language specialized in matrix operations | command \`matlab\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [x] Debian</li></ul> |"
+install_matlab_mid()
+{
+  "${TEMP_FOLDER}/matlab/install"  # Execute installer
+  rm -Rf "${TEMP_FOLDER}/matlab"
+}
+uninstall_matlab_mid()
+{
+  :
+}
 
 mdadm_installationtype="packagemanager"
 mdadm_arguments=("mdadm")
@@ -4942,6 +5054,19 @@ pgadmin_manualcontentavailable="0;1;0"
 pgadmin_pipinstallations=("pgadmin4")
 pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")
 pgadmin_readmeline="| pgAdmin | ${pgadmin_readmelinedescription} | Command \`pgadmin4\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+install_pgadmin_mid() {
+  # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
+  # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
+  # information on how to call the script using the correct python interpreter, which is the one in the virtual
+  # environment an not the python system interpreter.
+
+  # Prepend shebang line to python3 interpreter of the venv
+  echo "#!${BIN_FOLDER}/pgadmin/bin/python3" | cat - "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" >"${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  chmod +x "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+}
+uninstall_pgadmin_mid() {
+  :
+}
 
 php_installationtype="packagemanager"
 php_arguments=("php")
@@ -5243,6 +5368,21 @@ pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux6
 pypy3_manualcontentavailable="0;1;0"
 pypy3_readmeline="| pypy3 | Faster interpreter for the Python3 programming language | Commands \`pypy3\` and \`pypy3-pip\` in the PATH || <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 pypy3_packagedependencies=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
+# Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
+install_pypy3_mid() {
+  # Install modules using pip
+  "${BIN_FOLDER}/pypy3/bin/pypy3" -m ensurepip
+
+  # Forces download of pip and of modules
+  "${BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir -q install --upgrade pip
+  "${BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir install cython numpy
+  # Currently not supported
+  # ${BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
+}
+# Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
+uninstall_pypy3_mid() {
+  :
+}
 
 python3_installationtype="packagemanager"
 python3_arguments=("python_3" "python" "v")
@@ -5467,6 +5607,12 @@ sherlock_bashfunctions=("alias sherlock=\"python3 \"${BIN_FOLDER}/sherlock/sherl
 sherlock_repositoryurl="https://github.com/sherlock-project/sherlock.git"
 sherlock_manualcontentavailable="0;0;1"
 sherlock_readmeline="| Sherlock | Tool to obtain linked social media accounts using user name | Commands \`sherlock\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+install_sherlock_post() {
+  python3 -m pip install -r "${BIN_FOLDER}/sherlock/requirements.txt"
+}
+uninstall_sherlock_post() {
+  :
+}
 
 shortcuts_installationtype="environmental"
 shortcuts_arguments=("shortcuts")
@@ -5732,6 +5878,15 @@ sysmontask_launchernames=("SysMonTask")
 sysmontask_manualcontentavailable="0;1;0"
 sysmontask_readmeline="| Sysmontask | Control panel for linux | Command \`sysmontask\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 sysmontask_repositoryurl="https://github.com/KrispyCamel4u/SysMonTask.git"
+install_sysmontask_mid() {
+  (
+    cd "${BIN_FOLDER}/sysmontask" || exit
+    python3 setup.py install
+  )
+}
+uninstall_sysmontask_mid() {
+  :
+}
 
 system_fonts_installationtype="environmental"
 system_fonts_arguments=("system_fonts")
@@ -6331,6 +6486,12 @@ wikit_manualcontentavailable=";1;"
 wikit_flagsoverride="1;;;;;"  # Install always as user
 wikit_arguments=("wikit")
 wikit_readmeline="| Wikit | Wikipedia search inside terminal | Command \`wikit\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+install_wikit_mid() {
+  npm install wikit -g
+}
+uninstall_wikit_mid() {
+  npm remove wikit -g
+}
 
 wireshark_installationtype="packagemanager"
 wireshark_arguments=("wireshark")
