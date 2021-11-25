@@ -4151,6 +4151,17 @@ matlab_compressedfilepathoverride="${TEMP_FOLDER}"
 # When following the graphical installation of matlab, install it in $BIN_FOLDER/matlab in order to find the executables
 # when creating these links in the path.
 matlab_binariesinstalledpaths=("bin/matlab;matlab" "bin/mex;mex")
+matlab_downloads=("https://icon-icons.com/downloadimage.php?id=130398&root=2107/SVG/&file=file_type_matlab_icon_130398.svg;matlab_icon.svg")
+# Exec=matlab -desktop -prefersoftwareopengl
+matlab_launchercontents=(
+"[Desktop Entry]
+Version=1.0
+Type=Application
+Name=MATLAB R2021a
+Icon=${BIN_FOLDER}/matlab/matlab_icon.svg
+Exec=matlab
+Terminal=false
+")
 matlab_manualcontentavailable="0;1;0"
 matlab_readmeline="| Matlab | IDE + programming language specialized in matrix operations | command \`matlab\`, \'mex\' ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [x] Debian</li></ul> |"
 install_matlab_mid()
