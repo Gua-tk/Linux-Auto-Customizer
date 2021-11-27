@@ -107,9 +107,9 @@ cd32379  UPDATED: A table of contents have been added to README.md (Axlfc)
 e40bfe3  FIXED: Bug in clonerepository installation type. There was an rm missing for avoiding collisions (AleixMT)
 ```
 
-## Semmantic versioning
+## Semantic versioning
 
-We do use semmantic versioning as defined in [here](https://semver.org/). 
+We do use semantic versioning as defined in [here](https://semver.org/). 
 
 Given a version number MAJOR.MINOR.PATCH, increment the:
 
@@ -132,7 +132,7 @@ maximize the usability and fanciness of each of them and the different capabilit
 - [x] The software that is manually installed is put under `BIN_FOLDER`, which by default points to `~/.bin`. `~/.bin` and is always **present** during the execution of `install.sh`.
 - [x] Shell features are not installed directly into `~/.bashrc`, instead, there is always present during the runtime of `install sh` the file `$BIN_FOLDER/bash_functions/.bash_functions`, which is a file imported by `~/.bashrc`. In `~/.bash_functions`, you can write imports to individual scripts that provide a feature to the shell environment. Usually those scripts are stored under `~/.bin/bash_functions/`, which is a location always present. So the generic way to include new content to `~/.bashrc` is writing a script to `~/.bin/bash_functions` and including it in `~/.bash_functions/`.
 - [ ] Soft links to include a program in the PATH are created under `DIR_IN_PATH` which by default points to `~/.local/bin` a directory that is usually already in the PATH. If not, `install.sh` will add it at the beginning of the installation
-- [ ] Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using chgrp and chown
+- [ ] Files or folders created as root need to change their permissions and also its group and owner to the `${SUDO_USER}` using `chgrp` and `chown`
 - [ ] console features are not installed directly in bashrc; instead use the structure provided by the customizer using .bash_functions
 - [ ] Code lines length is 120 maximum. Lines with more characters need to be split in many. Some exceptions may apply, for example when defining vars that contain links.
 - [ ] help lines in 80 characters.
