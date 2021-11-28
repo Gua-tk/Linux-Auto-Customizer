@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Install all programs, show output and save it to a file, ignore errors, overwrite already existent features
-sudo bash install.sh -v -o -i --root | tee customizersudoall.outerr.txt &
+sudo bash ../src/install.sh -v -o -i --root | tee customizersudoall.outerr.txt &
 PID_ROOT=$!
 # wait 10 seconds to write the password with nothing on the screen
 sleep 10
-bash install.sh -v -o -i --user &>customizeruserall.outerr.txt &
+bash ../src/install.sh -v -o -i --user &>customizeruserall.outerr.txt &
 PID_USER=$!
 
 gnome-terminal -- less +F -f -r customizeruserall.outerr.txt
