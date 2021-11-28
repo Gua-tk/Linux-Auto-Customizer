@@ -6449,24 +6449,24 @@ set -sg escape-time 0
 
 ## Clipboard integration
 # ctrl+c to send to clipboard
-bind C-c run \\\"tmux save-buffer - | xclip -i -sel clipboard\\\"
+bind C-c run \"tmux save-buffer - | xclip -i -sel clipboard\"
 # ctrl+v to paste from clipboard
-bind C-v run \\\"tmux set-buffer \\\\\"\\\$(xclip -o -sel clipboard)\\\\\"; tmux paste-buffer\\\"
+bind C-v run \"tmux set-buffer \\\"\$(xclip -o -sel clipboard)\\\"; tmux paste-buffer\"
 
 # Selection with mouse should copy to clipboard right away, in addition to the default action.
 unbind -n -Tcopy-mode-vi MouseDragEnd1Pane
-bind -Tcopy-mode-vi MouseDragEnd1Pane send -X copy-selection-and-cancel\; run \\\"tmux save-buffer - | xclip -i -sel clipboard > /dev/null\\\"
+bind -Tcopy-mode-vi MouseDragEnd1Pane send -X copy-selection-and-cancel\; run \"tmux save-buffer - | xclip -i -sel clipboard > /dev/null\"
 
 # # Use vim keybindings in copy mode
 setw -g mode-keys vi
 # Update default binding of Enter to also use copy-pipe
 unbind -T copy-mode-vi Enter
-bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel \\\"xclip -selection c\\\"
-bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel \\\"xclip -in -selection clipboard\\\"
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel \"xclip -selection c\"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel \"xclip -in -selection clipboard\"
 
 
 unbind-key MouseDown2Pane
-bind-key -n MouseDown2Pane run \\\"tmux set-buffer -- \\\\\"\\\$(xclip -o -sel primary);\\\\\"; tmux paste-buffer -p\\\"
+bind-key -n MouseDown2Pane run \"tmux set-buffer -- \\\"\$(xclip -o -sel primary);\\\"; tmux paste-buffer -p\"
 
 # Drag to re-order windows
 bind-key -n MouseDrag1Status swap-window -t=
@@ -6475,21 +6475,21 @@ bind-key -n MouseDrag1Status swap-window -t=
 bind-key -n DoubleClick1Status new-window
 
 # split panes using | and -
-unbind '\\\"'
+unbind '\"'
 unbind %
 bind | split-window -h
 bind - split-window -v
 
-set -g default-terminal \\\"screen-256color\\\"
+set -g default-terminal \"screen-256color\"
 # used colours
-GREY=\\\"colour233\\\"
-LGREY=\\\"colour235\\\"
-BLUE=\\\"colour4\\\"
-BLACK=\\\"#000000\\\"
-ORANGE=\\\"colour172\\\"
-GREEN=\\\"colour76\\\"
-WHITE=\\\"colour252\\\"
-UBUNTU=\\\"#2c001e\\\"
+GREY=\"colour233\"
+LGREY=\"colour235\"
+BLUE=\"colour4\"
+BLACK=\"#000000\"
+ORANGE=\"colour172\"
+GREEN=\"colour76\"
+WHITE=\"colour252\"
+UBUNTU=\"#2c001e\"
 
 # Dracula Colours
 background_color='#282a36'
@@ -6505,9 +6505,9 @@ red='#ff5555'
 yellow='#f1fa8c'
 
 # colorize messages in the command line
-set-option -g message-style \\\"bg=cyan,fg=black\\\"
-set -g pane-active-border-style fg=yellow,bg=\\\$background_color
-set -g pane-border-style fg=\\\$BLUE,bg=\\\$BLACK
+set-option -g message-style \"bg=cyan,fg=black\"
+set -g pane-active-border-style fg=yellow,bg=\$background_color
+set -g pane-border-style fg=\$BLUE,bg=\$BLACK
 setw -g window-status-activity-style fg=green,bg=black,none
 
 setw -g window-status-style bg=black
@@ -6521,17 +6521,17 @@ set-window-option -g window-status-style fg='#bd93f9',bg=default
 set-window-option -g window-status-current-style fg='#ff79c6',bg='#282a36'
 
 # pane border
-set-option -g pane-border-style fg=\\\$BLUE #fg=base02
+set-option -g pane-border-style fg=\$BLUE #fg=base02
 set-option -g pane-active-border-style fg=yellow
 set -g pane-border-status top
-set -g pane-border-format \\\"#P: #{pane_current_command}\\\"
+set -g pane-border-format \"#P: #{pane_current_command}\"
 
 # message text
-set-option -g message-style \\\"bg=cyan,fg=black\\\"
+set-option -g message-style \"bg=cyan,fg=black\"
 
 # pane number display
 set-option -g display-panes-active-colour green
-set-option -g display-panes-colour \\\$WHITE
+set-option -g display-panes-colour \$WHITE
 # clock
 set-window-option -g clock-mode-colour green #green
 
@@ -6547,24 +6547,24 @@ set-option -g automatic-rename-format '#{b:pane_current_path}'
 set -g status-interval 1
 
 set -g status-left-length 52
-setw -g window-status-current-format \\\$WINDOW
-setw -g window-status-format \\\$WINDOW
+setw -g window-status-current-format \$WINDOW
+setw -g window-status-format \$WINDOW
 
 set -g status-right-length 140
-set -g status-left \\\"#[fg=colour232,bg=colour154]#S#[fg=white,bg=colour238,nobold,nounderscore,noitalics]#[fg=colour222,bg=colour238]#{s|/home/|~/|\\\$HOME|~|=:pane_current_command}#[fg=white,bg=colour238,nobold,nounderscore,noitalics]\\\"
+set -g status-left \"#[fg=colour232,bg=colour154]#S#[fg=white,bg=colour238,nobold,nounderscore,noitalics]#[fg=colour222,bg=colour238]#{s|/home/|~/|\$HOME|~|=:pane_current_command}#[fg=white,bg=colour238,nobold,nounderscore,noitalics]\"
 
-set -g status-right '#[fg=\\\$foreground_color,bold]#(bash ~/Escritorio/git/gitlab/clockmoji/clockmoji.sh)#[default]'
+set -g status-right '#[fg=\$foreground_color,bold]#(bash ~/Escritorio/git/gitlab/clockmoji/clockmoji.sh)#[default]'
 
-set -g window-status-current-format \\\"#[fg=green, bg=\\\$background_color, bold][#[fg=red,bold]#(whoami)#[fg=green,bold]]\\\"
+set -g window-status-current-format \"#[fg=green, bg=\$background_color, bold][#[fg=red,bold]#(whoami)#[fg=green,bold]]\"
 
 # window creation/splitting
 unbind h
 unbind v
-bind | split-window -h -p 50 -c \\\"#{pane_current_path}\\\"
-bind - split-window -v -p 50 -c \\\"#{pane_current_path}\\\"
-bind c new-window -c \\\"#{pane_current_path}\\\"
-bind i command-prompt -p 'Insert window at:' 'new-window -c \\\"#{pane_current_path}\\\" -a -t %1; swap-window -t -1'
-bind I command-prompt -p 'New window at:' 'new-window -c \\\"#{pane_current_path}\\\" -t %1'
+bind | split-window -h -p 50 -c \"#{pane_current_path}\"
+bind - split-window -v -p 50 -c \"#{pane_current_path}\"
+bind c new-window -c \"#{pane_current_path}\"
+bind i command-prompt -p 'Insert window at:' 'new-window -c \"#{pane_current_path}\" -a -t %1; swap-window -t -1'
+bind I command-prompt -p 'New window at:' 'new-window -c \"#{pane_current_path}\" -t %1'
 
 # resize pane
 bind -r K resize-pane -U
@@ -6577,18 +6577,18 @@ bind    m resize-pane -Z
 # focus events enabled for terminals that support them
 set -g focus-events on
 
-# super useful when using \\\"grouped sessions\\\" and multi-monitor setup
+# super useful when using \"grouped sessions\" and multi-monitor setup
 setw -g aggressive-resize on
 
 # status bar formats
-WINDOW=\\\"[#W]\\\"
+WINDOW=\"[#W]\"
 
 # set active/pasive pane background colours
-set -g window-style fg=\\\$WHITE
+set -g window-style fg=\$WHITE
 
-%if \\\"#{==:#{host},myhost}\\\"
-set -g status-style bg=\\\$GREY
-%elif \\\"#{==:#{host},myotherhost}\\\"
+%if \"#{==:#{host},myhost}\"
+set -g status-style bg=\$GREY
+%elif \"#{==:#{host},myotherhost}\"
 set -g status-style bg=green
 %else
 set -g status-style bg=blue
@@ -6600,7 +6600,7 @@ set -g status 'on'
 #set -g status-position top
 #set -g status-justify 'centre'
 set -g status-right-length '100'
-set -g message-command-style fg=\\\$BLACK,bg=cyan
+set -g message-command-style fg=\$BLACK,bg=cyan
 set -g message-style fg=black,bg=cyan
 
 # put useful info in the status bar
@@ -6618,15 +6618,15 @@ set -g status-fg white
 
 # Ctrl Scroll to Zoom
 bind-key -T root C-WheelUpPane {
-       run-shell \\\"xdotool key Ctrl+plus\\\"
+       run-shell \"xdotool key Ctrl+plus\"
 }
 
 bind-key -T root C-WheelDownPane {
-       run-shell \\\"xdotool key Ctrl+minus\\\"
+       run-shell \"xdotool key Ctrl+minus\"
 }
 
 bind-key -T root C-MouseDown2Pane {
-       run-shell \\\"xdotool key Ctrl+0\\\"
+       run-shell \"xdotool key Ctrl+0\"
 }
 
 ### Sane scrolling
@@ -6664,14 +6664,14 @@ bind k select-pane -U
 bind l select-pane -R
 
 # set to main-horizontal, 66% height for main pane
-bind m run-shell \\\"~/.tmux/scripts/resize-adaptable.sh -l main-horizontal -p 66\\\"
+bind m run-shell \"~/.tmux/scripts/resize-adaptable.sh -l main-horizontal -p 66\"
 # Same thing for verical layouts
-bind M run-shell \\\"~/.tmux/scripts/resize-adaptable.sh -l main-vertical -p 50\\\"
+bind M run-shell \"~/.tmux/scripts/resize-adaptable.sh -l main-vertical -p 50\"
 
-bind-key C command-prompt -p \\\"Name of new window: \\\" \\\"new-window -n '%%'\\\"
+bind-key C command-prompt -p \"Name of new window: \" \"new-window -n '%%'\"
 
 # reload config
-bind r source-file ~/.tmux.conf \\; display-message \\\"Config reloaded...\\\"
+bind r source-file ~/.tmux.conf \\; display-message \"Config reloaded...\"
 "
 tmux_tmuxconf_path="${HOME_FOLDER}/.tmux.conf"
 
