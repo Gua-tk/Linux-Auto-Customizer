@@ -1232,6 +1232,17 @@ emojis_arguments=("emojis" "emoji")
 emojis_packagedependencies=("fonts-symbola")
 emojis_readmeline=
 emojis_bashfunctions=("
+liveclock(){
+clocks=(🕛 🕧 🕐 🕜 🕑 🕝 🕒 🕞 🕓 🕟 🕔 🕠 🕕 🕡 🕖 🕢 🕗 🕣 🕘 🕤 🕙 🕥 🕚 🕦 🕛)
+while :; do
+  echo \"\${clocks[index]}\"
+  index=\$((\${index} + 1))
+  index=\$((\${index} % 25))
+  sleep 0.04
+  clear
+done
+}
+
 emoji() {
   if [ -z \"\$(echo \"\${EMOJIS[@]}\")\" ]; then
     declare -Ar EMOJIS=(
@@ -6250,7 +6261,7 @@ tilix_readmeline="| Tilix | Advanced GTK3 tiling terminal emulator | Command \`t
 
 tmux_installationtype="packagemanager"
 tmux_arguments=("tmux")
-tmux_dependencies=("xdotool" "xclip" "tmuxp")
+tmux_dependencies=("xdotool" "xclip" "tmuxp" "xsel" "bash-completion")
 tmux_readmelinedescription="Terminal multiplexer for Unix-like operating systems"
 tmux_launchercontents=("
 [Desktop Entry]
@@ -6274,37 +6285,34 @@ tmux_readmeline="| Tmux | ${tmux_readmelinedescription} | Command \`tmux\`, desk
 tmux_bashfunctions=("
 att()
 {
-	tmux attach -t \$1
+	tmux attach -t \"\$1\"
 }
 
 dt()
 {
-	CONTADOR=0
-
-	while [ \"\$*\" ]
-	do
-		if [[ \$1 == \"default\" ]]; then
-		  shift
-		else
-		  let CONTADOR=\$CONTADOR+1
-		  tmux new-session -d -s \$1
-	shift
-	fi
+	local CONTADOR=0
+	while [ \$# -ne 0 ]; do
+		if [ \"\$1\" != \"default\" ]; then
+		  CONTADOR=\$((\${CONTADOR} + 1))
+		  tmux new-session -d -s \"\$1\"
+	  fi
+	  shift
 	done
 }
 
 
 freezesession()
 {
-	tmuxp freeze \$1
+	tmuxp freeze \"\$1\"
 }
 
 
 session()
-{	if [[ -z \"\$1.yaml\" ]]; then
-		tmuxp load \$HOME/Escritorio/sessions/ses/\$1.yaml
+{
+	if [ -n \"\$1\" ]; then
+		tmuxp load \"${BIN_FOLDER}/tmux/\$1.yaml\"
 	else
-		tmuxp load \$HOME/Escritorio/sessions/ses/mysession.yaml
+		tmuxp load \"${BIN_FOLDER}/tmux/main.yaml\"
 	fi
 }
 
@@ -6317,80 +6325,74 @@ ta()
     tmux attach -t \"\$1\"
   fi
 }
-
 _ta() {
-    TMUX_SESSIONS=\$(tmux ls -F '#S' | xargs)
-
-    local cur=\${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( \$(compgen -W \"\$TMUX_SESSIONS\" -- \$cur) )
+  TMUX_SESSIONS=\$(tmux ls -F '#S' | xargs)
+  local cur=\${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( \$(compgen -W \"\$TMUX_SESSIONS\" -- \$cur) )
 }
 complete -F _ta ta
 
 
 td()
 {
-  tmux detach \$1
+  tmux detach \"\$1\"
 }
 _td() {
-    TMUX_SESSIONS=\$(tmux ls -F '#S' | xargs)
-
-    local cur=\${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( \$(compgen -W \"\$TMUX_SESSIONS\" -- \$cur) )
+  TMUX_SESSIONS=\$(tmux ls -F '#S' | xargs)
+  local cur=\${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( \$(compgen -W \"\$TMUX_SESSIONS\" -- \$cur) )
 }
 complete -F _td td
 
 
 trs()
 {
-	tmux rename-session \$1
+	tmux rename-session \"\$1\"
 }
 
 
 ts()
 {
-	tmux switch -t \$1
+	tmux switch -t \"\$1\"
 }
 _ts() {
-    TMUX_SESSIONS=\$(tmux ls -F '#S' | xargs)
-
-    local cur=\${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( \$(compgen -W \"\$TMUX_SESSIONS\" -- \$cur) )
+  TMUX_SESSIONS=\$(tmux ls -F '#S' | xargs)
+  local cur=\${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( \$(compgen -W \"\$TMUX_SESSIONS\" -- \$cur) )
 }
 complete -F _ts ts
 
 
 tsend()
 {
-    tmux send -t \"\$1\" \"\$2\" Enter
+  tmux send -t \"\$1\" \"\$2\" Enter
 }
 
 
 tses()
 {
-	tmuxp load \$HOME/Escritorio/sessions/ses/\$1.json
+	tmuxp load \"${BIN_FOLDER}/tmux/\$1.json\"
 }
 
 
 tsesconvert()
 {
-	tmuxp convert -y \$1
+	tmuxp convert -y \"\$1\"
 }
 
 
 tsk()
 {
 CONTADOR=0
-
 while [ \"\$*\" ]
 do
-	if [[ \$1 == \"default\" ]]; then
+	if [[ \"\$1\" == \"default\" ]]; then
 	  shift
 	else
 	  let CONTADOR=\$CONTADOR+1
 	  tmux kill-session -t \$1
     shift
   fi
-
 done
 }
 _tsk() {
@@ -6423,13 +6425,25 @@ alias pbpaste=\"xsel --clipboard --output\"
 # create a global per-pane variable that holds the pane's PWD
 export PS9=\$PS9'\$( [ -n \$TMUX ] && tmux setenv -g TMUX_PWD_\$(tmux display -p \"#D\" | tr -d %) \$PWD)'
 
+echo \"tmux features\"
+
 # Load tmux in terminal
 if [ -z \"\$TMUX\" ]; then
+    echo \"hola, sessio atachada\"
+    sleep 2
     attach_session=\$(tmux 2> /dev/null ls -F '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' | awk '/^0/ { if (\$2 > t) { t = \$2; s = \$3 } }; END { if (s) printf \"%s\", s }')
+    echo \"I finished attach session\"
+    sleep 2
     if [ -n \"\$attach_session\" ]; then
-        tmux attach -t \"\$attach_session\"
+      echo \"Hem trobat la sessió\"
+      sleep 2
+      tmux attach -t \"\$attach_session\"
     else
+      echo \"NO TROBO RE\"
+      sleep 2
+      if [ \${EUID} -ne 0 ]; then
         tmux
+      fi
     fi
 fi
 
@@ -6437,7 +6451,7 @@ fi
 tmux_filekeys=("tmuxconf" "clockmoji")
 tmux_clockmoji_content="
 index=\$(( (\$(date +%H%M) % 1200 % 100 + 15 + \$(date +%H%M) % 1200 / 100 * 60) / 30 ))
-clocks=(🕛 🕧 🕐 🕜 🕑 🕝 🕒 🕞 🕓 🕟 🕔 🕠 🕕 🕡 🕖 🕢 º🕗 🕣 🕘 🕤 🕙 🕥 🕚 🕦 🕛)
+clocks=(🕛 🕧 🕐 🕜 🕑 🕝 🕒 🕞 🕓 🕟 🕔 🕠 🕕 🕡 🕖 🕢 🕗 🕣 🕘 🕤 🕙 🕥 🕚 🕦 🕛)
 
 echo \${clocks[\${index}]}
 "
