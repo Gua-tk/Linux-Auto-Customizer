@@ -1018,10 +1018,22 @@ data_and_file_structures_initialization() {
   fi
   add_bash_initialization "${keybinding_function}" "keybinding.sh"
 
-  # Make sure that .bashrc sources .bash_functions
-  if ! grep -Fqo "${bash_functions_import}" "${BASHRC_PATH}"; then
-    echo -e "${bash_functions_import}" >> "${BASHRC_PATH}"
+  # We source from the bashrc of the current user or all the users depending on out permissions with priority
+  # in being sourced from BASHRC_ALL_USERS_PATH
+  if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}" &>/dev/null; then
+    if [ "${EUID}" == 0 ]; then
+      echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
+      grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
+      if grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}" &>/dev/null; then
+        remove_line "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
+      fi
+    else
+      if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}" &>/dev/null; then
+        echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_PATH}"
+      fi
+    fi
   fi
+
   # Make sure that .profile sources .bash_initializations
   if ! grep -Fqo "${bash_initializations_import}" "${PROFILE_PATH}"; then
     echo -e "${bash_initializations_import}" >> "${PROFILE_PATH}"

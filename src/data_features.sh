@@ -882,14 +882,10 @@ customizer_readmeline="| Linux Auto Customizer | Program and function management
 install_customizer_post()
 {
   ln -sf "${DIR}/install.sh" /usr/bin/customizer-install
-  if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}"; then
-    echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
-  fi
 }
 uninstall_customizer_post()
 {
   remove_file /usr/bin/customizer-uninstall
-  remove_line "source \"${BASH_FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}"
 }
 
 d_installationtype="environmental"
@@ -6427,22 +6423,25 @@ alias pbpaste=\"xsel --clipboard --output\"
 # create a global per-pane variable that holds the pane's PWD
 export PS9=\$PS9'\$( [ -n \$TMUX ] && tmux setenv -g TMUX_PWD_\$(tmux display -p \"#D\" | tr -d %) \$PWD)'
 
+# Load tmux in terminal
 if [ -z \"\$TMUX\" ]; then
-    attach_session=\$(tmux 2> /dev/null ls -F \
-        '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' |
-        awk '/^0/ { if (\$2 > t) { t = \$2; s = \$3 } }; END { if (s) printf \"%s\", s }')
-
+    attach_session=\$(tmux 2> /dev/null ls -F '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' | awk '/^0/ { if (\$2 > t) { t = \$2; s = \$3 } }; END { if (s) printf \"%s\", s }')
     if [ -n \"\$attach_session\" ]; then
         tmux attach -t \"\$attach_session\"
     else
         tmux
     fi
-else
-  true
 fi
 
 ")
-tmux_filekeys=("tmuxconf")
+tmux_filekeys=("tmuxconf" "clockmoji")
+tmux_clockmoji_content="
+index=\$(( (\$(date +%H%M) % 1200 % 100 + 15 + \$(date +%H%M) % 1200 / 100 * 60) / 30 ))
+clocks=(🕛 🕧 🕐 🕜 🕑 🕝 🕒 🕞 🕓 🕟 🕔 🕠 🕕 🕡 🕖 🕢 º🕗 🕣 🕘 🕤 🕙 🕥 🕚 🕦 🕛)
+
+echo \${clocks[\${index}]}
+"
+tmux_clockmoji_path="clockmoji.sh"
 tmux_tmuxconf_content="
 set -g mouse on
 set -sg escape-time 0
@@ -6553,7 +6552,7 @@ setw -g window-status-format \$WINDOW
 set -g status-right-length 140
 set -g status-left \"#[fg=colour232,bg=colour154]#S#[fg=white,bg=colour238,nobold,nounderscore,noitalics]#[fg=colour222,bg=colour238]#{s|/home/|~/|\$HOME|~|=:pane_current_command}#[fg=white,bg=colour238,nobold,nounderscore,noitalics]\"
 
-set -g status-right '#[fg=\$foreground_color,bold]#(bash ~/Escritorio/git/gitlab/clockmoji/clockmoji.sh)#[default]'
+set -g status-right '#[fg=\$foreground_color,bold]#(bash ${BIN_FOLDER}/tmux/clockmoji.sh)#[default]'
 
 set -g window-status-current-format \"#[fg=green, bg=\$background_color, bold][#[fg=red,bold]#(whoami)#[fg=green,bold]]\"
 

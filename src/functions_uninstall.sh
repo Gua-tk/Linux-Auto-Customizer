@@ -48,19 +48,6 @@ remove_keybinding() {
 }
 
 
-# - Description: Function to delete a concrete line of a file.
-# - Permissions: can be executed indifferently as root or user.
-# - Argument 1: Text to be removed.
-# - Argument 2: Path to the file which contains the text to be removed.
-remove_line() {
-  if [ -f "$2" ]; then
-    sed "s@^${1}\$@@g" -i "$2"
-  else
-    output_proxy_executioner "echo WARNING: file $2 is not present, so the text $1 cannot be removed from the file. Skipping..." "${FLAG_QUIETNESS}"
-  fi
-}
-
-
 # - Description: Removes a program from the taskbar by using the favorites subsystem. This subsystem is executed in
 #   every log in to update the favorite programs in the taskbar.
 #   This is done by writing in PROGRAM_FAVORITES_PATH, which is the file used to feed this subsystem.
