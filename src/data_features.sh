@@ -6650,6 +6650,7 @@ wireshark_readmeline="| Wireshark | Net sniffer | Command \`wireshark\`, desktop
 
 x_installationtype="environmental"
 x_arguments=("x" "extract" "extract_function")
+x_packagedependencies=("libfile-mimeinfo-perl")
 x_bashfunctions=("
 x() {
   local first_compressed_file_arg_pos=
