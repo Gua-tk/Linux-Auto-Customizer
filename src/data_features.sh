@@ -195,13 +195,17 @@ Type=Application
 Version=1.0
 ")
 
+apache2_installationtype="packagemanager"
+apache2_arguments=("apache2")
+apache2_packagenames=("apache2" "apache2-utils")
+apache2_readmeline="| Apache2 | Redirect Web content to browser | It is used as a service so it has not command ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 ardour_installationtype="packagemanager"
 ardour_arguments=("ardour")
 ardour_bashfunctions=("alias ardour=\"nohup ardour &>/dev/null &\"")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
 ardour_readmeline="| Ardour | Software for music production | Commands \`ardour\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
-
 
 aspell_installationtype="packagemanager"
 aspell_arguments=("aspell")
@@ -1043,6 +1047,45 @@ dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbo
 dropbox_package_manager_override="apt-get"
 dropbox_readmeline="| Dropbox | File hosting service | Command \`dropbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+drupal_installationtype="userinherit"
+drupal_arguments=("drupal")
+drupal_bashfunctions=("alias drupal=\"nohup xdg-open http://localhost/drupal &>/dev/null &\"")
+drupal_compressedfilepathoverride="/var/www/html"
+drupal_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Druplicon.vector.svg;drupal_icon.svg")
+drupal_packagedependencies=("php-dom" "php-gd")
+#drupal_binariesinstalledpaths=("drupal;drupal")
+drupal_compressedfileurl="https://www.drupal.org/download-latest/tar.gz"
+drupal_readmelinedescription="Web CMS"
+drupal_launchercontents=("[Desktop Entry]
+Categories=CMS;web;
+Comment=${drupal_readmelinedescription}
+Encoding=UTF-8
+Exec=xdg-open http://localhost/drupal
+GenericName=IDE
+Icon=${BIN_FOLDER}/drupal/drupal_icon.svg
+Keywords=CMS;web;
+MimeType=
+Name=Drupal
+StartupNotify=true
+StartupWMClass=Drupal
+Terminal=false
+TryExec=google-chrome
+Type=Application
+Version=4.2.2
+")
+drupal_readmeline="| Drupal | ${drupal_readmelinedescription} | Command \`drupal\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+drupal_manualcontentavailable="0;0;1"
+install_drupal_post()
+{
+  mkdir /var/www/html/drupal/sites/default/files
+  mkdir /var/www/html/drupal/sites/default/files/translations
+  cp /var/www/html/drupal/sites/default/default.settings.php /var/www/html/drupal/sites/default/settings.php
+  chown -R www-data:www-data /var/www/html/drupal
+}
+uninstall_drupal_post()
+{
+  :
+}
 duckduckgo_installationtype="environmental"
 duckduckgo_arguments=("duckduckgo")
 duckduckgo_url="https://duckduckgo.com/"
@@ -5107,8 +5150,13 @@ uninstall_pgadmin_mid() {
 
 php_installationtype="packagemanager"
 php_arguments=("php")
-php_packagenames=("php" "libapache2-mod-php")
+php_packagenames=("php" "libapache2-mod-php" "php7.4" "libapache2-mod-php7.4" "php7.4-mysql" "php-common" "php7.4-cli" "php7.4-common" "php7.4-json" "php7.4-opcache" "php7.4-readline")
 php_readmeline="| php | Programming language | Command \`php\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+phppgadmin_installationtype="packagemanager"
+phppgadmin_arguments=("phppgadmin")
+phppgadmin_packagenames=("phppgadmin")
+phppgadmin_readmeline="| phppgadmin | GUI for SQL Database Management | It runs an instance of the program at localhost/phppgadmin ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 pluma_installationtype="packagemanager"
 pluma_arguments=("pluma")

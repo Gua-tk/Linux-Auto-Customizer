@@ -91,6 +91,15 @@ customizer_prompt()
   done
 }
 
+# - Description: Change ownership of folders recursively.
+# - Permission: Can be run as root.
+# - Argument 1: user
+# - Argument 2: Path
+custom_permission()
+{
+  chown -R "$1:$1" "$2"
+}
+
 
 # - Description: Receives an string, a separator and a position and returns the selected field via stdout
 # - Permission: Can be called as root or user.
