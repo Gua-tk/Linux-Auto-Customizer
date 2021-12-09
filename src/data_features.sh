@@ -1051,7 +1051,7 @@ drupal_installationtype="userinherit"
 drupal_arguments=("drupal")
 drupal_compressedfilepathoverride="/var/www/html"
 drupal_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Druplicon.vector.svg;drupal_icon.svg")
-drupal_packagedependencies=("php-dom" "php-gd" "php7.4" "libapache2-mod-php7.4" "php7.4-mysql" "php-common" "php7.4-cli" "php7.4-common" "php7.4-json" "php7.4-opcache" "php7.4-readline")
+drupal_packagedependencies=("php-dom" "php-gd")
 #drupal_binariesinstalledpaths=("drupal;drupal")
 #drupal_compressedfileurl="https://www.drupal.org/download-latest/tar.gz" # This url might not be working stably as expected...
 drupal_compressedfileurl="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
@@ -5154,7 +5154,7 @@ uninstall_pgadmin_mid() {
 
 php_installationtype="packagemanager"
 php_arguments=("php")
-php_packagenames=("php" "libapache2-mod-php")
+php_packagenames=("php" "libapache2-mod-php" "php7.4" "libapache2-mod-php7.4" "php7.4-mysql" "php-common" "php7.4-cli" "php7.4-common" "php7.4-json" "php7.4-opcache" "php7.4-readline")
 php_readmeline="| php | Programming language | Command \`php\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 phppgadmin_installationtype="packagemanager"
