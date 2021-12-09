@@ -1049,7 +1049,6 @@ dropbox_readmeline="| Dropbox | File hosting service | Command \`dropbox\`, desk
 
 drupal_installationtype="userinherit"
 drupal_arguments=("drupal")
-drupal_bashfunctions=("alias drupal=\"nohup xdg-open http://localhost/drupal &>/dev/null &\"")
 drupal_compressedfilepathoverride="/var/www/html"
 drupal_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Druplicon.vector.svg;drupal_icon.svg")
 drupal_packagedependencies=("php-dom" "php-gd" "php7.4" "libapache2-mod-php7.4" "php7.4-mysql" "php-common" "php7.4-cli" "php7.4-common" "php7.4-json" "php7.4-opcache" "php7.4-readline")
@@ -1058,11 +1057,12 @@ drupal_packagedependencies=("php-dom" "php-gd" "php7.4" "libapache2-mod-php7.4" 
 drupal_compressedfileurl="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
 drupal_readmelinedescription="Web CMS"
 drupal_url="https://localhost/drupal"
+drupal_bashfunctions=("alias drupal=\"nohup xdg-open ${drupal_url} &>/dev/null &\"")
 drupal_launchercontents=("[Desktop Entry]
 Categories=CMS;web;
 Comment=${drupal_readmelinedescription}
 Encoding=UTF-8
-Exec=xdg-open http://localhost/drupal
+Exec=xdg-open ${drupal_url}
 GenericName=IDE
 Icon=${BIN_FOLDER}/drupal/drupal_icon.svg
 Keywords=CMS;web;
