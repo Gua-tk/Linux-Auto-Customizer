@@ -132,6 +132,16 @@ autostart_program() {
 }
 
 
+# - Description: Change ownership of folders recursively.
+# - Permission: Can be run as root.
+# - Argument 1: user
+# - Argument 2: Path
+custom_permission()
+{
+  chown -R "$1:$1" "$2"
+}
+
+
 # - Description: Applies the user permissions recursively on all the files and directories contained recursively in the
 #   folder received by argument.
 # - Permissions: Can be called as root or user. It will put chmod 755 to all the files recursively in the received
@@ -148,6 +158,7 @@ apply_permissions_recursively() {
     output_proxy_executioner "echo WARNING: This functions only accepts a directory as an argument, Skipping..." "${FLAG_QUIETNESS}"
   fi
 }
+
 
 # - Description: Apply standard permissions and set owner and group to the user who called root.
 # - Permissions: This functions can be called as root or user.

@@ -5155,8 +5155,28 @@ php_readmeline="| php | Programming language | Command \`php\` ||  <ul><li>- [x]
 
 phppgadmin_installationtype="packagemanager"
 phppgadmin_arguments=("phppgadmin")
+phppgadmin_bashfunctions=("alias phppgadmin=\"nohup xdg-open http://localhost/phppgadmin &>/dev/null &\"")
 phppgadmin_packagenames=("phppgadmin")
 phppgadmin_readmeline="| phppgadmin | GUI for SQL Database Management | It runs an instance of the program at localhost/phppgadmin ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+'''
+phppgadmin_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=GUI for SQL Database Management
+Encoding=UTF-8
+GenericName=phppgadmin
+Keywords=phppgadmin
+MimeType=
+Name=pgAdmin 4
+StartupNotify=true
+StartupWMClass=pgadmin
+Terminal=false
+Type=Application
+Version=1.0
+Icon=${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Exec=nohup xdg-open http://localhost/phppgadmin
+")
+'''
 
 pluma_installationtype="packagemanager"
 pluma_arguments=("pluma")
