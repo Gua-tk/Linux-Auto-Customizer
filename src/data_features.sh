@@ -1056,7 +1056,7 @@ drupal_packagedependencies=("php-dom" "php-gd" "php7.4" "libapache2-mod-php7.4" 
 #drupal_compressedfileurl="https://www.drupal.org/download-latest/tar.gz" # This url might not be working stably as expected...
 drupal_compressedfileurl="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
 drupal_readmelinedescription="Web CMS"
-drupal_url="https://localhost/drupal"
+drupal_url="http://localhost/drupal"
 drupal_bashfunctions=("alias drupal=\"nohup xdg-open ${drupal_url} &>/dev/null &\"")
 drupal_launchercontents=("[Desktop Entry]
 Categories=CMS;web;
