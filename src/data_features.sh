@@ -5162,7 +5162,7 @@ phppgadmin_arguments=("phppgadmin")
 phppgadmin_bashfunctions=("alias phppgadmin=\"nohup xdg-open http://localhost/phppgadmin &>/dev/null &\"")
 phppgadmin_packagenames=("phppgadmin")
 phppgadmin_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;phppgadmin.svg")
-phppgadmin_url="https://localhost/phppgadmin"
+phppgadmin_url="localhost/phppgadmin"
 phppgadmin_readmeline="| phppgadmin | GUI for SQL Database Management | It runs an instance of the program at localhost/phppgadmin ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 phppgadmin_launchercontents=("
 [Desktop Entry]
