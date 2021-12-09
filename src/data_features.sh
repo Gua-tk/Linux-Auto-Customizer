@@ -1079,15 +1079,11 @@ drupal_readmeline="| Drupal | ${drupal_readmelinedescription} | Command \`drupal
 drupal_manualcontentavailable="0;0;1"
 install_drupal_post()
 {
-  mkdir -p /var/www/html/drupal/sites/default/files
-  chown -R www-data:www-data /var/www/html/drupal/sites/default/files
-  mkdir -p /var/www/html/drupal/sites/default/files/translations
-  cp /var/www/html/drupal/sites/default/default.settings.php /var/www/html/drupal/sites/default/settings.php
-  
+  create_folder /var/www/html/drupal/sites/default/files/translations 777
 }
 uninstall_drupal_post()
 {
-  rm -Rf /var/www/html/drupal/
+  remove_folder /var/www/html/drupal/
 }
 
 duckduckgo_installationtype="environmental"
