@@ -1006,7 +1006,7 @@ Name=Google Documents
 StartupNotify=true
 StartupWMClass=Google Documents
 Terminal=false
-TryExec=xdg-open ${documents_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -1032,7 +1032,7 @@ StartupWMClass=Google Drive
 Terminal=false
 Exec=xdg-open ${drive_url}
 Icon=${BIN_FOLDER}/drive/drive_icon.svg
-TryExec=xdg-open ${drive_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -1057,7 +1057,7 @@ drupal_packagedependencies=("php-dom" "php-gd" "php7.4" "libapache2-mod-php7.4" 
 #drupal_compressedfileurl="https://www.drupal.org/download-latest/tar.gz" # This url might not be working stably as expected...
 drupal_compressedfileurl="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
 drupal_readmelinedescription="Web CMS"
-drupal_url="http://localhost/drupal"
+drupal_url="https://localhost/drupal"
 drupal_launchercontents=("[Desktop Entry]
 Categories=CMS;web;
 Comment=${drupal_readmelinedescription}
@@ -1071,7 +1071,7 @@ Name=Drupal
 StartupNotify=true
 StartupWMClass=Drupal
 Terminal=false
-TryExec=xdg-open ${drupal_url}
+TryExec=xdg-open
 Type=Application
 Version=4.2.2
 ")
@@ -1109,7 +1109,7 @@ Name=DuckDuckGo
 StartupNotify=true
 StartupWMClass=DuckDuckGo
 Terminal=false
-TryExec=xdg-open ${duckduckgo_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3156,7 +3156,7 @@ Name=Facebook
 StartupNotify=true
 StartupWMClass=Facebook
 Terminal=false
-TryExec=xdg-open ${facebook_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3264,7 +3264,7 @@ Name=Google Forms
 StartupNotify=true
 StartupWMClass=Google Forms
 Terminal=false
-TryExec=xdg-open ${forms_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3370,7 +3370,7 @@ Name=GitHub
 StartupNotify=true
 StartupWMClass=GitHub
 Terminal=false
-TryExec=xdg-open ${github_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3411,7 +3411,7 @@ Name=GitLab
 StartupNotify=true
 StartupWMClass=GitLab
 Terminal=false
-TryExec=xdg-open ${gitlab_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3448,7 +3448,7 @@ Name=Gmail
 StartupNotify=true
 StartupWMClass=Gmail
 Terminal=false
-TryExec=xdg-open ${gmail_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3546,7 +3546,7 @@ Name=Google
 StartupNotify=true
 StartupWMClass=Google
 Terminal=false
-TryExec=xdg-open ${google_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3572,7 +3572,7 @@ Name=Google Calendar
 StartupNotify=true
 StartupWMClass=Google Calendar
 Terminal=false
-TryExec=xdg-open ${googlecalendar_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3826,7 +3826,7 @@ Name=Instagram
 StartupNotify=true
 StartupWMClass=Instagram
 Terminal=false
-TryExec=xdg-open ${instagran_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -4034,7 +4034,7 @@ Name=Google Keep
 StartupNotify=true
 StartupWMClass=Google Keep
 Terminal=false
-TryExec=xdg-open ${keep_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -4906,7 +4906,7 @@ Name=Netflix
 StartupNotify=true
 StartupWMClass=Netflix
 Terminal=false
-TryExec=xdg-open ${netflix_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -4992,7 +4992,7 @@ Name=OneDrive
 StartupNotify=true
 StartupWMClass=OneDrive
 Terminal=false
-TryExec=xdg-open ${onedrive_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5048,7 +5048,7 @@ Name=Outlook
 StartupNotify=true
 StartupWMClass=Outlook
 Terminal=false
-TryExec=xdg-open ${outlook_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5074,7 +5074,7 @@ Name=Overleaf
 StartupNotify=true
 StartupWMClass=Overleaf
 #Terminal=false
-TryExec=xdg-open ${overleaf_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5162,7 +5162,7 @@ phppgadmin_arguments=("phppgadmin")
 phppgadmin_bashfunctions=("alias phppgadmin=\"nohup xdg-open http://localhost/phppgadmin &>/dev/null &\"")
 phppgadmin_packagenames=("phppgadmin")
 phppgadmin_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;phppgadmin.svg")
-phppgadmmin_url="localhost/phppgadmin"
+phppgadmin_url="https://localhost/phppgadmin"
 phppgadmin_readmeline="| phppgadmin | GUI for SQL Database Management | It runs an instance of the program at localhost/phppgadmin ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 phppgadmin_launchercontents=("
 [Desktop Entry]
@@ -5172,15 +5172,15 @@ Encoding=UTF-8
 GenericName=phppgadmin
 Keywords=phppgadmin
 MimeType=
-Name=pgAdmin 4
+Name=phpPgAdmin
 StartupNotify=true
-StartupWMClass=pgadmin
+StartupWMClass=phppggadmin
 Terminal=false
 Type=Application
 Version=1.0
 Icon=${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
-Exec=nohup xdg-open http://localhost/phppgadmin
-TryExec=xdg-open ${phppgadmin_url}
+Exec=nohup xdg-open ${phppgadmin_url}
+TryExec=xdg-open
 ")
 
 pluma_installationtype="packagemanager"
@@ -5255,7 +5255,7 @@ Name=Google Presentation
 StartupNotify=true
 StartupWMClass=Google Presentation
 Terminal=false
-TryExec=xdg-open ${presentation_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5576,7 +5576,7 @@ Name=Reddit
 StartupNotify=true
 StartupWMClass=Reddit
 Terminal=false
-TryExec=xdg-open ${reddit_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5827,7 +5827,7 @@ Name=SoundCloud
 StartupNotify=true
 StartupWMClass=Soundcloud
 Terminal=false
-TryExec=xdg-open ${soundcloud_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5862,7 +5862,7 @@ Name=Google Spreadsheets
 StartupNotify=true
 StartupWMClass=Google Spreadsheets
 Terminal=false
-TryExec=xdg-open ${spreadsheets_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6379,7 +6379,7 @@ Name=Google Translate
 StartupNotify=true
 StartupWMClass=Google Translator
 Terminal=false
-TryExec=xdg-open ${translator_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6411,7 +6411,7 @@ Name=Trello
 StartupNotify=true
 StartupWMClass=Trello
 Terminal=false
-TryExec=xdg-open ${trello_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6437,7 +6437,7 @@ Name=Tumblr
 StartupNotify=true
 StartupWMClass=Tumblr
 Terminal=false
-TryExec=xdg-open ${tumblr_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6463,7 +6463,7 @@ Name=Twitch
 StartupNotify=true
 StartupWMClass=Twitch
 Terminal=false
-TryExec=xdg-open ${twitch_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6489,7 +6489,7 @@ Name=Twitter
 StartupNotify=true
 StartupWMClass=Twitter
 Terminal=false
-TryExec=xdg-open ${twitter_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6559,7 +6559,7 @@ Name=WhatsApp Web
 StartupNotify=true
 StartupWMClass=WhatsApp
 Terminal=false
-TryExec=xdg-open ${whatsapp_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6585,7 +6585,7 @@ Name=Wikipedia
 StartupNotify=true
 StartupWMClass=Wikipedia
 Terminal=false
-TryExec=xdg-open ${wikipedia_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6846,7 +6846,7 @@ Name=YouTube
 StartupNotify=true
 StartupWMClass=YouTube
 Terminal=false
-TryExec=xdg-open ${youtube_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6884,7 +6884,7 @@ Name=YouTube Music
 StartupNotify=true
 StartupWMClass=YouTube Music
 Terminal=false
-TryExec=xdg-open ${youtubemusic_url}
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
