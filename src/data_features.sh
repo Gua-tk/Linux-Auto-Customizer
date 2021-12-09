@@ -1087,7 +1087,7 @@ install_drupal_post()
 }
 uninstall_drupal_post()
 {
-  :
+  rm -Rf /var/www/html/drupal/
 }
 
 duckduckgo_installationtype="environmental"
