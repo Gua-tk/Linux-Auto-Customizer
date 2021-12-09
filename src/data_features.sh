@@ -195,13 +195,17 @@ Type=Application
 Version=1.0
 ")
 
+apache2_installationtype="packagemanager"
+apache2_arguments=("apache2")
+apache2_packagenames=("apache2" "apache2-utils")
+apache2_readmeline="| Apache2 | Redirect Web content to browser | It is used as a service so it has not command ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 ardour_installationtype="packagemanager"
 ardour_arguments=("ardour")
 ardour_bashfunctions=("alias ardour=\"nohup ardour &>/dev/null &\"")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
 ardour_readmeline="| Ardour | Software for music production | Commands \`ardour\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
-
 
 aspell_installationtype="packagemanager"
 aspell_arguments=("aspell")
@@ -1002,7 +1006,7 @@ Name=Google Documents
 StartupNotify=true
 StartupWMClass=Google Documents
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -1028,7 +1032,7 @@ StartupWMClass=Google Drive
 Terminal=false
 Exec=xdg-open ${drive_url}
 Icon=${BIN_FOLDER}/drive/drive_icon.svg
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -1042,6 +1046,45 @@ dropbox_packagedependencies=("python3-gpg")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
 dropbox_package_manager_override="apt-get"
 dropbox_readmeline="| Dropbox | File hosting service | Command \`dropbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+drupal_installationtype="userinherit"
+drupal_arguments=("drupal")
+drupal_compressedfilepathoverride="/var/www/html"
+drupal_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Druplicon.vector.svg;drupal_icon.svg")
+drupal_packagedependencies=("php-dom" "php-gd")
+#drupal_binariesinstalledpaths=("drupal;drupal")
+#drupal_compressedfileurl="https://www.drupal.org/download-latest/tar.gz" # This url might not be working stably as expected...
+drupal_compressedfileurl="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
+drupal_readmelinedescription="Web CMS"
+drupal_url="http://localhost/drupal"
+drupal_bashfunctions=("alias drupal=\"nohup xdg-open ${drupal_url} &>/dev/null &\"")
+drupal_launchercontents=("[Desktop Entry]
+Categories=CMS;web;
+Comment=${drupal_readmelinedescription}
+Encoding=UTF-8
+Exec=xdg-open ${drupal_url}
+GenericName=IDE
+Icon=${BIN_FOLDER}/drupal/drupal_icon.svg
+Keywords=CMS;web;
+MimeType=
+Name=Drupal
+StartupNotify=true
+StartupWMClass=Drupal
+Terminal=false
+TryExec=xdg-open
+Type=Application
+Version=4.2.2
+")
+drupal_readmeline="| Drupal | ${drupal_readmelinedescription} | Command \`drupal\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+drupal_manualcontentavailable="0;0;1"
+install_drupal_post()
+{
+  create_folder /var/www/html/drupal/sites/default/files/translations 777
+}
+uninstall_drupal_post()
+{
+  remove_folder /var/www/html/drupal/
+}
 
 duckduckgo_installationtype="environmental"
 duckduckgo_arguments=("duckduckgo")
@@ -1062,7 +1105,7 @@ Name=DuckDuckGo
 StartupNotify=true
 StartupWMClass=DuckDuckGo
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3109,7 +3152,7 @@ Name=Facebook
 StartupNotify=true
 StartupWMClass=Facebook
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3217,7 +3260,7 @@ Name=Google Forms
 StartupNotify=true
 StartupWMClass=Google Forms
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3323,7 +3366,7 @@ Name=GitHub
 StartupNotify=true
 StartupWMClass=GitHub
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3364,7 +3407,7 @@ Name=GitLab
 StartupNotify=true
 StartupWMClass=GitLab
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3401,7 +3444,7 @@ Name=Gmail
 StartupNotify=true
 StartupWMClass=Gmail
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3499,7 +3542,7 @@ Name=Google
 StartupNotify=true
 StartupWMClass=Google
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3525,7 +3568,7 @@ Name=Google Calendar
 StartupNotify=true
 StartupWMClass=Google Calendar
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3779,7 +3822,7 @@ Name=Instagram
 StartupNotify=true
 StartupWMClass=Instagram
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3987,7 +4030,7 @@ Name=Google Keep
 StartupNotify=true
 StartupWMClass=Google Keep
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -4859,7 +4902,7 @@ Name=Netflix
 StartupNotify=true
 StartupWMClass=Netflix
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -4945,7 +4988,7 @@ Name=OneDrive
 StartupNotify=true
 StartupWMClass=OneDrive
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5001,7 +5044,7 @@ Name=Outlook
 StartupNotify=true
 StartupWMClass=Outlook
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5027,7 +5070,7 @@ Name=Overleaf
 StartupNotify=true
 StartupWMClass=Overleaf
 #Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5107,8 +5150,34 @@ uninstall_pgadmin_mid() {
 
 php_installationtype="packagemanager"
 php_arguments=("php")
-php_packagenames=("php" "libapache2-mod-php")
+php_packagenames=("php" "libapache2-mod-php" "php7.4" "libapache2-mod-php7.4" "php7.4-mysql" "php-common" "php7.4-cli" "php7.4-common" "php7.4-json" "php7.4-opcache" "php7.4-readline")
 php_readmeline="| php | Programming language | Command \`php\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+phppgadmin_installationtype="packagemanager"
+phppgadmin_arguments=("phppgadmin")
+phppgadmin_packagenames=("phppgadmin")
+phppgadmin_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;phppgadmin.svg")
+phppgadmin_url="http://localhost/phppgadmin"
+phppgadmin_bashfunctions=("alias phppgadmin=\"nohup xdg-open ${phppgadmin_url} &>/dev/null &\"")
+phppgadmin_readmeline="| phppgadmin | GUI for SQL Database Management | It runs an instance of the program at localhost/phppgadmin ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+phppgadmin_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=GUI for SQL Database Management
+Encoding=UTF-8
+GenericName=phppgadmin
+Keywords=phppgadmin
+MimeType=
+Name=phpPgAdmin
+StartupNotify=true
+StartupWMClass=phppggadmin
+Terminal=false
+Type=Application
+Version=1.0
+Icon=${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Exec=nohup xdg-open ${phppgadmin_url}
+TryExec=xdg-open
+")
 
 pluma_installationtype="packagemanager"
 pluma_arguments=("pluma")
@@ -5182,7 +5251,7 @@ Name=Google Presentation
 StartupNotify=true
 StartupWMClass=Google Presentation
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5503,7 +5572,7 @@ Name=Reddit
 StartupNotify=true
 StartupWMClass=Reddit
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5754,7 +5823,7 @@ Name=SoundCloud
 StartupNotify=true
 StartupWMClass=Soundcloud
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5789,7 +5858,7 @@ Name=Google Spreadsheets
 StartupNotify=true
 StartupWMClass=Google Spreadsheets
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6306,7 +6375,7 @@ Name=Google Translate
 StartupNotify=true
 StartupWMClass=Google Translator
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6338,7 +6407,7 @@ Name=Trello
 StartupNotify=true
 StartupWMClass=Trello
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6364,7 +6433,7 @@ Name=Tumblr
 StartupNotify=true
 StartupWMClass=Tumblr
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6390,7 +6459,7 @@ Name=Twitch
 StartupNotify=true
 StartupWMClass=Twitch
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6416,7 +6485,7 @@ Name=Twitter
 StartupNotify=true
 StartupWMClass=Twitter
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6486,7 +6555,7 @@ Name=WhatsApp Web
 StartupNotify=true
 StartupWMClass=WhatsApp
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6512,7 +6581,7 @@ Name=Wikipedia
 StartupNotify=true
 StartupWMClass=Wikipedia
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6773,7 +6842,7 @@ Name=YouTube
 StartupNotify=true
 StartupWMClass=YouTube
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6811,7 +6880,7 @@ Name=YouTube Music
 StartupNotify=true
 StartupWMClass=YouTube Music
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
