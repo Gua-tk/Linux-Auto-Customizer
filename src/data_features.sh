@@ -4630,7 +4630,7 @@ gsettings set org.gnome.desktop.interface clock-show-seconds true
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.desktop.interface enable-hot-corners true
 gsettings set org.gnome.desktop.interface cursor-theme Yaru-dark
-gsettings set org.gnome.terminal.legacy mnemonics-enabled true
+gsettings set org.gnome.Terminal.Legacy.Settings mnemonics-enabled true
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-position \"'BOTTOM'\"
 gsettings set org.gnome.login-screen fallback-logo \"'/usr/share/plymouth/ubuntu-logo.png'\"
 # gsettings set org.gnome.login-screen fallback-logo \"'CUSTOMIZER LOGO'\"
@@ -4640,9 +4640,10 @@ gsettings set org.gnome.gedit.preferences.editor display-right-margin true
 gsettings set org.gnome.gedit.preferences.editor tabs-size 4
 gsettings set org.gnome.gedit.preferences.ui bottom-panel-visible true
 gsettings set org.gnome.gedit.preferences.ui side-panel-visible true
-gsettings set org.gnome.gedit.plugins.spell highlight-misspeled true
+gsettings set org.gnome.gedit.plugins.spell highlight-misspelled true
+
 gsettings set org.nemo.desktop home-icon-visible true
-gsettings set org.nemo.icon-view \"['size', 'type', 'date_accessed', 'date_modified']\"
+gsettings set org.nemo.icon-view captions \"['size', 'type', 'date_accessed', 'date_modified']\"
 gsettings set org.gnome.desktop.privacy hide-identity true
 gsettings set org.gnome.calculator show-thousands true
 gsettings set org.nemo.sidebar-panels.tree show-only-directories false
