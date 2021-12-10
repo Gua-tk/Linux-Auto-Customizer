@@ -5469,7 +5469,7 @@ push()
 	  fi
 	else
 	  git push origin \"\$@\"
-	  returnerror=\"\$(git push origin --dry-run \"\$@\" &>&1)\"
+	  returnerror=\"\$(git push origin --dry-run \"\$@\" 2>&1)\"
 	  if echo \"\${returnerror}\" | grep -Eo \"git push --set-upstream origin\" &>/dev/null; then
 	    git push --set-upstream origin \"\$@\"
 	  else
