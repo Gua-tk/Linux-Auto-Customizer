@@ -904,10 +904,18 @@ _customizer-install() {
   COMPREPLY=( \$(compgen -W \"\${arguments}\" -- \"\${COMP_WORDS[COMP_CWORD]}\") )
 }
 complete -F _customizer-install customizer-install
+
+_customizer-uninstall() {
+  COMPREPLY=()
+  local arguments=\"\$(echo \"\$(customizer-uninstall --commands)\")\"
+  COMPREPLY=( \$(compgen -W \"\${arguments}\" -- \"\${COMP_WORDS[COMP_CWORD]}\") )
+}
+complete -F _customizer-uninstall customizer-uninstall
 ")
 customizer_readmeline="| Linux Auto Customizer | Program and function management and automations | Command \`customizer-install\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_customizer_post()
 {
+  ln -sf "${DIR}/uninstall.sh" /usr/bin/customizer-uninstall
   ln -sf "${DIR}/install.sh" /usr/bin/customizer-install
   if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}"; then
     echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
