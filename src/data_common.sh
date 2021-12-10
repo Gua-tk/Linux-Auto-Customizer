@@ -183,6 +183,7 @@ if [ -z "${XDG_TEMPLATES_DIR}" ]; then
 fi
 
 
+# Customizer folders
 declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
 declare -r BIN_FOLDER="${CUSTOMIZER_FOLDER}/bin"
 declare -r CACHE_FOLDER="${CUSTOMIZER_FOLDER}/cache"
@@ -191,12 +192,16 @@ declare -r FUNCTIONS_FOLDER="${CUSTOMIZER_FOLDER}/functions"
 declare -r INITIALIZATIONS_FOLDER="${CUSTOMIZER_FOLDER}/initializations"
 declare -r DATA_FOLDER="${CUSTOMIZER_FOLDER}/data"
 
+# Customizer installation src file paths
 declare -r FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
 declare -r INITIALIZATIONS_PATH="${DATA_FOLDER}/initializations.sh"
+
+# Customizer installation data file paths
 declare -r PROGRAM_FAVORITES_PATH="${DATA_FOLDER}/favorites.txt"
 declare -r PROGRAM_KEYBINDINGS_PATH="${DATA_FOLDER}/keybindings.txt"
 declare -r INSTALLED_FEATURES="${DATA_FOLDER}/installed_features.txt"
 
+# System routes used in installation or capabilities
 declare -r PATH_POINTED_FOLDER="${HOME_FOLDER}/.local/bin"
 declare -r ALL_USERS_PATH_POINTED_FOLDER="/usr/bin"
 declare -r PERSONAL_LAUNCHERS_DIR="${HOME_FOLDER}/.local/share/applications"
@@ -205,8 +210,11 @@ declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
 declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
 declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
-declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
+
+# Used in certain types of features
+declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
+declare -r BASH_COMPLETIONS_PATH="/usr/share/bash-completion/completions/git"
 
 ########################################################################################################################
 ################################################## RUNTIME FLAGS #######################################################

@@ -133,8 +133,8 @@ a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` |
 add_installationtype="environmental"
 add_arguments=("add" "add_function")
 add_bashfunctions=("alias add=\"git add\"
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete add _git_add
 fi
 ")
@@ -454,8 +454,8 @@ MimeType=application/x-blender;")
 branch_installationtype="environmental"
 branch_arguments=("branch")
 branch_bashfunctions=("alias branch=\"git branch\"
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete branch _git_branch
 fi
 ")
@@ -566,8 +566,8 @@ cheat_readmeline="| cheat.sh | Provides access to community-driven cheat sheets 
 checkout_installationtype="environmental"
 checkout_arguments=("checkout")
 checkout_bashfunctions=("alias checkout=\"git checkout\"
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete checkout _git_checkout
 fi
 ")
@@ -655,8 +655,8 @@ clone()
     fi
   fi
 }
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete clone _git_clone
 fi
 ")
@@ -785,8 +785,8 @@ commit()
     done
     git commit -am \"\$messag\"
 }
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete commit _git_commit
 fi
 ")
@@ -953,8 +953,8 @@ d()
     fi
   fi
 }
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete d _git_diff
 fi
 ")
@@ -3204,8 +3204,8 @@ fdupes_readmeline="| Fdupes | Searches for duplicated files within given directo
 fetch_installationtype="environmental"
 fetch_arguments=("fetch")
 fetch_bashfunctions=("alias fetch=\"git fetch\"
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete fetch _git_fetch
 fi
 ")
@@ -3688,8 +3688,8 @@ handbrake_readmeline="| Handbrake | Video Transcoder | Command \`handbrake\`, De
 hard_installationtype="environmental"
 hard_arguments=("hard")
 hard_bashfunctions=("alias hard=\"git reset --hard\"
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete hard _git_reset
 fi
 ")
@@ -4520,8 +4520,8 @@ merge_bashfunctions=("
 merge() {
   git merge \"\$@\"
 }
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete merge _git_merge
 fi
 ")
@@ -5410,8 +5410,8 @@ pull()
 	  git pull origin \"\$1\"
 	fi
 }
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete pull _git_pull
 fi
 ")
@@ -5428,8 +5428,8 @@ push()
 	  git push origin \"\$1\"
 	fi
 }
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete push _git_push
 fi
 ")
@@ -5920,8 +5920,8 @@ ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubu
 status_installationtype="environmental"
 status_arguments=("status")
 status_bashfunctions=("alias status=\"git status\"
-if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
-  source \"/usr/share/bash-completion/completions/git\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete status _git_status
 fi")
 status_readmeline="| Functions \`status\` | \`git status\` | Command \`status\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
