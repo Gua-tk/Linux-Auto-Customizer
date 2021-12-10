@@ -4553,7 +4553,7 @@ merge()
   if [ -z \"\$1\" ]; then
 	  git merge
 	else
-	  git merge origin --no-ff \"\$1\"
+	  git merge origin --no-ff \"\$@\"
 	fi
 }
 if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
@@ -5443,7 +5443,7 @@ pull()
   if [ -z \"\$1\" ]; then
 	  git pull
 	else
-	  git pull origin --no-ff \"\$1\"
+	  git pull origin --no-ff \"\$@\"
 	fi
 }
 if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
