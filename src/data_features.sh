@@ -4642,6 +4642,10 @@ gsettings set org.gnome.gedit.preferences.ui bottom-panel-visible true
 gsettings set org.gnome.gedit.preferences.ui side-panel-visible true
 gsettings set org.gnome.gedit.plugins.spell highlight-misspelled true
 
+# keyboard configurations 0 for spanish 1 for us keyboard
+gsettings set org.gnome.desktop.input-sources sources \"[('xkb', 'es'), ('xkb', 'us')]\"
+gsettings set org.gnome.desktop.input-sources current 0
+
 gsettings set org.nemo.desktop home-icon-visible true
 gsettings set org.nemo.icon-view captions \"['size', 'type', 'date_accessed', 'date_modified']\"
 gsettings set org.gnome.desktop.privacy hide-identity true
