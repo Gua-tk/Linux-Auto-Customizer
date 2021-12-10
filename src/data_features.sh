@@ -5467,10 +5467,10 @@ push()
 	    echo \"\${returnerror}\"
 	  fi
 	else
-	  git push origin \"\$1\"
-	  returnerror=\"\$(git push origin \"\$1\" 2>&1)\"
+	  git push origin \"\$@\"
+	  returnerror=\"\$(git push origin \"\$@\" 2>&1)\"
 	  if echo \"\${returnerror}\" | grep -Eo \"git push --set-upstream origin\" &>/dev/null; then
-	    git push --set-upstream origin \"\$1\"
+	    git push --set-upstream origin \"\$@\"
 	  else
 	    # Show the actual message of a push in branch with set upstream
 	    echo \"\${returnerror}\"
