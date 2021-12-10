@@ -4517,8 +4517,13 @@ X-Mendeley-Version=1
 
 merge_installationtype="environmental"
 merge_bashfunctions=("
-merge() {
-  git merge \"\$@\"
+merge()
+{
+  if [ -z \"\$1\" ]; then
+	  git merge
+	else
+	  git merge origin --no-ff \"\$1\"
+	fi
 }
 if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
   source \"${BASH_COMPLETIONS_PATH}\"
@@ -5407,12 +5412,12 @@ pull()
   if [ -z \"\$1\" ]; then
 	  git pull
 	else
-	  git pull origin \"\$1\"
+	  git pull origin --no-ff \"\$1\"
 	fi
 }
 if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
   source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete pull _git_pull
+  __git_complete pull _git_branch  # Using git branch completions since _git_pull completions only give incorreclty \"origin origin\" as completion
 fi
 ")
 pull_readmeline="| Function \`pull\` | Alias for \`git pull\`|  Command \`pull\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -5420,17 +5425,10 @@ pull_readmeline="| Function \`pull\` | Alias for \`git pull\`|  Command \`pull\`
 push_installationtype="environmental"
 push_arguments=("push")
 push_bashfunctions=("
-push()
-{
-  if [ -z \"\$1\" ]; then
-	  git push
-	else
-	  git push origin \"\$1\"
-	fi
-}
+alias push=\"git push\"
 if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
   source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete push _git_push
+  __git_complete push _git_branch  # Using git branch completions since _git_push completions only give incorreclty \"origin origin\" as completion
 fi
 ")
 push_readmeline="| Function \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
