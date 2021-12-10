@@ -5433,7 +5433,28 @@ pull_readmeline="| Function \`pull\` | Alias for \`git pull\`|  Command \`pull\`
 push_installationtype="environmental"
 push_arguments=("push")
 push_bashfunctions=("
-alias push=\"git push\"
+push()
+{
+  if [ -z \"\$1\" ]; then
+	  returnerror=\"\$(git push 2>&1)\"
+	  if echo \"\${returnerror}\" | grep -Eo \"git push --set-upstream origin\" &>/dev/null; then
+	    git push --set-upstream origin \"\$(git branch --show-current)\"
+	  else
+	    # Show the actual message of a push in branch with set upstream
+	    echo \"\${returnerror}\"
+	  fi
+	else
+	  git push origin \"\$1\"
+	  returnerror=\"\$(git push origin \"\$1\" 2>&1)\"
+	  if echo \"\${returnerror}\" | grep -Eo \"git push --set-upstream origin\" &>/dev/null; then
+	    git push --set-upstream origin \"\$1\"
+	  else
+	    # Show the actual message of a push in branch with set upstream
+	    echo \"\${returnerror}\"
+	  fi
+	fi
+	unset returnerror
+}
 if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
   source \"${BASH_COMPLETIONS_PATH}\"
   __git_complete push _git_branch  # Using git branch completions since _git_push completions only give incorreclty \"origin origin\" as completion
