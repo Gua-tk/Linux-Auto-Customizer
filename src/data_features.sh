@@ -793,7 +793,7 @@ fi
 commit_readmeline="| Function \`commit\` | Function \`commit\` that makes \`git commit -am \"\$1\"\` | Function \`commit\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
 
 config_installationtype="environmental"
-config_arguments=("config" "git_config")
+config_arguments=("config" "git_config" "config_function")
 config_readmeline="| Function \`config\` | Function \`config\` that does a git config accepting two parameters username and email | Function \`config\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
 config_bashfunctions=("
 config()
@@ -4553,7 +4553,7 @@ merge()
   if [ -z \"\$1\" ]; then
 	  git merge
 	else
-	  git merge origin --no-ff \"\$1\"
+	  git merge origin --no-ff \"\$@\"
 	fi
 }
 if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
@@ -5443,7 +5443,7 @@ pull()
   if [ -z \"\$1\" ]; then
 	  git pull
 	else
-	  git pull origin --no-ff \"\$1\"
+	  git pull origin --no-ff \"\$@\"
 	fi
 }
 if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
@@ -5467,10 +5467,10 @@ push()
 	    echo \"\${returnerror}\"
 	  fi
 	else
-	  git push origin \"\$1\"
-	  returnerror=\"\$(git push origin \"\$1\" 2>&1)\"
+	  git push origin \"\$@\"
+	  returnerror=\"\$(git push origin \"\$@\" 2>&1)\"
 	  if echo \"\${returnerror}\" | grep -Eo \"git push --set-upstream origin\" &>/dev/null; then
-	    git push --set-upstream origin \"\$1\"
+	    git push --set-upstream origin \"\$@\"
 	  else
 	    # Show the actual message of a push in branch with set upstream
 	    echo \"\${returnerror}\"
