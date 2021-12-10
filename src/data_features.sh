@@ -132,7 +132,12 @@ a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` |
 
 add_installationtype="environmental"
 add_arguments=("add" "add_function")
-add_bashfunctions=("alias add=\"git add\"")
+add_bashfunctions=("alias add=\"git add\"
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete add _git_add
+fi
+")
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 aircrack_ng_installationtype="packagemanager"
@@ -448,7 +453,12 @@ MimeType=application/x-blender;")
 
 branch_installationtype="environmental"
 branch_arguments=("branch")
-branch_bashfunctions=("alias branch=\"git branch\"")
+branch_bashfunctions=("alias branch=\"git branch\"
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete branch _git_branch
+fi
+")
 branch_readmeline="| Function \`branch\` | alias for \`git branch -vv\` | Command \`branch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 brasero_installationtype="packagemanager"
@@ -555,7 +565,12 @@ cheat_readmeline="| cheat.sh | Provides access to community-driven cheat sheets 
 
 checkout_installationtype="environmental"
 checkout_arguments=("checkout")
-checkout_bashfunctions=("alias checkout=\"git checkout\"")
+checkout_bashfunctions=("alias checkout=\"git checkout\"
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete checkout _git_checkout
+fi
+")
 checkout_readmeline="| Function \`checkout\` | alias for \`git checkout\` | Command \`checkout\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 cheese_installationtype="packagemanager"
@@ -640,6 +655,10 @@ clone()
     fi
   fi
 }
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete clone _git_clone
+fi
 ")
 clone_readmeline="| Function \`clone\` | Function for \`git clone \$1\`|  Command \`clone\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -766,6 +785,10 @@ commit()
     done
     git commit -am \"\$messag\"
 }
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete commit _git_commit
+fi
 ")
 commit_readmeline="| Function \`commit\` | Function \`commit\` that makes \`git commit -am \"\$1\"\` | Function \`commit\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
 
@@ -930,6 +953,10 @@ d()
     fi
   fi
 }
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete d _git_diff
+fi
 ")
 d_readmeline="| Function \`d\` | Function for \`diff\` and \`git diff\` usage | Command \`diff\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -3176,7 +3203,12 @@ fdupes_readmeline="| Fdupes | Searches for duplicated files within given directo
 
 fetch_installationtype="environmental"
 fetch_arguments=("fetch")
-fetch_bashfunctions=("alias fetch=\"git fetch\"")
+fetch_bashfunctions=("alias fetch=\"git fetch\"
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete fetch _git_fetch
+fi
+")
 fetch_readmeline="| Function \`fetch\` | \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ffmpeg_installationtype="packagemanager"
@@ -3343,7 +3375,6 @@ install_gitcm_post()
 uninstall_gitcm_post()
 {
   :
-  #git config --global credential.credentialStore plaintext
 }
 
 github_installationtype="environmental"
@@ -3656,7 +3687,12 @@ handbrake_readmeline="| Handbrake | Video Transcoder | Command \`handbrake\`, De
 
 hard_installationtype="environmental"
 hard_arguments=("hard")
-hard_bashfunctions=("alias hard=\"git reset HEAD --hard\"")
+hard_bashfunctions=("alias hard=\"git reset --hard\"
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete hard _git_reset
+fi
+")
 hard_readmeline="| Function \`hard\` | alias for \`git reset HEAD --hard\` | <-- || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 hardinfo_installationtype="packagemanager"
@@ -4484,6 +4520,10 @@ merge_bashfunctions=("
 merge() {
   git merge \"\$@\"
 }
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete merge _git_merge
+fi
 ")
 merge_arguments=("merge" "function_merge")
 merge_readmeline="| Function \`merge\` | Function for \`git merge\`|  Command \`merge\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -5370,6 +5410,10 @@ pull()
 	  git pull origin \"\$1\"
 	fi
 }
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete pull _git_pull
+fi
 ")
 pull_readmeline="| Function \`pull\` | Alias for \`git pull\`|  Command \`pull\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -5384,6 +5428,10 @@ push()
 	  git push origin \"\$1\"
 	fi
 }
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete push _git_push
+fi
 ")
 push_readmeline="| Function \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -5871,7 +5919,11 @@ ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubu
 
 status_installationtype="environmental"
 status_arguments=("status")
-status_bashfunctions=("alias status=\"git status\"")
+status_bashfunctions=("alias status=\"git status\"
+if [ -f \"/usr/share/bash-completion/completions/git\" ]; then
+  source \"/usr/share/bash-completion/completions/git\"
+  __git_complete status _git_status
+fi")
 status_readmeline="| Functions \`status\` | \`git status\` | Command \`status\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 steam_installationtype="packageinstall"
