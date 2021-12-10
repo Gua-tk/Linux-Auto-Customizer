@@ -323,6 +323,7 @@ declare -r feature_keynames=(
   "codeblocks"
   "codium"
   "commit"
+  "config"
   "converters"
   "copyq"
   "curl"
@@ -576,7 +577,7 @@ declare -r wrapper_fontsuser=("fonts-alegreya-sans", "fonts-lato", "fonts-noto-s
 declare -r wrapper_fontsroot=("fonts-firacode", "fonts-hack", "fonts-hermit", "fonts-roboto")
 # Custom wrappers
 declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "curl" "git" "ffmpeg" "java" "python3")
-declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch")
+declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch" "config")
 declare -r wrapper_iochemroot=("gcc" "virtualbox" "uget" "pdfgrep" "obs" "nemo" "gpaint" "guake" "parallel" "calculator" "autofirma" "dia" "psql" "chrome" "caffeine" "copyq" "thunderbird" "vlc" "python" "git" "gitk" "teams" "customizer")
 declare -r wrapper_iochemuser=("anydesk" "telegram" "eclipse" "fastcommands" "cheat" "apache" "java" "ant" "mvn" "terminal-background" "bashcolors" "pycharm" "sublime" "gitcm" "wallpapers" "java" "ideac" "ideau" "pgadmin" "a" "add" "alert" "b" "B" "c" "changebg" "checkout" "clean" "clone" "commit" "d" "dummycommit" "e" "E" "emojis" "f" "F" "fetch" "h" "hard" "i" "ipe" "ipi" "j" "k" "l" "L" "loc" "merge" "o" "port" "pull" "push" "q" "s" "u" "x" "z" "status" "gitprompt" "history_optimization" "meld" "mendeley" "onedrive" "postman" "prompt" "gitprompt" "screenshots" "sherlock" "shortcuts" "sonarqube" "templates" "youtube-music" "youtube-dl" "zoom" "whatsapp")
 

@@ -779,11 +779,11 @@ commit_arguments=("commit")
 commit_bashfunctions=("
 commit()
 {
-    messag=\"\$@\"
-    while [ -z \"\$messag\" ]; do
-      read -p \"Add message: \" messag
-    done
-    git commit -am \"\$messag\"
+  messag=\"\$@\"
+  while [ -z \"\$messag\" ]; do
+    read -p \"Add message: \" messag
+  done
+  git commit -am \"\$messag\"
 }
 if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
   source \"${BASH_COMPLETIONS_PATH}\"
@@ -791,6 +791,29 @@ if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
 fi
 ")
 commit_readmeline="| Function \`commit\` | Function \`commit\` that makes \`git commit -am \"\$1\"\` | Function \`commit\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
+
+config_installationtype="environmental"
+config_arguments=("config" "git_config")
+config_readmeline="| Function \`config\` | Function \`config\` that does a git config accepting two parameters username and email | Function \`config\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
+config_bashfunctions=("
+config()
+{
+  if [ -z \"\$1\" ]; then
+    echo \"ERROR: config needs two arguments\"
+    return 1
+  fi
+  if [ -z \"\$2\" ]; then
+    echo \"ERROR: config needs two arguments\"
+    return 1
+  fi
+  if ! echo \"\$2\" | grep -Eo \"@\" &>/dev/null; then
+    echo \"ERROR: config needs an email as the second arguments\"
+    return 1
+  fi
+  git config user.name \"\$1\"
+  git config user.email \"\$2\"
+}
+")
 
 converters_installationtype="repositoryclone"
 converters_arguments=("converters")
