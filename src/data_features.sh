@@ -5460,21 +5460,17 @@ push()
 {
   git fetch &>/dev/null
   if [ -z \"\$1\" ]; then
-	  returnerror=\"\$(git push 2>&1)\"
-	  if echo \"\${returnerror}\" | grep -Eo \"git push --set-upstream origin\" &>/dev/null; then
+    if git rev-parse --symbolic-full-name \$(git branch --show-current)@{upstream} &>/dev/null; then
+      git push
+    else
 	    git push --set-upstream origin \"\$(git branch --show-current)\"
-	  else
-	    # Show the actual message of a push in branch with set upstream
-	    echo \"\${returnerror}\"
-	  fi
+    fi
 	else
-	  git push origin \"\$@\"
-	  returnerror=\"\$(git push origin --dry-run \"\$@\" 2>&1)\"
-	  if echo \"\${returnerror}\" | grep -Eo \"git push --set-upstream origin\" &>/dev/null; then
-	    git push --set-upstream origin \"\$@\"
-	  else
+	  if git rev-parse --symbolic-full-name \$(git branch --show-current)@{upstream} &>/dev/null; then
 	    git push origin \"\$@\"
-	  fi
+    else
+	    git push --set-upstream origin \"\$@\"
+    fi
 	fi
 	unset returnerror
 }
