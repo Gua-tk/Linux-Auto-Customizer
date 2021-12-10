@@ -5458,6 +5458,7 @@ push_arguments=("push")
 push_bashfunctions=("
 push()
 {
+  git fetch &>/dev/null
   if [ -z \"\$1\" ]; then
 	  returnerror=\"\$(git push 2>&1)\"
 	  if echo \"\${returnerror}\" | grep -Eo \"git push --set-upstream origin\" &>/dev/null; then
@@ -5468,12 +5469,11 @@ push()
 	  fi
 	else
 	  git push origin \"\$@\"
-	  returnerror=\"\$(git push origin \"\$@\" 2>&1)\"
+	  returnerror=\"\$(git push origin --dry-run \"\$@\" 2>&1)\"
 	  if echo \"\${returnerror}\" | grep -Eo \"git push --set-upstream origin\" &>/dev/null; then
 	    git push --set-upstream origin \"\$@\"
 	  else
-	    # Show the actual message of a push in branch with set upstream
-	    echo \"\${returnerror}\"
+	    git push origin \"\$@\"
 	  fi
 	fi
 	unset returnerror
