@@ -6,7 +6,7 @@
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 17/9/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
+# - Email: aleix.marine@estudiants.urv.cat                                                                             #
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
 # imports. See the header of each function to see its privilege requirements.                                          #
 # - Arguments: No arguments                                                                                            #

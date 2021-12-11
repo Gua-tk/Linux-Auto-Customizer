@@ -5,7 +5,7 @@
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 11/8/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
+# - Email: aleix.marine@estudiants.urv.cat                                                                             #
 # - Permissions: This script should not be executed directly, only sourced to import its variables.                    #
 # - Arguments: No arguments                                                                                            #
 # - Usage: Sourced from install.sh                                                                                     #

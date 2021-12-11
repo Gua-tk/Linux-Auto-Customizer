@@ -141,25 +141,28 @@ alias pbpaste="xsel --clipboard --output"
 # create a global per-pane variable that holds the pane's PWD
 export PS9=$PS9'$( [ -n $TMUX ] && tmux setenv -g TMUX_PWD_$(tmux display -p "#D" | tr -d %) $PWD)'
 
-echo "tmux features"
-
-# Load tmux in terminal
-if [ -z "$TMUX" ]; then
-    echo "hola, sessio atachada"
+# https://unix.stackexchange.com/questions/43601/how-can-i-set-my-default-shell-to-start-up-tmux
+# Make sure that
+#  * (1) tmux exists on the system
+#  * (2) we're in an interactive shell
+#  * (3) tmux doesn't try to run within itself
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#exec tmux
+  echo "hola, sessio atachada"
+  sleep 2
+  attach_session=$(tmux 2> /dev/null ls -F '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' | awk '/^0/ { if ($2 > t) { t = $2; s = $3 } }; END { if (s) printf "%s", s }')
+  echo "I finished attach session"
+  sleep 2
+  if [ -n "$attach_session" ]; then
+    echo "Hem trobat la sessió"
     sleep 2
-    attach_session=$(tmux 2> /dev/null ls -F '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' | awk '/^0/ { if ($2 > t) { t = $2; s = $3 } }; END { if (s) printf "%s", s }')
-    echo "I finished attach session"
+    tmux attach -t "$attach_session"
+  else
+    echo "NO TROBO RE"
     sleep 2
-    if [ -n "$attach_session" ]; then
-      echo "Hem trobat la sessió"
-      sleep 2
-      tmux attach -t "$attach_session"
-    else
-      echo "NO TROBO RE"
-      sleep 2
-      if [ ${EUID} -ne 0 ]; then
-        tmux
-      fi
-    fi
+    # Use the followin instruction instead of tmux to make tmux kidnap the session so there is no terminal to fall back
+    #exec tmux
+    tmux
+  fi
 fi
 
