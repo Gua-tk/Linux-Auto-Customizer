@@ -216,6 +216,10 @@ declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r BASH_COMPLETIONS_PATH="/usr/share/bash-completion/completions/git"
 
+# To keep information about the current installation
+declare CURRENT_INSTALLATION_FOLDER=""
+declare CURRENT_INSTALLATION_KEYNAME=""
+
 ########################################################################################################################
 ################################################## RUNTIME FLAGS #######################################################
 ########################################################################################################################

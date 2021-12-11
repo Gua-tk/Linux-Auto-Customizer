@@ -803,6 +803,9 @@ execute_installation()
       set -e
     fi
 
+    CURRENT_INSTALLATION_FOLDER="${BIN_FOLDER}/${keyname}"
+    CURRENT_INSTALLATION_KEYNAME="${keyname}"
+
     output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${keyname}." "${FLAG_QUIETNESS}"
     output_proxy_executioner "generic_installation ${keyname}" "${FLAG_QUIETNESS}"
     output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." "${FLAG_QUIETNESS}"
