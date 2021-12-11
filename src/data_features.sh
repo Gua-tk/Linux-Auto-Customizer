@@ -132,7 +132,12 @@ a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` |
 
 add_installationtype="environmental"
 add_arguments=("add" "add_function")
-add_bashfunctions=("alias add=\"git add\"")
+add_bashfunctions=("alias add=\"git add\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete add _git_add
+fi
+")
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 aircrack_ng_installationtype="packagemanager"
@@ -195,13 +200,17 @@ Type=Application
 Version=1.0
 ")
 
+apache2_installationtype="packagemanager"
+apache2_arguments=("apache2")
+apache2_packagenames=("apache2" "apache2-utils")
+apache2_readmeline="| Apache2 | Redirect Web content to browser | It is used as a service so it has not command ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 ardour_installationtype="packagemanager"
 ardour_arguments=("ardour")
 ardour_bashfunctions=("alias ardour=\"nohup ardour &>/dev/null &\"")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
 ardour_readmeline="| Ardour | Software for music production | Commands \`ardour\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
-
 
 aspell_installationtype="packagemanager"
 aspell_arguments=("aspell")
@@ -444,7 +453,12 @@ MimeType=application/x-blender;")
 
 branch_installationtype="environmental"
 branch_arguments=("branch")
-branch_bashfunctions=("alias branch=\"git branch\"")
+branch_bashfunctions=("alias branch=\"git branch\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete branch _git_branch
+fi
+")
 branch_readmeline="| Function \`branch\` | alias for \`git branch -vv\` | Command \`branch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 brasero_installationtype="packagemanager"
@@ -551,7 +565,12 @@ cheat_readmeline="| cheat.sh | Provides access to community-driven cheat sheets 
 
 checkout_installationtype="environmental"
 checkout_arguments=("checkout")
-checkout_bashfunctions=("alias checkout=\"git checkout\"")
+checkout_bashfunctions=("alias checkout=\"git checkout\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete checkout _git_checkout
+fi
+")
 checkout_readmeline="| Function \`checkout\` | alias for \`git checkout\` | Command \`checkout\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 cheese_installationtype="packagemanager"
@@ -636,6 +655,10 @@ clone()
     fi
   fi
 }
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete clone _git_clone
+fi
 ")
 clone_readmeline="| Function \`clone\` | Function for \`git clone \$1\`|  Command \`clone\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -756,14 +779,41 @@ commit_arguments=("commit")
 commit_bashfunctions=("
 commit()
 {
-    messag=\"\$@\"
-    while [ -z \"\$messag\" ]; do
-      read -p \"Add message: \" messag
-    done
-    git commit -am \"\$messag\"
+  messag=\"\$@\"
+  while [ -z \"\$messag\" ]; do
+    read -p \"Add message: \" messag
+  done
+  git commit -am \"\$messag\"
 }
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete commit _git_commit
+fi
 ")
 commit_readmeline="| Function \`commit\` | Function \`commit\` that makes \`git commit -am \"\$1\"\` | Function \`commit\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
+
+config_installationtype="environmental"
+config_arguments=("config" "git_config" "config_function")
+config_readmeline="| Function \`config\` | Function \`config\` that does a git config accepting two parameters username and email | Function \`config\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
+config_bashfunctions=("
+config()
+{
+  if [ -z \"\$1\" ]; then
+    echo \"ERROR: config needs two arguments\"
+    return 1
+  fi
+  if [ -z \"\$2\" ]; then
+    echo \"ERROR: config needs two arguments\"
+    return 1
+  fi
+  if ! echo \"\$2\" | grep -Eo \"@\" &>/dev/null; then
+    echo \"ERROR: config needs an email as the second arguments\"
+    return 1
+  fi
+  git config user.name \"\$1\"
+  git config user.email \"\$2\"
+}
+")
 
 converters_installationtype="repositoryclone"
 converters_arguments=("converters")
@@ -877,10 +927,18 @@ _customizer-install() {
   COMPREPLY=( \$(compgen -W \"\${arguments}\" -- \"\${COMP_WORDS[COMP_CWORD]}\") )
 }
 complete -F _customizer-install customizer-install
+
+_customizer-uninstall() {
+  COMPREPLY=()
+  local arguments=\"\$(echo \"\$(customizer-uninstall --commands)\")\"
+  COMPREPLY=( \$(compgen -W \"\${arguments}\" -- \"\${COMP_WORDS[COMP_CWORD]}\") )
+}
+complete -F _customizer-uninstall customizer-uninstall
 ")
 customizer_readmeline="| Linux Auto Customizer | Program and function management and automations | Command \`customizer-install\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_customizer_post()
 {
+  ln -sf "${DIR}/uninstall.sh" /usr/bin/customizer-uninstall
   ln -sf "${DIR}/install.sh" /usr/bin/customizer-install
 }
 uninstall_customizer_post()
@@ -922,6 +980,10 @@ d()
     fi
   fi
 }
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete d _git_diff
+fi
 ")
 d_readmeline="| Function \`d\` | Function for \`diff\` and \`git diff\` usage | Command \`diff\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -998,7 +1060,7 @@ Name=Google Documents
 StartupNotify=true
 StartupWMClass=Google Documents
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -1024,7 +1086,7 @@ StartupWMClass=Google Drive
 Terminal=false
 Exec=xdg-open ${drive_url}
 Icon=${BIN_FOLDER}/drive/drive_icon.svg
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -1038,6 +1100,45 @@ dropbox_packagedependencies=("python3-gpg")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
 dropbox_package_manager_override="apt-get"
 dropbox_readmeline="| Dropbox | File hosting service | Command \`dropbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+drupal_installationtype="userinherit"
+drupal_arguments=("drupal")
+drupal_compressedfilepathoverride="/var/www/html"
+drupal_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Druplicon.vector.svg;drupal_icon.svg")
+drupal_packagedependencies=("php-dom" "php-gd")
+#drupal_binariesinstalledpaths=("drupal;drupal")
+#drupal_compressedfileurl="https://www.drupal.org/download-latest/tar.gz" # This url might not be working stably as expected...
+drupal_compressedfileurl="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
+drupal_readmelinedescription="Web CMS"
+drupal_url="http://localhost/drupal"
+drupal_bashfunctions=("alias drupal=\"nohup xdg-open ${drupal_url} &>/dev/null &\"")
+drupal_launchercontents=("[Desktop Entry]
+Categories=CMS;web;
+Comment=${drupal_readmelinedescription}
+Encoding=UTF-8
+Exec=xdg-open ${drupal_url}
+GenericName=IDE
+Icon=${BIN_FOLDER}/drupal/drupal_icon.svg
+Keywords=CMS;web;
+MimeType=
+Name=Drupal
+StartupNotify=true
+StartupWMClass=Drupal
+Terminal=false
+TryExec=xdg-open
+Type=Application
+Version=4.2.2
+")
+drupal_readmeline="| Drupal | ${drupal_readmelinedescription} | Command \`drupal\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+drupal_manualcontentavailable="0;0;1"
+install_drupal_post()
+{
+  create_folder /var/www/html/drupal/sites/default/files/translations 777
+}
+uninstall_drupal_post()
+{
+  remove_folder /var/www/html/drupal/
+}
 
 duckduckgo_installationtype="environmental"
 duckduckgo_arguments=("duckduckgo")
@@ -1058,7 +1159,7 @@ Name=DuckDuckGo
 StartupNotify=true
 StartupWMClass=DuckDuckGo
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3116,7 +3217,7 @@ Name=Facebook
 StartupNotify=true
 StartupWMClass=Facebook
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3140,7 +3241,12 @@ fdupes_readmeline="| Fdupes | Searches for duplicated files within given directo
 
 fetch_installationtype="environmental"
 fetch_arguments=("fetch")
-fetch_bashfunctions=("alias fetch=\"git fetch\"")
+fetch_bashfunctions=("alias fetch=\"git fetch\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete fetch _git_fetch
+fi
+")
 fetch_readmeline="| Function \`fetch\` | \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ffmpeg_installationtype="packagemanager"
@@ -3224,7 +3330,7 @@ Name=Google Forms
 StartupNotify=true
 StartupWMClass=Google Forms
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3307,7 +3413,6 @@ install_gitcm_post()
 uninstall_gitcm_post()
 {
   :
-  #git config --global credential.credentialStore plaintext
 }
 
 github_installationtype="environmental"
@@ -3330,7 +3435,7 @@ Name=GitHub
 StartupNotify=true
 StartupWMClass=GitHub
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3371,7 +3476,7 @@ Name=GitLab
 StartupNotify=true
 StartupWMClass=GitLab
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3408,7 +3513,7 @@ Name=Gmail
 StartupNotify=true
 StartupWMClass=Gmail
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3506,7 +3611,7 @@ Name=Google
 StartupNotify=true
 StartupWMClass=Google
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3532,7 +3637,7 @@ Name=Google Calendar
 StartupNotify=true
 StartupWMClass=Google Calendar
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3620,7 +3725,12 @@ handbrake_readmeline="| Handbrake | Video Transcoder | Command \`handbrake\`, De
 
 hard_installationtype="environmental"
 hard_arguments=("hard")
-hard_bashfunctions=("alias hard=\"git reset HEAD --hard\"")
+hard_bashfunctions=("alias hard=\"git reset --hard\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete hard _git_reset
+fi
+")
 hard_readmeline="| Function \`hard\` | alias for \`git reset HEAD --hard\` | <-- || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 hardinfo_installationtype="packagemanager"
@@ -3786,7 +3896,7 @@ Name=Instagram
 StartupNotify=true
 StartupWMClass=Instagram
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -3994,7 +4104,7 @@ Name=Google Keep
 StartupNotify=true
 StartupWMClass=Google Keep
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -4445,9 +4555,18 @@ X-Mendeley-Version=1
 
 merge_installationtype="environmental"
 merge_bashfunctions=("
-merge() {
-  git merge \"\$@\"
+merge()
+{
+  if [ -z \"\$1\" ]; then
+	  git merge
+	else
+	  git merge origin --no-ff \"\$@\"
+	fi
 }
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete merge _git_merge
+fi
 ")
 merge_arguments=("merge" "function_merge")
 merge_readmeline="| Function \`merge\` | Function for \`git merge\`|  Command \`merge\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -4507,6 +4626,87 @@ fi
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set org.nemo.desktop show-desktop-icons true
+
+# Other tweaks
+gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
+gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
+gsettings set org.gnome.desktop.datetime automatic-timezone true
+gsettings set org.gnome.desktop.interface gtk-theme Yaru-dark
+gsettings set org.gnome.desktop.interface show-battery-percentage true
+gsettings set org.gnome.desktop.interface clock-show-seconds true
+gsettings set org.gnome.desktop.interface clock-show-weekday true
+gsettings set org.gnome.desktop.interface enable-hot-corners true
+gsettings set org.gnome.desktop.interface cursor-theme Yaru-dark
+gsettings set org.gnome.Terminal.Legacy.Settings mnemonics-enabled true
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-position \"'BOTTOM'\"
+gsettings set org.gnome.login-screen fallback-logo \"'/usr/share/plymouth/ubuntu-logo.png'\"
+# gsettings set org.gnome.login-screen fallback-logo \"'CUSTOMIZER LOGO'\"
+gsettings set org.gnome.gedit.preferences.editor auto-save true
+gsettings set org.gnome.gedit.preferences.editor display-line-numbers true
+gsettings set org.gnome.gedit.preferences.editor display-right-margin true
+gsettings set org.gnome.gedit.preferences.editor tabs-size 4
+gsettings set org.gnome.gedit.preferences.ui bottom-panel-visible true
+gsettings set org.gnome.gedit.preferences.ui side-panel-visible true
+gsettings set org.gnome.gedit.plugins.spell highlight-misspelled true
+
+# keyboard configurations 0 for spanish 1 for us keyboard
+gsettings set org.gnome.desktop.input-sources sources \"[('xkb', 'es'), ('xkb', 'us')]\"
+gsettings set org.gnome.desktop.input-sources current 0
+
+gsettings set org.nemo.desktop home-icon-visible true
+gsettings set org.nemo.icon-view captions \"['size', 'type', 'date_accessed', 'date_modified']\"
+gsettings set org.gnome.desktop.privacy hide-identity true
+gsettings set org.gnome.calculator show-thousands true
+gsettings set org.nemo.sidebar-panels.tree show-only-directories false
+
+# Category launcher containers in dashboard
+gsettings set org.gnome.desktop.app-folders folder-children \"['accessories', 'chrome-apps', 'games', 'graphics', 'internet', 'office', 'programming', 'science', 'sound---video', 'system-tools', 'universal-access', 'wine']\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/accessories/ name \"Accessories\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/accessories/ categories \"['Utility']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/chrome-apps/ name \"Chrome Apps\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/chrome-apps/ categories \"['chrome-apps']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/games/ name \"Games\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/games/ categories \"['Game']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/graphics/ name \"Graphics\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/graphics/ categories \"['Graphics']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/internet/ name \"Internet\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/internet/ categories \"['Network', 'WebBrowser', 'Email']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/office/ name \"Office\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/office/ categories \"['Office']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/programming/ name \"Programming\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/programming/ categories \"['Development']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/science/ name \"Science\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/science/ categories \"['Science']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/sound---video/ name \"Sound & Video\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/sound---video/ categories \"['AudioVideo', 'Audio', 'Video']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/system-tools/ name \"System Tools\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/system-tools/ categories \"['System', 'Settings']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/universal-access/ name \"Universal Access\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/universal-access/ categories \"['Accessibility']\"
+
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/wine/ name \"Wine\"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/wine/ categories \"['Wine', 'X-Wine', 'Wine-Programs-Accessories']\"
 "
 
 "
@@ -4866,7 +5066,7 @@ Name=Netflix
 StartupNotify=true
 StartupWMClass=Netflix
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -4952,7 +5152,7 @@ Name=OneDrive
 StartupNotify=true
 StartupWMClass=OneDrive
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5008,7 +5208,7 @@ Name=Outlook
 StartupNotify=true
 StartupWMClass=Outlook
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5034,7 +5234,7 @@ Name=Overleaf
 StartupNotify=true
 StartupWMClass=Overleaf
 #Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5114,8 +5314,34 @@ uninstall_pgadmin_mid() {
 
 php_installationtype="packagemanager"
 php_arguments=("php")
-php_packagenames=("php" "libapache2-mod-php")
+php_packagenames=("php" "libapache2-mod-php" "php7.4" "libapache2-mod-php7.4" "php7.4-mysql" "php-common" "php7.4-cli" "php7.4-common" "php7.4-json" "php7.4-opcache" "php7.4-readline")
 php_readmeline="| php | Programming language | Command \`php\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+phppgadmin_installationtype="packagemanager"
+phppgadmin_arguments=("phppgadmin")
+phppgadmin_packagenames=("phppgadmin")
+phppgadmin_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;phppgadmin.svg")
+phppgadmin_url="http://localhost/phppgadmin"
+phppgadmin_bashfunctions=("alias phppgadmin=\"nohup xdg-open ${phppgadmin_url} &>/dev/null &\"")
+phppgadmin_readmeline="| phppgadmin | GUI for SQL Database Management | It runs an instance of the program at localhost/phppgadmin ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+phppgadmin_launchercontents=("
+[Desktop Entry]
+Categories=Network;
+Comment=GUI for SQL Database Management
+Encoding=UTF-8
+GenericName=phppgadmin
+Keywords=phppgadmin
+MimeType=
+Name=phpPgAdmin
+StartupNotify=true
+StartupWMClass=phppggadmin
+Terminal=false
+Type=Application
+Version=1.0
+Icon=${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Exec=nohup xdg-open ${phppgadmin_url}
+TryExec=xdg-open
+")
 
 pluma_installationtype="packagemanager"
 pluma_arguments=("pluma")
@@ -5189,7 +5415,7 @@ Name=Google Presentation
 StartupNotify=true
 StartupWMClass=Google Presentation
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5305,9 +5531,13 @@ pull()
   if [ -z \"\$1\" ]; then
 	  git pull
 	else
-	  git pull origin \"\$1\"
+	  git pull origin --no-ff \"\$@\"
 	fi
 }
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete pull _git_branch  # Using git branch completions since _git_pull completions only give incorreclty \"origin origin\" as completion
+fi
 ")
 pull_readmeline="| Function \`pull\` | Alias for \`git pull\`|  Command \`pull\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -5316,12 +5546,26 @@ push_arguments=("push")
 push_bashfunctions=("
 push()
 {
+  git fetch &>/dev/null
   if [ -z \"\$1\" ]; then
-	  git push
+    if git rev-parse --symbolic-full-name \$(git branch --show-current)@{upstream} &>/dev/null; then
+      git push
+    else
+	    git push --set-upstream origin \"\$(git branch --show-current)\"
+    fi
 	else
-	  git push origin \"\$1\"
+	  if git rev-parse --symbolic-full-name \$(git branch --show-current)@{upstream} &>/dev/null; then
+	    git push origin \"\$@\"
+    else
+	    git push --set-upstream origin \"\$@\"
+    fi
 	fi
+	unset returnerror
 }
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete push _git_branch  # Using git branch completions since _git_push completions only give incorreclty \"origin origin\" as completion
+fi
 ")
 push_readmeline="| Function \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -5510,7 +5754,7 @@ Name=Reddit
 StartupNotify=true
 StartupWMClass=Reddit
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5761,7 +6005,7 @@ Name=SoundCloud
 StartupNotify=true
 StartupWMClass=Soundcloud
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5796,7 +6040,7 @@ Name=Google Spreadsheets
 StartupNotify=true
 StartupWMClass=Google Spreadsheets
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -5809,7 +6053,11 @@ ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubu
 
 status_installationtype="environmental"
 status_arguments=("status")
-status_bashfunctions=("alias status=\"git status\"")
+status_bashfunctions=("alias status=\"git status\"
+if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
+  source \"${BASH_COMPLETIONS_PATH}\"
+  __git_complete status _git_status
+fi")
 status_readmeline="| Functions \`status\` | \`git status\` | Command \`status\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 steam_installationtype="packageinstall"
@@ -6720,7 +6968,7 @@ Name=Google Translate
 StartupNotify=true
 StartupWMClass=Google Translator
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6752,7 +7000,7 @@ Name=Trello
 StartupNotify=true
 StartupWMClass=Trello
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6778,7 +7026,7 @@ Name=Tumblr
 StartupNotify=true
 StartupWMClass=Tumblr
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6804,7 +7052,7 @@ Name=Twitch
 StartupNotify=true
 StartupWMClass=Twitch
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6830,7 +7078,7 @@ Name=Twitter
 StartupNotify=true
 StartupWMClass=Twitter
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6900,7 +7148,7 @@ Name=WhatsApp Web
 StartupNotify=true
 StartupWMClass=WhatsApp
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -6926,7 +7174,7 @@ Name=Wikipedia
 StartupNotify=true
 StartupWMClass=Wikipedia
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -7064,6 +7312,7 @@ wireshark_readmeline="| Wireshark | Net sniffer | Command \`wireshark\`, desktop
 
 x_installationtype="environmental"
 x_arguments=("x" "extract" "extract_function")
+x_packagedependencies=("libfile-mimeinfo-perl")
 x_bashfunctions=("
 x() {
   local first_compressed_file_arg_pos=
@@ -7186,7 +7435,7 @@ Name=YouTube
 StartupNotify=true
 StartupWMClass=YouTube
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
@@ -7224,7 +7473,7 @@ Name=YouTube Music
 StartupNotify=true
 StartupWMClass=YouTube Music
 Terminal=false
-TryExec=google-chrome
+TryExec=xdg-open
 Type=Application
 Version=1.0
 ")

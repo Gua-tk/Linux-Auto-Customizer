@@ -435,6 +435,7 @@ argument_processing()
       --commands)  # Print list of possible arguments and finish the program
         local all_arguments+=("${feature_keynames[@]}")
         all_arguments+=("${auxiliary_arguments[@]}")
+        all_arguments+=("${WRAPPERS_KEYNAMES[@]}")
         echo "${all_arguments[@]}"
         exit 0
       ;;

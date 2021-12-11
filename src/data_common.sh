@@ -183,6 +183,7 @@ if [ -z "${XDG_TEMPLATES_DIR}" ]; then
 fi
 
 
+# Customizer folders
 declare -r CUSTOMIZER_FOLDER="${HOME_FOLDER}/.customizer"
 declare -r BIN_FOLDER="${CUSTOMIZER_FOLDER}/bin"
 declare -r CACHE_FOLDER="${CUSTOMIZER_FOLDER}/cache"
@@ -191,12 +192,16 @@ declare -r FUNCTIONS_FOLDER="${CUSTOMIZER_FOLDER}/functions"
 declare -r INITIALIZATIONS_FOLDER="${CUSTOMIZER_FOLDER}/initializations"
 declare -r DATA_FOLDER="${CUSTOMIZER_FOLDER}/data"
 
+# Customizer installation src file paths
 declare -r FUNCTIONS_PATH="${DATA_FOLDER}/functions.sh"
 declare -r INITIALIZATIONS_PATH="${DATA_FOLDER}/initializations.sh"
+
+# Customizer installation data file paths
 declare -r PROGRAM_FAVORITES_PATH="${DATA_FOLDER}/favorites.txt"
 declare -r PROGRAM_KEYBINDINGS_PATH="${DATA_FOLDER}/keybindings.txt"
 declare -r INSTALLED_FEATURES="${DATA_FOLDER}/installed_features.txt"
 
+# System routes used in installation or capabilities
 declare -r PATH_POINTED_FOLDER="${HOME_FOLDER}/.local/bin"
 declare -r ALL_USERS_PATH_POINTED_FOLDER="/usr/bin"
 declare -r PERSONAL_LAUNCHERS_DIR="${HOME_FOLDER}/.local/share/applications"
@@ -205,8 +210,11 @@ declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
 declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
 declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
-declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
+
+# Used in certain types of features
+declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
+declare -r BASH_COMPLETIONS_PATH="/usr/share/bash-completion/completions/git"
 
 ########################################################################################################################
 ################################################## RUNTIME FLAGS #######################################################
@@ -284,6 +292,7 @@ declare -r feature_keynames=(
   "ansible"
   "ant"
   "anydesk"
+  "apache2"
   "ardour"
   "aspell"
   "atom"
@@ -314,6 +323,7 @@ declare -r feature_keynames=(
   "codeblocks"
   "codium"
   "commit"
+  "config"
   "converters"
   "copyq"
   "curl"
@@ -327,6 +337,7 @@ declare -r feature_keynames=(
   "documents"
   "drive"
   "dropbox"
+  "drupal"
   "duckduckgo"
   "dummycommit"
   "E"
@@ -445,6 +456,7 @@ declare -r feature_keynames=(
   "pdfgrep"
   "pgadmin"
   "php"
+  "phppgadmin"
   "pluma"
   "postman"
   "presentation"
@@ -543,7 +555,7 @@ declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C
 # multi-feature wrapper.                                                                                               #
 # Is preferable that the wrapper has the same installation privileges in all of its features.                          #
 ########################################################################################################################
-
+declare -r WRAPPERS_KEYNAMES=("programmingcore" "programmingide" "programmingpro" "texteditorcore" "mediacore" "systemcore" "internetcore" "artcore" "gamesinstall" "internetshortcuts" "standardinstall" "bashfunctions" "desktopfunctions" "terminalfunctions" "network" "networks" "fontsuser" "fontsroot" "custom1" "gitbashfunctions" "iochemroot" "iochemuser")
 # Thematic wrappers
 declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel")
 declare -r wrapper_programmingide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
@@ -565,7 +577,7 @@ declare -r wrapper_fontsuser=("fonts-alegreya-sans", "fonts-lato", "fonts-noto-s
 declare -r wrapper_fontsroot=("fonts-firacode", "fonts-hack", "fonts-hermit", "fonts-roboto")
 # Custom wrappers
 declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "curl" "git" "ffmpeg" "java" "python3")
-declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch")
+declare -r wrapper_gitbashfunctions=("pull" "push" "dummycommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch" "config")
 declare -r wrapper_iochemroot=("gcc" "virtualbox" "uget" "pdfgrep" "obs" "nemo" "gpaint" "guake" "parallel" "calculator" "autofirma" "dia" "psql" "chrome" "caffeine" "copyq" "thunderbird" "vlc" "python" "git" "gitk" "teams" "customizer")
 declare -r wrapper_iochemuser=("anydesk" "telegram" "eclipse" "fastcommands" "cheat" "apache" "java" "ant" "mvn" "terminal-background" "bashcolors" "pycharm" "sublime" "gitcm" "wallpapers" "java" "ideac" "ideau" "pgadmin" "a" "add" "alert" "b" "B" "c" "changebg" "checkout" "clean" "clone" "commit" "d" "dummycommit" "e" "E" "emojis" "f" "F" "fetch" "h" "hard" "i" "ipe" "ipi" "j" "k" "l" "L" "loc" "merge" "o" "port" "pull" "push" "q" "s" "u" "x" "z" "status" "gitprompt" "history_optimization" "meld" "mendeley" "onedrive" "postman" "prompt" "gitprompt" "screenshots" "sherlock" "shortcuts" "sonarqube" "templates" "youtube-music" "youtube-dl" "zoom" "whatsapp")
 

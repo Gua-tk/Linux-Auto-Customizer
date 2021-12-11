@@ -132,6 +132,16 @@ autostart_program() {
 }
 
 
+# - Description: Change ownership of folders recursively.
+# - Permission: Can be run as root.
+# - Argument 1: user
+# - Argument 2: Path
+custom_permission()
+{
+  chown -R "$1:$1" "$2"
+}
+
+
 # - Description: Applies the user permissions recursively on all the files and directories contained recursively in the
 #   folder received by argument.
 # - Permissions: Can be called as root or user. It will put chmod 755 to all the files recursively in the received
@@ -149,25 +159,33 @@ apply_permissions_recursively() {
   fi
 }
 
+
 # - Description: Apply standard permissions and set owner and group to the user who called root.
 # - Permissions: This functions can be called as root or user.
 # Argument 1: Path to the file or directory whose permissions are changed.
 apply_permissions() {
+  if [ -z "$2" ]; then
+    permission_mask="755"
+  else
+    permission_mask="$2"
+  fi
+
   if [ -f "$1" ]; then
     if [ ${EUID} == 0 ]; then  # file
       chgrp "${SUDO_USER}" "$1"
       chown "${SUDO_USER}" "$1"
     fi
-    chmod 755 "$1"
+    chmod "${permission_mask}" "$1"
   elif [ -d "$1" ]; then
     if [ ${EUID} == 0 ]; then  # directory
       chgrp "${SUDO_USER}" "$1"
       chown "${SUDO_USER}" "$1"
     fi
-    chmod 755 "$1"
+    chmod "${permission_mask}" "$1"
   else
     output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." "${FLAG_QUIETNESS}"
   fi
+  unset permission_mask
 }
 
 
@@ -198,9 +216,11 @@ create_file() {
 # - Permissions: This functions is expected to be called as root, or it will throw an error, since $SUDO_USER is not
 # defined in the the scope of the normal user.
 # - Argument 1: Path to the directory that we want to create.
+# - Argument 2: Mask permission for the folder.
 create_folder() {
   mkdir -p "$1"
-  apply_permissions "$1"
+  apply_permissions "$1" "$2"
+
 }
 
 
