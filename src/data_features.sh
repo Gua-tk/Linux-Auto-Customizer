@@ -6543,7 +6543,6 @@ tmux_clockmoji_path="clockmoji.sh"
 tmux_tmuxconf_content="features/tmux.conf"
 tmux_tmuxconf_path="${HOME_FOLDER}/.tmux.conf"
 
-
 tomcat_installationtype="userinherit"
 tomcat_arguments=("tomcat" "apache_tomcat" "tomcat_server" "apache")
 tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
