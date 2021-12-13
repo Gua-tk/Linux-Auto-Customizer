@@ -353,6 +353,7 @@ declare -r feature_keynames=(
   "fdupes"
   "fetch"
   "ffmpeg"
+  "filezilla"
   "firefox"
   "fonts_alegreya_sans"
   "fonts_firacode"

@@ -3247,6 +3247,30 @@ ffmpeg_arguments=("ffmpeg" "youtube_dl_dependencies")
 ffmpeg_packagenames=("ffmpeg")
 ffmpeg_readmeline="| ffmpeg | Super fast video / audio encoder | Command \`ffmpeg\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+filezilla_installationtype="packagemanager"
+filezilla_arguments=("filezilla")
+filezilla_bashfunctions=("alias filezilla=\"nohup filezilla &>/dev/null &\"")
+filezilla_packagenames=("filezilla")
+filezilla_downloads=("https://upload.wikimedia.org/wikipedia/commons/0/01/FileZilla_logo.svg;filezilla_icon.svg")
+filezilla_readmeline="| FileZilla | FTP Client & Server | Command \`filezilla\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+filezilla_launchercontents=("[Desktop Entry]
+Categories=Network;
+Comment=FTP Client & Server
+Encoding=UTF-8
+Exec=filezilla
+Icon=${BIN_FOLDER}/filezilla/filezilla_icon.svg
+GenericName=Document
+Keywords=forms;
+MimeType=
+Name=FileZilla
+StartupNotify=true
+StartupWMClass=FileZilla
+Terminal=false
+TryExec=filezilla
+Type=Application
+Version=1.0
+")
+
 firefox_installationtype="packagemanager"
 firefox_arguments=("firefox")
 firefox_bashfunctions=("alias firefox=\"nohup firefox &>/dev/null &\"")
