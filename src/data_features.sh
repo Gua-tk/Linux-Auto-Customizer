@@ -618,7 +618,7 @@ clion() {
 }
 ")
 clion_binariesinstalledpaths=("bin/clion.sh;clion")
-clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2021.2.1.tar.gz"
+clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2021.3.tar.gz"
 clion_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
 Comment=${clion_readmelinedescription}
@@ -3805,7 +3805,7 @@ ideac() {
 }
 "
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
-ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.2.1.tar.gz"
+ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.3.tar.gz"
 ideac_readmelinedescription="Integrated development environment written in Java for developing computer software"
 ideac_launchercontents=("
 [Desktop Entry]
@@ -3841,7 +3841,7 @@ ideau() {
 }
 ")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
-ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.2.1.tar.gz"
+ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.3.tar.gz"
 ideau_readmelinedescription="Integrated development environment written in Java for developing computer software"
 ideau_launchercontents=("
 [Desktop Entry]
@@ -5576,7 +5576,7 @@ pycharm() {
 }
 ")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
-pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.2.1.tar.gz"
+pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
 pycharm_readmelinedescription="Integrated development environment used in computer programming"
 pycharm_launchercontents=("
@@ -5620,7 +5620,7 @@ pycharmpro() {
 }
 ")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
-pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2021.2.1.tar.gz"
+pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2021.3.tar.gz"
 pycharmpro_readmelinedescription="Integrated development environment used in computer programming"
 pycharmpro_launchercontents=("
 [Desktop Entry]
