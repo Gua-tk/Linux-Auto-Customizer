@@ -122,19 +122,13 @@ complete -F _tsk tsk
 
 
 alias at="tmux a -t"
-alias edittmux="pluma ${HOME}/.tmux.conf"
 alias oldt="tmux new -s default"
 alias t="tmux"
-alias tl="tmux ls"
 alias tls="tmux ls -F '#{session_attached} #{session_name}'"
 alias tk="tmux kill-ses"
 alias tks="tmux kill-server"
-alias tbash="tmux new-session /bin/bash \; set default-shell /bin/bash"
 alias tds="tmux a #"
-alias terminal="tmux"
-alias tn="tmux new -s $1"
 alias trefresh="tmux refresh-client -S"
-alias tupgrade="tmux source ${HOME}/.tmux.conf"
 alias pbcopy="xsel --clipboard --input"
 alias pbpaste="xsel --clipboard --output"
 
