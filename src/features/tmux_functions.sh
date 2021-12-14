@@ -138,9 +138,6 @@ alias tupgrade="tmux source ${HOME}/.tmux.conf"
 alias pbcopy="xsel --clipboard --input"
 alias pbpaste="xsel --clipboard --output"
 
-# create a global per-pane variable that holds the pane's PWD
-export PS9=$PS9'$( [ -n $TMUX ] && tmux setenv -g TMUX_PWD_$(tmux display -p "#D" | tr -d %) $PWD)'
-
 # https://unix.stackexchange.com/questions/43601/how-can-i-set-my-default-shell-to-start-up-tmux
 # Make sure that
 #  * (1) tmux exists on the system
@@ -151,7 +148,7 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
   if [ -n "$attach_session" ]; then
     tmux attach -t "$attach_session"
   else
-    # Use the followin instruction instead of tmux to make tmux kidnap the session so there is no terminal to fall back
+    # Use the following instruction instead of tmux to make tmux kidnap the session so there is no terminal to fall back after killing the tmux server
     #exec tmux
     tmux
   fi
