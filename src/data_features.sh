@@ -6069,15 +6069,15 @@ ssh_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/64/Human-folder
 ssh_bashfunctions=("
 sssh() {
   if [ \$# -eq 0 ]; then
-    echo \"Enter user/domain:\"
+    echo \"Enter username:\"
     read username
-    echo \"Enter ip:\"
+    echo \"Enter ip/domain:\"
     read ip
   elif [ \$# -eq 2 ]; then
     username=\$1
-    pass=\$2
+    ip=\$2
   else
-    echo \"We need a user/domain name and password to stablish ssh connection\"
+    echo \"We need a user and domain/name to stablish ssh connection\"
   fi
   ssh \"\${username}\"@\"\${ip}\"
   }
