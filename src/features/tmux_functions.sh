@@ -1,137 +1,165 @@
+########################################################################################################################
+# - Name: tmux_functions.sh                                                                                            #
+# - Description: Miscellaneous configuration (functions and aliases) of tmux using bash. Functions include completions #
+# - Creation Date: 15/12/21                                                                                            #
+# - Last Modified: 15/12/21                                                                                            #
+# - Author & Maintainer: Aleix Mariné-Tena                                                                             #
+# - Email: aleix.marine@estudiants.urv.cat                                                                             #
+# - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
+# imports. See the header of each function to see its privilege requirements.                                          #
+# - Arguments: No arguments                                                                                            #
+# - Usage: Not executed directly, sourced from functions.sh                                                            #
+# - License: GPL v2.0                                                                                                  #
+########################################################################################################################
 
-alias at="tmux a -t"
-alias oldt="tmux new -s default"
+
 alias t="tmux"
-alias tls="tmux ls -F '#{session_attached} #{session_name}'"
-alias tk="tmux kill-ses"
+alias tls="echo -e '\e[0;33m'; echo \"name | atached(yes/no) | running command\"; echo -en '\e[0m'; tmux ls -F '#S      #{session_attached}                 #{command}'"
+alias thelp="tmux list-commands"
 alias tks="tmux kill-server"
-alias tds="tmux a #"
 alias trefresh="tmux refresh-client -S"
-alias pbcopy="xsel --clipboard --input"
-alias pbpaste="xsel --clipboard --output"
 
-att()
-{
-	tmux attach -t "$1"
-}
 
-dt()
+# - Description: Generates a completion using the active tmux sessions.
+# - Permissions: Needs access to tmux server.
+_tsession_complete()
 {
-	local CONTADOR=0
-	while [ $# -ne 0 ]; do
-		if [ "$1" != "default" ]; then
-		  CONTADOR=$((${CONTADOR} + 1))
-		  tmux new-session -d -s "$1"
-	  fi
-	  shift
-	done
+  COMPREPLY=($(compgen -W "$(tmux ls -F '#S' | xargs)" -- "${COMP_WORDS[COMP_CWORD]}"))
 }
 
 
-freezesession()
+# - Description: Create the new sessions supplied by argument.
+# - Permissions: Needs access to tmux server.
+# - Arguments:
+#   * Argument N: Name of the new session.
+tns()
+{
+  while [ $# -ne 0 ]; do
+		tmux new-session -d -s "$1"
+    shift
+  done
+}
+
+
+# - Description: Invoke a new terminal that does not load tmux.
+# - Permissions: No special permissions needed.
+# - Arguments: No arguments.
+told()
+{
+  gnome-terminal
+}
+
+# - Description: Saves configuration of the current session to a file.
+# - Permissions: Needs access to tmux server and be inside a tmux session.
+# - Arguments:
+#   * Argument 1: Targeted tmux session file name in €{CURRENT_INSTALLATION_FOLDER}
+tsave()
 {
 	tmuxp freeze "$1"
 }
+complete -F _tsession_complete tsave
 
 
-session()
+# - Description: Load configuration from the installation folder of tmux
+# - Permissions: Needs access to tmux server and be inside a tmux session.
+# - Arguments:
+#   * Argument 1: Targeted tmux session file name in €{CURRENT_INSTALLATION_FOLDER}
+tload()
 {
-	if [ -n "$1" ]; then
-		tmuxp load "€{CURRENT_INSTALLATION_FOLDER}/$1.yaml"
-	else
-		tmuxp load "€{CURRENT_INSTALLATION_FOLDER}/main.yaml"
-	fi
+	tmuxp load "€{CURRENT_INSTALLATION_FOLDER}/$1"
 }
 
 
+# - Description: Generates a completion using the name of the files in €{CURRENT_INSTALLATION_FOLDER}
+# - Permissions: Needs access to the tmux installation folder.
+_tload()
+{
+  COMPREPLY=($(compgen -W "$(ls "€{CURRENT_INSTALLATION_FOLDER}")" -- "${COMP_WORDS[COMP_CWORD]}"))
+}
+complete -F _tload tload
+
+
+# - Description: From outside tmux attaches the current client to an existing tmux session or creates a new one. From
+#   inside tmux perform a `tmux switch` to the desired session.
+# - Permissions: Needs access to tmux server.
+# - Arguments:
+#   * Argument 1: Targeted tmux session using name.
 ta()
 {
-  if [[ -z $1 ]]; then
-    tmux attach
+  if [ -z "$1" ]; then
+    tmux attach-session
   else
-    tmux attach -t "$1"
+    tmux attach-session -t "$1"
   fi
 }
-_ta() {
-  TMUX_SESSIONS=$(tmux ls -F '#S' | xargs)
-  local cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=( $(compgen -W "$TMUX_SESSIONS" -- $cur) )
-}
-complete -F _ta ta
+complete -F _tsession_complete ta
 
 
+# - Description: Detaches from the current tmux session, returning to the original bash shell that called tmux.
+# - Permissions: Needs access to tmux server.
+# - Arguments:
+#   * Argument 1: Targeted tmux session using name.
 td()
 {
-  tmux detach "$1"
+  tmux detach-client -s "$1"
 }
-_td() {
-  TMUX_SESSIONS=$(tmux ls -F '#S' | xargs)
-  local cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=( $(compgen -W "$TMUX_SESSIONS" -- $cur) )
-}
-complete -F _td td
+complete -F _tsession_complete td
 
 
+# - Description: Renames the current session to the supplied argument.
+# - Permissions: Needs access to tmux server.
+# - Arguments:
+#   * Argument 1: Targeted tmux session using name.
 trs()
 {
 	tmux rename-session "$1"
 }
+complete -F _tsession_complete ts
 
 
+# - Description: Switch the current session to the desired session. This allows you to control another terminal.
+# - Permissions: Needs access to tmux server.
+# - Arguments:
+#   * Argument N: Targeted tmux session using name.
+#   * Argument N+1: Command to send to the session.
 ts()
 {
 	tmux switch -t "$1"
 }
-_ts() {
-  TMUX_SESSIONS=$(tmux ls -F '#S' | xargs)
-  local cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=( $(compgen -W "$TMUX_SESSIONS" -- $cur) )
-}
-complete -F _ts ts
+complete -F _tsession_complete ts
 
 
+# - Description: Sends commands to the desired sessions.
+# - Permissions: Needs access to tmux server.
+# - Arguments:
+#   * Argument N: Targeted tmux session using name.
+#   * Argument N+1: Command to send to the session.
 tsend()
 {
-  tmux send -t "$1" "$2" Enter
+  while [ $# -ne 0 ]; do
+    tmux send -t "$1" "$2" Enter
+    shift; shift
+  done
 }
+complete -F _tsession_complete tsend
 
 
-tses()
+# - Description: Kills the desired tmux session using its name. This can be consulted using `tmux ls`.
+# - Arguments:
+#   * Argument N: tmux session name to be killed.
+tk()
 {
-	tmuxp load "€{CURRENT_INSTALLATION_FOLDER}/$1.json"
+  for session_name in "$@"; do
+    tmux kill-session -t "${session_name}"
+  done
 }
+complete -F _tsession_complete tk
 
 
-tsesconvert()
-{
-	tmuxp convert -y "$1"
-}
-
-
-tsk()
-{
-CONTADOR=0
-while [ "$*" ]
-do
-	if [[ "$1" == "default" ]]; then
-	  shift
-	else
-	  let CONTADOR=$CONTADOR+1
-	  tmux kill-session -t $1
-    shift
-  fi
-done
-}
-_tsk() {
-    TMUX_SESSIONS=$(tmux ls -F '#S' | xargs)
-
-    local cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W "$TMUX_SESSIONS" -- $cur) )
-}
-complete -F _tsk tsk
-
-# Inverts the mouse state by adding "set -g mouse on" line into .tmux.conf or deleting the same line.
-# You need to reload tmux afterwards to reload the configuration changes.
+# - Description: Inverts the mouse state by adding "set -g mouse on" line into .tmux.conf or deleting the same line.
+#   You need to reload tmux afterwards to reload the configuration changes.
+# - Permissions: Needs access to €{HOME_FOLDER}/.bashrc to write and read.
+# - Arguments: No arguments
 tm()
 {
   local -r activate_mouse_tmuxconf_line="set -g mouse on\$"
