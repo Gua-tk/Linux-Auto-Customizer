@@ -14,7 +14,7 @@
 
 
 alias t="tmux"
-alias tls="echo -e '\e[0;33m'; echo \"name | atached(yes/no) | running command\"; echo -en '\e[0m'; tmux ls -F '#S      #{session_attached}                 #{command}'"
+alias tls="echo -e '\e[0;33m'; echo \"Name | Attached(1/0) | Windows name\"; echo -en '\e[0m'; tmux ls -F '#S      #{session_attached}              #{W}'"
 alias thelp="tmux list-commands"
 alias tks="tmux kill-server"
 alias trefresh="tmux refresh-client -S"
@@ -25,6 +25,14 @@ alias trefresh="tmux refresh-client -S"
 _tsession_complete()
 {
   COMPREPLY=($(compgen -W "$(tmux ls -F '#S' | xargs)" -- "${COMP_WORDS[COMP_CWORD]}"))
+}
+
+
+# - Description: Generates a completion using the name of the files in €{CURRENT_INSTALLATION_FOLDER}
+# - Permissions: Needs access to the tmux installation folder.
+_tload()
+{
+  COMPREPLY=($(compgen -W "$(ls -ca "€{CURRENT_INSTALLATION_FOLDER}" | grep -Eo ".*\.(json|yaml)")" -- "${COMP_WORDS[COMP_CWORD]}"))
 }
 
 
@@ -67,14 +75,6 @@ complete -F _tsession_complete tsave
 tload()
 {
 	tmuxp load "€{CURRENT_INSTALLATION_FOLDER}/$1"
-}
-
-
-# - Description: Generates a completion using the name of the files in €{CURRENT_INSTALLATION_FOLDER}
-# - Permissions: Needs access to the tmux installation folder.
-_tload()
-{
-  COMPREPLY=($(compgen -W "$(ls -ca "€{CURRENT_INSTALLATION_FOLDER}" | grep -Eo ".*\.(json|yaml)")" -- "${COMP_WORDS[COMP_CWORD]}"))
 }
 complete -F _tload tload
 
@@ -169,7 +169,6 @@ tm()
   else
     sed "s/^${activate_mouse_tmuxconf_line}\$//g" -i "€{HOME_FOLDER}/.tmux.conf"
   fi
-
 }
 
 
