@@ -162,7 +162,7 @@ complete -F _tsession_complete tk
 # - Arguments: No arguments
 tm()
 {
-  local -r activate_mouse_tmuxconf_line="set -g mouse on\$"
+  local -r activate_mouse_tmuxconf_line="set -g mouse on"
   if ! grep -qE "^${activate_mouse_tmuxconf_line}\$" "€{HOME_FOLDER}/.tmux.conf" &>/dev/null; then
     echo "${activate_mouse_tmuxconf_line}" >> "€{HOME_FOLDER}/.tmux.conf"
     tmux source-file "€{HOME_FOLDER}/.tmux.conf"
