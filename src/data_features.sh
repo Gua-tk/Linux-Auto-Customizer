@@ -6539,7 +6539,7 @@ tilix_readmeline="| Tilix | Advanced GTK3 tiling terminal emulator | Command \`t
 
 tmux_installationtype="packagemanager"
 tmux_arguments=("tmux")
-tmux_packagedependencies=("xdotool" "xclip" "tmuxp" "xsel" "bash-completion")
+tmux_packagedependencies=("xdotool" "xclip" "tmuxp" "bash-completion")
 tmux_readmelinedescription="Terminal multiplexer for Unix-like operating systems"
 tmux_launchercontents=("
 [Desktop Entry]
