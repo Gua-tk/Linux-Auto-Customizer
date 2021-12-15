@@ -6,7 +6,7 @@
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 17/9/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
+# - Email: aleix.marine@estudiants.urv.cat                                                                             #
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
 # imports. See the header of each function to see its privilege requirements.                                          #
 # - Arguments: No arguments                                                                                            #
@@ -24,9 +24,11 @@
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
 # - Argument 2: Name of the bash script file in $FUNCTIONS_FOLDER.
+# - Argument 3 (optional): Contains a relative path from the repository folder to a file that is copied in the desired
+#   path. If set argument 1 is ignored.
 add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
-  create_file "${FUNCTIONS_FOLDER}/$2" "$1"
+  create_file "${FUNCTIONS_FOLDER}/$2" "$1" "$3"
   # If we are root apply permission to the file
   if [ "${EUID}" == 0 ]; then
     apply_permissions "${FUNCTIONS_FOLDER}/$2"
@@ -45,9 +47,11 @@ add_bash_function() {
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Text containing all the code that will be saved into file, which will be sourced from bash_functions.
 # - Argument 2: Name of the file.
+# - Argument 3 (optional): Contains a relative path from the repository folder to a file that is copied in the desired
+#   path. If set argument 1 is ignored.
 add_bash_initialization() {
   # Write code to bash initializations folder with the name of the feature we want to install
-  create_file "${INITIALIZATIONS_FOLDER}/$2" "$1"
+  create_file "${INITIALIZATIONS_FOLDER}/$2" "$1" "$3"
   # If we are root apply permission to the file
   if [ "${EUID}" == 0 ]; then
     apply_permissions "${INITIALIZATIONS_FOLDER}/$2"
@@ -147,7 +151,8 @@ custom_permission()
 # - Permissions: Can be called as root or user. It will put chmod 755 to all the files recursively in the received
 #   directory, but as root it will also change their group and owner to the one invoking sudo, by consulting variable
 #   SUDO_USER.
-apply_permissions_recursively() {
+apply_permissions_recursively()
+{
   if [ -d "$1" ]; then
     if [ ${EUID} == 0 ]; then  # directory
       chgrp -R "${SUDO_USER}" "$1"
@@ -162,8 +167,11 @@ apply_permissions_recursively() {
 
 # - Description: Apply standard permissions and set owner and group to the user who called root.
 # - Permissions: This functions can be called as root or user.
-# Argument 1: Path to the file or directory whose permissions are changed.
-apply_permissions() {
+# - Arguments:
+#   * Argument 1: Path to the file or directory whose permissions are changed.
+#   * Argument 2 (optional): Custom mask of permissions
+apply_permissions()
+{
   if [ -z "$2" ]; then
     permission_mask="755"
   else
@@ -196,15 +204,29 @@ apply_permissions() {
 # defined in the the scope of the normal user.
 # - Argument 1: Path to the file that we want to create.
 # - Argument 2 (Optional): Content of the file we want to create.
-create_file() {
+# - Argument 3 (Optional): Relative path from customizer repository to the file that will be copied to create the file.
+#   By using this option the function will ignore data of argument 2.
+create_file()
+  {
   local -r folder="$(echo "$1" | rev | cut -d "/" -f2- | rev)"
   local -r filename="$(echo "$1" | rev | cut -d "/" -f1 | rev)"
-  if [ -n "${filename}" ]; then
-    mkdir -p "${folder}"
-    echo -n "$2" > "$1"
-    apply_permissions "$1"
+  if [ -n "$3" ]; then
+    if [ -f "${DIR}/$3" ]; then
+      create_folder "${folder}"
+      cp "${DIR}/$3" "$1"
+      apply_permissions "$1"
+      translate_variables "$1"
+    else
+      output_proxy_executioner "echo WARNING: The specified path to a customizer internal file $3 does not exist. It will be skipped" "${FLAG_QUIETNESS}"
+    fi
   else
-    output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "${FLAG_QUIETNESS}"
+    if [ -n "${filename}" ]; then
+      create_folder "${folder}"
+      echo -n "$2" > "$1"
+      apply_permissions "$1"
+    else
+      output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "${FLAG_QUIETNESS}"
+    fi
   fi
 }
 
@@ -220,7 +242,6 @@ create_file() {
 create_folder() {
   mkdir -p "$1"
   apply_permissions "$1" "$2"
-
 }
 
 
@@ -539,6 +560,27 @@ register_file_associations() {
 }
 
 
+# - Description: Receives the file path of a file text which contents will be evaluated by this function to look for
+#   variables with the € format (€{variable}) and translate its symbol by the actual value in running memory.
+# - Permissions: Needs writing permission to the received file because it will be overwritten in place.
+# - Arguments:
+#   * Argument 1: Absolute path to the file which will be parsed and its € variables translated.
+translate_variables()
+{
+  if [ ! -f "$1" ]; then
+    output_proxy_executioner "echo WARNING: The file $1 is not present or is not accesible"
+    return
+  fi
+  detected_variables=($(grep -Eo "€{([A-Z]|[a-z]|_)*}" < "$1" | uniq))
+  for variable in "${detected_variables[@]}"; do
+    # Obtain only the variable name
+    real_variable_name="$(echo "${variable}" | cut -d "{" -f2 | cut -d "}" -f1)"
+    # Change variable for its real value
+    sed "s@${variable}@${!real_variable_name}@g" -i "$1"
+  done
+}
+
+
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - OPTIONAL PROPERTIES #####################################
 ########################################################################################################################
@@ -553,20 +595,6 @@ generic_install_manual_launchers() {
   local name_suffix_anticollision=""
   for launchercontent in "${!launchercontents}"; do
     create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
-  done
-}
-
-
-# - Description: Expands function contents and add them to .bashrc indirectly using bash_functions
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_bashfunctions
-#   and the name of the first argument in the common_data.sh table
-generic_install_functions() {
-  local -r bashfunctions="$1_bashfunctions[@]"
-  local name_suffix_anticollision=""
-  for bashfunction in "${!bashfunctions}"; do
-    add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
@@ -694,24 +722,6 @@ generic_install_pathlinks() {
 }
 
 
-# - Description: Expands $1_filekeys to obtain the keys which are a name of a variable
-#   that has to be expanded to obtain the data of the file.
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_filekeys
-generic_install_files() {
-  local -r filekeys="$1_filekeys[@]"
-  for filekey in "${!filekeys}"; do
-    local content="$1_${filekey}_content"
-    local path="$1_${filekey}_path"
-    if echo "${!path}" | grep -Eqo "^/"; then
-      create_file "${!path}" "${!content}"
-    else
-      create_file "${BIN_FOLDER}/$1/${!path}" "${!content}"
-    fi
-  done
-}
-
-
 # - Description: Expands $1_copy_launcher to obtain the name of the launcher to be copied explicitly
 #   from /usr/share/applications
 # - Permissions: Can be executed as root or user.
@@ -734,8 +744,58 @@ generic_install_initializations() {
   local -r bashinitializations="$1_bashinitializations[@]"
   local name_suffix_anticollision=""
   for bashinit in "${!bashinitializations}"; do
-    add_bash_initialization "${bashinit}" "$1${name_suffix_anticollision}.sh"
+    if [[ "${bashinit}" = *$'\n'* ]]; then
+      # More than one line, we can guess its a content
+      add_bash_initialization "${bashinit}" "$1${name_suffix_anticollision}.sh"
+    else
+      add_bash_initialization "" "$1${name_suffix_anticollision}.sh" "${bashinit}"
+    fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
+}
+
+
+# - Description: Expands function contents and add them to .bashrc indirectly using bash_functions
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_bashfunctions
+#   and the name of the first argument in the common_data.sh table
+generic_install_functions() {
+  local -r bashfunctions="$1_bashfunctions[@]"
+  local name_suffix_anticollision=""
+  for bashfunction in "${!bashfunctions}"; do
+    if [[ "${bashfunction}" = *$'\n'* ]]; then
+      # More than one line, we can guess its a content
+      add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
+    else
+      # Only one line we guess it is a path
+      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${bashfunction}"
+    fi
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
+}
+
+
+# - Description: Expands $1_filekeys to obtain the keys which are a name of a variable
+#   that has to be expanded to obtain the data of the file.
+# - Permissions: Can be executed as root or user.
+# - Argument 1: Name of the feature to install, matching the variable $1_filekeys
+generic_install_files() {
+  local -r filekeys="$1_filekeys[@]"
+  for filekey in "${!filekeys}"; do
+    local content="$1_${filekey}_content"
+    local path="$1_${filekey}_path"
+    if echo "${!path}" | grep -Eqo "^/"; then
+      local destiny_path="${!path}"
+    else
+      local destiny_path="${BIN_FOLDER}/$1/${!path}"
+    fi
+    if [[ "${!content}" = *$'\n'* ]]; then
+      # More than one line, we can guess its a content
+      create_file "${destiny_path}" "${!content}"
+    else
+      # Only one line we guess it is a path
+      create_file "${destiny_path}" "" "${!content}"
+    fi
   done
 }
 
@@ -1038,10 +1098,22 @@ data_and_file_structures_initialization() {
   fi
   add_bash_initialization "${keybinding_function}" "keybinding.sh"
 
-  # Make sure that .bashrc sources .bash_functions
-  if ! grep -Fqo "${bash_functions_import}" "${BASHRC_PATH}"; then
-    echo -e "${bash_functions_import}" >> "${BASHRC_PATH}"
+  # We source from the bashrc of the current user or all the users depending on out permissions with priority
+  # in being sourced from BASHRC_ALL_USERS_PATH
+  if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}" &>/dev/null; then
+    if [ "${EUID}" == 0 ]; then
+      echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
+      grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
+      if grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}" &>/dev/null; then
+        remove_line "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
+      fi
+    else
+      if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}" &>/dev/null; then
+        echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_PATH}"
+      fi
+    fi
   fi
+
   # Make sure that .profile sources .bash_initializations
   if ! grep -Fqo "${bash_initializations_import}" "${PROFILE_PATH}"; then
     echo -e "${bash_initializations_import}" >> "${PROFILE_PATH}"

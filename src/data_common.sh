@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 ########################################################################################################################
-# - Name: Linux Auto-Customizer data of core.                                                                      #
+# - Name: Linux Auto-Customizer data of core.                                                                          #
 # - Description: A set of programs, functions, aliases, templates, environment variables, wallpapers, desktop          #
 # features... collected in a simple portable shell script to customize a Linux working environment.                    #
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 16/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
+# - Email: aleix.marine@estudiants.urv.cat                                                                             #
 # - Permissions: Needs root permissions explicitly given by sudo (to access the SUDO_USER variable, not present when   #
 # logged as root) to install some of the features.                                                                     #
 # - Arguments: Accepts behavioural arguments with one hyphen (-f, -o, etc.) and feature selection with two hyphens     #
@@ -215,6 +215,10 @@ declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 # Used in certain types of features
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r BASH_COMPLETIONS_PATH="/usr/share/bash-completion/completions/git"
+
+# To keep information about the current installation
+declare CURRENT_INSTALLATION_FOLDER=""
+declare CURRENT_INSTALLATION_KEYNAME=""
 
 ########################################################################################################################
 ################################################## RUNTIME FLAGS #######################################################

@@ -6,7 +6,7 @@
 # - Creation Date: 28/5/19                                                                                             #
 # - Last Modified: 16/5/21                                                                                             #
 # - Author & Maintainer: Aleix Mariné-Tena                                                                             #
-# - Email: aleix.marine@estudiants.urv.cat, amarine@iciq.es                                                            #
+# - Email: aleix.marine@estudiants.urv.cat                                                                             #
 # - Permissions: This script can not be executed directly, only sourced to import its functions and process its own    #
 # imports. See the header of each function to see its privilege requirements                                           #
 # - Arguments: No arguments                                                                                            #
@@ -45,19 +45,6 @@ remove_bash_initialization() {
 # - Argument 1: Keybinding data to be removed
 remove_keybinding() {
     remove_line "$1" "${PROGRAM_KEYBINDINGS_PATH}"
-}
-
-
-# - Description: Function to delete a concrete line of a file.
-# - Permissions: can be executed indifferently as root or user.
-# - Argument 1: Text to be removed.
-# - Argument 2: Path to the file which contains the text to be removed.
-remove_line() {
-  if [ -f "$2" ]; then
-    sed "s@^${1}\$@@g" -i "$2"
-  else
-    output_proxy_executioner "echo WARNING: file $2 is not present, so the text $1 cannot be removed from the file. Skipping..." "${FLAG_QUIETNESS}"
-  fi
 }
 
 
