@@ -74,7 +74,7 @@ tload()
 # - Permissions: Needs access to the tmux installation folder.
 _tload()
 {
-  COMPREPLY=($(compgen -W "$(ls "€{CURRENT_INSTALLATION_FOLDER}")" -- "${COMP_WORDS[COMP_CWORD]}"))
+  COMPREPLY=($(compgen -W "$(ls -ca "€{CURRENT_INSTALLATION_FOLDER}" | grep -Eo ".*\.(json|yaml)")" -- "${COMP_WORDS[COMP_CWORD]}"))
 }
 complete -F _tload tload
 
