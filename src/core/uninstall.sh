@@ -38,6 +38,7 @@ main()
 }
 
 DIR=$(dirname "$(realpath "$0")")
+CUSTOMIZER_PROJECT_FOLDER="$(cd "${DIR}/../.." &>/dev/null && pwd)"
 
 if [ -f "${DIR}/functions_uninstall.sh" ]; then
   source "${DIR}/functions_uninstall.sh"

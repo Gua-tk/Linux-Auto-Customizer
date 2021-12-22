@@ -3142,37 +3142,7 @@ F_readmeline="| Function \`F\` | Function to find strings in files in the direct
 
 f_installationtype="environmental"
 f_arguments=("f")
-f_bashfunctions=("
-f() {
-  if  [ \$# -eq 0 ]; then  # No arguments given
-    find . 2>/dev/null
-  elif [ \$# -eq 1 ]; then
-    if [ -f \"\$1\" ]; then  # Searches therm in a file
-      cat \"\$1\"
-    elif [ -d \"\$1\" ]; then  # Searches files in directory
-      find \"\$1\"
-    else
-      more * | grep \"\$1\"  # Searches therm in all files
-    fi
-  elif [ \$# -gt 1 ]; then
-    local temp=\"\$1\"
-    while [ \$# -gt 1 ]; do
-      if [ -f \"\$temp\" ]; then  # Searches therm in a file
-        more \"\$temp\" | grep \"\$2\"
-      elif [ -d \"\$temp\" ]; then  # Searches file in directory
-        if [ -n \"\$(find \"\$temp\" -name \"\$2\")\" ]; then  # Show files matching argument
-          more \$(find \"\$temp\" -name \"\$2\")
-        else
-          ls -lah \"\$temp\" | grep \"\$2\"  # Show list of other matching files in elements of directory
-        fi
-      else  # Literal search in therm
-        echo \"\$temp\" | grep \"\$2\"
-      fi
-      shift
-    done
-  fi
-}
-")
+f_bashfunctions=("f.sh")
 f_readmeline="| Function \`f\` | Function for finding strings in files, files in directories and show found files | Command \`f\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 f_irc_installationtype="packagemanager"
@@ -6560,11 +6530,11 @@ Type=Application
 Version=1.0")
 tmux_packagenames=("tmux")
 tmux_readmeline="| Tmux | ${tmux_readmelinedescription} | Command \`tmux\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
-tmux_bashfunctions=("features/tmux_functions.sh")
+tmux_bashfunctions=("tmux_functions.sh")
 tmux_filekeys=("tmuxconf" "clockmoji")
-tmux_clockmoji_content="features/tmux_clockmoji.sh"
+tmux_clockmoji_content="tmux_clockmoji.sh"
 tmux_clockmoji_path="clockmoji.sh"
-tmux_tmuxconf_content="features/tmux.conf"
+tmux_tmuxconf_content="tmux.conf"
 tmux_tmuxconf_path="${HOME_FOLDER}/.tmux.conf"
 
 tomcat_installationtype="userinherit"

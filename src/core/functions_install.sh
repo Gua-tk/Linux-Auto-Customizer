@@ -211,9 +211,9 @@ create_file()
   local -r folder="$(echo "$1" | rev | cut -d "/" -f2- | rev)"
   local -r filename="$(echo "$1" | rev | cut -d "/" -f1 | rev)"
   if [ -n "$3" ]; then
-    if [ -f "${DIR}/$3" ]; then
+    if [ -f "$3" ]; then
       create_folder "${folder}"
-      cp "${DIR}/$3" "$1"
+      cp "$3" "$1"
       apply_permissions "$1"
       translate_variables "$1"
     else
@@ -748,7 +748,7 @@ generic_install_initializations() {
       # More than one line, we can guess its a content
       add_bash_initialization "${bashinit}" "$1${name_suffix_anticollision}.sh"
     else
-      add_bash_initialization "" "$1${name_suffix_anticollision}.sh" "${bashinit}"
+      add_bash_initialization "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashinit}"
     fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
@@ -767,8 +767,8 @@ generic_install_functions() {
       # More than one line, we can guess its a content
       add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
     else
-      # Only one line we guess it is a path
-      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${bashfunction}"
+      # Only one line we guess it is a partial path
+      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
     fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
@@ -794,7 +794,7 @@ generic_install_files() {
       create_file "${destiny_path}" "${!content}"
     else
       # Only one line we guess it is a path
-      create_file "${destiny_path}" "" "${!content}"
+      create_file "${destiny_path}" "" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${!content}"
     fi
   done
 }
