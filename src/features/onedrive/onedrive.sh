@@ -1,0 +1,1 @@
+alias onedrive="nohup xdg-open https://onedrive.live.com/ &>/dev/null &"
