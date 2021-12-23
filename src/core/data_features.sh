@@ -3095,6 +3095,26 @@ spreadsheets_readmeline="| Spreadsheets | ${spreadsheets_readmelinedescription} 
 ssh_installationtype="packagemanager"
 ssh_arguments=("ssh")
 ssh_packagenames=("ssh-client")
+ssh_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/64/Human-folder-remote-ssh.svg;ssh_icon.svg")
+ssh_bashfunctions=("ssh.sh")
+ssh_packagedependencies=("openssh-sftp-server" "openssh-client")
+ssh_launchercontents=("[Desktop Entry]
+Categories=ssh;remote;shell;
+Comment=Remote access to a server through a secure channel
+Encoding=UTF-8
+Exec=sssh
+GenericName=Secure Shell
+Icon=${BIN_FOLDER}/ssh/ssh_icon.svg
+Keywords=ssh;remote;shell
+MimeType=
+Name=SSH
+StartupNotify=true
+StartupWMClass=ssh
+Terminal=true
+TryExec=ssh
+Type=Application
+Version=1.0
+")
 ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 status_installationtype="environmental"
