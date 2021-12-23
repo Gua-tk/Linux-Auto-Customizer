@@ -1,1 +1,1 @@
-alias drive="nohup xdg-open https://drive.google.com/ &>/dev/null &"
+alias drive="nohup xdg-open €{drive_url} &>/dev/null &"

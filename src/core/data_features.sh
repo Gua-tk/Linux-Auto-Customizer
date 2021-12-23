@@ -893,7 +893,7 @@ f_irc_readmeline="| f-irc | ${f_irc_readmelinedescription} | Command \`f-irc\`, 
 facebook_installationtype="environmental"
 facebook_arguments=("facebook")
 facebook_url="https://facebook.com/"
-facebook_bashfunctions=("alias facebook=\"nohup xdg-open ${facebook_url} &>/dev/null &\"")
+facebook_bashfunctions=("facebook.sh")
 facebook_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg;facebook_icon.svg")
 facebook_readmelinedescription="Desktop app to facebook from Chrome"
 facebook_launchercontents=("[Desktop Entry]
@@ -917,13 +917,7 @@ facebook_readmeline="| Facebook | ${facebook_readmelinedescription} | Command \`
 
 fastcommands_installationtype="environmental"
 fastcommands_arguments=("fast_commands")
-fastcommands_bashfunctions=("
-alias rip=\"sudo shutdown -h now\"
-alias up=\"sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-broken install && sudo apt-get -y autoclean && sudo apt-get -y autoremove\"
-alias services=\"sudo systemctl --type=service\"
-alias cls=\"clear\"
-alias services=\"sudo systemctl --type=service\"
-")
+fastcommands_bashfunctions=("fastcommands.sh")
 fastcommands_readmeline="| fast commands | Generic multi-purpose | Commands \`...\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 fdupes_installationtype="packagemanager"
@@ -933,12 +927,7 @@ fdupes_readmeline="| Fdupes | Searches for duplicated files within given directo
 
 fetch_installationtype="environmental"
 fetch_arguments=("fetch")
-fetch_bashfunctions=("alias fetch=\"git fetch\"
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete fetch _git_fetch
-fi
-")
+fetch_bashfunctions=("fetch.sh")
 fetch_readmeline="| Function \`fetch\` | \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ffmpeg_installationtype="packagemanager"
@@ -948,7 +937,7 @@ ffmpeg_readmeline="| ffmpeg | Super fast video / audio encoder | Command \`ffmpe
 
 filezilla_installationtype="packagemanager"
 filezilla_arguments=("filezilla")
-filezilla_bashfunctions=("alias filezilla=\"nohup filezilla &>/dev/null &\"")
+filezilla_bashfunctions=("filezilla.sh")
 filezilla_packagenames=("filezilla")
 filezilla_downloads=("https://upload.wikimedia.org/wikipedia/commons/0/01/FileZilla_logo.svg;filezilla_icon.svg")
 filezilla_readmeline="| FileZilla | FTP Client & Server | Command \`filezilla\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -972,7 +961,7 @@ Version=1.0
 
 firefox_installationtype="packagemanager"
 firefox_arguments=("firefox")
-firefox_bashfunctions=("alias firefox=\"nohup firefox &>/dev/null &\"")
+firefox_bashfunctions=("firefox.sh")
 firefox_launchernames=("firefox")
 firefox_packagenames=("firefox")
 firefox_readmeline="| Firefox | Free web browser | Command \`firefox\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -1030,7 +1019,7 @@ fonts_roboto_readmeline="| fonts-roboto | Installs font| Install roboto font || 
 forms_installationtype="environmental"
 forms_arguments=("forms" "google_forms")
 forms_url="https://docs.google.com/forms/"
-forms_bashfunctions=("alias forms=\"nohup xdg-open ${forms_url} &>/dev/null &\"")
+forms_bashfunctions=("forms.sh")
 forms_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg;forms_icon.svg")
 forms_readmelinedescription="Google Forms opening in Chrome"
 forms_launchercontents=("[Desktop Entry]
@@ -1060,9 +1049,7 @@ freecad_readmeline="| FreeCAD | General-purpose parametric 3D computer-aided des
 
 gcc_installationtype="packagemanager"
 gcc_arguments=("gcc")
-gcc_bashfunctions=("# colored GCC warnings and errors
-export GCC_COLORS=\"error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01\"
-")
+gcc_bashfunctions=("gcc.sh")
 gcc_packagenames=("gcc")
 gcc_readmeline="| GNU C Compiler | C compiler for GNU systems | Command \`gcc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -1134,7 +1121,7 @@ uninstall_gitcm_post()
 github_installationtype="environmental"
 github_arguments=("github")
 github_url="https://github.com/"
-github_bashfunctions=("alias github=\"nohup xdg-open ${github_url} &>/dev/null &\"")
+github_bashfunctions=("github.sh")
 github_downloads=("https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg;github_icon.svg")
 github_readmelinedescription="GitHub opening in Chrome"
 github_launchercontents=("
@@ -1162,20 +1149,20 @@ github_desktop_arguments=("github_desktop")
 github_desktop_launchernames=("github-desktop")
 github_desktop_packagenames=("github")
 github_desktop_packageurls=("https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb")
-github_desktop__package_manager_override="apt-get"
+github_desktop_package_manager_override="apt-get"
 github_desktop_readmeline="| GitHub Desktop | GitHub Application | Command \`github-desktop\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gitk_installationtype="packagemanager"
 gitk_arguments=("gitk")
 gitk_packagedependencies=("unifont")
-gitk_bashfunctions=("alias gitk=\"gitk --all --date-order &\"")
+gitk_bashfunctions=("gitk.sh")
 gitk_packagenames=("gitk")
 gitk_readmeline="| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gitlab_installationtype="environmental"
 gitlab_arguments=("gitlab")
 gitlab_url="https://gitlab.com/"
-gitlab_bashfunctions=("alias gitlab=\"nohup xdg-open ${gitlab_url} &>/dev/null &\"")
+gitlab_bashfunctions=("gitlab.sh")
 gitlab_downloads=("https://about.gitlab.com/images/press/logo/svg/gitlab-icon-rgb.svg;gitlab_icon.svg")
 gitlab_readmelinedescription="Gitlab opening in Chrome"
 gitlab_launchercontents=("
@@ -1200,19 +1187,14 @@ gitlab_readmeline="| GitLab | ${gitlab_readmelinedescription} | Command || <ul><
 
 gitprompt_installationtype="repositoryclone"
 gitprompt_arguments=("git_prompt")
-gitprompt_bashfunctions=("
-if [ -f ${BIN_FOLDER}/gitprompt/gitprompt.sh ]; then
-    GIT_PROMPT_ONLY_IN_REPO=1
-    source ${BIN_FOLDER}/gitprompt/gitprompt.sh
-fi
-")
+gitprompt_bashfunctions=("gitprompt.sh")
 gitprompt_readmeline="| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 gitprompt_repositoryurl="https://github.com/magicmonty/bash-git-prompt.git"
 
 gmail_installationtype="environmental"
 gmail_arguments=("gmail")
 gmail_url="https://mail.google.com/"
-gmail_bashfunctions=("alias gmail=\"nohup xdg-open ${gmail_url} &>/dev/null &\"")
+gmail_bashfunctions=("gmail.sh")
 gmail_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg;gmail_icon.svg")
 gmail_readmelinedescription="Gmail opening in Chrome"
 gmail_launchercontents=("
@@ -1251,7 +1233,6 @@ Keywords=ide;editor;ada;c
 ")
 gnat_gps_packagenames=("gnat-gps")
 gnat_gps_readmeline="| GNAT | ${gnat_gps_readmelinedescription} | Command \`gnat-gps\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 gnome_calculator_installationtype="packagemanager"
 gnome_calculator_arguments=("gnome_calculator" "calculator" "calc")
@@ -1301,16 +1282,13 @@ go_arguments=("go" "go_lang")
 go_compressedfileurl="https://golang.org/dl/go1.17.linux-amd64.tar.gz"
 go_compressedfilepathoverride="/usr/local"
 go_flagsoverride="0;;;;;"  # Install always as root
-go_bashinitializations=("
-export GOPATH=${HOME_FOLDER}/goWorkspace
-export PATH=\$PATH:/usr/local/go/bin:\$GOPATH/bin
-")
+go_bashinitializations=("go.sh")
 go_readmeline="| go | programming language | command \`go\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 google_installationtype="environmental"
 google_arguments=("google")
 google_url="https://www.google.com/"
-google_bashfunctions=("alias google=\"nohup xdg-open ${google_url} &>/dev/null &\"")
+google_bashfunctions=("google.sh")
 google_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/53/Google_\"G\"_Logo.svg;google_icon.svg")
 google_readmelinedescription="Google opening in Chrome"
 google_launchercontents=("
@@ -1336,7 +1314,7 @@ google_readmeline="| Google | ${google_readmelinedescription} | Command \`google
 googlecalendar_installationtype="environmental"
 googlecalendar_arguments=("google_calendar")
 googlecalendar_url="https://calendar.google.com/"
-googlecalendar_bashfunctions=("alias googlecalendar=\"nohup xdg-open ${googlecalendar_url} &>/dev/null &\"")
+googlecalendar_bashfunctions=("googlecalendar.sh")
 googlecalendar_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg;googlecalendar_icon.svg")
 googlecalendar_readmelinedescription="Google Calendar opening in Chrome"
 googlecalendar_launchercontents=("
@@ -1361,11 +1339,7 @@ googlecalendar_readmeline="| Google Calendar | ${googlecalendar_readmelinedescri
 
 google_chrome_installationtype="packageinstall"
 google_chrome_arguments=("google_chrome")
-google_chrome_bashfunctions=("
-google-chrome() {
-  nohup google-chrome &>/dev/null &
-}
-")
+google_chrome_bashfunctions=("google_chrome.sh")
 google_chrome_flagsoverride=";;;;1;"
 google_chrome_arguments=("chrome" "google_chrome" "googlechrome")
 google_chrome_packagenames=("google-chrome-stable")
@@ -1401,7 +1375,7 @@ gparted_readmeline="| GParted | Creating, deleting, resizing, moving, checking, 
 
 guake_installationtype="packagemanager"
 guake_arguments=("guake")
-guake_bashfunctions=("alias guake=\"nohup guake &>/dev/null &\"")
+guake_bashfunctions=("guake.sh")
 guake_packagenames=("guake")
 guake_launchernames=("guake")
 guake_readmeline="| guake | Press F12 to display a terminal | Command \`guake\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -1415,23 +1389,8 @@ gvim_readmeline="| Gvim | Vim with a built-in GUI | Command \`gvim\`, desktop la
 
 h_installationtype="environmental"
 h_arguments=("h")
-h_bashfunctions=("
-h()
-{
-  if [ \$# -eq 0 ]; then
-    history
-  else
-    if [ \$# -eq 1 ]; then
-      history | grep --color=always \"\$1\"
-    else
-      echo \"ERROR: Too many arguments\"
-      return
-    fi
-  fi
-}
-")
+h_bashfunctions=("h.sh")
 h_readmeline="| Function \`h\` | Search in your history for previous commands entered, stands by \`history | grep \"\$@\"\` | Command \`h\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 handbrake_installationtype="packagemanager"
 handbrake_arguments=("handbrake")
@@ -1441,12 +1400,7 @@ handbrake_readmeline="| Handbrake | Video Transcoder | Command \`handbrake\`, De
 
 hard_installationtype="environmental"
 hard_arguments=("hard")
-hard_bashfunctions=("alias hard=\"git reset --hard\"
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete hard _git_reset
-fi
-")
+hard_bashfunctions=("hard.sh")
 hard_readmeline="| Function \`hard\` | alias for \`git reset HEAD --hard\` | <-- || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 hardinfo_installationtype="packagemanager"
@@ -1457,76 +1411,18 @@ hardinfo_readmeline="| Hardinfo | Check pc hardware info | Command \`hardinfo\` 
 
 history_optimization_installationtype="environmental"
 history_optimization_arguments=("history_optimization")
-history_optimization_bashfunctions=("
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-export HISTSIZE=100000
-export HISTFILESIZE=10000000
-# append to the history file, don't overwrite it
-shopt -s histappend
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoredups
-# Ignore simple commands in history
-HISTIGNORE=\"ls:ps:history:l:pwd:top:gitk\"
-# The cmdhist shell option, if enabled, causes the shell to attempt to save each line of a multi-line command in the
-# same history entry, adding semicolons where necessary to preserve syntactic correctness.
-shopt -s cmdhist
-# Store multiline commands with newlines when possible, rather that using semicolons
-#shopt -s lithist
-# To retrieve the commands correctly
-HISTTIMEFORMAT='%F %T '
-# Check the windows size on every prompt and reset the number of columns and rows if necessary
-shopt -s checkwinsize  # Kinda buggy
-
-# Save and reload from history before prompt appears
-if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \"history -a; history -r\")\" ]; then
-  # Check if there is something inside PROMPT_COMMAND, so we put semicolon to separate or not
-  if [ -z \"\${PROMPT_COMMAND}\" ]; then
-    export PROMPT_COMMAND=\"history -a; history -r\"
-  else
-    export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; history -a; history -r\"
-  fi
-fi
-")
+history_optimization_bashfunctions=("history_optimization.sh")
 history_optimization_readmeline="| history optimization | Increased the size of bash history, store multiline commands in just one line, force append and not overwrite to history, ignore repeated commands when appending to history, deleted tracking history of some simple commands: \`ls\`, \`cd\`, \`gitk\`... | <-- || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 i_installationtype="environmental"
 i_arguments=("i" "i_function")
-i_bashfunctions=("
-i()
-{
-  if [ \$# -eq 0 ]; then
-    tree -d \"\$(pwd)\"
-  else
-    while [ -n \"\$1\" ]; do
-      if [ -d \"\$1\" ]; then
-        echo
-        tree -d \"\$1\"
-        echo
-      else
-        echo \"ERROR: A valid path to a folder is expected, skipping argument\"
-      fi
-      shift
-    done
-  fi
-}
-")
+i_bashfunctions=("i.sh")
 i_readmeline="| Function \`i\` | Shows folder structures | Command \`i\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 ideac_installationtype="userinherit"
 ideac_arguments=("ideac" "intellij_community")
 ideac_associatedfiletypes=("text/x-java")
-ideac_bashfunctions="
-ideac() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup ideac \${args} &>/dev/null &
-}
-"
+ideac_bashfunctions="ideac.sh"
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
 ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.3.tar.gz"
 ideac_readmelinedescription="Integrated development environment written in Java for developing computer software"
@@ -1553,16 +1449,7 @@ ideac_readmeline="| intelliJ Community | ${ideac_readmelinedescription} | Comman
 ideau_installationtype="userinherit"
 ideau_arguments=("ideau" "intellij_ultimate")
 ideau_associatedfiletypes=("text/x-java")
-ideau_bashfunctions=("
-ideau() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup ideau \${args} &>/dev/null &
-}
-")
+ideau_bashfunctions=("ideau.sh")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
 ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.3.tar.gz"
 ideau_readmelinedescription="Integrated development environment written in Java for developing computer software"
@@ -1595,7 +1482,7 @@ inkscape_readmeline="| Inkscape | Vector graphics editor used to create vector i
 instagram_installationtype="environmental"
 instagram_arguments=("instagram")
 instagram_url="https://instagram.com"
-instagram_bashfunctions="alias instagram=\"nohup xdg-open ${instagram_url} &>/dev/null &\""
+instagram_bashfunctions=("instagram.sh")
 instagram_downloads=("https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg;instagram_icon.svg")
 instagram_readmelinedescription="Opens Instagram in Chrome"
 instagram_launchercontents=("
@@ -1630,22 +1517,17 @@ ipe_readmeline="| Function \`ipe\` | Returns the public IP | Command \`ipe\` || 
 
 ipi_installationtype="environmental"
 ipi_arguments=("ipi")
-ipi_bashfunctions=("
-ipi()
-{
-  hostname -I | awk '{print \$1}'
-}
-")
+ipi_bashfunctions=("ipi.sh")
 ipi_readmeline="| Function \`ipi\` | Returns the private IP | Command \`ipi\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ips_installationtype="environmental"
 ips_arguments=("ipi")
-ips_bashfunctions=("alias ips=\"ip -4 addr | grep -oP '(?<=inet\s)\d+(\.\d+){3}'\"")
+ips_bashfunctions=("ips.sh")
 ips_readmeline="| Function \`ips\` | Returns the IP information | Command \`ips\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 iqmol_installationtype="packageinstall"
 iqmol_arguments=("iqmol")
-iqmol_bashfunctions=("alias iqmol=\"nohup iqmol . &>/dev/null &\"")
+iqmol_bashfunctions=("iqmol.sh")
 iqmol_downloads=("http://www.iqmol.org/images/icon.png;iqmol_icon.png")
 iqmol_readmelinedescription="Program to visualize molecular data"
 iqmol_launchercontents=("
@@ -1667,17 +1549,17 @@ Type=Application
 Version=1.0
 ")
 iqmol_packageurls=("http://www.iqmol.org/download.php?get=iqmol_2.14.deb")
-iqmol__package_manager_override="apt-get"
+iqmol_package_manager_override="apt-get"
 iqmol_readmeline="| IQmol | ${iqmol_readmelinedescription} | Command \`iqmol\`, silent alias, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 j_installationtype="environmental"
 j_arguments=("j")
-j_bashfunctions=("alias j=\"jobs -l\"")
+j_bashfunctions=("j.sh")
 j_readmeline="| Function \`j\` | alias for jobs -l | Commands \`j\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 java_installationtype="userinherit"
 java_arguments=("java" "java_development_kit" "java_development" "java_development_kit_8" "jdk" "jdk_8")
-java_bashfunctions=("export JAVA_HOME=\"${BIN_FOLDER}/java\"")
+java_bashfunctions=("java.sh")
 java_binariesinstalledpaths=("bin/java;java")
 java_compressedfileurl="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
 java_readmeline="| Java Development Kit 8 | Implementation of version 8 of the Java (programming language) SE Platform | Commands \`java\`, \`javac\` and \`jar\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -1701,9 +1583,8 @@ julia_readmeline="| Julia and IJulia | ${julia_readmelinedescription} | Commands
 
 jupyter_lab_installationtype="pythonvenv"
 jupyter_lab_arguments=("jupyter_lab" "jupyter" "lab")
-jupyter_lab_bashfunctions=("alias lab=\"jupyter-lab\"")
+jupyter_lab_bashfunctions=("jupyter_lab.sh")
 jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
-jupyter_lab_bashfunctions=("alias lab=\"jupyter-lab\"")
 jupyter_lab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
 jupyter_lab_readmelinedescription="IDE with a lot of possible customization and usable for different programming languages."
 jupyter_lab_launchercontents=("
@@ -1778,32 +1659,13 @@ uninstall_jupyter_lab_mid() {
 
 k_installationtype="environmental"
 k_arguments=("k")
-k_bashfunctions=("
-k() {    #sudo kill \`lsof -i:3000 -t\` \"\$1\"  # kill by port
-  [ \"\$1\" -eq \"\$1\" ] 2>/dev/null
-  if [ \$? -eq 0 ]; then
-    sudo kill -9 \"\$1\"
-  else
-    if [ -n \"\$1\" ]; then
-      pkill \"\$1\"
-    else
-      # Introduce port to be killed
-      echo \"Kill port nº:\"
-      read portkillnumber
-      for pid_program in \$(sudo lsof -i:\"\${portkillnumber}\" | tail -n+2 | tr -s \" \"  | cut -d \" \" -f2 | sort | uniq); do
-        sudo kill \${pid_program}
-      done
-    fi
-  fi
-}
-")
+k_bashfunctions=("k.sh")
 k_readmeline="| Function \`k\` | Kill processes by PID and name of process | Command \`k\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
-
 
 keep_installationtype="environmental"
 keep_arguments=("keep" "google_keep")
 keep_url="https://keep.google.com/"
-keep_bashfunctions=("alias keep=\"nohup xdg-open ${keep_url} &>/dev/null &\"")
+keep_bashfunctions=("keep.sh")
 keep_downloads=("https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg;keep_icon.svg")
 keep_readmelinedescription="Google Keep opening in Chrome"
 keep_launchercontents=("
@@ -1828,53 +1690,12 @@ keep_readmeline="| Google Keep | ${keep_readmelinedescription} | Command \`keep\
 
 L_installationtype="environmental"
 L_arguments=("L")
-L_bashfunctions=("
-L()
-{
-  # Work around because du options are hard to parametrize for a different directory that the current one for showing size of hiddent directories
-  if [ -n \"\$1\" ]; then
-    local -r current_path=\"\$(pwd)\"
-    cd \"\$1\"
-  fi
-  local -r NEW_LINE=\$'\\n'
-  local -r lsdisplay=\"\$(ls -lhA | tr -s \" \" | tail -n+2)\"  # Obtain ls data in list format
-  local -r numfiles=\"\$(echo \"\$lsdisplay\" | wc -l)\"  # Obtain number of elements in the folder
-  local -r dudisplay=\"\$(du -shxc .[!.]* * 2>/dev/null | sort -h | tr -s \"\\\t\" \" \" | head -n -1)\"  # Obtain du data for the real size of the directories, deleting the line of the total size
-  local -r totaldu=\"\$(echo \${dudisplay} | tail -1 | rev | cut -d \" \" -f2 | rev)\"  # Obtain the total size of the folder
-  local finaldisplay=\"\"
-  # Iterate over every line in ls and check if it is a directory in order to change the size shown in ls (4 KB) for the real size of directory from the output of du
-  local IFS=\$'\\n'
-  for linels in \${lsdisplay}; do
-    element_name=\"\$(echo \${linels} | cut -d ' ' -f9-)\"  # Obtain full name of the element that we are goind to add
-    if [[ \"\${linels}\" =~ ^d.* ]]; then  # If a directory, perform substitution of size
-      for linedu in \${dudisplay}; do  # Search for matching du line using name from both ls and du
-        if [[ \"\$(echo \${linedu} | cut -d ' ' -f2-)\" = \"\${element_name}\" ]]; then  # Search for match using directory name
-          currentline=\$(echo \${linels} | cut -d \" \" -f-4)  # Obtain prefix of line (before the column of the size in ls)
-          currentline=\"\${currentline} \$(echo \${linedu} | cut -d ' ' -f1)\"  # Obtain size from du and append
-          currentline=\"\${currentline} \$(echo \${linels} | cut -d ' ' -f6-)\"  # Obtain rest of the line
-          # Now add the semicolons in between columns in order to work with column command
-
-          finaldisplay=\"\$finaldisplay\$NEW_LINE\$(echo \"\${currentline}\" | cut -d ' ' -f-8 | tr \" \" \";\");\${element_name}\"
-          break
-        fi
-      done
-    else
-      finaldisplay=\"\${finaldisplay}\${NEW_LINE}\$(echo \"\${linels}\" | cut -d ' ' -f-8 | tr \" \" \";\");\${element_name}\"  # Change spaces for semicolons for using column
-    fi
-  done
-  finaldisplay=\"\$(echo \"\${finaldisplay}\"  | column -ts \";\")\"  # Construct table by using column
-  finaldisplay=\"\${totaldu} in \${numfiles} files and directories\${NEW_LINE}\${finaldisplay}\"  # Prepend first line of output with general summary
-  echo \"\${finaldisplay}\"
-  if [ -n \"\${current_path}\" ]; then
-    cd \"\${current_path}\"
-  fi
-}
-")
+L_bashfunctions=("L.sh")
 L_readmeline="| Function \`L\` | Function that lists files in a directory, but listing the directory sizes | Function \`L\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 l_installationtype="environmental"
 l_arguments=("l")
-l_bashfunctions=("alias l=\"ls -lAh --color=auto\"")
+l_bashfunctions=("l.sh")
 l_readmeline="| Function \`l\` | alias for \`ls\` | command \`l\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 latex_installationtype="packagemanager"
@@ -1912,83 +1733,24 @@ libxcb_xtest0_readmeline="| libxcb-xtest0 | Zoom dependency | Used when Zoom is 
 
 lmms_installationtype="packagemanager"
 lmms_arguments=("lmms")
-lmms_bashfunctions=("alias lmms=\"nohup lmms &>/dev/null &\"")
+lmms_bashfunctions=("lmms.sh")
 lmms_packagenames=("lmms")
 lmms_launchernames=("lmms")
 lmms_readmeline="| lmms | Software for making music | command \`lmms\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 loc_installationtype="environmental"
 loc_arguments=("loc" "function_loc")
-loc_bashfunctions=("
-loc() {
-  local total_lines=0
-  local -r NEW_LINE=\$'\\n'
-  local loc_table=\"\"
-
-  if [ -z \"\$1\" ]; then
-    local total_lines_in_directory=0
-    for file_route in \$(find \"\$1\" -type f -name \"*\" 2>/dev/null); do
-      loc_table+=\"\${file_route};\"
-      local lines_file=\"\$(cat \"\${file_route}\" 2>/dev/null | sed '/^\$/d' | wc -l)\"
-      total_lines_in_directory=\$(( \${total_lines_in_directory} + \${lines_file} ))
-      loc_table+=\"\${lines_file}\"
-      loc_table+=\"\${NEW_LINE}\"
-    done
-    loc_table+=\"\${1};\"
-    loc_table+=\"\${total_lines_in_directory}\"
-    total_lines=\$(( \${total_lines} + \${total_lines_in_directory} ))
-    loc_table+=\"\${NEW_LINE}\"
-  else
-    local counter_args=1
-    while [ -n \"\$1\" ]; do
-      if [ -f \"\$1\" ]; then
-        loc_table+=\"\${1};\"
-        local_lines_in_file=\"\$(cat \"\$1\"  2>/dev/null | sed '/^\$/d' | wc -l)\"
-        loc_table+=\"\${local_lines_in_file}\"
-        total_lines=\$(( \${total_lines} + \${local_lines_in_file} ))
-        loc_table+=\"\${NEW_LINE}\"     
-      elif [ -d \"\$1\" ]; then
-        local total_lines_in_directory=0
-
-        for file_route in \$(find \"\$1\" -type f -name \"*\" 2>/dev/null); do
-          loc_table+=\"\${file_route};\"
-          local lines_file=\"\$(cat \"\${file_route}\" 2>/dev/null | sed '/^\$/d' | wc -l)\"
-          total_lines_in_directory=\$(( \${total_lines_in_directory} + \${lines_file} ))
-          loc_table+=\"\${lines_file}\"
-          loc_table+=\"\${NEW_LINE}\"
-        done
-        loc_table+=\"\${1};\"
-        loc_table+=\"\${total_lines_in_directory}\"
-        total_lines=\$(( \${total_lines} + \${total_lines_in_directory} ))
-        loc_table+=\"\${NEW_LINE}\"
-      else
-        loc_table+=\"argument \${counter_args};\"
-        local_lines_in_string=\"\$(echo \"\$1\" | sed '/^\$/d' | wc -l)\"
-        loc_table+=\"\${local_lines_in_string}\"
-        total_lines=\$(( \${total_lines} + \${local_lines_in_string} ))
-        loc_table+=\"\${NEW_LINE}\"
-      fi
-      counter_args=\$(( 1 + \${counter_args} ))
-      shift
-    done
-    loc_table+=\"\${NEW_LINE}\"
-    loc_table+=\"TOTAL;\"
-    loc_table+=\"\${total_lines}\"
-    echo \"\${loc_table}\" | column -ts \";\"
-  fi
-}
-")
+loc_bashfunctions=("loc.sh")
 loc_readmeline="| Function \`loc\` | Counts lines of code | command \`loc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 lolcat_installationtype="packagemanager"
 lolcat_arguments=("lolcat")
-lolcat_bashfunctions=("alias lol=\"lolcat\"")
+lolcat_bashfunctions=("lolcat.sh")
 lolcat_packagenames=("lolcat")
 lolcat_readmeline="| lolcat | Same as the command \`cat\` but outputting the text in rainbow color and concatenate string | command \`lolcat\`, alias \`lol\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 matlab_installationtype="userinherit"
 matlab_arguments=("matlab" "mat_lab" "math_works")
-matlab_bashfunctions=("alias matlab=\"nohup matlab &>/dev/null\"")
 # Matlab can only be downloaded by creating an account, making it impossible to download the file programmatically.
 # Instead, download the linux installation file of matlab and manually cache it into customizer cache in order to
 # install matlab. To do so, put this file into $CACHE_FOLDER and rename it to "matlab_compressed_file"
@@ -2009,16 +1771,7 @@ Exec=matlab -desktop
 Terminal=false
 ")
 matlab_manualcontentavailable="0;1;0"
-matlab_bashfunctions=("
-matlab() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup matlab \${args} &>/dev/null &
-}
-")
+matlab_bashfunctions=("matlab.sh")
 matlab_readmeline="| Matlab | IDE + programming language specialized in matrix operations | command \`matlab\`, \'mex\' ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [x] Debian</li></ul> |"
 install_matlab_mid()
 {
@@ -2047,7 +1800,8 @@ megasync_readmeline="| MegaSync | Synchronises folders between your computer and
 meld_installationtype="userinherit"
 meld_packagedependencies=("libgtksourceview-4-dev" "libgtksourceview-3.0-1")
 meld_arguments=("meld")
-meld_bashfunctions=("alias meld=\"nohup meld &>/dev/null &\"")
+meld_bashfunctions=("alias meld=\"nohup meld &>/dev/null &\"
+")
 meld_binariesinstalledpaths=("bin/meld;meld")
 meld_compressedfileurl="https://download.gnome.org/sources/meld/3.21/meld-3.21.0.tar.xz"
 meld_launchercontents=("
@@ -2270,23 +2024,9 @@ X-Mendeley-Version=1
 ")
 
 merge_installationtype="environmental"
-merge_bashfunctions=("
-merge()
-{
-  if [ -z \"\$1\" ]; then
-	  git merge
-	else
-	  git merge origin --no-ff \"\$@\"
-	fi
-}
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete merge _git_merge
-fi
-")
+merge_bashfunctions=("merge.sh")
 merge_arguments=("merge" "function_merge")
 merge_readmeline="| Function \`merge\` | Function for \`git merge\`|  Command \`merge\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_arguments=("msttcorefonts")
@@ -2298,23 +2038,11 @@ mvn_arguments=("mvn")
 mvn_binariesinstalledpaths=("bin/mvn;mvn")
 mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 mvn_readmeline="| Maven | Build automation tool used primarily for Java projects | Command \`mvn\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
-mvn_bashfunctions=("
-export M2_HOME=\"${BIN_FOLDER}/mvn\"
-")
+mvn_bashfunctions=("mvn.sh")
 
 nautilus_installationtype="packagemanager"
 nautilus_arguments=("nautilus")
-nautilus_bashfunctions=("
-# Check if gsettings command is available
-if ! command -v gsettings &> /dev/null
-then
-  return
-fi
-
-xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
-gsettings set org.gnome.desktop.background show-desktop-icons true
-xdg-mime default org.gnome.Nautilus.desktop inode/directory
-")
+nautilus_bashfunctions=("nautilus.sh")
 nautilus_launchernames=("org.gnome.Nautilus")
 nautilus_packagenames=("nautilus")
 nautilus_readmeline="| Nautilus | Standard file and desktop manager | Command \`nautilus\` Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -2332,111 +2060,7 @@ nedit_readmeline="| NEdit | Multi-purpose text editor and source code editor | C
 
 nemo_installationtype="packagemanager"
 nemo_arguments=("nemo" "nemo_desktop")
-nemo_bashfunctions=("
-# Check if gsettings command is available
-if ! command -v gsettings &> /dev/null
-then
-  return
-fi
-
-xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
-gsettings set org.gnome.desktop.background show-desktop-icons false
-gsettings set org.nemo.desktop show-desktop-icons true
-
-# Other tweaks
-# Do not ask for password after locking
-gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
-# Allow forcing the volume
-gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
-# Set the time zone automatically
-gsettings set org.gnome.desktop.datetime automatic-timezone true
-# Set the dark theme
-gsettings set org.gnome.desktop.interface gtk-theme Yaru-dark
-gsettings set org.gnome.desktop.interface cursor-theme Yaru-dark
-# Show battery percentage on bar
-gsettings set org.gnome.desktop.interface show-battery-percentage true
-# Show seconds in the time
-gsettings set org.gnome.desktop.interface clock-show-seconds true
-# Show weekday in the date of the calendar
-gsettings set org.gnome.desktop.interface clock-show-weekday true
-# Enable that the left corner acts as the show apps menu (not working)
-gsettings set org.gnome.desktop.interface enable-hot-corners true
-# Enable keyboard shortcuts
-gsettings set org.gnome.Terminal.Legacy.Settings mnemonics-enabled true
-# Put dock in the bottom of the screen
-gsettings set org.gnome.shell.extensions.dash-to-dock dock-position \"'BOTTOM'\"
-# Change the image in the lockscreen
-# gsettings set org.gnome.login-screen fallback-logo \"'CUSTOMIZER LOGO'\"
-# Show icon of the home folder
-gsettings set org.nemo.desktop home-icon-visible true
-# Show different captions for the icon view in the file explorer
-gsettings set org.nemo.icon-view captions \"['size', 'type', 'date_accessed', 'date_modified']\"
-# Try to hide the identity given to third party softwares
-gsettings set org.gnome.desktop.privacy hide-identity true
-# Show thousands separators in the calculator
-gsettings set org.gnome.calculator show-thousands true
-# Also show files in the side panel of the file explorer
-gsettings set org.nemo.sidebar-panels.tree show-only-directories false
-
-# Gedit options
-gsettings set org.gnome.gedit.preferences.editor auto-save true
-gsettings set org.gnome.gedit.preferences.editor display-line-numbers true
-gsettings set org.gnome.gedit.preferences.editor display-right-margin true
-gsettings set org.gnome.gedit.preferences.editor tabs-size 4
-gsettings set org.gnome.gedit.preferences.ui bottom-panel-visible true
-gsettings set org.gnome.gedit.preferences.ui side-panel-visible true
-gsettings set org.gnome.gedit.plugins.spell highlight-misspelled true
-
-# keyboard configurations 0 for spanish 1 for us keyboard
-gsettings set org.gnome.desktop.input-sources sources \"[('xkb', 'es'), ('xkb', 'us')]\"
-gsettings set org.gnome.desktop.input-sources current 0
-
-# Category launcher containers in dashboard
-gsettings set org.gnome.desktop.app-folders folder-children \"['accessories', 'chrome-apps', 'games', 'graphics', 'internet', 'office', 'programming', 'science', 'sound---video', 'system-tools', 'universal-access', 'wine']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/accessories/ name \"Accessories\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/accessories/ categories \"['Utility']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/chrome-apps/ name \"Chrome Apps\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/chrome-apps/ categories \"['chrome-apps']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/games/ name \"Games\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/games/ categories \"['Game']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/graphics/ name \"Graphics\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/graphics/ categories \"['Graphics']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/internet/ name \"Internet\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/internet/ categories \"['Network', 'WebBrowser', 'Email']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/office/ name \"Office\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/office/ categories \"['Office']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/programming/ name \"Programming\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/programming/ categories \"['Development']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/science/ name \"Science\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/science/ categories \"['Science']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/sound---video/ name \"Sound & Video\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/sound---video/ categories \"['AudioVideo', 'Audio', 'Video']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/system-tools/ name \"System Tools\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/system-tools/ categories \"['System', 'Settings']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/universal-access/ name \"Universal Access\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/universal-access/ categories \"['Accessibility']\"
-
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/wine/ name \"Wine\"
-gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/wine/ categories \"['Wine', 'X-Wine', 'Wine-Programs-Accessories']\"
-"
-
-"
-nemo()
-{
-  nohup nemo \"\$1\" &>/dev/null &
-}
-")
+nemo_bashfunctions=("nemo_config.sh" "nemo.sh")
 nemo_packagenames=("nemo")
 nemo_packagedependencies=("dconf-editor")
 nemo_readmelinedescription="File and desktop manager, usually with better options and less bugs than nautilus. *We recommend this explorer to view correctly the launchers*"
@@ -2766,12 +2390,12 @@ X-GNOME-Autostart-Delay=2
 NoDisplay=false
 ")
 nemo_flagsoverride=";;;;;1"  # Always autostart
-nemo_keybindings=("nemo;<Super>e;Nemo Fie Explorer")
+nemo_keybindings=("nemo;<Super>e;Nemo File Explorer")
 
 netflix_installationtype="environmental"
 netflix_arguments=("netflix")
 netflix_url="https://www.netflix.com"
-netflix_bashfunctions=("alias netflix=\"nohup xdg-open ${netflix_url} &>/dev/null &\"")
+netflix_bashfunctions=("netflix.sh")
 netflix_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg;netflix_icon.svg")
 netflix_readmelinedescription="Netflix opening in Chrome"
 netflix_launchercontents=("
@@ -2796,10 +2420,7 @@ netflix_readmeline="| Netflix | ${netflix_readmelinedescription} | Command \`net
 
 net_tools_installationtype="packagemanager"
 net_tools_arguments=("net_tools")
-net_tools_bashfunctions=("
-alias ports=\"netstat -tulanp\"
-alias nr=\"net-restart\"
-")
+net_tools_bashfunctions=("net_tools.sh")
 net_tools_packagenames=("net-tools")
 net_tools_readmeline="| net-tools | GUI network interfaces. *We recommend this explorer to view correctly the launchers* | Command \`net-tools\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -2821,18 +2442,8 @@ notepadqq_readmeline="| Notepadqq | Text editor that is designed by developers f
 
 o_installationtype="environmental"
 o_arguments=("o")
-o_bashfunctions=("
-o()
-{
-	if [[ -z \"\$1\" ]]; then
-		nemo \"\$(pwd)\" &>/dev/null &
-	else
-		nemo \"\$1\" &>/dev/null &
-	fi
-}
-")
+o_bashfunctions=("o.sh")
 o_readmeline="| Function \`o\` | Alias for \`nemo-desktop\` | Alias \`o\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 obs_studio_installationtype="packagemanager"
 obs_studio_arguments=("obs_studio" "obs")
@@ -2843,7 +2454,7 @@ obs_studio_readmeline="| OBS | Streaming and recording program | Command \`obs\`
 
 octave_installationtype="packagemanager"
 octave_arguments=("octave" "gnu_octave" "octave_cli")
-octave_bashfunctions=("alias octave=\"nohup /usr/bin/octave --gui %f &>/dev/null &\"")
+octave_bashfunctions=("octave.sh")
 octave_packagenames=("octave")
 octave_launchernames=("org.octave.Octave")
 octave_readmeline="| GNU Octave | Programming language and IDE | Command \`octave\`, desktop launcher and dashboard launcher. ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -2857,27 +2468,10 @@ okular_readmeline="| Okular | PDF viewer | Command \`okular\`, desktop launcher 
 onedrive_installationtype="environmental"
 onedrive_arguments=("onedrive")
 onedrive_url="https://onedrive.live.com/"
-onedrive_bashfunctions=("alias onedrive=\"nohup xdg-open ${onedrive_url} &>/dev/null &\"")
+onedrive_bashfunctions=("alias onedrive=\"nohup xdg-open €{onedrive_url} &>/dev/null &\"")
 onedrive_downloads=("https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg;onedrive_icon.svg")
 onedrive_readmelinedescription="Microsoft OneDrive opening in Chrome"
-onedrive_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${onedrive_readmelinedescription}
-Encoding=UTF-8
-Exec=xdg-open ${onedrive_url}
-Icon=${BIN_FOLDER}/onedrive/onedrive_icon.svg
-GenericName=OneDrive
-Keywords=onedrive;
-MimeType=
-Name=OneDrive
-StartupNotify=true
-StartupWMClass=OneDrive
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
+onedrive_launchercontents=("onedrive.sh")
 onedrive_readmeline="| OneDrive | ${onedrive_readmelinedescription} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 openoffice_installationtype="packageinstall"
@@ -2900,20 +2494,13 @@ openssl102_readmeline="| openssl1.0 | RStudio dependency | Used for running rstu
 openssh_server_installationtype="packagemanager"
 openssh_server_arguments=("openssh_server")
 openssh_server_packagenames=("openssh-server")
-openssh_server_bashfunctions=("
-alias sshDisable=\"sudo systemctl disable sshd\"
-alias sshEnable=\"sudo systemctl enable ssh\"
-alias sshRestart=\"sudo systemctl restart sshd\"
-alias sshStart=\"sudo systemctl start sshd\"
-alias sshStatus=\"sudo systemctl status sshd\"
-alias sshStop=\"sudo systemctl stop sshd\"
-")
+openssh_server_bashfunctions=("openssh_server.sh")
 openssh_server_readmeline="| openssh-server | SSH server | Used for running an SSH server ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 outlook_installationtype="environmental"
 outlook_arguments=("outlook")
 outlook_url="https://outlook.live.com"
-outlook_bashfunctions=("alias outlook=\"nohup xdg-open ${outlook_url} &>/dev/null &\"")
+outlook_bashfunctions=("outlook.sh")
 outlook_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg;outlook_icon.svg")
 outlook_readmelinedescription="Microsoft Outlook e-mail opening in Chrome"
 outlook_launchercontents=("
@@ -2939,7 +2526,7 @@ outlook_readmeline="| Outlook | ${outlook_readmelinedescription} | Command \`out
 overleaf_installationtype="environmental"
 overleaf_arguments=("overleaf")
 overleaf_url="https://www.overleaf.com/"
-overleaf_bashfunctions=("alias overleaf=\"nohup xdg-open ${overleaf_url} &>/dev/null &\"")
+overleaf_bashfunctions=("overleaf.sh")
 overleaf_downloads="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg;overleaf_icon.svg"
 overleaf_readmelinedescription="Online LaTeX editor opening in Chrome"
 overleaf_launchercontents=("
@@ -2962,6 +2549,11 @@ Version=1.0
 ")
 overleaf_readmeline="| Overleaf | ${overleaf_readmelinedescription} | Command \`overleaf\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+p_installationtype="environmental"
+p_arguments=("p" "port" "port_function")
+p_bashfunctions=("p.sh")
+p_readmeline="| Function \`port\` | Check processes names and PID's from given port | Command \`port\` ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
 pacman_installationtype="packagemanager"
 pacman_arguments=("pacman")
 pacman_launchernames=("pacman")
@@ -2982,21 +2574,9 @@ pgadmin_installationtype="pythonvenv"
 pgadmin_arguments=("pgadmin" "pgadmin4")
 pgadmin_binariesinstalledpaths=("lib/python3.8/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
 pgadmin_confoverride_path="lib/python3.8/site-packages/pgadmin4/config_local.py"
-pgadmin_confoverride_content=("
-import os
-DATA_DIR = os.path.realpath(os.path.expanduser(u'${BIN_FOLDER}/pgadmin'))
-LOG_FILE = os.path.join(DATA_DIR, 'pgadmin4.log')
-SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
-SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
-STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
-SERVER_MODE = False
-")
+pgadmin_confoverride_content="config_local.py"
 pgadmin_executionscript_path="pgadmin_exec.sh"
-pgadmin_executionscript_content="
-pgadmin &
-sleep 2  # Wait two seconds, so pgadmin can have time to init
-xdg-open http://127.0.0.1:5050/browser
-"
+pgadmin_executionscript_content="pgadmin_exec.sh"
 pgadmin_filekeys=("confoverride" "executionscript")
 pgadmin_readmelinedescription="PostgreSQL Tools"
 pgadmin_launchercontents=("
@@ -3044,7 +2624,7 @@ phppgadmin_arguments=("phppgadmin")
 phppgadmin_packagenames=("phppgadmin")
 phppgadmin_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;phppgadmin.svg")
 phppgadmin_url="http://localhost/phppgadmin"
-phppgadmin_bashfunctions=("alias phppgadmin=\"nohup xdg-open ${phppgadmin_url} &>/dev/null &\"")
+phppgadmin_bashfunctions=("phppgadmin.sh")
 phppgadmin_readmeline="| phppgadmin | GUI for SQL Database Management | It runs an instance of the program at localhost/phppgadmin ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 phppgadmin_launchercontents=("
 [Desktop Entry]
@@ -3067,37 +2647,10 @@ TryExec=xdg-open
 
 pluma_installationtype="packagemanager"
 pluma_arguments=("pluma")
-pluma_bashfunctions=("
-pluma()
-{
-  if [ \$# -eq 0 ]; then
-    nohup pluma &>/dev/null &
-  else
-    while [ -n \"\$1\" ]; do
-      nohup pluma \"\$1\" &>/dev/null &
-      shift
-    done
-  fi
-}
-")
+pluma_bashfunctions=("pluma.sh")
 pluma_launchernames=("pluma")
 pluma_packagenames=("pluma")
 pluma_readmeline="| pluma | Fork of gedit 2.0 that supports many plugins and new features | Command \`pluma\`, desktop launcjer and dashboard launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-p_installationtype="environmental"
-p_arguments=("p" "port" "port_function")
-p_bashfunctions=("
-p()
-{
-  if [ -n \"\$1\" ]; then
-    sudo lsof -i:\"\$1\" | tail -n+2 | tr -s \" \"  | cut -d \" \" -f-2 | sort | uniq | column -ts \" \"
-  else
-    sudo lsof -Pan -i tcp -i udp
-  fi
-}
-")
-p_readmeline="| Function \`port\` | Check processes names and PID's from given port | Command \`port\` ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 postman_installationtype="userinherit"
 postman_arguments=("postman")
@@ -3120,7 +2673,7 @@ postman_readmeline="| Postman | ${postman_readmelinedescription} | Command \`pos
 presentation_installationtype="environmental"
 presentation_arguments=("presentation" "google_presentation")
 presentation_url="https://docs.google.com/presentation/"
-presentation_bashfunctions=("alias presentation=\"nohup xdg-open ${presentation_url} &>/dev/null &\"")
+presentation_bashfunctions=("presentation.sh")
 presentation_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;presentation_icon.svg")
 presentation_readmelinedescription="Google Presentation opening in Chrome"
 presentation_launchercontents=("
@@ -3145,98 +2698,7 @@ presentation_readmeline="| Presentation | ${presentation_readmelinedescription} 
 
 prompt_installationtype="environmental"
 prompt_arguments=("prompt")
-prompt_bashfunctions=(
-"
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z \"\${debian_chroot:-}\" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=\$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we \"want\" color)
-case \"\$TERM\" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
-
-if [ -n \"\$force_color_prompt\" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ \"\$color_prompt\" = yes ]; then
-  if [ -n \"\${GIT_PROMPT_LAST_COMMAND_STATE}\" ]; then
-    if [ \${GIT_PROMPT_LAST_COMMAND_STATE} -gt 0 ]; then  # Red color if error
-      color_dollar=\"\\[\\e[1;31m\\]\"
-    else  # light green color if last command is ok
-      color_dollar=\"\\[\\e[1;32m\\]\"
-    fi
-  else
-    color_dollar=\"\\[\\e[2;32m\\]\"
-  fi
-
-    PS1=\"\\[\\e[1;33m\\]\$(date \"+%a %d %b %Y\") \\[\\e[0;35m\\]\\u\\[\\e[0;0m\\]@\\[\\e[0;36m\\]\\H \\[\\e[0;33m\\]\\w
-\\[\\e[0;37m\\]\\t \${color_dollar}\\$ \\[\\e[0;0m\\]\"
-else
-    PS1='\${debian_chroot:+(\$debian_chroot)}\u@\h:\w\\$ '
-fi
-unset color_prompt force_color_prompt color_dollar
-
-# If this is an xterm set the title to user@host:dir
-case \"\$TERM\" in
-xterm*|rxvt*)
-    :
-    PS1=\"\$PS1\\[\\\e]0;\${debian_chroot:+(\$debian_chroot)}\u@\h: \w\\\a\]\"
-    ;;
-*)
-    ;;
-esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval \"\$(dircolors -b ~/.dircolors)\" || eval \"\$(dircolors -b)\"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-"
-
-"
-# Save and reload from history before prompt appears to be sure the prompt is being charged correctly because it conflicts with gitprompt.
-if [ -z \"\$(echo \"\${PROMPT_COMMAND}\" | grep -Fo \" [ ! -d .git ] && source \"${FUNCTIONS_FOLDER}/prompt.sh\"\")\" ]; then
-  # Check if there is something inside PROMPT_COMMAND, so we put semicolon to separate or not
-  if [ -z \"\${PROMPT_COMMAND}\" ]; then
-    export PROMPT_COMMAND=\" [ ! -d .git ] && source \"${FUNCTIONS_FOLDER}/prompt.sh\"\"
-  else
-    export PROMPT_COMMAND=\"\${PROMPT_COMMAND}; [ ! -d .git ] && source \"${FUNCTIONS_FOLDER}/prompt.sh\"\"
-  fi
-fi
-")
-
+prompt_bashfunctions=("prompt.sh" "prompt_command.sh")
 prompt_readmeline="| prompt | Installs a new colourful prompt on terminal window including and upgrading the default ones in Ubuntu | Adds a personalized prompt that shows the date, return code of last executed program, user, group and working directory. It also changes the prompt colour of introduced text to green. It changes the terminal windows title, adds colourful aliases and ensures completion || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 psql_installationtype="packagemanager"
@@ -3247,63 +2709,18 @@ psql_readmeline="| PostGreSQL | Installs \`psql\`|  Command \`psql\` ||  <ul><li
 
 pull_installationtype="environmental"
 pull_arguments=("pull")
-pull_bashfunctions=("
-pull()
-{
-  if [ -z \"\$1\" ]; then
-	  git pull
-	else
-	  git pull origin --no-ff \"\$@\"
-	fi
-}
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete pull _git_branch  # Using git branch completions since _git_pull completions only give incorreclty \"origin origin\" as completion
-fi
-")
+pull_bashfunctions=("pull.sh")
 pull_readmeline="| Function \`pull\` | Alias for \`git pull\`|  Command \`pull\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 push_installationtype="environmental"
 push_arguments=("push")
-push_bashfunctions=("
-push()
-{
-  git fetch &>/dev/null
-  if [ -z \"\$1\" ]; then
-    if git rev-parse --symbolic-full-name \$(git branch --show-current)@{upstream} &>/dev/null; then
-      git push
-    else
-	    git push --set-upstream origin \"\$(git branch --show-current)\"
-    fi
-	else
-	  if git rev-parse --symbolic-full-name \$(git branch --show-current)@{upstream} &>/dev/null; then
-	    git push origin \"\$@\"
-    else
-	    git push --set-upstream origin \"\$@\"
-    fi
-	fi
-	unset returnerror
-}
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete push _git_branch  # Using git branch completions since _git_push completions only give incorreclty \"origin origin\" as completion
-fi
-")
+push_bashfunctions=("push.sh")
 push_readmeline="| Function \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 pycharm_installationtype="userinherit"
 pycharm_arguments=("pycharm" "pycharm_community")
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
-pycharm_bashfunctions=("
-pycharm() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup pycharm \${args} &>/dev/null &
-}
-")
+pycharm_bashfunctions=("pycharm.sh")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
@@ -3333,7 +2750,6 @@ Exec=pycharm
 Icon=${BIN_FOLDER}/pycharm/bin/pycharm.png
 ")
 pycharm_readmeline="| Pycharm Community | ${pycharm_readmelinedescription} | Command \`pycharm\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files  || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 pycharmpro_installationtype="userinherit"
 pycharmpro_arguments=("pycharm_pro")
@@ -3396,49 +2812,13 @@ uninstall_pypy3_mid() {
 
 python3_installationtype="packagemanager"
 python3_arguments=("python_3" "python" "v")
-python3_bashfunctions=("
-# Create and source a venv with the given name passed as parameter.
-# If already exists, only sources activate
-# If already activated, do deactivate
-v()
-{
-  if [ \$# -eq 0 ]; then
-    if [ -n \"\${VIRTUAL_ENV}\" ]; then
-      deactivate
-    else
-      if [ -f activate ]; then
-        source activate
-        return
-      elif [ -f bin/activate ]; then
-        source bin/activate
-        return
-      else
-        for i in \$(ls); do
-          if [ -d \"\${i}\" ]; then
-            if [ -f \"\${i}/bin/activate\" ]; then
-              source \"\${i}/bin/activate\"
-              return
-            fi
-          fi
-        done
-      fi
-      python3 -m venv venv
-    fi
-  else
-    if [ -n \"\${VIRTUAL_ENV}\" ]; then
-      deactivate
-    else
-      python3 -m venv \"\$1\"
-    fi
-  fi
-}
-")
+python3_bashfunctions=("v.sh")
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel" "python3.8-venv")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
 python3_readmeline="| Python3 | Interpreted, high-level and general-purpose programming language | Commands \`python\`, \`python3\`, \`pip3\` and Function \`v\` is for activate/deactivate python3 virtual environments (venv) can be used as default \`v\` as a command creates the /venv/ environment we can activate/deactivate new or existing virtual environments, command \`v namevenv\` creates /namevenv/ we can activate the virtual environment again using \`v namenv\` or deactivate same again, using \`v namenv\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 q_installationtype="environmental"
 q_arguments=("q")
-q_bashfunctions=("alias q=\"exit\"")
+q_bashfunctions=("q.sh")
 q_readmeline="| Function \`q\` | Programming language | Commands \`R\`, Dashboard Launcher, Desktop Launcher|| <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
 R_installationtype="packagemanager"
@@ -3459,7 +2839,7 @@ R_readmeline="| R | Programming language | Commands \`R\`, Dashboard Launcher, D
 reddit_installationtype="environmental"
 reddit_arguments=("reddit")
 reddit_url="https://www.reddit.com/"
-reddit_bashfunctions=("alias reddit=\"nohup xdg-open ${reddit_url} &>/dev/null &\"")
+reddit_bashfunctions=("reddit.sh")
 reddit_downloads=("https://www.svgrepo.com/download/14413/reddit.svg;reddit_icon.svg")
 reddit_readmelinedescription="Opens Reddit in Chrome"
 reddit_launchercontents=("
@@ -3490,7 +2870,7 @@ remmina_readmeline="| Remmina | Remote Desktop Contol | Commands \`remmina\`, De
 
 rosegarden_installationtype="packagemanager"
 rosegarden_arguments=("rosegarden")
-rosegarden_bashfunctions=("alias rosegarden=\"nohup rosegarden &>/dev/null &\"")
+rosegarden_bashfunctions=("rosegarden.sh")
 rosegarden_packagenames=("rosegarden")
 rosegarden_launchernames=("com.rosegardenmusic.rosegarden")
 rosegarden_readmeline="| Rosegarden | Software for music production | Commands \`rosegarden\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
@@ -3498,7 +2878,7 @@ rosegarden_readmeline="| Rosegarden | Software for music production | Commands \
 rstudio_installationtype="userinherit"
 rstudio_arguments=("r_studio")
 rstudio_associatedfiletypes=("text/plain")
-rstudio_bashfunctions=("alias rstudio=\"nohup rstudio &>/dev/null &\"")
+rstudio_bashfunctions=("rstudio.sh")
 rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
 rstudio_compressedfileurl="https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz"
 rstudio_readmelinedescription="Default application for .R files "
@@ -3528,7 +2908,8 @@ rsync_arguments=("rsync" "grsync")
 rsync_packagedependencies=("libcanberra-gtk-module" "libcanberra-gtk3-module" "libcanberra-gtk-module:i386")
 rsync_packagenames=("rsync" "grsync")
 rsync_launchernames=("grsync")
-rsync_bashfunctions=("alias rs=\"rsync -av --progress\"")
+rsync_bashfunctions=("alias rs=\"rsync -av --progress\"
+")
 rsync_readmeline="| Grsync | Software for file/folders synchronization | Commands \`grsync\`, desktop launcher and \`rsync\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 rustc_installationtype="packagemanager"
@@ -3540,12 +2921,7 @@ rustc_readmeline="| Rust | Programming Language | Installs \`rustc\` || <ul><li>
 
 s_installationtype="environmental"
 s_arguments=("s")
-s_bashfunctions=("
-s()
-{
-  \"\$@\" &>/dev/null &
-}
-")
+s_bashfunctions=("s.sh")
 s_readmeline="| Function \`s\` | Function to execute any program silently and in the background | Function \`s \"command\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 scala_installationtype="packagemanager"
@@ -3555,7 +2931,7 @@ scala_readmeline="| Scala | Programming language | Command \`scala\` || <ul><li>
 
 scilab_installationtype="userinherit"
 scilab_arguments=("scilab")
-scilab_bashfunctions=("alias scilab=\"nohup scilab &>/dev/null &\"" "alias scinotes=\"nohup scinotes &>/dev/null &\"")
+scilab_bashfunctions=("scilab.sh")
 scilab_binariesinstalledpaths=("bin/scilab;scilab" "bin/scilab-cli;scilab-cli" "bin/scinotes;scinotes")
 scilab_packagedependencies=("openjdk-8-jdk-headless" "libtinfo5")
 scilab_compressedfileurl="https://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz"
@@ -3587,33 +2963,19 @@ screenshots_arguments=("screenshots")
 screenshots_filekeys=("screenshotwindow" "screenshotarea" "screenshotfull")
 screenshots_keybindings=("scr-area;<Primary><Alt><Super>a;Screenshot Area" "scr-full;<Primary><Alt><Super>s;Screenshot Full" "scr-window;<Primary><Alt><Super>w;Screenshot Window")
 screenshots_screenshotwindow_path="screenshot_window.sh"
-screenshots_screenshotwindow_content="
-mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
-screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
-gnome-screenshot -w -f \"${XDG_PICTURES_DIR}/screenshots/\${screenshotname}\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
-unset screenshotname
-"
+screenshots_screenshotwindow_content="screenshot_window.sh"
 screenshots_screenshotarea_path="screenshot_area.sh"
-screenshots_screenshotarea_content="
-mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
-screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
-gnome-screenshot -a -f \"${XDG_PICTURES_DIR}/screenshots/\${screenshotname}\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
-unset screenshotname
-"
+screenshots_screenshotarea_content="screenshot_area.sh"
 screenshots_screenshotfull_path="screenshot_full.sh"
-screenshots_screenshotfull_content="
-mkdir -p \"${XDG_PICTURES_DIR}/screenshots\"
-screenshotname=\"Screenshot-\$(date +%Y-%m-%d-%H:%M:%S).png\"
-gnome-screenshot -f \"${XDG_PICTURES_DIR}/screenshots/\${screenshotname}\" && xclip -in -selection clipboard -target image/png \"${XDG_PICTURES_DIR}/screenshots/\$screenshotname\" && paplay /usr/share/sounds/freedesktop/stereo/camera-shutter.oga
-unset screenshotname
-"
+screenshots_screenshotfull_content="screenshot_full.sh"
 screenshots_binariesinstalledpaths=("screenshot_area.sh;scr-area" "screenshot_window.sh;scr-window" "screenshot_full.sh;scr-full")
 screenshots_packagedependencies=("gnome-screenshot" "xclip")
 screenshots_readmeline="| Screenshots | Takes a screenshot and saves it to custom ~/Images/screenshots folder and save it to the clipboard for pasting | Commands \`screenshot-full\` \`screenshot-window\` \`screenshot-area\`||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 sherlock_installationtype="repositoryclone"
 sherlock_arguments=("sherlock")
-sherlock_bashfunctions=("alias sherlock=\"python3 \"${BIN_FOLDER}/sherlock/sherlock/sherlock.py\"\"")
+sherlock_bashfunctions=("alias sherlock=\"python3 \"€{BIN_FOLDER}/sherlock/sherlock/sherlock.py\"\"
+")
 sherlock_repositoryurl="https://github.com/sherlock-project/sherlock.git"
 sherlock_manualcontentavailable="0;0;1"
 sherlock_readmeline="| Sherlock | Tool to obtain linked social media accounts using user name | Commands \`sherlock\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -3626,28 +2988,7 @@ uninstall_sherlock_post() {
 
 shortcuts_installationtype="environmental"
 shortcuts_arguments=("shortcuts")
-shortcuts_bashfunctions=("
-ALLBIN=\"${ALL_USERS_PATH_POINTED_FOLDER}\"
-AUTOSTART=\"${AUTOSTART_FOLDER}\"
-BIN=\"${BIN_FOLDER}\"
-CUSTOMIZER=\"${DIR}\"
-DESK=\"${XDG_DESKTOP_DIR}\"
-DOCUMENTS=\"${XDG_DOCUMENTS_DIR}\"
-DOWNLOAD=\"${XDG_DOWNLOAD_DIR}\"
-FONTS=\"${FONTS_FOLDER}\"
-FUNCTIONSD=\"${FUNCTIONS_FOLDER}\"
-FUNCTIONS=\"${FUNCTIONS_PATH}\"
-GIT=\"${XDG_DESKTOP_DIR}/git\"
-LAUNCHERS=\"${ALL_USERS_LAUNCHERS_DIR}\"
-LOCALBIN=\"${PATH_POINTED_FOLDER}\"
-MUSIC=\"${XDG_MUSIC_DIR}\"
-PERSONAL_LAUNCHERS=\"${PERSONAL_LAUNCHERS_DIR}\"
-PICTURES=\"${XDG_PICTURES_DIR}\"
-TEMPLATES=\"${XDG_TEMPLATES_DIR}\"
-TRASH=\"${HOME_FOLDER}/.local/share/Trash/\"
-VIDEOS=\"${XDG_VIDEOS_DIR}\"
-INITIALIZATIONSD=\"${INITIALIZATIONS_FOLDER}\"
-")
+shortcuts_bashfunctions=("shortcuts.sh")
 shortcuts_readmeline="| shortcuts | Installs custom key commands | variables... (\$DESK...) || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 shotcut_installationtype="packagemanager"
@@ -3710,7 +3051,7 @@ sonic_pi_readmeline="| Sonic Pi | programming language that ouputs sounds as com
 soundcloud_installationtype="environmental"
 soundcloud_arguments=("soundcloud")
 soundcloud_url="https://www.soundcloud.com/"
-soundcloud_bashfunctions=("alias soundcloud=\"nohup xdg-open ${soundcloud_url} &>/dev/null &\"")
+soundcloud_bashfunctions=("soundcloud.sh")
 soundcloud_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a2/Antu_soundcloud.svg;soundcloud_icon.svg")
 soundcloud_readmelinedescription="SoundCloud opening in Chrome"
 soundcloud_launchercontents=("
@@ -3735,9 +3076,9 @@ soundcloud_readmeline="| Soundcloud | ${soundcloud_readmelinedescription} | Comm
 
 spotify_installationtype="packageinstall"
 spotify_arguments=("spotify")
-spotify_bashfunctions=("alias spotify=\"spotify &>/dev/null &\"")
+spotify_bashfunctions=("spotify.sh")
 spotify_launchernames=("spotify")
-spotify_packageurls=("https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.67.586.gbb5ef64e_amd64.deb")
+spotify_packageurls=("https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.72.439.gc253025e_amd64.deb")
 spotify_package_manager_override="apt-get"
 spotify_packagenames=("spotify-desktop")
 spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
@@ -3745,7 +3086,7 @@ spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, d
 spreadsheets_installationtype="environmental"
 spreadsheets_arguments=("spreadsheets" "google_spreadsheets")
 spreadsheets_url="https://docs.google.com/spreadsheets/"
-spreadsheets_bashfunctions=("alias spreadsheets=\"nohup xdg-open ${spreadsheets_url} &>/dev/null &\"")
+spreadsheets_bashfunctions=("spreadheets.sh")
 spreadsheets_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg;spreadsheets_icon.svg")
 spreadsheets_readmelinedescription="Google Spreadsheets opening in Chrome"
 spreadsheets_launchercontents=("
@@ -3770,16 +3111,12 @@ spreadsheets_readmeline="| Spreadsheets | ${spreadsheets_readmelinedescription} 
 
 ssh_installationtype="packagemanager"
 ssh_arguments=("ssh")
-ssh_packagenames=("ssh")
+ssh_packagenames=("ssh-client")
 ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 status_installationtype="environmental"
 status_arguments=("status")
-status_bashfunctions=("alias status=\"git status\"
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete status _git_status
-fi")
+status_bashfunctions=("status.sh")
 status_readmeline="| Functions \`status\` | \`git status\` | Command \`status\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 steam_installationtype="packageinstall"
@@ -3830,16 +3167,7 @@ sublime_keybindings=("sublime;<Primary><Alt><Super>e;Sublime Text")
 sublime_installationtype="userinherit"
 sublime_arguments=("sublime" "sublime_text" "subl")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
-sublime_bashfunctions=("
-sublime() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup sublime \${args} &>/dev/null &
-}
-")
+sublime_bashfunctions=("sublime.sh")
 sublime_binariesinstalledpaths=("sublime_text;sublime")
 sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_build_4113_x64.tar.xz"
 sublime_readmelinedescription="Source code editor with an emphasis on source code editing"
@@ -3887,7 +3215,7 @@ StartupWMClass=synaptic
 sysmontask_installationtype="repositoryclone"
 sysmontask_arguments=("sysmontask")
 sysmontask_flagsoverride="0;;;;;"  # To install the cloned software it has to be run as root
-sysmontask_bashfunctions=("alias sysmontask=\"nohup sysmontask &>/dev/null &\"")
+sysmontask_bashfunctions=("sysmontask.sh")
 sysmontask_launchernames=("SysMonTask")
 sysmontask_manualcontentavailable="0;1;0"
 sysmontask_readmeline="| Sysmontask | Control panel for linux | Command \`sysmontask\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
@@ -3939,7 +3267,7 @@ teams_readmeline="| Microsoft Teams | Video Conference, calls and meetings | Com
 telegram_installationtype="userinherit"
 telegram_arguments=("telegram")
 telegram_binariesinstalledpaths=("Telegram;telegram")
-telegram_bashfunctions=("alias telegram=\"nohup telegram &>/dev/null &\"")
+telegram_bashfunctions=("telegram.sh")
 telegram_compressedfileurl="https://telegram.org/dl/desktop/linux"
 telegram_downloads=("https://telegram.org/img/t_logo.svg;telegram_icon.svg")
 telegram_readmelinedescription="Cloud-based instant messaging software and application service"
@@ -3967,247 +3295,24 @@ templates_installationtype="environmental"
 templates_arguments=("templates")
 templates_filekeys=("c" "headers" "makefile" "python" "bash" "latex" "empty")
 templates_c_path="${XDG_TEMPLATES_DIR}/c_script.c"
-templates_c_content="
-########################################################################################################################
-# -Name:
-# -Description:
-# -Creation Date:
-# -Last Revision:
-# -Author:
-# -Email:
-# -Permissions:
-# -Args:
-# -Usage:
-# -License:
-########################################################################################################################
-
-
-#include \"c_script_header.h\"
-
-
-int main(int nargs, char* args[])
-{
-  printf(\"Hello World\");
-}
-"
+templates_c_content="c_script"
 templates_headers_path="${XDG_TEMPLATES_DIR}/c_script_header.h"
-templates_headers_content="
-// Includes
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-"
+templates_headers_content="c_script_header.h"
 templates_makefile_path="${XDG_TEMPLATES_DIR}/makefile"
-templates_makefile_content="
-CC = gcc
-CFLAGS = -O3 -Wall
-
-all : c_script
-
-c_script : c_script.c
-	\$(CC) \$(CFLAGS) c_script.c -o c_script -lm
-
-run : c_script
-	./c_script
-
-.PHONY : clean
-clean :
-	rm -f c_script
-"
+templates_makefile_content="makefile"
 templates_python_path="${XDG_TEMPLATES_DIR}/python3_script.py"
-templates_python_content="
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-########################################################################################################################
-# -Name:
-# -Description:
-# -Creation Date:
-# -Last Revision:
-# -Author:
-# -Email:
-# -Permissions:
-# -Args:
-# -Usage:
-# -License:
-########################################################################################################################
-
-
-if __name__ == \"__main__\":
-    print(\"HELLO WORLD!\")
-    exit(0)
-"
+templates_python_content="python3_script.py"
 templates_bash_path="${XDG_TEMPLATES_DIR}/shell_script.sh"
-templates_bash_content="
-#!/usr/bin/env bash
-########################################################################################################################
-# -Name:
-# -Description:
-# -Creation Date:
-# -Last Modified:
-# -Author:
-# -Email:
-# -Permissions:
-# -Args:
-# -Usage:
-# -License:
-########################################################################################################################
-
-main()
-{
-  echo \"Hello World\"
-  exit 0
-}
-
-set -e
-main \"\$@\""
+templates_bash_content="shell_script.sh"
 templates_latex_path="${XDG_TEMPLATES_DIR}/latex_document.tex"
-templates_latex_content="
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%2345678901234567890123456789012345678901234567890123456789012345678901234567890
-%        1         2         3         4         5         6         7         8
-\documentclass[11pt]{article}
-
-% Use helvetica font (similar to Arial)
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage[scaled=1]{helvet}
-
-% Don't include Table of Contents (ToC) in ToC
-% Don't include List of Figures (LoF) in ToC
-% Don't include List of Tables (LoT) in ToC
-% Include bibliography in ToC with its own section number
-\usepackage[nottoc, notlot, notlof, numbib]{tocbibind}
-
-% //W: Kept because error if these commands are removed
-\title{}
-\date{}
-\author{}
-
-\begin{document}
-
-
-% Title Page
-\begin{titlepage}
-\centering
-%\includegraphics[width=0.5\textwidth]{imgs/logourv}  % Logo
-\par
-\vspace{1cm}
-\Large
-{An exemple document of LaTeX\par}
-\vspace{1cm}
-{John Doe \par}
-\vspace{1cm}
-{\itshape\Large LaTeX FINAL PROJECT \par}
-\vfill
-
-\vspace{1cm}
-%\includegraphics[width=0.7\textwidth]{imgs/grafportada}  % Portada Imagen
-\par
-\vspace{1cm}
-\vfill
-
-\large
-\raggedright
-{Tutor and supervisor: Jane Doe, UL, (jane.doe@LaTeX.cat) \par}
-{In cooperation with: LaTeX and Friends \par}
-\vspace{2cm}
-
-\raggedleft
-\large
-November 2020
-\par
-\end{titlepage}
-
-% Dont number the title page
-\pagenumbering{gobble}
-
-% Rest of the document
-\setlength{\parskip}{1em}  % Set vertical separation between paragraphs
-%\onehalfspacing  % spacing 1.5
-\normalsize  % //Spec: normalsize = 11 pt (declared at e headers)
-
-% Resumen (Abstract)
-\newpage
-\section*{Abstract}  % Use the * to not include section in ToC
-  We try to explain a basic example of LaTeX. We will include ToC and references.
-
-% Index (ToC)
-\newpage
-\setlength{\parskip}{0em}  % Set vertical separation = 0 between paragraphs in the index
-\tableofcontents
-\newpage
-
-\setlength{\parskip}{1em}  % Set vertical separation between paragraphs for the rest of the doc
-%\onehalfspacing  % //Spec: spacing 1.5
-
-% First Section
-\pagenumbering{arabic}  % Start numbering in the intro, not in the title or abstract page
-\section{Hello World!}
-  Hello World!
-
-% Second Section
-\section{Advanced Hello World}
-  Hello, World. Basic LaTeX Operations:
-  \subsection{Itemizes}
-    \begin{itemize}
-      \item One thing.
-      \item Two things.
-      \item Last
-    \end{itemize}
-  \subsection{Enumerates}
-    \begin{enumerate}
-      \item First thing
-      \item Second thing
-      \item Third thing \textbf{and last!}
-    \end{enumerate}
-  \subsection{References}
-    We can use \cite{Doe20} to cite, but the same happens citing \cite{Doe19}.
-
-% Bibliography
-\newpage
-\begin{thebibliography}{0}
-\bibitem{Doe20} Doe, J., Martínez A. (2020). How to LaTeX with Linux Auto Customizer. University of Computing, Girona, Spain
-\bibitem{Doe19} Doe, J., Priyatniva, A. \& Solanas, A. (2019). Referencing in LaTeX, 10th International Conference on Information, Intelligence, Systems and Applications. https://doi.org/20.1105/IISO.2019.8903718
-\end{thebibliography}
-
-\end{document}
-
-"
+templates_latex_content="latex_document.tex"
 templates_empty_path="${XDG_TEMPLATES_DIR}/empty_text_file.txt"
-templates_empty_content=""
+templates_empty_content="empty_text_file.txt"
 templates_readmeline="| Templates | Different collection of templates for starting code projects: Python3 script (\`.py\`), Bash script (\`.sh\`), LaTeX document (\`.tex\`), C script (\`.c\`), C header script (\`.h\`), makefile example (\`makefile\`) and empty text file (\`.txt\`) | In the file explorer, right click on any folder to see the contextual menu of \"create document\", where all the templates are located || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 terminal_background_installationtype="environmental"
 terminal_background_arguments=("terminal_background")
-terminal_background_bashinitializations=("
-# Check if gsettings command is available
-if ! command -v gsettings &> /dev/null
-then
-  return
-fi
-
-profile_uuid=\"\$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d \"'\" -f2)\"
-if [ -n \"\${profile_uuid}\" ]; then
-  # make sure the profile is set to not use theme colors
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ use-theme-colors false # --> Don't use system color theme
-
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ use-transparent-background true
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ background-transparency-percent \"10\"
-
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ bold-color \"#6E46A4\"
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ background-color \"#282A36\"
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ foreground-color \"#F8F8F2\"
-
-  ##############################################################################################################################grey#######pink#######green######yellow#####purple#####red#######cyan#######orange####lighgrey##lightpink##lightgreen#lightyellow#lightpurple#lightred#lightcyan##lightorange
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:\${profile_uuid}/ palette \"['#262626', '#E356A7', '#42E66C', '#E4F34A', '#9B6BDF', '#E64747', '#75D7EC', '#EFA554', '#7A7A7A', '#FF79C6', '#50FA7B', '#F1FA8C', '#BD93F9', '#FF5555', '#8BE9FD', '#FFB86C']\"
-
-  # Cursor like in a text editor
-  gsettings set org.gnome.Terminal.Legacy.Profile:/:\"\${profile_uuid}\"/ cursor-shape 'ibeam'
-  
-  unset profile_uuid
-else
-  echo \"ERROR, non terminal default profile list found\"
-fi
-")
+terminal_background_bashinitializations=("terminal_background.sh")
 terminal_background_readmeline="| Terminal background | Change background of the terminal to black | Every time you open a terminal || <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 terminator_installationtype="packagemanager"
@@ -4273,7 +3378,7 @@ tor_readmeline="| Tor browser | Software for enabling anonymous communication by
 translator_installationtype="environmental"
 translator_arguments=("translator")
 translator_url="https://translate.google.com/"
-translator_bashfunctions=("alias translator=\"nohup xdg-open ${translator_url} &>/dev/null &\"")
+translator_bashfunctions=("translator.sh")
 translator_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png;translator_icon.png")
 translator_readmelinedescription="Google Translate opening in Chrome"
 translator_launchercontents=("
@@ -4305,7 +3410,7 @@ transmission_gtk_readmeline="| Transmission | A set of lightweight Torrent clien
 trello_installationtype="environmental"
 trello_arguments=("trello")
 trello_url="https://trello.com"
-trello_bashfunctions=("alias trello=\"nohup xdg-open ${trello_url} &>/dev/null &\"")
+trello_bashfunctions=("trello.sh")
 trello_downloads=("https://en.wikipedia.org/wiki/File:Antu_trello.svg;trello_icon.svg")
 trello_readmelinedescription="Trello web opens in Chrome"
 trello_launchercontents=("
@@ -4331,7 +3436,7 @@ trello_readmeline="| Trello | ${trello_readmelinedescription} | Command \`trello
 tumblr_installationtype="environmental"
 tumblr_arguments=("tumblr")
 tumblr_url="https://www.tumblr.com/"
-tumblr_bashfunctions=("alias tumblr=\"nohup xdg-open ${tumblr_url} &>/dev/null &\"")
+tumblr_bashfunctions=("tumblr.sh")
 tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/4/43/Tumblr.svg;tumblr_icon.svg")
 tumblr_readmelinedescription="Tumblr web opens in Chrome"
 tumblr_launchercontents=("
@@ -4357,7 +3462,8 @@ tumblr_readmeline="| Tumblr | ${tumblr_readmelinedescription} | Command \`tumblr
 twitch_installationtype="environmental"
 twitch_arguments=("twitch" "twitch_tv")
 twitch_url="https://twitch.tv/"
-twitch_bashfunctions=("alias twitch=\"nohup xdg-open ${twitch_url} &>/dev/null &\"")
+twitch_bashfunctions=("alias twitch=\"nohup xdg-open €{twitch_url} &>/dev/null &\"
+")
 twitch_downloads=("https://commons.wikimedia.org/wiki/File:Twitch_Glitch_Logo_Purple.svg;twitch_icon.svg")
 twitch_readmelinedescription="Twitch web opens in Chrome"
 twitch_launchercontents=("
@@ -4383,7 +3489,8 @@ twitch_readmeline="| Twitch | ${twitch_readmelinedescription} | Command \`twitch
 twitter_installationtype="environmental"
 twitter_arguments=("twitter")
 twitter_url="https://twitter.com/"
-twitter_bashfunctions=("alias twitter=\"nohup xdg-open ${twitter_url} &>/dev/null &\"")
+twitter_bashfunctions=("alias twitter=\"nohup xdg-open €{twitter_url} &>/dev/null &\"
+")
 twitter_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg;twitter_icon.svg")
 twitter_readmelinedescription="Twitter web opens in Chrome"
 twitter_launchercontents=("
@@ -4408,23 +3515,7 @@ twitter_readmeline="| Twitter | ${twitter_readmelinedescription} | Command \`twi
 
 u_installationtype="environmental"
 u_arguments=("u")
-u_bashfunctions=("
-u()
-{
-  if [ \$# -eq 0 ]; then
-    echo \"ERROR: You need to provide at least one argument\"
-    return
-  else
-    for url_address in \"\$@\"; do
-      if [ -n \"\$(echo \"\${url_address}\" | grep -Eo \"^[a-z]+://.+$\")\" ]; then
-        xdg-open \"\${url_address}\" &>/dev/null
-      else
-        xdg-open \"https://\${url_address}\" &>/dev/null
-      fi
-    done
-  fi
-}
-")
+u_bashfunctions=("u.sh")
 u_readmeline="| Function \`u\` | Opens given link in default web browser | Command \`u\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 uget_installationtype="packagemanager"
@@ -4436,7 +3527,7 @@ uget_readmeline="| uget | GUI utility to manage downloads | Command \`uget\`, de
 
 virtualbox_installationtype="packageinstall"
 virtualbox_arguments=("virtual_box")
-virtualbox_bashfunctions=("alias virtualbox=\"nohup virtualbox &>/dev/null &\"")
+virtualbox_bashfunctions=("virtualbox.sh")
 virtualbox_launchernames=("virtualbox")
 virtualbox_packagedependencies=("make" "gcc" "perl" "python" "build-essential" "dkms" "libsdl1.2debian" "virtualbox-guest-utils" "libqt5printsupport5" "libqt5x11extras5" "libcurl4" "virtualbox-guest-dkms" "linux-headers-$(uname -r)" "libqt5opengl5" "linux-headers-generic" "linux-source" "linux-generic" "linux-signed-generic")
 virtualbox_packagenames=("virtualbox-6.1")
@@ -4453,7 +3544,7 @@ vlc_readmeline="| VLC | Media player software, and streaming media server | Comm
 whatsapp_installationtype="environmental"
 whatsapp_arguments=("whatsapp")
 whatsapp_url="https://web.whatsapp.com/"
-whatsapp_bashfunctions=("alias whatsapp=\"nohup xdg-open ${whatsapp_url} &>/dev/null &\"")
+whatsapp_bashfunctions=("whatsapp.sh")
 whatsapp_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg;whatsapp_icon.svg")
 whatsapp_readmelinedescription="Whatsapp web opens in Chrome"
 whatsapp_launchercontents=("
@@ -4479,7 +3570,7 @@ whatsapp_readmeline="| Whatsapp Web | ${whatsapp_readmelinedescription} | Comman
 wikipedia_installationtype="environmental"
 wikipedia_arguments=("wikipedia")
 wikipedia_url="https://www.wikipedia.org/"
-wikipedia_bashfunctions=("alias wikipedia=\"nohup xdg-open ${wikipedia_url} &>/dev/null &\"")
+wikipedia_bashfunctions=("wikipedia.sh")
 wikipedia_downloads=("https://upload.wikimedia.org/wikipedia/commons/2/20/Wikipedia-logo-simple.svg;wikipedia_icon.svg")
 wikipedia_readmelinedescription="Wikipedia web opens in Chrome"
 wikipedia_launchercontents=("
@@ -4635,101 +3726,7 @@ wireshark_readmeline="| Wireshark | Net sniffer | Command \`wireshark\`, desktop
 x_installationtype="environmental"
 x_arguments=("x" "extract" "extract_function")
 x_packagedependencies=("libfile-mimeinfo-perl")
-x_bashfunctions=("
-x() {
-  local first_compressed_file_arg_pos=
-  if [ -d \"\$1\" ]; then
-    local -r decompression_folder=\"\$1\"
-    mkdir -p \"\${decompression_folder}\"
-    local old_folder=\"\$(pwd)\"
-    shift  # With this we expect files in \$1 and the following positions.
-  fi
-
-  while [ -n \"\$1\" ]; do
-    local absolute_first_arg=
-    if [ -n \"\${decompression_folder}\" ]; then
-      if [ -n \"\$(echo \"\$1\" | grep -Eo \"^/\")\" ]; then  # Absolute path
-        absolute_first_arg=\"\$1\"
-      else  # relative path
-        absolute_first_arg=\"\$(pwd)/\$1\"
-      fi
-      cd \"\${decompression_folder}\"
-    else
-      absolute_first_arg=\"\$1\"
-    fi
-    if [ -f \"\${absolute_first_arg}\" ] ; then
-      local mime_type=\"\$(mimetype \"\${absolute_first_arg}\" | cut -d \":\" -f2 | tr -d \" \")\"
-      case \"\${mime_type}\" in
-        application/x-bzip-compressed-tar)
-          tar xjf \"\${absolute_first_arg}\"
-        ;;
-        application/x-compressed-tar)
-          tar xzf \"\${absolute_first_arg}\"
-        ;;
-        application/x-bzip)
-          if ! which bunzip2 2>/dev/null; then
-            sudo ${PACKAGE_MANAGER_INSTALL} bunzip2
-          fi
-          bunzip2 \"\${absolute_first_arg}\"
-        ;;
-        application/vnd.rar)
-          if ! which rar 2>/dev/null; then
-            sudo ${PACKAGE_MANAGER_INSTALL} rar
-          fi
-          rar x \"\${absolute_first_arg}\"
-        ;;
-        application/gzip)
-          if ! which gzip 2>/dev/null; then
-            sudo ${PACKAGE_MANAGER_INSTALL} gzip
-          fi
-          gzip -dk \"\${absolute_first_arg}\"
-        ;;
-        application/x-xz-compressed-tar)
-          tar xf \"\${absolute_first_arg}\"
-        ;;
-        application/x-tar)
-          tar xf \"\${absolute_first_arg}\"
-        ;;
-        application/x-bzip-compressed-tar)
-          tar xjf \"\${absolute_first_arg}\"
-        ;;
-        application/zip)
-          if ! which unzip 2>/dev/null; then
-            sudo ${PACKAGE_MANAGER_INSTALL} unzip
-          fi
-          unzip \"\${absolute_first_arg}\"
-        ;;
-        application/x-compress)
-          if ! which uncompress 2>/dev/null; then
-            sudo ${PACKAGE_MANAGER_INSTALL} uncompress
-          fi
-          uncompress \"\${absolute_first_arg}\"
-        ;;
-        application/x-7z-compressed)
-          if ! which 7z 2>/dev/null; then
-            sudo ${PACKAGE_MANAGER_INSTALL} 7z
-          fi
-          7z x \"\${absolute_first_arg}\"
-        ;;
-        *)
-          echo \"\${absolute_first_arg} cannot be extracted via x\"
-        ;;
-      esac
-    else
-      echo \"'\${absolute_first_arg}' is not a valid file for x\"
-    fi
-    if [ -n \"\${decompression_folder}\" ]; then
-      cd \"\${old_folder}\"
-    fi
-
-    shift
-  done
-  if [ ! -n \"\$(echo \"\${absolute_first_arg}\")\" ]; then
-    echo \"ERROR: x needs at least an argument. The first arg can be a file or directory where compressed files will be extracted. The rest o arguments are paths to different compressed files.\"
-  fi
-
-}
-")
+x_bashfunctions=("x.sh")
 x_readmeline="| Function \`x\` | Function to extract from a compressed file, no matter its format | Function \`x \"filename\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 xclip_installationtype="packagemanager"
@@ -4740,7 +3737,7 @@ xclip_readmeline="| \`xclip\` | Utility for pasting. | Command \`xclip\` || <ul>
 youtube_installationtype="environmental"
 youtube_arguments=("youtube")
 youtube_url="https://youtube.com/"
-youtube_bashfunctions=("alias youtube=\"nohup xdg-open ${youtube_url} &>/dev/null &\"")
+youtube_bashfunctions=("youtube.sh")
 youtube_downloads=("https://upload.wikimedia.org/wikipedia/commons/4/4f/YouTube_social_white_squircle.svg;youtube_icon.svg")
 youtube_readmelinedescription="YouTube opens in Chrome"
 youtube_launchercontents=("
@@ -4765,7 +3762,7 @@ youtube_readmeline="| Youtube | ${youtube_readmelinedescription} | Command \`you
 
 youtube_dl_installationtype="environmental"
 youtube_dl_arguments=("youtube_dl")
-youtube_dl_bashfunctions=("alias youtubewav=\"youtube-dl --extract-audio --audio-format wav\"")
+youtube_dl_bashfunctions=("youtube_dl.sh")
 youtube_dl_binariesinstalledpaths=("youtube-dl;youtube-dl")
 youtube_dl_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl")
 youtube_dl_readmeline="| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command \`youtube-dl\` in the PATH and alias \`youtube-wav\` to scratch a mp3 from youtube || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -4774,9 +3771,7 @@ youtubemusic_installationtype="environmental"
 youtubemusic_url="https://music.youtube.com"
 youtubemusic_filekeys=("youtubemusicscript")
 youtubemusic_youtubemusicscript_path="youtubemusic.sh"
-youtubemusic_youtubemusicscript_content="
-nohup xdg-open ${youtubemusic_url} &>/dev/null &
-"
+youtubemusic_youtubemusicscript_content="youtubemusic.sh"
 youtubemusic_binariesinstalledpaths=("youtubemusic.sh;youtubemusic")
 youtubemusic_arguments=("youtube_music")
 youtubemusic_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg;youtubemusic_icon.svg")
@@ -4804,85 +3799,7 @@ youtubemusic_readmeline="| Youtube Music | ${youtubemusic_readmelinedescription}
 z_installationtype="environmental"
 z_arguments=("z" "z_function")
 z_readmeline="| Function \`z\` | function to compress files given a type and a set of pats to files | Command \`z\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
-z_bashfunctions=("
-z() {
-  local first_compressed_file_arg_pos=
-  if [ -d \"\$1\" ]; then
-    local -r decompression_folder=\"\$1\"
-    mkdir -p \"\${decompression_folder}\"
-    local old_folder=\"\$(pwd)\"
-    shift  # With this we expect files in \$1 and the following positions.
-  fi
-
-  while [ -n \"\$1\" ]; do
-    local absolute_first_arg=
-    if [ -n \"\${decompression_folder}\" ]; then
-      if [ -n \"\$(echo \"\$1\" | grep -Eo \"^/\")\" ]; then  # Absolute path
-        absolute_first_arg=\"\$1\"
-      else  # relative path
-        absolute_first_arg=\"\$(pwd)/\$1\"
-      fi
-      cd \"\${decompression_folder}\"
-    else
-      absolute_first_arg=\"\$1\"
-    fi
-
-    local compression_type=\"\$1\"
-    shift
-    if [ -f \"\${absolute_first_arg}\" ]; then
-      local first_arg_name=\"\$(echo \"\$1\" | rev | cut -d \"/\" -f1 | rev)\"
-      case \"\${compression_type}\" in
-        tar.bz2)
-          tar cvjf \"\${first_arg_name}.tar.bz2\" \"\${absolute_first_arg}\"
-        ;;
-        tar.gz)
-          tar cvzf \"\${first_arg_name}.tar.gz\" \"\${absolute_first_arg}\"
-        ;;
-        bz2)
-          bzip2 \"\${first_arg_name}.bz2\" \"\${absolute_first_arg}\"
-        ;;
-        rar)
-          rar a \"\${first_arg_name}.rar\" \"\${absolute_first_arg}\"
-        ;;
-        gz)
-          gzip -c \"\${absolute_first_arg}.gz\" > \"\${first_arg_name}\"
-        ;;
-        tar)
-          tar cf \"\${first_arg_name}.tar\" \"\${absolute_first_arg}\"
-        ;;
-        tbz2)
-          tar cvjf \"\${first_arg_name}.tbz2\" \"\${absolute_first_arg}\"
-        ;;
-        tgz)
-          tar cvzf \"\${first_arg_name}.tgz\" \"\${absolute_first_arg}\"
-        ;;
-        zip)
-          zip \"\${first_arg_name}.zip\" \"\${absolute_first_arg}\"
-        ;;
-        Z)
-          compress \"\${first_arg_name}.Z\" \"\${absolute_first_arg}\"
-        ;;
-        7z)
-          7z a \"\${first_arg_name}.7z\" \"\${absolute_first_arg}\"
-        ;;
-        *)
-          echo \"\${absolute_first_arg} cannot be extracted via x\"
-        ;;
-      esac
-    else
-      echo \"'\${absolute_first_arg}' is not a valid file for z\"
-    fi
-    if [ -n \"\${decompression_folder}\" ]; then
-      cd \"\${old_folder}\"
-    fi
-
-    shift
-  done
-  if [ ! -n \"\$(echo \"\${absolute_first_arg}\")\" ]; then
-    echo \"ERROR: z needs at least an argument. The first arg can be a file or directory where compressed files will be created. The rest o arguments are paths to different files that have to be compressed.\"
-  fi
-}
-")
+z_bashfunctions=("z.sh")
 
 zoom_installationtype="userinherit"
 zoom_arguments=("zoom")
