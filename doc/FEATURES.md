@@ -1,4 +1,4 @@
-Customizer currently has available 129 user features and 114 root features, 243 in total
+Customizer currently has available 131 user features and 117 root features, 248 in total
 
 #### User programs
 | Name | Description | Execution | Arguments | Testing |
@@ -16,6 +16,7 @@ Customizer currently has available 129 user features and 114 root features, 243 
 | Converters | Set of converter Python scripts that integrate in your environment as `bash` commands | Commands `bintodec`, `dectobin`, `dectohex`, `dectoutf`, `escaper`, `hextodec`, `to` and `utftodec` | converters | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | 
 | Discord | All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone. | Command `discord` and desktop and dashboard launcher | discord | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Docker | Containerization service | Command `docker`, `containerd`, `containerd-shim`, `containerd-shim-runc-v2`, `ctr`, `dockerd`, `docker-init`, `docker-proxy`, `runc` | docker | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| Drupal | Web CMS | Command `drupal` | drupal | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | DuckDuckGo | Opens DuckDuckGo in Chrome | Command `duckduckgo` | duckduckgo | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Eclipse | IDE for Java | Command `eclipse` | eclipse | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Facebook | Desktop app to facebook from Chrome | Command `facebook`, desktop launcher and dashboard launcher | facebook | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
@@ -26,9 +27,9 @@ Customizer currently has available 129 user features and 114 root features, 243 
 | fonts-oswald | Installs font| Install oswald font | fonts_oswald | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | fonts-oxygen | Installs font | Install oxygen font | fonts_oxygen | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Forms | Google Forms opening in Chrome | Command `forms`, desktop launcher, dashboard launcher | forms google_forms |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| Function `a` | Prints a list of aliases using `compgen -a` | Command `a` | a |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `add` | alias for `git add` | Command `add` | add add_function |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `alert` | Alias to show a notification at the end of a command | Alias `alert`. Use it at the end of long running commands like so: `sleep 10; alert` | alert alert_alias alias_alert | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| Function `a` | Prints a list of aliases using `compgen -a` | Command `a` | a |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `b` | Alias for `bash` | Alias `b` | b b_function | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `B` | Alias for `bash` | Alias `B` | B B_function | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `branch` | alias for `git branch -vv` | Command `branch` | branch | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
@@ -38,20 +39,21 @@ Customizer currently has available 129 user features and 114 root features, 243 
 | Function `clean` | Remove files and contents from the trash bin and performs `sudo apt-get -y autoclean` and `sudo apt-get -y autoremove`. | Command `clean` | clean | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `clone` | Function for `git clone $1`|  Command `clone` | clone |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `commit` | Function `commit` that makes `git commit -am "$1"` | Function `commit` | commit | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> 
+| Function `config` | Function `config` that does a git config accepting two parameters username and email | Function `config` | config git_config config_function | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> 
 | Function `d` | Function for `diff` and `git diff` usage | Command `diff` | d |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `dummycommit` | Do the following commands `git add -a` `git commit -am $1` `git push` | Command `dummycommit`| dummycommit | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| Function `emojis` | Print emojis name in terminal when passing an emoji and prints emoji name when an emoji is passed to it. | Command `emoji` | emojis emoji |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `e` | Multi Function `e` to edit a file or project in folder | Function `e` | e | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `E` | Multi Function `E` to edit a set of hardcoded key files using an argument | Function `E` |  | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| Function `fetch` | `git fetch`| Command `fetch` | fetch | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| Function `emojis` | Print emojis name in terminal when passing an emoji and prints emoji name when an emoji is passed to it. | Command `emoji` | emojis emoji |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `f` | Function for finding strings in files, files in directories and show found files | Command `f` | f | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `F` | Function to find strings in files in the directory in the 1st argument | Command `F` | F | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| Function `hard` | alias for `git reset HEAD --hard` | <-- | hard | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| Function `fetch` | `git fetch`| Command `fetch` | fetch | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `h` | Search in your history for previous commands entered, stands by `history | grep "$@"` | Command `h`  h  Command `h` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| Function `hard` | alias for `git reset HEAD --hard` | <-- | hard | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| Function `i` | Shows folder structures | Command `i` | i i_function |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `ipe` | Returns the public IP | Command `ipe` | ipe | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `ipi` | Returns the private IP | Command `ipi` | ipi | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `ips` | Returns the IP information | Command `ips` | ipi | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| Function `i` | Shows folder structures | Command `i` | i i_function |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `j` | alias for jobs -l | Commands `j` | j | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `k` | Kill processes by PID and name of process | Command `k` | k | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  
 | Function `l` | alias for `ls` | command `l` | l | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
@@ -64,22 +66,22 @@ Customizer currently has available 129 user features and 114 root features, 243 
 | Function `push` | Alias for `git push`|  Command `push` | push |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `q` | Programming language | Commands `R`, Dashboard Launcher, Desktop Launcher| q | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  
 | Function `s` | Function to execute any program silently and in the background | Function `s "command"` | s | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| Functions `status` | `git status` | Command `status` | status | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `u` | Opens given link in default web browser | Command `u` | u |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `x` | Function to extract from a compressed file, no matter its format | Function `x "filename"` | x extract extract_function | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Function `z` | function to compress files given a type and a set of pats to files | Command `z` | z z_function | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
+| Functions `status` | `git status` | Command `status` | status | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | GeoGebra | Geometry calculator GUI | Command `geogebra`, desktop launcher and dashboard launcher | geogebra geogebra_classic_6 geogebra_6 | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Git Credentials Manager | Plug-in for git to automatically use personal tokens | Command `gitcm` | git_c_m | <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |
 | GitHub | GitHub opening in Chrome | Command `github` | github | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | GitLab | Gitlab opening in Chrome | Command | gitlab | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | gitprompt | Special prompt in git repositories | Command `gitprompt`| git_prompt | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Gmail | Gmail opening in Chrome | Command `gmail`, desktop launcher and dashboard launcher | gmail |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| go | programming language | command `go` | go go_lang |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| Google | Google opening in Chrome | Command `google`, desktop launcher and dashboard launcher | google |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Google Calendar | Google Calendar opening in Chrome | Command `googlecalendar`, desktop launcher and dashboard launcher | google_calendar |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Google Documents | Google Documents opening in Chrome | Command `document` and desktop and dashboard launcher | documents google_document google_documents document |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Google Drive | Google Drive opening in Chrome | Command `drive`, desktop launcher and dashboard launcher | drive google_drive |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| Google | Google opening in Chrome | Command `google`, desktop launcher and dashboard launcher | google |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Google Keep | Google Keep opening in Chrome | Command `keep`, desktop launcher and dashboard launcher | keep google_keep |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| go | programming language | command `go` | go go_lang |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | history optimization | Increased the size of bash history, store multiline commands in just one line, force append and not overwrite to history, ignore repeated commands when appending to history, deleted tracking history of some simple commands: `ls`, `cd`, `gitk`... | <-- | history_optimization | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Instagram | Opens Instagram in Chrome | Command `instagram`, desktop launcher, dashboard launcher | instagram | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | intelliJ Community | Integrated development environment written in Java for developing computer software | Command `ideac`, silent alias for `ideac`, desktop launcher, dashboard launcher and association to `.java` files | ideac intellij_community | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |
@@ -127,9 +129,9 @@ Customizer currently has available 129 user features and 114 root features, 243 
 | Whatsapp Web | Whatsapp web opens in Chrome | Command `whatsapp`, desktop launcher and dashboard launcher | whatsapp | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Wikipedia | Wikipedia web opens in Chrome | Command `wikipedia`, desktop launcher and dashboard launcher | wikipedia | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Wikit | Wikipedia search inside terminal | Command `wikit` | wikit | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command `youtube-dl` in the PATH and alias `youtube-wav` to scratch a mp3 from youtube | youtube_dl | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| Youtube Music | YouTube music opens in Chrome. | Command `youtubemusic`, desktop launcher and dashboard launcher | youtube_music |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Youtube | YouTube opens in Chrome | Command `youtube`, desktop launcher and dashboard launcher | youtube |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| Youtube Music | YouTube music opens in Chrome. | Command `youtubemusic`, desktop launcher and dashboard launcher | youtube_music |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command `youtube-dl` in the PATH and alias `youtube-wav` to scratch a mp3 from youtube | youtube_dl | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Zoom | Live Video Streaming for Meetings | Command `zoom`, desktop launcher and dashboard launcher | zoom | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 
 
@@ -139,6 +141,7 @@ Customizer currently has available 129 user features and 114 root features, 243 
 |-------------|----------------------|------------------------------------------------------|------------|-------------|
 | aircrack-ng | Security tools for audition | Command `aircrack-ng` |  |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Ansible | Automation of software | Command `ansible` | ansible | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| Apache2 | Redirect Web content to browser | It is used as a service so it has not command | apache2 |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Ardour | Software for music production | Commands `ardour`, Desktop launcher and Icon | ardour | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  
 | Aspell | Spell checker | Command `aspell` | aspell |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Atom | Text and source code editor | Command `atom`, desktop and dashboard launcher | atom |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
@@ -164,6 +167,7 @@ Customizer currently has available 129 user features and 114 root features, 243 
 | evolution | User calendar agend, planning | Command `evolution` | evolution |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Fdupes | Searches for duplicated files within given directories | Command `fdupes`| fdupes | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | ffmpeg | Super fast video / audio encoder | Command `ffmpeg` | ffmpeg youtube_dl_dependencies |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| FileZilla | FTP Client & Server | Command `filezilla`, desktop launcher, dashboard launcher | filezilla |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | f-irc | CLI IRC client | Command `f-irc`, desktop launcher and dashboard launcher | f_irc |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Firefox | Free web browser | Command `firefox`, desktop launcher, dashboard launcher | firefox |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | font Msttcorefonts | Windows classic fonts | Install mscore fonts | msttcorefonts |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | 
@@ -175,9 +179,9 @@ Customizer currently has available 129 user features and 114 root features, 243 
 | Geany | Lightweight GUI text editor using Scintilla and GTK, including basic IDE features | Command `geany`, desktop launcher and dashboard launcher | geany |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | GhostWriter | Text editor without distractions. | Command `ghostwriter, desktop launcher and dashboard launcher | ghostwriter |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats. | Command `gimp`, desktop launcher and dashboard launcher | gimp |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Command `git` and `gitk` | git |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | GitHub Desktop | GitHub Application | Command `github-desktop` | github_desktop | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Gitk | GUI for git | Command `gitk` | gitk |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
-| git | Software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development | Command `git` and `gitk` | git |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | GNAT | Programming Studio for Ada and C | Command `gnat-gps`, desktop launcher and dashboard launcher | gnat_gps |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | GNOME terminal | Terminal of the system | Command `gnome-terminal` | gnome_terminal |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | GNOME Tweaks | GUI for system customization | command and desktop launcher... | gnome_tweak_tool tweaks gnome_tweak gnome_tweak_tools gnome_tweaks |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
@@ -220,12 +224,13 @@ Customizer currently has available 129 user features and 114 root features, 243 
 | Pac-man | Implementation of the classical arcade game | Command `pacman`, desktop launcher and dashboard launcher | pacman |  <ul><li>- [x] Ubuntu</li>x</li><li>- [ ] Debian</li></ul> |
 | pdfgrep | CLI utility that makes it possible to search for text in a PDF file without opening the file | Command `pdfgrep` | pdfgrep |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | php | Programming language | Command `php` | php |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+| phppgadmin | GUI for SQL Database Management | It runs an instance of the program at localhost/phppgadmin | phppgadmin |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | pluma | Fork of gedit 2.0 that supports many plugins and new features | Command `pluma`, desktop launcjer and dashboard launcher | pluma |  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | PostGreSQL | Installs `psql`|  Command `psql` | psql postgresql |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Python3 | Interpreted, high-level and general-purpose programming language | Commands `python`, `python3`, `pip3` and Function `v` is for activate/deactivate python3 virtual environments (venv) can be used as default `v` as a command creates the /venv/ environment we can activate/deactivate new or existing virtual environments, command `v namevenv` creates /namevenv/ we can activate the virtual environment again using `v namenv` or deactivate same again, using `v namenv` | python_3 python v |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | 
+| R | Programming language | Commands `R`, Dashboard Launcher, Desktop Launcher| R r_base | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  
 | Remmina | Remote Desktop Contol | Commands `remmina`, Desktop launcher and Icon | remmina | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  
 | Rosegarden | Software for music production | Commands `rosegarden`, Desktop launcher and Icon | rosegarden | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  
-| R | Programming language | Commands `R`, Dashboard Launcher, Desktop Launcher| R r_base | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  
 | Rust | Programming Language | Installs `rustc` | rustc | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Scala | Programming language | Command `scala` | scala | <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | ShotCut | Cross-platform video editing | Command `shotcut`, desktop launcher and dashboard launcher | shotcut |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
