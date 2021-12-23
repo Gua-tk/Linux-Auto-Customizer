@@ -127,17 +127,12 @@ fi
 
 a_installationtype="environmental"
 a_arguments=("a")
-a_bashfunctions=("alias a=\"echo '---------------Alias----------------';compgen -a\"")
+a_bashfunctions=("a.sh")
 a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 add_installationtype="environmental"
 add_arguments=("add" "add_function")
-add_bashfunctions=("alias add=\"git add\"
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete add _git_add
-fi
-")
+add_bashfunctions=("add.sh")
 add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 aircrack_ng_installationtype="packagemanager"
@@ -153,11 +148,7 @@ aisleriot_readmeline="| Solitaire aisleriot | Implementation of the classical ga
 
 alert_installationtype="environmental"
 alert_arguments=("alert" "alert_alias" "alias_alert")
-alert_bashfunctions=("
-# Add an alert alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i \"\$([ \$? = 0 ] && echo terminal || echo error)\" \"\$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\\'')\"'
-")
+alert_bashfunctions=("alert.sh")
 alert_readmeline="| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ansible_installationtype="packagemanager"
@@ -167,7 +158,7 @@ ansible_readmeline="| Ansible | Automation of software | Command \`ansible\` || 
 
 ant_installationtype="userinherit"
 ant_arguments=("ant" "apache_ant")
-ant_bashfunctions=("export ANT_HOME=\"${BIN_FOLDER}/ant\"")
+ant_bashfunctions=("ant.sh")
 ant_binariesinstalledpaths=("bin/ant;ant")
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_flagsoverride="1;;;;;"
@@ -176,7 +167,7 @@ ant_readmeline="| Apache Ant | Software tool for automating software build proce
 anydesk_installationtype="userinherit"
 anydesk_arguments=("any_desk")
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")
-anydesk_bashfunctions=("alias anydesk=\"nohup anydesk &>/dev/null &\"")
+anydesk_bashfunctions=("anydesk.sh")
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
 anydesk_readmelinedescription="Software to remote control other computers"
@@ -207,7 +198,7 @@ apache2_readmeline="| Apache2 | Redirect Web content to browser | It is used as 
 
 ardour_installationtype="packagemanager"
 ardour_arguments=("ardour")
-ardour_bashfunctions=("alias ardour=\"nohup ardour &>/dev/null &\"")
+ardour_bashfunctions=("ardour.sh")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
 ardour_readmeline="| Ardour | Software for music production | Commands \`ardour\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
@@ -225,14 +216,14 @@ atom_readmeline="| Atom | Text and source code editor | Command \`atom\`, deskto
 
 audacity_installationtype="packagemanager"
 audacity_arguments=("audacity")
-audacity_bashfunctions=("alias audacity=\"nohup audacity &>/dev/null &\"")
+audacity_bashfunctions=("audacity.sh")
 audacity_launchernames=("audacity")
 audacity_packagenames=("audacity" "audacity-data")
 audacity_readmeline="| Audacity | Digital audio editor and recording | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 AutoFirma_installationtype="packageinstall"
 AutoFirma_arguments=("auto_firma")
-AutoFirma_bashfunctions=("alias autofirma=\"nohup AutoFirma &>/dev/null &\"")
+AutoFirma_bashfunctions=("AutoFirma.sh")
 AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip"
 AutoFirma_launchernames=("afirma")
 AutoFirma_packagedependencies=("libnss3-tools")
@@ -246,116 +237,18 @@ axel_readmeline="| Axel | Download manager | Command \`axel\` ||  <ul><li>- [x] 
 
 B_installationtype="environmental"
 B_arguments=("B" "B_function")
-B_bashfunctions=("
-B() {
-  clear
-  source \"${BASHRC_PATH}\"
-  source \"${PROFILE_PATH}\"
-  while [ -n \"\$1\" ]; do
-    case \"\$1\" in 
-      fonts)
-        fc-cache -f
-      ;;
-      path)
-        hash -r
-      ;;
-      *) 
-        echo \"ERROR: Not recognized argument. Exiting...\"
-        exit 1
-      ;;
-    esac
-    shift
-  done
-}
-")
+B_bashfunctions=("B.sh")
 B_readmeline="| Function \`B\` | Alias for \`bash\` | Alias \`B\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 
 b_installationtype="environmental"
 b_arguments=("b" "b_function")
-b_bashfunctions=("alias b=\"bash\"")
+b_bashfunctions=("b.sh")
 b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 bashcolors_installationtype="environmental"
 bashcolors_arguments=("bash_colors" "colors" "colours")
-bashcolors_bashfunctions=("
-colors() {
-  if [ -z \"\$(echo \"\${COLORS[@]}\")\" ]; then
-    declare -Ar COLORS=(
-      [BLACK]='\e[0;30m'
-      [RED]='\e[0;31m'
-      [GREEN]='\e[0;32m'
-      [YELLOW]='\e[0;33m'
-      [BLUE]='\e[0;34m'
-      [PURPLE]='\e[0;35m'
-      [CYAN]='\e[0;36m'
-      [WHITE]='\e[0;37m'
-
-      [BOLD_BLACK]='\e[1;30m'
-      [BOLD_RED]='\e[1;31m'
-      [BOLD_GREEN]='\e[1;32m'
-      [BOLD_YELLOW]='\e[1;33m'
-      [BOLD_BLUE]='\e[1;34m'
-      [BOLD_PURPLE]='\e[1;35m'
-      [BOLD_CYAN]='\e[1;36m'
-      [BOLD_WHITE]='\e[1;37m'
-
-      [UNDERLINE_BLACK]='\e[4;30m'
-      [UNDERLINE_RED]='\e[4;31m'
-      [UNDERLINE_GREEN]='\e[4;32m'
-      [UNDERLINE_YELLOW]='\e[4;33m'
-      [UNDERLINE_BLUE]='\e[4;34m'
-      [UNDERLINE_PURPLE]='\e[4;35m'
-      [UNDERLINE_CYAN]='\e[4;36m'
-      [UNDERLINE_WHITE]='\e[4;37m'
-
-      [BACKGROUND_BLACK]='\e[40m'
-      [BACKGROUND_RED]='\e[41m'
-      [BACKGROUND_GREEN]='\e[42m'
-      [BACKGROUND_YELLOW]='\e[43m'
-      [BACKGROUND_BLUE]='\e[44m'
-      [BACKGROUND_PURPLE]='\e[45m'
-      [BACKGROUND_CYAN]='\e[46m'
-      [BACKGROUND_WHITE]='\e[47m'
-
-      [CLEAR]='\e[0m'
-    )
-  fi
-
-  if [ -n \"\$1\" ]; then
-    local return_color=\"\${COLORS[\$(echo \"\$1\" | tr '[:lower:]' '[:upper:]')]}\"
-    if [ -z \"\$(echo \"\${return_color}\")\" ]; then  # Not a color keyname
-      for i in \"\${!COLORS[@]}\"; do  # Search for color and return its keyname
-        if [ \"\${COLORS[\${i}]}\" == \"\$1\" ]; then
-          return_color=\"\${i}\"
-          echo \"\${return_color}\"
-          return
-        fi
-      done
-      # At this point \$1 is not a keyname or color
-      if [ \"\$1\" == \"random\" ]; then  # Check for random color
-        COLORS_arr=(\${COLORS[@]})
-        echo -e \"\${COLORS_arr[\$RANDOM % \${#COLORS_arr[@]}]}\"
-      elif [ \"\$1\" == \"randomkey\" ]; then
-        COLORS_arr=(\${!COLORS[@]})
-        echo \"\${COLORS_arr[\$RANDOM % \${#COLORS_arr[@]}]}\"
-      elif [ \"\$1\" -ge 0 ]; then  # If a natural number passed return a color indexing by number
-        COLORS_arr=(\${COLORS[@]})
-        echo -e \"\${COLORS_arr[\$1 % \${#COLORS_arr[@]}]}\"
-      else
-        echo \"ERROR Not recognised option\"
-      fi
-    else  # Return color from indexing with dict
-      echo -e \"\${return_color}\"
-    fi
-  else
-    # Not an argument, show all colors with dictionary structure
-    for i in \"\${!COLORS[@]}\"; do
-      echo \"\${i}:\${COLORS[\${i}]}\"
-    done
-  fi
-}
-")
+bashcolors_bashfunctions=("bashcolors.sh")
 bashcolors_readmeline="| bashcolors | bring color to terminal | Command \`bashcolors\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 blender_installationtype="userinherit"
@@ -453,12 +346,7 @@ MimeType=application/x-blender;")
 
 branch_installationtype="environmental"
 branch_arguments=("branch")
-branch_bashfunctions=("alias branch=\"git branch\"
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete branch _git_branch
-fi
-")
+branch_bashfunctions=("branch.sh")
 branch_readmeline="| Function \`branch\` | alias for \`git branch -vv\` | Command \`branch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 brasero_installationtype="packagemanager"
@@ -470,17 +358,7 @@ brasero_readmeline="| Brasero | Software for image burning | Command \`brasero\`
 
 c_installationtype="environmental"
 c_arguments=("c")
-c_bashfunctions=("
-c()
-{
-  clear
-	if [ -d \"\$1\" ]; then
-		cd \$1
-	elif [ -f \"\$1\" ]; then
-		cat \$1
-	fi
-}
-")
+c_bashfunctions=("c.sh")
 c_readmeline="| Function \`c\` | Function \`c\` that changes the directory or clears the screen | Function \`c \` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 caffeine_installationtype="packagemanager"
@@ -501,7 +379,6 @@ uninstall_caffeine_pre()
 {
  :
 }
-
 uninstall_caffeine_post()
 {
  :
@@ -509,7 +386,7 @@ uninstall_caffeine_post()
 
 calibre_installationtype="packagemanager"
 calibre_arguments=("calibre")
-calibre_bashfunctions=("alias calibre=\"nohup calibre &>/dev/null &\"")
+calibre_bashfunctions=("calibre.sh")
 calibre_launchernames=("calibre-gui")
 calibre_packagenames=("calibre")
 calibre_readmeline="| Calibre | e-book reader| Commmand \`calibre\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -518,32 +395,9 @@ changebg_installationtype="repositoryclone"
 changebg_arguments=("change_bg" "wallpaper" "wallpapers")
 changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES_DIR}/wallpapers" "*.jpeg;${XDG_PICTURES_DIR}/wallpapers" )
 changebg_binariesinstalledpaths=".cronscript.sh;changebg"
-changebg_cronscript_content="
-#!/bin/bash
-if [ -z \${DBUS_SESSION_BUS_ADDRESS+x} ]; then
-  user=\$(whoami)
-  fl=\$(find /proc -maxdepth 2 -user \$user -name environ -print -quit)
-  while [ -z \$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2- | tr -d '\000' ) ]
-  do
-    fl=\$(find /proc -maxdepth 2 -user \$user -name environ -newer \"\$fl\" -print -quit)
-  done
-  export DBUS_SESSION_BUS_ADDRESS=\$(grep -z DBUS_SESSION_BUS_ADDRESS \"\$fl\" | cut -d= -f2-)
-fi
-DIR=\"${XDG_PICTURES_DIR}/wallpapers\"
-PIC=\"\"
-while [ -z \"\${PIC}\" ]; do
-  PIC=\"\$(ls \"\${DIR}\" | shuf -n1)\"
-  if [ \"\${PIC}\" == \".git\" ] || [ \"\${PIC}\" == \".gitattributes\" ] || [ \"\${PIC}\" == \".cronscript.sh\" ] || [ \"\${PIC}\" == \".cronjob\" ]; then
-    PIC=\"\"
-  fi
-done
-
-dconf write \"/org/gnome/desktop/background/picture-uri\" \"'file://\${DIR}/\${PIC}'\"
-
-"
-changebg_cronscript_path=".cronscript.sh"
-changebg_cronjob_content="*/5 * * * * ${BIN_FOLDER}/changebg/.cronscript.sh
-"
+changebg_cronscript_content="cronscript.sh"
+changebg_cronscript_path="cronscript.sh"
+changebg_cronjob_content=".cronjob"
 changebg_cronjob_path=".cronjob"
 changebg_filekeys=("cronscript" "cronjob")
 changebg_manualcontentavailable="0;0;1"
@@ -565,12 +419,7 @@ cheat_readmeline="| cheat.sh | Provides access to community-driven cheat sheets 
 
 checkout_installationtype="environmental"
 checkout_arguments=("checkout")
-checkout_bashfunctions=("alias checkout=\"git checkout\"
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete checkout _git_checkout
-fi
-")
+checkout_bashfunctions=("checkout.sh")
 checkout_readmeline="| Function \`checkout\` | alias for \`git checkout\` | Command \`checkout\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 cheese_installationtype="packagemanager"
@@ -582,24 +431,12 @@ cheese_readmeline="| Cheese | GNOME webcam application | Command \`cheese\`, des
 
 clean_installationtype="environmental"
 clean_arguments=("clean")
-clean_bashfunctions=("
-clean()
-{
-  if [ ${EUID} -eq 0 ]; then
-    apt-get -y --fix-broken install
-    apt-get update -y --fix-missing
-    apt-get -y autoclean
-    apt-get -y autoremove
-  fi
-  rm -rf ${HOME}/.local/share/Trash/* 2>/dev/null
-  echo \"The recycle bin has been emptied\"
-}
-")
+clean_bashfunctions=("clean.sh")
 clean_readmeline="| Function \`clean\` | Remove files and contents from the trash bin and performs \`sudo apt-get -y autoclean\` and \`sudo apt-get -y autoremove\`. | Command \`clean\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 clementine_installationtype="packagemanager"
 clementine_arguments=("clementine")
-clementine_bashfunctions=("alias clementine=\"nohup clementine &>/dev/null &\"")
+clementine_bashfunctions=("clementine.sh")
 clementine_launchernames=("clementine")
 clementine_packagenames=("clementine")
 clementine_readmeline="| Clementine | Modern music player and library organizer | Command \`clementine\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -607,16 +444,7 @@ clementine_readmeline="| Clementine | Modern music player and library organizer 
 clion_installationtype="userinherit"
 clion_arguments=("clion")
 clion_associatedfiletypes=("text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc")
-clion_bashfunctions=("
-clion() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup clion \${args} &>/dev/null &
-}
-")
+clion_bashfunctions=("clion.sh")
 clion_binariesinstalledpaths=("bin/clion.sh;clion")
 clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2021.3.tar.gz"
 clion_launchercontents=("[Desktop Entry]
@@ -641,30 +469,14 @@ clion_readmeline="| Clion | ${clion_readmelinedescription} | Command \`clion\`, 
 
 clone_installationtype="environmental"
 clone_arguments=("clone")
-clone_bashfunctions=("
-clone()
-{
-  if [ \$# -eq 0 ]; then
-    echo \"ERROR: You need to provide at least one argument\"
-    return
-  else
-    if [ -n \"\$(echo \"\$1\" | grep -Eo \"^http.?://.+$\")\" ]; then
-      git clone \"\$1\"
-    else
-      git clone \"https://\$1\"
-    fi
-  fi
-}
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete clone _git_clone
-fi
-")
+clone_bashfunctions=("clone.sh")
 clone_readmeline="| Function \`clone\` | Function for \`git clone \$1\`|  Command \`clone\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 clonezilla_installationtype="packagemanager"
 clonezilla_arguments=("clonezilla")
 clonezilla_packagenames=("clonezilla")
+clonezilla_readmelinedescription="Disk cloning, disk imaging, data recovery, and deployment"
+clonezilla_readmeline="| CloneZilla | ${clonezilla_readmelinedescription} | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 clonezilla_launchercontents=("[Desktop Entry]
 Categories=backup;images;restoration;boot;
 Comment=${clonezilla_readmelinedescription}
@@ -682,8 +494,6 @@ TryExec=clonezilla
 Type=Application
 Version=1.0
 ")
-clonezilla_readmelinedescription="Disk cloning, disk imaging, data recovery, and deployment"
-clonezilla_readmeline="| CloneZilla | ${clonezilla_readmelinedescription} | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 cmake_installationtype="userinherit"
 cmake_binariesinstalledpaths=("bin/ccmake;ccmake" "bin/cmake;cmake" "bin/cmake-gui;cmake-gui" "bin/cpack;cpack" "bin/ctest;ctest")
@@ -693,7 +503,7 @@ cmake_readmeline="| Cmake | Compile C and c make | Command \`cmake\`, \`ccmake\`
 
 cmatrix_installationtype="packagemanager"
 cmatrix_arguments=("cmatrix")
-cmatrix_bashfunctions=("alias matrix=\"cmatrix -sC yellow\"")
+cmatrix_bashfunctions=("cmatrix.sh")
 cmatrix_launchercontents=("
 [Desktop Entry]
 Categories=matrix;
@@ -718,7 +528,7 @@ cmatrix_readmeline="| Cmatrix | ${cmatrix_readmelinedescription} | Command \`cma
 
 code_installationtype="userinherit"
 code_arguments=("code" "visual_studio_code" "visual_studio")
-code_bashfunctions=("alias code=\"nohup code . &>/dev/null &\"")
+code_bashfunctions=("code.sh")
 code_binariesinstalledpaths=("code;code")
 code_compressedfileurl="https://go.microsoft.com/fwlink/?LinkID=620884"
 code_launchercontents=("[Desktop Entry]
@@ -743,23 +553,14 @@ code_readmeline="| Visual Studio Code | ${code_readmelinedescription} | Command 
 
 codeblocks_installationtype="packagemanager"
 codeblocks_arguments=("codeblocks" "code::blocks")
-codeblocks_bashfunctions=("alias codeblocks=\"nohup codeblocks &>/dev/null &\"")
+codeblocks_bashfunctions=("codeblocks.sh")
 codeblocks_launchernames=("codeblocks")
 codeblocks_packagenames=("codeblocks")
 codeblocks_readmeline="| Code::Blocks | IDE for programming  | Command \`codeblocks\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 codium_installationtype="userinherit"
 codium_donotinherit="yes"
-codium_bashfunctions=("
-codium() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup codium \${args} &>/dev/null &
-}
-")
+codium_bashfunctions=("codium.sh")
 codium_compressedfilepathoverride="${BIN_FOLDER}/codium"
 codium_binariesinstalledpaths=("bin/codium;codium")
 codium_compressedfileurl="https://github.com/VSCodium/vscodium/releases/download/1.62.2/VSCodium-linux-x64-1.62.2.tar.gz"
@@ -776,129 +577,17 @@ Categories=IDE;Programming;
 
 commit_installationtype="environmental"
 commit_arguments=("commit")
-commit_bashfunctions=("
-commit()
-{
-  messag=\"\$@\"
-  while [ -z \"\$messag\" ]; do
-    read -p \"Add message: \" messag
-  done
-  git commit -am \"\$messag\"
-}
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete commit _git_commit
-fi
-")
+commit_bashfunctions=("commit.sh")
 commit_readmeline="| Function \`commit\` | Function \`commit\` that makes \`git commit -am \"\$1\"\` | Function \`commit\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
 
 config_installationtype="environmental"
 config_arguments=("config" "git_config" "config_function")
 config_readmeline="| Function \`config\` | Function \`config\` that does a git config accepting two parameters username and email | Function \`config\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
-config_bashfunctions=("
-config()
-{
-  if [ -z \"\$1\" ]; then
-    echo \"ERROR: config needs two arguments\"
-    return 1
-  fi
-  if [ -z \"\$2\" ]; then
-    echo \"ERROR: config needs two arguments\"
-    return 1
-  fi
-  if ! echo \"\$2\" | grep -Eo \"@\" &>/dev/null; then
-    echo \"ERROR: config needs an email as the second arguments\"
-    return 1
-  fi
-  git config user.name \"\$1\"
-  git config user.email \"\$2\"
-}
-")
+config_bashfunctions=("config.sh")
 
 converters_installationtype="repositoryclone"
 converters_arguments=("converters")
-converters_bashfunctions=("
-bintooct()
-{
-  to \$1 2 3
-}
-bintoocto()
-{
-  to \$1 2 8
-}
-bintodec()
-{
-  to \$1 2 10
-}
-bintohex()
-{
-  to \$1 2 16
-}
-octtobin()
-{
-  to \$1 3 2
-}
-octtoocto()
-{
-  to \$1 3 8
-}
-octtodec()
-{
-  to \$1 3 10
-}
-octohex()
-{
-  to \$1 3 16
-}
-octotobin()
-{
-  to \$1 8 2
-}
-octotooct()
-{
-  to \$1 8 3
-}
-octotodec()
-{
-  to \$1 8 10
-}
-octotohex()
-{
-  to \$1 8 16
-}
-dectobin()
-{
-  to \$1 10 2
-}
-dectooct()
-{
-  to \$1 10 3
-}
-dectoocto()
-{
-  to \$1 10 8
-}
-dectohex()
-{
-  to \$1 10 16
-}
-hextobin()
-{
-  to \$1 16 2
-}
-hextooct()
-{
-  to \$1 16 3
-}
-hextoocto()
-{
-  to \$1 16 8
-}
-hextodec()
-{
-  to \$1 16 10
-}
-")
+converters_bashfunctions=("converters.sh")
 converters_binariesinstalledpaths=("converters/to.py;to" "converters/dectoutf.py;dectoutf" "converters/utftodec.py;utftodec")
 converters_readmeline="| Converters | Set of converter Python scripts that integrate in your environment as \`bash\` commands | Commands \`bintodec\`, \`dectobin\`, \`dectohex\`, \`dectoutf\`, \`escaper\`, \`hextodec\`, \`to\` and \`utftodec\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 converters_repositoryurl="https://github.com/Axlfc/converters"
@@ -920,21 +609,7 @@ customizer_arguments=("customizer" "linux_auto_customizer" "auto_customizer" "li
 customizer_repositoryurl="https://github.com/AleixMT/Linux-Auto-Customizer"
 customizer_manualcontentavailable="0;0;1"
 customizer_flagsoverride="0;;;;;"  # Install always as root
-customizer_bashfunctions=("
-_customizer-install() {
-  COMPREPLY=()
-  local arguments=\"\$(echo \"\$(customizer-install --commands)\")\"
-  COMPREPLY=( \$(compgen -W \"\${arguments}\" -- \"\${COMP_WORDS[COMP_CWORD]}\") )
-}
-complete -F _customizer-install customizer-install
-
-_customizer-uninstall() {
-  COMPREPLY=()
-  local arguments=\"\$(echo \"\$(customizer-uninstall --commands)\")\"
-  COMPREPLY=( \$(compgen -W \"\${arguments}\" -- \"\${COMP_WORDS[COMP_CWORD]}\") )
-}
-complete -F _customizer-uninstall customizer-uninstall
-")
+customizer_bashfunctions=("customizer.sh")
 customizer_readmeline="| Linux Auto Customizer | Program and function management and automations | Command \`customizer-install\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_customizer_post()
 {
@@ -948,45 +623,8 @@ uninstall_customizer_post()
 
 d_installationtype="environmental"
 d_arguments=("d")
-d_bashfunctions=("
-d()
-{ # d, a git diff and color grep dif
-  if [ \$# -eq 2 ]; then
-    if [ -d \".git\" ]; then
-      git diff --color-words \"\$1\" \"\$2\"
-    else
-      git diff --color-words --no-index \"\$1\" \"\$2\"
-    fi
-  elif [ \$# -eq 1 ]; then
-    if [ -d \".git\" ]; then
-      git diff --color-words \"\$1\"
-    else
-      echo \"ERROR: If this is not a git directory you need at least two arguments to see any differences.\"
-    fi
-  elif [ \$# -eq 0 ]; then
-    if [ -d \".git\" ]; then
-      git diff --color-words
-    else
-      echo \"ERROR: If this is not a git directory you need at least two arguments to see any differences.\"
-    fi
-  else
-    if [ -d \".git\" ]; then
-      while [ -n \"\$1\" ]; do
-        git diff --color-words \"\$1\"
-        shift
-      done
-    else
-      echo \"ERROR: If this is not a git directory you need at least two arguments to see any differences.\"
-    fi
-  fi
-}
-if [ -f \"${BASH_COMPLETIONS_PATH}\" ]; then
-  source \"${BASH_COMPLETIONS_PATH}\"
-  __git_complete d _git_diff
-fi
-")
+d_bashfunctions=("d.sh")
 d_readmeline="| Function \`d\` | Function for \`diff\` and \`git diff\` usage | Command \`diff\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 dbeaver_installationtype="packageinstall"
 dbeaver_arguments=("dbeaver")
@@ -1005,7 +643,8 @@ dia_installationtype="packagemanager"
 dia_arguments=("dia")
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")
-dia_bashfunctions=("alias dia=\"nohup dia &>/dev/null &\"")
+dia_bashfunctions=("alias dia=\"nohup dia &>/dev/null &\"
+")
 dia_readmeline="| Dia | Graph and relational  | Command \`dia\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 discord_installationtype="userinherit"
@@ -1043,7 +682,7 @@ docker_readmeline="| Docker | Containerization service | Command \`docker\`, \`c
 documents_installationtype="environmental"
 documents_arguments=("documents" "google_document" "google_documents" "document")
 documents_url="https://docs.google.com/document/"
-documents_bashfunctions=("alias documents=\"nohup xdg-open ${documents_url} &>/dev/null &\"")
+documents_bashfunctions=("documents.sh")
 documents_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;documents_icon.svg")
 documents_readmelinedescription="Google Documents opening in Chrome"
 documents_launchercontents=("
@@ -1069,7 +708,7 @@ documents_readmeline="| Google Documents | ${documents_readmelinedescription} | 
 drive_installationtype="environmental"
 drive_arguments=("drive" "google_drive")
 drive_url="https://drive.google.com/"
-drive_bashfunctions=("alias drive=\"nohup xdg-open ${drive_url} &>/dev/null &\"")
+drive_bashfunctions=("drive.sh")
 drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon.svg")
 drive_readmelinedescription="Google Drive opening in Chrome"
 drive_launchercontents=("
@@ -1111,7 +750,7 @@ drupal_packagedependencies=("php-dom" "php-gd")
 drupal_compressedfileurl="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
 drupal_readmelinedescription="Web CMS"
 drupal_url="http://localhost/drupal"
-drupal_bashfunctions=("alias drupal=\"nohup xdg-open ${drupal_url} &>/dev/null &\"")
+drupal_bashfunctions=("drupal.sh")
 drupal_launchercontents=("[Desktop Entry]
 Categories=CMS;web;
 Comment=${drupal_readmelinedescription}
@@ -1143,7 +782,7 @@ uninstall_drupal_post()
 duckduckgo_installationtype="environmental"
 duckduckgo_arguments=("duckduckgo")
 duckduckgo_url="https://duckduckgo.com/"
-duckduckgo_bashfunctions=("alias duckduckgo=\"nohup xdg-open ${duckduckgo_url} &>/dev/null &\"")
+duckduckgo_bashfunctions=("duckduckgo.sh")
 duckduckgo_downloads=("https://icon-icons.com/downloadimage.php?id=67089&root=844/SVG/&file=DuckDuckGo_icon-icons.com_67089.svg;duckduckgo_icon.svg")
 duckduckgo_readmelinedescription="Opens DuckDuckGo in Chrome"
 duckduckgo_launchercontents=("
@@ -1167,105 +806,21 @@ duckduckgo_readmeline="| DuckDuckGo | ${duckduckgo_readmelinedescription} | Comm
 
 dummycommit_installationtype="environmental"
 dummycommit_arguments=("dummycommit")
-dummycommit_bashfunctions=("
-dummycommit()
-{
-  git add -A
-  messag=\"\$@\"
-  while [ -z \"\$messag\" ]; do
-    read -p \"Add message: \" messag
-  done
-  git commit -am \"\$messag\"
-  git push
-}
-")
+dummycommit_bashfunctions=("dummycommit.sh")
 dummycommit_readmeline="| Function \`dummycommit\` | Do the following commands \`git add -a\` \`git commit -am \$1\` \`git push\` | Command \`dummycommit\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 e_installationtype="environmental"
 e_arguments=("e")
-e_bashfunctions=("
-e()
-{
-  if [ -z \"\$1\" ]; then
-    editor new_text_file &
-  else
-    if [ -f \"\$1\" ]; then
-      if [ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]; then
-  			local -r dir_name=\"\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)\"
-  			mkdir -p \"\${dir_name}\"
-				cd \"\${dir_name}\"
-      fi
-      case \"\$1\" in
-        *)
-          nohup pluma \"\$1\" &>/dev/null &
-        ;;
-        *.py)
-          nohup pycharm \"\$1\" &>/dev/null &
-        ;;
-        *.tex)
-          nohup texmaker \"\$1\" &>/dev/null &
-        ;;
-        *.pdf)
-          nohup okular \"\$1\" &>/dev/null &
-        ;;
-        *.rtf)
-          nohup gedit \"\$1\" &>/dev/null &
-        ;;
-      esac
-		else
-			if [ -d \"\$1\" ]; then
-				cd \"\$1\"
-				if [ -d \".git\" ]; then
-				  git fetch
-          nohup gitk --all --date-order &>/dev/null &
-          nohup pycharm &>/dev/null &
-				else
-          nohup nemo \"\$1\" &>/dev/null &
-				fi
-			else
-        #Inexistent route or new file
-        if [ ! -z \$(echo \"\$1\" | grep -Fo \"/\") ]; then
-          local -r dir_name=\"\$(echo \"\$1\" | rev | cut -d '/' -f2- | rev)\"
-          if [ -d \"\${dir_name}\" ]; then
-            cd \"\${dir_name}\"
-          else
-            mkdir -p \"\${dir_name}\"
-            cd \"\${dir_name}\"
-          fi
-          editor \"\$(echo \"\$1\" | rev | cut -d '/' -f1 | rev)\" &
-        else
-          case \"\$1\" in
-            *.py)
-              nohup pycharm \"\$1\" &>/dev/null &
-            ;;
-            *.tex)
-              nohup texmaker \"\$1\" &>/dev/null &
-            ;;
-            *)
-              nohup pluma \"\$1\" &>/dev/null &
-            ;;
-         esac
-        fi
-			fi
-		fi
-	fi
-}
-")
+e_bashfunctions=("e.sh")
 e_readmeline="| Function \`e\` | Multi Function \`e\` to edit a file or project in folder | Function \`e\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+E_installationtype="environmental"
+E_bashfunctions=("E.sh")
+E_readmeline="| Function \`E\` | Multi Function \`E\` to edit a set of hardcoded key files using an argument | Function \`E\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 eclipse_installationtype="userinherit"
 eclipse_arguments=("eclipse")
-eclipse_bashfunctions="
-eclipse() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup eclipse \${args} &>/dev/null &
-}
-"
+eclipse_bashfunctions="eclipse.sh"
 eclipse_binariesinstalledpaths=("eclipse;eclipse")
 eclipse_compressedfileurl="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
 eclipse_readmelinedescription="IDE for Java"
@@ -1288,1856 +843,23 @@ Version=4.2.2
 ")
 eclipse_readmeline="| Eclipse | ${eclipse_readmelinedescription} | Command \`eclipse\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-E_installationtype="environmental"
-E_bashfunctions=("
-E() {
-  declare -Arl EDITABLEFILES=(
-    [aliases]=\"${HOME_FOLDER}/.bash_aliases\"
-    [allbashrc]=\"${BASHRC_ALL_USERS_PATH}\"
-    [bashfunctions]=\"${FUNCTIONS_PATH}\"
-    [bashrc]=\"${BASHRC_PATH}\"
-    [favorites]=\"${PROGRAM_FAVORITES_PATH}\"
-    [initializations]=\"${INITIALIZATIONS_PATH}\"
-    [keybindings]=\"${PROGRAM_KEYBINDINGS_PATH}\"
-    [mime]=\"${MIME_ASSOCIATION_PATH}\"
-    [profile]=\"${PROFILE_PATH}\"
-    [sshconf]=\"${HOME_FOLDER}/.ssh/config\"
-    [tmuxconf]=\"${HOME_FOLDER}/.tmux.conf\"
-    )
-  if [ \$# -eq 0 ]; then
-    echo \"Recognised arguments to edit:\"
-    for i in \"\${!EDITABLEFILES[@]}\"; do
-      echo \"\${i}:\${EDITABLEFILES[\${i}]}\"
-    done
-  else
-    while [ -n \"\$1\" ]; do
-      local path_editable=\"\${EDITABLEFILES[\"\$1\"]}\"
-      if [ -z \"\${path_editable}\" ]; then
-        if [ -f \"\$1\" ]; then
-          nohup editor \"\$1\" &>/dev/null &
-        else
-          echo \"\$1 is not a valid file or option.\"
-        fi
-      else
-        nohup editor \"\${path_editable}\" &>/dev/null &
-      fi
-      shift
-    done
-  fi
-}
-")
-E_readmeline="| Function \`E\` | Multi Function \`E\` to edit a set of hardcoded key files using an argument | Function \`E\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 emojis_installationtype="environmental"
 emojis_arguments=("emojis" "emoji")
 emojis_packagedependencies=("fonts-symbola")
 emojis_readmeline=
-emojis_bashfunctions=("
-liveclock(){
-clocks=(🕛 🕧 🕐 🕜 🕑 🕝 🕒 🕞 🕓 🕟 🕔 🕠 🕕 🕡 🕖 🕢 🕗 🕣 🕘 🕤 🕙 🕥 🕚 🕦 🕛)
-while :; do
-  echo \"\${clocks[index]}\"
-  index=\$((\${index} + 1))
-  index=\$((\${index} % 25))
-  sleep 0.04
-  clear
-done
-}
-
-emoji() {
-  if [ -z \"\$(echo \"\${EMOJIS[@]}\")\" ]; then
-    declare -Ar EMOJIS=(
-      [grinning_face]=😀
-      [grinning_face_with_big_eyes]=😃
-      [grinning_face_with_smiling_eyes]=😄
-      [beaming_face_with_smiling_eyes]=😁
-      [grinning_squinting_face]=😆
-      [grinning_face_with_sweat]=😅
-      [rolling_on_the_floor_laughing]=🤣
-      [face_with_tears_of_joy]=😂
-      [slightly_smiling_face]=🙂
-      [upside_down_face]=🙃
-      [winking_face]=😉
-      [smiling_face_with_smiling_eyes]=😊
-      [smiling_face_with_halo]=😇
-      [smiling_face_with_hearts]=🥰
-      [smiling_face_with_heart_eyes]=😍
-      [star_struck]=🤩
-      [face_blowing_a_kiss]=😘
-      [kissing_face]=😗
-      [smiling_face]=☺
-      [kissing_face_with_closed_eyes]=😚
-      [kissing_face_with_smiling_eyes]=😙
-      [face_savoring_food]=😋
-      [face_with_tongue]=😛
-      [winking_face_with_tongue]=😜
-      [zany_face]=🤪
-      [squinting_face_with_tongue]=😝
-      [money_mouth_face]=🤑
-      [hugging_face]=🤗
-      [face_with_hand_over_mouth]=🤭
-      [shushing_face]=🤫
-      [thinking_face]=🤔
-      [zipper_mouth_face]=🤐
-      [face_with_raised_eyebrow]=🤨
-      [neutral_face]=😐
-      [expressionless_face]=😑
-      [face_without_mouth]=😶
-      [smirking_face]=😏
-      [unamused_face]=😒
-      [face_with_rolling_eyes]=🙄
-      [grimacing_face]=😬
-      [lying_face]=🤥
-      [relieved_face]=😌
-      [pensive_face]=😔
-      [sleepy_face]=😪
-      [drooling_face]=🤤
-      [sleeping_face]=😴
-      [face_with_medical_mask]=😷
-      [face_with_thermometer]=🤒
-      [face_with_head_bandage]=🤕
-      [nauseated_face]=🤢
-      [face_vomiting]=🤮
-      [sneezing_face]=🤧
-      [hot_face]=🥵
-      [cold_face]=🥶
-      [woozy_face]=🥴
-      [dizzy_face]=😵
-      [exploding_head]=🤯
-      [cowboy_hat_face]=🤠
-      [partying_face]=🥳
-      [smiling_face_with_sunglasses]=😎
-      [nerd_face]=🤓
-      [face_with_monocle]=🧐
-      [confused_face]=😕
-      [worried_face]=😟
-      [slightly_frowning_face]=🙁
-      [frowning_face]=☹
-      [face_with_open_mouth]=😮
-      [hushed_face]=😯
-      [astonished_face]=😲
-      [flushed_face]=😳
-      [pleading_face]=🥺
-      [frowning_face_with_open_mouth]=😦
-      [anguished_face]=😧
-      [fearful_face]=😨
-      [anxious_face_with_sweat]=😰
-      [sad_but_relieved_face]=😥
-      [crying_face]=😢
-      [loudly_crying_face]=😭
-      [face_screaming_in_fear]=😱
-      [confounded_face]=😖
-      [persevering_face]=😣
-      [disappointed_face]=😞
-      [downcast_face_with_sweat]=😓
-      [weary_face]=😩
-      [tired_face]=😫
-      [yawning_face]=🥱
-      [face_with_steam_from_nose]=😤
-      [pouting_face]=😡
-      [angry_face]=😠
-      [face_with_symbols_on_mouth]=🤬
-      [smiling_face_with_horns]=😈
-      [angry_face_with_horns]=👿
-      [skull]=💀
-      [skull_and_crossbones]=☠
-      [pile_of_poo]=💩
-      [clown_face]=🤡
-      [ogre]=👹
-      [goblin]=👺
-      [ghost]=👻
-      [alien]=👽
-      [alien_monster]=👾
-      [robot]=🤖
-      [grinning_cat]=😺
-      [grinning_cat_with_smiling_eyes]=😸
-      [cat_with_tears_of_joy]=😹
-      [smiling_cat_with_heart_eyes]=😻
-      [cat_with_wry_smile]=😼
-      [kissing_cat]=😽
-      [weary_cat]=🙀
-      [crying_cat]=😿
-      [pouting_cat]=😾
-      [see_no_evil_monkey]=🙈
-      [hear_no_evil_monkey]=🙉
-      [speak_no_evil_monkey]=🙊
-      [kiss_mark]=💋
-      [love_letter]=💌
-      [heart_with_arrow]=💘
-      [heart_with_ribbon]=💝
-      [sparkling_heart]=💖
-      [growing_heart]=💗
-      [beating_heart]=💓
-      [revolving_hearts]=💞
-      [two_hearts]=💕
-      [heart_decoration]=💟
-      [heart_exclamation]=❣
-      [broken_heart]=💔
-      [red_heart]=❤
-      [orange_heart]=🧡
-      [yellow_heart]=💛
-      [green_heart]=💚
-      [blue_heart]=💙
-      [purple_heart]=💜
-      [brown_heart]=🤎
-      [black_heart]=🖤
-      [white_heart]=🤍
-      [hundred_points]=💯
-      [anger_symbol]=💢
-      [collision]=💥
-      [dizzy]=💫
-      [sweat_droplets]=💦
-      [dashing_away]=💨
-      [hole]=🕳
-      [bomb]=💣
-      [speech_balloon]=💬
-      [eye_in_speech_bubble]=👁️‍🗨️
-      [left_speech_bubble]=🗨
-      [right_anger_bubble]=🗯
-      [thought_balloon]=💭
-      [zzz]=💤
-      [waving_hand]=👋
-      [raised_back_of_hand]=🤚
-      [hand_with_fingers_splayed]=🖐
-      [raised_hand]=✋
-      [vulcan_salute]=🖖
-      [ok_hand]=👌
-      [pinching_hand]=🤏
-      [victory_hand]=✌
-      [crossed_fingers]=🤞
-      [love_you_gesture]=🤟
-      [sign_of_the_horns]=🤘
-      [call_me_hand]=🤙
-      [backhand_index_pointing_left]=👈
-      [backhand_index_pointing_right]=👉
-      [backhand_index_pointing_up]=👆
-      [middle_finger]=🖕
-      [backhand_index_pointing_down]=👇
-      [index_pointing_up]=☝
-      [thumbs_up]=👍
-      [thumbs_down]=👎
-      [raised_fist]=✊
-      [oncoming_fist]=👊
-      [left_facing_fist]=🤛
-      [right_facing_fist]=🤜
-      [clapping_hands]=👏
-      [raising_hands]=🙌
-      [open_hands]=👐
-      [palms_up_together]=🤲
-      [handshake]=🤝
-      [folded_hands]=🙏
-      [writing_hand]=✍
-      [nail_polish]=💅
-      [selfie]=🤳
-      [flexed_biceps]=💪
-      [mechanical_arm]=🦾
-      [mechanical_leg]=🦿
-      [leg]=🦵
-      [foot]=🦶
-      [ear]=👂
-      [ear_with_hearing_aid]=🦻
-      [nose]=👃
-      [brain]=🧠
-      [tooth]=🦷
-      [bone]=🦴
-      [eyes]=👀
-      [eye]=👁
-      [tongue]=👅
-      [mouth]=👄
-      [baby]=👶
-      [child]=🧒
-      [boy]=👦
-      [girl]=👧
-      [person]=🧑
-      [person_blond_hair]=👱
-      [man]=👨
-      [man_beard]=🧔
-      [man_blond_hair]=👱‍♂️
-      [man_red_hair]=👨‍🦰
-      [man_curly_hair]=👨‍🦱
-      [man_white_hair]=👨‍🦳
-      [man_bald]=👨‍🦲
-      [woman]=👩
-      [woman_blond_hair]=👱‍♀️
-      [woman_red_hair]=👩‍🦰
-      [woman_curly_hair]=👩‍🦱
-      [woman_white_hair]=👩‍🦳
-      [woman_bald]=👩‍🦲
-      [older_person]=🧓
-      [old_man]=👴
-      [old_woman]=👵
-      [person_frowning]=🙍
-      [man_frowning]=🙍‍♂️
-      [woman_frowning]=🙍‍♀️
-      [person_pouting]=🙎
-      [man_pouting]=🙎‍♂️
-      [woman_pouting]=🙎‍♀️
-      [person_gesturing_no]=🙅
-      [man_gesturing_no]=🙅‍♂️
-      [woman_gesturing_no]=🙅‍♀️
-      [person_gesturing_ok]=🙆
-      [man_gesturing_ok]=🙆‍♂️
-      [woman_gesturing_ok]=🙆‍♀️
-      [person_tipping_hand]=💁
-      [man_tipping_hand]=💁‍♂️
-      [woman_tipping_hand]=💁‍♀️
-      [person_raising_hand]=🙋
-      [man_raising_hand]=🙋‍♂️
-      [woman_raising_hand]=🙋‍♀️
-      [deaf_person]=🧏
-      [deaf_man]=🧏‍♂️
-      [deaf_woman]=🧏‍♀️
-      [person_bowing]=🙇
-      [man_bowing]=🙇‍♂️
-      [woman_bowing]=🙇‍♀️
-      [person_facepalming]=🤦
-      [man_facepalming]=🤦‍♂️
-      [woman_facepalming]=🤦‍♀️
-      [person_shrugging]=🤷
-      [man_shrugging]=🤷‍♂️
-      [woman_shrugging]=🤷‍♀️
-      [man_health_worker]=👨‍⚕️
-      [woman_health_worker]=👩‍⚕️
-      [man_student]=👨‍🎓
-      [woman_student]=👩‍🎓
-      [man_teacher]=👨‍🏫
-      [woman_teacher]=👩‍🏫
-      [man_judge]=👨‍⚖️
-      [woman_judge]=👩‍⚖️
-      [man_farmer]=👨‍🌾
-      [woman_farmer]=👩‍🌾
-      [man_cook]=👨‍🍳
-      [woman_cook]=👩‍🍳
-      [man_mechanic]=👨‍🔧
-      [woman_mechanic]=👩‍🔧
-      [man_factory_worker]=👨‍🏭
-      [woman_factory_worker]=👩‍🏭
-      [man_office_worker]=👨‍💼
-      [woman_office_worker]=👩‍💼
-      [man_scientist]=👨‍🔬
-      [woman_scientist]=👩‍🔬
-      [man_technologist]=👨‍💻
-      [woman_technologist]=👩‍💻
-      [man_singer]=👨‍🎤
-      [woman_singer]=👩‍🎤
-      [man_artist]=👨‍🎨
-      [woman_artist]=👩‍🎨
-      [man_pilot]=👨‍✈️
-      [woman_pilot]=👩‍✈️
-      [man_astronaut]=👨‍🚀
-      [woman_astronaut]=👩‍🚀
-      [man_firefighter]=👨‍🚒
-      [woman_firefighter]=👩‍🚒
-      [police_officer]=👮
-      [man_police_officer]=👮‍♂️
-      [woman_police_officer]=👮‍♀️
-      [detective]=🕵
-      [man_detective]=🕵️‍♂️
-      [woman_detective]=🕵️‍♀️
-      [guard]=💂
-      [man_guard]=💂‍♂️
-      [woman_guard]=💂‍♀️
-      [construction_worker]=👷
-      [man_construction_worker]=👷‍♂️
-      [woman_construction_worker]=👷‍♀️
-      [prince]=🤴
-      [princess]=👸
-      [person_wearing_turban]=👳
-      [man_wearing_turban]=👳‍♂️
-      [woman_wearing_turban]=👳‍♀️
-      [man_with_chinese_cap]=👲
-      [woman_with_headscarf]=🧕
-      [man_in_tuxedo]=🤵
-      [bride_with_veil]=👰
-      [pregnant_woman]=🤰
-      [breast_feeding]=🤱
-      [baby_angel]=👼
-      [santa_claus]=🎅
-      [mrs_claus]=🤶
-      [superhero]=🦸
-      [man_superhero]=🦸‍♂️
-      [woman_superhero]=🦸‍♀️
-      [supervillain]=🦹
-      [man_supervillain]=🦹‍♂️
-      [woman_supervillain]=🦹‍♀️
-      [mage]=🧙
-      [man_mage]=🧙‍♂️
-      [woman_mage]=🧙‍♀️
-      [fairy]=🧚
-      [man_fairy]=🧚‍♂️
-      [woman_fairy]=🧚‍♀️
-      [vampire]=🧛
-      [man_vampire]=🧛‍♂️
-      [woman_vampire]=🧛‍♀️
-      [merperson]=🧜
-      [merman]=🧜‍♂️
-      [mermaid]=🧜‍♀️
-      [elf]=🧝
-      [man_elf]=🧝‍♂️
-      [woman_elf]=🧝‍♀️
-      [genie]=🧞
-      [man_genie]=🧞‍♂️
-      [woman_genie]=🧞‍♀️
-      [zombie]=🧟
-      [man_zombie]=🧟‍♂️
-      [woman_zombie]=🧟‍♀️
-      [person_getting_massage]=💆
-      [man_getting_massage]=💆‍♂️
-      [woman_getting_massage]=💆‍♀️
-      [person_getting_haircut]=💇
-      [man_getting_haircut]=💇‍♂️
-      [woman_getting_haircut]=💇‍♀️
-      [person_walking]=🚶
-      [man_walking]=🚶‍♂️
-      [woman_walking]=🚶‍♀️
-      [person_standing]=🧍
-      [man_standing]=🧍‍♂️
-      [woman_standing]=🧍‍♀️
-      [person_kneeling]=🧎
-      [man_kneeling]=🧎‍♂️
-      [woman_kneeling]=🧎‍♀️
-      [man_with_probing_cane]=👨‍🦯
-      [woman_with_probing_cane]=👩‍🦯
-      [man_in_motorized_wheelchair]=👨‍🦼
-      [woman_in_motorized_wheelchair]=👩‍🦼
-      [man_in_manual_wheelchair]=👨‍🦽
-      [woman_in_manual_wheelchair]=👩‍🦽
-      [person_running]=🏃
-      [man_running]=🏃‍♂️
-      [woman_running]=🏃‍♀️
-      [woman_dancing]=💃
-      [man_dancing]=🕺
-      [man_in_suit_levitating]=🕴
-      [people_with_bunny_ears]=👯
-      [men_with_bunny_ears]=👯‍♂️
-      [women_with_bunny_ears]=👯‍♀️
-      [person_in_steamy_room]=🧖
-      [man_in_steamy_room]=🧖‍♂️
-      [woman_in_steamy_room]=🧖‍♀️
-      [person_climbing]=🧗
-      [man_climbing]=🧗‍♂️
-      [woman_climbing]=🧗‍♀️
-      [person_fencing]=🤺
-      [horse_racing]=🏇
-      [skier]=⛷
-      [snowboarder]=🏂
-      [person_golfing]=🏌
-      [man_golfing]=🏌️‍♂️
-      [woman_golfing]=🏌️‍♀️
-      [person_surfing]=🏄
-      [man_surfing]=🏄‍♂️
-      [woman_surfing]=🏄‍♀️
-      [person_rowing_boat]=🚣
-      [man_rowing_boat]=🚣‍♂️
-      [woman_rowing_boat]=🚣‍♀️
-      [person_swimming]=🏊
-      [man_swimming]=🏊‍♂️
-      [woman_swimming]=🏊‍♀️
-      [person_bouncing_ball]=⛹
-      [man_bouncing_ball]=⛹️‍♂️
-      [woman_bouncing_ball]=⛹️‍♀️
-      [person_lifting_weights]=🏋
-      [man_lifting_weights]=🏋️‍♂️
-      [woman_lifting_weights]=🏋️‍♀️
-      [person_biking]=🚴
-      [man_biking]=🚴‍♂️
-      [woman_biking]=🚴‍♀️
-      [person_mountain_biking]=🚵
-      [man_mountain_biking]=🚵‍♂️
-      [woman_mountain_biking]=🚵‍♀️
-      [person_cartwheeling]=🤸
-      [man_cartwheeling]=🤸‍♂️
-      [woman_cartwheeling]=🤸‍♀️
-      [people_wrestling]=🤼
-      [men_wrestling]=🤼‍♂️
-      [women_wrestling]=🤼‍♀️
-      [person_playing_water_polo]=🤽
-      [man_playing_water_polo]=🤽‍♂️
-      [woman_playing_water_polo]=🤽‍♀️
-      [person_playing_handball]=🤾
-      [man_playing_handball]=🤾‍♂️
-      [woman_playing_handball]=🤾‍♀️
-      [person_juggling]=🤹
-      [man_juggling]=🤹‍♂️
-      [woman_juggling]=🤹‍♀️
-      [person_in_lotus_position]=🧘
-      [man_in_lotus_position]=🧘‍♂️
-      [woman_in_lotus_position]=🧘‍♀️
-      [person_taking_bath]=🛀
-      [person_in_bed]=🛌
-      [people_holding_hands]=🧑‍🤝‍🧑
-      [women_holding_hands]=👭
-      [woman_and_man_holding_hands]=👫
-      [men_holding_hands]=👬
-      [kiss]=💏
-      [kiss_woman_man]=👩‍❤️‍💋‍👨
-      [kiss_man_man]=👨‍❤️‍💋‍👨
-      [kiss_woman_woman]=👩‍❤️‍💋‍👩
-      [couple_with_heart]=💑
-      [couple_with_heart_woman_man]=👩‍❤️‍👨
-      [couple_with_heart_man_man]=👨‍❤️‍👨
-      [couple_with_heart_woman_woman]=👩‍❤️‍👩
-      [family]=👪
-      [family_man_woman_boy]=👨‍👩‍👦
-      [family_man_woman_girl]=👨‍👩‍👧
-      [family_man_woman_girl_boy]=👨‍👩‍👧‍👦
-      [family_man_woman_boy_boy]=👨‍👩‍👦‍👦
-      [family_man_woman_girl_girl]=👨‍👩‍👧‍👧
-      [family_man_man_boy]=👨‍👨‍👦
-      [family_man_man_girl]=👨‍👨‍👧
-      [family_man_man_girl_boy]=👨‍👨‍👧‍👦
-      [family_man_man_boy_boy]=👨‍👨‍👦‍👦
-      [family_man_man_girl_girl]=👨‍👨‍👧‍👧
-      [family_woman_woman_boy]=👩‍👩‍👦
-      [family_woman_woman_girl]=👩‍👩‍👧
-      [family_woman_woman_girl_boy]=👩‍👩‍👧‍👦
-      [family_woman_woman_boy_boy]=👩‍👩‍👦‍👦
-      [family_woman_woman_girl_girl]=👩‍👩‍👧‍👧
-      [family_man_boy]=👨‍👦
-      [family_man_boy_boy]=👨‍👦‍👦
-      [family_man_girl]=👨‍👧
-      [family_man_girl_boy]=👨‍👧‍👦
-      [family_man_girl_girl]=👨‍👧‍👧
-      [family_woman_boy]=👩‍👦
-      [family_woman_boy_boy]=👩‍👦‍👦
-      [family_woman_girl]=👩‍👧
-      [family_woman_girl_boy]=👩‍👧‍👦
-      [family_woman_girl_girl]=👩‍👧‍👧
-      [speaking_head]=🗣
-      [bust_in_silhouette]=👤
-      [busts_in_silhouette]=👥
-      [footprints]=👣
-      [red_hair]=🦰
-      [curly_hair]=🦱
-      [white_hair]=🦳
-      [bald]=🦲
-      [monkey_face]=🐵
-      [monkey]=🐒
-      [gorilla]=🦍
-      [orangutan]=🦧
-      [dog_face]=🐶
-      [dog]=🐕
-      [guide_dog]=🦮
-      [service_dog]=🐕‍🦺
-      [poodle]=🐩
-      [wolf]=🐺
-      [fox]=🦊
-      [raccoon]=🦝
-      [cat_face]=🐱
-      [cat]=🐈
-      [lion]=🦁
-      [tiger_face]=🐯
-      [tiger]=🐅
-      [leopard]=🐆
-      [horse_face]=🐴
-      [horse]=🐎
-      [unicorn]=🦄
-      [zebra]=🦓
-      [deer]=🦌
-      [cow_face]=🐮
-      [ox]=🐂
-      [water_buffalo]=🐃
-      [cow]=🐄
-      [pig_face]=🐷
-      [pig]=🐖
-      [boar]=🐗
-      [pig_nose]=🐽
-      [ram]=🐏
-      [ewe]=🐑
-      [goat]=🐐
-      [camel]=🐪
-      [two_hump_camel]=🐫
-      [llama]=🦙
-      [giraffe]=🦒
-      [elephant]=🐘
-      [rhinoceros]=🦏
-      [hippopotamus]=🦛
-      [mouse_face]=🐭
-      [mouse]=🐁
-      [rat]=🐀
-      [hamster]=🐹
-      [rabbit_face]=🐰
-      [rabbit]=🐇
-      [chipmunk]=🐿
-      [hedgehog]=🦔
-      [bat]=🦇
-      [bear]=🐻
-      [koala]=🐨
-      [panda]=🐼
-      [sloth]=🦥
-      [otter]=🦦
-      [skunk]=🦨
-      [kangaroo]=🦘
-      [badger]=🦡
-      [paw_prints]=🐾
-      [turkey]=🦃
-      [chicken]=🐔
-      [rooster]=🐓
-      [hatching_chick]=🐣
-      [baby_chick]=🐤
-      [front_facing_baby_chick]=🐥
-      [bird]=🐦
-      [penguin]=🐧
-      [dove]=🕊
-      [eagle]=🦅
-      [duck]=🦆
-      [swan]=🦢
-      [owl]=🦉
-      [flamingo]=🦩
-      [peacock]=🦚
-      [parrot]=🦜
-      [frog]=🐸
-      [crocodile]=🐊
-      [turtle]=🐢
-      [lizard]=🦎
-      [snake]=🐍
-      [dragon_face]=🐲
-      [dragon]=🐉
-      [sauropod]=🦕
-      [t_rex]=🦖
-      [spouting_whale]=🐳
-      [whale]=🐋
-      [dolphin]=🐬
-      [fish]=🐟
-      [tropical_fish]=🐠
-      [blowfish]=🐡
-      [shark]=🦈
-      [octopus]=🐙
-      [spiral_shell]=🐚
-      [snail]=🐌
-      [butterfly]=🦋
-      [bug]=🐛
-      [ant]=🐜
-      [honeybee]=🐝
-      [lady_beetle]=🐞
-      [cricket]=🦗
-      [spider]=🕷
-      [spider_web]=🕸
-      [scorpion]=🦂
-      [mosquito]=🦟
-      [microbe]=🦠
-      [bouquet]=💐
-      [cherry_blossom]=🌸
-      [white_flower]=💮
-      [rosette]=🏵
-      [rose]=🌹
-      [wilted_flower]=🥀
-      [hibiscus]=🌺
-      [sunflower]=🌻
-      [blossom]=🌼
-      [tulip]=🌷
-      [seedling]=🌱
-      [evergreen_tree]=🌲
-      [deciduous_tree]=🌳
-      [palm_tree]=🌴
-      [cactus]=🌵
-      [sheaf_of_rice]=🌾
-      [herb]=🌿
-      [shamrock]=☘
-      [four_leaf_clover]=🍀
-      [maple_leaf]=🍁
-      [fallen_leaf]=🍂
-      [leaf_fluttering_in_wind]=🍃
-      [grapes]=🍇
-      [melon]=🍈
-      [watermelon]=🍉
-      [tangerine]=🍊
-      [lemon]=🍋
-      [banana]=🍌
-      [pineapple]=🍍
-      [mango]=🥭
-      [red_apple]=🍎
-      [green_apple]=🍏
-      [pear]=🍐
-      [peach]=🍑
-      [cherries]=🍒
-      [strawberry]=🍓
-      [kiwi_fruit]=🥝
-      [tomato]=🍅
-      [coconut]=🥥
-      [avocado]=🥑
-      [eggplant]=🍆
-      [potato]=🥔
-      [carrot]=🥕
-      [ear_of_corn]=🌽
-      [hot_pepper]=🌶
-      [cucumber]=🥒
-      [leafy_green]=🥬
-      [broccoli]=🥦
-      [garlic]=🧄
-      [onion]=🧅
-      [mushroom]=🍄
-      [peanuts]=🥜
-      [chestnut]=🌰
-      [bread]=🍞
-      [croissant]=🥐
-      [baguette_bread]=🥖
-      [pretzel]=🥨
-      [bagel]=🥯
-      [pancakes]=🥞
-      [waffle]=🧇
-      [cheese_wedge]=🧀
-      [meat_on_bone]=🍖
-      [poultry_leg]=🍗
-      [cut_of_meat]=🥩
-      [bacon]=🥓
-      [hamburger]=🍔
-      [french_fries]=🍟
-      [pizza]=🍕
-      [hot_dog]=🌭
-      [sandwich]=🥪
-      [taco]=🌮
-      [burrito]=🌯
-      [stuffed_flatbread]=🥙
-      [falafel]=🧆
-      [egg]=🥚
-      [cooking]=🍳
-      [shallow_pan_of_food]=🥘
-      [pot_of_food]=🍲
-      [bowl_with_spoon]=🥣
-      [green_salad]=🥗
-      [popcorn]=🍿
-      [butter]=🧈
-      [salt]=🧂
-      [canned_food]=🥫
-      [bento_box]=🍱
-      [rice_cracker]=🍘
-      [rice_ball]=🍙
-      [cooked_rice]=🍚
-      [curry_rice]=🍛
-      [steaming_bowl]=🍜
-      [spaghetti]=🍝
-      [roasted_sweet_potato]=🍠
-      [oden]=🍢
-      [sushi]=🍣
-      [fried_shrimp]=🍤
-      [fish_cake_with_swirl]=🍥
-      [moon_cake]=🥮
-      [dango]=🍡
-      [dumpling]=🥟
-      [fortune_cookie]=🥠
-      [takeout_box]=🥡
-      [crab]=🦀
-      [lobster]=🦞
-      [shrimp]=🦐
-      [squid]=🦑
-      [oyster]=🦪
-      [soft_ice_cream]=🍦
-      [shaved_ice]=🍧
-      [ice_cream]=🍨
-      [doughnut]=🍩
-      [cookie]=🍪
-      [birthday_cake]=🎂
-      [shortcake]=🍰
-      [cupcake]=🧁
-      [pie]=🥧
-      [chocolate_bar]=🍫
-      [candy]=🍬
-      [lollipop]=🍭
-      [custard]=🍮
-      [honey_pot]=🍯
-      [baby_bottle]=🍼
-      [glass_of_milk]=🥛
-      [hot_beverage]=☕
-      [teacup_without_handle]=🍵
-      [sake]=🍶
-      [bottle_with_popping_cork]=🍾
-      [wine_glass]=🍷
-      [cocktail_glass]=🍸
-      [tropical_drink]=🍹
-      [beer_mug]=🍺
-      [clinking_beer_mugs]=🍻
-      [clinking_glasses]=🥂
-      [tumbler_glass]=🥃
-      [cup_with_straw]=🥤
-      [beverage_box]=🧃
-      [mate]=🧉
-      [ice_cube]=🧊
-      [chopsticks]=🥢
-      [fork_and_knife_with_plate]=🍽
-      [fork_and_knife]=🍴
-      [spoon]=🥄
-      [kitchen_knife]=🔪
-      [amphora]=🏺
-      [globe_showing_europe_africa]=🌍
-      [globe_showing_americas]=🌎
-      [globe_showing_asia_australia]=🌏
-      [globe_with_meridians]=🌐
-      [world_map]=🗺
-      [map_of_japan]=🗾
-      [compass]=🧭
-      [snow_capped_mountain]=🏔
-      [mountain]=⛰
-      [volcano]=🌋
-      [mount_fuji]=🗻
-      [camping]=🏕
-      [beach_with_umbrella]=🏖
-      [desert]=🏜
-      [desert_island]=🏝
-      [national_park]=🏞
-      [stadium]=🏟
-      [classical_building]=🏛
-      [building_construction]=🏗
-      [brick]=🧱
-      [houses]=🏘
-      [derelict_house]=🏚
-      [house]=🏠
-      [house_with_garden]=🏡
-      [office_building]=🏢
-      [japanese_post_office]=🏣
-      [post_office]=🏤
-      [hospital]=🏥
-      [bank]=🏦
-      [hotel]=🏨
-      [love_hotel]=🏩
-      [convenience_store]=🏪
-      [school]=🏫
-      [department_store]=🏬
-      [factory]=🏭
-      [japanese_castle]=🏯
-      [castle]=🏰
-      [wedding]=💒
-      [tokyo_tower]=🗼
-      [statue_of_liberty]=🗽
-      [church]=⛪
-      [mosque]=🕌
-      [hindu_temple]=🛕
-      [synagogue]=🕍
-      [shinto_shrine]=⛩
-      [kaaba]=🕋
-      [fountain]=⛲
-      [tent]=⛺
-      [foggy]=🌁
-      [night_with_stars]=🌃
-      [cityscape]=🏙
-      [sunrise_over_mountains]=🌄
-      [sunrise]=🌅
-      [cityscape_at_dusk]=🌆
-      [sunset]=🌇
-      [bridge_at_night]=🌉
-      [hot_springs]=♨
-      [carousel_horse]=🎠
-      [ferris_wheel]=🎡
-      [roller_coaster]=🎢
-      [barber_pole]=💈
-      [circus_tent]=🎪
-      [locomotive]=🚂
-      [railway_car]=🚃
-      [high_speed_train]=🚄
-      [bullet_train]=🚅
-      [train]=🚆
-      [metro]=🚇
-      [light_rail]=🚈
-      [station]=🚉
-      [tram]=🚊
-      [monorail]=🚝
-      [mountain_railway]=🚞
-      [tram_car]=🚋
-      [bus]=🚌
-      [oncoming_bus]=🚍
-      [trolleybus]=🚎
-      [minibus]=🚐
-      [ambulance]=🚑
-      [fire_engine]=🚒
-      [police_car]=🚓
-      [oncoming_police_car]=🚔
-      [taxi]=🚕
-      [oncoming_taxi]=🚖
-      [automobile]=🚗
-      [oncoming_automobile]=🚘
-      [sport_utility_vehicle]=🚙
-      [delivery_truck]=🚚
-      [articulated_lorry]=🚛
-      [tractor]=🚜
-      [racing_car]=🏎
-      [motorcycle]=🏍
-      [motor_scooter]=🛵
-      [manual_wheelchair]=🦽
-      [motorized_wheelchair]=🦼
-      [auto_rickshaw]=🛺
-      [bicycle]=🚲
-      [kick_scooter]=🛴
-      [skateboard]=🛹
-      [bus_stop]=🚏
-      [motorway]=🛣
-      [railway_track]=🛤
-      [oil_drum]=🛢
-      [fuel_pump]=⛽
-      [police_car_light]=🚨
-      [horizontal_traffic_light]=🚥
-      [vertical_traffic_light]=🚦
-      [stop_sign]=🛑
-      [construction]=🚧
-      [anchor]=⚓
-      [sailboat]=⛵
-      [canoe]=🛶
-      [speedboat]=🚤
-      [passenger_ship]=🛳
-      [ferry]=⛴
-      [motor_boat]=🛥
-      [ship]=🚢
-      [airplane]=✈
-      [small_airplane]=🛩
-      [airplane_departure]=🛫
-      [airplane_arrival]=🛬
-      [parachute]=🪂
-      [seat]=💺
-      [helicopter]=🚁
-      [suspension_railway]=🚟
-      [mountain_cableway]=🚠
-      [aerial_tramway]=🚡
-      [satellite]=🛰
-      [rocket]=🚀
-      [flying_saucer]=🛸
-      [bellhop_bell]=🛎
-      [luggage]=🧳
-      [hourglass_done]=⌛
-      [hourglass_not_done]=⏳
-      [watch]=⌚
-      [alarm_clock]=⏰
-      [stopwatch]=⏱
-      [timer_clock]=⏲
-      [mantelpiece_clock]=🕰
-      [twelve_oclock]=🕛
-      [twelve_thirty]=🕧
-      [one_oclock]=🕐
-      [one_thirty]=🕜
-      [two_oclock]=🕑
-      [two_thirty]=🕝
-      [three_oclock]=🕒
-      [three_thirty]=🕞
-      [four_oclock]=🕓
-      [four_thirty]=🕟
-      [five_oclock]=🕔
-      [five_thirty]=🕠
-      [six_oclock]=🕕
-      [six_thirty]=🕡
-      [seven_oclock]=🕖
-      [seven_thirty]=🕢
-      [eight_oclock]=🕗
-      [eight_thirty]=🕣
-      [nine_oclock]=🕘
-      [nine_thirty]=🕤
-      [ten_oclock]=🕙
-      [ten_thirty]=🕥
-      [eleven_oclock]=🕚
-      [eleven_thirty]=🕦
-      [new_moon]=🌑
-      [waxing_crescent_moon]=🌒
-      [first_quarter_moon]=🌓
-      [waxing_gibbous_moon]=🌔
-      [full_moon]=🌕
-      [waning_gibbous_moon]=🌖
-      [last_quarter_moon]=🌗
-      [waning_crescent_moon]=🌘
-      [crescent_moon]=🌙
-      [new_moon_face]=🌚
-      [first_quarter_moon_face]=🌛
-      [last_quarter_moon_face]=🌜
-      [thermometer]=🌡
-      [sun]=☀
-      [full_moon_face]=🌝
-      [sun_with_face]=🌞
-      [ringed_planet]=🪐
-      [star]=⭐
-      [glowing_star]=🌟
-      [shooting_star]=🌠
-      [milky_way]=🌌
-      [cloud]=☁
-      [sun_behind_cloud]=⛅
-      [cloud_with_lightning_and_rain]=⛈
-      [sun_behind_small_cloud]=🌤
-      [sun_behind_large_cloud]=🌥
-      [sun_behind_rain_cloud]=🌦
-      [cloud_with_rain]=🌧
-      [cloud_with_snow]=🌨
-      [cloud_with_lightning]=🌩
-      [tornado]=🌪
-      [fog]=🌫
-      [wind_face]=🌬
-      [cyclone]=🌀
-      [rainbow]=🌈
-      [closed_umbrella]=🌂
-      [umbrella]=☂
-      [umbrella_with_rain_drops]=☔
-      [umbrella_on_ground]=⛱
-      [high_voltage]=⚡
-      [snowflake]=❄
-      [snowman]=☃
-      [snowman_without_snow]=⛄
-      [comet]=☄
-      [fire]=🔥
-      [droplet]=💧
-      [water_wave]=🌊
-      [jack_o_lantern]=🎃
-      [christmas_tree]=🎄
-      [fireworks]=🎆
-      [sparkler]=🎇
-      [firecracker]=🧨
-      [sparkles]=✨
-      [balloon]=🎈
-      [party_popper]=🎉
-      [confetti_ball]=🎊
-      [tanabata_tree]=🎋
-      [pine_decoration]=🎍
-      [japanese_dolls]=🎎
-      [carp_streamer]=🎏
-      [wind_chime]=🎐
-      [moon_viewing_ceremony]=🎑
-      [red_envelope]=🧧
-      [ribbon]=🎀
-      [wrapped_gift]=🎁
-      [reminder_ribbon]=🎗
-      [admission_tickets]=🎟
-      [ticket]=🎫
-      [military_medal]=🎖
-      [trophy]=🏆
-      [sports_medal]=🏅
-      [1st_place_medal]=🥇
-      [2nd_place_medal]=🥈
-      [3rd_place_medal]=🥉
-      [soccer_ball]=⚽
-      [baseball]=⚾
-      [softball]=🥎
-      [basketball]=🏀
-      [volleyball]=🏐
-      [american_football]=🏈
-      [rugby_football]=🏉
-      [tennis]=🎾
-      [flying_disc]=🥏
-      [bowling]=🎳
-      [cricket_game]=🏏
-      [field_hockey]=🏑
-      [ice_hockey]=🏒
-      [lacrosse]=🥍
-      [ping_pong]=🏓
-      [badminton]=🏸
-      [boxing_glove]=🥊
-      [martial_arts_uniform]=🥋
-      [goal_net]=🥅
-      [flag_in_hole]=⛳
-      [ice_skate]=⛸
-      [fishing_pole]=🎣
-      [diving_mask]=🤿
-      [running_shirt]=🎽
-      [skis]=🎿
-      [sled]=🛷
-      [curling_stone]=🥌
-      [direct_hit]=🎯
-      [yo_yo]=🪀
-      [kite]=🪁
-      [pool_8_ball]=🎱
-      [crystal_ball]=🔮
-      [nazar_amulet]=🧿
-      [video_game]=🎮
-      [joystick]=🕹
-      [slot_machine]=🎰
-      [game_die]=🎲
-      [puzzle_piece]=🧩
-      [teddy_bear]=🧸
-      [spade_suit]=♠
-      [heart_suit]=♥
-      [diamond_suit]=♦
-      [club_suit]=♣
-      [chess_pawn]=♟
-      [joker]=🃏
-      [mahjong_red_dragon]=🀄
-      [flower_playing_cards]=🎴
-      [performing_arts]=🎭
-      [framed_picture]=🖼
-      [artist_palette]=🎨
-      [thread]=🧵
-      [yarn]=🧶
-      [glasses]=👓
-      [sunglasses]=🕶
-      [goggles]=🥽
-      [lab_coat]=🥼
-      [safety_vest]=🦺
-      [necktie]=👔
-      [t_shirt]=👕
-      [jeans]=👖
-      [scarf]=🧣
-      [gloves]=🧤
-      [coat]=🧥
-      [socks]=🧦
-      [dress]=👗
-      [kimono]=👘
-      [sari]=🥻
-      [one_piece_swimsuit]=🩱
-      [swim_brief]=🩲
-      [shorts]=🩳
-      [bikini]=👙
-      [womans_clothes]=👚
-      [purse]=👛
-      [handbag]=👜
-      [clutch_bag]=👝
-      [shopping_bags]=🛍
-      [backpack]=🎒
-      [mans_shoe]=👞
-      [running_shoe]=👟
-      [hiking_boot]=🥾
-      [flat_shoe]=🥿
-      [high_heeled_shoe]=👠
-      [womans_sandal]=👡
-      [ballet_shoes]=🩰
-      [womans_boot]=👢
-      [crown]=👑
-      [womans_hat]=👒
-      [top_hat]=🎩
-      [graduation_cap]=🎓
-      [billed_cap]=🧢
-      [rescue_workers_helmet]=⛑
-      [prayer_beads]=📿
-      [lipstick]=💄
-      [ring]=💍
-      [gem_stone]=💎
-      [muted_speaker]=🔇
-      [speaker_low_volume]=🔈
-      [speaker_medium_volume]=🔉
-      [speaker_high_volume]=🔊
-      [loudspeaker]=📢
-      [megaphone]=📣
-      [postal_horn]=📯
-      [bell]=🔔
-      [bell_with_slash]=🔕
-      [musical_score]=🎼
-      [musical_note]=🎵
-      [musical_notes]=🎶
-      [studio_microphone]=🎙
-      [level_slider]=🎚
-      [control_knobs]=🎛
-      [microphone]=🎤
-      [headphone]=🎧
-      [radio]=📻
-      [saxophone]=🎷
-      [guitar]=🎸
-      [musical_keyboard]=🎹
-      [trumpet]=🎺
-      [violin]=🎻
-      [banjo]=🪕
-      [drum]=🥁
-      [mobile_phone]=📱
-      [mobile_phone_with_arrow]=📲
-      [telephone]=☎
-      [telephone_receiver]=📞
-      [pager]=📟
-      [fax_machine]=📠
-      [battery]=🔋
-      [electric_plug]=🔌
-      [laptop_computer]=💻
-      [desktop_computer]=🖥
-      [printer]=🖨
-      [keyboard]=⌨
-      [computer_mouse]=🖱
-      [trackball]=🖲
-      [computer_disk]=💽
-      [floppy_disk]=💾
-      [optical_disk]=💿
-      [dvd]=📀
-      [abacus]=🧮
-      [movie_camera]=🎥
-      [film_frames]=🎞
-      [film_projector]=📽
-      [clapper_board]=🎬
-      [television]=📺
-      [camera]=📷
-      [camera_with_flash]=📸
-      [video_camera]=📹
-      [videocassette]=📼
-      [magnifying_glass_tilted_left]=🔍
-      [magnifying_glass_tilted_right]=🔎
-      [candle]=🕯
-      [light_bulb]=💡
-      [flashlight]=🔦
-      [red_paper_lantern]=🏮
-      [diya_lamp]=🪔
-      [notebook_with_decorative_cover]=📔
-      [closed_book]=📕
-      [open_book]=📖
-      [green_book]=📗
-      [blue_book]=📘
-      [orange_book]=📙
-      [books]=📚
-      [notebook]=📓
-      [ledger]=📒
-      [page_with_curl]=📃
-      [scroll]=📜
-      [page_facing_up]=📄
-      [newspaper]=📰
-      [rolled_up_newspaper]=🗞
-      [bookmark_tabs]=📑
-      [bookmark]=🔖
-      [label]=🏷
-      [money_bag]=💰
-      [yen_banknote]=💴
-      [dollar_banknote]=💵
-      [euro_banknote]=💶
-      [pound_banknote]=💷
-      [money_with_wings]=💸
-      [credit_card]=💳
-      [receipt]=🧾
-      [chart_increasing_with_yen]=💹
-      [currency_exchange]=💱
-      [heavy_dollar_sign]=💲
-      [envelope]=✉
-      [e_mail]=📧
-      [incoming_envelope]=📨
-      [envelope_with_arrow]=📩
-      [outbox_tray]=📤
-      [inbox_tray]=📥
-      [package]=📦
-      [closed_mailbox_with_raised_flag]=📫
-      [closed_mailbox_with_lowered_flag]=📪
-      [open_mailbox_with_raised_flag]=📬
-      [open_mailbox_with_lowered_flag]=📭
-      [postbox]=📮
-      [ballot_box_with_ballot]=🗳
-      [pencil]=✏
-      [black_nib]=✒
-      [fountain_pen]=🖋
-      [pen]=🖊
-      [paintbrush]=🖌
-      [crayon]=🖍
-      [memo]=📝
-      [briefcase]=💼
-      [file_folder]=📁
-      [open_file_folder]=📂
-      [card_index_dividers]=🗂
-      [calendar]=📅
-      [tear_off_calendar]=📆
-      [spiral_notepad]=🗒
-      [spiral_calendar]=🗓
-      [card_index]=📇
-      [chart_increasing]=📈
-      [chart_decreasing]=📉
-      [bar_chart]=📊
-      [clipboard]=📋
-      [pushpin]=📌
-      [round_pushpin]=📍
-      [paperclip]=📎
-      [linked_paperclips]=🖇
-      [straight_ruler]=📏
-      [triangular_ruler]=📐
-      [scissors]=✂
-      [card_file_box]=🗃
-      [file_cabinet]=🗄
-      [wastebasket]=🗑
-      [locked]=🔒
-      [unlocked]=🔓
-      [locked_with_pen]=🔏
-      [locked_with_key]=🔐
-      [key]=🔑
-      [old_key]=🗝
-      [hammer]=🔨
-      [axe]=🪓
-      [pick]=⛏
-      [hammer_and_pick]=⚒
-      [hammer_and_wrench]=🛠
-      [dagger]=🗡
-      [crossed_swords]=⚔
-      [pistol]=🔫
-      [bow_and_arrow]=🏹
-      [shield]=🛡
-      [wrench]=🔧
-      [nut_and_bolt]=🔩
-      [gear]=⚙
-      [clamp]=🗜
-      [balance_scale]=⚖
-      [probing_cane]=🦯
-      [link]=🔗
-      [chains]=⛓
-      [toolbox]=🧰
-      [magnet]=🧲
-      [alembic]=⚗
-      [test_tube]=🧪
-      [petri_dish]=🧫
-      [dna]=🧬
-      [microscope]=🔬
-      [telescope]=🔭
-      [satellite_antenna]=📡
-      [syringe]=💉
-      [drop_of_blood]=🩸
-      [pill]=💊
-      [adhesive_bandage]=🩹
-      [stethoscope]=🩺
-      [door]=🚪
-      [bed]=🛏
-      [couch_and_lamp]=🛋
-      [chair]=🪑
-      [toilet]=🚽
-      [shower]=🚿
-      [bathtub]=🛁
-      [razor]=🪒
-      [lotion_bottle]=🧴
-      [safety_pin]=🧷
-      [broom]=🧹
-      [basket]=🧺
-      [roll_of_paper]=🧻
-      [soap]=🧼
-      [sponge]=🧽
-      [fire_extinguisher]=🧯
-      [shopping_cart]=🛒
-      [cigarette]=🚬
-      [coffin]=⚰
-      [funeral_urn]=⚱
-      [moai]=🗿
-      [atm_sign]=🏧
-      [litter_in_bin_sign]=🚮
-      [potable_water]=🚰
-      [wheelchair_symbol]=♿
-      [mens_room]=🚹
-      [womens_room]=🚺
-      [restroom]=🚻
-      [baby_symbol]=🚼
-      [water_closet]=🚾
-      [passport_control]=🛂
-      [customs]=🛃
-      [baggage_claim]=🛄
-      [left_luggage]=🛅
-      [warning]=⚠
-      [children_crossing]=🚸
-      [no_entry]=⛔
-      [prohibited]=🚫
-      [no_bicycles]=🚳
-      [no_smoking]=🚭
-      [no_littering]=🚯
-      [non_potable_water]=🚱
-      [no_pedestrians]=🚷
-      [no_mobile_phones]=📵
-      [no_one_under_eighteen]=🔞
-      [radioactive]=☢
-      [biohazard]=☣
-      [up_arrow]=⬆
-      [up_right_arrow]=↗
-      [right_arrow]=➡
-      [down_right_arrow]=↘
-      [down_arrow]=⬇
-      [down_left_arrow]=↙
-      [left_arrow]=⬅
-      [up_left_arrow]=↖
-      [up_down_arrow]=↕
-      [left_right_arrow]=↔
-      [right_arrow_curving_left]=↩
-      [left_arrow_curving_right]=↪
-      [right_arrow_curving_up]=⤴
-      [right_arrow_curving_down]=⤵
-      [clockwise_vertical_arrows]=🔃
-      [counterclockwise_arrows_button]=🔄
-      [back_arrow]=🔙
-      [end_arrow]=🔚
-      [on_arrow]=🔛
-      [soon_arrow]=🔜
-      [top_arrow]=🔝
-      [place_of_worship]=🛐
-      [atom_symbol]=⚛
-      [om]=🕉
-      [star_of_david]=✡
-      [wheel_of_dharma]=☸
-      [yin_yang]=☯
-      [latin_cross]=✝
-      [orthodox_cross]=☦
-      [star_and_crescent]=☪
-      [peace_symbol]=☮
-      [menorah]=🕎
-      [dotted_six_pointed_star]=🔯
-      [aries]=♈
-      [taurus]=♉
-      [gemini]=♊
-      [cancer]=♋
-      [leo]=♌
-      [virgo]=♍
-      [libra]=♎
-      [scorpio]=♏
-      [sagittarius]=♐
-      [capricorn]=♑
-      [aquarius]=♒
-      [pisces]=♓
-      [ophiuchus]=⛎
-      [shuffle_tracks_button]=🔀
-      [repeat_button]=🔁
-      [repeat_single_button]=🔂
-      [play_button]=▶
-      [fast_forward_button]=⏩
-      [next_track_button]=⏭
-      [play_or_pause_button]=⏯
-      [reverse_button]=◀
-      [fast_reverse_button]=⏪
-      [last_track_button]=⏮
-      [upwards_button]=🔼
-      [fast_up_button]=⏫
-      [downwards_button]=🔽
-      [fast_down_button]=⏬
-      [pause_button]=⏸
-      [stop_button]=⏹
-      [record_button]=⏺
-      [eject_button]=⏏
-      [cinema]=🎦
-      [dim_button]=🔅
-      [bright_button]=🔆
-      [antenna_bars]=📶
-      [vibration_mode]=📳
-      [mobile_phone_off]=📴
-      [female_sign]=♀
-      [male_sign]=♂
-      [medical_symbol]=⚕
-      [infinity]=♾
-      [recycling_symbol]=♻
-      [fleur_de_lis]=⚜
-      [trident_emblem]=🔱
-      [name_badge]=📛
-      [japanese_symbol_for_beginner]=🔰
-      [hollow_red_circle]=⭕
-      [check_mark_button]=✅
-      [check_box_with_check]=☑
-      [check_mark]=✔
-      [multiplication_sign]=✖
-      [cross_mark]=❌
-      [missing_mark]=✘
-      [cross_mark_button]=❎
-      [plus_sign]=➕
-      [minus_sign]=➖
-      [division_sign]=➗
-      [curly_loop]=➰
-      [double_curly_loop]=➿
-      [part_alternation_mark]=〽
-      [eight_spoked_asterisk]=✳
-      [eight_pointed_star]=✴
-      [sparkle]=❇
-      [double_exclamation_mark]=‼
-      [exclamation_question_mark]=⁉
-      [question_mark]=❓
-      [white_question_mark]=❔
-      [white_exclamation_mark]=❕
-      [exclamation_mark]=❗
-      [wavy_dash]=〰
-      [copyright]=©
-      [registered]=®
-      [trade_mark]=™
-      [keycap_hashtag]=#️⃣
-      [keycap_star]=*️⃣
-      [keycap_0]=0️⃣
-      [keycap_1]=1️⃣
-      [keycap_2]=2️⃣
-      [keycap_3]=3️⃣
-      [keycap_4]=4️⃣
-      [keycap_5]=5️⃣
-      [keycap_6]=6️⃣
-      [keycap_7]=7️⃣
-      [keycap_8]=8️⃣
-      [keycap_9]=9️⃣
-      [keycap_10]=🔟
-      [input_latin_uppercase]=🔠
-      [input_latin_lowercase]=🔡
-      [input_numbers]=🔢
-      [input_symbols]=🔣
-      [input_latin_letters]=🔤
-      [a_button_blood_type]=🅰
-      [ab_button_blood_type]=🆎
-      [b_button_blood_type]=🅱
-      [cl_button]=🆑
-      [cool_button]=🆒
-      [free_button]=🆓
-      [information]=ℹ
-      [id_button]=🆔
-      [circled_m]=Ⓜ
-      [new_button]=🆕
-      [ng_button]=🆖
-      [o_button_blood_type]=🅾
-      [ok_button]=🆗
-      [p_button]=🅿
-      [sos_button]=🆘
-      [up_button]=🆙
-      [vs_button]=🆚
-      [japanese_here_button]=🈁
-      [japanese_service_charge_button]=🈂
-      [japanese_monthly_amount_button]=🈷
-      [japanese_not_free_of_charge_button]=🈶
-      [japanese_reserved_button]=🈯
-      [japanese_bargain_button]=🉐
-      [japanese_discount_button]=🈹
-      [japanese_free_of_charge_button]=🈚
-      [japanese_prohibited_button]=🈲
-      [japanese_acceptable_button]=🉑
-      [japanese_application_button]=🈸
-      [japanese_passing_grade_button]=🈴
-      [japanese_vacancy_button]=🈳
-      [japanese_congratulations_button]=㊗
-      [japanese_secret_button]=㊙
-      [japanese_open_for_business_button]=🈺
-      [japanese_no_vacancy_button]=🈵
-      [red_circle]=🔴
-      [orange_circle]=🟠
-      [yellow_circle]=🟡
-      [green_circle]=🟢
-      [blue_circle]=🔵
-      [purple_circle]=🟣
-      [brown_circle]=🟤
-      [black_circle]=⚫
-      [white_circle]=⚪
-      [red_square]=🟥
-      [orange_square]=🟧
-      [yellow_square]=🟨
-      [green_square]=🟩
-      [blue_square]=🟦
-      [purple_square]=🟪
-      [brown_square]=🟫
-      [black_large_square]=⬛
-      [white_large_square]=⬜
-      [black_medium_square]=◼
-      [white_medium_square]=◻
-      [black_medium_small_square]=◾
-      [white_medium_small_square]=◽
-      [black_small_square]=▪
-      [white_small_square]=▫
-      [large_orange_diamond]=🔶
-      [large_blue_diamond]=🔷
-      [small_orange_diamond]=🔸
-      [small_blue_diamond]=🔹
-      [red_triangle_pointed_up]=🔺
-      [red_triangle_pointed_down]=🔻
-      [diamond_with_a_dot]=💠
-      [radio_button]=🔘
-      [white_square_button]=🔳
-      [black_square_button]=🔲
-      [chequered_flag]=🏁
-      [triangular_flag]=🚩
-      [crossed_flags]=🎌
-      [black_flag]=🏴
-      [white_flag]=🏳
-      [rainbow_flag]=🏳️‍🌈
-      [pirate_flag]=🏴‍☠️
-      [flag_ascension_island]=🇦🇨
-      [flag_andorra]=🇦🇩
-      [flag_united_arab_emirates]=🇦🇪
-      [flag_afghanistan]=🇦🇫
-      [flag_antigua_and_barbuda]=🇦🇬
-      [flag_anguilla]=🇦🇮
-      [flag_albania]=🇦🇱
-      [flag_armenia]=🇦🇲
-      [flag_angola]=🇦🇴
-      [flag_antarctica]=🇦🇶
-      [flag_argentina]=🇦🇷
-      [flag_american_samoa]=🇦🇸
-      [flag_austria]=🇦🇹
-      [flag_australia]=🇦🇺
-      [flag_aruba]=🇦🇼
-      [flag_aland_islands]=🇦🇽
-      [flag_azerbaijan]=🇦🇿
-      [flag_bosnia_and_herzegovina]=🇧🇦
-      [flag_barbados]=🇧🇧
-      [flag_bangladesh]=🇧🇩
-      [flag_belgium]=🇧🇪
-      [flag_burkina_faso]=🇧🇫
-      [flag_bulgaria]=🇧🇬
-      [flag_bahrain]=🇧🇭
-      [flag_burundi]=🇧🇮
-      [flag_benin]=🇧🇯
-      [flag_st_barthelemy]=🇧🇱
-      [flag_bermuda]=🇧🇲
-      [flag_brunei]=🇧🇳
-      [flag_bolivia]=🇧🇴
-      [flag_caribbean_netherlands]=🇧🇶
-      [flag_brazil]=🇧🇷
-      [flag_bahamas]=🇧🇸
-      [flag_bhutan]=🇧🇹
-      [flag_bouvet_island]=🇧🇻
-      [flag_botswana]=🇧🇼
-      [flag_belarus]=🇧🇾
-      [flag_belize]=🇧🇿
-      [flag_canada]=🇨🇦
-      [flag_cocos_keeling_islands]=🇨🇨
-      [flag_congo___kinshasa]=🇨🇩
-      [flag_central_african_republic]=🇨🇫
-      [flag_congo___brazzaville]=🇨🇬
-      [flag_switzerland]=🇨🇭
-      [flag_cote_divoire]=🇨🇮
-      [flag_cook_islands]=🇨🇰
-      [flag_chile]=🇨🇱
-      [flag_cameroon]=🇨🇲
-      [flag_china]=🇨🇳
-      [flag_colombia]=🇨🇴
-      [flag_clipperton_island]=🇨🇵
-      [flag_costa_rica]=🇨🇷
-      [flag_cuba]=🇨🇺
-      [flag_cape_verde]=🇨🇻
-      [flag_curacao]=🇨🇼
-      [flag_christmas_island]=🇨🇽
-      [flag_cyprus]=🇨🇾
-      [flag_czechia]=🇨🇿
-      [flag_germany]=🇩🇪
-      [flag_diego_garcia]=🇩🇬
-      [flag_djibouti]=🇩🇯
-      [flag_denmark]=🇩🇰
-      [flag_dominica]=🇩🇲
-      [flag_dominican_republic]=🇩🇴
-      [flag_algeria]=🇩🇿
-      [flag_ceuta_and_melilla]=🇪🇦
-      [flag_ecuador]=🇪🇨
-      [flag_estonia]=🇪🇪
-      [flag_egypt]=🇪🇬
-      [flag_western_sahara]=🇪🇭
-      [flag_eritrea]=🇪🇷
-      [flag_spain]=🇪🇸
-      [flag_ethiopia]=🇪🇹
-      [flag_european_union]=🇪🇺
-      [flag_finland]=🇫🇮
-      [flag_fiji]=🇫🇯
-      [flag_falkland_islands]=🇫🇰
-      [flag_micronesia]=🇫🇲
-      [flag_faroe_islands]=🇫🇴
-      [flag_france]=🇫🇷
-      [flag_gabon]=🇬🇦
-      [flag_united_kingdom]=🇬🇧
-      [flag_grenada]=🇬🇩
-      [flag_georgia]=🇬🇪
-      [flag_french_guiana]=🇬🇫
-      [flag_guernsey]=🇬🇬
-      [flag_ghana]=🇬🇭
-      [flag_gibraltar]=🇬🇮
-      [flag_greenland]=🇬🇱
-      [flag_gambia]=🇬🇲
-      [flag_guinea]=🇬🇳
-      [flag_guadeloupe]=🇬🇵
-      [flag_equatorial_guinea]=🇬🇶
-      [flag_greece]=🇬🇷
-      [flag_south_georgia_and_south_sandwich_islands]=🇬🇸
-      [flag_guatemala]=🇬🇹
-      [flag_guam]=🇬🇺
-      [flag_guinea_bissau]=🇬🇼
-      [flag_guyana]=🇬🇾
-      [flag_hong_kong_sar_china]=🇭🇰
-      [flag_heard_and_mcdonald_islands]=🇭🇲
-      [flag_honduras]=🇭🇳
-      [flag_croatia]=🇭🇷
-      [flag_haiti]=🇭🇹
-      [flag_hungary]=🇭🇺
-      [flag_canary_islands]=🇮🇨
-      [flag_indonesia]=🇮🇩
-      [flag_ireland]=🇮🇪
-      [flag_israel]=🇮🇱
-      [flag_isle_of_man]=🇮🇲
-      [flag_india]=🇮🇳
-      [flag_british_indian_ocean_territory]=🇮🇴
-      [flag_iraq]=🇮🇶
-      [flag_iran]=🇮🇷
-      [flag_iceland]=🇮🇸
-      [flag_italy]=🇮🇹
-      [flag_jersey]=🇯🇪
-      [flag_jamaica]=🇯🇲
-      [flag_jordan]=🇯🇴
-      [flag_japan]=🇯🇵
-      [flag_kenya]=🇰🇪
-      [flag_kyrgyzstan]=🇰🇬
-      [flag_cambodia]=🇰🇭
-      [flag_kiribati]=🇰🇮
-      [flag_comoros]=🇰🇲
-      [flag_st_kitts_and_nevis]=🇰🇳
-      [flag_north_korea]=🇰🇵
-      [flag_south_korea]=🇰🇷
-      [flag_kuwait]=🇰🇼
-      [flag_cayman_islands]=🇰🇾
-      [flag_kazakhstan]=🇰🇿
-      [flag_laos]=🇱🇦
-      [flag_lebanon]=🇱🇧
-      [flag_st_lucia]=🇱🇨
-      [flag_liechtenstein]=🇱🇮
-      [flag_sri_lanka]=🇱🇰
-      [flag_liberia]=🇱🇷
-      [flag_lesotho]=🇱🇸
-      [flag_lithuania]=🇱🇹
-      [flag_luxembourg]=🇱🇺
-      [flag_latvia]=🇱🇻
-      [flag_libya]=🇱🇾
-      [flag_morocco]=🇲🇦
-      [flag_monaco]=🇲🇨
-      [flag_moldova]=🇲🇩
-      [flag_montenegro]=🇲🇪
-      [flag_st_martin]=🇲🇫
-      [flag_madagascar]=🇲🇬
-      [flag_marshall_islands]=🇲🇭
-      [flag_macedonia]=🇲🇰
-      [flag_mali]=🇲🇱
-      [flag_myanmar_burma]=🇲🇲
-      [flag_mongolia]=🇲🇳
-      [flag_macao_sar_china]=🇲🇴
-      [flag_northern_mariana_islands]=🇲🇵
-      [flag_martinique]=🇲🇶
-      [flag_mauritania]=🇲🇷
-      [flag_montserrat]=🇲🇸
-      [flag_malta]=🇲🇹
-      [flag_mauritius]=🇲🇺
-      [flag_maldives]=🇲🇻
-      [flag_malawi]=🇲🇼
-      [flag_mexico]=🇲🇽
-      [flag_malaysia]=🇲🇾
-      [flag_mozambique]=🇲🇿
-      [flag_namibia]=🇳🇦
-      [flag_new_caledonia]=🇳🇨
-      [flag_niger]=🇳🇪
-      [flag_norfolk_island]=🇳🇫
-      [flag_nigeria]=🇳🇬
-      [flag_nicaragua]=🇳🇮
-      [flag_netherlands]=🇳🇱
-      [flag_norway]=🇳🇴
-      [flag_nepal]=🇳🇵
-      [flag_nauru]=🇳🇷
-      [flag_niue]=🇳🇺
-      [flag_new_zealand]=🇳🇿
-      [flag_oman]=🇴🇲
-      [flag_panama]=🇵🇦
-      [flag_peru]=🇵🇪
-      [flag_french_polynesia]=🇵🇫
-      [flag_papua_new_guinea]=🇵🇬
-      [flag_philippines]=🇵🇭
-      [flag_pakistan]=🇵🇰
-      [flag_poland]=🇵🇱
-      [flag_st_pierre_and_miquelon]=🇵🇲
-      [flag_pitcairn_islands]=🇵🇳
-      [flag_puerto_rico]=🇵🇷
-      [flag_palestinian_territories]=🇵🇸
-      [flag_portugal]=🇵🇹
-      [flag_palau]=🇵🇼
-      [flag_paraguay]=🇵🇾
-      [flag_qatar]=🇶🇦
-      [flag_reunion]=🇷🇪
-      [flag_romania]=🇷🇴
-      [flag_serbia]=🇷🇸
-      [flag_russia]=🇷🇺
-      [flag_rwanda]=🇷🇼
-      [flag_saudi_arabia]=🇸🇦
-      [flag_solomon_islands]=🇸🇧
-      [flag_seychelles]=🇸🇨
-      [flag_sudan]=🇸🇩
-      [flag_sweden]=🇸🇪
-      [flag_singapore]=🇸🇬
-      [flag_st_helena]=🇸🇭
-      [flag_slovenia]=🇸🇮
-      [flag_svalbard_and_jan_mayen]=🇸🇯
-      [flag_slovakia]=🇸🇰
-      [flag_sierra_leone]=🇸🇱
-      [flag_san_marino]=🇸🇲
-      [flag_senegal]=🇸🇳
-      [flag_somalia]=🇸🇴
-      [flag_suriname]=🇸🇷
-      [flag_south_sudan]=🇸🇸
-      [flag_sao_tome_and_principe]=🇸🇹
-      [flag_el_salvador]=🇸🇻
-      [flag_sint_maarten]=🇸🇽
-      [flag_syria]=🇸🇾
-      [flag_eswatini]=🇸🇿
-      [flag_tristan_da_cunha]=🇹🇦
-      [flag_turks_and_caicos_islands]=🇹🇨
-      [flag_chad]=🇹🇩
-      [flag_french_southern_territories]=🇹🇫
-      [flag_togo]=🇹🇬
-      [flag_thailand]=🇹🇭
-      [flag_tajikistan]=🇹🇯
-      [flag_tokelau]=🇹🇰
-      [flag_timor_leste]=🇹🇱
-      [flag_turkmenistan]=🇹🇲
-      [flag_tunisia]=🇹🇳
-      [flag_tonga]=🇹🇴
-      [flag_turkey]=🇹🇷
-      [flag_trinidad_and_tobago]=🇹🇹
-      [flag_tuvalu]=🇹🇻
-      [flag_taiwan]=🇹🇼
-      [flag_tanzania]=🇹🇿
-      [flag_ukraine]=🇺🇦
-      [flag_uganda]=🇺🇬
-      [flag_us_outlying_islands]=🇺🇲
-      [flag_united_nations]=🇺🇳
-      [flag_united_states]=🇺🇸
-      [flag_uruguay]=🇺🇾
-      [flag_uzbekistan]=🇺🇿
-      [flag_vatican_city]=🇻🇦
-      [flag_st_vincent_and_grenadines]=🇻🇨
-      [flag_venezuela]=🇻🇪
-      [flag_british_virgin_islands]=🇻🇬
-      [flag_us_virgin_islands]=🇻🇮
-      [flag_vietnam]=🇻🇳
-      [flag_vanuatu]=🇻🇺
-      [flag_wallis_and_futuna]=🇼🇫
-      [flag_samoa]=🇼🇸
-      [flag_kosovo]=🇽🇰
-      [flag_yemen]=🇾🇪
-      [flag_mayotte]=🇾🇹
-      [flag_south_africa]=🇿🇦
-      [flag_zambia]=🇿🇲
-      [flag_zimbabwe]=🇿🇼
-      [flag_england]=🏴󠁧󠁢󠁥󠁮󠁧󠁿
-      [flag_scotland]=🏴󠁧󠁢󠁳󠁣󠁴󠁿
-      [flag_wales]=🏴󠁧󠁢󠁷󠁬󠁳󠁿
-    )
-  fi
-
-  if [ -n \"\$1\" ]; then
-    local return_emoji=\"\${EMOJIS[\$1]}\"
-    if [ -z \"\$(echo \"\${return_emoji}\")\" ]; then  # Not an emoji keyname
-      for i in \"\${!EMOJIS[@]}\"; do  # Search for emoji and return its keyname
-        if [ \"\${EMOJIS[\${i}]}\" == \"\$1\" ]; then
-          return_emoji=\"\${i}\"
-          echo \"\${return_emoji}\"
-          return
-        fi
-      done
-      # At this point \$1 is not a keyname or emoji
-      if [ \"\$1\" == \"random\" ]; then  # Check for random emoji
-        EMOJIS_arr=(\${EMOJIS[@]})
-        echo \"\${EMOJIS_arr[\$RANDOM % \${#EMOJIS_arr[@]}]}\"
-      elif [[ \"\$1\" =~ ^[0-9]+$ ]] && [ \"\$1\" -ge 0 ]; then  # If a natural number passed return an emoji indexing by number
-        EMOJIS_arr=(\${EMOJIS[@]})
-        echo \"\${EMOJIS_arr[\$1 % \${#EMOJIS_arr[@]}]}\"
-      else
-        echo \"ERROR Not recognised option\"
-      fi
-    else  # Return emoji from indexing with dict
-      echo \"\${return_emoji}\"
-    fi
-  else
-    # Not an argument, show all emojis with dictionary structure
-    for i in \"\${!EMOJIS[@]}\"; do
-      echo \"\${i}:\${EMOJIS[\${i}]}\"
-    done
-  fi
-}
-")
+emojis_bashfunctions=("emojis.sh")
 emojis_readmeline="| Function \`emojis\` | Print emojis name in terminal when passing an emoji and prints emoji name when an emoji is passed to it. | Command \`emoji\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 evolution_installationtype="packagemanager"
 evolution_arguments=("evolution")
-evolution_bashfunctions=("alias evolution=\"nohup evolution &>/dev/null &\"")
+evolution_bashfunctions=("evolution.sh")
 evolution_launchernames=("evolution-calendar")
 evolution_packagenames=("evolution" )
 evolution_readmeline="| evolution | User calendar agend, planning | Command \`evolution\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 F_installationtype="environmental"
 F_arguments=("F")
-F_bashfunctions=("
-F() {
-  if [ \$# -eq 0 ]; then  # No arguments given
-    find / 2>/dev/null
-  else
-    if [ -d \"\$1\" ]; then
-      first_argument=\"\$1\"
-      shift
-    else
-      first_argument=\".\"
-    fi
-    IFS=\$'\\n'
-    while [ -n \"\$1\" ]; do
-      for filename in \$(find \"\${first_argument}\" -type f 2>/dev/null); do
-        local result=\"\$(cat \"\${filename}\" 2>/dev/null | grep \"\$1\")\"
-        if [ -n \"\$(echo \"\${result}\")\" ]; then
-          echo
-          echo -e \"\\e[0;33m\${filename}\\e[0m\"
-          cat \"\${filename}\" 2>/dev/null | grep -hnI -B 3 -A 3 --color='auto' \"\$1\"
-         fi
-      done
-      shift
-    done
-  fi
-}
-")
+F_bashfunctions=("F.sh")
 F_readmeline="| Function \`F\` | Function to find strings in files in the directory in the 1st argument | Command \`F\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 f_installationtype="environmental"
