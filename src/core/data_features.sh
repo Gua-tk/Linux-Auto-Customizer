@@ -351,7 +351,7 @@ branch_readmeline="| Function \`branch\` | alias for \`git branch -vv\` | Comman
 
 brasero_installationtype="packagemanager"
 brasero_arguments=("brasero")
-brasero_bashfunctions=("alias brasero=\"nohup brasero &>/dev/null &\"")
+brasero_bashfunctions=("brasero.sh")
 brasero_launchernames=("brasero")
 brasero_packagenames=("brasero")
 brasero_readmeline="| Brasero | Software for image burning | Command \`brasero\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -424,7 +424,7 @@ checkout_readmeline="| Function \`checkout\` | alias for \`git checkout\` | Comm
 
 cheese_installationtype="packagemanager"
 cheese_arguments=("cheese")
-cheese_bashfunctions=("alias cheese=\"nohup cheese &>/dev/null &\"")
+cheese_bashfunctions=("cheese.sh")
 cheese_launchernames=("org.gnome.Cheese")
 cheese_packagenames=("cheese")
 cheese_readmeline="| Cheese | GNOME webcam application | Command \`cheese\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -643,13 +643,13 @@ dia_installationtype="packagemanager"
 dia_arguments=("dia")
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")
-dia_bashfunctions=("alias dia=\"nohup dia &>/dev/null &\"
-")
+dia_bashfunctions=("dia.sh")
 dia_readmeline="| Dia | Graph and relational  | Command \`dia\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 discord_installationtype="userinherit"
 discord_arguments=("discord")
-discord_bashfunctions=("alias discord=\"nohup discord &>/dev/null &\"")
+discord_bashfunctions=("alias discord=\"nohup discord &>/dev/null &\"
+")
 discord_binariesinstalledpaths=("Discord;discord")
 discord_compressedfileurl="https://discord.com/api/download?platform=linux&format=tar.gz"
 discord_launchercontents=("
@@ -820,7 +820,7 @@ E_readmeline="| Function \`E\` | Multi Function \`E\` to edit a set of hardcoded
 
 eclipse_installationtype="userinherit"
 eclipse_arguments=("eclipse")
-eclipse_bashfunctions="eclipse.sh"
+eclipse_bashfunctions=("eclipse.sh")
 eclipse_binariesinstalledpaths=("eclipse;eclipse")
 eclipse_compressedfileurl="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
 eclipse_readmelinedescription="IDE for Java"
@@ -1422,7 +1422,7 @@ i_readmeline="| Function \`i\` | Shows folder structures | Command \`i\` ||  <ul
 ideac_installationtype="userinherit"
 ideac_arguments=("ideac" "intellij_community")
 ideac_associatedfiletypes=("text/x-java")
-ideac_bashfunctions="ideac.sh"
+ideac_bashfunctions=("ideac.sh")
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
 ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.3.tar.gz"
 ideac_readmelinedescription="Integrated development environment written in Java for developing computer software"
@@ -1507,12 +1507,7 @@ instagram_readmeline="| Instagram | ${instagram_readmelinedescription} | Command
 
 ipe_installationtype="environmental"
 ipe_arguments=("ipe")
-ipe_bashfunctions=("
-ipe()
-{
-  dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'\"' '{ print \$2 }';
-}
-")
+ipe_bashfunctions=("ipe.sh")
 ipe_readmeline="| Function \`ipe\` | Returns the public IP | Command \`ipe\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ipi_installationtype="environmental"
@@ -1800,8 +1795,7 @@ megasync_readmeline="| MegaSync | Synchronises folders between your computer and
 meld_installationtype="userinherit"
 meld_packagedependencies=("libgtksourceview-4-dev" "libgtksourceview-3.0-1")
 meld_arguments=("meld")
-meld_bashfunctions=("alias meld=\"nohup meld &>/dev/null &\"
-")
+meld_bashfunctions=("meld.sh")
 meld_binariesinstalledpaths=("bin/meld;meld")
 meld_compressedfileurl="https://download.gnome.org/sources/meld/3.21/meld-3.21.0.tar.xz"
 meld_launchercontents=("
@@ -2468,7 +2462,7 @@ okular_readmeline="| Okular | PDF viewer | Command \`okular\`, desktop launcher 
 onedrive_installationtype="environmental"
 onedrive_arguments=("onedrive")
 onedrive_url="https://onedrive.live.com/"
-onedrive_bashfunctions=("alias onedrive=\"nohup xdg-open €{onedrive_url} &>/dev/null &\"")
+onedrive_bashfunctions=("onedrive.sh")
 onedrive_downloads=("https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg;onedrive_icon.svg")
 onedrive_readmelinedescription="Microsoft OneDrive opening in Chrome"
 onedrive_launchercontents=("onedrive.sh")
@@ -2754,16 +2748,7 @@ pycharm_readmeline="| Pycharm Community | ${pycharm_readmelinedescription} | Com
 pycharmpro_installationtype="userinherit"
 pycharmpro_arguments=("pycharm_pro")
 pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
-pycharmpro_bashfunctions=("
-pycharmpro() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup pycharmpro \${args} &>/dev/null &
-}
-")
+pycharmpro_bashfunctions=("pycharmpro.sh")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
 pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2021.3.tar.gz"
 pycharmpro_readmelinedescription="Integrated development environment used in computer programming"
@@ -2908,8 +2893,7 @@ rsync_arguments=("rsync" "grsync")
 rsync_packagedependencies=("libcanberra-gtk-module" "libcanberra-gtk3-module" "libcanberra-gtk-module:i386")
 rsync_packagenames=("rsync" "grsync")
 rsync_launchernames=("grsync")
-rsync_bashfunctions=("alias rs=\"rsync -av --progress\"
-")
+rsync_bashfunctions=("rsync.sh")
 rsync_readmeline="| Grsync | Software for file/folders synchronization | Commands \`grsync\`, desktop launcher and \`rsync\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 rustc_installationtype="packagemanager"
@@ -2974,8 +2958,7 @@ screenshots_readmeline="| Screenshots | Takes a screenshot and saves it to custo
 
 sherlock_installationtype="repositoryclone"
 sherlock_arguments=("sherlock")
-sherlock_bashfunctions=("alias sherlock=\"python3 \"€{BIN_FOLDER}/sherlock/sherlock/sherlock.py\"\"
-")
+sherlock_bashfunctions=("sherlock.sh")
 sherlock_repositoryurl="https://github.com/sherlock-project/sherlock.git"
 sherlock_manualcontentavailable="0;0;1"
 sherlock_readmeline="| Sherlock | Tool to obtain linked social media accounts using user name | Commands \`sherlock\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -3130,16 +3113,7 @@ steam_readmeline="| Steam | Video game digital distribution service | Command \`
 
 studio_installationtype="userinherit"
 studio_arguments=("studio" "android_studio")
-studio_bashfunctions=("
-studio() {
-  if [ \$# -eq 0 ]; then
-    args=\".\"
-  else
-    args=\"\$@\"
-  fi
-  nohup studio \${args} &>/dev/null &
-}
-")
+studio_bashfunctions=("studio.sh")
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
 studio_compressedfileurl="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2020.3.1.24/android-studio-2020.3.1.24-linux.tar.gz"
 studio_readmelinedescription="Development environment for Google's Android operating system"
@@ -3326,7 +3300,7 @@ thunderbird_arguments=("thunderbird")
 thunderbird_launchernames=("thunderbird")
 thunderbird_packagenames=("thunderbird")
 thunderbird_readmeline="| Thunderbird | Email, personal information manager, news, RSS and chat client | Command \`thunderbird\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-thunderbird_bashfunctions=("alias thunderbird=\"nohup thunderbird &>/dev/null &\"")
+thunderbird_bashfunctions=("thunderbird.sh")
 
 tilix_installationtype="packagemanager"
 tilix_arguments=("tilix")
@@ -3462,8 +3436,7 @@ tumblr_readmeline="| Tumblr | ${tumblr_readmelinedescription} | Command \`tumblr
 twitch_installationtype="environmental"
 twitch_arguments=("twitch" "twitch_tv")
 twitch_url="https://twitch.tv/"
-twitch_bashfunctions=("alias twitch=\"nohup xdg-open €{twitch_url} &>/dev/null &\"
-")
+twitch_bashfunctions=("twitch.sh")
 twitch_downloads=("https://commons.wikimedia.org/wiki/File:Twitch_Glitch_Logo_Purple.svg;twitch_icon.svg")
 twitch_readmelinedescription="Twitch web opens in Chrome"
 twitch_launchercontents=("
@@ -3489,8 +3462,7 @@ twitch_readmeline="| Twitch | ${twitch_readmelinedescription} | Command \`twitch
 twitter_installationtype="environmental"
 twitter_arguments=("twitter")
 twitter_url="https://twitter.com/"
-twitter_bashfunctions=("alias twitter=\"nohup xdg-open €{twitter_url} &>/dev/null &\"
-")
+twitter_bashfunctions=("twitter.sh")
 twitter_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg;twitter_icon.svg")
 twitter_readmelinedescription="Twitter web opens in Chrome"
 twitter_launchercontents=("
