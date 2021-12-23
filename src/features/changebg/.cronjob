@@ -1,0 +1,2 @@
+*/5 * * * * €{BIN_FOLDER}/changebg/.cronscript.sh
+

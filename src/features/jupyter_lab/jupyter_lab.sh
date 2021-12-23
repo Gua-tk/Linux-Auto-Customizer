@@ -1,0 +1,1 @@
+alias lab="jupyter-lab"

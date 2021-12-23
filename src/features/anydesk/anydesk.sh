@@ -1,0 +1,1 @@
+alias anydesk="nohup anydesk &>/dev/null &"
