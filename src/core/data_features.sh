@@ -2505,6 +2505,8 @@ openssh_server_conf=(
 "AllowUsers  # Allow these users to access the ssh server"
 "ClientAliveInterval 300  # Time that the server will wait before sending a null paint to keep the connection alive"
 "ClientAliveCountMax 0  # Maximum number of keep-alive sent to client before dropping"
+"PubkeyAuthentication yes  # Used to accept login by public keys infrastructure"
+"RSAAuthentication yes  # Allow authentication with RSA key generation algorithm"
 )
 install_openssh_server_post()
 {
