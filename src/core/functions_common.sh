@@ -123,13 +123,28 @@ set_field()
 # - Permissions: can be executed indifferently as root or user.
 # - Argument 1: Text to be removed.
 # - Argument 2: Path to the file which contains the text to be removed.
-remove_line() {
+remove_line()
+{
   if [ -f "$2" ]; then
-    sed "s@^${1}\$@@g" -i "$2"
+    sed "s@^$1\$@@g" -i "$2"
   else
     output_proxy_executioner "echo WARNING: file $2 is not present, so the text $1 cannot be removed from the file. Skipping..." "${FLAG_QUIETNESS}"
   fi
 }
+
+
+# - Description: Function to append text to a file if the text is not already present.
+# - Permissions: Can be executed indifferently as root or user, but we need read/write access to the file.
+# - Argument 1: Text to be added.
+# - Argument 2: Path to the file where we will append the text.
+append_text()
+{
+  # If there is not a literal match: (grep -E ^LITERAL_MATCH\$) append to the file.
+  if ! grep -Eqo "^$1\$" "$2"; then
+    echo -e "$1" >> "$2"
+  fi
+}
+
 
 # - Description: Performs a post-install clean by using cleaning option of package manager
 # - Permission: Can be called as root or user.
