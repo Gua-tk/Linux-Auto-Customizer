@@ -137,7 +137,7 @@ add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` || 
 
 aircrack_ng_installationtype="packagemanager"
 aircrack_ng_packagenames=("aircrack-ng")
-aircrack_ng_arguents=("aircrack_ng" "aircrackng")
+aircrack_ng_arguments=("aircrack_ng" "aircrackng")
 aircrack_ng_readmeline="| aircrack-ng | Security tools for audition | Command \`aircrack-ng\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 aisleriot_installationtype="packagemanager"
