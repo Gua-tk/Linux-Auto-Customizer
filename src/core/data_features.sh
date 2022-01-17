@@ -2054,7 +2054,8 @@ nedit_readmeline="| NEdit | Multi-purpose text editor and source code editor | C
 
 nemo_installationtype="packagemanager"
 nemo_arguments=("nemo" "nemo_desktop")
-nemo_bashfunctions=("nemo_config.sh" "nemo.sh")
+nemo_bashfunctions=("nemo.sh")
+nemo_bashinitializations=("nemo_config.sh")
 nemo_packagenames=("nemo")
 nemo_packagedependencies=("dconf-editor")
 nemo_readmelinedescription="File and desktop manager, usually with better options and less bugs than nautilus. *We recommend this explorer to view correctly the launchers*"
