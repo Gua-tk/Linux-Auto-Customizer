@@ -2036,7 +2036,7 @@ mvn_bashfunctions=("mvn.sh")
 
 nautilus_installationtype="packagemanager"
 nautilus_arguments=("nautilus")
-nautilus_bashfunctions=("nautilus.sh")
+nautilus_bashinitializations=("nautilus.sh")
 nautilus_launchernames=("org.gnome.Nautilus")
 nautilus_packagenames=("nautilus")
 nautilus_readmeline="| Nautilus | Standard file and desktop manager | Command \`nautilus\` Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -2054,7 +2054,8 @@ nedit_readmeline="| NEdit | Multi-purpose text editor and source code editor | C
 
 nemo_installationtype="packagemanager"
 nemo_arguments=("nemo" "nemo_desktop")
-nemo_bashfunctions=("nemo_config.sh" "nemo.sh")
+nemo_bashfunctions=("nemo.sh")
+nemo_bashinitializations=("nemo_config.sh")
 nemo_packagenames=("nemo")
 nemo_packagedependencies=("dconf-editor")
 nemo_readmelinedescription="File and desktop manager, usually with better options and less bugs than nautilus. *We recommend this explorer to view correctly the launchers*"
