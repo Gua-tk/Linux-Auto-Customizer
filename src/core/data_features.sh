@@ -2036,7 +2036,7 @@ mvn_bashfunctions=("mvn.sh")
 
 nautilus_installationtype="packagemanager"
 nautilus_arguments=("nautilus")
-nautilus_bashfunctions=("nautilus.sh")
+nautilus_bashinitializations=("nautilus.sh")
 nautilus_launchernames=("org.gnome.Nautilus")
 nautilus_packagenames=("nautilus")
 nautilus_readmeline="| Nautilus | Standard file and desktop manager | Command \`nautilus\` Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
