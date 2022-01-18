@@ -164,6 +164,7 @@ else  # Root variables
   # the file in one line.
   if [ -f "${USER_DIRS_PATH}" ]; then
     while IFS= read -r line; do
+      # Process lines that are not commented out
       if ! echo "${line}" | grep -Eoq "^#"; then
         declare -r "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
       fi
@@ -215,6 +216,7 @@ declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 # Used in certain types of features
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r BASH_COMPLETIONS_PATH="/usr/share/bash-completion/completions/git"
+declare -r SSH_GLOBAL_CONF_PATH="/etc/ssh/sshd_config"
 
 # To keep information about the current installation
 declare CURRENT_INSTALLATION_FOLDER=""
