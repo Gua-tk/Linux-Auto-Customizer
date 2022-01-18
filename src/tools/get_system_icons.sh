@@ -28,6 +28,7 @@ main()
     if [ -z "$(echo "${!launchers_pointer}")" ]; then
       continue
     fi
+
     programs_with_copy_launcher+=(${key_name})
     mkdir -p "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${key_name}"
     for launcher_pointer in ${!launchers_pointer}; do
@@ -38,10 +39,16 @@ main()
       fi
       programs_trimmed+=(${key_name})
       icon_name="$(cat "${XDG_DESKTOP_DIR}/${launcher_pointer}.desktop" | grep -Eo "^Icon=.*\$" | cut -d "=" -f2)"
-      for icon_path_system in $(find /usr/share/icons | grep "${icon_name}"); do
-        echo "${icon_path_system}"
-        echo "${icon_name}"
-        cp "${icon_path_system}" "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${key_name}/${key_name}_${num}.$(echo "${icon_path_system}" | rev | cut -d "." -f1 | rev)"
+      for icon_path_system in $(find /usr/share/icons -type f | grep -E "^.*/${icon_name}"); do
+        echo "ICON PATH: ${icon_path_system}"
+        echo "ICON NAME: ${icon_name}"
+        file_extension="$(echo "${icon_path_system}" | rev | cut -d "." -f1 | rev)"
+        file_name="$(echo "${icon_path_system}" | tr "/" "_" )"
+        if [ "${file_extension}" == "svg" ] || [ "${file_extension}" == "png" ]; then
+          cp "${icon_path_system}" "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${key_name}/${key_name}_${num}_${file_name}.${file_extension}"
+        else
+          cp "${icon_path_system}" "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${key_name}/${key_name}_${num}_${file_name}"
+        fi
         num=$((num + 1))
       done
     done
