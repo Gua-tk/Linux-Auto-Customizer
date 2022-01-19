@@ -24,14 +24,24 @@ main()
   programs_not_trimmed=()
   for key_name in "${feature_keynames[@]}"; do
     num=1
+    echo "Program: ${key_name}"
     launchers_pointer="${key_name}_launchernames[@]"
     if [ -z "$(echo "${!launchers_pointer}")" ]; then
+      echo "${key_name} has no launcher names property"
       continue
     fi
 
     programs_with_copy_launcher+=(${key_name})
     mkdir -p "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${key_name}"
+    if [[ $(ls -A "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${key_name}") ]]; then
+      echo "${key_name} static folder already has files"
+      programs_trimmed+=(${key_name})
+      continue
+    fi
+
+
     for launcher_pointer in ${!launchers_pointer}; do
+      echo "launcher name: ${launcher_pointer}.desktop"
       if [ ! -f "${XDG_DESKTOP_DIR}/${launcher_pointer}.desktop" ]; then
         echo "${XDG_DESKTOP_DIR}/${launcher_pointer}.desktop does not exist"
         programs_not_trimmed+=(${key_name})
@@ -39,7 +49,14 @@ main()
       fi
       programs_trimmed+=(${key_name})
       icon_name="$(cat "${XDG_DESKTOP_DIR}/${launcher_pointer}.desktop" | grep -Eo "^Icon=.*\$" | cut -d "=" -f2)"
-      for icon_path_system in $(find /usr/share/icons -type f | grep -E "^.*/${icon_name}"); do
+      echo "Icon name is ${icon_name}"
+
+      icon_paths="$(find /usr/share/icons -type f | grep -E "^.*/.*${icon_name}" || true)"
+      echo first
+      icon_paths+=" $(find /usr/share/pixmaps -type f | grep -E "${icon_name}" || true)"
+      echo seecond
+      echo "${icon_paths}"
+      for icon_path_system in ${icon_paths}; do
         echo "ICON PATH: ${icon_path_system}"
         echo "ICON NAME: ${icon_name}"
         file_extension="$(echo "${icon_path_system}" | rev | cut -d "." -f1 | rev)"

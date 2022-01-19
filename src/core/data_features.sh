@@ -3063,7 +3063,7 @@ spotify_bashfunctions=("spotify.sh")
 spotify_launchernames=("spotify")
 spotify_packageurls=("https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.72.439.gc253025e_amd64.deb")
 spotify_package_manager_override="apt-get"
-spotify_packagenames=("spotify-desktop")
+spotify_packagedependencies=("libgconf-2-4")
 spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 spreadsheets_installationtype="environmental"
