@@ -2034,6 +2034,14 @@ mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/
 mvn_readmeline="| Maven | Build automation tool used primarily for Java projects | Command \`mvn\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 mvn_bashfunctions=("mvn.sh")
 
+nano_installationtype="packagemanager"
+nano_arguments=("nano")
+nano_packagenames=("nano")
+nano_readmeline="| nano | CLI File editor | Command \`nano\` and syntax highlighting ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+nano_filekeys=("conf")
+nano_conf_path="${HOME_FOLDER}/.nanorc"
+nano_conf_content=("nanorc")
+
 nautilus_installationtype="packagemanager"
 nautilus_arguments=("nautilus")
 nautilus_bashinitializations=("nautilus.sh")

@@ -70,8 +70,11 @@ case ${OS_NAME} in
   Fedora)
     initialize_package_manager_yum
   ;;
+  "Parrot OS")
+    initialize_package_manager_apt-get
+  ;;
   *)
-    output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager"
+    output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager" "${FLAG_QUIETNESS}"
     OS_NAME="Ubuntu"
     initialize_package_manager_apt-get
   ;;
@@ -438,6 +441,7 @@ declare -r feature_keynames=(
   "merge"
   "msttcorefonts"
   "mvn"
+  "nano"
   "nautilus"
   "ncat"
   "nedit"
