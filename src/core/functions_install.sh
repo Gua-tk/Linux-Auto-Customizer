@@ -353,7 +353,7 @@ decompress() {
           internal_folder_name=""
         fi
       ;;
-      "application/x-bzip-compressed-tar")
+      "application/x-bzip-compressed-tar" | "application/x-bzip2")
         local -r internal_folder_name=$( (tar -tjf - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
       ;;
       "application/gzip")
@@ -391,7 +391,7 @@ decompress() {
           unzip -o "${file_name}"
         )
       ;;
-      "application/x-bzip-compressed-tar")
+      "application/x-bzip-compressed-tar" | "application/x-bzip2")
       # Decompress in a subshell to avoid changing the working directory in the current shell
         (
           cd "${dir_name}" || exit

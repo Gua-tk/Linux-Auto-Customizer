@@ -783,7 +783,7 @@ duckduckgo_installationtype="environmental"
 duckduckgo_arguments=("duckduckgo")
 duckduckgo_url="https://duckduckgo.com/"
 duckduckgo_bashfunctions=("duckduckgo.sh")
-duckduckgo_downloads=("https://icon-icons.com/downloadimage.php?id=67089&root=844/SVG/&file=DuckDuckGo_icon-icons.com_67089.svg;duckduckgo_icon.svg")
+duckduckgo_downloads=("https://raw.githubusercontent.com/Axlfc/icons/master/images/duckduckgo/duckduckgo_icon.svg;duckduckgo_icon.svg")
 duckduckgo_readmelinedescription="Opens DuckDuckGo in Chrome"
 duckduckgo_launchercontents=("
 [Desktop Entry]
@@ -1785,8 +1785,8 @@ mdadm_readmeline="| mdadm | Manage RAID systems | Command \`mdadm\` ||  <ul><li>
 
 megasync_installationtype="packageinstall"
 megasync_arguments=("megasync" "mega")
-megasync_packagedependencies=("nautilus" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
-megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.5.3-2.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nautilus-megasync_3.6.6_amd64.deb")
+megasync_packagedependencies=("nemo" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
+megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.6.1-2.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb")
 megasync_package_manager_override="apt-get"
 megasync_launchernames=("megasync")
 megasync_packagenames=("nautilus-megasync" "megasync")
@@ -2034,9 +2034,17 @@ mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/
 mvn_readmeline="| Maven | Build automation tool used primarily for Java projects | Command \`mvn\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 mvn_bashfunctions=("mvn.sh")
 
+nano_installationtype="packagemanager"
+nano_arguments=("nano")
+nano_packagenames=("nano")
+nano_readmeline="| nano | CLI File editor | Command \`nano\` and syntax highlighting ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+nano_filekeys=("conf")
+nano_conf_path="${HOME_FOLDER}/.nanorc"
+nano_conf_content=("nanorc")
+
 nautilus_installationtype="packagemanager"
 nautilus_arguments=("nautilus")
-nautilus_bashfunctions=("nautilus.sh")
+nautilus_bashinitializations=("nautilus.sh")
 nautilus_launchernames=("org.gnome.Nautilus")
 nautilus_packagenames=("nautilus")
 nautilus_readmeline="| Nautilus | Standard file and desktop manager | Command \`nautilus\` Desktop launcher and dashboard launcher for the file manager ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -2054,7 +2062,8 @@ nedit_readmeline="| NEdit | Multi-purpose text editor and source code editor | C
 
 nemo_installationtype="packagemanager"
 nemo_arguments=("nemo" "nemo_desktop")
-nemo_bashfunctions=("nemo_config.sh" "nemo.sh")
+nemo_bashfunctions=("nemo.sh")
+nemo_bashinitializations=("nemo_config.sh")
 nemo_packagenames=("nemo")
 nemo_packagedependencies=("dconf-editor")
 nemo_readmelinedescription="File and desktop manager, usually with better options and less bugs than nautilus. *We recommend this explorer to view correctly the launchers*"
@@ -2465,7 +2474,25 @@ onedrive_url="https://onedrive.live.com/"
 onedrive_bashfunctions=("onedrive.sh")
 onedrive_downloads=("https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg;onedrive_icon.svg")
 onedrive_readmelinedescription="Microsoft OneDrive opening in Chrome"
-onedrive_launchercontents=("onedrive.sh")
+onedrive_launchercontents=("
+[Desktop Entry]
+Categories=FileSharing;
+Comment=${onedrive_readmelinedescription}
+Encoding=UTF-8
+Exec=xdg-open ${onedrive_url}
+Icon=${BIN_FOLDER}/onedrive/onedrive_icon.svg
+GenericName=OneDrive
+Keywords=onedrive;
+MimeType=
+Name=OneDrive
+StartupNotify=true
+StartupWMClass=onedrive
+Terminal=false
+TryExec=xdg-open
+Type=Application
+Version=1.0
+")
+
 onedrive_readmeline="| OneDrive | ${onedrive_readmelinedescription} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 libreoffice_installationtype="packagemanager"
@@ -2486,6 +2513,37 @@ openssh_server_arguments=("openssh_server")
 openssh_server_packagenames=("openssh-server")
 openssh_server_bashfunctions=("openssh_server.sh")
 openssh_server_readmeline="| openssh-server | SSH server | Used for running an SSH server ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+openssh_server_manualcontentavailable="0;0;1"
+
+openssh_server_conf=(
+"Port 3297  # Change default port for ssh server to listen"
+"LogLevel VERBOSE  # Verbose on logs"
+"LoginGraceTime 60  # Time allowed for a successful connection"
+"PermitRootLogin no  # Do not allow root user to log in"
+"PasswordAuthentication no  # Deactivate password logins"
+"ChallengeResponseAuthentication no  # Uses a backend for extra challenges in authentication"
+"AllowTcpForwarding no  # Can be used to exploit vulnerabilities"
+"X11Forwarding no  # Can be used to tunnel graphical sessions but can be used as vulnerability"
+"MaxStartups 2:100:3  # Allowed 2 unauthenticated connections to the server, 100 % chance of dropping with more than 2 connections, 3 simultaneous sessions allowed"
+"AllowUsers  # Allow these users to access the ssh server"
+"ClientAliveInterval 300  # Time that the server will wait before sending a null paint to keep the connection alive"
+"ClientAliveCountMax 0  # Maximum number of keep-alive sent to client before dropping"
+"PubkeyAuthentication yes  # Used to accept login by public keys infrastructure"
+"RSAAuthentication yes  # Allow authentication with RSA key generation algorithm"
+)
+install_openssh_server_post()
+{
+  for conf_element in "${openssh_server_conf[@]}"; do
+    append_text "${conf_element}" "${SSH_GLOBAL_CONF_PATH}"
+  done
+}
+uninstall_openssh_server_post()
+{
+  for conf_element in "${openssh_server_conf[@]}"; do
+    remove_line "${conf_element}" "${SSH_GLOBAL_CONF_PATH}"
+  done
+}
+
 
 outlook_installationtype="environmental"
 outlook_arguments=("outlook")
@@ -3401,7 +3459,7 @@ trello_installationtype="environmental"
 trello_arguments=("trello")
 trello_url="https://trello.com"
 trello_bashfunctions=("trello.sh")
-trello_downloads=("https://en.wikipedia.org/wiki/File:Antu_trello.svg;trello_icon.svg")
+trello_downloads=("https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/trello-512.png;trello_icon.png")
 trello_readmelinedescription="Trello web opens in Chrome"
 trello_launchercontents=("
 [Desktop Entry]
@@ -3409,7 +3467,7 @@ Categories=Network;
 Comment=${trello_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${trello_url}
-Icon=${BIN_FOLDER}/trello/trello_icon.svg
+Icon=${BIN_FOLDER}/trello/trello_icon.png
 GenericName=Trello
 Keywords=trello;
 MimeType=
@@ -3453,7 +3511,7 @@ twitch_installationtype="environmental"
 twitch_arguments=("twitch" "twitch_tv")
 twitch_url="https://twitch.tv/"
 twitch_bashfunctions=("twitch.sh")
-twitch_downloads=("https://commons.wikimedia.org/wiki/File:Twitch_Glitch_Logo_Purple.svg;twitch_icon.svg")
+twitch_downloads=("https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png;twitch_icon.png")
 twitch_readmelinedescription="Twitch web opens in Chrome"
 twitch_launchercontents=("
 [Desktop Entry]
