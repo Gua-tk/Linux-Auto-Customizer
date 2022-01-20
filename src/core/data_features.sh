@@ -3795,9 +3795,10 @@ z_bashfunctions=("z.sh")
 
 zoom_installationtype="userinherit"
 zoom_arguments=("zoom")
-zoom_packagedependencies=("libxcb-xtest0" "libqt5quickwidgets5")
+zoom_packagedependencies=("libglib2.0-0"
+#"libgstreamer-plugins-base0.10-0"
+"libxcb-shape0" "libxcb-shm0" "libxcb-xfixes0" "libxcb-randr0" "libxcb-image0" "libfontconfig1" "libgl1-mesa-glx" "libxi6" "libsm6" "libxrender1" "libpulse0" "libxcomposite1" "libxslt1.1" "libsqlite3-0" "libxcb-keysyms1" "ibus" "libxcb-xtest0" "libqt5quickwidgets5")
 zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
-
 zoom_compressedfileurl="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
 zoom_downloads=("https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/zoom.svg;zoom_icon.svg")
 zoom_readmelinedescription="Live Video Streaming for Meetings"
