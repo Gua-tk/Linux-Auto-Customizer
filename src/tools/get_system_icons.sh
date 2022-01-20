@@ -40,7 +40,7 @@ main()
     fi
 
 
-    for launcher_pointer in ${!launchers_pointer}; do
+    for launcher_pointer in $(echo "${!launchers_pointer}"); do
       echo "launcher name: ${launcher_pointer}.desktop"
       if [ ! -f "${XDG_DESKTOP_DIR}/${launcher_pointer}.desktop" ]; then
         echo "${XDG_DESKTOP_DIR}/${launcher_pointer}.desktop does not exist"
@@ -48,13 +48,17 @@ main()
         continue
       fi
       programs_trimmed+=(${key_name})
-      icon_name="$(cat "${XDG_DESKTOP_DIR}/${launcher_pointer}.desktop" | grep -Eo "^Icon=.*\$" | cut -d "=" -f2)"
+      icon_name="$(cat "${XDG_DESKTOP_DIR}/${launcher_pointer}.desktop" | grep -Eo "^Icon=.*\$" | cut -d "=" -f2-)"
+      if [ -z "${icon_name}" ]; then
+        continue
+      fi
       echo "Icon name is ${icon_name}"
-
+      sleep 1
       icon_paths="$(find /usr/share/icons -type f | grep -E "^.*/.*${icon_name}" || true)"
       echo first
       icon_paths+=" $(find /usr/share/pixmaps -type f | grep -E "${icon_name}" || true)"
       echo seecond
+      sleep 2
       echo "${icon_paths}"
       for icon_path_system in ${icon_paths}; do
         echo "ICON PATH: ${icon_path_system}"
