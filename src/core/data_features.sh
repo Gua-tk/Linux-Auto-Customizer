@@ -2655,8 +2655,9 @@ install_pgadmin_mid() {
   # environment an not the python system interpreter.
 
   # Prepend shebang line to python3 interpreter of the venv
-  echo "#!${BIN_FOLDER}/pgadmin/bin/python3" | cat - "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" >"${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
-  chmod +x "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  local -r python_folder="$(python3 --version | tr "A-Z" "a-z" | tr -d " " | rev | cut -d "." -f2- | rev)"
+  echo "#!${BIN_FOLDER}/pgadmin/bin/python3" | cat - "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py" > "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py.tmp" "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py"
+  chmod +x "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py"
 }
 uninstall_pgadmin_mid() {
   :
@@ -3511,7 +3512,7 @@ twitch_installationtype="environmental"
 twitch_arguments=("twitch" "twitch_tv")
 twitch_url="https://twitch.tv/"
 twitch_bashfunctions=("twitch.sh")
-twitch_downloads=("https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png;twitch_icon.png")
+twitch_downloads=("https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png;twitch.png")
 twitch_readmelinedescription="Twitch web opens in Chrome"
 twitch_launchercontents=("
 [Desktop Entry]
@@ -3519,7 +3520,7 @@ Categories=Network;
 Comment=${twitch_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${twitch_url}
-Icon=${BIN_FOLDER}/twitch/twitch_icon.svg
+Icon=${BIN_FOLDER}/twitch/twitch_icon.png
 GenericName=Twitch.tv
 Keywords=twitch;Twitch;
 MimeType=
