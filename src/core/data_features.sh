@@ -2620,8 +2620,8 @@ pdfgrep_readmeline="| pdfgrep | CLI utility that makes it possible to search for
 
 pgadmin_installationtype="pythonvenv"
 pgadmin_arguments=("pgadmin" "pgadmin4")
-pgadmin_binariesinstalledpaths=("lib/python3.8/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
-pgadmin_confoverride_path="lib/python3.8/site-packages/pgadmin4/config_local.py"
+pgadmin_binariesinstalledpaths=("lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
+pgadmin_confoverride_path="lib/${PYTHON_VERSION}/site-packages/pgadmin4/config_local.py"
 pgadmin_confoverride_content="config_local.py"
 pgadmin_executionscript_path="pgadmin_exec.sh"
 pgadmin_executionscript_content="pgadmin_exec.sh"
@@ -2641,7 +2641,7 @@ StartupWMClass=pgadmin
 Terminal=false
 Type=Application
 Version=1.0
-Icon=${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Icon=${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
 Exec=bash ${BIN_FOLDER}/pgadmin/pgadmin_exec.sh
 ")
 pgadmin_manualcontentavailable="0;1;0"
@@ -2655,13 +2655,13 @@ install_pgadmin_mid() {
   # environment an not the python system interpreter.
 
   # Prepend shebang line to python3 interpreter of the venv
-  local -r python_folder="$(python3 --version | tr "A-Z" "a-z" | tr -d " " | rev | cut -d "." -f2- | rev)"
-  echo "#!${BIN_FOLDER}/pgadmin/bin/python3" | cat - "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py" > "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py.tmp" "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py"
-  chmod +x "${BIN_FOLDER}/pgadmin/lib/${python_folder}/site-packages/pgadmin4/pgAdmin4.py"
+  echo "#!${BIN_FOLDER}/pgadmin/bin/python3" | cat - "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py" > "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py.tmp" "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py"
+  chmod +x "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py"
 }
 uninstall_pgadmin_mid() {
   :
 }
+
 
 php_installationtype="packagemanager"
 php_arguments=("php")
@@ -2689,7 +2689,7 @@ StartupWMClass=phppggadmin
 Terminal=false
 Type=Application
 Version=1.0
-Icon=${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Icon=${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
 Exec=nohup xdg-open ${phppgadmin_url}
 TryExec=xdg-open
 ")
