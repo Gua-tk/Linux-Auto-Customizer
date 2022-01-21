@@ -26,7 +26,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-  if [ -n "${GIT_PROMPT_LAST_COMMAND_STATE}" ]; then
+  if [ ! -z "${GIT_PROMPT_LAST_COMMAND_STATE}" ]; then
     if [ ${GIT_PROMPT_LAST_COMMAND_STATE} -gt 0 ]; then  # Red color if error
       color_dollar="\[\e[1;31m\]"
     else  # light green color if last command is ok
