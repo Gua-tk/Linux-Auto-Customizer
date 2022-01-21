@@ -264,7 +264,7 @@ copy_launcher() {
 
 # - Description: This function accepts an undefined number of pairs of arguments. The first of the pair is a path to a
 #   binary that will be linked to our path. The second one is the name that it will have as a terminal command.
-#   This function processes the last optional arguments of the function download_and_decompress, but can be
+#   This function processes the last optional arguments of the function decompress, but can be
 #   used as a manual way to add binaries to the PATH, in order to add new commands to your environment.
 # - Argument 1: Absolute path to the binary you want to be in the PATH.
 # - Argument 2: Name of the command that will be added to your environment to execute the previous binary.
@@ -922,7 +922,7 @@ download_and_install_package() {
     "application/zip"|"application/x-bzip-compressed-tar"|"application/gzip"|"application/x-xz")
       decompress "${BIN_FOLDER}/${file_name}" "${file_name}_decompressed"  # Decompressing
       ${PACKAGE_MANAGER_FIXBROKEN}
-      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"  # Notice the S at the end of this variable...
+      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/${file_name}_decompressed"  # Notice the S at the end of this variable...
       ${PACKAGE_MANAGER_FIXBROKEN}
       # Remove decompressed folder that contains the installable packages
       rm -Rf "${BIN_FOLDER:?}/${file_name}_decompressed"

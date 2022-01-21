@@ -220,6 +220,7 @@ declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r BASH_COMPLETIONS_PATH="/usr/share/bash-completion/completions/git"
 declare -r SSH_GLOBAL_CONF_PATH="/etc/ssh/sshd_config"
+declare -r PYTHON_VERSION="$(python3 --version | tr "A-Z" "a-z" | tr -d " " | rev | cut -d "." -f2- | rev)"
 
 # To keep information about the current installation
 declare CURRENT_INSTALLATION_FOLDER=""
@@ -429,6 +430,7 @@ declare -r feature_keynames=(
   "latex"
   "libgtkglext1"
   "libkrb5_dev"
+  "libreoffice"
   "libxcb_xtest0"
   "lmms"
   "loc"
@@ -456,7 +458,6 @@ declare -r feature_keynames=(
   "octave"
   "okular"
   "onedrive"
-  "openoffice"
   "openssl102"
   "openssh_server"
   "outlook"

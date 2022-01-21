@@ -107,6 +107,41 @@ cd32379  UPDATED: A table of contents have been added to README.md (Axlfc)
 e40bfe3  FIXED: Bug in clonerepository installation type. There was an rm missing for avoiding collisions (AleixMT)
 ```
 
+## Git Large File-System support
+We are using git-lfs to track binary data on our repository like data from images which do not need to be indexed as
+a normal file in git. Instead, we use git-lfs, a utility to upload binary files to git in a more optimized way, so it
+does not conflict with our pull, push, checkout and clone speeds.
+
+First you need to install git-lfs in your computer. You can use the customizer for this matter if you already have it installed:
+```
+sudo apt-get install -y git-lfs
+```
+or
+```
+sudo customizer-install -v -o git
+```
+
+Then, every time you clone the repository, you need to navigate to the project folder and execute:
+```
+git-lfs install
+```
+You will see sentences similar to these:
+```
+Updated git hooks.
+Git LFS initialized.
+```
+
+Now you can work transparently and uploading binary content. The rules for `git-lfs` to distinguish between indexable
+files (source code) and no-indexable files (binary data) are in the `.gitattributes` file in the root of the project.
+You can include rules there to mark as no-indexable file any type of files regarding its name (and extension). For example:
+``` 
+*.svg filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+```
+
+Which are two rules that make all the files with `.svg` and `.png` extension trackable by git-lfs. These rules are already
+in the repository. 
+
 ## Semantic versioning
 
 We do use semantic versioning as defined in [here](https://semver.org/). 

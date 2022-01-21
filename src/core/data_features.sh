@@ -137,7 +137,7 @@ add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` || 
 
 aircrack_ng_installationtype="packagemanager"
 aircrack_ng_packagenames=("aircrack-ng")
-aircrack_ng_arguents=("aircrack_ng" "aircrackng")
+aircrack_ng_arguments=("aircrack_ng" "aircrackng")
 aircrack_ng_readmeline="| aircrack-ng | Security tools for audition | Command \`aircrack-ng\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 aisleriot_installationtype="packagemanager"
@@ -394,7 +394,7 @@ calibre_readmeline="| Calibre | e-book reader| Commmand \`calibre\`, desktop lau
 changebg_installationtype="repositoryclone"
 changebg_arguments=("change_bg" "wallpaper" "wallpapers")
 changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES_DIR}/wallpapers" "*.jpeg;${XDG_PICTURES_DIR}/wallpapers" )
-changebg_binariesinstalledpaths=".cronscript.sh;changebg"
+changebg_binariesinstalledpaths=(".cronscript.sh;changebg")
 changebg_cronscript_content="cronscript.sh"
 changebg_cronscript_path="cronscript.sh"
 changebg_cronjob_content=".cronjob"
@@ -2495,16 +2495,12 @@ Version=1.0
 
 onedrive_readmeline="| OneDrive | ${onedrive_readmelinedescription} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-openoffice_installationtype="packageinstall"
-openoffice_arguments=("open_office" "office")
-openoffice_packagenames=("libreoffice-base-core" "libreoffice-impress" "libreoffice-calc"
-      "libreoffice-math" "libreoffice-common" "libreoffice-ogltrans" "libreoffice-core" "libreoffice-pdfimport"
-      "libreoffice-draw" "libreoffice-style-breeze" "libreoffice-gnome" "libreoffice-style-colibre" "libreoffice-gtk3"
-      "libreoffice-style-elementary" "libreoffice-help-common" "libreoffice-style-tango" "libreoffice-help-en-us"
-      "libreoffice-writer")
-openoffice_compressedfileurl="https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028"
-openoffice_launchernames=("openoffice4-base" "openoffice4-calc" "openoffice4-draw" "openoffice4-math" "openoffice4-writer")
-openoffice_readmeline="| OpenOffice | Office suite for open-source systems | Command \`openoffice4\` in PATH, desktop launchers for \`base\`, \`calc\`, \`draw\`, \`math\` and \`writer\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+libreoffice_installationtype="packagemanager"
+libreoffice_arguments=("open_office" "office" "libre_office")
+libreoffice_packagenames=("libreoffice-base-core" "libreoffice-impress" "libreoffice-calc" "libreoffice-math" "libreoffice-common" "libreoffice-ogltrans" "libreoffice-core" "libreoffice-pdfimport" "libreoffice-draw" "libreoffice-style-breeze" "libreoffice-gnome" "libreoffice-style-colibre" "libreoffice-gtk3" "libreoffice-style-elementary" "libreoffice-help-common" "libreoffice-style-tango" "libreoffice-help-en-us" "libreoffice-writer")
+#openoffice_packageurls=("https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028")
+libreoffice_launchernames=("libreoffice-impress" "libreoffice-calc" "libreoffice-draw" "libreoffice-math" "libreoffice-startcenter" "libreoffice-writer")  # "libreoffice-xsltfilter"
+libreoffice_readmeline="| OpenOffice | Office suite for open-source systems | Command \`openoffice4\` in PATH, desktop launchers for \`base\`, \`calc\`, \`draw\`, \`math\` and \`writer\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 openssl102_installationtype="packageinstall"
 openssl102_arguments=("openssl102")
@@ -2624,8 +2620,8 @@ pdfgrep_readmeline="| pdfgrep | CLI utility that makes it possible to search for
 
 pgadmin_installationtype="pythonvenv"
 pgadmin_arguments=("pgadmin" "pgadmin4")
-pgadmin_binariesinstalledpaths=("lib/python3.8/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
-pgadmin_confoverride_path="lib/python3.8/site-packages/pgadmin4/config_local.py"
+pgadmin_binariesinstalledpaths=("lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
+pgadmin_confoverride_path="lib/${PYTHON_VERSION}/site-packages/pgadmin4/config_local.py"
 pgadmin_confoverride_content="config_local.py"
 pgadmin_executionscript_path="pgadmin_exec.sh"
 pgadmin_executionscript_content="pgadmin_exec.sh"
@@ -2645,7 +2641,7 @@ StartupWMClass=pgadmin
 Terminal=false
 Type=Application
 Version=1.0
-Icon=${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Icon=${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
 Exec=bash ${BIN_FOLDER}/pgadmin/pgadmin_exec.sh
 ")
 pgadmin_manualcontentavailable="0;1;0"
@@ -2659,12 +2655,13 @@ install_pgadmin_mid() {
   # environment an not the python system interpreter.
 
   # Prepend shebang line to python3 interpreter of the venv
-  echo "#!${BIN_FOLDER}/pgadmin/bin/python3" | cat - "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py" >"${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py.tmp" "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
-  chmod +x "${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgAdmin4.py"
+  echo "#!${BIN_FOLDER}/pgadmin/bin/python3" | cat - "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py" > "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py.tmp" "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py"
+  chmod +x "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py"
 }
 uninstall_pgadmin_mid() {
   :
 }
+
 
 php_installationtype="packagemanager"
 php_arguments=("php")
@@ -2692,7 +2689,7 @@ StartupWMClass=phppggadmin
 Terminal=false
 Type=Application
 Version=1.0
-Icon=${BIN_FOLDER}/pgadmin/lib/python3.8/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
+Icon=${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
 Exec=nohup xdg-open ${phppgadmin_url}
 TryExec=xdg-open
 ")
@@ -3121,7 +3118,7 @@ spotify_bashfunctions=("spotify.sh")
 spotify_launchernames=("spotify")
 spotify_packageurls=("https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.72.439.gc253025e_amd64.deb")
 spotify_package_manager_override="apt-get"
-spotify_packagenames=("spotify-desktop")
+spotify_packagedependencies=("libgconf-2-4")
 spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 spreadsheets_installationtype="environmental"
@@ -3515,7 +3512,7 @@ twitch_installationtype="environmental"
 twitch_arguments=("twitch" "twitch_tv")
 twitch_url="https://twitch.tv/"
 twitch_bashfunctions=("twitch.sh")
-twitch_downloads=("https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png;twitch_icon.png")
+twitch_downloads=("https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png;twitch.png")
 twitch_readmelinedescription="Twitch web opens in Chrome"
 twitch_launchercontents=("
 [Desktop Entry]
@@ -3523,7 +3520,7 @@ Categories=Network;
 Comment=${twitch_readmelinedescription}
 Encoding=UTF-8
 Exec=xdg-open ${twitch_url}
-Icon=${BIN_FOLDER}/twitch/twitch_icon.svg
+Icon=${BIN_FOLDER}/twitch/twitch_icon.png
 GenericName=Twitch.tv
 Keywords=twitch;Twitch;
 MimeType=
@@ -3853,9 +3850,10 @@ z_bashfunctions=("z.sh")
 
 zoom_installationtype="userinherit"
 zoom_arguments=("zoom")
-zoom_packagedependencies=("libxcb-xtest0" "libqt5quickwidgets5")
+zoom_packagedependencies=("libglib2.0-0"
+#"libgstreamer-plugins-base0.10-0"
+"libxcb-shape0" "libxcb-shm0" "libxcb-xfixes0" "libxcb-randr0" "libxcb-image0" "libfontconfig1" "libgl1-mesa-glx" "libxi6" "libsm6" "libxrender1" "libpulse0" "libxcomposite1" "libxslt1.1" "libsqlite3-0" "libxcb-keysyms1" "ibus" "libxcb-xtest0" "libqt5quickwidgets5")
 zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
-
 zoom_compressedfileurl="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
 zoom_downloads=("https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/zoom.svg;zoom_icon.svg")
 zoom_readmelinedescription="Live Video Streaming for Meetings"
