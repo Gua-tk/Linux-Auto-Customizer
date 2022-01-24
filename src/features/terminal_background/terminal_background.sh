@@ -5,6 +5,11 @@ then
   return
 fi
 
+if ! gsettings get org.gnome.Terminal.ProfilesList default &>/dev/null; then
+  # Returned an error, probably schema not present. Abort
+  return
+fi
+
 profile_uuid="$(gsettings get org.gnome.Terminal.ProfilesList default | cut -d "'" -f2)"
 if [ -n "${profile_uuid}" ]; then
   # make sure the profile is set to not use theme colors
@@ -23,7 +28,7 @@ if [ -n "${profile_uuid}" ]; then
   # Cursor like in a text editor
   gsettings set org.gnome.Terminal.Legacy.Profile:/:"${profile_uuid}"/ cursor-shape 'ibeam'
   
-  unset profile_uuid
 else
   echo "ERROR, non terminal default profile list found"
 fi
+unset profile_uuid
