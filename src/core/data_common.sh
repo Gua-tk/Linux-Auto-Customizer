@@ -425,7 +425,7 @@ declare -r feature_keynames=(
   "jupyter_lab"
   "k"
   "keep"
-  "keyboardfixç"
+  "keyboardfix"
   "L"
   "l"
   "latex"
