@@ -394,11 +394,11 @@ calibre_readmeline="| Calibre | e-book reader| Commmand \`calibre\`, desktop lau
 changebg_installationtype="repositoryclone"
 changebg_arguments=("change_bg" "wallpaper" "wallpapers")
 changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES_DIR}/wallpapers" "*.jpeg;${XDG_PICTURES_DIR}/wallpapers" )
-changebg_binariesinstalledpaths=(".cronscript.sh;changebg")
+changebg_binariesinstalledpaths=("cronscript.sh;changebg")
 changebg_cronscript_content="cronscript.sh"
 changebg_cronscript_path="cronscript.sh"
-changebg_cronjob_content=".cronjob"
-changebg_cronjob_path=".cronjob"
+changebg_cronjob_content="cronjob"
+changebg_cronjob_path="cronjob"
 changebg_filekeys=("cronscript" "cronjob")
 changebg_manualcontentavailable="0;0;1"
 changebg_readmeline="| Function \`changebg\` | Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes | Function \`changebg\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -408,7 +408,7 @@ install_changebg_post() {
 }
 install_changebg_post() {
   :
-  #crontab "${USR_BIN_FOLDER}/changebg/.cronjob"
+  #crontab "${USR_BIN_FOLDER}/changebg/cronjob"
 }
 
 cheat_installationtype="environmental"
