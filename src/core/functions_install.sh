@@ -1103,7 +1103,6 @@ data_and_file_structures_initialization() {
   if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}" &>/dev/null; then
     if [ "${EUID}" == 0 ]; then
       echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
-      grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
       if grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}" &>/dev/null; then
         remove_line "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
       fi
