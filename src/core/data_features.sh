@@ -1683,6 +1683,24 @@ Version=1.0
 ")
 keep_readmeline="| Google Keep | ${keep_readmelinedescription} | Command \`keep\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+keyboardfix_installationtype="environmental"
+keyboardfix_arguments=("keyboard_fix" "fix_keyboard")
+keyboardfix_readmelinedescription="Fixes the Fn key in combination with the Function keys F1, F2, etc. which happens to not work in some keyboards"
+keyboardfix_filekeys=("keyboardconf")
+keyboardfix_keyboardconf_path="/etc/modprobe.d/hid_apple.conf"
+keyboardfix_keyboardconf_content="keyboard.conf"
+keyboardfix_manualcontentavailable="0;0;1"
+keyboardfix_flagsoverride="1;;;;;"  # Root mode
+install_keyboardfix_post()
+{
+  update-initramfs -u -k all
+}
+uninstall_keyboardfix_pre()
+{
+  :
+}
+
+
 L_installationtype="environmental"
 L_arguments=("L")
 L_bashfunctions=("L.sh")
