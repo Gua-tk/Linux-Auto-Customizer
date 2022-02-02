@@ -23,13 +23,16 @@ main()
   for key_name in *; do
     cd ${key_name}
     pwd
-    if [ -f ${key_name}.sh ]; then
-      ex ${key_name}.sh <<eof
-1 insert
-#!/usr/bin/env bash
-.
-xit
-eof
+    if [ -f *.sh ]; then
+      if head -1 *.sh; then
+
+        ex ${key_name}.sh <<eof
+  1 insert
+  #!/usr/bin/env bash
+  .
+  xit
+  eof
+      fi
     fi
     cd ..
   done

@@ -1,4 +1,4 @@
-
+#!/usr/bin/env bash
 # Create and source a venv with the given name passed as parameter.
 # If already exists, only sources activate
 # If already activated, do deactivate

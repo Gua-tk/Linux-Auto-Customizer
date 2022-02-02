@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ########################################################################################################################
 # - Name: tmux_functions.sh                                                                                            #
 # - Description: Miscellaneous configuration (functions and aliases) of tmux using bash. Functions include completions #

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ########################################################################################################################
 # - Name: tmux_clockmoji.sh                                                                                            #
 # - Description: Displays the corresponding emoji of a clock regarding the current time. Used in the right status bar  #
