@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 studio() {
   if [ $# -eq 0 ]; then

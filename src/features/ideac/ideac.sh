@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ideac() {
   if [ $# -eq 0 ]; then

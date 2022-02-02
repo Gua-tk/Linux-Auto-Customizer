@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 alias sshDisable="sudo systemctl disable sshd"
 alias sshEnable="sudo systemctl enable ssh"

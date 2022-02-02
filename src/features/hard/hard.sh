@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 alias hard="git reset --hard"
 if [ -f "€{BASH_COMPLETIONS_PATH}" ]; then
   source "€{BASH_COMPLETIONS_PATH}"

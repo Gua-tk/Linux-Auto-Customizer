@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 loc() {
   local total_lines=0

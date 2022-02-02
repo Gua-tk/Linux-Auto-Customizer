@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ideau() {
   if [ $# -eq 0 ]; then

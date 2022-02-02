@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 alias branch="git branch"
 if [ -f "€{BASH_COMPLETIONS_PATH}" ]; then
   source "€{BASH_COMPLETIONS_PATH}"

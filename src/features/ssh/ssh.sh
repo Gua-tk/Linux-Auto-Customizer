@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 sssh() {
   if [ $# -eq 0 ]; then

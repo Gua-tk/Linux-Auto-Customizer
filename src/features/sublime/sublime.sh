@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 sublime() {
   if [ $# -eq 0 ]; then

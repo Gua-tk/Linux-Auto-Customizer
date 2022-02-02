@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 E() {
   declare -Arl EDITABLEFILES=(

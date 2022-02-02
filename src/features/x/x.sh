@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 x() {
   local first_compressed_file_arg_pos=

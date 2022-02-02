@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 k() {    #sudo kill `lsof -i:3000 -t` "$1"  # kill by port
   [ "$1" -eq "$1" ] 2>/dev/null

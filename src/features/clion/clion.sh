@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 clion() {
   if [ $# -eq 0 ]; then

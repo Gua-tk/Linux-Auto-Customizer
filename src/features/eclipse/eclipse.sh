@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 eclipse() {
   if [ $# -eq 0 ]; then
