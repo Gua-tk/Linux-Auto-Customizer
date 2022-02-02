@@ -4,7 +4,7 @@
 [![GitHub commits since tagged version](https://img.shields.io/github/commits-since/AleixMT/Linux-Auto-Customizer/v0.1.0?style=plastic&logo=github)](https://github.com/AleixMT/Linux-Auto-Customizer/issues)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/AleixMT/Linux-Auto-Customizer?style=plastic&logo=linux)](https://github.com/AleixMT/Linux-Auto-Customizer/graphs/commit-activity)
 [![GitHub last commit](https://img.shields.io/github/last-commit/AleixMT/Linux-Auto-Customizer?&style=plastic&color=blue)](https://github.com/AleixMT/Linux-Auto-Customizer/commits/master)
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/customizer)
+[![Buy Me A Coffee](https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/customizer)
 [![GitHub Repo stars](https://img.shields.io/github/stars/AleixMT/Linux-Auto-Customizer?style=social)](https://github.com/AleixMT/Linux-Auto-Customizer)
 
 
