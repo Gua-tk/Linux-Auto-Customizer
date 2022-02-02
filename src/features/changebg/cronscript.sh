@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #!/bin/bash
 if [ -z ${DBUS_SESSION_BUS_ADDRESS+x} ]; then
   user=$(whoami)

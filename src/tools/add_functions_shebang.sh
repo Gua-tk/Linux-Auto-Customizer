@@ -23,17 +23,20 @@ main()
   for key_name in *; do
     cd ${key_name}
     pwd
-    if [ -f *.sh ]; then
-      if head -1 *.sh; then
-
-        ex ${key_name}.sh <<eof
-  1 insert
-  #!/usr/bin/env bash
-  .
-  xit
-  eof
+    for script in *; do
+      if echo ${script} | grep ".sh"; then
+        #Match for .sh extension
+        if [ ! "$(head -1 "${script}")" == '#!/usr/bin/env bash' ]; then
+          #Write the shebang if we have not already
+          ex ${script} <<eof
+1 insert
+#!/usr/bin/env bash
+.
+xit
+eof
+        fi
       fi
-    fi
+    done
     cd ..
   done
 }
