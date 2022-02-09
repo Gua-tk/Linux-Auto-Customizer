@@ -45,7 +45,7 @@ main()
       programs_not_trimmed+=(${key_name})
       continue
     fi
-    icon_path="$(cat "${XDG_DESKTOP_DIR}/${key_name}.desktop" | grep -Eo "^Icon=.*\$" | cut -d "=" -f2-)"
+    icon_path="$(grep -Eo "^Icon=.*\$" < "${XDG_DESKTOP_DIR}/${key_name}.desktop" | cut -d "=" -f2-)"
     if [ -z "${icon_path}" ]; then
       continue
     fi
