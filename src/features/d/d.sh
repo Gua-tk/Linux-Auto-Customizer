@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 d()
 { # d, a git diff and color grep dif

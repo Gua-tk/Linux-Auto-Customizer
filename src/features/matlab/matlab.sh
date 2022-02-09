@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 matlab() {
   if [ $# -eq 0 ]; then
     args="."

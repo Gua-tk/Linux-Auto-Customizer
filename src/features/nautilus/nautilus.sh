@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Check if xdg-mime command is available
 if ! command -v xdg-mime &> /dev/null
 then

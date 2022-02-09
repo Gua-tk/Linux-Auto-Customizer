@@ -1,4 +1,4 @@
-
+#!/usr/bin/env bash
 z() {
   local first_compressed_file_arg_pos=
   if [ -d "$1" ]; then

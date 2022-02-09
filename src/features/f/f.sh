@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 f()
 {
   if  [ $# -eq 0 ]; then  # No arguments given

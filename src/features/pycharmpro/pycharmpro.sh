@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 pycharmpro() {
   if [ $# -eq 0 ]; then

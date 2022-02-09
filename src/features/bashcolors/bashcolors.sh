@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 colors() {
   if [ -z "$(echo "${COLORS[@]}")" ]; then

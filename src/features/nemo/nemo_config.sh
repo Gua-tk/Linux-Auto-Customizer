@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Set a key into gsettings safely, even if it does not exists
 # Argument 1: Key path
 # Argument 2: Property

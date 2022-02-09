@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 # Check if gsettings command is available
 if ! command -v gsettings &> /dev/null

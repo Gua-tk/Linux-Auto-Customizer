@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 if [ -f "€{BIN_FOLDER}/gitprompt/gitprompt.sh" ]; then
     GIT_PROMPT_THEME=Default_Ubuntu

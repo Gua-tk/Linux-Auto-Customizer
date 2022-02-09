@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 codium() {
   if [ $# -eq 0 ]; then

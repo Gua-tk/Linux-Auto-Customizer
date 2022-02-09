@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #!/bin/bash
 ########################################################################################################################
 # - Name: Linux Auto-Customizer change background script.                                                              #
