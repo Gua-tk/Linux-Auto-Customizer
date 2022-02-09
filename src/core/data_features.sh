@@ -804,10 +804,10 @@ Version=1.0
 ")
 duckduckgo_readmeline="| DuckDuckGo | ${duckduckgo_readmelinedescription} | Command \`duckduckgo\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-dummycommit_installationtype="environmental"
-dummycommit_arguments=("dummycommit")
-dummycommit_bashfunctions=("dummycommit.sh")
-dummycommit_readmeline="| Function \`dummycommit\` | Do the following commands \`git add -a\` \`git commit -am \$1\` \`git push\` | Command \`dummycommit\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+vommit_installationtype="environmental"
+vommit_arguments=("vommit")
+vommit_bashfunctions=("vommit.sh")
+vommit_readmeline="| Function \`vommit\` | Do the following commands \`git add -a\` \`git commit -am \$1\` \`git push\` | Command \`vommit\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 e_installationtype="environmental"
 e_arguments=("e")

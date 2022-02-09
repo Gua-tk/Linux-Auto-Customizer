@@ -6,5 +6,5 @@ pycharmpro() {
   else
     args="$@"
   fi
-  nohup pycharmpro ${args} &>/dev/null &
+  nohup pycharmpro "${args}" &>/dev/null &
 }

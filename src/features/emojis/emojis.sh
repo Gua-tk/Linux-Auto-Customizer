@@ -4,8 +4,8 @@ liveclock(){
 clocks=(🕛 🕧 🕐 🕜 🕑 🕝 🕒 🕞 🕓 🕟 🕔 🕠 🕕 🕡 🕖 🕢 🕗 🕣 🕘 🕤 🕙 🕥 🕚 🕦 🕛)
 while :; do
   echo "${clocks[index]}"
-  index=$((${index} + 1))
-  index=$((${index} % 25))
+  index=$(($index + 1))
+  index=$(($index % 25))
   sleep 0.04
   clear
 done

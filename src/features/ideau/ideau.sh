@@ -6,5 +6,5 @@ ideau() {
   else
     args="$@"
   fi
-  nohup ideau ${args} &>/dev/null &
+  nohup ideau "${args}" &>/dev/null &
 }

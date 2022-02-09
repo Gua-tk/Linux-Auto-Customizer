@@ -6,5 +6,5 @@ clion() {
   else
     args="$@"
   fi
-  nohup clion ${args} &>/dev/null &
+  nohup clion "${args}" &>/dev/null &
 }
