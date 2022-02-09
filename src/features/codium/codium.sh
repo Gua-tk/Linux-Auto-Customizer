@@ -6,5 +6,5 @@ codium() {
   else
     args="$@"
   fi
-  nohup codium ${args} &>/dev/null &
+  nohup codium "${args}" &>/dev/null &
 }

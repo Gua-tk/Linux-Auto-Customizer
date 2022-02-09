@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-dummycommit()
+vommit()
 {
   git add -A
   messag="$@"

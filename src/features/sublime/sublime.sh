@@ -6,5 +6,5 @@ sublime() {
   else
     args="$@"
   fi
-  nohup sublime ${args} &>/dev/null &
+  nohup sublime "${args}" &>/dev/null &
 }

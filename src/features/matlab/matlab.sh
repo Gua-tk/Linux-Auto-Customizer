@@ -5,5 +5,5 @@ matlab() {
   else
     args="$@"
   fi
-  nohup matlab ${args} &>/dev/null &
+  nohup matlab "${args}" &>/dev/null &
 }
