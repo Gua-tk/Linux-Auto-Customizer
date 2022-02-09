@@ -6,5 +6,5 @@ studio() {
   else
     args="$@"
   fi
-  nohup studio ${args} &>/dev/null &
+  nohup studio "${args}" &>/dev/null &
 }

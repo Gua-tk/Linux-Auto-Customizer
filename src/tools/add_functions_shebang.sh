@@ -2,7 +2,7 @@
 
 ########################################################################################################################
 # -Name: add_functions_shebang.sh
-# -Description: Add shebangs in bash functions to avoid codacy error 'Add a shebang or a 'shell' directive.'
+# -Defile_pathion: Add shebangs in bash functions to avoid codacy error 'Add a shebang or a 'shell' directive.'
 # -Creation Date: 02/02/2022
 # -Last Modified: 02/02/2002
 # -Author: Axel
@@ -16,28 +16,35 @@
 main()
 {
   CUSTOMIZER_PROJECT_FOLDER="$(cd "$(dirname "$(realpath "$0")")/../.." &>/dev/null && pwd)"
+
   DIR="${CUSTOMIZER_PROJECT_FOLDER}/src/core"
-  source "${CUSTOMIZER_PROJECT_FOLDER}/src/core/data_features.sh"
+  source "${DIR}/data_features.sh"
+  SHE_BANG='#!/usr/bin/env bash'
 
+  for key_name in ${feature_keynames[@]}; do
 
-  for key_name in *; do
-    cd ${key_name}
-    pwd
-    for script in *; do
-      if echo ${script} | grep ".sh"; then
-        #Match for .sh extension
-        if [ ! "$(head -1 "${script}")" == '#!/usr/bin/env bash' ]; then
-          #Write the shebang if we have not already
-          ex ${script} <<eof
+    if [ ! -d "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${key_name}" ]; then
+      continue
+    fi
+    for file_path in "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${key_name}/"*; do
+
+      if [ ! "$(echo "${file_path}" | rev | cut -d '.' -f1 | rev )" == "sh" ]; then
+        continue
+      fi
+      # Match for .sh extension
+      if [ "$(head -1 "${file_path}")" == "${SHE_BANG}" ]; then
+        continue
+      fi
+      # Write the shebang if we have not already
+      ex "${file_path}" <<eof
 1 insert
 #!/usr/bin/env bash
 .
 xit
 eof
-        fi
-      fi
+
+      echo "Added shebang to file ${file_path}"
     done
-    cd ..
   done
 }
 

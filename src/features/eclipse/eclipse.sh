@@ -6,5 +6,5 @@ eclipse() {
   else
     args="$@"
   fi
-  nohup eclipse ${args} &>/dev/null &
+  nohup eclipse "${args}" &>/dev/null &
 }
