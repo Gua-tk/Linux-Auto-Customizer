@@ -3,9 +3,9 @@
 c()
 {
   clear
-	if [ -d "$1" ]; then
-		cd $1
-	elif [ -f "$1" ]; then
-		cat $1
+	if [ -d "$*" ]; then
+		cd "$*"
+	elif [ -f "$*" ]; then
+		cat "$*"
 	fi
 }

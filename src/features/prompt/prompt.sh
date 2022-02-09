@@ -28,7 +28,7 @@ fi
 
 if [ "$color_prompt" = yes ]; then
   if [ ! -z "${GIT_PROMPT_LAST_COMMAND_STATE}" ]; then
-    if [ ${GIT_PROMPT_LAST_COMMAND_STATE} -gt 0 ]; then  # Red color if error
+    if [ "${GIT_PROMPT_LAST_COMMAND_STATE}" -gt 0 ]; then  # Red color if error
       color_dollar="\[\e[1;31m\]"
     else  # light green color if last command is ok
       color_dollar="\[\e[1;32m\]"
@@ -56,7 +56,16 @@ esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
+    if test -r ~/.dircolors; then
+      if eval "$(dircolors -b ~/.dircolors)"; then
+        :
+      else
+        eval "$(dircolors -b)"
+      fi
+    else
+      eval "$(dircolors -b)"
+    fi
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
