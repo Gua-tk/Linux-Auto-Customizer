@@ -33,13 +33,13 @@ loc() {
         for file_route in $(find "$1" -type f -name "*" 2>/dev/null); do
           loc_table+="${file_route};"
           local lines_file="$( sed '/^$/d' < "${file_route}" 2>/dev/null | wc -l)"
-          total_lines_in_directory=$(( ${total_lines_in_directory} + ${lines_file} ))
+          total_lines_in_directory=$(( total_lines_in_directory + lines_file ))
           loc_table+="${lines_file}"
           loc_table+="${NEW_LINE}"
         done
         loc_table+="${1};"
         loc_table+="${total_lines_in_directory}"
-        total_lines=$(( ${total_lines} + ${total_lines_in_directory} ))
+        total_lines=$(( total_lines + total_lines_in_directory ))
         loc_table+="${NEW_LINE}"
       else
         loc_table+="argument ${counter_args};"
