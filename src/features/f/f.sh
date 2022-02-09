@@ -9,7 +9,7 @@ f()
     elif [ -d "$1" ]; then  # Searches files in directory
       find "$1"
     else
-      more * | grep "$1"  # Searches therm in all files
+      more ./* | grep "$1"  # Searches therm in all files
     fi
   elif [ $# -gt 1 ]; then
     local temp="$1"
