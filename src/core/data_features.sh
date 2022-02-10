@@ -2178,7 +2178,7 @@ Comment[tr]=Dosyalara eriş ve düzenle
 Comment[uk]=Доступ до файлів та впорядковування файлів
 Comment[zh_CN]=访问和组织文件
 Comment[zh_HK]=存取與組織檔案
-Exec=nemo
+Exec=nemo %U
 Icon=folder
 # Translators: these are keywords of the file manager
 Keywords=folders;filesystem;explorer;
