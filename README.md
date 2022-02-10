@@ -40,7 +40,7 @@ for a command.
 ## 🛠️ Configuration 
 To install this software you must begin cloning this repository to you computer. You can either
 download a `.zip`
-file containing the repository from github clicking [here](https://github.com/AleixMT/Linux-Auto-Customizer/archive/master.zip).
+file containing the repository from GitHub clicking [here](https://github.com/AleixMT/Linux-Auto-Customizer/archive/master.zip).
 Decompress the file and open a terminal in that directory.
 
 You can also clone the repository using directly terminal. To do the last option, you must have installed 
