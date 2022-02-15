@@ -591,6 +591,7 @@ create_dynamic_launcher() {
   override_name="$2_$1_name"
   metadata_name="$2_name"
   text="[Desktop Entry]
+Type=Application
 Encoding=UTF-8
 NoDisplay=false"
   if [ ! -z "${!override_name}" ]; then
@@ -659,7 +660,18 @@ NoDisplay=false"
   #override_="$2_$1_"
   #metadata_="$2_"
 
+
+  override_exec="$2_$1_exec"
+  metadata_exec_temp="$2_binariesinstalledpaths[0]"
+  metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
+  if [ ! -z "${!override_exec}" ]; then
+    text+=$'\n'"Exec=${!override_exec}"
+  else
+    text+=$'\n'"Exec=${metadata_exec}"
+  fi
+
   echo "${text}" > "${XDG_DESKTOP_DIR}/$3.desktop"
+  apply_permissions "${XDG_DESKTOP_DIR}/$3.desktop"
 }
 
 

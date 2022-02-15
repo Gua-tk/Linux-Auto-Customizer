@@ -256,3 +256,4 @@ Customizer currently has available 131 user features and 117 root features, 248 
 | VLC | Media player software, and streaming media server | Command `vlc`, desktop launcher and dashboard launcher | vlc |  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | Wireshark | Net sniffer | Command `wireshark`, desktop launcher and dashboard launcher | wireshark |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |
 | `xclip` | Utility for pasting. | Command `xclip` | x_clip | <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |
+![anydesk logo](https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/develop/data/static/anydesk/anydesk.svg)
