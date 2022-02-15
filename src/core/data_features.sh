@@ -186,6 +186,7 @@ ant_readmeline="| Apache Ant | Software tool for automating software build proce
 
 anydesk_installationtype="userinherit"
 anydesk_arguments=("any_desk")
+anydesk_name="Anydesk"
 anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
 anydesk_version="6.1.1"
 anydesk_tags=("remote" "control" "cloud")
@@ -197,6 +198,7 @@ anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
 anydesk_description="Software to remote control other computers"
 anydesk_readmeline="| Anydesk | ${anydesk_description} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+anydesk_launcherkeynames=("default")
 anydesk_launchercontents=("
 [Desktop Entry]
 Categories=Remote;control;other;

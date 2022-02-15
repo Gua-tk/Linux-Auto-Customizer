@@ -195,6 +195,14 @@ generic_uninstall_manual_launchers() {
   done
 }
 
+# - Description:
+# - Permissions:
+# Argument 1: Feature keyname
+# Argument 2:
+generic_uninstall_dynamic_launcher() {
+  :
+}
+
 # - Description: Expands function contents and remove them of .bashrc indirectly using bash_functions
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to uninstall, matching the variable $1_bashfunctions

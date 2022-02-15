@@ -581,6 +581,88 @@ translate_variables()
 }
 
 
+
+# - Description: Override .desktop Desktop launchers feature properties
+# - Permissions:
+# Argument 1: Launcher keyname
+# Argument 2: Program keyname
+# Argument 3:
+create_dynamic_launcher() {
+  override_name="$2_$1_name"
+  metadata_name="$2_name"
+  text="[Desktop Entry]
+Encoding=UTF-8
+NoDisplay=false"
+  if [ ! -z "${!override_name}" ]; then
+    text+=$'\n'"Name=${!override_name}"
+  else
+    text+=$'\n'"Name=${!metadata_name}"
+  fi
+
+  override_version="$2_$1_version"
+  metadata_version="$2_version"
+  if [ ! -z "${!override_version}" ]; then
+    text+=$'\n'"Version=${!override_version}"
+  else
+    text+=$'\n'"Version=${!metadata_version}"
+  fi
+
+  override_commentary="$2_$1_commentary"
+  metadata_commentary="$2_commentary"
+  if [ ! -z "${!override_commentary}" ]; then
+    text+=$'\n'"Comment=${!override_commentary}"
+  else
+    text+=$'\n'"Comment=${!metadata_commentary}"
+  fi
+
+  override_tags="$2_$1_tags[@]"
+  metadata_tags="$2_tags[@]"
+  if [ ! -z "${!override_tags}" ]; then
+    text+=$'\n'"Keywords="
+    for tag_override in "${!override_tags}"; do
+      text+="${tag_override}; "
+    done
+  else
+    text+=$'\n'"Keywords="
+    for tag_metadata in "${!metadata_tags}"; do
+      text+="${tag_metadata}; "
+    done
+  fi
+
+  override_icon="$2_$1_icon"
+  metadata_icon="$2_icon"
+  if [ ! -z "${!override_icon}" ]; then
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!override_icon}" "${BIN_FOLDER}/$2"
+    apply_permissions "${BIN_FOLDER}/$2/${!override_icon}"
+
+    text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!override_icon}"
+  else
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${BIN_FOLDER}/$2"
+    apply_permissions "${BIN_FOLDER}/$2/${!metadata_icon}"
+    text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!metadata_icon}"
+  fi
+
+  override_systemcategories="$2_$1_systemcategories[@]"
+  metadata_systemcategories="$2_systemcategories[@]"
+  if [ ! -z "${!override_systemcategories}" ]; then
+    text+=$'\n'"Categories="
+    for category_override in "${!override_systemcategories}"; do
+      text+="${category_override}; "
+    done
+  else
+    text+=$'\n'"Categories="
+    for category_metadata in "${!metadata_systemcategories}"; do
+      text+="${category_metadata}; "
+    done
+  fi
+
+  #override_="$2_$1_"
+  #metadata_="$2_"
+
+  echo "${text}" > "${XDG_DESKTOP_DIR}/$3.desktop"
+}
+
+
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - OPTIONAL PROPERTIES #####################################
 ########################################################################################################################
@@ -599,6 +681,19 @@ generic_install_manual_launchers() {
   done
 }
 
+# - Description:
+# - Permissions:
+# Argument 1: Feature keyname
+# Argument 2:
+generic_install_dynamic_launcher() {
+  local -r launcherkeynames="$1_launcherkeynames[@]"
+  local name_suffix_anticollision=""
+
+  for launcherkeyname in "${!launcherkeynames}"; do
+    create_dynamic_launcher "${launcherkeyname}" "$1" "$1${name_suffix_anticollision}"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
+}
 
 # - Description: Expands launcher names and add them to the favorites subsystem if FLAG_FAVORITES is set to 1.
 # - Permissions: Can be executed as root or user.
