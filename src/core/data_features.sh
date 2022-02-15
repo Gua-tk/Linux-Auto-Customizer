@@ -63,13 +63,21 @@ fi
 #    * "repositoryclone": Clone a repository inside the directory of the current feature installing.                   #
 #    * "environmental": Uses only the common part of every installation type. Has no type-dependent properties.        #
 #  - FEATUREKEYNAME_readmeline: Contains the readme line of the table for each feature.                                #
-#                                                                                                                      #
+#  - FEATUREKEYNAME_name: Stores the feature's name. Property 'Name=' of the desktop launcher.                                                                  #
+#  - FEATUREKEYNAME_version: Feature version. Property 'Version=' of the desktop launcher.                                                                          #
+#  - FEATUREKEYNAME_description: Feature description. Property 'GenericName=' of the desktop launcher.                                                            #
+#  - FEATUREKEYNAME_commentary: Commentary for desktop launcher. Property 'Comment=' of the desktop launcher.
+#  - FEATUREKEYNAME_tags: System categories for the feature Property 'Keywords=' of the desktop launcher.
+#  - FEATUREKEYNAME_systemcategories: Property 'Categories=' of the desktop launcher.
+#    Building Debugger IDE GUIDesigner Profiling RevisionControl Translation Calendar ContactManagement Database Dictionary Chart Email Finance FlowChart PDA ProjectManagement Presentation Spreadsheet WordProcessor 2DGraphics VectorGraphics RasterGraphics 3DGraphics Scanning OCR Photography Publishing Viewer TextTools DesktopSettings HardwareSettings Printing PackageManager Dialup InstantMessaging Chat IRCClient Feed FileTransfer HamRadio News P2P RemoteAccess Telephony TelephonyTools VideoConference WebBrowser WebDevelopment Midi Mixer Sequencer Tuner TV AudioVideoEditing Player Recorder DiscBurning ActionGame AdventureGame ArcadeGame BoardGame BlocksGame CardGame KidsGame LogicGame RolePlaying Shooter Simulation SportsGame StrategyGame Art Construction Music Languages ArtificialIntelligence Astronomy Biology Chemistry ComputerScience DataVisualization Economy Electricity Geography Geology Geoscience History Humanities ImageProcessing Literature Maps Math NumericalAnalysis MedicalSoftware Physics Robotics Spirituality Sports ParallelComputing Amusement Archiving Compression Electronics Emulator Engineering FileTools FileManager TerminalEmulator Filesystem Monitor Security Accessibility Calculator Clock TextEditor Documentation Adult Core KDE GNOME XFCE GTK Qt Motif Java ConsoleOnly Screensaver TrayIcon Applet Shell AudioVideo Audio Video Development Education Game Graphics Network Office Science Settings System Utility
+#  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
+#    static data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
 ### Optional properties                                                                                                #
 #  - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder of the system.   #
 #    Used as fallback for autostart and associatedfiletypes.                                                           #
 #  - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to      #
 #    binaries that will be added to the PATH. Its name in the PATH is added by using a ";" to separate it from the     #
-#    relative path: "binaries/common/handbreak.sh;handbreak".                                                          #
+#    relative path: "binaries/common/handbreak.sh;handbreak". It will be used to inherit when there is no overrrite.   #
 #  - FEATUREKEYNAME_launchercontents: Array of contents of launchers to be created in the desktop and dashboard.       #
 #    They are used as fallback for autostart too.                                                                      #
 #  - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be executed on the start of every terminal        #
@@ -105,7 +113,19 @@ fi
 #  - FEATUREKEYNAME_movefiles: Allows file moving from installation folder to other ones in the system, matching *     #
 #  - FEATUREKEYNAME_package_manager_override: Allows to load another package manager and its calls for a certain       #
 #    feature, reloading it back after its installation.                                                                #
-#                                                                                                                      #
+#  - FEATUREKEYNAME_launcherkeynames: Keynames to expand features properties of the desktop launcher when overriding. #                                                                                              #
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_name:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_version:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_commentary:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_tags:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_icon:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_description:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_mimetype:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_exec:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_systemcategories:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_actionkeynames:
+#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_name:
+#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_exec:
 ### Installation type dependent properties                                                                             #
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
 #    feature. Used in: packageinstall, packagemanager.                                                                 #
@@ -166,16 +186,21 @@ ant_readmeline="| Apache Ant | Software tool for automating software build proce
 
 anydesk_installationtype="userinherit"
 anydesk_arguments=("any_desk")
+anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
+anydesk_version="6.1.1"
+anydesk_tags=("remote" "control" "cloud")
+anydesk_icon="anydesk.svg"
+anydesk_systemcategories=("Accessibility" "Network" "RemoteAccess" "FileTransfer" "P2P")
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")
 anydesk_bashfunctions=("anydesk.sh")
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
-anydesk_readmelinedescription="Software to remote control other computers"
-anydesk_readmeline="| Anydesk | ${anydesk_readmelinedescription} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+anydesk_description="Software to remote control other computers"
+anydesk_readmeline="| Anydesk | ${anydesk_description} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 anydesk_launchercontents=("
 [Desktop Entry]
 Categories=Remote;control;other;
-Comment=${anydesk_readmelinedescription}
+Comment=${anydesk_description}
 Encoding=UTF-8
 Exec=anydesk
 GenericName=Remote desktop application
@@ -449,7 +474,7 @@ clion_binariesinstalledpaths=("bin/clion.sh;clion")
 clion_compressedfileurl="https://download.jetbrains.com/cpp/CLion-2021.3.tar.gz"
 clion_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
-Comment=${clion_readmelinedescription}
+Comment=${clion_description}
 Encoding=UTF-8
 Exec=clion %F
 GenericName=C Programing IDE
@@ -464,8 +489,8 @@ TryExec=clion
 Type=Application
 Version=1.0
 ")
-clion_readmelinedescription="Cross-platform C/C++ IDE"
-clion_readmeline="| Clion | ${clion_readmelinedescription} | Command \`clion\`, silent alias \`clion\`, desktop launcher, dashboard launcher, associated with mimetypes \`.c\`, \`.h\` and \`.cpp\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+clion_description="Cross-platform C/C++ IDE"
+clion_readmeline="| Clion | ${clion_description} | Command \`clion\`, silent alias \`clion\`, desktop launcher, dashboard launcher, associated with mimetypes \`.c\`, \`.h\` and \`.cpp\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 clone_installationtype="environmental"
 clone_arguments=("clone")
@@ -475,11 +500,11 @@ clone_readmeline="| Function \`clone\` | Function for \`git clone \$1\`|  Comman
 clonezilla_installationtype="packagemanager"
 clonezilla_arguments=("clonezilla")
 clonezilla_packagenames=("clonezilla")
-clonezilla_readmelinedescription="Disk cloning, disk imaging, data recovery, and deployment"
-clonezilla_readmeline="| CloneZilla | ${clonezilla_readmelinedescription} | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+clonezilla_description="Disk cloning, disk imaging, data recovery, and deployment"
+clonezilla_readmeline="| CloneZilla | ${clonezilla_description} | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 clonezilla_launchercontents=("[Desktop Entry]
 Categories=backup;images;restoration;boot;
-Comment=${clonezilla_readmelinedescription}
+Comment=${clonezilla_description}
 Encoding=UTF-8
 Exec=sudo clonezilla
 GenericName=Disk image utility
@@ -523,8 +548,8 @@ Type=Application
 Version=1.0
 ")
 cmatrix_packagenames=("cmatrix")
-cmatrix_readmelinedescription="Terminal screensaver from The Matrix"
-cmatrix_readmeline="| Cmatrix | ${cmatrix_readmelinedescription} | Command \`cmatrix\`, function \`matrix\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+cmatrix_description="Terminal screensaver from The Matrix"
+cmatrix_readmeline="| Cmatrix | ${cmatrix_description} | Command \`cmatrix\`, function \`matrix\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 code_installationtype="userinherit"
 code_arguments=("code" "visual_studio_code" "visual_studio")
@@ -533,7 +558,7 @@ code_binariesinstalledpaths=("code;code")
 code_compressedfileurl="https://go.microsoft.com/fwlink/?LinkID=620884"
 code_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
-Comment=${code_readmelinedescription}
+Comment=${code_description}
 Encoding=UTF-8
 Exec=code %f
 GenericName=IDE for programming
@@ -548,8 +573,8 @@ TryExec=code
 Type=Application
 Version=1.0
 ")
-code_readmelinedescription="Source-code editor"
-code_readmeline="| Visual Studio Code | ${code_readmelinedescription} | Command \`code\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+code_description="Source-code editor"
+code_readmeline="| Visual Studio Code | ${code_description} | Command \`code\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 codeblocks_installationtype="packagemanager"
 codeblocks_arguments=("codeblocks" "code::blocks")
@@ -655,7 +680,7 @@ discord_compressedfileurl="https://discord.com/api/download?platform=linux&forma
 discord_launchercontents=("
 [Desktop Entry]
 Categories=Network;InstantMessaging;
-Comment=${discord_readmelinedescription}
+Comment=${discord_description}
 Encoding=UTF-8
 Exec=discord
 GenericName=Internet Messenger
@@ -670,8 +695,8 @@ TryExec=discord
 Type=Application
 Version=1.0
 ")
-discord_readmelinedescription="All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone."
-discord_readmeline="| Discord | ${discord_readmelinedescription} | Command \`discord\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+discord_description="All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone."
+discord_readmeline="| Discord | ${discord_description} | Command \`discord\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 docker_installationtype="userinherit"
 docker_arguments=("docker")
@@ -684,11 +709,11 @@ documents_arguments=("documents" "google_document" "google_documents" "document"
 documents_url="https://docs.google.com/document/"
 documents_bashfunctions=("documents.sh")
 documents_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;documents_icon.svg")
-documents_readmelinedescription="Google Documents opening in Chrome"
+documents_description="Google Documents opening in Chrome"
 documents_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${documents_readmelinedescription}
+Comment=${documents_description}
 Encoding=UTF-8
 Exec=xdg-open ${documents_url}
 Icon=${BIN_FOLDER}/documents/documents_icon.svg
@@ -703,18 +728,18 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-documents_readmeline="| Google Documents | ${documents_readmelinedescription} | Command \`document\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+documents_readmeline="| Google Documents | ${documents_description} | Command \`document\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 drive_installationtype="environmental"
 drive_arguments=("drive" "google_drive")
 drive_url="https://drive.google.com/"
 drive_bashfunctions=("drive.sh")
 drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon.svg")
-drive_readmelinedescription="Google Drive opening in Chrome"
+drive_description="Google Drive opening in Chrome"
 drive_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${drive_readmelinedescription}
+Comment=${drive_description}
 Encoding=UTF-8
 GenericName=drive
 Keywords=drive;
@@ -729,7 +754,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-drive_readmeline="| Google Drive | ${drive_readmelinedescription} | Command \`drive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+drive_readmeline="| Google Drive | ${drive_description} | Command \`drive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 dropbox_installationtype="packageinstall"
 dropbox_arguments=("dropbox")
@@ -748,12 +773,12 @@ drupal_packagedependencies=("php-dom" "php-gd")
 #drupal_binariesinstalledpaths=("drupal;drupal")
 #drupal_compressedfileurl="https://www.drupal.org/download-latest/tar.gz" # This url might not be working stably as expected...
 drupal_compressedfileurl="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
-drupal_readmelinedescription="Web CMS"
+drupal_description="Web CMS"
 drupal_url="http://localhost/drupal"
 drupal_bashfunctions=("drupal.sh")
 drupal_launchercontents=("[Desktop Entry]
 Categories=CMS;web;
-Comment=${drupal_readmelinedescription}
+Comment=${drupal_description}
 Encoding=UTF-8
 Exec=xdg-open ${drupal_url}
 GenericName=IDE
@@ -768,7 +793,7 @@ TryExec=xdg-open
 Type=Application
 Version=4.2.2
 ")
-drupal_readmeline="| Drupal | ${drupal_readmelinedescription} | Command \`drupal\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+drupal_readmeline="| Drupal | ${drupal_description} | Command \`drupal\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 drupal_manualcontentavailable="0;0;1"
 install_drupal_post()
 {
@@ -784,11 +809,11 @@ duckduckgo_arguments=("duckduckgo")
 duckduckgo_url="https://duckduckgo.com/"
 duckduckgo_bashfunctions=("duckduckgo.sh")
 duckduckgo_downloads=("https://raw.githubusercontent.com/Axlfc/icons/master/images/duckduckgo/duckduckgo_icon.svg;duckduckgo_icon.svg")
-duckduckgo_readmelinedescription="Opens DuckDuckGo in Chrome"
+duckduckgo_description="Opens DuckDuckGo in Chrome"
 duckduckgo_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${duckduckgo_readmelinedescription}
+Comment=${duckduckgo_description}
 Encoding=UTF-8
 Exec=xdg-open ${duckduckgo_url}
 Icon=${BIN_FOLDER}/duckduckgo/duckduckgo_icon.svg
@@ -802,7 +827,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-duckduckgo_readmeline="| DuckDuckGo | ${duckduckgo_readmelinedescription} | Command \`duckduckgo\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+duckduckgo_readmeline="| DuckDuckGo | ${duckduckgo_description} | Command \`duckduckgo\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 vommit_installationtype="environmental"
 vommit_arguments=("vommit")
@@ -823,10 +848,10 @@ eclipse_arguments=("eclipse")
 eclipse_bashfunctions=("eclipse.sh")
 eclipse_binariesinstalledpaths=("eclipse;eclipse")
 eclipse_compressedfileurl="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
-eclipse_readmelinedescription="IDE for Java"
+eclipse_description="IDE for Java"
 eclipse_launchercontents=("[Desktop Entry]
 Categories=Development;IDE;
-Comment=${eclipse_readmelinedescription}
+Comment=${eclipse_description}
 Encoding=UTF-8
 Exec=eclipse
 GenericName=IDE
@@ -841,7 +866,7 @@ TryExec=eclipse
 Type=Application
 Version=4.2.2
 ")
-eclipse_readmeline="| Eclipse | ${eclipse_readmelinedescription} | Command \`eclipse\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+eclipse_readmeline="| Eclipse | ${eclipse_description} | Command \`eclipse\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 emojis_installationtype="environmental"
 emojis_arguments=("emojis" "emoji")
@@ -870,10 +895,10 @@ f_readmeline="| Function \`f\` | Function for finding strings in files, files in
 f_irc_installationtype="packagemanager"
 f_irc_arguments=("f_irc")
 f_irc_packagenames=("f-irc")
-f_irc_readmelinedescription="CLI IRC client"
+f_irc_description="CLI IRC client"
 f_irc_launchercontents=("[Desktop Entry]
 Categories=InstantMessaging;Communication;
-Comment=${f_irc_readmelinedescription}
+Comment=${f_irc_description}
 Encoding=UTF-8
 Exec=f-irc
 GenericName=IRC client
@@ -888,17 +913,17 @@ TryExec=f-irc
 Type=Application
 Version=1.0
 ")
-f_irc_readmeline="| f-irc | ${f_irc_readmelinedescription} | Command \`f-irc\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+f_irc_readmeline="| f-irc | ${f_irc_description} | Command \`f-irc\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 facebook_installationtype="environmental"
 facebook_arguments=("facebook")
 facebook_url="https://facebook.com/"
 facebook_bashfunctions=("facebook.sh")
 facebook_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg;facebook_icon.svg")
-facebook_readmelinedescription="Desktop app to facebook from Chrome"
+facebook_description="Desktop app to facebook from Chrome"
 facebook_launchercontents=("[Desktop Entry]
 Categories=Network;
-Comment=${facebook_readmelinedescription}
+Comment=${facebook_description}
 Encoding=UTF-8
 Exec=xdg-open ${facebook_url}
 Icon=${BIN_FOLDER}/facebook/facebook_icon.svg
@@ -913,7 +938,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-facebook_readmeline="| Facebook | ${facebook_readmelinedescription} | Command \`facebook\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+facebook_readmeline="| Facebook | ${facebook_description} | Command \`facebook\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 fastcommands_installationtype="environmental"
 fastcommands_arguments=("fast_commands")
@@ -1021,10 +1046,10 @@ forms_arguments=("forms" "google_forms")
 forms_url="https://docs.google.com/forms/"
 forms_bashfunctions=("forms.sh")
 forms_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg;forms_icon.svg")
-forms_readmelinedescription="Google Forms opening in Chrome"
+forms_description="Google Forms opening in Chrome"
 forms_launchercontents=("[Desktop Entry]
 Categories=Network;
-Comment=${forms_readmelinedescription}
+Comment=${forms_description}
 Encoding=UTF-8
 Exec=xdg-open ${forms_url}
 Icon=${BIN_FOLDER}/forms/forms_icon.svg
@@ -1039,7 +1064,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-forms_readmeline="| Forms | ${forms_readmelinedescription} | Command \`forms\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+forms_readmeline="| Forms | ${forms_description} | Command \`forms\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 freecad_installationtype="packagemanager"
 freecad_arguments=("freecad")
@@ -1064,10 +1089,10 @@ geogebra_arguments=("geogebra" "geogebra_classic_6" "geogebra_6")
 geogebra_binariesinstalledpaths=("GeoGebra;geogebra")
 geogebra_compressedfileurl="https://download.geogebra.org/package/linux-port6"
 geogebra_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/57/Geogebra.svg;geogebra_icon.svg")
-geogebra_readmelinedescription="Geometry calculator GUI"
+geogebra_description="Geometry calculator GUI"
 geogebra_launchercontents=("[Desktop Entry]
 Categories=geometry;
-Comment=${geogebra_readmelinedescription}
+Comment=${geogebra_description}
 Encoding=UTF-8
 Exec=geogebra
 GenericName=Geometry visualization plotter
@@ -1082,7 +1107,7 @@ TryExec=geogebra
 Type=Application
 Version=4.2.2
 ")
-geogebra_readmeline="| GeoGebra | ${geogebra_readmelinedescription} | Command \`geogebra\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+geogebra_readmeline="| GeoGebra | ${geogebra_description} | Command \`geogebra\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ghostwriter_installationtype="packagemanager"
 ghostwriter_arguments=("ghostwriter")
@@ -1123,11 +1148,11 @@ github_arguments=("github")
 github_url="https://github.com/"
 github_bashfunctions=("github.sh")
 github_downloads=("https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg;github_icon.svg")
-github_readmelinedescription="GitHub opening in Chrome"
+github_description="GitHub opening in Chrome"
 github_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${github_readmelinedescription}
+Comment=${github_description}
 Encoding=UTF-8
 Exec=xdg-open ${github_url}
 Icon=${BIN_FOLDER}/github/github_icon.svg
@@ -1142,7 +1167,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-github_readmeline="| GitHub | ${github_readmelinedescription} | Command \`github\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+github_readmeline="| GitHub | ${github_description} | Command \`github\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 github_desktop_installationtype="packageinstall"
 github_desktop_arguments=("github_desktop")
@@ -1164,11 +1189,11 @@ gitlab_arguments=("gitlab")
 gitlab_url="https://gitlab.com/"
 gitlab_bashfunctions=("gitlab.sh")
 gitlab_downloads=("https://about.gitlab.com/images/press/logo/svg/gitlab-icon-rgb.svg;gitlab_icon.svg")
-gitlab_readmelinedescription="Gitlab opening in Chrome"
+gitlab_description="Gitlab opening in Chrome"
 gitlab_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${gitlab_readmelinedescription}
+Comment=${gitlab_description}
 Encoding=UTF-8
 Exec=xdg-open ${gitlab_url}
 Icon=${BIN_FOLDER}/gitlab/gitlab_icon.svg
@@ -1183,7 +1208,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-gitlab_readmeline="| GitLab | ${gitlab_readmelinedescription} | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+gitlab_readmeline="| GitLab | ${gitlab_description} | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gitprompt_installationtype="repositoryclone"
 gitprompt_arguments=("git_prompt")
@@ -1196,11 +1221,11 @@ gmail_arguments=("gmail")
 gmail_url="https://mail.google.com/"
 gmail_bashfunctions=("gmail.sh")
 gmail_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg;gmail_icon.svg")
-gmail_readmelinedescription="Gmail opening in Chrome"
+gmail_description="Gmail opening in Chrome"
 gmail_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${gmail_readmelinedescription}
+Comment=${gmail_description}
 Encoding=UTF-8
 Exec=xdg-open ${gmail_url}
 Icon=${BIN_FOLDER}/gmail/gmail_icon.svg
@@ -1215,16 +1240,16 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-gmail_readmeline="| Gmail | ${gmail_readmelinedescription} | Command \`gmail\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+gmail_readmeline="| Gmail | ${gmail_description} | Command \`gmail\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gnat_gps_installationtype="packagemanager"
 gnat_gps_arguments=("gnat_gps")
-gnat_gps_readmelinedescription="Programming Studio for Ada and C"
+gnat_gps_description="Programming Studio for Ada and C"
 gnat_gps_launchercontents=("
 [Desktop Entry]
 Type=Application
 Name=GNAT Programming Studio
-Comment=${gnat_gps_readmelinedescription}
+Comment=${gnat_gps_description}
 Exec=/usr/bin/gnat-gps
 Icon=/usr/share/doc/gnat-gps/html/users_guide/_static/favicon.ico
 Terminal=false
@@ -1232,7 +1257,7 @@ Categories=Development;IDE
 Keywords=ide;editor;ada;c
 ")
 gnat_gps_packagenames=("gnat-gps")
-gnat_gps_readmeline="| GNAT | ${gnat_gps_readmelinedescription} | Command \`gnat-gps\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+gnat_gps_readmeline="| GNAT | ${gnat_gps_description} | Command \`gnat-gps\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gnome_calculator_installationtype="packagemanager"
 gnome_calculator_arguments=("gnome_calculator" "calculator" "calc")
@@ -1290,11 +1315,11 @@ google_arguments=("google")
 google_url="https://www.google.com/"
 google_bashfunctions=("google.sh")
 google_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/53/Google_\"G\"_Logo.svg;google_icon.svg")
-google_readmelinedescription="Google opening in Chrome"
+google_description="Google opening in Chrome"
 google_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${google_readmelinedescription}
+Comment=${google_description}
 Encoding=UTF-8
 Exec=xdg-open ${google_url}
 Icon=${BIN_FOLDER}/google/google_icon.svg
@@ -1309,18 +1334,18 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-google_readmeline="| Google | ${google_readmelinedescription} | Command \`google\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+google_readmeline="| Google | ${google_description} | Command \`google\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 googlecalendar_installationtype="environmental"
 googlecalendar_arguments=("google_calendar")
 googlecalendar_url="https://calendar.google.com/"
 googlecalendar_bashfunctions=("googlecalendar.sh")
 googlecalendar_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg;googlecalendar_icon.svg")
-googlecalendar_readmelinedescription="Google Calendar opening in Chrome"
+googlecalendar_description="Google Calendar opening in Chrome"
 googlecalendar_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${googlecalendar_readmelinedescription}
+Comment=${googlecalendar_description}
 Encoding=UTF-8
 Exec=xdg-open ${googlecalendar_url}
 Icon=${BIN_FOLDER}/googlecalendar/googlecalendar_icon.svg
@@ -1335,7 +1360,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-googlecalendar_readmeline="| Google Calendar | ${googlecalendar_readmelinedescription} | Command \`googlecalendar\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+googlecalendar_readmeline="| Google Calendar | ${googlecalendar_description} | Command \`googlecalendar\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 google_chrome_installationtype="packageinstall"
 google_chrome_arguments=("google_chrome")
@@ -1425,11 +1450,11 @@ ideac_associatedfiletypes=("text/x-java")
 ideac_bashfunctions=("ideac.sh")
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
 ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.3.tar.gz"
-ideac_readmelinedescription="Integrated development environment written in Java for developing computer software"
+ideac_description="Integrated development environment written in Java for developing computer software"
 ideac_launchercontents=("
 [Desktop Entry]
 Categories=Development;IDE;
-Comment=${ideac_readmelinedescription}
+Comment=${ideac_description}
 Encoding=UTF-8
 Exec=ideac %f
 GenericName=Java programming IDE
@@ -1444,7 +1469,7 @@ TryExec=ideac
 Type=Application
 Version=13.0
 ")
-ideac_readmeline="| intelliJ Community | ${ideac_readmelinedescription} | Command \`ideac\`, silent alias for \`ideac\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
+ideac_readmeline="| intelliJ Community | ${ideac_description} | Command \`ideac\`, silent alias for \`ideac\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 
 ideau_installationtype="userinherit"
 ideau_arguments=("ideau" "intellij_ultimate")
@@ -1452,11 +1477,11 @@ ideau_associatedfiletypes=("text/x-java")
 ideau_bashfunctions=("ideau.sh")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
 ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.3.tar.gz"
-ideau_readmelinedescription="Integrated development environment written in Java for developing computer software"
+ideau_description="Integrated development environment written in Java for developing computer software"
 ideau_launchercontents=("
 [Desktop Entry]
 Categories=Development;IDE;
-Comment=${ideau_readmelinedescription}
+Comment=${ideau_description}
 Encoding=UTF-8
 Exec=ideau %f
 GenericName=Java programing IDE
@@ -1471,7 +1496,7 @@ TryExec=ideau
 Type=Application
 Version=1.0
 ")
-ideau_readmeline="| intelliJ Ultimate | ${ideau_readmelinedescription} | Command \`ideau\`, silent alias for \`ideau\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
+ideau_readmeline="| intelliJ Ultimate | ${ideau_description} | Command \`ideau\`, silent alias for \`ideau\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 
 inkscape_installationtype="packagemanager"
 inkscape_arguments=("ink_scape")
@@ -1484,11 +1509,11 @@ instagram_arguments=("instagram")
 instagram_url="https://instagram.com"
 instagram_bashfunctions=("instagram.sh")
 instagram_downloads=("https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg;instagram_icon.svg")
-instagram_readmelinedescription="Opens Instagram in Chrome"
+instagram_description="Opens Instagram in Chrome"
 instagram_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${instagram_readmelinedescription}
+Comment=${instagram_description}
 Encoding=UTF-8
 Exec=xdg-open ${instagran_url}
 Icon=${BIN_FOLDER}/instagram/instagram_icon.svg
@@ -1503,7 +1528,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-instagram_readmeline="| Instagram | ${instagram_readmelinedescription} | Command \`instagram\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+instagram_readmeline="| Instagram | ${instagram_description} | Command \`instagram\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ipe_installationtype="environmental"
 ipe_arguments=("ipe")
@@ -1524,11 +1549,11 @@ iqmol_installationtype="packageinstall"
 iqmol_arguments=("iqmol")
 iqmol_bashfunctions=("iqmol.sh")
 iqmol_downloads=("http://www.iqmol.org/images/icon.png;iqmol_icon.png")
-iqmol_readmelinedescription="Program to visualize molecular data"
+iqmol_description="Program to visualize molecular data"
 iqmol_launchercontents=("
 [Desktop Entry]
 Categories=Visualization;
-Comment=${iqmol_readmelinedescription}
+Comment=${iqmol_description}
 Encoding=UTF-8
 Exec=iqmol
 GenericName=Molecule visualizer
@@ -1545,7 +1570,7 @@ Version=1.0
 ")
 iqmol_packageurls=("http://www.iqmol.org/download.php?get=iqmol_2.14.deb")
 iqmol_package_manager_override="apt-get"
-iqmol_readmeline="| IQmol | ${iqmol_readmelinedescription} | Command \`iqmol\`, silent alias, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+iqmol_readmeline="| IQmol | ${iqmol_description} | Command \`iqmol\`, silent alias, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 j_installationtype="environmental"
 j_arguments=("j")
@@ -1563,29 +1588,29 @@ julia_installationtype="userinherit"
 julia_arguments=("julia")
 julia_binariesinstalledpaths=("bin/julia;julia")
 julia_compressedfileurl="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
-julia_readmelinedescription="High-level, high-performance dynamic language for technical computing"
+julia_description="High-level, high-performance dynamic language for technical computing"
 julia_launchercontents=("
 [Desktop Entry]
 Name=Julia
-Comment=${julia_readmelinedescription}
+Comment=${julia_description}
 Exec=julia
 Icon=${BIN_FOLDER}/julia/share/icons/hicolor/scalable/apps/julia.svg
 Terminal=true
 Type=Application
 Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;ParallelComputing;DataVisualization;ConsoleOnly;
 ")
-julia_readmeline="| Julia and IJulia | ${julia_readmelinedescription} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+julia_readmeline="| Julia and IJulia | ${julia_description} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 jupyter_lab_installationtype="pythonvenv"
 jupyter_lab_arguments=("jupyter_lab" "jupyter" "lab")
 jupyter_lab_bashfunctions=("jupyter_lab.sh")
 jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
 jupyter_lab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
-jupyter_lab_readmelinedescription="IDE with a lot of possible customization and usable for different programming languages."
+jupyter_lab_description="IDE with a lot of possible customization and usable for different programming languages."
 jupyter_lab_launchercontents=("
 [Desktop Entry]
 Categories=IDE; text_editor;
-Comment=${jupyter_lab_readmelinedescription}
+Comment=${jupyter_lab_description}
 Encoding=UTF-8
 GenericName=jupyter-lab
 Keywords=jupyter; programming; text; webpage;
@@ -1602,7 +1627,7 @@ Exec=jupyter-lab &
 jupyter_lab_manualcontentavailable="1;1;0"
 jupyter_lab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
 jupyter_lab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
-jupyter_lab_readmeline="| Jupyter Lab | ${jupyter_lab_readmelinedescription} | alias \`lab\`, commands \`jupyter-lab\`, \`jupyter-lab\`, \`ipython\`, \`ipython3\`, desktop launcher and dashboard launcher. Recognized programming languages: Python, Ansible, Bash, IArm, Kotlin, PowerShell, Vim. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+jupyter_lab_readmeline="| Jupyter Lab | ${jupyter_lab_description} | alias \`lab\`, commands \`jupyter-lab\`, \`jupyter-lab\`, \`ipython\`, \`ipython3\`, desktop launcher and dashboard launcher. Recognized programming languages: Python, Ansible, Bash, IArm, Kotlin, PowerShell, Vim. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_jupyter_lab_pre() {
   local -r dependencies=("npm" "R" "julia")
   for dependency in "${dependencies[@]}"; do
@@ -1662,11 +1687,11 @@ keep_arguments=("keep" "google_keep")
 keep_url="https://keep.google.com/"
 keep_bashfunctions=("keep.sh")
 keep_downloads=("https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg;keep_icon.svg")
-keep_readmelinedescription="Google Keep opening in Chrome"
+keep_description="Google Keep opening in Chrome"
 keep_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${keep_readmelinedescription}
+Comment=${keep_description}
 Encoding=UTF-8
 Exec=xdg-open ${keep_url}
 Icon=${BIN_FOLDER}/keep/keep_icon.svg
@@ -1681,11 +1706,11 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-keep_readmeline="| Google Keep | ${keep_readmelinedescription} | Command \`keep\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+keep_readmeline="| Google Keep | ${keep_description} | Command \`keep\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 keyboardfix_installationtype="environmental"
 keyboardfix_arguments=("keyboard_fix" "fix_keyboard")
-keyboardfix_readmelinedescription="Fixes the Fn key in combination with the Function keys F1, F2, etc. which happens to not work in some keyboards"
+keyboardfix_description="Fixes the Fn key in combination with the Function keys F1, F2, etc. which happens to not work in some keyboards"
 keyboardfix_filekeys=("keyboardconf")
 keyboardfix_keyboardconf_path="/etc/modprobe.d/hid_apple.conf"
 keyboardfix_keyboardconf_content="keyboard.conf"
@@ -1713,12 +1738,12 @@ l_readmeline="| Function \`l\` | alias for \`ls\` | command \`l\` || <ul><li>- [
 
 latex_installationtype="packagemanager"
 latex_arguments=("latex")
-latex_readmelinedescription="Software system for document preparation"
+latex_description="Software system for document preparation"
 latex_launchercontents=("
 [Desktop Entry]
 Name=TeXdoctk
 Exec=texdoctk
-Comment=${latex_readmelinedescription}
+Comment=${latex_description}
 Type=Application
 Type=Application
 Terminal=false
@@ -1727,7 +1752,7 @@ Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png")
 latex_launchernames=("texmaker")
 latex_packagedependencies=("perl-tk" )
 latex_packagenames=("texlive-latex-extra" "texmaker" "perl-tk")
-latex_readmeline="| LaTeX | ${latex_readmelinedescription} | Command \`tex\` (LaTeX compiler) and \`texmaker\` (LaTeX IDE), desktop launchers for \`texmaker\` and LaTeX documentation ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+latex_readmeline="| LaTeX | ${latex_description} | Command \`tex\` (LaTeX compiler) and \`texmaker\` (LaTeX IDE), desktop launchers for \`texmaker\` and LaTeX documentation ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 libgtkglext1_installationtype="packagemanager"
 libgtkglext1_arguments=("libgtkglext1" "anydesk_dependencies")
@@ -2018,13 +2043,13 @@ mendeley_arguments=("mendeley")
 mendeley_compressedfileurl="https://www.mendeley.com/autoupdates/installer/Linux-x64/stable-incoming"
 mendeley_binariesinstalledpaths="bin/mendeleydesktop;mendeley"
 mendeley_packagedependencies=("gconf2" "qt5-default" "qt5-doc" "qt5-doc-html" "qtbase5-examples" "qml-module-qtwebengine")
-mendeley_readmelinedescription="It is most known for its reference manager which is used to manage and share research papers and generate bibliographies for scholarly articles"
-mendeley_readmeline="| Mendeley | ${mendeley_readmelinedescription} | Command \`mendeley\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+mendeley_description="It is most known for its reference manager which is used to manage and share research papers and generate bibliographies for scholarly articles"
+mendeley_readmeline="| Mendeley | ${mendeley_description} | Command \`mendeley\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 mendeley_launchercontents=("
 [Desktop Entry]
 Name=Mendeley Desktop
 GenericName=Research Paper Manager
-Comment=${mendeley_readmelinedescription}
+Comment=${mendeley_description}
 Exec=mendeley %f
 Icon=${BIN_FOLDER}/mendeley/share/icons/hicolor/128x128/apps/mendeleydesktop.png
 Terminal=false
@@ -2084,7 +2109,7 @@ nemo_bashfunctions=("nemo.sh")
 nemo_bashinitializations=("nemo_config.sh")
 nemo_packagenames=("nemo")
 nemo_packagedependencies=("dconf-editor")
-nemo_readmelinedescription="File and desktop manager, usually with better options and less bugs than nautilus. *We recommend this explorer to view correctly the launchers*"
+nemo_description="File and desktop manager, usually with better options and less bugs than nautilus. *We recommend this explorer to view correctly the launchers*"
 nemo_launchercontents=("
 [Desktop Entry]
 OnlyShowIn=GNOME;Unity;KDE;
@@ -2418,11 +2443,11 @@ netflix_arguments=("netflix")
 netflix_url="https://www.netflix.com"
 netflix_bashfunctions=("netflix.sh")
 netflix_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg;netflix_icon.svg")
-netflix_readmelinedescription="Netflix opening in Chrome"
+netflix_description="Netflix opening in Chrome"
 netflix_launchercontents=("
 [Desktop Entry]
 Categories=Network;VideoStreaming;Film;
-Comment=${netflix_readmelinedescription}
+Comment=${netflix_description}
 Encoding=UTF-8
 Exec=xdg-open ${netflix_url}
 Icon=${BIN_FOLDER}/netflix/netflix_icon.svg
@@ -2437,7 +2462,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-netflix_readmeline="| Netflix | ${netflix_readmelinedescription} | Command \`netflix\`. Desktop launcher and dashboard launcher for the file manager | --netflix --Netflix |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+netflix_readmeline="| Netflix | ${netflix_description} | Command \`netflix\`. Desktop launcher and dashboard launcher for the file manager | --netflix --Netflix |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 net_tools_installationtype="packagemanager"
 net_tools_arguments=("net_tools")
@@ -2491,11 +2516,11 @@ onedrive_arguments=("onedrive")
 onedrive_url="https://onedrive.live.com/"
 onedrive_bashfunctions=("onedrive.sh")
 onedrive_downloads=("https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg;onedrive_icon.svg")
-onedrive_readmelinedescription="Microsoft OneDrive opening in Chrome"
+onedrive_description="Microsoft OneDrive opening in Chrome"
 onedrive_launchercontents=("
 [Desktop Entry]
 Categories=FileSharing;
-Comment=${onedrive_readmelinedescription}
+Comment=${onedrive_description}
 Encoding=UTF-8
 Exec=xdg-open ${onedrive_url}
 Icon=${BIN_FOLDER}/onedrive/onedrive_icon.svg
@@ -2511,7 +2536,7 @@ Type=Application
 Version=1.0
 ")
 
-onedrive_readmeline="| OneDrive | ${onedrive_readmelinedescription} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+onedrive_readmeline="| OneDrive | ${onedrive_description} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 libreoffice_installationtype="packagemanager"
 libreoffice_arguments=("open_office" "office" "libre_office")
@@ -2568,11 +2593,11 @@ outlook_arguments=("outlook")
 outlook_url="https://outlook.live.com"
 outlook_bashfunctions=("outlook.sh")
 outlook_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg;outlook_icon.svg")
-outlook_readmelinedescription="Microsoft Outlook e-mail opening in Chrome"
+outlook_description="Microsoft Outlook e-mail opening in Chrome"
 outlook_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${outlook_readmelinedescription}
+Comment=${outlook_description}
 Encoding=UTF-8
 Exec=xdg-open ${outlook_url}
 Icon=${BIN_FOLDER}/outlook/outlook_icon.svg
@@ -2587,18 +2612,18 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-outlook_readmeline="| Outlook | ${outlook_readmelinedescription} | Command \`outlook\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+outlook_readmeline="| Outlook | ${outlook_description} | Command \`outlook\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 overleaf_installationtype="environmental"
 overleaf_arguments=("overleaf")
 overleaf_url="https://www.overleaf.com/"
 overleaf_bashfunctions=("overleaf.sh")
 overleaf_downloads="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg;overleaf_icon.svg"
-overleaf_readmelinedescription="Online LaTeX editor opening in Chrome"
+overleaf_description="Online LaTeX editor opening in Chrome"
 overleaf_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${overleaf_readmelinedescription}
+Comment=${overleaf_description}
 Encoding=UTF-8
 Exec=xdg-open ${overleaf_url}
 Icon=${BIN_FOLDER}/overleaf/overleaf_icon.svg
@@ -2613,7 +2638,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-overleaf_readmeline="| Overleaf | ${overleaf_readmelinedescription} | Command \`overleaf\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+overleaf_readmeline="| Overleaf | ${overleaf_description} | Command \`overleaf\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 p_installationtype="environmental"
 p_arguments=("p" "port" "port_function")
@@ -2644,11 +2669,11 @@ pgadmin_confoverride_content="config_local.py"
 pgadmin_executionscript_path="pgadmin_exec.sh"
 pgadmin_executionscript_content="pgadmin_exec.sh"
 pgadmin_filekeys=("confoverride" "executionscript")
-pgadmin_readmelinedescription="PostgreSQL Tools"
+pgadmin_description="PostgreSQL Tools"
 pgadmin_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${pgadmin_readmelinedescription}
+Comment=${pgadmin_description}
 Encoding=UTF-8
 GenericName=pgadmin4
 Keywords=pgadmin
@@ -2665,7 +2690,7 @@ Exec=bash ${BIN_FOLDER}/pgadmin/pgadmin_exec.sh
 pgadmin_manualcontentavailable="0;1;0"
 pgadmin_pipinstallations=("pgadmin4")
 pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")
-pgadmin_readmeline="| pgAdmin | ${pgadmin_readmelinedescription} | Command \`pgadmin4\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+pgadmin_readmeline="| pgAdmin | ${pgadmin_description} | Command \`pgadmin4\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_pgadmin_mid() {
   # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
   # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
@@ -2723,30 +2748,30 @@ postman_installationtype="userinherit"
 postman_arguments=("postman")
 postman_binariesinstalledpaths=("Postman;postman")
 postman_compressedfileurl="https://dl.pstmn.io/download/latest/linux64"
-postman_readmelinedescription="Application to maintain and organize collections of REST API calls"
+postman_description="Application to maintain and organize collections of REST API calls"
 postman_launchercontents=("
 [Desktop Entry]
 Encoding=UTF-8
 Name=Postman
 Exec=postman
-Comment=${postman_readmelinedescription}
+Comment=${postman_description}
 Icon=${BIN_FOLDER}/postman/app/resources/app/assets/icon.png
 Terminal=false
 Type=Application
 Categories=Development;
 ")
-postman_readmeline="| Postman | ${postman_readmelinedescription} | Command \`postman\`, desktop launcher and dashboard launcher  ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+postman_readmeline="| Postman | ${postman_description} | Command \`postman\`, desktop launcher and dashboard launcher  ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 presentation_installationtype="environmental"
 presentation_arguments=("presentation" "google_presentation")
 presentation_url="https://docs.google.com/presentation/"
 presentation_bashfunctions=("presentation.sh")
 presentation_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;presentation_icon.svg")
-presentation_readmelinedescription="Google Presentation opening in Chrome"
+presentation_description="Google Presentation opening in Chrome"
 presentation_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=D${presentation_readmelinedescription}
+Comment=D${presentation_description}
 Encoding=UTF-8
 Exec=xdg-open ${presentation_url}
 Icon=${BIN_FOLDER}/presentation/presentation_icon.svg
@@ -2761,7 +2786,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-presentation_readmeline="| Presentation | ${presentation_readmelinedescription} | Command \`presentation\`, desktop launcher and dashboard launcher||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+presentation_readmeline="| Presentation | ${presentation_description} | Command \`presentation\`, desktop launcher and dashboard launcher||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 prompt_installationtype="environmental"
 prompt_arguments=("prompt")
@@ -2791,12 +2816,12 @@ pycharm_bashfunctions=("pycharm.sh")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
-pycharm_readmelinedescription="Integrated development environment used in computer programming"
+pycharm_description="Integrated development environment used in computer programming"
 pycharm_launchercontents=("
 [Desktop Entry]
 Actions=NewWindow;
 Categories=programming;dev;
-Comment=${pycharm_readmelinedescription}
+Comment=${pycharm_description}
 Encoding=UTF-8
 Exec=pycharm %F
 GenericName=Pycharm
@@ -2816,7 +2841,7 @@ Name=Pycharm New Window
 Exec=pycharm
 Icon=${BIN_FOLDER}/pycharm/bin/pycharm.png
 ")
-pycharm_readmeline="| Pycharm Community | ${pycharm_readmelinedescription} | Command \`pycharm\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files  || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+pycharm_readmeline="| Pycharm Community | ${pycharm_description} | Command \`pycharm\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files  || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 pycharmpro_installationtype="userinherit"
 pycharmpro_arguments=("pycharm_pro")
@@ -2824,11 +2849,11 @@ pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharmpro_bashfunctions=("pycharmpro.sh")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
 pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2021.3.tar.gz"
-pycharmpro_readmelinedescription="Integrated development environment used in computer programming"
+pycharmpro_description="Integrated development environment used in computer programming"
 pycharmpro_launchercontents=("
 [Desktop Entry]
 Categories=programming;dev;
-Comment=${pycharmpro_readmelinedescription}
+Comment=${pycharmpro_description}
 Encoding=UTF-8
 Exec=pycharmpro %F
 GenericName=Pycharm Pro
@@ -2843,7 +2868,7 @@ TryExec=pycharmpro
 Type=Application
 Version=1.0
 ")
-pycharmpro_readmeline="| Pycharm Pro | ${pycharmpro_readmelinedescription} | Command \`pycharm-pro\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+pycharmpro_readmeline="| Pycharm Pro | ${pycharmpro_description} | Command \`pycharm-pro\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 pypy3_installationtype="userinherit"
 pypy3_arguments=("pypy3" "pypy")
@@ -2899,11 +2924,11 @@ reddit_arguments=("reddit")
 reddit_url="https://www.reddit.com/"
 reddit_bashfunctions=("reddit.sh")
 reddit_downloads=("https://www.svgrepo.com/download/14413/reddit.svg;reddit_icon.svg")
-reddit_readmelinedescription="Opens Reddit in Chrome"
+reddit_description="Opens Reddit in Chrome"
 reddit_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${reddit_readmelinedescription}
+Comment=${reddit_description}
 Encoding=UTF-8
 Exec=xdg-open ${reddit_url}
 Icon=${BIN_FOLDER}/reddit/reddit_icon.svg
@@ -2918,7 +2943,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-reddit_readmeline="| Reddit | ${reddit_readmelinedescription} | Commands \`reddit\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+reddit_readmeline="| Reddit | ${reddit_description} | Commands \`reddit\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 remmina_installationtype="packagemanager"
 remmina_arguments=("remmina")
@@ -2939,11 +2964,11 @@ rstudio_associatedfiletypes=("text/plain")
 rstudio_bashfunctions=("rstudio.sh")
 rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
 rstudio_compressedfileurl="https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz"
-rstudio_readmelinedescription="Default application for .R files "
+rstudio_description="Default application for .R files "
 rstudio_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${rstudio_readmelinedescription}
+Comment=${rstudio_description}
 Encoding=UTF-8
 Exec=rstudio
 GenericName=RStudio
@@ -2959,7 +2984,7 @@ Type=Application
 Version=1.0
 ")
 rstudio_packagedependencies=("libssl-dev")
-rstudio_readmeline="| RStudio | ${rstudio_readmelinedescription} | Commands \`rstudio\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
+rstudio_readmeline="| RStudio | ${rstudio_description} | Commands \`rstudio\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
 rsync_installationtype="packagemanager"
 rsync_arguments=("rsync" "grsync")
@@ -3049,11 +3074,11 @@ shortcuts_readmeline="| shortcuts | Installs custom key commands | variables... 
 
 shotcut_installationtype="packagemanager"
 shotcut_arguments=("shotcut")
-shotcut_readmelinedescription="Cross-platform video editing"
+shotcut_description="Cross-platform video editing"
 shotcut_launchercontents=("
 [Desktop Entry]
 Categories=video;
-Comment=${shotcut_readmelinedescription}
+Comment=${shotcut_description}
 Encoding=UTF-8
 Exec=shotcut
 GenericName=shotcut
@@ -3068,7 +3093,7 @@ TryExec=shotcut
 Type=Application
 Version=1.0")
 shotcut_packagenames=("shotcut")
-shotcut_readmeline="| ShotCut | ${shotcut_readmelinedescription} | Command \`shotcut\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+shotcut_readmeline="| ShotCut | ${shotcut_description} | Command \`shotcut\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 shotwell_installationtype="packagemanager"
 shotwell_arguments=("shotwell")
@@ -3109,11 +3134,11 @@ soundcloud_arguments=("soundcloud")
 soundcloud_url="https://www.soundcloud.com/"
 soundcloud_bashfunctions=("soundcloud.sh")
 soundcloud_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a2/Antu_soundcloud.svg;soundcloud_icon.svg")
-soundcloud_readmelinedescription="SoundCloud opening in Chrome"
+soundcloud_description="SoundCloud opening in Chrome"
 soundcloud_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${soundcloud_readmelinedescription}
+Comment=${soundcloud_description}
 Encoding=UTF-8
 Exec=xdg-open ${soundcloud_url}
 Icon=${BIN_FOLDER}/soundcloud/soundcloud_icon.svg
@@ -3128,7 +3153,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-soundcloud_readmeline="| Soundcloud | ${soundcloud_readmelinedescription} | Command \`soundcloud\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+soundcloud_readmeline="| Soundcloud | ${soundcloud_description} | Command \`soundcloud\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 spotify_installationtype="packageinstall"
 spotify_arguments=("spotify")
@@ -3144,11 +3169,11 @@ spreadsheets_arguments=("spreadsheets" "google_spreadsheets")
 spreadsheets_url="https://docs.google.com/spreadsheets/"
 spreadsheets_bashfunctions=("spreadheets.sh")
 spreadsheets_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg;spreadsheets_icon.svg")
-spreadsheets_readmelinedescription="Google Spreadsheets opening in Chrome"
+spreadsheets_description="Google Spreadsheets opening in Chrome"
 spreadsheets_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${spreadsheets_readmelinedescription}
+Comment=${spreadsheets_description}
 Encoding=UTF-8
 Exec=xdg-open ${spreadsheets_url}
 Icon=${BIN_FOLDER}/spreadsheets/spreadsheets_icon.svg
@@ -3163,7 +3188,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-spreadsheets_readmeline="| Spreadsheets | ${spreadsheets_readmelinedescription} | Command \`spreadsheets\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+spreadsheets_readmeline="| Spreadsheets | ${spreadsheets_description} | Command \`spreadsheets\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 ssh_installationtype="packagemanager"
 ssh_arguments=("ssh")
@@ -3209,11 +3234,11 @@ studio_arguments=("studio" "android_studio")
 studio_bashfunctions=("studio.sh")
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
 studio_compressedfileurl="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2020.3.1.24/android-studio-2020.3.1.24-linux.tar.gz"
-studio_readmelinedescription="Development environment for Google's Android operating system"
+studio_description="Development environment for Google's Android operating system"
 studio_launchercontents=("
 [Desktop Entry]
 Categories=Development;IDE;
-Comment=${studio_readmelinedescription}
+Comment=${studio_description}
 Encoding=UTF-8
 Exec=studio %F
 GenericName=studio
@@ -3228,7 +3253,7 @@ TryExec=studio
 Type=Application
 Version=1.0
 ")
-studio_readmeline="| Android Studio | ${studio_readmelinedescription} | Command \`studio\`, alias \`studio\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+studio_readmeline="| Android Studio | ${studio_description} | Command \`studio\`, alias \`studio\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 sublime_keybindings=("sublime;<Primary><Alt><Super>e;Sublime Text")
 sublime_installationtype="userinherit"
@@ -3237,11 +3262,11 @@ sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x
 sublime_bashfunctions=("sublime.sh")
 sublime_binariesinstalledpaths=("sublime_text;sublime")
 sublime_compressedfileurl="https://download.sublimetext.com/sublime_text_build_4113_x64.tar.xz"
-sublime_readmelinedescription="Source code editor with an emphasis on source code editing"
+sublime_description="Source code editor with an emphasis on source code editing"
 sublime_launchercontents=("
 [Desktop Entry]
 Categories=;
-Comment=${sublime_readmelinedescription}
+Comment=${sublime_description}
 Encoding=UTF-8
 Exec=sublime %F
 GenericName=Text Editor, programming...
@@ -3256,19 +3281,19 @@ TryExec=sublime
 Type=Application
 Version=1.0
 ")
-sublime_readmeline="| Sublime | ${sublime_readmelinedescription} | Command \`sublime\`, silent alias for \`sublime\`, desktop launcher, dashboard launcher, associated with the mime type of \`.c\`, \`.h\`, \`.cpp\`, \`.hpp\`, \`.sh\` and \`.py\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+sublime_readmeline="| Sublime | ${sublime_description} | Command \`sublime\`, silent alias for \`sublime\`, desktop launcher, dashboard launcher, associated with the mime type of \`.c\`, \`.h\`, \`.cpp\`, \`.hpp\`, \`.sh\` and \`.py\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 synaptic_installationtype="packagemanager"
 synaptic_arguments=("synaptic")
 synaptic_packagenames=("synaptic")
 synaptic_launchernames=("synaptic")
-synaptic_readmelinedescription="Graphical installation manager to install, remove and upgrade software packages"
-synaptic_readmeline="| Synaptic | ${synaptic_readmelinedescription} | Command \`synaptic\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+synaptic_description="Graphical installation manager to install, remove and upgrade software packages"
+synaptic_readmeline="| Synaptic | ${synaptic_description} | Command \`synaptic\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 synaptic_launchercontents=("
 [Desktop Entry]
 Name=Synaptic Package Manager
 GenericName=Package Manager
-Comment=${synaptic_readmelinedescription}
+Comment=${synaptic_description}
 Exec=synaptic
 Icon=synaptic
 Terminal=false
@@ -3337,11 +3362,11 @@ telegram_binariesinstalledpaths=("Telegram;telegram")
 telegram_bashfunctions=("telegram.sh")
 telegram_compressedfileurl="https://telegram.org/dl/desktop/linux"
 telegram_downloads=("https://telegram.org/img/t_logo.svg;telegram_icon.svg")
-telegram_readmelinedescription="Cloud-based instant messaging software and application service"
+telegram_description="Cloud-based instant messaging software and application service"
 telegram_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${telegram_readmelinedescription}
+Comment=${telegram_description}
 Encoding=UTF-8
 Exec=telegram -- %u
 GenericName=Telegram
@@ -3356,7 +3381,7 @@ TryExec=telegram
 Type=Application
 Version=1.0
 ")
-telegram_readmeline="| Telegram | ${telegram_readmelinedescription} | Command \`telegram\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+telegram_readmeline="| Telegram | ${telegram_description} | Command \`telegram\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 templates_installationtype="environmental"
 templates_arguments=("templates")
@@ -3404,11 +3429,11 @@ tilix_readmeline="| Tilix | Advanced GTK3 tiling terminal emulator | Command \`t
 tmux_installationtype="packagemanager"
 tmux_arguments=("tmux")
 tmux_packagedependencies=("xdotool" "xclip" "tmuxp" "bash-completion")
-tmux_readmelinedescription="Terminal multiplexer for Unix-like operating systems"
+tmux_description="Terminal multiplexer for Unix-like operating systems"
 tmux_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${tmux_readmelinedescription}
+Comment=${tmux_description}
 Encoding=UTF-8
 Exec=tmux
 GenericName=Terminal multiplexor with special mnemo-rules 'Ctrl+a'
@@ -3423,7 +3448,7 @@ TryExec=tmux
 Type=Application
 Version=1.0")
 tmux_packagenames=("tmux")
-tmux_readmeline="| Tmux | ${tmux_readmelinedescription} | Command \`tmux\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+tmux_readmeline="| Tmux | ${tmux_description} | Command \`tmux\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 tmux_bashfunctions=("tmux_functions.sh")
 tmux_filekeys=("tmuxconf" "clockmoji")
 tmux_clockmoji_content="tmux_clockmoji.sh"
@@ -3447,11 +3472,11 @@ translator_arguments=("translator")
 translator_url="https://translate.google.com/"
 translator_bashfunctions=("translator.sh")
 translator_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png;translator_icon.png")
-translator_readmelinedescription="Google Translate opening in Chrome"
+translator_description="Google Translate opening in Chrome"
 translator_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${translator_readmelinedescription}
+Comment=${translator_description}
 Encoding=UTF-8
 Exec=xdg-open ${translator_url}
 Icon=${BIN_FOLDER}/translator/translator_icon.png
@@ -3466,7 +3491,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-translator_readmeline="| Translator | ${google_readmelinedescription} | Command \`translator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+translator_readmeline="| Translator | ${google_description} | Command \`translator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 transmission_gtk_installationtype="packagemanager"
 transmission_gtk_arguments=("transmission_gtk" "transmission")
@@ -3479,11 +3504,11 @@ trello_arguments=("trello")
 trello_url="https://trello.com"
 trello_bashfunctions=("trello.sh")
 trello_downloads=("https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/trello-512.png;trello_icon.png")
-trello_readmelinedescription="Trello web opens in Chrome"
+trello_description="Trello web opens in Chrome"
 trello_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${trello_readmelinedescription}
+Comment=${trello_description}
 Encoding=UTF-8
 Exec=xdg-open ${trello_url}
 Icon=${BIN_FOLDER}/trello/trello_icon.png
@@ -3498,18 +3523,18 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-trello_readmeline="| Trello | ${trello_readmelinedescription} | Command \`trello\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+trello_readmeline="| Trello | ${trello_description} | Command \`trello\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 tumblr_installationtype="environmental"
 tumblr_arguments=("tumblr")
 tumblr_url="https://www.tumblr.com/"
 tumblr_bashfunctions=("tumblr.sh")
 tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/4/43/Tumblr.svg;tumblr_icon.svg")
-tumblr_readmelinedescription="Tumblr web opens in Chrome"
+tumblr_description="Tumblr web opens in Chrome"
 tumblr_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${tumblr_readmelinedescription}
+Comment=${tumblr_description}
 Encoding=UTF-8
 Exec=xdg-open ${tumblr_url}
 Icon=${BIN_FOLDER}/tumblr/tumblr_icon.svg
@@ -3524,18 +3549,18 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-tumblr_readmeline="| Tumblr | ${tumblr_readmelinedescription} | Command \`tumblr\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+tumblr_readmeline="| Tumblr | ${tumblr_description} | Command \`tumblr\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 twitch_installationtype="environmental"
 twitch_arguments=("twitch" "twitch_tv")
 twitch_url="https://twitch.tv/"
 twitch_bashfunctions=("twitch.sh")
 twitch_downloads=("https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png;twitch.png")
-twitch_readmelinedescription="Twitch web opens in Chrome"
+twitch_description="Twitch web opens in Chrome"
 twitch_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${twitch_readmelinedescription}
+Comment=${twitch_description}
 Encoding=UTF-8
 Exec=xdg-open ${twitch_url}
 Icon=${BIN_FOLDER}/twitch/twitch_icon.png
@@ -3550,18 +3575,18 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-twitch_readmeline="| Twitch | ${twitch_readmelinedescription} | Command \`twitch\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+twitch_readmeline="| Twitch | ${twitch_description} | Command \`twitch\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 twitter_installationtype="environmental"
 twitter_arguments=("twitter")
 twitter_url="https://twitter.com/"
 twitter_bashfunctions=("twitter.sh")
 twitter_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg;twitter_icon.svg")
-twitter_readmelinedescription="Twitter web opens in Chrome"
+twitter_description="Twitter web opens in Chrome"
 twitter_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${twitter_readmelinedescription}
+Comment=${twitter_description}
 Encoding=UTF-8
 Exec=xdg-open ${twitter_url}
 Icon=${BIN_FOLDER}/twitter/twitter_icon.svg
@@ -3576,7 +3601,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-twitter_readmeline="| Twitter | ${twitter_readmelinedescription} | Command \`twitter\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+twitter_readmeline="| Twitter | ${twitter_description} | Command \`twitter\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 u_installationtype="environmental"
 u_arguments=("u")
@@ -3611,11 +3636,11 @@ whatsapp_arguments=("whatsapp")
 whatsapp_url="https://web.whatsapp.com/"
 whatsapp_bashfunctions=("whatsapp.sh")
 whatsapp_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg;whatsapp_icon.svg")
-whatsapp_readmelinedescription="Whatsapp web opens in Chrome"
+whatsapp_description="Whatsapp web opens in Chrome"
 whatsapp_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${whatsapp_readmelinedescription}
+Comment=${whatsapp_description}
 Encoding=UTF-8
 Exec=xdg-open ${whatsapp_url}
 Icon=${BIN_FOLDER}/whatsapp/whatsapp_icon.svg
@@ -3630,18 +3655,18 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-whatsapp_readmeline="| Whatsapp Web | ${whatsapp_readmelinedescription} | Command \`whatsapp\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+whatsapp_readmeline="| Whatsapp Web | ${whatsapp_description} | Command \`whatsapp\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 wikipedia_installationtype="environmental"
 wikipedia_arguments=("wikipedia")
 wikipedia_url="https://www.wikipedia.org/"
 wikipedia_bashfunctions=("wikipedia.sh")
 wikipedia_downloads=("https://upload.wikimedia.org/wikipedia/commons/2/20/Wikipedia-logo-simple.svg;wikipedia_icon.svg")
-wikipedia_readmelinedescription="Wikipedia web opens in Chrome"
+wikipedia_description="Wikipedia web opens in Chrome"
 wikipedia_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${wikipedia_readmelinedescription}
+Comment=${wikipedia_description}
 Encoding=UTF-8
 Exec=xdg-open ${wikipedia_url}
 Icon=${BIN_FOLDER}/wikipedia/wikipedia_icon.svg
@@ -3656,7 +3681,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-wikipedia_readmeline="| Wikipedia | ${wikipedia_readmelinedescription} | Command \`wikipedia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+wikipedia_readmeline="| Wikipedia | ${wikipedia_description} | Command \`wikipedia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 wikit_installationtype="environmental"
 wikit_manualcontentavailable=";1;"
@@ -3804,11 +3829,11 @@ youtube_arguments=("youtube")
 youtube_url="https://youtube.com/"
 youtube_bashfunctions=("youtube.sh")
 youtube_downloads=("https://upload.wikimedia.org/wikipedia/commons/4/4f/YouTube_social_white_squircle.svg;youtube_icon.svg")
-youtube_readmelinedescription="YouTube opens in Chrome"
+youtube_description="YouTube opens in Chrome"
 youtube_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${youtube_readmelinedescription}
+Comment=${youtube_description}
 Encoding=UTF-8
 Exec=xdg-open ${youtube_url}
 Icon=${BIN_FOLDER}/youtube/youtube_icon.svg
@@ -3823,7 +3848,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-youtube_readmeline="| Youtube | ${youtube_readmelinedescription} | Command \`youtube\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+youtube_readmeline="| Youtube | ${youtube_description} | Command \`youtube\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 youtube_dl_installationtype="environmental"
 youtube_dl_arguments=("youtube_dl")
@@ -3840,11 +3865,11 @@ youtubemusic_youtubemusicscript_content="youtubemusic.sh"
 youtubemusic_binariesinstalledpaths=("youtubemusic.sh;youtubemusic")
 youtubemusic_arguments=("youtube_music")
 youtubemusic_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg;youtubemusic_icon.svg")
-youtubemusic_readmelinedescription="YouTube music opens in Chrome."
+youtubemusic_description="YouTube music opens in Chrome."
 youtubemusic_launchercontents=("
 [Desktop Entry]
 Categories=Network;
-Comment=${youtubemusic_readmelinedescription}
+Comment=${youtubemusic_description}
 Encoding=UTF-8
 Exec=xdg-open ${youtubemusic_url}
 Icon=${BIN_FOLDER}/youtubemusic/youtubemusic_icon.svg
@@ -3859,7 +3884,7 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-youtubemusic_readmeline="| Youtube Music | ${youtubemusic_readmelinedescription} | Command \`youtubemusic\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+youtubemusic_readmeline="| Youtube Music | ${youtubemusic_description} | Command \`youtubemusic\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 z_installationtype="environmental"
 z_arguments=("z" "z_function")
@@ -3874,11 +3899,11 @@ zoom_packagedependencies=("libglib2.0-0"
 zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
 zoom_compressedfileurl="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
 zoom_downloads=("https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/zoom.svg;zoom_icon.svg")
-zoom_readmelinedescription="Live Video Streaming for Meetings"
+zoom_description="Live Video Streaming for Meetings"
 zoom_launchercontents=("
 [Desktop Entry]
 Categories=Social;Communication;
-Comment=${zoom_readmelinedescription}
+Comment=${zoom_description}
 Encoding=UTF-8
 GenericName=Video multiple calls
 Icon=${BIN_FOLDER}/zoom/zoom_icon.svg
@@ -3893,4 +3918,4 @@ Type=Application
 Version=1.0
 Exec=ZoomLauncher
 ")
-zoom_readmeline="| Zoom | ${zoom_readmelinedescription} | Command \`zoom\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+zoom_readmeline="| Zoom | ${zoom_description} | Command \`zoom\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"

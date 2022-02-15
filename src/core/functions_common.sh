@@ -897,6 +897,7 @@ generic_installation() {
     "generic_${FLAG_MODE}_movefiles" "${featurename}"
     "generic_${FLAG_MODE}_manual_launchers" "${featurename}"
     "generic_${FLAG_MODE}_copy_launcher" "${featurename}"
+    "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"
     "generic_${FLAG_MODE}_functions" "${featurename}"
     "generic_${FLAG_MODE}_initializations" "${featurename}"
     "generic_${FLAG_MODE}_autostart" "${featurename}"
