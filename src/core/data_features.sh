@@ -2488,6 +2488,12 @@ notepadqq_packagenames=("notepadqq")
 notepadqq_launchernames=("notepadqq")
 notepadqq_readmeline="| Notepadqq | Text editor that is designed by developers for the developers. It supports more than 100 programming languages | Command \`notepadqq\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+notflix_installationtype="environmental"
+notflix_arguments=("notflix")
+notflix_bashfunctions=("notflix.sh")
+notflix_readmeline="| Function \`notflix\` | Stream movies from torrent magnets via console | Function \`notflix\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+#notflix dependencies: curl (apt), peerflix (((((((((((((((((((((((qqqnpm)
+
 o_installationtype="environmental"
 o_arguments=("o")
 o_bashfunctions=("o.sh")

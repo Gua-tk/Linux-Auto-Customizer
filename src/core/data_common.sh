@@ -453,6 +453,7 @@ declare -r feature_keynames=(
   "nmap"
   "npm"
   "notepadqq"
+  "notflix"
   "o"
   "obs_studio"
   "octave"
