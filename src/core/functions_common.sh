@@ -274,8 +274,7 @@ autogen_readme()
   done
 
 
-  features_table_lines+="Customizer currently has available $(echo "${feature_keynames[@]}" | wc -w)"
-
+  features_table_lines+=$'\n'"Customizer currently has available $(echo "${feature_keynames[@]}" | wc -w) features."
   echo "${features_table_lines}" > FEATURES.md
 }
 
