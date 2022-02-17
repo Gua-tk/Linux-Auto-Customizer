@@ -257,9 +257,9 @@ autogen_readme()
 
     local icon_pointer="${keyname}_icon"
     if [ -z "${!icon_pointer}" ]; then
-      icon_value="![${keyname} logo](https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/develop/data/static/${keyname}/${!icon_pointer})"
+      icon_value="![${keyname} logo](https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master/.github/logo.png)"
     else
-      icon_value="![${keyname} logo](https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/develop/data/static/${keyname}/${!icon_pointer})"
+      icon_value="![${keyname} logo](https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master/data/static/${keyname}/${!icon_pointer})"
     fi
 
     local description_pointer="${keyname}_description"
