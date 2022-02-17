@@ -3173,7 +3173,7 @@ soundcloud_readmeline="| Soundcloud | ${soundcloud_description} | Command \`soun
 
 spotify_installationtype="packageinstall"
 spotify_arguments=("spotify")
-spotify_name="spotify"
+spotify_name="Spotify"
 spotify_commentary="Play music in stream"
 spotify_version="1.1.72"
 spotify_tags=("music" "stream")
@@ -3185,12 +3185,12 @@ spotify_launcher_exec="spotify"
 spotify_launcher_actionkeynames=("Playpause" "Next" "Previous" "Stop")
 spotify_launcher_Playpause_name="Play/pause"
 spotify_launcher_Playpause_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
-spotify_launcher_Siguiente_name="Next"
-spotify_launcher_Siguiente_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
-spotify_launcher_Anterior_name="Previous"
-spotify_launcher_Anterior_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
-spotify_launcher_Parar_name="Stop"
-spotify_launcher_Parar_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
+spotify_launcher_Next_name="Next"
+spotify_launcher_Next_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+spotify_launcher_Previous_name="Previous"
+spotify_launcher_Previous_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+spotify_launcher_Stop_name="Stop"
+spotify_launcher_Stop_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 spotify_bashfunctions=("spotify.sh")
 spotify_launchernames=("spotify")
 spotify_packageurls=("https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.72.439.gc253025e_amd64.deb")

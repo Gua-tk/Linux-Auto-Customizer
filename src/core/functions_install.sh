@@ -632,16 +632,17 @@ NoDisplay=false"
 
   override_icon="$2_$1_icon"
   metadata_icon="$2_icon"
-  echo "marcaa"
-  echo "${CUSTOMIZER_PROJECT_FOLDER}"
   if [ ! -z "${!override_icon}" ]; then
+    create_folder "${BIN_FOLDER}/$2"
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!override_icon}" "${BIN_FOLDER}/$2"
     apply_permissions "${BIN_FOLDER}/$2/${!override_icon}"
 
     text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!override_icon}"
   else
+    create_folder "${BIN_FOLDER}/$2"
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${BIN_FOLDER}/$2"
     apply_permissions "${BIN_FOLDER}/$2/${!metadata_icon}"
+
     text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!metadata_icon}"
   fi
 
@@ -665,8 +666,8 @@ NoDisplay=false"
   local -r metadata_exec_temp="$2_binariesinstalledpaths[0]"
   local -r metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
   if [ ! -z "${!override_exec}" ]; then
-    if "${!override_exec}" | grep -qE " " ; then
-      text+=$'\n'"TryExec=$(echo ${!override_exec} | cut -d " " -f1)"
+    if echo "${!override_exec}" | grep -qE " " ; then
+      text+=$'\n'"TryExec=$(echo "${!override_exec}" | cut -d " " -f1)"
     else
       text+=$'\n'"TryExec=${!override_exec}"
     fi
@@ -705,10 +706,13 @@ NoDisplay=false"
       text+="${actionkeyname_override};"
     done
 
-    for actionkeyname_override in "${!override_actionkeynames}"; do
+    for actionkeyname_override in $(echo "${!override_actionkeynames}"); do
       local actionkeyname_name="$2_$1_${actionkeyname_override}_name"
+      echo ${!actionkeyname_name}
+      echo ${actionkeyname_name}
       local actionkeyname_exec="$2_$1_${actionkeyname_override}_exec"
-
+      echo ${!actionkeyname_exec}
+      echo ${actionkeyname_exec}
       text+=$'\n'$'\n'"[Desktop Action ${actionkeyname_override}]"
       text+=$'\n'"Name=${!actionkeyname_name}"
       text+=$'\n'"Exec=${!actionkeyname_exec}"
