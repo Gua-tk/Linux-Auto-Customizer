@@ -2476,11 +2476,17 @@ nmap_installationtype="packagemanager"
 nmap_arguments=("nmap")
 nmap_readmeline="| nmap | Scan and network security used for port scanning. | Command \`nmap\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-npm_installationtype="userinherit"
+nodejs_installationtype="userinherit"
+nodejs_arguments=("node" "node_js")
+nodejs_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
+nodejs_compressedfileurl="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
+nodejs_readmeline="| NodeJS | JavaScript packagemanager for the developers. | Command \`node\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+npm_installationtype="packagemanager"
 npm_arguments=("npm")
-npm_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
-npm_compressedfileurl="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
-npm_readmeline="| NodeJS npm | JavaScript packagemanager for the developers. | Command \`node\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+npm_packagenames=("npm")
+npm_launchernames=("npm")
+npm_readmeline="| npm | Nodejs package manager | Command \`npm\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 notepadqq_installationtype="packagemanager"
 notepadqq_arguments=("notepad_qq")
@@ -2490,9 +2496,9 @@ notepadqq_readmeline="| Notepadqq | Text editor that is designed by developers f
 
 notflix_installationtype="environmental"
 notflix_arguments=("notflix")
+notflix_packagedependencies=("curl" "vlc")
 notflix_bashfunctions=("notflix.sh")
-notflix_readmeline="| Function \`notflix\` | Stream movies from torrent magnets via console | Function \`notflix\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-#notflix dependencies: curl (apt), peerflix (((((((((((((((((((((((qqqnpm)
+notflix_readmeline="| Function \`notflix\` | Stream title movies via console magnet tracking | Function \`notflix\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 o_installationtype="environmental"
 o_arguments=("o")

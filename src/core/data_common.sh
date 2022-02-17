@@ -451,6 +451,7 @@ declare -r feature_keynames=(
   "netflix"
   "net_tools"
   "nmap"
+  "nodejs"
   "npm"
   "notepadqq"
   "notflix"
