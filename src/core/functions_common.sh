@@ -247,68 +247,36 @@ autogen_help()
 #   permissions to a privileges or non-privileged user.
 autogen_readme()
 {
-  local packagemanager_lines=
-  local user_lines=()
-  local root_lines=()
-  local root_num=0
-  local user_num=0
-  true > "FEATURES.md"
-  for program in "${feature_keynames[@]}"; do
-    local readme_line_pointer="${program}_readmeline"
-    local installationtype_pointer="${program}_installationtype"
-    local arguments_pointer="${program}_arguments[@]"
+  local features_table_lines="
+| Icon | Name | Arguments | Description | Execution |
+|-------------|----------------------|------------------------------------------------------|------------|-------------|"
 
-    local readme_line=
-    readme_line="${!readme_line_pointer}"
-    local installation_type=
-    installation_type="${!installationtype_pointer}"
-    local program_arguments=
-    program_arguments="${!arguments_pointer}"
-    local program_name=
-    program_name="${program}"
+  for keyname in "${feature_keynames[@]}"; do
+    local arguments_pointer="${keyname}_arguments[@]"
+    local name_pointer="${keyname}_name"
 
-    # Add arguments to readme
-    local prefix=
-    prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
-    local suffix=
-    suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
-    local readme_line="${prefix} ${program_arguments} ${suffix}"
-    case ${installation_type} in
-      packagemanager|packageinstall)
-        root_lines+=("${readme_line}")
-        root_num=$(( root_num + 1 ))
-      ;;
-      repositoryclone|userinherit|environmental|pythonvenv)
-        user_lines+=("${readme_line}")
-        user_num=$(( user_num + 1 ))
-      ;;
-    esac
-  done
-  local -r newline=$'\n'
-  {
-    echo "#### User programs";
-    echo "| Name | Description | Execution | Arguments | Testing |";
-    echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
-  } >> "FEATURES.md"
-  local user_lines_final=
-  for line in "${user_lines[@]}"; do
-    user_lines_final="${user_lines_final}${line}${newline}"
-  done
-  {
-  echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort;
-  echo "${newline}${newline}"
-  echo "#### Root Programs";
-  echo "| Name | Description | Execution | Arguments | Testing |";
-  echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
-  } >> "FEATURES.md"
-  local root_lines_final=
-  for line in "${root_lines[@]}"; do
-    root_lines_final="${root_lines_final}${line}${newline}"
-  done
-  echo "${root_lines_final[@]}" | sed -r '/^\s*$/d' | sort >> "FEATURES.md"
+    local icon_pointer="${keyname}_icon"
+    if [ -z "${!icon_pointer}" ]; then
+      icon_value="![${keyname} logo](https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master/.github/logo.png)"
+    else
+      icon_value="![${keyname} logo](https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master/data/static/${keyname}/${!icon_pointer})"
+    fi
 
-  # Prepend line
-  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total${newline}" | cat - FEATURES.md > FEATURES.md.bak && mv FEATURES.md.bak FEATURES.md
+    local description_pointer="${keyname}_description"
+
+    local usage_value="Binaries in Path: "
+    local binaries_pointers="${keyname}_binariesinstalledpaths[@]"
+    for binary in "${!binaries_pointers}"; do
+      usage_value+="$(echo "${binary}" | cut -d ';' -f2)"
+    done
+
+    features_table_lines+=$'\n'"| ${icon_value} | ${!name_pointer} | ${!arguments_pointer} | ${!description_pointer} | ${usage_value} |"
+  done
+
+
+  features_table_lines+="Customizer currently has available $(echo "${feature_keynames[@]}" | wc -w)"
+
+  echo "${features_table_lines}" > FEATURES.md
 }
 
 

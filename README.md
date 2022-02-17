@@ -11,7 +11,7 @@
 `bash` scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
 
 <p align="center">
-<img src="https://i.imgur.com/N7Hp7H1.png" width="250" height="290"/>
+<img src="https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master/.github/logo.png" width="250" height="290"/>
 </p>
 
 # Customizer

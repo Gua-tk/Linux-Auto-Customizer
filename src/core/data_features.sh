@@ -69,7 +69,20 @@ fi
 #  - FEATUREKEYNAME_commentary: Commentary for desktop launcher. Property 'Comment=' of the desktop launcher.
 #  - FEATUREKEYNAME_tags: System categories for the feature Property 'Keywords=' of the desktop launcher.
 #  - FEATUREKEYNAME_systemcategories: Property 'Categories=' of the desktop launcher.
-#    Building Debugger IDE GUIDesigner Profiling RevisionControl Translation Calendar ContactManagement Database Dictionary Chart Email Finance FlowChart PDA ProjectManagement Presentation Spreadsheet WordProcessor 2DGraphics VectorGraphics RasterGraphics 3DGraphics Scanning OCR Photography Publishing Viewer TextTools DesktopSettings HardwareSettings Printing PackageManager Dialup InstantMessaging Chat IRCClient Feed FileTransfer HamRadio News P2P RemoteAccess Telephony TelephonyTools VideoConference WebBrowser WebDevelopment Midi Mixer Sequencer Tuner TV AudioVideoEditing Player Recorder DiscBurning ActionGame AdventureGame ArcadeGame BoardGame BlocksGame CardGame KidsGame LogicGame RolePlaying Shooter Simulation SportsGame StrategyGame Art Construction Music Languages ArtificialIntelligence Astronomy Biology Chemistry ComputerScience DataVisualization Economy Electricity Geography Geology Geoscience History Humanities ImageProcessing Literature Maps Math NumericalAnalysis MedicalSoftware Physics Robotics Spirituality Sports ParallelComputing Amusement Archiving Compression Electronics Emulator Engineering FileTools FileManager TerminalEmulator Filesystem Monitor Security Accessibility Calculator Clock TextEditor Documentation Adult Core KDE GNOME XFCE GTK Qt Motif Java ConsoleOnly Screensaver TrayIcon Applet Shell AudioVideo Audio Video Development Education Game Graphics Network Office Science Settings System Utility
+#    Building Debugger IDE GUIDesigner Profiling RevisionControl Translation Calendar ContactManagement Database
+#    Dictionary Chart Email Finance FlowChart PDA ProjectManagement Presentation Spreadsheet WordProcessor 2DGraphics
+#    VectorGraphics RasterGraphics 3DGraphics Scanning OCR Photography Publishing Viewer TextTools DesktopSettings
+#    HardwareSettings Printing PackageManager Dialup InstantMessaging Chat IRCClient Feed FileTransfer HamRadio News
+#    P2P RemoteAccess Telephony TelephonyTools VideoConference WebBrowser WebDevelopment Midi Mixer Sequencer Tuner TV
+#    AudioVideoEditing Player Recorder DiscBurning ActionGame AdventureGame ArcadeGame BoardGame BlocksGame CardGame
+#    KidsGame LogicGame RolePlaying Shooter Simulation SportsGame StrategyGame Art Construction Music Languages
+#    ArtificialIntelligence Astronomy Biology Chemistry ComputerScience DataVisualization Economy Electricity Geography
+#    Geology Geoscience History Humanities ImageProcessing Literature Maps Math NumericalAnalysis MedicalSoftware
+#    Physics Robotics Spirituality Sports ParallelComputing Amusement Archiving Compression Electronics Emulator
+#    Engineering FileTools FileManager TerminalEmulator Filesystem Monitor Security Accessibility Calculator Clock
+#    TextEditor Documentation Adult Core KDE GNOME XFCE GTK Qt Motif Java ConsoleOnly Screensaver TrayIcon Applet Shell
+#    AudioVideo Audio Video Development Education Game Graphics Network Office Science Settings System Utility
+#
 #  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
 #    static data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
 ### Optional properties                                                                                                #
@@ -120,9 +133,10 @@ fi
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_tags:
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_icon:
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_description:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_mimetype:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_mimetypes:
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_exec:
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_systemcategories:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_terminal: By default is 'false', but if defined the supplied value is overridden.
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_actionkeynames:
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_name:
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_exec:
@@ -3171,6 +3185,24 @@ soundcloud_readmeline="| Soundcloud | ${soundcloud_description} | Command \`soun
 
 spotify_installationtype="packageinstall"
 spotify_arguments=("spotify")
+spotify_name="Spotify"
+spotify_commentary="Play music in stream"
+spotify_version="1.1.72"
+spotify_tags=("music" "stream")
+spotify_icon="spotify.png"
+spotify_systemcategories=("Music" "Audio")
+
+spotify_launcherkeynames=("launcher")
+spotify_launcher_exec="spotify"
+spotify_launcher_actionkeynames=("Playpause" "Next" "Previous" "Stop")
+spotify_launcher_Playpause_name="Play/pause"
+spotify_launcher_Playpause_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+spotify_launcher_Next_name="Next"
+spotify_launcher_Next_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+spotify_launcher_Previous_name="Previous"
+spotify_launcher_Previous_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+spotify_launcher_Stop_name="Stop"
+spotify_launcher_Stop_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 spotify_bashfunctions=("spotify.sh")
 spotify_launchernames=("spotify")
 spotify_packageurls=("https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.72.439.gc253025e_amd64.deb")

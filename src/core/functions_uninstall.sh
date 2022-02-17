@@ -200,7 +200,12 @@ generic_uninstall_manual_launchers() {
 # Argument 1: Feature keyname
 # Argument 2:
 generic_uninstall_dynamic_launcher() {
-  :
+  local -r launcherkeynames="$1_launcherkeynames[@]"
+  local name_suffix_anticollision=""
+  for launcherkey in "${!launcherkeynames}"; do
+    remove_manual_launcher "$1${name_suffix_anticollision}.desktop"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
 }
 
 # - Description: Expands function contents and remove them of .bashrc indirectly using bash_functions

@@ -621,57 +621,102 @@ NoDisplay=false"
   if [ ! -z "${!override_tags}" ]; then
     text+=$'\n'"Keywords="
     for tag_override in "${!override_tags}"; do
-      text+="${tag_override}; "
+      text+="${tag_override};"
     done
   else
     text+=$'\n'"Keywords="
     for tag_metadata in "${!metadata_tags}"; do
-      text+="${tag_metadata}; "
+      text+="${tag_metadata};"
     done
   fi
 
   override_icon="$2_$1_icon"
   metadata_icon="$2_icon"
   if [ ! -z "${!override_icon}" ]; then
+    create_folder "${BIN_FOLDER}/$2"
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!override_icon}" "${BIN_FOLDER}/$2"
     apply_permissions "${BIN_FOLDER}/$2/${!override_icon}"
 
     text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!override_icon}"
   else
+    create_folder "${BIN_FOLDER}/$2"
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${BIN_FOLDER}/$2"
     apply_permissions "${BIN_FOLDER}/$2/${!metadata_icon}"
+
     text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!metadata_icon}"
   fi
 
+  # Categories from systemcategories
   override_systemcategories="$2_$1_systemcategories[@]"
   metadata_systemcategories="$2_systemcategories[@]"
   if [ ! -z "${!override_systemcategories}" ]; then
     text+=$'\n'"Categories="
     for category_override in "${!override_systemcategories}"; do
-      text+="${category_override}; "
+      text+="${category_override};"
     done
   else
     text+=$'\n'"Categories="
     for category_metadata in "${!metadata_systemcategories}"; do
-      text+="${category_metadata}; "
+      text+="${category_metadata};"
     done
   fi
 
-  #override_="$2_$1_"
-  #metadata_="$2_"
-
-
-  override_exec="$2_$1_exec"
-  metadata_exec_temp="$2_binariesinstalledpaths[0]"
-  metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
+  # Exec and Tryexec from binariesinstalledpaths
+  local -r override_exec="$2_$1_exec"
+  local -r metadata_exec_temp="$2_binariesinstalledpaths[0]"
+  local -r metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
   if [ ! -z "${!override_exec}" ]; then
+    if echo "${!override_exec}" | grep -qE " " ; then
+      text+=$'\n'"TryExec=$(echo "${!override_exec}" | cut -d " " -f1)"
+    else
+      text+=$'\n'"TryExec=${!override_exec}"
+    fi
     text+=$'\n'"Exec=${!override_exec}"
   else
+    text+=$'\n'"TryExec=${metadata_exec}"
     text+=$'\n'"Exec=${metadata_exec}"
   fi
 
-  echo "${text}" > "${XDG_DESKTOP_DIR}/$3.desktop"
-  apply_permissions "${XDG_DESKTOP_DIR}/$3.desktop"
+  #Terminal by default is set to false, true if overridden
+  local -r override_terminal="$2_$1_terminal"
+  if [ ! -z "${!override_terminal}" ]; then
+    text+=$'\n'"Terminal=${!override_terminal}"
+  else
+    text+=$'\n'"Terminal=false"
+  fi
+
+  override_mime="$2_$1_mimetypes[@]"
+  metadata_mime="$2_associatedfiletypes[@]"
+  if [ ! -z "${!override_mime}" ]; then
+    text+=$'\n'"MimeType="
+    for mime_override in "${!override_mime}"; do
+      text+="${mime_override};"
+    done
+  else
+    text+=$'\n'"MimeType="
+    for mime_metadata in "${!metadata_mime}"; do
+      text+="${mime_metadata};"
+    done
+  fi
+
+  override_actionkeynames="$2_$1_actionkeynames[@]"
+  if [ ! -z "$(echo "${!override_actionkeynames}" )" ]; then
+    text+=$'\n'"Actions="
+    for actionkeyname_override in "${!override_actionkeynames}"; do
+      text+="${actionkeyname_override};"
+    done
+
+    for actionkeyname_override in $(echo "${!override_actionkeynames}"); do
+      local actionkeyname_name="$2_$1_${actionkeyname_override}_name"
+      local actionkeyname_exec="$2_$1_${actionkeyname_override}_exec"
+
+      text+=$'\n'$'\n'"[Desktop Action ${actionkeyname_override}]"
+      text+=$'\n'"Name=${!actionkeyname_name}"
+      text+=$'\n'"Exec=${!actionkeyname_exec}"
+    done
+  fi
+
+  create_manual_launcher "${text}" "$3"
 }
 
 
