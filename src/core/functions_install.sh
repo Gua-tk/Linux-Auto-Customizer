@@ -708,18 +708,15 @@ NoDisplay=false"
 
     for actionkeyname_override in $(echo "${!override_actionkeynames}"); do
       local actionkeyname_name="$2_$1_${actionkeyname_override}_name"
-      echo ${!actionkeyname_name}
-      echo ${actionkeyname_name}
       local actionkeyname_exec="$2_$1_${actionkeyname_override}_exec"
-      echo ${!actionkeyname_exec}
-      echo ${actionkeyname_exec}
+
       text+=$'\n'$'\n'"[Desktop Action ${actionkeyname_override}]"
       text+=$'\n'"Name=${!actionkeyname_name}"
       text+=$'\n'"Exec=${!actionkeyname_exec}"
     done
   fi
-  echo "${text}" > "${XDG_DESKTOP_DIR}/$3.desktop"
-  apply_permissions "${XDG_DESKTOP_DIR}/$3.desktop"
+
+  create_manual_launcher "${text}" "$3"
 }
 
 
