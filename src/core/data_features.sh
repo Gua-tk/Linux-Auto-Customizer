@@ -279,12 +279,20 @@ audacity_readmeline="| Audacity | "${audacity_commentary}" | Command \`audacity\
 
 AutoFirma_installationtype="packageinstall"
 AutoFirma_arguments=("auto_firma")
+AutoFirma_name="AutoFirma"
+AutoFirma_commentary="Electronic signature recognition"
+AutoFirma_version="1.0"
+AutoFirma_tags=("digitalsign")
+AutoFirma_icon="AutoFirma.png"
+AutoFirma_systemcategories=("Utility")
+AutoFirma_launcherkeynames=("default")
+AutoFirma_default_exec="AutoFirma"
 AutoFirma_bashfunctions=("AutoFirma.sh")
 AutoFirma_compressedfileurl="https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip"
 AutoFirma_launchernames=("afirma")
 AutoFirma_packagedependencies=("libnss3-tools")
 AutoFirma_packagenames=("AutoFirma")
-AutoFirma_readmeline="| AutoFirma | Electronic signature recognition | Command \`AutoFirma\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+AutoFirma_readmeline="| AutoFirma | "${AutoFirma_commentary}" | Command \`AutoFirma\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 axel_installationtype="packagemanager"
 axel_arguments=("axel")
