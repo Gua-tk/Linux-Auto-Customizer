@@ -264,10 +264,17 @@ atom_readmeline="| Atom | "${atom_commentary}" | Command \`atom\`, desktop and d
 
 audacity_installationtype="packagemanager"
 audacity_arguments=("audacity")
+audacity_name="Audacity"
+audacity_commentary="Digital audio editor and recording"
+audacity_version="1.0"
+audacity_tags=("music" "audio" "producing")
+audacity_icon="audacity.svg"
+audacity_systemcategories=("Audio" "Music")
+audacity_launcherkeynames=("default")
 audacity_bashfunctions=("audacity.sh")
 audacity_launchernames=("audacity")
 audacity_packagenames=("audacity" "audacity-data")
-audacity_readmeline="| Audacity | Digital audio editor and recording | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+audacity_readmeline="| Audacity | "${audacity_commentary}" | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 AutoFirma_installationtype="packageinstall"
 AutoFirma_arguments=("auto_firma")
