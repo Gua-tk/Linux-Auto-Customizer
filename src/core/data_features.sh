@@ -271,6 +271,7 @@ audacity_tags=("music" "audio" "producing")
 audacity_icon="audacity.svg"
 audacity_systemcategories=("Audio" "Music")
 audacity_launcherkeynames=("default")
+audacity_default_exec="audacity"
 audacity_bashfunctions=("audacity.sh")
 audacity_launchernames=("audacity")
 audacity_packagenames=("audacity" "audacity-data")
