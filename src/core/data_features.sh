@@ -176,9 +176,18 @@ aircrack_ng_readmeline="| aircrack-ng | Security tools for audition | Command \`
 
 aisleriot_installationtype="packagemanager"
 aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
+aisleriot_name="AisleRiot Solitaire"
+aisleriot_commentary="Implementation of the classical game solitaire"
+aisleriot_version="3.22.9"
+aisleriot_tags=("cards" "game" "cardsgame")
+aisleriot_icon="aisleriot.png"
+aisleriot_systemcategories=("Game" "CardGame" )
+aisleriot_bashfunctions=("aisleriot.sh")
+aisleriot_launcherkeynames=("default")
+aisleriot_default_exec="sol"
 aisleriot_launchernames=("sol")
 aisleriot_packagenames=("aisleriot")
-aisleriot_readmeline="| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+aisleriot_readmeline="| Solitaire aisleriot | "${aisleriot_commentary}" | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 alert_installationtype="environmental"
 alert_arguments=("alert" "alert_alias" "alias_alert")
@@ -213,24 +222,6 @@ anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd6
 anydesk_description="Software to remote control other computers"
 anydesk_readmeline="| Anydesk | ${anydesk_description} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 anydesk_launcherkeynames=("default")
-anydesk_launchercontents=("
-[Desktop Entry]
-Categories=Remote;control;other;
-Comment=${anydesk_description}
-Encoding=UTF-8
-Exec=anydesk
-GenericName=Remote desktop application
-Icon=${BIN_FOLDER}/anydesk/icons/hicolor/scalable/apps/anydesk.svg
-Keywords=IDE;programming;android;studio;dev;
-MimeType=
-Name=AnyDesk
-StartupNotify=true
-StartupWMClass=anydesk
-Terminal=false
-TryExec=anydesk
-Type=Application
-Version=1.0
-")
 
 apache2_installationtype="packagemanager"
 apache2_arguments=("apache2")
@@ -239,10 +230,17 @@ apache2_readmeline="| Apache2 | Redirect Web content to browser | It is used as 
 
 ardour_installationtype="packagemanager"
 ardour_arguments=("ardour")
+ardour_name="Ardour5"
+ardour_commentary="Software for music production"
+ardour_version=""
+ardour_tags=("music" "audio" "production")
+ardour_icon="ardour.svg"
+ardour_systemcategories=("Audio" "Music")
+ardour_launcherkeynames=("default")
 ardour_bashfunctions=("ardour.sh")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
-ardour_readmeline="| Ardour | Software for music production | Commands \`ardour\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
+ardour_readmeline="| Ardour | "${ardour_commentary}" | Commands \`ardour\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
 aspell_installationtype="packagemanager"
 aspell_arguments=("aspell")
