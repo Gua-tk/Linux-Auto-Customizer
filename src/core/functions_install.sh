@@ -1070,6 +1070,7 @@ download_and_install_package() {
 
   local mime_type=
   mime_type="$(mimetype "${BIN_FOLDER}/${file_name}" | cut -d ":" -f2 | tr -d " ")"
+  echo MARCAAAA
   case "${mime_type}" in
     "application/zip"|"application/x-bzip-compressed-tar"|"application/gzip"|"application/x-xz")
       decompress "${BIN_FOLDER}/${file_name}" "${file_name}_decompressed"  # Decompressing
@@ -1101,6 +1102,7 @@ download_and_install_package() {
 # - Permissions: Expected to be run by root.
 # - Argument 1: String that matches a set of variables in data_features.
 packageinstall_installation_type() {
+  echo MARCA2
   local -r packageurls="$1_packageurls[@]"
   local name_suffix_anticollision=""
   for packageurl in "${!packageurls}"; do
