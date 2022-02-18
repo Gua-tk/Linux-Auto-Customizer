@@ -237,6 +237,7 @@ ardour_tags=("music" "audio" "production")
 ardour_icon="ardour.svg"
 ardour_systemcategories=("Audio" "Music")
 ardour_launcherkeynames=("default")
+ardour_default_exec="ardour5"
 ardour_bashfunctions=("ardour.sh")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
