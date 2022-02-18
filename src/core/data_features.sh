@@ -250,9 +250,17 @@ aspell_readmeline="| Aspell | Spell checker | Command \`aspell\` ||  <ul><li>- [
 
 atom_installationtype="packageinstall"
 atom_arguments=("atom")
+atom_name="Atom"
+atom_commentary="Text and source code editor"
+atom_version="1.59.0"
+atom_tags=("IDE" "programming")
+atom_icon="atom.png"
+atom_systemcategories=("IDE" "TextTools" "TextEditor" "Development")
+atom_launcherkeynames=("default")
+atom_default_exec="atom"
 atom_launchernames=("atom")
 atom_packageurls=("https://atom.io/download/deb")
-atom_readmeline="| Atom | Text and source code editor | Command \`atom\`, desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+atom_readmeline="| Atom | "${atom_commentary}" | Command \`atom\`, desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 audacity_installationtype="packagemanager"
 audacity_arguments=("audacity")
