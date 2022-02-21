@@ -267,7 +267,28 @@ autogen_readme()
     local usage_value="Binaries in Path: "
     local binaries_pointers="${keyname}_binariesinstalledpaths[@]"
     for binary in "${!binaries_pointers}"; do
-      usage_value+="$(echo "${binary}" | cut -d ';' -f2)"
+      usage_value+="$(echo "${binary}" | cut -d ';' -f2), "
+    done
+
+    usage_value+=$'\n'"Functions in shell environment: "
+    local filekeys_pointers="${keyname}_filekeys[@]"
+    local feature_function_names=""
+    for filekey in "${!filekeys_pointers}"; do
+      filekey_name="${keyname}_${filekey}_name"
+
+
+      feature_function_names="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${keyname}/${!filekey_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*\\(\\)" | uniq)"
+
+      for feature_function_name in "${feature_function_names}" ; do
+        # Append name without parenthesis
+        usage_value+="$(echo "${feature_function_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*"), "
+      done
+    done
+
+    local usage_value+="Keyboard shortcuts: "
+    local shortcuts_pointers="${keyname}_binariesinstalledpaths[@]"
+    for binary in "${!binaries_pointers}"; do
+      usage_value+="$(echo "${binary}" | cut -d ';' -f2), "
     done
 
     features_table_lines+=$'\n'"| ${icon_value} | ${!name_pointer} | ${!arguments_pointer} | ${!description_pointer} | ${usage_value} |"

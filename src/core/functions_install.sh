@@ -800,6 +800,7 @@ generic_install_dynamic_launcher() {
   done
 }
 
+
 # - Description: Expands launcher names and add them to the favorites subsystem if FLAG_FAVORITES is set to 1.
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_launchernames
