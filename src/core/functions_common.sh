@@ -264,14 +264,14 @@ autogen_readme()
 
     local description_pointer="${keyname}_description"
 
-    local usage_value="Binaries in Path: "
+    local usage_value="- Binaries in Path: "
     local binaries_pointers="${keyname}_binariesinstalledpaths[@]"
     for binary in "${!binaries_pointers}"; do
       usage_value+="$(echo "${binary}" | cut -d ';' -f2), "
     done
 
     filekey_path=""
-    usage_value+=$'\n'"Functions in shell environment: "
+    usage_value+="- Functions in shell environment: "
     local filekeys_pointers="${keyname}_filekeys[@]"
     local feature_function_names=""
     for filekey in "${!filekeys_pointers}"; do
@@ -285,10 +285,10 @@ autogen_readme()
       done
     done
 
-    local usage_value+="$'\n'Keyboard shortcuts: "
+    local usage_value+="- Keyboard shortcuts: "
     local shortcuts_pointers="${keyname}_binariesinstalledpaths[@]"
-    for binary in "${!binaries_pointers}"; do
-      usage_value+="$(echo "${binary}" | cut -d ';' -f2), "
+    for shortcut_keyboard in "${!shortcuts_pointers}"; do
+      usage_value+="$(echo "${shortcut_keyboard}" | cut -d ';' -f2), "
     done
 
     features_table_lines+=$'\n'"| ${icon_value} | ${!name_pointer} | ${!arguments_pointer} | ${!description_pointer} | ${usage_value} |"
