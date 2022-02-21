@@ -270,12 +270,12 @@ autogen_readme()
       usage_value+="$(echo "${binary}" | cut -d ';' -f2), "
     done
 
+    filekey_path=""
     usage_value+=$'\n'"Functions in shell environment: "
     local filekeys_pointers="${keyname}_filekeys[@]"
     local feature_function_names=""
     for filekey in "${!filekeys_pointers}"; do
-      filekey_name="${keyname}_${filekey}_name"
-
+      filekey_name="${keyname}_${filekey}_content"
 
       feature_function_names="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${keyname}/${!filekey_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*\\(\\)" | uniq)"
 
@@ -285,7 +285,7 @@ autogen_readme()
       done
     done
 
-    local usage_value+="Keyboard shortcuts: "
+    local usage_value+="$'\n'Keyboard shortcuts: "
     local shortcuts_pointers="${keyname}_binariesinstalledpaths[@]"
     for binary in "${!binaries_pointers}"; do
       usage_value+="$(echo "${binary}" | cut -d ';' -f2), "
@@ -296,7 +296,7 @@ autogen_readme()
 
 
   features_table_lines+=$'\n'"Customizer currently has available $(echo "${feature_keynames[@]}" | wc -w) features."
-  echo "${features_table_lines}" > FEATURES.md
+  echo "${features_table_lines}" > "${CUSTOMIZER_PROJECT_FOLDER}/FEATURES.md"
 }
 
 
