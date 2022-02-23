@@ -137,9 +137,21 @@ fi
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_exec:
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_systemcategories:
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_terminal: By default is 'false', but if defined the supplied value is overridden.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_notify: Shows an hourglass in the cursor until the app is loaded. By default true
+#      but overridden by this variable.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_windowclass: Used to group multiple windows launched from the same launcher and
+#      in other situations. By default the feaurekeyname but overriden by this variable.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_nodisplay: Used to show or not show launcher in the dashboard. By default the
+#      feaurekeyname but overriden by this variable.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autostartcondition:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autorestart:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autorestartdelay:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_windowclass: Used to group multiple windows launched from the same launcher and
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_actionkeynames:
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_name:
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_exec:
+#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_icon: By default customizer logo if no icon at feature level
+#        provided. If not, overridden by this variable
 ### Installation type dependent properties                                                                             #
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
 #    feature. Used in: packageinstall, packagemanager.                                                                 #
@@ -181,7 +193,7 @@ aisleriot_commentary="Implementation of the classical game solitaire"
 aisleriot_version="3.22.9"
 aisleriot_tags=("cards" "game" "cardsgame")
 aisleriot_icon="aisleriot.png"
-aisleriot_systemcategories=("Game" "CardGame" )
+aisleriot_systemcategories=("Game" "CardGame")
 aisleriot_bashfunctions=("aisleriot.sh")
 aisleriot_launcherkeynames=("default")
 aisleriot_default_exec="sol"
@@ -2862,37 +2874,24 @@ push_readmeline="| Function \`push\` | Alias for \`git push\`|  Command \`push\`
 
 pycharm_installationtype="userinherit"
 pycharm_arguments=("pycharm" "pycharm_community")
+pycharm_name="PyCharm Community"
+pycharm_commentary="Integrated development environment used in computer programming"
+pycharm_version="2021.3"
+pycharm_tags=("IDE" "development" "text editor" "dev" "programming" "python")
+pycharm_icon="pycharm.png"
+pycharm_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharm_bashfunctions=("pycharm.sh")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
-pycharm_description="Integrated development environment used in computer programming"
-pycharm_launchercontents=("
-[Desktop Entry]
-Actions=NewWindow;
-Categories=programming;dev;
-Comment=${pycharm_description}
-Encoding=UTF-8
-Exec=pycharm %F
-GenericName=Pycharm
-Icon=${BIN_FOLDER}/pycharm/bin/pycharm.png
-Keywords=dev;programming;python;
-MimeType=
-Name=PyCharm
-StartupNotify=true
-StartupWMClass=jetbrains-pycharm
-Terminal=false
-TryExec=pycharm
-Type=Application
-Version=1.0
-
-[Desktop Action NewWindow]
-Name=Pycharm New Window
-Exec=pycharm
-Icon=${BIN_FOLDER}/pycharm/bin/pycharm.png
-")
-pycharm_readmeline="| Pycharm Community | ${pycharm_description} | Command \`pycharm\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files  || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+pycharm_launcherkeynames=("launcher")
+pycharm_launcher_exec="pycharm %F"
+pycharm_launcher_windowclass="jetbrains-pycharm"
+pycharm_launcher_actionkeynames=("newwindow" )
+pycharm_launcher_newwindow_name="Pycharm New Window"
+pycharm_launcher_newwindow_exec="pycharm"
+pycharm_readmeline="| Pycharm Community | ${pycharm_commentary} | Command \`pycharm\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files  || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 pycharmpro_installationtype="userinherit"
 pycharmpro_arguments=("pycharm_pro")

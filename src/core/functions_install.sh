@@ -757,10 +757,22 @@ NoDisplay=false"
     for actionkeyname_override in $(echo "${!override_actionkeynames}"); do
       local actionkeyname_name="$2_$1_${actionkeyname_override}_name"
       local actionkeyname_exec="$2_$1_${actionkeyname_override}_exec"
-
+      local actionkeyname_icon="$2_$1_${actionkeyname_override}_icon"
       text+=$'\n'$'\n'"[Desktop Action ${actionkeyname_override}]"
       text+=$'\n'"Name=${!actionkeyname_name}"
       text+=$'\n'"Exec=${!actionkeyname_exec}"
+      local action_icon=""
+      local feature_icon_pointer="$2_icon"
+      if [ -z "${!actionkeyname_icon}" ]; then
+        if [ -z "${!feature_icon_pointer}" ]; then
+          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png"
+        else
+          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!feature_icon_pointer}"
+        fi
+      else
+        action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!actionkeyname_icon}"
+      fi
+      text+=$'\n'"Icon=${action_icon}"
     done
   fi
 
