@@ -73,8 +73,11 @@ case ${OS_NAME} in
   "Parrot OS")
     initialize_package_manager_apt-get
   ;;
+  "Trisquel GNU/Linux")
+    initialize_package_manager_apt-get
+  ;;
   *)
-    output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager" "${FLAG_QUIETNESS}"
+    output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager" "0"
     OS_NAME="Ubuntu"
     initialize_package_manager_apt-get
   ;;
