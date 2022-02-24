@@ -2890,7 +2890,7 @@ pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
 pycharm_launcherkeynames=("launcher")
 pycharm_launcher_exec="pycharm %F"
 pycharm_launcher_windowclass="jetbrains-pycharm"
-pycharm_launcher_actionkeynames=("newwindow" )
+pycharm_launcher_actionkeynames=("newwindow")
 pycharm_launcher_newwindow_name="Pycharm New Window"
 pycharm_launcher_newwindow_exec="pycharm"
 
@@ -3206,17 +3206,16 @@ spotify_version="1.1.72"
 spotify_tags=("music" "stream")
 spotify_icon="spotify.png"
 spotify_systemcategories=("Music" "Audio")
-
 spotify_launcherkeynames=("launcher")
-spotify_launcher_exec="spotify"
+spotify_launcher_exec="spotify %U"
 spotify_launcher_actionkeynames=("Playpause" "Next" "Previous" "Stop")
-spotify_launcher_Playpause_name="Play/pause"
+spotify_launcher_Playpause_name="⏯"
 spotify_launcher_Playpause_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
-spotify_launcher_Next_name="Next"
+spotify_launcher_Next_name="⏭"
 spotify_launcher_Next_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
-spotify_launcher_Previous_name="Previous"
+spotify_launcher_Previous_name="⏮"
 spotify_launcher_Previous_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
-spotify_launcher_Stop_name="Stop"
+spotify_launcher_Stop_name="⏹"
 spotify_launcher_Stop_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 spotify_bashfunctions=("spotify.sh")
 spotify_launchernames=("spotify")
