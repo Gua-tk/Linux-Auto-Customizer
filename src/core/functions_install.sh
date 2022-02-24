@@ -608,6 +608,14 @@ NoDisplay=false"
     text+=$'\n'"Version=${!metadata_version}"
   fi
 
+  override_genericname_pointer="$2_$1_description"
+  metadata_genericname_pointer="$2_description"
+  if [ ! -z "${!override_genericname_pointer}" ]; then
+    text+=$'\n'"GenericName=${!override_genericname_pointer}"
+  else
+    text+=$'\n'"GenericName=${!metadata_genericname_pointer}"
+  fi
+
   override_commentary="$2_$1_commentary"
   metadata_commentary="$2_commentary"
   if [ ! -z "${!override_commentary}" ]; then
