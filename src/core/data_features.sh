@@ -3214,7 +3214,7 @@ spotify_tags=("music" "stream")
 spotify_icon="spotify.png"
 spotify_systemcategories=("Music" "Audio")
 spotify_launcherkeynames=("launcher")
-spotify_launcher_exec="spotify --no-zygote"
+spotify_launcher_exec="spotify %U"
 spotify_launcher_actionkeynames=("Playpause" "Next" "Previous" "Stop")
 spotify_launcher_Playpause_name="⏯"
 spotify_launcher_Playpause_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
