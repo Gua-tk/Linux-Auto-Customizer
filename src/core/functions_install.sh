@@ -647,11 +647,29 @@ NoDisplay=false"
 
     text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!override_icon}"
   else
-    create_folder "${BIN_FOLDER}/$2"
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${BIN_FOLDER}/$2"
-    apply_permissions "${BIN_FOLDER}/$2/${!metadata_icon}"
-
-    text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!metadata_icon}"
+    if [ ! -z "${!metadata_icon}" ]; then
+      create_folder "${BIN_FOLDER}/$2"
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${BIN_FOLDER}/$2"
+      apply_permissions "${BIN_FOLDER}/$2/${!metadata_icon}"
+      text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!metadata_icon}"
+    else
+      if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.svg" ]; then
+        create_folder "${BIN_FOLDER}/$2"
+        cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.svg" "${BIN_FOLDER}/$2"
+        apply_permissions "${BIN_FOLDER}/$2/$2.svg"
+        text+=$'\n'"Icon=${BIN_FOLDER}/$2/$2.svg"
+      elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.png" ]; then
+        create_folder "${BIN_FOLDER}/$2"
+        cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.png" "${BIN_FOLDER}/$2"
+        apply_permissions "${BIN_FOLDER}/$2/$2.png"
+        text+=$'\n'"Icon=${BIN_FOLDER}/$2/$2.png"
+      else
+        create_folder "${BIN_FOLDER}/$2"
+        cp "${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png" "${BIN_FOLDER}/$2"
+        apply_permissions "${BIN_FOLDER}/$2/logo.png"
+        text+=$'\n'"Icon=${BIN_FOLDER}/$2/logo.png"
+      fi
+    fi
   fi
 
   # Categories from systemcategories

@@ -173,43 +173,61 @@ fi
 
 a_installationtype="environmental"
 a_arguments=("a")
+a_name="Function a"
+a_description="Function that displays environment aliases using compgen -a"
+a_version="1.0"
+a_tags=("bashfunctions" "aliases")
 a_bashfunctions=("a.sh")
-a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 add_installationtype="environmental"
 add_arguments=("add" "add_function")
+add_name="Function add"
+add_description="Alias to git add with completion"
+add_version="1.0"
+add_tags=("gitbashfunctions" "bashfunctions" "git")
 add_bashfunctions=("add.sh")
-add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 aircrack_ng_installationtype="packagemanager"
-aircrack_ng_packagenames=("aircrack-ng")
 aircrack_ng_arguments=("aircrack_ng" "aircrackng")
-aircrack_ng_readmeline="| aircrack-ng | Security tools for audition | Command \`aircrack-ng\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+aircrack_ng_packagenames=("aircrack-ng")
+aircrack_ng_name="Aircrack-ng"
+aircrack_ng_description="Complete suite of security tools to assess WiFi network security"
+aircrack_ng_version="1.6"
+aircrack_ng_tags=("attack" "network" "security")
+
 
 aisleriot_installationtype="packagemanager"
 aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
 aisleriot_name="AisleRiot Solitaire"
 aisleriot_commentary="Implementation of the classical game solitaire"
+aisleriot_description="Solitaire Classic Card Game"
 aisleriot_version="3.22.9"
 aisleriot_tags=("cards" "game" "cardsgame")
-aisleriot_icon="aisleriot.png"
 aisleriot_systemcategories=("Game" "CardGame")
 aisleriot_bashfunctions=("aisleriot.sh")
 aisleriot_launcherkeynames=("default")
 aisleriot_default_exec="sol"
 aisleriot_launchernames=("sol")
 aisleriot_packagenames=("aisleriot")
-aisleriot_readmeline="| Solitaire aisleriot | "${aisleriot_commentary}" | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 alert_installationtype="environmental"
 alert_arguments=("alert" "alert_alias" "alias_alert")
+alert_name="Function alert"
+alert_description="Alias to show a notification at the end of a commands"
+alert_version="1.0"
+alert_packagedepedencies=("libnotify-bin")
+alert_tags=("bashfunctions" "notify" "notification")
 alert_bashfunctions=("alert.sh")
-alert_readmeline="| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ansible_installationtype="packagemanager"
 ansible_arguments=("ansible")
+ansible_name="Ansible"
+ansible_commentary="Automation of software"
+ansible_description=""
+ansible_version=""
+ansible_tags=("")
+ansible_systemcategories=("")
 ansible_packagenames=("ansible")
-ansible_readmeline="| Ansible | Automation of software | Command \`ansible\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ant_installationtype="userinherit"
 ant_arguments=("ant" "apache_ant")
@@ -225,7 +243,6 @@ anydesk_name="Anydesk"
 anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
 anydesk_version="6.1.1"
 anydesk_tags=("remote" "control" "cloud")
-anydesk_icon="anydesk.svg"
 anydesk_systemcategories=("Accessibility" "Network" "RemoteAccess" "FileTransfer" "P2P")
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")
 anydesk_bashfunctions=("anydesk.sh")
