@@ -258,15 +258,14 @@ autogen_readme()
     local icon_pointer="${keyname}_icon"
     if [ -z "${!icon_pointer}" ]; then
       if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.svg" ]; then
-        icon_value="![${keyname} logo](${github_url}/data/static/${keyname}/${keyname}.svg)"
+        icon_value="<img src=\"${github_url}/data/static/${keyname}/${keyname}.svg\" width=\"200\" height=\"200\" />"
       elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.png" ]; then
-        icon_value="![${keyname} logo](${github_url}/data/static/${keyname}/${keyname}.png)"
+        icon_value="<img src=\"${github_url}/data/static/${keyname}/${keyname}.png\" width=\"200\" height=\"200\" />"
       else
-        icon_value="![${keyname} logo](${github_url}/.github/logo.png)"
+        icon_value="<img src=\"${github_url}/.github/logo.png\" width=\"200\" height=\"200\" />"
       fi
     else
-
-      icon_value="![${keyname} logo](${github_url}/data/static/${keyname}/${!icon_pointer})"
+      icon_value="<img src=\"${github_url}/data/static/${keyname}/${!icon_pointer}\" width=\"200\" height=\"200\" />"
     fi
 
     local description_pointer="${keyname}_description"
