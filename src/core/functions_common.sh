@@ -251,6 +251,9 @@ autogen_readme()
 | Icon | Name | Arguments | Description | Execution |
 |-------------|----------------------|------------------------------------------------------|------------|-------------|"
   local github_url="https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master"
+  local html_prefix="<img src=\""
+  local html_suffix="\" width=\"200\" height=\"200\" />"
+  local icon_path=""
   for keyname in "${feature_keynames[@]}"; do
     local arguments_pointer="${keyname}_arguments[@]"
     local name_pointer="${keyname}_name"
@@ -258,15 +261,17 @@ autogen_readme()
     local icon_pointer="${keyname}_icon"
     if [ -z "${!icon_pointer}" ]; then
       if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.svg" ]; then
-        icon_value="<img src=\"${github_url}/data/static/${keyname}/${keyname}.svg\" width=\"200\" height=\"200\" />"
+        icon_path="/data/static/${keyname}/${keyname}.svg"
       elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.png" ]; then
-        icon_value="<img src=\"${github_url}/data/static/${keyname}/${keyname}.png\" width=\"200\" height=\"200\" />"
+        icon_path="/data/static/${keyname}/${keyname}.png"
       else
-        icon_value="<img src=\"${github_url}/.github/logo.png\" width=\"200\" height=\"200\" />"
+        icon_path="/.github/logo.png"
       fi
     else
-      icon_value="<img src=\"${github_url}/data/static/${keyname}/${!icon_pointer}\" width=\"200\" height=\"200\" />"
+      icon_path="/data/static/${keyname}/${!icon_pointer}"
     fi
+    icon_value="${html_prefix}${github_url}${icon_path}${html_suffix}"
+
 
     local description_pointer="${keyname}_description"
 
