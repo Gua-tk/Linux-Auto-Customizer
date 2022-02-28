@@ -45,15 +45,42 @@ initialize_package_manager_yum() {
   PACKAGE_MANAGER_UNINSTALLPACKAGE="yum -y purge"
   PACKAGE_MANAGER_AUTOREMOVE="yum -y autoremove"
   PACKAGE_MANAGER_AUTOCLEAN=":"
+}
 
+initialize_package_manager_pkg() {
+  DEFAULT_PACKAGE_MANAGER="pkg"
+  PACKAGE_MANAGER_INSTALL="pkg install -y"
+  PACKAGE_MANAGER_FIXBROKEN="pkg install -y -f"
+  PACKAGE_MANAGER_UNINSTALL="pkg uninstall -y"
+  PACKAGE_MANAGER_UPDATE="pkg update -y"
+  PACKAGE_MANAGER_UPGRADE="pkg upgrade -y"
+  PACKAGE_MANAGER_INSTALLPACKAGE="pm install -y"
+  PACKAGE_MANAGER_INSTALLPACKAGES="pm install -y"
+  PACKAGE_MANAGER_UNINSTALLPACKAGE="pkg uninstall -y"
+  PACKAGE_MANAGER_AUTOREMOVE="apt-get -y autoremove"
+  PACKAGE_MANAGER_AUTOCLEAN="pkg -y autoclean"
 }
 
 # Search the current OS in order to determine the default package manager and its main
 if [ -f "/etc/os-release" ]; then
-  declare OS_NAME=$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )
+
+  subsys_Windows="$(echo $(uname -r) | rev | cut -d "-" -f1 | rev)"
+  if "${subsys_Windows}" == "WSL2"; then
+    #declare wdesk="/Users/Axel F C/Desktop"
+    #declare wsl2desk="/home/axl/Desktop"
+    declare OS_NAME="WSL2"
+  else
+    declare OS_NAME=$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )
+  fi
 else
   echo "WARNING: /etc/os-release can not be read. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager"
-  declare OS_NAME="Ubuntu"
+  subsys_Android="$(echo $(uname -a) | rev | cut -d " " -f1 | rev)"
+
+  if "${subsys_Android}" == "Android"; then
+    declare OS_NAME="Android"
+  else
+    declare OS_NAME="Ubuntu"
+  fi
 fi
 
 # Load the call to the package manager corresponding to the previously detected OS
@@ -76,6 +103,13 @@ case ${OS_NAME} in
   "Trisquel GNU/Linux")
     initialize_package_manager_apt-get
   ;;
+  WSL2)
+    # May change due to different machines available
+    initialize_package_manager_apt-get
+  ;;
+  Android)
+    initialize_package_manager_pkg
+  ;;
   *)
     output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager" "0"
     OS_NAME="Ubuntu"
@@ -88,7 +122,7 @@ declare STACKED_PACKAGE_MANAGER
 # Variable used to indicate if we need to reload an stacked package manager at the end of an installation.
 declare POP_PACKAGE_MANAGER=0
 # List of recognised package managers
-declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum")
+declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum" "pkg")
 
 ########################################################################################################################
 ################################################## CONSTANT PATHS ######################################################
