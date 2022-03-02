@@ -1268,6 +1268,7 @@ data_and_file_structures_initialization() {
     fi
   fi
 
+
   # Make sure that .profile sources .bash_initializations
   if ! grep -Fqo "${bash_initializations_import}" "${PROFILE_PATH}"; then
     echo -e "${bash_initializations_import}" >> "${PROFILE_PATH}"
