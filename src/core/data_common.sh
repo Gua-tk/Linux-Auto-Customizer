@@ -56,38 +56,30 @@ initialize_package_manager_pkg() {
   PACKAGE_MANAGER_UPGRADE="pkg upgrade -y"
   PACKAGE_MANAGER_INSTALLPACKAGE="pm install -y"
   PACKAGE_MANAGER_INSTALLPACKAGES="pm install -y"
-  PACKAGE_MANAGER_UNINSTALLPACKAGE="pkg uninstall -y"
-  PACKAGE_MANAGER_AUTOREMOVE="apt-get -y autoremove"
+  PACKAGE_MANAGER_UNINSTALLPACKAGE="pm uninstall -y"
+  PACKAGE_MANAGER_AUTOREMOVE=":"
   PACKAGE_MANAGER_AUTOCLEAN="pkg -y autoclean"
 }
 
 # Search the current OS in order to determine the default package manager and its main
 if [ -f "/etc/os-release" ]; then
-
-  subsys_Windows="$(echo $(uname -r) | rev | cut -d "-" -f1 | rev)"
-  if "${subsys_Windows}" == "WSL2"; then
-    #declare wdesk="/Users/Axel F C/Desktop"
-    #declare wsl2desk="/home/axl/Desktop"
+  subsys_Windows="$(echo "$(uname -r)" | rev | cut -d "-" -f1 | rev)"
+  if [ "${subsys_Windows}" == "WSL2" ]; then
     declare OS_NAME="WSL2"
+  # If his path exist means that we are running in termux
+  elif [ -d /data/data/com.termux/files/home ]; then
+    declare OS_NAME="TermuxUbuntu"
   else
     declare OS_NAME=$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )
   fi
 else
-  echo "WARNING: /etc/os-release can not be read. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager"
   subsys_Android="$(echo $(uname -a) | rev | cut -d " " -f1 | rev)"
-
-  if "${subsys_Android}" == "Android"; then
+  if [ "${subsys_Android}" == "Android" ]; then
     declare OS_NAME="Android"
   else
-    # We search for termux
-    if [ -d /data/data/com.termux/files/home ]; then
-      declare OS_NAME="TermuxUbuntu"
-    else
-      declare OS_NAME="Ubuntu"
-    fi
+    echo "WARNING: /etc/os-release can not be read. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager"
+    declare OS_NAME="Ubuntu"
   fi
-
-
 fi
 
 # Load the call to the package manager corresponding to the previously detected OS
@@ -111,8 +103,18 @@ case ${OS_NAME} in
     initialize_package_manager_apt-get
   ;;
   WSL2)
-    # May change due to different machines available
-    initialize_package_manager_apt-get
+    # TODO: May change due to different machines available
+    case $( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" ) in
+      "Debian GNU/Linux")
+        initialize_package_manager_apt-get
+      ;;
+      Ubuntu)
+        initialize_package_manager_apt-get
+      ;;
+      *)
+        initialize_package_manager_apt-get
+      ;;
+    esac
   ;;
   TermuxUbuntu)
     initialize_package_manager_apt-get
@@ -193,36 +195,64 @@ declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum" "pkg")
 
 # User variables
 if [ "${EUID}" != 0 ]; then
-  if ["${OS_NAME}" == "TermuxUbuntu"]; then
+  if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
     declare -r HOME_FOLDER="/data/data/com.termux/folder/home"
+  elif [ "${OS_NAME}" == "WSL2" ]; then
+    declare -r HOME_FOLDER="/Users/$(whoami)"
   else
     declare -r HOME_FOLDER="${HOME}"
   fi
 
-  declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
 
-  # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
-  if [ -f "${USER_DIRS_PATH}" ]; then
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    # TODO: Get paths corresponding the image of the templates, user name directory and user pictures folder in correct language
+    declare -r XDG_DESKTOP_DIR=""
+    declare -r XDG_TEMPLATES_DIR=""
+    declare -r XDG_PICTURES_DIR=""
+  elif [ "${OS_NAME}" == "Android" ] || [ "${OS_NAME}" == "TermuxUbuntu" ] ; then
+    declare -r XDG_DESKTOP_DIR="/data/data/com.termux/files/home/Desktop"
+    declare -r XDG_TEMPLATES_DIR="/data/data/com.termux/files/home/Templates"
+    declare -r XDG_PICTURES_DIR="/data/data/com.termux/files/home/Pictures"
+  else
+    declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
     # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
-    # shellcheck source=$HOME/.config/user-dirs.dirs
-    source "${USER_DIRS_PATH}"
-  fi 
+    if [ -f "${USER_DIRS_PATH}" ]; then
+      # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
+      # shellcheck source=$HOME/.config/user-dirs.dirs
+      source "${USER_DIRS_PATH}"
+    fi
+  fi
 else  # Root variables
-  declare -r HOME_FOLDER="/home/${SUDO_USER}"
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    # TODO: Get path for WSL2
+    declare -r XDG_DESKTOP_DIR=""
+    declare -r XDG_TEMPLATES_DIR=""
+    declare -r XDG_PICTURES_DIR=""
+  elif [ "${OS_NAME}" == "Android" ] || "${OS_NAME}" == "TermuxUbuntu" ] ; then
+    # TODO: Test this path
+    declare -r XDG_DESKTOP_DIR="/data/data/com.termux/files/home/Desktop"
+    declare -r XDG_TEMPLATES_DIR="/data/data/com.termux/files/home/Templates"
+    declare -r XDG_PICTURES_DIR="/data/data/com.termux/files/home/Pictures"
+  else
+    if [ -z "${SUDO_USER}" ]; then
+      echo "ERROR: Customizer cannot be called as root in this OS. The SUDO_USER variable is needed. Use sudo to invoke Customizer as root or declare the variable manually before calling Customizer."
+      exit 1
+    fi
+    declare -r HOME_FOLDER="/home/${SUDO_USER}"
 
-  declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
-
-  # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
-  # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
-  # for /home/$SUDO_USER to be interpreted correctly as a root user. Also with declare we can declare all variables in
-  # the file in one line.
-  if [ -f "${USER_DIRS_PATH}" ]; then
-    while IFS= read -r line; do
-      # Process lines that are not commented out
-      if ! echo "${line}" | grep -Eoq "^#"; then
-        declare -r "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
-      fi
-    done < "${HOME_FOLDER}/.config/user-dirs.dirs"
+    declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
+    # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
+    # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
+    # for /home/$SUDO_USER to be interpreted correctly as a root user. Also with declare we can declare all variables in
+    # the file in one line.
+    if [ -f "${USER_DIRS_PATH}" ]; then
+      while IFS= read -r line; do
+        # Process lines that are not commented out
+        if ! echo "${line}" | grep -Eoq "^#"; then
+          declare -r "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
+        fi
+      done < "${HOME_FOLDER}/.config/user-dirs.dirs"
+    fi
   fi
 fi
 

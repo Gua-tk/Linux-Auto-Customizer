@@ -1222,6 +1222,7 @@ data_and_file_structures_initialization() {
   create_folder "${XDG_PICTURES_DIR}"
   create_folder "${XDG_TEMPLATES_DIR}"
 
+
   # Initialize bash functions
   if [ ! -f "${FUNCTIONS_PATH}" ]; then
     create_file "${FUNCTIONS_PATH}"
