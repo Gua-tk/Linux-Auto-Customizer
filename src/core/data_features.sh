@@ -83,6 +83,28 @@ fi
 #    TextEditor Documentation Adult Core KDE GNOME XFCE GTK Qt Motif Java ConsoleOnly Screensaver TrayIcon Applet Shell
 #    AudioVideo Audio Video Development Education Game Graphics Network Office Science Settings System Utility
 #
+#    This categories translate to thw following dash categories, used to group launchers:
+########################################################################################################################
+#    Launcher categories:
+#    These are the classes in which the desktop launchers are classified. To know if a desktop launchers belongs to a
+#    certain class the "Categories" field of a desktop launcher is used. This field contains a list of categories that
+#    categorize the desktop launcher. These are used to group the desktop launchers in the dash.
+#    The categories relate to the class in the following way:
+#    Class name        |        Categories
+#    accessories       |        Utility
+#    chrome-apps       |        chrome-apps
+#    games             |        Game
+#    graphics          |        Graphics
+#    internet          |        Network, WebBrowser, Email
+#    office            |        Office
+#    programming       |        Development
+#    science           |        Science
+#    sound & video     |        AudioVideo, Audio, Video
+#    system-tools      |        System, Settings
+#    universal-access  |        Accessibility
+#    wine              |        Wine, X-Wine, Wine-Programs-Accessories
+########################################################################################################################
+
 #  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
 #    static data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
 ### Optional properties                                                                                                #
