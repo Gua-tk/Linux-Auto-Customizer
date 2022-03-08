@@ -195,7 +195,6 @@ aircrack_ng_description="Complete suite of security tools to assess WiFi network
 aircrack_ng_version="1.6"
 aircrack_ng_tags=("attack" "network" "security")
 
-
 aisleriot_installationtype="packagemanager"
 aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
 aisleriot_name="AisleRiot Solitaire"
@@ -222,20 +221,24 @@ alert_bashfunctions=("alert.sh")
 ansible_installationtype="packagemanager"
 ansible_arguments=("ansible")
 ansible_name="Ansible"
-ansible_commentary="Automation of software"
-ansible_description=""
-ansible_version=""
-ansible_tags=("")
-ansible_systemcategories=("")
+ansible_commentary="IT automation engine that automates cloud provisioning, configuration management, application deployment"
+ansible_description="Application deployment engine"
+ansible_version="5.0.0"
+ansible_tags=("automation" "development" "deployment")
+ansible_systemcategories=("development" "ProjectManagement" "ComputerScience" "Monitor")
 ansible_packagenames=("ansible")
 
 ant_installationtype="userinherit"
 ant_arguments=("ant" "apache_ant")
+ant_name="Ant"
+ant_commentary="Tool to automatize repetitive tasks, usually during the compilation, building and deployment phase of the software development"
+ant_description="Automation tool for software build"
+ant_version="1.10.11"
+ant_tags=("automation" "development" "deployment")
 ant_bashfunctions=("ant.sh")
 ant_binariesinstalledpaths=("bin/ant;ant")
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_flagsoverride="1;;;;;"
-ant_readmeline="| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 
 anydesk_installationtype="userinherit"
 anydesk_arguments=("any_desk")
@@ -253,8 +256,12 @@ anydesk_launcherkeynames=("default")
 
 apache2_installationtype="packagemanager"
 apache2_arguments=("apache2")
+apache2_name="Apache httpd server project"
+apache2_commentary="open-source HTTP server for modern operating systems including UNIX and Windows"
+apache2_description="Web server"
+apache2_version="2.4.52"
+apache2_tags=("development" "deployment")
 apache2_packagenames=("apache2" "apache2-utils")
-apache2_readmeline="| Apache2 | Redirect Web content to browser | It is used as a service so it has not command ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ardour_installationtype="packagemanager"
 ardour_arguments=("ardour")
@@ -269,12 +276,15 @@ ardour_default_exec="ardour5"
 ardour_bashfunctions=("ardour.sh")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
-ardour_readmeline="| Ardour | "${ardour_commentary}" | Commands \`ardour\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
 aspell_installationtype="packagemanager"
 aspell_arguments=("aspell")
+aspell_name="GNU Aspell"
+aspell_commentary="Free and open source spell checker in Linux. Can be used to check spelling from provided files or stdin"
+aspell_description="Spell checker"
+aspell_version="0.60.8"
+aspell_tags=("development" "deployment" "Education" "Office" "Utility" "Documentation" "FileTools" "Humanities" "Languages" "WordProcessor" "Dictionary" "Translation")
 aspell_packagenames=("aspell-es" "aspell-ca")
-aspell_readmeline="| Aspell | Spell checker | Command \`aspell\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 atom_installationtype="packageinstall"
 atom_arguments=("atom")
