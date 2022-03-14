@@ -1205,6 +1205,18 @@ userinherit_installation_type() {
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
 
+  if [ "${EUID}" == 0 ]; then
+    if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
+      if ! users | grep -q "Android"; then
+        # TODO: Add user non-interactively with no error output
+        adduser "Android"
+        usermod -aG sudo "Android"
+        echo "Android  ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/Android
+        yes | passwd "Android"
+      fi
+    fi
+  fi
+
   # Customizer inner folders
   create_folder "${CUSTOMIZER_FOLDER}"
   create_folder "${CACHE_FOLDER}"

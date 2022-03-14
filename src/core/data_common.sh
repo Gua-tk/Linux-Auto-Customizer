@@ -67,13 +67,14 @@ if [ -f "/etc/os-release" ]; then
   if [ "${subsys_Windows}" == "WSL2" ]; then
     declare OS_NAME="WSL2"
   # If his path exist means that we are running in termux
-  elif [ -d /data/data/com.termux/files/home ]; then
+  elif [ -d /data/data/com.termux ]; then
     declare OS_NAME="TermuxUbuntu"
   else
-    declare OS_NAME=$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )
+    declare OS_NAME
+    OS_NAME="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )"
   fi
 else
-  subsys_Android="$(echo $(uname -a) | rev | cut -d " " -f1 | rev)"
+  subsys_Android="$(echo "$(uname -a)" | rev | cut -d " " -f1 | rev)"
   if [ "${subsys_Android}" == "Android" ]; then
     declare OS_NAME="Android"
   else
@@ -83,7 +84,7 @@ else
 fi
 
 # Load the call to the package manager corresponding to the previously detected OS
-case ${OS_NAME} in
+case "${OS_NAME}" in
   Ubuntu)
     initialize_package_manager_apt-get
   ;;
@@ -196,9 +197,14 @@ declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum" "pkg")
 # User variables
 if [ "${EUID}" != 0 ]; then
   if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
-    declare -r HOME_FOLDER="/data/data/com.termux/folder/home"
+    declare -r HOME_FOLDER
+    HOME_FOLDER="/home/$(whoami)"
   elif [ "${OS_NAME}" == "WSL2" ]; then
-    declare -r HOME_FOLDER="/Users/$(whoami)"
+    # TODO: Get user who invoked WSL2, or set the correct path in the venv, whoami is wrong in this branch
+    declare -r HOME_FOLDER
+    HOME_FOLDER="/mnt/c/Users/$(whoami)"
+  elif [ "${OS_NAME}" == "Android" ]; then
+    declare -r HOME_FOLDER="/data/data/com.termux/files/home"
   else
     declare -r HOME_FOLDER="${HOME}"
   fi
@@ -206,13 +212,17 @@ if [ "${EUID}" != 0 ]; then
 
   if [ "${OS_NAME}" == "WSL2" ]; then
     # TODO: Get paths corresponding the image of the templates, user name directory and user pictures folder in correct language
-    declare -r XDG_DESKTOP_DIR=""
-    declare -r XDG_TEMPLATES_DIR=""
-    declare -r XDG_PICTURES_DIR=""
-  elif [ "${OS_NAME}" == "Android" ] || [ "${OS_NAME}" == "TermuxUbuntu" ] ; then
-    declare -r XDG_DESKTOP_DIR="/data/data/com.termux/files/home/Desktop"
-    declare -r XDG_TEMPLATES_DIR="/data/data/com.termux/files/home/Templates"
-    declare -r XDG_PICTURES_DIR="/data/data/com.termux/files/home/Pictures"
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}"
+  elif [ "${OS_NAME}" == "Android" ]; then
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+  elif [ "${OS_NAME}" == "TermuxUbuntu" ]; then
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
   else
     declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
     # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
@@ -220,26 +230,48 @@ if [ "${EUID}" != 0 ]; then
       # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
       # shellcheck source=$HOME/.config/user-dirs.dirs
       source "${USER_DIRS_PATH}"
+    else
+      echo "WARNING: ${HOME_FOLDER}/.config/user-dirs.dirs has not been found for the definition of XDG_DESKTOP_DIR,
+      XDG_PICTURES_DIR, XDG_TEMPLATES_DIR in this context, falling back to defaults "
+      declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+      declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+      declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     fi
   fi
-else  # Root variables
-  if [ "${OS_NAME}" == "WSL2" ]; then
-    # TODO: Get path for WSL2
-    declare -r XDG_DESKTOP_DIR=""
-    declare -r XDG_TEMPLATES_DIR=""
-    declare -r XDG_PICTURES_DIR=""
-  elif [ "${OS_NAME}" == "Android" ] || "${OS_NAME}" == "TermuxUbuntu" ] ; then
-    # TODO: Test this path
-    declare -r XDG_DESKTOP_DIR="/data/data/com.termux/files/home/Desktop"
-    declare -r XDG_TEMPLATES_DIR="/data/data/com.termux/files/home/Templates"
-    declare -r XDG_PICTURES_DIR="/data/data/com.termux/files/home/Pictures"
-  else
-    if [ -z "${SUDO_USER}" ]; then
-      echo "ERROR: Customizer cannot be called as root in this OS. The SUDO_USER variable is needed. Use sudo to invoke Customizer as root or declare the variable manually before calling Customizer."
-      exit 1
-    fi
-    declare -r HOME_FOLDER="/home/${SUDO_USER}"
+else
 
+  # Set HOME_FOLDER
+  if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
+    declare -r HOME_FOLDER
+    # Obtain the main user
+    if [ -n "${SUDO_USER}" ]; then
+      HOME_FOLDER="/home/${SUDO_USER}"
+    else
+      # Existence and further creation of the user will be done in initializations
+      HOME_FOLDER="/home/Android"
+    fi
+  elif [ "${OS_NAME}" == "WSL2" ]; then
+    # TODO: Get user who invoked WSL2, or set the correct path in the venv, whoami is wrong in this branch
+    declare -r HOME_FOLDER
+    HOME_FOLDER="/mnt/c/Users/$(whoami)"
+  elif [ "${OS_NAME}" == "Android" ]; then
+    declare -r HOME_FOLDER="/data/data/com.termux/files/home"
+  else
+    declare -r HOME_FOLDER="/home/${SUDO_USER}"
+  fi
+
+
+  # Root variables
+  if [ "${OS_NAME}" == "TermuxUbuntu" ] || [ "${OS_NAME}" == "Android" ]; then
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+  elif [ "${OS_NAME}" == "WSL2" ]; then
+    # TODO: Get paths corresponding the image of the templates, user name directory and user pictures folder in correct language
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+  else
     declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
     # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
     # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
@@ -252,19 +284,14 @@ else  # Root variables
           declare -r "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
         fi
       done < "${HOME_FOLDER}/.config/user-dirs.dirs"
+    else
+      echo "WARNING: ${HOME_FOLDER}/.config/user-dirs.dirs has not been found for the definition of XDG_DESKTOP_DIR,
+      XDG_PICTURES_DIR, XDG_TEMPLATES_DIR in this context, falling back to defaults "
+      declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+      declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+      declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     fi
   fi
-fi
-
-# Define fallbacks for the used variables if USER_DIRS_PATH is not present
-if [ -z "${XDG_DESKTOP_DIR}" ]; then
-  declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
-fi
-if [ -z "${XDG_PICTURES_DIR}" ]; then
-  declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
-fi
-if [ -z "${XDG_TEMPLATES_DIR}" ]; then
-  declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
 fi
 
 
@@ -856,7 +883,7 @@ features.
   - Individual features are a certain installation, configuration or
   customization of a program or system module.
   - Feature wrappers group many individual features with the same permissions
-  related to the same topic: programming, image edition, system cutomization...
+  related to the same topic: programming, image edition, system customization...
 "
 
 declare -r help_wrappers="
