@@ -532,6 +532,7 @@ declare -r feature_keynames=(
   "twitter"
   "u"
   "uget"
+  "upgrade"
   "virtualbox"
   "vlc"
   "vommit"
