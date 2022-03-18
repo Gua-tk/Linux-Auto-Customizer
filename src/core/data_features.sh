@@ -3661,6 +3661,14 @@ uget_packagedependencies=("aria2")
 uget_packagenames=("uget")
 uget_readmeline="| uget | GUI utility to manage downloads | Command \`uget\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+upgrade_installationtype="environmental"
+upgrade_arguments=("upgrade")
+upgrade_name="Function Upgrade"
+upgrade_commentary="Update, upgrade and clean packages in a single command"
+upgrade_version="1.0"
+upgrade_tags=("system" "management" "apt" "update" "upgrade")
+upgrade_bashfunctions=("upgrade.sh")
+
 virtualbox_installationtype="packageinstall"
 virtualbox_arguments=("virtual_box")
 virtualbox_bashfunctions=("virtualbox.sh")
