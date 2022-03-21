@@ -1234,6 +1234,10 @@ data_and_file_structures_initialization() {
   create_folder "${XDG_PICTURES_DIR}"
   create_folder "${XDG_TEMPLATES_DIR}"
 
+  # Initialize whoami file
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    create_file "${CUSTOMIZER_PROJECT_FOLDER}/whoami" "$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+  fi
 
   # Initialize bash functions
   if [ ! -f "${FUNCTIONS_PATH}" ]; then

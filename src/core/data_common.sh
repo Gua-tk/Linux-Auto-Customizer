@@ -246,7 +246,12 @@ else
       declare -r HOME_FOLDER="/home/Android"
     fi
   elif [ "${OS_NAME}" == "WSL2" ]; then
-    declare -r HOME_FOLDER="/mnt/c/Users/$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/whoami" ]; then
+      declare -r HOME_FOLDER="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/whoami")"
+    else
+      echo "ERROR: The file whoami does not exist, run again without privileges."
+      exit 1
+    fi
   elif [ "${OS_NAME}" == "Android" ]; then
     declare -r HOME_FOLDER="/data/data/com.termux/files/home"
   else
