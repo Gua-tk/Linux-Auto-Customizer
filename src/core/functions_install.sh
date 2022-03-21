@@ -719,6 +719,74 @@ NoDisplay=false"
   create_manual_launcher "${text}" "$3"
 }
 
+# - Description: Creates Windows Launchers from .desktop launchers from WLS2
+# - Permissions: Can be executed as root or user.
+# Argument 1: Launcher key name
+# Argument 2: suffix anticollision
+create_WSL2_dynamic_launcher() {
+  # "${CURRENT_INSTALLATION_KEYNAME}"
+  # Exec and Tryexec from binariesinstalledpaths
+  local -r override_exec="${CURRENT_INSTALLATION_KEYNAME}_$1_exec"
+  local -r metadata_exec_temp="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[0]"
+  local -r metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
+  if [ ! -z "${!override_exec}" ]; then
+    if echo "${!override_exec}" | grep -qE " " ; then
+      exec_command="$(echo "${!override_exec}" | cut -d " " -f1)"
+    else
+      exec_command="${!override_exec}"
+    fi
+    exec_command="${!override_exec}"
+  else
+    exec_command="${metadata_exec}"
+  fi
+
+  override_icon="${CURRENT_INSTALLATION_KEYNAME}_$1_icon"
+  metadata_icon="${CURRENT_INSTALLATION_KEYNAME}_icon"
+  if [ ! -z "${!override_icon}" ]; then
+    icon_path="${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}"
+  else
+    icon_path="${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}"
+  fi
+
+
+  vbscript_content="set shell = CreateObject(\"WScript.Shell\")
+
+comm = \"wsl nohup ${exec_command} '${HOME_FOLDER_WSL2}/Desktop' &>/dev/null\"
+
+shell.Run comm,0"
+  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
+
+  user_folder_windows_name="$(echo ${HOME_FOLDER_WSL2} | rev | cut -d "/" -f1 | rev)"
+  cmdscript_content="@echo off
+
+set SCRIPT=\"%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs\"
+
+echo Set oWS = WScript.CreateObject(\"WScript.Shell\") >> %SCRIPT%
+echo sLinkFile = \"%SYSTEMDRIVE%\Users\\${user_folder_windows_name}\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\" >> %SCRIPT%
+echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %SCRIPT%
+echo oLink.TargetPath = \"\\\\wsl.localhost\Debian\\${CURRENT_INSTALLATION_FOLDER}\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs\" >> %SCRIPT%
+echo oLink.IconLocation = \"\\\\wsl.localhost\Debian\\${CURRENT_INSTALLATION_FOLDER}\\${CURRENT_INSTALLATION_KEYNAME}$2.ico\" >> %SCRIPT%
+echo oLink.WorkingDirectory = \"\\\\wsl.localhost\Debian\\${CURRENT_INSTALLATION_FOLDER}\" >> %SCRIPT%
+echo oLink.Save >> %SCRIPT%
+
+cscript /nologo %SCRIPT%
+
+del %SCRIPT%"
+  if ! which convert; then
+    if [ $EUID != 0 ]; then
+      echo "ERROR: Icon could not be created due to convert is not installed, install it or run again with sudo"
+      return
+    else
+      "${PACKAGE_MANAGER_INSTALL}" imagemagick
+    fi
+  fi
+  name=$(echo $1 | cut -d "." -f1)
+  convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
+
+  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat" "${cmdscript_content}"
+# TODO: Execute cmd code in cmdscript_content.
+}
+
 
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - OPTIONAL PROPERTIES #####################################
@@ -747,7 +815,17 @@ generic_install_dynamic_launcher() {
   local name_suffix_anticollision=""
 
   for launcherkeyname in "${!launcherkeynames}"; do
-    create_dynamic_launcher "${launcherkeyname}" "$1" "$1${name_suffix_anticollision}"
+    create_dynamic_launcher "${launcherkeyname}" "$1${name_suffix_anticollision}"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
+}
+
+generic_install_WSL2_dynamic_launcher() {
+  local -r launcherkeynames="$1_launcherkeynames[@]"
+  local name_suffix_anticollision=""
+
+  for launcherkeyname in "${!launcherkeynames}"; do
+    create_WSL2_dynamic_launcher "${launcherkeyname}" "$1" "$1${name_suffix_anticollision}"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }

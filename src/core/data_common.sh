@@ -199,7 +199,8 @@ if [ "${EUID}" != 0 ]; then
   if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
     declare -r HOME_FOLDER="/home/$(whoami)"
   elif [ "${OS_NAME}" == "WSL2" ]; then
-    declare -r HOME_FOLDER="/mnt/c/Users/$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+    declare -r HOME_FOLDER_WSL2="/mnt/c/Users/$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+    declare -r HOME_FOLDER="/home/$(whoami)"
   elif [ "${OS_NAME}" == "Android" ]; then
     declare -r HOME_FOLDER="/data/data/com.termux/files/home"
   else
@@ -207,11 +208,7 @@ if [ "${EUID}" != 0 ]; then
   fi
 
 
-  if [ "${OS_NAME}" == "WSL2" ]; then
-    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
-    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
-    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
-  elif [ "${OS_NAME}" == "Android" ]; then
+  if [ "${OS_NAME}" == "Android" ]; then
     declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
     declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
@@ -234,6 +231,10 @@ if [ "${EUID}" != 0 ]; then
       declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     fi
   fi
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER_WSL2}/Desktop"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER_WSL2}/Pictures"
+  fi
 else
 
   # Set HOME_FOLDER
@@ -247,7 +248,8 @@ else
     fi
   elif [ "${OS_NAME}" == "WSL2" ]; then
     if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/whoami" ]; then
-      declare -r HOME_FOLDER="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/whoami")"
+      declare -r HOME_FOLDER_WSL2="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/whoami")"
+      declare -r HOME_FOLDER="/home/${SUDO_USER}"
     else
       echo "ERROR: The file whoami does not exist, run again without privileges."
       exit 1
@@ -261,10 +263,6 @@ else
 
   # Root variables
   if [ "${OS_NAME}" == "TermuxUbuntu" ] || [ "${OS_NAME}" == "Android" ]; then
-    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
-    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
-    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
-  elif [ "${OS_NAME}" == "WSL2" ]; then
     declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
     declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
@@ -288,6 +286,10 @@ else
       declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
       declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     fi
+  fi
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER_WSL2}/Desktop"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER_WSL2}/Pictures"
   fi
 fi
 

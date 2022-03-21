@@ -865,6 +865,9 @@ generic_installation() {
     #"generic_${FLAG_MODE}_manual_launchers" "${featurename}"
     #"generic_${FLAG_MODE}_copy_launcher" "${featurename}"
     "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"
+    if [ "${OS_NAME}" == "WSL2" ]; then
+      "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
+    fi
     "generic_${FLAG_MODE}_functions" "${featurename}"
     "generic_${FLAG_MODE}_initializations" "${featurename}"
     "generic_${FLAG_MODE}_autostart" "${featurename}"
