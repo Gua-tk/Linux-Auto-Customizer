@@ -200,9 +200,8 @@ if [ "${EUID}" != 0 ]; then
     declare -r HOME_FOLDER
     HOME_FOLDER="/home/$(whoami)"
   elif [ "${OS_NAME}" == "WSL2" ]; then
-    # TODO: Get user who invoked WSL2, or set the correct path in the venv, whoami is wrong in this branch
     declare -r HOME_FOLDER
-    HOME_FOLDER="/mnt/c/Users/$(whoami)"
+    HOME_FOLDER="/mnt/c/Users/$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%')"
   elif [ "${OS_NAME}" == "Android" ]; then
     declare -r HOME_FOLDER="/data/data/com.termux/files/home"
   else
@@ -212,9 +211,10 @@ if [ "${EUID}" != 0 ]; then
 
   if [ "${OS_NAME}" == "WSL2" ]; then
     # TODO: Get paths corresponding the image of the templates, user name directory and user pictures folder in correct language
-    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}"
-    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}"
-    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}"
+
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
   elif [ "${OS_NAME}" == "Android" ]; then
     declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
     declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
