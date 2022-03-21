@@ -137,9 +137,21 @@ fi
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_exec:
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_systemcategories:
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_terminal: By default is 'false', but if defined the supplied value is overridden.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_notify: Shows an hourglass in the cursor until the app is loaded. By default true
+#      but overridden by this variable.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_windowclass: Used to group multiple windows launched from the same launcher and
+#      in other situations. By default the feaurekeyname but overriden by this variable.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_nodisplay: Used to show or not show launcher in the dashboard. By default the
+#      feaurekeyname but overriden by this variable.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autostartcondition:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autorestart:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autorestartdelay:
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_windowclass: Used to group multiple windows launched from the same launcher and
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_actionkeynames:
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_name:
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_exec:
+#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_icon: By default customizer logo if no icon at feature level
+#        provided. If not, overridden by this variable
 ### Installation type dependent properties                                                                             #
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
 #    feature. Used in: packageinstall, packagemanager.                                                                 #
@@ -161,42 +173,72 @@ fi
 
 a_installationtype="environmental"
 a_arguments=("a")
+a_name="Function a"
+a_description="Function that displays environment aliases using compgen -a"
+a_version="1.0"
+a_tags=("bashfunctions" "aliases")
 a_bashfunctions=("a.sh")
-a_readmeline="| Function \`a\` | Prints a list of aliases using \`compgen -a\` | Command \`a\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 add_installationtype="environmental"
 add_arguments=("add" "add_function")
+add_name="Function add"
+add_description="Alias to git add with completion"
+add_version="1.0"
+add_tags=("gitbashfunctions" "bashfunctions" "git")
 add_bashfunctions=("add.sh")
-add_readmeline="| Function \`add\` | alias for \`git add\` | Command \`add\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 aircrack_ng_installationtype="packagemanager"
-aircrack_ng_packagenames=("aircrack-ng")
 aircrack_ng_arguments=("aircrack_ng" "aircrackng")
-aircrack_ng_readmeline="| aircrack-ng | Security tools for audition | Command \`aircrack-ng\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+aircrack_ng_packagenames=("aircrack-ng")
+aircrack_ng_name="Aircrack-ng"
+aircrack_ng_description="Complete suite of security tools to assess WiFi network security"
+aircrack_ng_version="1.6"
+aircrack_ng_tags=("attack" "network" "security")
 
 aisleriot_installationtype="packagemanager"
 aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
+aisleriot_name="AisleRiot Solitaire"
+aisleriot_commentary="Implementation of the classical game solitaire"
+aisleriot_description="Solitaire Classic Card Game"
+aisleriot_version="3.22.9"
+aisleriot_tags=("cards" "game" "cardsgame")
+aisleriot_systemcategories=("Game" "CardGame")
+aisleriot_bashfunctions=("aisleriot.sh")
+aisleriot_launcherkeynames=("default")
+aisleriot_default_exec="sol"
 aisleriot_launchernames=("sol")
 aisleriot_packagenames=("aisleriot")
-aisleriot_readmeline="| Solitaire aisleriot | Implementation of the classical game solitaire | Command \`aisleriot\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 alert_installationtype="environmental"
 alert_arguments=("alert" "alert_alias" "alias_alert")
+alert_name="Function alert"
+alert_description="Alias to show a notification at the end of a commands"
+alert_version="1.0"
+alert_packagedepedencies=("libnotify-bin")
+alert_tags=("bashfunctions" "notify" "notification")
 alert_bashfunctions=("alert.sh")
-alert_readmeline="| Function \`alert\` | Alias to show a notification at the end of a command | Alias \`alert\`. Use it at the end of long running commands like so: \`sleep 10; alert\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ansible_installationtype="packagemanager"
 ansible_arguments=("ansible")
+ansible_name="Ansible"
+ansible_commentary="IT automation engine that automates cloud provisioning, configuration management, application deployment"
+ansible_description="Application deployment engine"
+ansible_version="5.0.0"
+ansible_tags=("automation" "development" "deployment")
+ansible_systemcategories=("development" "ProjectManagement" "ComputerScience" "Monitor")
 ansible_packagenames=("ansible")
-ansible_readmeline="| Ansible | Automation of software | Command \`ansible\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ant_installationtype="userinherit"
 ant_arguments=("ant" "apache_ant")
+ant_name="Ant"
+ant_commentary="Tool to automatize repetitive tasks, usually during the compilation, building and deployment phase of the software development"
+ant_description="Automation tool for software build"
+ant_version="1.10.11"
+ant_tags=("automation" "development" "deployment")
 ant_bashfunctions=("ant.sh")
 ant_binariesinstalledpaths=("bin/ant;ant")
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_flagsoverride="1;;;;;"
-ant_readmeline="| Apache Ant | Software tool for automating software build processes | Command \`ant\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
 
 anydesk_installationtype="userinherit"
 anydesk_arguments=("any_desk")
@@ -204,72 +246,91 @@ anydesk_name="Anydesk"
 anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
 anydesk_version="6.1.1"
 anydesk_tags=("remote" "control" "cloud")
-anydesk_icon="anydesk.svg"
 anydesk_systemcategories=("Accessibility" "Network" "RemoteAccess" "FileTransfer" "P2P")
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")
 anydesk_bashfunctions=("anydesk.sh")
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
-anydesk_description="Software to remote control other computers"
-anydesk_readmeline="| Anydesk | ${anydesk_description} | Command \`anydesk\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+anydesk_description="PC Remote controller"
 anydesk_launcherkeynames=("default")
-anydesk_launchercontents=("
-[Desktop Entry]
-Categories=Remote;control;other;
-Comment=${anydesk_description}
-Encoding=UTF-8
-Exec=anydesk
-GenericName=Remote desktop application
-Icon=${BIN_FOLDER}/anydesk/icons/hicolor/scalable/apps/anydesk.svg
-Keywords=IDE;programming;android;studio;dev;
-MimeType=
-Name=AnyDesk
-StartupNotify=true
-StartupWMClass=anydesk
-Terminal=false
-TryExec=anydesk
-Type=Application
-Version=1.0
-")
 
 apache2_installationtype="packagemanager"
 apache2_arguments=("apache2")
+apache2_name="Apache httpd server project"
+apache2_commentary="open-source HTTP server for modern operating systems including UNIX and Windows"
+apache2_description="Web server"
+apache2_version="2.4.52"
+apache2_tags=("development" "deployment")
 apache2_packagenames=("apache2" "apache2-utils")
-apache2_readmeline="| Apache2 | Redirect Web content to browser | It is used as a service so it has not command ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ardour_installationtype="packagemanager"
 ardour_arguments=("ardour")
+ardour_name="Ardour5"
+ardour_commentary="Software for music production"
+ardour_version=""
+ardour_tags=("music" "audio" "production")
+ardour_icon="ardour.svg"
+ardour_systemcategories=("Audio" "Music")
+ardour_launcherkeynames=("default")
+ardour_default_exec="ardour5"
 ardour_bashfunctions=("ardour.sh")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
-ardour_readmeline="| Ardour | Software for music production | Commands \`ardour\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
 aspell_installationtype="packagemanager"
 aspell_arguments=("aspell")
+aspell_name="GNU Aspell"
+aspell_commentary="Free and open source spell checker in Linux. Can be used to check spelling from provided files or stdin"
+aspell_description="Spell checker"
+aspell_version="0.60.8"
+aspell_tags=("development" "deployment" "Education" "Office" "Utility" "Documentation" "FileTools" "Humanities" "Languages" "WordProcessor" "Dictionary" "Translation")
 aspell_packagenames=("aspell-es" "aspell-ca")
-aspell_readmeline="| Aspell | Spell checker | Command \`aspell\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 atom_installationtype="packageinstall"
 atom_arguments=("atom")
+atom_name="Atom"
+atom_commentary="Text and source code editor"
+atom_version="1.59.0"
+atom_tags=("IDE" "programming")
+atom_icon="atom.png"
+atom_systemcategories=("IDE" "TextTools" "TextEditor" "Development")
+atom_launcherkeynames=("default")
+atom_default_exec="atom"
 atom_launchernames=("atom")
 atom_packageurls=("https://atom.io/download/deb")
-atom_readmeline="| Atom | Text and source code editor | Command \`atom\`, desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+atom_readmeline="| Atom | "${atom_commentary}" | Command \`atom\`, desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 audacity_installationtype="packagemanager"
 audacity_arguments=("audacity")
+audacity_name="Audacity"
+audacity_commentary="Digital audio editor and recording"
+audacity_version="2.3.3"
+audacity_tags=("music" "audio" "producing")
+audacity_icon="audacity.svg"
+audacity_systemcategories=("Audio" "Music")
+audacity_launcherkeynames=("default")
+audacity_default_exec="audacity"
 audacity_bashfunctions=("audacity.sh")
 audacity_launchernames=("audacity")
 audacity_packagenames=("audacity" "audacity-data")
-audacity_readmeline="| Audacity | Digital audio editor and recording | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+audacity_readmeline="| Audacity | "${audacity_commentary}" | Command \`audacity\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 AutoFirma_installationtype="packageinstall"
 AutoFirma_arguments=("auto_firma")
+AutoFirma_name="AutoFirma"
+AutoFirma_commentary="Electronic signature recognition"
+AutoFirma_version="1.0"
+AutoFirma_tags=("digitalsign")
+AutoFirma_icon="AutoFirma.png"
+AutoFirma_systemcategories=("Utility")
+AutoFirma_launcherkeynames=("default")
+AutoFirma_default_exec="AutoFirma"
 AutoFirma_bashfunctions=("AutoFirma.sh")
 AutoFirma_packageurls=("https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip")
 AutoFirma_launchernames=("afirma")
 AutoFirma_packagedependencies=("libnss3-tools")
 AutoFirma_packagenames=("AutoFirma")
-AutoFirma_readmeline="| AutoFirma | Electronic signature recognition | Command \`AutoFirma\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+AutoFirma_readmeline="| AutoFirma | "${AutoFirma_commentary}" | Command \`AutoFirma\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 axel_installationtype="packagemanager"
 axel_arguments=("axel")
@@ -1462,38 +1523,41 @@ i_readmeline="| Function \`i\` | Shows folder structures | Command \`i\` ||  <ul
 
 ideac_installationtype="userinherit"
 ideac_arguments=("ideac" "intellij_community")
+ideac_name="IntelliJ Community"
+ideac_commentary="Integrated development environment written in Java for developing computer software"
+ideac_version="2021.3"
+ideac_tags=("IDE" "development" "text editor" "dev" "programming" "java")
+ideac_icon="ideac.png"
+ideac_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
 ideac_associatedfiletypes=("text/x-java")
 ideac_bashfunctions=("ideac.sh")
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
 ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.3.tar.gz"
-ideac_description="Integrated development environment written in Java for developing computer software"
-ideac_launchercontents=("
-[Desktop Entry]
-Categories=Development;IDE;
-Comment=${ideac_description}
-Encoding=UTF-8
-Exec=ideac %f
-GenericName=Java programming IDE
-Icon=${BIN_FOLDER}/ideac/bin/idea.svg
-Keywords=IDE;programming;java;dev;
-MimeType=
-Name=IntelliJ IDEA Community Edition
-StartupNotify=true
-StartupWMClass=jetbrains-idea
-Terminal=false
-TryExec=ideac
-Type=Application
-Version=13.0
-")
-ideac_readmeline="| intelliJ Community | ${ideac_description} | Command \`ideac\`, silent alias for \`ideac\`, desktop launcher, dashboard launcher and association to \`.java\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
+ideac_launcherkeynames=("launcher")
+ideac_launcher_exec="ideac %f"
+ideac_launcher_windowclass="jetbrains-ideac"
+ideac_launcher_actionkeynames=("newwindow")
+ideac_launcher_newwindow_name="IntelliJ Community New Window"
+ideac_launcher_newwindow_exec="ideac"
 
 ideau_installationtype="userinherit"
 ideau_arguments=("ideau" "intellij_ultimate")
+ideau_name="IntelliJ Ultimate"
+ideau_commentary="Integrated development environment written in Java for developing computer software"
+ideau_version="2021.3"
+ideau_tags=("IDE" "development" "text editor" "dev" "programming" "java")
+ideau_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
+ideau_icon="ideau.png"
 ideau_associatedfiletypes=("text/x-java")
 ideau_bashfunctions=("ideau.sh")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
 ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.3.tar.gz"
-ideau_description="Integrated development environment written in Java for developing computer software"
+ideau_launcherkeynames=("launcher")
+ideau_launcher_exec="ideau %f"
+ideau_launcher_windowclass="jetbrains-idea"
+ideau_launcher_actionkeynames=("newwindow")
+ideau_launcher_newwindow_name="IntelliJ Community New Window"
+ideau_launcher_newwindow_exec="ideau"
 ideau_launchercontents=("
 [Desktop Entry]
 Categories=Development;IDE;
@@ -2839,64 +2903,42 @@ push_readmeline="| Function \`push\` | Alias for \`git push\`|  Command \`push\`
 
 pycharm_installationtype="userinherit"
 pycharm_arguments=("pycharm" "pycharm_community")
+pycharm_name="PyCharm Community"
+pycharm_commentary="Integrated development environment used in computer programming"
+pycharm_version="2021.3"
+pycharm_tags=("IDE" "development" "text editor" "dev" "programming" "python")
+pycharm_icon="pycharm.png"
+pycharm_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharm_bashfunctions=("pycharm.sh")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
-pycharm_description="Integrated development environment used in computer programming"
-pycharm_launchercontents=("
-[Desktop Entry]
-Actions=NewWindow;
-Categories=programming;dev;
-Comment=${pycharm_description}
-Encoding=UTF-8
-Exec=pycharm %F
-GenericName=Pycharm
-Icon=${BIN_FOLDER}/pycharm/bin/pycharm.png
-Keywords=dev;programming;python;
-MimeType=
-Name=PyCharm
-StartupNotify=true
-StartupWMClass=jetbrains-pycharm
-Terminal=false
-TryExec=pycharm
-Type=Application
-Version=1.0
-
-[Desktop Action NewWindow]
-Name=Pycharm New Window
-Exec=pycharm
-Icon=${BIN_FOLDER}/pycharm/bin/pycharm.png
-")
-pycharm_readmeline="| Pycharm Community | ${pycharm_description} | Command \`pycharm\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files  || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+pycharm_launcherkeynames=("launcher")
+pycharm_launcher_exec="pycharm %F"
+pycharm_launcher_windowclass="jetbrains-pycharm"
+pycharm_launcher_actionkeynames=("newwindow")
+pycharm_launcher_newwindow_name="Pycharm New Window"
+pycharm_launcher_newwindow_exec="pycharm"
 
 pycharmpro_installationtype="userinherit"
 pycharmpro_arguments=("pycharm_pro")
+pycharmpro_name="PyCharm Professional"
+pycharmpro_commentary="Integrated development environment used in computer programming"
+pycharmpro_version="2021.3"
+pycharmpro_tags=("IDE" "development" "text editor" "dev" "programming" "python")
+pycharmpro_icon="pycharmpro.png"
+pycharmpro_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
 pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharmpro_bashfunctions=("pycharmpro.sh")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
 pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2021.3.tar.gz"
-pycharmpro_description="Integrated development environment used in computer programming"
-pycharmpro_launchercontents=("
-[Desktop Entry]
-Categories=programming;dev;
-Comment=${pycharmpro_description}
-Encoding=UTF-8
-Exec=pycharmpro %F
-GenericName=Pycharm Pro
-Icon=${BIN_FOLDER}/pycharmpro/bin/pycharm.png
-Keywords=dev;programming;python;
-MimeType=
-Name=PyCharm Professional
-StartupNotify=true
-StartupWMClass=jetbrains-pycharm
-Terminal=false
-TryExec=pycharmpro
-Type=Application
-Version=1.0
-")
-pycharmpro_readmeline="| Pycharm Pro | ${pycharmpro_description} | Command \`pycharm-pro\`, silent alias for \`pycharm-pro\`, desktop launcher, dashboard launcher, associated to the mime type of \`.py\` files || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+pycharmpro_launcherkeynames=("launcher")
+pycharmpro_launcher_exec="pycharmpro %F"
+pycharmpro_launcher_windowclass="jetbrains-pycharmpro"
+pycharmpro_launcher_actionkeynames=("newwindow")
+pycharmpro_launcher_newwindow_name="Pycharm Professional New Window"
+pycharmpro_launcher_newwindow_exec="pycharmpro"
 
 pypy3_installationtype="userinherit"
 pypy3_arguments=("pypy3" "pypy")
@@ -3191,17 +3233,16 @@ spotify_version="1.1.72"
 spotify_tags=("music" "stream")
 spotify_icon="spotify.png"
 spotify_systemcategories=("Music" "Audio")
-
 spotify_launcherkeynames=("launcher")
-spotify_launcher_exec="spotify"
+spotify_launcher_exec="spotify %U"
 spotify_launcher_actionkeynames=("Playpause" "Next" "Previous" "Stop")
-spotify_launcher_Playpause_name="Play/pause"
+spotify_launcher_Playpause_name="⏯"
 spotify_launcher_Playpause_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
-spotify_launcher_Next_name="Next"
+spotify_launcher_Next_name="⏭"
 spotify_launcher_Next_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
-spotify_launcher_Previous_name="Previous"
+spotify_launcher_Previous_name="⏮"
 spotify_launcher_Previous_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
-spotify_launcher_Stop_name="Stop"
+spotify_launcher_Stop_name="⏹"
 spotify_launcher_Stop_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 spotify_bashfunctions=("spotify.sh")
 spotify_launchernames=("spotify")
@@ -3433,7 +3474,7 @@ templates_installationtype="environmental"
 templates_arguments=("templates")
 templates_filekeys=("c" "headers" "makefile" "python" "bash" "latex" "empty")
 templates_c_path="${XDG_TEMPLATES_DIR}/c_script.c"
-templates_c_content="c_script"
+templates_c_content="c_script.c"
 templates_headers_path="${XDG_TEMPLATES_DIR}/c_script_header.h"
 templates_headers_content="c_script_header.h"
 templates_makefile_path="${XDG_TEMPLATES_DIR}/makefile"

@@ -608,6 +608,14 @@ NoDisplay=false"
     text+=$'\n'"Version=${!metadata_version}"
   fi
 
+  override_genericname_pointer="$2_$1_description"
+  metadata_genericname_pointer="$2_description"
+  if [ ! -z "${!override_genericname_pointer}" ]; then
+    text+=$'\n'"GenericName=${!override_genericname_pointer}"
+  else
+    text+=$'\n'"GenericName=${!metadata_genericname_pointer}"
+  fi
+
   override_commentary="$2_$1_commentary"
   metadata_commentary="$2_commentary"
   if [ ! -z "${!override_commentary}" ]; then
@@ -639,11 +647,29 @@ NoDisplay=false"
 
     text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!override_icon}"
   else
-    create_folder "${BIN_FOLDER}/$2"
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${BIN_FOLDER}/$2"
-    apply_permissions "${BIN_FOLDER}/$2/${!metadata_icon}"
-
-    text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!metadata_icon}"
+    if [ ! -z "${!metadata_icon}" ]; then
+      create_folder "${BIN_FOLDER}/$2"
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${BIN_FOLDER}/$2"
+      apply_permissions "${BIN_FOLDER}/$2/${!metadata_icon}"
+      text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!metadata_icon}"
+    else
+      if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.svg" ]; then
+        create_folder "${BIN_FOLDER}/$2"
+        cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.svg" "${BIN_FOLDER}/$2"
+        apply_permissions "${BIN_FOLDER}/$2/$2.svg"
+        text+=$'\n'"Icon=${BIN_FOLDER}/$2/$2.svg"
+      elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.png" ]; then
+        create_folder "${BIN_FOLDER}/$2"
+        cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.png" "${BIN_FOLDER}/$2"
+        apply_permissions "${BIN_FOLDER}/$2/$2.png"
+        text+=$'\n'"Icon=${BIN_FOLDER}/$2/$2.png"
+      else
+        create_folder "${BIN_FOLDER}/$2"
+        cp "${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png" "${BIN_FOLDER}/$2"
+        apply_permissions "${BIN_FOLDER}/$2/logo.png"
+        text+=$'\n'"Icon=${BIN_FOLDER}/$2/logo.png"
+      fi
+    fi
   fi
 
   # Categories from systemcategories
@@ -661,7 +687,7 @@ NoDisplay=false"
     done
   fi
 
-  # Exec and Tryexec from binariesinstalledpaths
+  # Obtain Exec and Tryexec from binariesinstalledpaths or override from exec property of this launcher
   local -r override_exec="$2_$1_exec"
   local -r metadata_exec_temp="$2_binariesinstalledpaths[0]"
   local -r metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
@@ -677,7 +703,7 @@ NoDisplay=false"
     text+=$'\n'"Exec=${metadata_exec}"
   fi
 
-  #Terminal by default is set to false, true if overridden
+  # Terminal by default is set to false, true if overridden
   local -r override_terminal="$2_$1_terminal"
   if [ ! -z "${!override_terminal}" ]; then
     text+=$'\n'"Terminal=${!override_terminal}"
@@ -685,6 +711,7 @@ NoDisplay=false"
     text+=$'\n'"Terminal=false"
   fi
 
+  # Override mimetypes over associatedfiletypes
   override_mime="$2_$1_mimetypes[@]"
   metadata_mime="$2_associatedfiletypes[@]"
   if [ ! -z "${!override_mime}" ]; then
@@ -699,6 +726,53 @@ NoDisplay=false"
     done
   fi
 
+  # Override start up notify over the default true
+  local -r override_notify="$2_$1_notify"
+  if [ ! -z "${!override_notify}" ]; then
+    text+=$'\n'"StartupNotify=${!override_notify}"
+  else
+    text+=$'\n'"StartupNotify=true"
+  fi
+
+  # Override Windows Manager Class over the default with the feature keyname
+  local -r override_windowclass="$2_$1_windowclass"
+  if [ ! -z "${!override_windowclass}" ]; then
+    text+=$'\n'"StartupWMClass=${!override_windowclass}"
+  else
+    text+=$'\n'"StartupWMClass=$2"
+  fi
+
+  # https://askubuntu.com/questions/1370616/whats-the-point-of-a-desktop-file-with-nodisplay-true
+  # Override nodisplay option over the default true
+  local -r override_nodisplay="$2_$1_nodisplay"
+  if [ ! -z "${!override_nodisplay}" ]; then
+    text+=$'\n'"NoDisplay=${!override_nodisplay}"
+  else
+    text+=$'\n'"NoDisplay=false"
+  fi
+
+  # https://unix.stackexchange.com/questions/491299/understanding-autostartcondition-key-in-desktop-files
+  # Override autostart condition over the default nothing
+  local -r override_autostartcondition="$2_$1_autostartcondition"
+  if [ ! -z "${!override_autostartcondition}" ]; then
+    text+=$'\n'"AutostartCondition=${!override_autostartcondition}"
+  fi
+
+  # //RF Maybe deprecated?
+  # Override the X-GNOME-AutoRestart over the default nothing
+  local -r override_autorestart="$2_$1_autorestart"
+  if [ ! -z "${!override_autorestart}" ]; then
+    text+=$'\n'"X-GNOME-AutoRestart=${!override_autorestart}"
+  fi
+
+  # //RF Maybe deprecated?
+  # Override the X-GNOME-AutoRestart over the default nothing
+  local -r override_autorestartdelay="$2_$1_autorestartdelay"
+  if [ ! -z "${!override_autorestartdelay}" ]; then
+    text+=$'\n'"X-GNOME-Autostart-Delay=${!override_autorestartdelay}"
+  fi
+
+  # Add actions for this particular launcher
   override_actionkeynames="$2_$1_actionkeynames[@]"
   if [ ! -z "$(echo "${!override_actionkeynames}" )" ]; then
     text+=$'\n'"Actions="
@@ -709,10 +783,22 @@ NoDisplay=false"
     for actionkeyname_override in $(echo "${!override_actionkeynames}"); do
       local actionkeyname_name="$2_$1_${actionkeyname_override}_name"
       local actionkeyname_exec="$2_$1_${actionkeyname_override}_exec"
-
+      local actionkeyname_icon="$2_$1_${actionkeyname_override}_icon"
       text+=$'\n'$'\n'"[Desktop Action ${actionkeyname_override}]"
       text+=$'\n'"Name=${!actionkeyname_name}"
       text+=$'\n'"Exec=${!actionkeyname_exec}"
+      local action_icon=""
+      local feature_icon_pointer="$2_icon"
+      if [ -z "${!actionkeyname_icon}" ]; then
+        if [ -z "${!feature_icon_pointer}" ]; then
+          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png"
+        else
+          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!feature_icon_pointer}"
+        fi
+      else
+        action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!actionkeyname_icon}"
+      fi
+      text+=$'\n'"Icon=${action_icon}"
     done
   fi
 
@@ -751,6 +837,7 @@ generic_install_dynamic_launcher() {
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
+
 
 # - Description: Expands launcher names and add them to the favorites subsystem if FLAG_FAVORITES is set to 1.
 # - Permissions: Can be executed as root or user.

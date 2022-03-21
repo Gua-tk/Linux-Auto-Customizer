@@ -250,24 +250,56 @@ autogen_readme()
   local features_table_lines="
 | Icon | Name | Arguments | Description | Execution |
 |-------------|----------------------|------------------------------------------------------|------------|-------------|"
-
+  local github_url="https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master"
+  local html_prefix="<img src=\""
+  local html_suffix="\" width=\"200\" height=\"200\" />"
+  local icon_path=""
   for keyname in "${feature_keynames[@]}"; do
     local arguments_pointer="${keyname}_arguments[@]"
     local name_pointer="${keyname}_name"
 
     local icon_pointer="${keyname}_icon"
     if [ -z "${!icon_pointer}" ]; then
-      icon_value="![${keyname} logo](https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master/.github/logo.png)"
+      if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.svg" ]; then
+        icon_path="/data/static/${keyname}/${keyname}.svg"
+      elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.png" ]; then
+        icon_path="/data/static/${keyname}/${keyname}.png"
+      else
+        icon_path="/.github/logo.png"
+      fi
     else
-      icon_value="![${keyname} logo](https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master/data/static/${keyname}/${!icon_pointer})"
+      icon_path="/data/static/${keyname}/${!icon_pointer}"
     fi
+    icon_value="${html_prefix}${github_url}${icon_path}${html_suffix}"
+
 
     local description_pointer="${keyname}_description"
 
-    local usage_value="Binaries in Path: "
+    local usage_value="- Binaries in Path: "
     local binaries_pointers="${keyname}_binariesinstalledpaths[@]"
     for binary in "${!binaries_pointers}"; do
-      usage_value+="$(echo "${binary}" | cut -d ';' -f2)"
+      usage_value+="$(echo "${binary}" | cut -d ';' -f2), "
+    done
+
+    filekey_path=""
+    usage_value+="- Functions in shell environment: "
+    local filekeys_pointers="${keyname}_filekeys[@]"
+    local feature_function_names=""
+    for filekey in "${!filekeys_pointers}"; do
+      filekey_name="${keyname}_${filekey}_content"
+
+      feature_function_names="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${keyname}/${!filekey_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*\\(\\)" | uniq)"
+
+      for feature_function_name in "${feature_function_names}" ; do
+        # Append name without parenthesis
+        usage_value+="$(echo "${feature_function_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*"), "
+      done
+    done
+
+    local usage_value+="- Keyboard shortcuts: "
+    local shortcuts_pointers="${keyname}_binariesinstalledpaths[@]"
+    for shortcut_keyboard in "${!shortcuts_pointers}"; do
+      usage_value+="$(echo "${shortcut_keyboard}" | cut -d ';' -f2), "
     done
 
     features_table_lines+=$'\n'"| ${icon_value} | ${!name_pointer} | ${!arguments_pointer} | ${!description_pointer} | ${usage_value} |"
@@ -275,7 +307,7 @@ autogen_readme()
 
 
   features_table_lines+=$'\n'"Customizer currently has available $(echo "${feature_keynames[@]}" | wc -w) features."
-  echo "${features_table_lines}" > FEATURES.md
+  echo "${features_table_lines}" > "${CUSTOMIZER_PROJECT_FOLDER}/FEATURES.md"
 }
 
 

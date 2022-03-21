@@ -45,7 +45,6 @@ initialize_package_manager_yum() {
   PACKAGE_MANAGER_UNINSTALLPACKAGE="yum -y purge"
   PACKAGE_MANAGER_AUTOREMOVE="yum -y autoremove"
   PACKAGE_MANAGER_AUTOCLEAN=":"
-
 }
 
 # Search the current OS in order to determine the default package manager and its main
@@ -73,8 +72,11 @@ case ${OS_NAME} in
   "Parrot OS")
     initialize_package_manager_apt-get
   ;;
+  "Trisquel GNU/Linux")
+    initialize_package_manager_apt-get
+  ;;
   *)
-    output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager" "${FLAG_QUIETNESS}"
+    output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager" "0"
     OS_NAME="Ubuntu"
     initialize_package_manager_apt-get
   ;;
@@ -146,7 +148,11 @@ declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum")
 
 # User variables
 if [ "${EUID}" != 0 ]; then
-  declare -r HOME_FOLDER="${HOME}"
+  if ["${OS_NAME}" == "TermuxUbuntu"]; then
+    declare -r HOME_FOLDER="/data/data/com.termux/folder/home"
+  else
+    declare -r HOME_FOLDER="${HOME}"
+  fi
 
   declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
 
