@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-alias ardour="nohup ardour &>/dev/null &"
+alias ardour="nohup ardour5 &>/dev/null &"
