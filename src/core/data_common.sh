@@ -148,12 +148,11 @@ declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum")
 
 # User variables
 if [ "${EUID}" != 0 ]; then
-  if ["${OS_NAME}" == "TermuxUbuntu"]; then
+  if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
     declare -r HOME_FOLDER="/data/data/com.termux/folder/home"
   else
     declare -r HOME_FOLDER="${HOME}"
   fi
-
   declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
 
   # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)

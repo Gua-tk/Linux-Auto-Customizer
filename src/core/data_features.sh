@@ -1795,7 +1795,7 @@ keyboardfix_filekeys=("keyboardconf")
 keyboardfix_keyboardconf_path="/etc/modprobe.d/hid_apple.conf"
 keyboardfix_keyboardconf_content="keyboard.conf"
 keyboardfix_manualcontentavailable="0;0;1"
-keyboardfix_flagsoverride="1;;;;;"  # Root mode
+keyboardfix_flagsoverride="0;;;;;"  # Root mode
 install_keyboardfix_post()
 {
   update-initramfs -u -k all
@@ -3734,7 +3734,7 @@ vncviewer_version="6.21.1109"
 vncviewer_tags=("remote" "control" "network")
 vncviewer_systemcategories=("Utility" "Network" "Viewer" "Monitor" "RemoteAccess" "Accessibility")
 vncviewer_launcherkeynames=("default")
-vncviewer_binariesinstalledpaths=("bin/vncviewer;vncviewer")
+vncviewer_binariesinstalledpaths=("vncviewer;vncviewer")
 vncviewer_compressedfileurl=("https://downloads.realvnc.com/download/file/viewer.files/VNC-Viewer-6.21.1109-Linux-x64-ANY.tar.gz")
 
 whatsapp_installationtype="environmental"
