@@ -535,6 +535,7 @@ declare -r feature_keynames=(
   "upgrade"
   "virtualbox"
   "vlc"
+  "vncviewer"
   "vommit"
   "whatsapp"
   "wikipedia"
