@@ -1332,7 +1332,13 @@ data_and_file_structures_initialization() {
   # Initialize whoami file
   if [ "${OS_NAME}" == "WSL2" ]; then
     if [ ${EUID} != 0 ]; then
-      create_file "${CUSTOMIZER_PROJECT_FOLDER}/whoami" "$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+      username_wsl2="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+      if [ -z "${username_wsl2}" ]; then
+        echo "ERROR: The user of Windows could not have been captured"
+        exit 1
+      else
+        create_file "${CUSTOMIZER_PROJECT_FOLDER}/whoami" "${username_wsl2}"
+      fi
     fi
   fi
 

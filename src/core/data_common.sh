@@ -253,6 +253,10 @@ else
   elif [ "${OS_NAME}" == "WSL2" ]; then
     if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/whoami" ]; then
       declare -r WSL2_USER="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/whoami")"
+      if [ -z "${WSL2_USER}" ]; then
+        echo "ERROR: the whoami files exists ${CUSTOMIZER_PROJECT_FOLDER}/whoami but it's empty"
+        exit 1
+      fi
       declare -r HOME_FOLDER_WSL2="/mnt/c/Users/${WSL2_USER}"
       declare -r HOME_FOLDER="/home/${SUDO_USER}"
     else
