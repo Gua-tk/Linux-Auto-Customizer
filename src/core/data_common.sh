@@ -228,9 +228,9 @@ if [ "${EUID}" != 0 ]; then
     else
       echo "WARNING: ${HOME_FOLDER}/.config/user-dirs.dirs has not been found for the definition of XDG_DESKTOP_DIR,
       XDG_PICTURES_DIR, XDG_TEMPLATES_DIR in this context, falling back to defaults "
-      declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
-      declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
-      declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+      declare XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+      declare XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+      declare XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     fi
   fi
 
@@ -281,15 +281,15 @@ else
       while IFS= read -r line; do
         # Process lines that are not commented out
         if ! echo "${line}" | grep -Eoq "^#"; then
-          declare -r "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
+          declare "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
         fi
       done < "${HOME_FOLDER}/.config/user-dirs.dirs"
     else
       echo "WARNING: ${HOME_FOLDER}/.config/user-dirs.dirs has not been found for the definition of XDG_DESKTOP_DIR,
       XDG_PICTURES_DIR, XDG_TEMPLATES_DIR in this context, falling back to defaults "
-      declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
-      declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
-      declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+      declare XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+      declare XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+      declare XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     fi
   fi
 
