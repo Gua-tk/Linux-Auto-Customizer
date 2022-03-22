@@ -71,7 +71,7 @@ if [ -f "/etc/os-release" ]; then
     declare OS_NAME="TermuxUbuntu"
   else
     declare OS_NAME
-    OS_NAME="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )"
+    OS_NAME="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' | cut -d " " -f1 ) < "/etc/os-release" )"
   fi
 else
   subsys_Android="$(echo "$(uname -a)" | rev | cut -d " " -f1 | rev)"
@@ -88,7 +88,7 @@ case "${OS_NAME}" in
   Ubuntu)
     initialize_package_manager_apt-get
   ;;
-  "Debian GNU/Linux")
+  Debian)
     initialize_package_manager_apt-get
   ;;
   ElementaryOS)
@@ -97,16 +97,17 @@ case "${OS_NAME}" in
   Fedora)
     initialize_package_manager_yum
   ;;
-  "Parrot OS")
+  Parrot)
     initialize_package_manager_apt-get
   ;;
-  "Trisquel GNU/Linux")
+  Trisquel)
     initialize_package_manager_apt-get
   ;;
   WSL2)
-    # TODO: May change due to different machines available
-    case $( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" ) in
-      "Debian GNU/Linux")
+    # TODO: Test to obtain the name of the WSL2 subsystem in Debian
+    WSL2_SUBSYSTEM="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' | cut -d " " -f1 ) < "/etc/os-release" )"
+    case "${WSL2_SUBSYSTEM}" in
+      Debian)
         initialize_package_manager_apt-get
       ;;
       Ubuntu)
@@ -199,7 +200,8 @@ if [ "${EUID}" != 0 ]; then
   if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
     declare -r HOME_FOLDER="/home/$(whoami)"
   elif [ "${OS_NAME}" == "WSL2" ]; then
-    declare -r HOME_FOLDER_WSL2="/mnt/c/Users/$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+    declare -r WSL2_USER="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+    declare -r HOME_FOLDER_WSL2="/mnt/c/Users/${WSL2_USER}"
     declare -r HOME_FOLDER="/home/$(whoami)"
   elif [ "${OS_NAME}" == "Android" ]; then
     declare -r HOME_FOLDER="/data/data/com.termux/files/home"
@@ -231,8 +233,10 @@ if [ "${EUID}" != 0 ]; then
       declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     fi
   fi
+
+  # Override these paths to the corresponding paths in the Windows system when in WSL2
   if [ "${OS_NAME}" == "WSL2" ]; then
-    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER_WSL2}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER_WSL2}/Templates"
     declare -r XDG_PICTURES_DIR="${HOME_FOLDER_WSL2}/Pictures"
   fi
 else
@@ -248,7 +252,8 @@ else
     fi
   elif [ "${OS_NAME}" == "WSL2" ]; then
     if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/whoami" ]; then
-      declare -r HOME_FOLDER_WSL2="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/whoami")"
+      declare -r WSL2_USER="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/whoami")"
+      declare -r HOME_FOLDER_WSL2="/mnt/c/Users/${WSL2_USER}"
       declare -r HOME_FOLDER="/home/${SUDO_USER}"
     else
       echo "ERROR: The file whoami does not exist, run again without privileges."
@@ -287,8 +292,10 @@ else
       declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     fi
   fi
+
+  # Override these paths to the corresponding paths in the Windows system when in WSL2
   if [ "${OS_NAME}" == "WSL2" ]; then
-    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER_WSL2}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER_WSL2}/Templates"
     declare -r XDG_PICTURES_DIR="${HOME_FOLDER_WSL2}/Pictures"
   fi
 fi
