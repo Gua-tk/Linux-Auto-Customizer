@@ -74,7 +74,7 @@ if [ -f "/etc/os-release" ]; then
     OS_NAME="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' | cut -d " " -f1 ) < "/etc/os-release" )"
   fi
 else
-  subsys_Android="$(echo "$(uname -a)" | rev | cut -d " " -f1 | rev)"
+  subsys_Android="$(uname -a | rev | cut -d " " -f1 | rev)"
   if [ "${subsys_Android}" == "Android" ]; then
     declare OS_NAME="Android"
   else
