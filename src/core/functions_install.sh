@@ -750,24 +750,47 @@ NoDisplay=false"
 }
 
 
-# - Description: Creates Windows Launchers from .desktop launchers from WLS2
-# - Permissions: Can be executed as root or user.
-# Argument 1: Launcher key name
-# Argument 2: suffix anticollision
+# - Description: Creates a Windows desktop launcher (an .ink file) using the provided launcherkeyname and the
+#   ${CURRENT_INSTALLATION_KEYNAME}
+# - Permissions: Can be executed as root or user. Needs to be able to write into ${HOME_FOLDER_WSL2}/Desktop, which in
+#   this environment is pointed by ${XDG_DESKTOP_DIR}
+# - Arguments:
+#    * Argument 1: Launcher key name from which we will obtain information of this launcher
+#    * Argument 2: suffix anticollision. To not overwrite files by having the same name if the current installation has
+#      more than one desktop launcher.
 create_WSL2_dynamic_launcher() {
-  # "${CURRENT_INSTALLATION_KEYNAME}"
-  # Exec and Tryexec from binariesinstalledpaths
+  # Deduce exec field of the launcher
   local -r exec_command="$(dynamic_launcher_deduce_exec "$1")"
+  # Deduce icon field of the launcher
   local -r icon_path="$(dynamic_launcher_deduce_icon "$1")"
 
+  # Ensure convert dependency is present
+  if ! which convert; then
+    if [ $EUID != 0 ]; then
+      echo "ERROR: Icon could not be created due to convert is not installed, install it or run again with sudo"
+      return
+    else
+      "${PACKAGE_MANAGER_INSTALL}" imagemagick
+    fi
+  fi
+  # Convert icon from customizer project to .ico
+  # TODO: Do convert uses .svg and .png (and .xpm)?; the formats that customizer uses to store icons? test
+  convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
+
+  # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
+  # ${CURRENT_INSTALLATION_FOLDER}
   local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
-
 comm = \"wsl nohup ${exec_command} &>/dev/null\"
-
 shell.Run comm,0"
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
 
-  user_folder_windows_name="$(echo "${HOME_FOLDER_WSL2}" | rev | cut -d "/" -f1 | rev)"
+  # Content of the cmd script that will be executed from Windows cmd to create a .vbs file that will be executed from
+  # the cmd script and then deleted. This inner .vbs file is the one that creates the final .ink file using the binary
+  # to execute, the icon path, the working directory (the current installation folder) and the position of the .ink,
+  # which will be the Windows Desktop folder.
+  # TODO: is \\wsl.localhost\Debian\home\.customizer\bin\KEYNAME equivalent to
+  # TODO: \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}"
+  # TODO: Is this path correct from the VBS script to access the WSL2 subsystem from Windows?
   cmdscript_content="@echo off
 
 set SCRIPT=\"%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs\"
@@ -783,22 +806,12 @@ echo oLink.Save >> %SCRIPT%
 cscript /nologo %SCRIPT%
 
 del %SCRIPT%"
-
-
-  if ! which convert; then
-    if [ $EUID != 0 ]; then
-      echo "ERROR: Icon could not be created due to convert is not installed, install it or run again with sudo"
-      return
-    else
-      "${PACKAGE_MANAGER_INSTALL}" imagemagick
-    fi
-  fi
-  convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
-
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat" "${cmdscript_content}"
 
+  # Call cmd of Windows to execute the .bat file that will create the .vbs file that will be executed to create the
+  # link file in the Windows Desktop
+  # TODO: Is this system call working? test calling the cmd from WSL2 with a dummy command and with root or user privileges
   /mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
-
 }
 
 
