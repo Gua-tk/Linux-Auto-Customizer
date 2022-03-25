@@ -2204,15 +2204,16 @@ install_nano_post()
 }
 uninstall_nano_post()
 {
-  # Restore default editor to git if we have it installed
-  if which git &>/dev/null; then
-    git config --global core.editor "default"
-  fi
-
   # Restore editor to the default one (usually vim)
   if [ ${EUID} == 0 ]; then
     update-alternatives --auto editor
   fi
+
+  # Restore default editor to git if we have it installed
+  if which git &>/dev/null; then
+    git config --global core.editor "editor"
+  fi
+
 }
 
 nautilus_installationtype="packagemanager"
