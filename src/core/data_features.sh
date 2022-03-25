@@ -2186,6 +2186,34 @@ nano_readmeline="| nano | CLI File editor | Command \`nano\` and syntax highligh
 nano_filekeys=("conf")
 nano_conf_path="${HOME_FOLDER}/.nanorc"
 nano_conf_content=("nanorc")
+nano_manualcontentavailable="0;0;1"
+install_nano_post()
+{
+  # Set nano as the default git editor
+  if which git &>/dev/null; then
+    git config --global core.editor "nano"
+  fi
+
+  # Set editor to nano using the entry displayed in update-alternatives --list editor
+  if [ ${EUID} == 0 ]; then
+    nano_default_path="$(update-alternatives --list editor | grep -Eo "^.*nano.*$" | head -1)"
+    if [ -n "${nano_default_path}" ]; then
+      update-alternatives --set editor "${nano_default_path}"
+    fi
+  fi
+}
+uninstall_nano_post()
+{
+  # Restore default editor to git if we have it installed
+  if which git &>/dev/null; then
+    git config --global core.editor "default"
+  fi
+
+  # Restore editor to the default one (usually vim)
+  if [ ${EUID} == 0 ]; then
+    update-alternatives --auto editor
+  fi
+}
 
 nautilus_installationtype="packagemanager"
 nautilus_arguments=("nautilus")
