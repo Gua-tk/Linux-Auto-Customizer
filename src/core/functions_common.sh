@@ -79,6 +79,17 @@ bell_sound()
 }
 
 
+# - Description: Receives a Linux based path (using / as separator) and returns it converted to Windows path using
+#   stdout.
+# - Permission: Does not need any special permission.
+# - Arguments
+#   * Argument 1: Linux-based path that will be converted to Windows-based path.
+convert_to_windows_path()
+{
+  echo "$1" | tr "/" "\\"
+}
+
+
 # - Description: Sets up a prompt in the desired point of customizer, which is used for in-place debugging. You can
 #   input your desired bash statements to run commands, declare installations or call functions defined in the runtime
 #   environment of the customizer.
@@ -897,6 +908,9 @@ generic_installation() {
     #"generic_${FLAG_MODE}_manual_launchers" "${featurename}"
     #"generic_${FLAG_MODE}_copy_launcher" "${featurename}"
     "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"
+    if [ "${OS_NAME}" == "WSL2" ]; then
+      "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
+    fi
     "generic_${FLAG_MODE}_functions" "${featurename}"
     "generic_${FLAG_MODE}_initializations" "${featurename}"
     "generic_${FLAG_MODE}_autostart" "${featurename}"

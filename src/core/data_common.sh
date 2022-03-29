@@ -47,20 +47,48 @@ initialize_package_manager_yum() {
   PACKAGE_MANAGER_AUTOCLEAN=":"
 }
 
+initialize_package_manager_pkg() {
+  DEFAULT_PACKAGE_MANAGER="pkg"
+  PACKAGE_MANAGER_INSTALL="pkg install -y"
+  PACKAGE_MANAGER_FIXBROKEN="pkg install -y -f"
+  PACKAGE_MANAGER_UNINSTALL="pkg uninstall -y"
+  PACKAGE_MANAGER_UPDATE="pkg update -y"
+  PACKAGE_MANAGER_UPGRADE="pkg upgrade -y"
+  PACKAGE_MANAGER_INSTALLPACKAGE="pm install -y"
+  PACKAGE_MANAGER_INSTALLPACKAGES="pm install -y"
+  PACKAGE_MANAGER_UNINSTALLPACKAGE="pm uninstall -y"
+  PACKAGE_MANAGER_AUTOREMOVE=":"
+  PACKAGE_MANAGER_AUTOCLEAN="pkg -y autoclean"
+}
+
 # Search the current OS in order to determine the default package manager and its main
 if [ -f "/etc/os-release" ]; then
-  declare OS_NAME=$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' ) < "/etc/os-release" )
+  subsys_Windows="$(echo "$(uname -r)" | rev | cut -d "-" -f1 | rev)"
+  if [ "${subsys_Windows}" == "WSL2" ]; then
+    declare OS_NAME="WSL2"
+  # If his path exist means that we are running in termux
+  elif [ -d /data/data/com.termux ]; then
+    declare OS_NAME="TermuxUbuntu"
+  else
+    declare OS_NAME
+    OS_NAME="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' | cut -d " " -f1 ) < "/etc/os-release" )"
+  fi
 else
-  echo "WARNING: /etc/os-release can not be read. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager"
-  declare OS_NAME="Ubuntu"
+  subsys_Android="$(uname -a | rev | cut -d " " -f1 | rev)"
+  if [ "${subsys_Android}" == "Android" ]; then
+    declare OS_NAME="Android"
+  else
+    echo "WARNING: /etc/os-release can not be read. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager"
+    declare OS_NAME="Ubuntu"
+  fi
 fi
 
 # Load the call to the package manager corresponding to the previously detected OS
-case ${OS_NAME} in
+case "${OS_NAME}" in
   Ubuntu)
     initialize_package_manager_apt-get
   ;;
-  "Debian GNU/Linux")
+  Debian)
     initialize_package_manager_apt-get
   ;;
   ElementaryOS)
@@ -69,11 +97,35 @@ case ${OS_NAME} in
   Fedora)
     initialize_package_manager_yum
   ;;
-  "Parrot OS")
+  Parrot)
+    initialize_package_manager_apt-get
+  ;;
+  Trisquel)
+    initialize_package_manager_apt-get
+  ;;
+  WSL2)
+    # TODO: Test to obtain the name of the WSL2 subsystem in Debian
+    WSL2_SUBSYSTEM="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' | cut -d " " -f1 ) < "/etc/os-release" )"
+    case "${WSL2_SUBSYSTEM}" in
+      Debian)
+        initialize_package_manager_apt-get
+      ;;
+      Ubuntu)
+        initialize_package_manager_apt-get
+      ;;
+      *)
+        initialize_package_manager_apt-get
+      ;;
+    esac
+  ;;
+  TermuxUbuntu)
     initialize_package_manager_apt-get
   ;;
   "Trisquel GNU/Linux")
     initialize_package_manager_apt-get
+  ;;
+  Android)
+    initialize_package_manager_pkg
   ;;
   *)
     output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager" "0"
@@ -87,7 +139,7 @@ declare STACKED_PACKAGE_MANAGER
 # Variable used to indicate if we need to reload an stacked package manager at the end of an installation.
 declare POP_PACKAGE_MANAGER=0
 # List of recognised package managers
-declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum")
+declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum" "pkg")
 
 ########################################################################################################################
 ################################################## CONSTANT PATHS ######################################################
@@ -149,46 +201,109 @@ declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum")
 # User variables
 if [ "${EUID}" != 0 ]; then
   if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
-    declare -r HOME_FOLDER="/data/data/com.termux/folder/home"
+    declare -r HOME_FOLDER="/home/$(whoami)"
+  elif [ "${OS_NAME}" == "WSL2" ]; then
+    declare -r WSL2_USER="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+    declare -r HOME_FOLDER_WSL2="/mnt/c/Users/${WSL2_USER}"
+    declare -r HOME_FOLDER="/home/$(whoami)"
+  elif [ "${OS_NAME}" == "Android" ]; then
+    declare -r HOME_FOLDER="/data/data/com.termux/files/home"
   else
     declare -r HOME_FOLDER="${HOME}"
   fi
-  declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
 
-  # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
-  if [ -f "${USER_DIRS_PATH}" ]; then
+  if [ "${OS_NAME}" == "Android" ]; then
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+  elif [ "${OS_NAME}" == "TermuxUbuntu" ]; then
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+  else
+    declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
     # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
-    # shellcheck source=$HOME/.config/user-dirs.dirs
-    source "${USER_DIRS_PATH}"
-  fi 
-else  # Root variables
-  declare -r HOME_FOLDER="/home/${SUDO_USER}"
-
-  declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
-
-  # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
-  # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
-  # for /home/$SUDO_USER to be interpreted correctly as a root user. Also with declare we can declare all variables in
-  # the file in one line.
-  if [ -f "${USER_DIRS_PATH}" ]; then
-    while IFS= read -r line; do
-      # Process lines that are not commented out
-      if ! echo "${line}" | grep -Eoq "^#"; then
-        declare -r "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
-      fi
-    done < "${HOME_FOLDER}/.config/user-dirs.dirs"
+    if [ -f "${USER_DIRS_PATH}" ]; then
+      # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
+      # shellcheck source=$HOME/.config/user-dirs.dirs
+      source "${USER_DIRS_PATH}"
+    else
+      echo "WARNING: ${HOME_FOLDER}/.config/user-dirs.dirs has not been found for the definition of XDG_DESKTOP_DIR,
+      XDG_PICTURES_DIR, XDG_TEMPLATES_DIR in this context, falling back to defaults "
+      declare XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+      declare XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+      declare XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    fi
   fi
-fi
 
-# Define fallbacks for the used variables if USER_DIRS_PATH is not present
-if [ -z "${XDG_DESKTOP_DIR}" ]; then
-  declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
-fi
-if [ -z "${XDG_PICTURES_DIR}" ]; then
-  declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
-fi
-if [ -z "${XDG_TEMPLATES_DIR}" ]; then
-  declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+  # Override these paths to the corresponding paths in the Windows system when in WSL2
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER_WSL2}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER_WSL2}/Pictures"
+  fi
+else
+
+  # Set HOME_FOLDER
+  if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
+    # Obtain the main user
+    if [ -n "${SUDO_USER}" ]; then
+      declare -r HOME_FOLDER="/home/${SUDO_USER}"
+    else
+      # Existence and further creation of the user will be done in initializations
+      declare -r HOME_FOLDER="/home/Android"
+    fi
+  elif [ "${OS_NAME}" == "WSL2" ]; then
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/whoami" ]; then
+      declare -r WSL2_USER="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/whoami")"
+      if [ -z "${WSL2_USER}" ]; then
+        echo "ERROR: the whoami files exists ${CUSTOMIZER_PROJECT_FOLDER}/whoami but it's empty"
+        exit 1
+      fi
+      declare -r HOME_FOLDER_WSL2="/mnt/c/Users/${WSL2_USER}"
+      declare -r HOME_FOLDER="/home/${SUDO_USER}"
+    else
+      echo "ERROR: The file whoami does not exist, run again without privileges."
+      exit 1
+    fi
+  elif [ "${OS_NAME}" == "Android" ]; then
+    declare -r HOME_FOLDER="/data/data/com.termux/files/home"
+  else
+    declare -r HOME_FOLDER="/home/${SUDO_USER}"
+  fi
+
+
+  # Root variables
+  if [ "${OS_NAME}" == "TermuxUbuntu" ] || [ "${OS_NAME}" == "Android" ]; then
+    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+  else
+    declare -r USER_DIRS_PATH="${HOME_FOLDER}/.config/user-dirs.dirs"
+    # Declare language specific user environment variables (XDG_DESKTOP_DIR, XDG_PICTURES_DIR, XDG_TEMPLATES_DIR...)
+    # This declaration is different from the analogous one in the previous block because $HOME needs to be substituted
+    # for /home/$SUDO_USER to be interpreted correctly as a root user. Also with declare we can declare all variables in
+    # the file in one line.
+    if [ -f "${USER_DIRS_PATH}" ]; then
+      while IFS= read -r line; do
+        # Process lines that are not commented out
+        if ! echo "${line}" | grep -Eoq "^#"; then
+          declare "$(echo "${line/\$HOME//home/${SUDO_USER}}" | tr -d "\"")"
+        fi
+      done < "${HOME_FOLDER}/.config/user-dirs.dirs"
+    else
+      echo "WARNING: ${HOME_FOLDER}/.config/user-dirs.dirs has not been found for the definition of XDG_DESKTOP_DIR,
+      XDG_PICTURES_DIR, XDG_TEMPLATES_DIR in this context, falling back to defaults "
+      declare XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+      declare XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+      declare XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+    fi
+  fi
+
+  # Override these paths to the corresponding paths in the Windows system when in WSL2
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER_WSL2}/Templates"
+    declare -r XDG_PICTURES_DIR="${HOME_FOLDER_WSL2}/Pictures"
+  fi
 fi
 
 
@@ -782,7 +897,7 @@ features.
   - Individual features are a certain installation, configuration or
   customization of a program or system module.
   - Feature wrappers group many individual features with the same permissions
-  related to the same topic: programming, image edition, system cutomization...
+  related to the same topic: programming, image edition, system customization...
 "
 
 declare -r help_wrappers="

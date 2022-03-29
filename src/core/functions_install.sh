@@ -582,12 +582,54 @@ translate_variables()
 
 
 
+# - Description: Returns the exec field from the received launcher keyname of the CURRENT_INSTALLATION_KEYNAME
+# - Permission: Does not need special permissions
+# - Arguments:
+#   * Argument 1: launcher keyname
+dynamic_launcher_deduce_exec()
+{
+  # Exec binariesinstalledpaths
+  local -r override_exec="${CURRENT_INSTALLATION_KEYNAME}_$1_exec"
+  local -r metadata_exec_temp="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[0]"
+  local -r metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
+  if [ ! -z "${!override_exec}" ]; then
+    echo "${!override_exec}"
+  else
+    echo "${metadata_exec}"
+  fi
+}
+
+
+# - Description: Returns the icon field (path to icon) from the received launcher keyname of the
+#   CURRENT_INSTALLATION_KEYNAME loaded in the CURRENT_INSTALLATION_FOLDER folder.
+# - Permission: Does need to create the icon in the CURRENT_INSTALLATION_FOLDER
+# - Arguments:
+#   * Argument 1: launcher keyname
+dynamic_launcher_deduce_icon()
+{
+  override_icon="$2_$1_icon"
+  metadata_icon="$2_icon"
+  if [ ! -z "${!override_icon}" ]; then
+    create_folder "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
+    echo "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
+  else
+    create_folder "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
+    echo "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
+  fi
+}
+
+
 # - Description: Override .desktop Desktop launchers feature properties
 # - Permissions:
 # Argument 1: Launcher keyname
 # Argument 2: Program keyname
 # Argument 3:
 create_dynamic_launcher() {
+  # feature name
   override_name="$2_$1_name"
   metadata_name="$2_name"
   text="[Desktop Entry]
@@ -600,6 +642,7 @@ NoDisplay=false"
     text+=$'\n'"Name=${!metadata_name}"
   fi
 
+  # Version
   override_version="$2_$1_version"
   metadata_version="$2_version"
   if [ ! -z "${!override_version}" ]; then
@@ -616,6 +659,7 @@ NoDisplay=false"
     text+=$'\n'"GenericName=${!metadata_genericname_pointer}"
   fi
 
+  # Commentary
   override_commentary="$2_$1_commentary"
   metadata_commentary="$2_commentary"
   if [ ! -z "${!override_commentary}" ]; then
@@ -624,6 +668,7 @@ NoDisplay=false"
     text+=$'\n'"Comment=${!metadata_commentary}"
   fi
 
+  # Tags
   override_tags="$2_$1_tags[@]"
   metadata_tags="$2_tags[@]"
   if [ ! -z "${!override_tags}" ]; then
@@ -638,39 +683,10 @@ NoDisplay=false"
     done
   fi
 
-  override_icon="$2_$1_icon"
-  metadata_icon="$2_icon"
-  if [ ! -z "${!override_icon}" ]; then
-    create_folder "${BIN_FOLDER}/$2"
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!override_icon}" "${BIN_FOLDER}/$2"
-    apply_permissions "${BIN_FOLDER}/$2/${!override_icon}"
-
-    text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!override_icon}"
-  else
-    if [ ! -z "${!metadata_icon}" ]; then
-      create_folder "${BIN_FOLDER}/$2"
-      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${BIN_FOLDER}/$2"
-      apply_permissions "${BIN_FOLDER}/$2/${!metadata_icon}"
-      text+=$'\n'"Icon=${BIN_FOLDER}/$2/${!metadata_icon}"
-    else
-      if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.svg" ]; then
-        create_folder "${BIN_FOLDER}/$2"
-        cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.svg" "${BIN_FOLDER}/$2"
-        apply_permissions "${BIN_FOLDER}/$2/$2.svg"
-        text+=$'\n'"Icon=${BIN_FOLDER}/$2/$2.svg"
-      elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.png" ]; then
-        create_folder "${BIN_FOLDER}/$2"
-        cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/$2.png" "${BIN_FOLDER}/$2"
-        apply_permissions "${BIN_FOLDER}/$2/$2.png"
-        text+=$'\n'"Icon=${BIN_FOLDER}/$2/$2.png"
-      else
-        create_folder "${BIN_FOLDER}/$2"
-        cp "${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png" "${BIN_FOLDER}/$2"
-        apply_permissions "${BIN_FOLDER}/$2/logo.png"
-        text+=$'\n'"Icon=${BIN_FOLDER}/$2/logo.png"
-      fi
-    fi
-  fi
+  # Icon
+  local icon_temp=
+  icon_temp="$(dynamic_launcher_deduce_icon "$1")"
+  text+=$'\n'"Icon=${icon_temp}"
 
   # Categories from systemcategories
   override_systemcategories="$2_$1_systemcategories[@]"
@@ -687,20 +703,14 @@ NoDisplay=false"
     done
   fi
 
-  # Obtain Exec and Tryexec from binariesinstalledpaths or override from exec property of this launcher
-  local -r override_exec="$2_$1_exec"
-  local -r metadata_exec_temp="$2_binariesinstalledpaths[0]"
-  local -r metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
-  if [ ! -z "${!override_exec}" ]; then
-    if echo "${!override_exec}" | grep -qE " " ; then
-      text+=$'\n'"TryExec=$(echo "${!override_exec}" | cut -d " " -f1)"
-    else
-      text+=$'\n'"TryExec=${!override_exec}"
-    fi
-    text+=$'\n'"Exec=${!override_exec}"
+  # Exec and Tryexec from binariesinstalledpaths
+  local exec_temp=
+  exec_temp="$(dynamic_launcher_deduce_exec "$1")"
+  text+=$'\n'"Exec=${exec_temp}"
+  if echo "${exec_temp}" | grep -qE " " ; then
+    text+=$'\n'"TryExec=$(echo "${exec_temp}" | cut -d " " -f1)"
   else
-    text+=$'\n'"TryExec=${metadata_exec}"
-    text+=$'\n'"Exec=${metadata_exec}"
+    text+=$'\n'"TryExec=${exec_temp}"
   fi
 
   # Terminal by default is set to false, true if overridden
@@ -806,6 +816,71 @@ NoDisplay=false"
 }
 
 
+# - Description: Creates a Windows desktop launcher (an .ink file) using the provided launcherkeyname and the
+#   ${CURRENT_INSTALLATION_KEYNAME}
+# - Permissions: Can be executed as root or user. Needs to be able to write into ${HOME_FOLDER_WSL2}/Desktop, which in
+#   this environment is pointed by ${XDG_DESKTOP_DIR}
+# - Arguments:
+#    * Argument 1: Launcher key name from which we will obtain information of this launcher
+#    * Argument 2: suffix anticollision. To not overwrite files by having the same name if the current installation has
+#      more than one desktop launcher.
+create_WSL2_dynamic_launcher() {
+  # Deduce exec field of the launcher
+  local -r exec_command="$(dynamic_launcher_deduce_exec "$1")"
+  # Deduce icon field of the launcher
+  local -r icon_path="$(dynamic_launcher_deduce_icon "$1")"
+
+  # Ensure convert dependency is present
+  if ! which convert; then
+    if [ $EUID != 0 ]; then
+      echo "ERROR: Icon could not be created due to convert is not installed, install it or run again with sudo"
+      return
+    else
+      "${PACKAGE_MANAGER_INSTALL}" imagemagick
+    fi
+  fi
+  # Convert icon from customizer project to .ico
+  # TODO: Do convert uses .svg and .png (and .xpm)?; the formats that customizer uses to store icons? test
+  convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
+
+  # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
+  # ${CURRENT_INSTALLATION_FOLDER}
+  local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
+comm = \"wsl nohup ${exec_command} &>/dev/null\"
+shell.Run comm,0"
+  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
+
+  # Content of the cmd script that will be executed from Windows cmd to create a .vbs file that will be executed from
+  # the cmd script and then deleted. This inner .vbs file is the one that creates the final .ink file using the binary
+  # to execute, the icon path, the working directory (the current installation folder) and the position of the .ink,
+  # which will be the Windows Desktop folder.
+  # TODO: is \\wsl.localhost\Debian\home\.customizer\bin\KEYNAME equivalent to
+  # TODO: \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}"
+  # TODO: Is this path correct from the VBS script to access the WSL2 subsystem from Windows?
+  cmdscript_content="@echo off
+
+set SCRIPT=\"%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs\"
+
+echo Set oWS = WScript.CreateObject(\"WScript.Shell\") >> %SCRIPT%
+echo sLinkFile = \"%SYSTEMDRIVE%\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\" >> %SCRIPT%
+echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %SCRIPT%
+echo oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs") >> %SCRIPT%
+echo oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico") >> %SCRIPT%
+echo oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}") >> %SCRIPT%
+echo oLink.Save >> %SCRIPT%
+
+cscript /nologo %SCRIPT%
+
+del %SCRIPT%"
+  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat" "${cmdscript_content}"
+
+  # Call cmd of Windows to execute the .bat file that will create the .vbs file that will be executed to create the
+  # link file in the Windows Desktop
+  # TODO: Is this system call working? test calling the cmd from WSL2 with a dummy command and with root or user privileges
+  /mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
+}
+
+
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - OPTIONAL PROPERTIES #####################################
 ########################################################################################################################
@@ -824,16 +899,28 @@ generic_install_manual_launchers() {
   done
 }
 
-# - Description:
-# - Permissions:
-# Argument 1: Feature keyname
-# Argument 2:
+
+# - Description: Create a dynamic launcher for each keyname
+# - Permissions: Does not need any permission.
 generic_install_dynamic_launcher() {
-  local -r launcherkeynames="$1_launcherkeynames[@]"
+  local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
   local name_suffix_anticollision=""
 
   for launcherkeyname in "${!launcherkeynames}"; do
-    create_dynamic_launcher "${launcherkeyname}" "$1" "$1${name_suffix_anticollision}"
+    create_dynamic_launcher "${launcherkeyname}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
+}
+
+
+# - Description: Creates a WSL2 dynamic desktop launcher for each keyname
+# - Permissions: Does not need any permission
+generic_install_WSL2_dynamic_launcher() {
+  local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
+  local name_suffix_anticollision=""
+
+  for launcherkeyname in "${!launcherkeynames}"; do
+    create_WSL2_dynamic_launcher "${launcherkeyname}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
@@ -1292,6 +1379,18 @@ userinherit_installation_type() {
 data_and_file_structures_initialization() {
   output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
 
+  if [ "${EUID}" == 0 ]; then
+    if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
+      if ! users | grep -q "Android"; then
+        # TODO: Add user non-interactively with no error output
+        adduser "Android"
+        usermod -aG sudo "Android"
+        echo "Android  ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/Android
+        yes | passwd "Android"
+      fi
+    fi
+  fi
+
   # Customizer inner folders
   create_folder "${CUSTOMIZER_FOLDER}"
   create_folder "${CACHE_FOLDER}"
@@ -1308,6 +1407,19 @@ data_and_file_structures_initialization() {
   create_folder "${XDG_DESKTOP_DIR}"
   create_folder "${XDG_PICTURES_DIR}"
   create_folder "${XDG_TEMPLATES_DIR}"
+
+  # Initialize whoami file
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    if [ ${EUID} != 0 ]; then
+      username_wsl2="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+      if [ -z "${username_wsl2}" ]; then
+        echo "ERROR: The user of Windows could not have been captured"
+        exit 1
+      else
+        create_file "${CUSTOMIZER_PROJECT_FOLDER}/whoami" "${username_wsl2}"
+      fi
+    fi
+  fi
 
   # Initialize bash functions
   if [ ! -f "${FUNCTIONS_PATH}" ]; then
@@ -1353,6 +1465,7 @@ data_and_file_structures_initialization() {
       fi
     fi
   fi
+
   # Make sure that .profile sources .bash_initializations
   if ! grep -Fqo "${bash_initializations_import}" "${PROFILE_PATH}"; then
     echo -e "${bash_initializations_import}" >> "${PROFILE_PATH}"

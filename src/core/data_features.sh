@@ -3689,31 +3689,16 @@ Version=1.0
 ")
 tumblr_readmeline="| Tumblr | ${tumblr_description} | Command \`tumblr\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-twitch_installationtype="environmental"
 twitch_arguments=("twitch" "twitch_tv")
-twitch_url="https://twitch.tv/"
+twitch_name="Twitch TV"
+twitch_commentary="Social media to perform live streams from your own computer"
+twitch_description="Internet browser shortcut to streaming platform"
+twitch_version="1.0"
+twitch_tags=("Streaming" "stream")
+twitch_systemcategories=("Video" "Network" "Chat")
+twitch_launcherkeynames=("default")
+twitch_default_exec="xdg-open https://twitch.tv/"
 twitch_bashfunctions=("twitch.sh")
-twitch_downloads=("https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png;twitch.png")
-twitch_description="Twitch web opens in Chrome"
-twitch_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${twitch_description}
-Encoding=UTF-8
-Exec=xdg-open ${twitch_url}
-Icon=${BIN_FOLDER}/twitch/twitch_icon.png
-GenericName=Twitch.tv
-Keywords=twitch;Twitch;
-MimeType=
-Name=Twitch
-StartupNotify=true
-StartupWMClass=Twitch
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-twitch_readmeline="| Twitch | ${twitch_description} | Command \`twitch\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 twitter_installationtype="environmental"
 twitter_arguments=("twitter")
