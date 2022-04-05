@@ -876,7 +876,7 @@ oLink.Save
   echo "mama ${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
   #/mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
   echo prrrrrrrrrro
-  /mnt/c/windows/system32/cscript.exe "\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "{CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")"
+  /mnt/c/windows/system32/cscript.exe "\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")"
 }
 
 
