@@ -869,7 +869,7 @@ echo oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_win
 echo oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}") >> %SCRIPT%
 echo oLink.Save >> %SCRIPT%
 
-cscript /nologo %SCRIPT%
+cscript /logo %SCRIPT%
 
 del %SCRIPT%"
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat" "${cmdscript_content}"
@@ -877,7 +877,8 @@ del %SCRIPT%"
   # Call cmd of Windows to execute the .bat file that will create the .vbs file that will be executed to create the
   # link file in the Windows Desktop
   # TODO: Is this system call working? test calling the cmd from WSL2 with a dummy command and with root or user privileges
-  /mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
+  echo "mama ${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
+  $(cd /mnt/c/ && /mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat")
 }
 
 
