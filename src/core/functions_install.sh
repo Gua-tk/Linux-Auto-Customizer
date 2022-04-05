@@ -842,7 +842,8 @@ create_WSL2_dynamic_launcher() {
   fi
   # Convert icon from customizer project to .ico
   # TODO: Do convert uses .svg and .png (and .xpm)?; the formats that customizer uses to store icons? test
-  convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
+  mkdir -p "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}"
+  convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
 
   # Content of the cmd script that will be executed from Windows cmd to create a .vbs file that will be executed from
   # the cmd script and then deleted. This inner .vbs file is the one that creates the final .ink file using the binary
@@ -856,7 +857,7 @@ Set oWS = WScript.CreateObject(\"WScript.Shell\")
 sLinkFile = \"C:\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\"
 Set oLink = oWS.CreateShortcut(sLinkFile)
 oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")\"
-oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico")\"
+oLink.IconLocation = \"C:\\Users\\${WSL2_USER}\\.customizer\\${CURRENT_INSTALLATION_KEYNAME}\\${CURRENT_INSTALLATION_KEYNAME}$2.ico\"
 oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}")\"
 oLink.Save
 "
