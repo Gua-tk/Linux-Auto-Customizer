@@ -867,7 +867,7 @@ shell.Run comm,0"
   # TODO: Is this system call working? test calling the cmd from WSL2 with a dummy command and with root or user privileges
   echo "mama ${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
   #/mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
-  /mnt/c/windows/system32/cmd.exe /C "@echo on && set SCRIPT=\"%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs\" && echo \"%SCRIPT%\" && echo basuko >> %SCRIPT%"
+  /mnt/c/windows/system32/cmd.exe /C "@echo off && set SCRIPT=\"%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs\" && echo \"%SCRIPT%\" && echo basuko >> %SCRIPT%"
   /mnt/c/windows/system32/cmd.exe /C "${cmdscript_content}"
 }
 
