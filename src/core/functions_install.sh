@@ -829,7 +829,7 @@ create_WSL2_dynamic_launcher() {
   local -r exec_command="$(dynamic_launcher_deduce_exec "$1")"
   # Deduce icon field of the launcher
   local -r icon_path="$(dynamic_launcher_deduce_icon "$1")"
-
+  echo "ikon path:::  ${icon_path}"
   # Ensure convert dependency is present
   if ! which convert; then
     if [ $EUID != 0 ]; then
