@@ -862,9 +862,9 @@ shell.Run comm,0"
 Set oWS = WScript.CreateObject(\"WScript.Shell\")
 sLinkFile = \"C:\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\"
 Set oLink = oWS.CreateShortcut(sLinkFile)
-oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")
-oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico")
-oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}")
+oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")\"
+oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico")\"
+oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}")\"
 oLink.Save
 "
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${cmdscript_content}"
