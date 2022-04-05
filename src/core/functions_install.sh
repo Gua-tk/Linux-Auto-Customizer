@@ -832,7 +832,7 @@ create_WSL2_dynamic_launcher() {
   echo "ikon path:::  ${icon_path}"
   ls "${icon_path}"
   # Ensure convert dependency is present
-  if ! which convert; then
+  if ! which convert &>/dev/null; then
     if [ $EUID != 0 ]; then
       echo "ERROR: Icon could not be created due to convert is not installed, install it or run again with sudo"
       return
@@ -879,7 +879,7 @@ del %SCRIPT%"
   # link file in the Windows Desktop
   # TODO: Is this system call working? test calling the cmd from WSL2 with a dummy command and with root or user privileges
   echo "mama ${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
-  $(cd /mnt/c/ && /mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat")
+  /mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
 }
 
 
