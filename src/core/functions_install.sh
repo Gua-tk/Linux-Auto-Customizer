@@ -607,16 +607,16 @@ dynamic_launcher_deduce_exec()
 #   * Argument 1: launcher keyname
 dynamic_launcher_deduce_icon()
 {
-  override_icon="$2_$1_icon"
-  metadata_icon="$2_icon"
+  override_icon="${CURRENT_INSTALLATION_KEYNAME}_$1_icon"
+  metadata_icon="${CURRENT_INSTALLATION_KEYNAME}_icon"
   if [ ! -z "${!override_icon}" ]; then
     create_folder "${CURRENT_INSTALLATION_FOLDER}"
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
   else
     create_folder "${CURRENT_INSTALLATION_FOLDER}"
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
   fi
