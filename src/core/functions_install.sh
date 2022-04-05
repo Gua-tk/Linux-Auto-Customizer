@@ -858,28 +858,16 @@ shell.Run comm,0"
   # TODO: is \\wsl.localhost\Debian\home\.customizer\bin\KEYNAME equivalent to
   # TODO: \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}"
   # TODO: Is this path correct from the VBS script to access the WSL2 subsystem from Windows?
-  cmdscript_content="@echo off
+  cmdscript_content="@echo on && set SCRIPT=\"%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs\" && echo Set oWS = WScript.CreateObject(\"WScript.Shell\") >> %SCRIPT% && echo sLinkFile = \"%SYSTEMDRIVE%\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\" >> %SCRIPT% && echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %SCRIPT% && echo oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs") >> %SCRIPT% && echo oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico") >> %SCRIPT% && echo oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}") >> %SCRIPT% && echo oLink.Save >> %SCRIPT% && cscript /logo %SCRIPT% && del %SCRIPT%"
+  #create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat" "${cmdscript_content}"
 
-set SCRIPT=\"%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs\"
-
-echo Set oWS = WScript.CreateObject(\"WScript.Shell\") >> %SCRIPT%
-echo sLinkFile = \"%SYSTEMDRIVE%\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\" >> %SCRIPT%
-echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %SCRIPT%
-echo oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs") >> %SCRIPT%
-echo oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico") >> %SCRIPT%
-echo oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}") >> %SCRIPT%
-echo oLink.Save >> %SCRIPT%
-
-cscript /logo %SCRIPT%
-
-del %SCRIPT%"
-  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat" "${cmdscript_content}"
 
   # Call cmd of Windows to execute the .bat file that will create the .vbs file that will be executed to create the
   # link file in the Windows Desktop
   # TODO: Is this system call working? test calling the cmd from WSL2 with a dummy command and with root or user privileges
   echo "mama ${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
-  /mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
+  #/mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
+  /mnt/c/windows/system32/cmd.exe /C "${cmdscript_content}"
 }
 
 
