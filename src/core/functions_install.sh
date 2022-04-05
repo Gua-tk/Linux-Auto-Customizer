@@ -844,13 +844,6 @@ create_WSL2_dynamic_launcher() {
   # TODO: Do convert uses .svg and .png (and .xpm)?; the formats that customizer uses to store icons? test
   convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
 
-  # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
-  # ${CURRENT_INSTALLATION_FOLDER}
-  local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
-comm = \"wsl nohup ${exec_command} &>/dev/null\"
-shell.Run comm,0"
-  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
-
   # Content of the cmd script that will be executed from Windows cmd to create a .vbs file that will be executed from
   # the cmd script and then deleted. This inner .vbs file is the one that creates the final .ink file using the binary
   # to execute, the icon path, the working directory (the current installation folder) and the position of the .ink,
@@ -868,15 +861,14 @@ oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_wind
 oLink.Save
 "
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${cmdscript_content}"
-
-
-  # Call cmd of Windows to execute the .bat file that will create the .vbs file that will be executed to create the
-  # link file in the Windows Desktop
-  # TODO: Is this system call working? test calling the cmd from WSL2 with a dummy command and with root or user privileges
-  echo "mama ${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
-  #/mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
-  echo prrrrrrrrrro
   /mnt/c/windows/system32/cscript.exe "\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")"
+
+    # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
+  local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
+comm = \"wsl nohup ${exec_command} &>/dev/null\"
+shell.Run comm,0"
+  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
+
 }
 
 
