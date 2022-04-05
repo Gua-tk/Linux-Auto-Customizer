@@ -858,7 +858,15 @@ shell.Run comm,0"
   # TODO: is \\wsl.localhost\Debian\home\.customizer\bin\KEYNAME equivalent to
   # TODO: \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}"
   # TODO: Is this path correct from the VBS script to access the WSL2 subsystem from Windows?
-  cmdscript_content="@echo on && echo Set oWS = WScript.CreateObject(\"WScript.Shell\") >> %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && echo sLinkFile = \"%SYSTEMDRIVE%\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\" >> %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && echo oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs") >> %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && echo oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico") >> %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && echo oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}") >> %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && echo oLink.Save >> %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && cscript /logo %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && del %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs"
+  cmdscript_content="
+Set oWS = WScript.CreateObject(\"WScript.Shell\")
+sLinkFile = \"C:\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\"
+Set oLink = oWS.CreateShortcut(sLinkFile)
+oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")
+oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico")
+oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}")
+oLink.Save
+"
   #create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat" "${cmdscript_content}"
 
 
@@ -870,6 +878,7 @@ shell.Run comm,0"
   echo prrrrrrrrrro
   /mnt/c/windows/system32/cmd.exe /C "@echo on && echo %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && echo basuko >> C:\\Windows"
   /mnt/c/windows/system32/cmd.exe /C "${cmdscript_content}"
+  /mnt/c/windows/system32/cscript.exe /C "${cmdscript_content}"
 }
 
 
