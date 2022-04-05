@@ -867,7 +867,7 @@ oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_
 oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}")
 oLink.Save
 "
-  #create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat" "${cmdscript_content}"
+  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${cmdscript_content}"
 
 
   # Call cmd of Windows to execute the .bat file that will create the .vbs file that will be executed to create the
@@ -876,9 +876,7 @@ oLink.Save
   echo "mama ${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
   #/mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
   echo prrrrrrrrrro
-  /mnt/c/windows/system32/cmd.exe /C "@echo on && echo %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && echo basuko >> C:\\Windows"
-  /mnt/c/windows/system32/cmd.exe /C "${cmdscript_content}"
-  /mnt/c/windows/system32/cscript.exe /C "${cmdscript_content}"
+  /mnt/c/windows/system32/cscript.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs"
 }
 
 
