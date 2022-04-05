@@ -921,7 +921,7 @@ generic_install_WSL2_dynamic_launcher() {
   local name_suffix_anticollision=""
 
   for launcherkeyname in "${!launcherkeynames}"; do
-    create_WSL2_dynamic_launcher "${launcherkeyname}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
+    create_WSL2_dynamic_launcher "${launcherkeyname}" "${name_suffix_anticollision}"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
