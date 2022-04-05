@@ -868,7 +868,7 @@ shell.Run comm,0"
   echo "mama ${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
   #/mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
   echo prrrrrrrrrro
-  /mnt/c/windows/system32/cmd.exe /C "@echo on && echo %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs"
+  /mnt/c/windows/system32/cmd.exe /C "@echo on && echo %TEMP%\\${CURRENT_INSTALLATION_KEYNAME}$2.vbs && echo basuko >> C:\\Windows"
   /mnt/c/windows/system32/cmd.exe /C "${cmdscript_content}"
 }
 
