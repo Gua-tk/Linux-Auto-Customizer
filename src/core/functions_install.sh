@@ -866,7 +866,7 @@ oLink.Save
 
     # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
   local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
-comm = \"wsl nohup ${exec_command} &>/dev/null\"
+comm = \"wsl bash -c nohup ${exec_command} &>/dev/null\"
 shell.Run comm,0"
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
 
