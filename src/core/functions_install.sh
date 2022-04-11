@@ -825,7 +825,6 @@ NoDisplay=false"
 #    * Argument 2: suffix anticollision. To not overwrite files by having the same name if the current installation has
 #      more than one desktop launcher.
 create_WSL2_dynamic_launcher() {
-  echo perro
   # Deduce exec field of the launcher
   local exec_command="$(dynamic_launcher_deduce_exec "$1")"
   if echo "${exec_command}" | tr -s " " | cut -d " " -f2 | grep -qE "^%"; then
@@ -1372,8 +1371,7 @@ data_and_file_structures_initialization() {
   if [ "${EUID}" == 0 ]; then
     if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
       if ! users | grep -q "Android"; then
-        # TODO: Add user non-interactively with no error output
-        adduser "Android"
+        adduser --gecos "" --disabled-password "Android"
         usermod -aG sudo "Android"
         echo "Android  ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/Android
         yes | passwd "Android"

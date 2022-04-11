@@ -106,7 +106,6 @@ case "${OS_NAME}" in
     initialize_package_manager_apt-get
   ;;
   WSL2)
-    # TODO: Test to obtain the name of the WSL2 subsystem in Debian
     WSL2_SUBSYSTEM="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' | cut -d " " -f1 ) < "/etc/os-release" )"
     case "${WSL2_SUBSYSTEM}" in
       Debian)
