@@ -78,7 +78,9 @@ else
   if [ "${subsys_Android}" == "Android" ]; then
     declare OS_NAME="Android"
   else
+    echo -en "\e[33m"
     echo "WARNING: /etc/os-release can not be read. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager"
+    echo -en "\e[0m"
     declare OS_NAME="Ubuntu"
   fi
 fi
@@ -104,7 +106,6 @@ case "${OS_NAME}" in
     initialize_package_manager_apt-get
   ;;
   WSL2)
-    # TODO: Test to obtain the name of the WSL2 subsystem in Debian
     WSL2_SUBSYSTEM="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' | cut -d " " -f1 ) < "/etc/os-release" )"
     case "${WSL2_SUBSYSTEM}" in
       Debian)
@@ -128,7 +129,9 @@ case "${OS_NAME}" in
     initialize_package_manager_pkg
   ;;
   *)
-    output_proxy_executioner "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager" "0"
+    echo -en "\e[33m"
+    echo "WARNING: ${OS_NAME} is not a recognised OS. Falling back to OS_NAME=Ubuntu for maximum compatibility. apt and dpkg will be used as the package manager" "0"
+    echo -en "\e[0m"
     OS_NAME="Ubuntu"
     initialize_package_manager_apt-get
   ;;
@@ -203,7 +206,7 @@ if [ "${EUID}" != 0 ]; then
   if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
     declare -r HOME_FOLDER="/home/$(whoami)"
   elif [ "${OS_NAME}" == "WSL2" ]; then
-    declare -r WSL2_USER="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+    declare -r WSL2_USER="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' 2> /dev/null | sed -e 's/\r//g')"
     declare -r HOME_FOLDER_WSL2="/mnt/c/Users/${WSL2_USER}"
     declare -r HOME_FOLDER="/home/$(whoami)"
   elif [ "${OS_NAME}" == "Android" ]; then
@@ -212,11 +215,7 @@ if [ "${EUID}" != 0 ]; then
     declare -r HOME_FOLDER="${HOME}"
   fi
 
-  if [ "${OS_NAME}" == "Android" ]; then
-    declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
-    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
-    declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
-  elif [ "${OS_NAME}" == "TermuxUbuntu" ]; then
+  if [ "${OS_NAME}" == "Android" ] || [ "${OS_NAME}" == "WSL2" ] || [ "${OS_NAME}" == "TermuxUbuntu" ]; then
     declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
     declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
@@ -228,18 +227,14 @@ if [ "${EUID}" != 0 ]; then
       # shellcheck source=$HOME/.config/user-dirs.dirs
       source "${USER_DIRS_PATH}"
     else
+      echo -en "\e[33m"
       echo "WARNING: ${HOME_FOLDER}/.config/user-dirs.dirs has not been found for the definition of XDG_DESKTOP_DIR,
       XDG_PICTURES_DIR, XDG_TEMPLATES_DIR in this context, falling back to defaults "
-      declare XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
-      declare XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
-      declare XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
+      echo -en "\e[0m"
+      declare -r XDG_DESKTOP_DIR="${HOME_FOLDER}/Desktop"
+      declare -r XDG_PICTURES_DIR="${HOME_FOLDER}/Pictures"
+      declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER}/Templates"
     fi
-  fi
-
-  # Override these paths to the corresponding paths in the Windows system when in WSL2
-  if [ "${OS_NAME}" == "WSL2" ]; then
-    declare -r XDG_TEMPLATES_DIR="${HOME_FOLDER_WSL2}/Templates"
-    declare -r XDG_PICTURES_DIR="${HOME_FOLDER_WSL2}/Pictures"
   fi
 else
 
@@ -730,11 +725,13 @@ declare -r bash_initializations_import="source \"${INITIALIZATIONS_PATH}\""
 declare -r flagsoverride_template=";;;;;"
 
 declare -r bash_functions_init="
-# If not running interactively, don't do anything
-case \$- in
-    *i*) ;;
-      *) return;;
-esac
+if [ \"${OS_NAME}\" != \"WSL2\" ]; then
+  # If not running interactively, don't do anything
+  case \$- in
+      *i*) ;;
+        *) return;;
+  esac
+fi
 
 # Make sure that PATH is pointing to ${PATH_POINTED_FOLDER} (where we will put our soft links to the software)
 if [ -z \"\$(echo \$PATH | grep -Eo \"${PATH_POINTED_FOLDER}\")\" ]; then

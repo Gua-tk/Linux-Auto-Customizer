@@ -607,16 +607,16 @@ dynamic_launcher_deduce_exec()
 #   * Argument 1: launcher keyname
 dynamic_launcher_deduce_icon()
 {
-  override_icon="$2_$1_icon"
-  metadata_icon="$2_icon"
+  override_icon="${CURRENT_INSTALLATION_KEYNAME}_$1_icon"
+  metadata_icon="${CURRENT_INSTALLATION_KEYNAME}_icon"
   if [ ! -z "${!override_icon}" ]; then
     create_folder "${CURRENT_INSTALLATION_FOLDER}"
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
   else
     create_folder "${CURRENT_INSTALLATION_FOLDER}"
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
   fi
@@ -826,12 +826,16 @@ NoDisplay=false"
 #      more than one desktop launcher.
 create_WSL2_dynamic_launcher() {
   # Deduce exec field of the launcher
-  local -r exec_command="$(dynamic_launcher_deduce_exec "$1")"
+  local exec_command="$(dynamic_launcher_deduce_exec "$1")"
+  if echo "${exec_command}" | tr -s " " | cut -d " " -f2 | grep -qE "^%"; then
+    exec_command="$(echo "${exec_command}" | tr -s " " |  cut -d " " -f1)"
+  fi
+
   # Deduce icon field of the launcher
   local -r icon_path="$(dynamic_launcher_deduce_icon "$1")"
 
   # Ensure convert dependency is present
-  if ! which convert; then
+  if ! which convert &>/dev/null; then
     if [ $EUID != 0 ]; then
       echo "ERROR: Icon could not be created due to convert is not installed, install it or run again with sudo"
       return
@@ -840,44 +844,29 @@ create_WSL2_dynamic_launcher() {
     fi
   fi
   # Convert icon from customizer project to .ico
-  # TODO: Do convert uses .svg and .png (and .xpm)?; the formats that customizer uses to store icons? test
-  convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
+  mkdir -p "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}"
+  convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
 
-  # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
-  # ${CURRENT_INSTALLATION_FOLDER}
+  # Content of the vbs script that will be executed from Windows cscript.exe to create a shortcut to our command to
+  # execute the binary. This .vbs script is the one that creates the final .ink file using the binary to execute, the
+  # icon path, the working directory (the current installation folder) and the position of the .ink, which will be the
+  # Windows Desktop folder.
+  cmdscript_content="
+Set oWS = WScript.CreateObject(\"WScript.Shell\")
+sLinkFile = \"C:\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\"
+Set oLink = oWS.CreateShortcut(sLinkFile)
+oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")\"
+oLink.IconLocation = \"C:\\Users\\${WSL2_USER}\\.customizer\\${CURRENT_INSTALLATION_KEYNAME}\\${CURRENT_INSTALLATION_KEYNAME}$2.ico\"
+oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}")\"
+oLink.Save
+"
+  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${cmdscript_content}"
+  /mnt/c/windows/system32/cscript.exe /nologo "\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")"
+    # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
   local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
-comm = \"wsl nohup ${exec_command} &>/dev/null\"
+comm = \"wsl bash -c 'source ${FUNCTIONS_PATH}; nohup ${exec_command} &>/dev/null'\"
 shell.Run comm,0"
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
-
-  # Content of the cmd script that will be executed from Windows cmd to create a .vbs file that will be executed from
-  # the cmd script and then deleted. This inner .vbs file is the one that creates the final .ink file using the binary
-  # to execute, the icon path, the working directory (the current installation folder) and the position of the .ink,
-  # which will be the Windows Desktop folder.
-  # TODO: is \\wsl.localhost\Debian\home\.customizer\bin\KEYNAME equivalent to
-  # TODO: \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}"
-  # TODO: Is this path correct from the VBS script to access the WSL2 subsystem from Windows?
-  cmdscript_content="@echo off
-
-set SCRIPT=\"%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs\"
-
-echo Set oWS = WScript.CreateObject(\"WScript.Shell\") >> %SCRIPT%
-echo sLinkFile = \"%SYSTEMDRIVE%\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\" >> %SCRIPT%
-echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %SCRIPT%
-echo oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs") >> %SCRIPT%
-echo oLink.IconLocation = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.ico") >> %SCRIPT%
-echo oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}") >> %SCRIPT%
-echo oLink.Save >> %SCRIPT%
-
-cscript /nologo %SCRIPT%
-
-del %SCRIPT%"
-  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat" "${cmdscript_content}"
-
-  # Call cmd of Windows to execute the .bat file that will create the .vbs file that will be executed to create the
-  # link file in the Windows Desktop
-  # TODO: Is this system call working? test calling the cmd from WSL2 with a dummy command and with root or user privileges
-  /mnt/c/windows/system32/cmd.exe "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.bat"
 }
 
 
@@ -920,7 +909,7 @@ generic_install_WSL2_dynamic_launcher() {
   local name_suffix_anticollision=""
 
   for launcherkeyname in "${!launcherkeynames}"; do
-    create_WSL2_dynamic_launcher "${launcherkeyname}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
+    create_WSL2_dynamic_launcher "${launcherkeyname}" "${name_suffix_anticollision}"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
@@ -1382,8 +1371,7 @@ data_and_file_structures_initialization() {
   if [ "${EUID}" == 0 ]; then
     if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
       if ! users | grep -q "Android"; then
-        # TODO: Add user non-interactively with no error output
-        adduser "Android"
+        adduser --gecos "" --disabled-password "Android"
         usermod -aG sudo "Android"
         echo "Android  ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/Android
         yes | passwd "Android"
@@ -1411,13 +1399,14 @@ data_and_file_structures_initialization() {
   # Initialize whoami file
   if [ "${OS_NAME}" == "WSL2" ]; then
     if [ ${EUID} != 0 ]; then
-      username_wsl2="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+      username_wsl2="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' 2> /dev/null | sed -e 's/\r//g')"
       if [ -z "${username_wsl2}" ]; then
         echo "ERROR: The user of Windows could not have been captured"
         exit 1
       else
         create_file "${CUSTOMIZER_PROJECT_FOLDER}/whoami" "${username_wsl2}"
       fi
+      unset username_wsl2
     fi
   fi
 
