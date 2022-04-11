@@ -613,12 +613,10 @@ dynamic_launcher_deduce_icon()
     create_folder "${CURRENT_INSTALLATION_FOLDER}"
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
-    echo "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
   else
     create_folder "${CURRENT_INSTALLATION_FOLDER}"
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
-    echo "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
   fi
 }
 
@@ -847,13 +845,10 @@ create_WSL2_dynamic_launcher() {
   mkdir -p "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}"
   convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
 
-  # Content of the cmd script that will be executed from Windows cmd to create a .vbs file that will be executed from
-  # the cmd script and then deleted. This inner .vbs file is the one that creates the final .ink file using the binary
-  # to execute, the icon path, the working directory (the current installation folder) and the position of the .ink,
-  # which will be the Windows Desktop folder.
-  # TODO: is \\wsl.localhost\Debian\home\.customizer\bin\KEYNAME equivalent to
-  # TODO: \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}"
-  # TODO: Is this path correct from the VBS script to access the WSL2 subsystem from Windows?
+  # Content of the vbs script that will be executed from Windows cscript.exe to create a shortcut to our command to
+  # execute the binary. This .vbs script is the one that creates the final .ink file using the binary to execute, the
+  # icon path, the working directory (the current installation folder) and the position of the .ink, which will be the
+  # Windows Desktop folder.
   cmdscript_content="
 Set oWS = WScript.CreateObject(\"WScript.Shell\")
 sLinkFile = \"C:\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\"
@@ -871,7 +866,6 @@ oLink.Save
 comm = \"wsl bash -c 'source ${FUNCTIONS_PATH}; nohup ${exec_command} &>/dev/null'\"
 shell.Run comm,0"
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
-
 }
 
 
