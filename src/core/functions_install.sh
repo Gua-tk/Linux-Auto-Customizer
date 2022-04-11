@@ -826,11 +826,14 @@ NoDisplay=false"
 #      more than one desktop launcher.
 create_WSL2_dynamic_launcher() {
   # Deduce exec field of the launcher
-  local -r exec_command="$(dynamic_launcher_deduce_exec "$1")"
+  local exec_command="$(dynamic_launcher_deduce_exec "$1")"
+  if echo "${exec_command}" | tr -s " " | cut -d " " -f2 | grep -qE "^%"; then
+    exec_command="$(echo "${exec_command}" | tr -s " " |  cut -d " " -f1)"
+  fi
+
   # Deduce icon field of the launcher
   local -r icon_path="$(dynamic_launcher_deduce_icon "$1")"
-  echo "ikon path:::  ${icon_path}"
-  ls "${icon_path}"
+
   # Ensure convert dependency is present
   if ! which convert &>/dev/null; then
     if [ $EUID != 0 ]; then
@@ -841,7 +844,6 @@ create_WSL2_dynamic_launcher() {
     fi
   fi
   # Convert icon from customizer project to .ico
-  # TODO: Do convert uses .svg and .png (and .xpm)?; the formats that customizer uses to store icons? test
   mkdir -p "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}"
   convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
 
@@ -866,7 +868,7 @@ oLink.Save
 
     # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
   local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
-comm = \"wsl bash -c 'source ~/.profile; nohup ${exec_command} &>/dev/null'\"
+comm = \"wsl bash -c 'source ${FUNCTIONS_PATH}; nohup ${exec_command} &>/dev/null'\"
 shell.Run comm,0"
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
 

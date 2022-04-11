@@ -730,11 +730,13 @@ declare -r bash_initializations_import="source \"${INITIALIZATIONS_PATH}\""
 declare -r flagsoverride_template=";;;;;"
 
 declare -r bash_functions_init="
-# If not running interactively, don't do anything
-case \$- in
-    *i*) ;;
-      *) return;;
-esac
+if [ \"${OS_NAME}\" != \"WSL2\" ]; then
+  # If not running interactively, don't do anything
+  case \$- in
+      *i*) ;;
+        *) return;;
+  esac
+fi
 
 # Make sure that PATH is pointing to ${PATH_POINTED_FOLDER} (where we will put our soft links to the software)
 if [ -z \"\$(echo \$PATH | grep -Eo \"${PATH_POINTED_FOLDER}\")\" ]; then
