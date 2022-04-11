@@ -860,8 +860,9 @@ oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_wind
 oLink.Save
 "
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${cmdscript_content}"
+  echo perro2
   /mnt/c/windows/system32/cscript.exe "\\nologo" "\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")"
-
+  echo perro33
     # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
   local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
 comm = \"wsl bash -c 'source ${FUNCTIONS_PATH}; nohup ${exec_command} &>/dev/null'\"
