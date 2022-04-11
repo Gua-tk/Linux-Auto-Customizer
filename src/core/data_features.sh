@@ -820,29 +820,15 @@ docker_readmeline="| Docker | Containerization service | Command \`docker\`, \`c
 
 documents_installationtype="environmental"
 documents_arguments=("documents" "google_document" "google_documents" "document")
-documents_url="https://docs.google.com/document/"
-documents_bashfunctions=("documents.sh")
-documents_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/66/Google_Docs_2020_Logo.svg;documents_icon.svg")
+documents_name="Google Documents"
 documents_description="Google Documents opening in Chrome"
-documents_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${documents_description}
-Encoding=UTF-8
-Exec=xdg-open ${documents_url}
-Icon=${BIN_FOLDER}/documents/documents_icon.svg
-GenericName=Document
-Keywords=documents;
-MimeType=
-Name=Google Documents
-StartupNotify=true
-StartupWMClass=Google Documents
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-documents_readmeline="| Google Documents | ${documents_description} | Command \`document\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+documents_version="Google dependent"
+documents_bashfunctions=("documents.sh")
+documents_launcherkeynames=("default")
+documents_systemcategories=("Office" "Documentation" "WebBrowser" "WordProcessor" "FlowChart")
+documents_commentary="take notes or edit rich text documents"
+documents_tags=("internet_shortcuts")
+documents_default_exec="xdg-open https://docs.google.com/document/"
 
 drive_installationtype="environmental"
 drive_arguments=("drive" "google_drive")
