@@ -844,8 +844,9 @@ create_WSL2_dynamic_launcher() {
   fi
   # Convert icon from customizer project to .ico
   mkdir -p "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}"
+  echo perrolol
   convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
-
+  echo perrako 
   # Content of the vbs script that will be executed from Windows cscript.exe to create a shortcut to our command to
   # execute the binary. This .vbs script is the one that creates the final .ink file using the binary to execute, the
   # icon path, the working directory (the current installation folder) and the position of the .ink, which will be the
