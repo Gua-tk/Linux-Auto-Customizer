@@ -823,6 +823,7 @@ NoDisplay=false"
 #    * Argument 2: suffix anticollision. To not overwrite files by having the same name if the current installation has
 #      more than one desktop launcher.
 create_WSL2_dynamic_launcher() {
+  echo perro
   # Deduce exec field of the launcher
   local exec_command="$(dynamic_launcher_deduce_exec "$1")"
   if echo "${exec_command}" | tr -s " " | cut -d " " -f2 | grep -qE "^%"; then
