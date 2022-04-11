@@ -846,6 +846,7 @@ create_WSL2_dynamic_launcher() {
   mkdir -p "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}"
   echo perrolol
   echo "${HOME_FOLDER_WSL2} + el perrakopooo lolol"
+  echo "${icon_path} + basukaaaaa"
   convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
   echo perrako
   # Content of the vbs script that will be executed from Windows cscript.exe to create a shortcut to our command to
