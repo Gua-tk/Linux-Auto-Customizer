@@ -859,7 +859,7 @@ oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_wind
 oLink.Save
 "
   create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${cmdscript_content}"
-  /mnt/c/windows/system32/cscript.exe "\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")"
+  /mnt/c/windows/system32/cscript.exe "\\nologo" "\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")" &> /dev/null
 
     # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
   local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
@@ -1399,13 +1399,14 @@ data_and_file_structures_initialization() {
   # Initialize whoami file
   if [ "${OS_NAME}" == "WSL2" ]; then
     if [ ${EUID} != 0 ]; then
-      username_wsl2="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')"
+      username_wsl2="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' 2> /dev/null | sed -e 's/\r//g')"
       if [ -z "${username_wsl2}" ]; then
         echo "ERROR: The user of Windows could not have been captured"
         exit 1
       else
         create_file "${CUSTOMIZER_PROJECT_FOLDER}/whoami" "${username_wsl2}"
       fi
+      unset username_wsl2
     fi
   fi
 

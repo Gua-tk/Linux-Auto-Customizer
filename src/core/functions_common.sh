@@ -48,7 +48,7 @@ output_proxy_executioner() {
     # If we need to process an echo and we are not in full quietness mode print the prefix with date for each echo
     echo_processed_command+="$(date +%Y-%m-%d_%T) -- "
     echo_processed_command+="${echo_command_arguments}"
-    echo_processed_command+="\e[0m"  # deactivate colour after the echo
+    echo_processed_command+="\e[0m"  # deactivate color after the echo
   fi
 
   # Execute command with verbosity depending on quietness level and if the command_name is an echo or not
@@ -86,7 +86,7 @@ bell_sound()
 #   * Argument 1: Linux-based path that will be converted to Windows-based path.
 convert_to_windows_path()
 {
-  echo "$1" | tr "/" "\\"
+  echo "$1" | tr "/" "\\\\"
 }
 
 
