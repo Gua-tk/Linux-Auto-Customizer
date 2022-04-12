@@ -30,11 +30,12 @@ fi
 ########################################################################################################################
 # The variables in here follow a naming scheme that is required for each feature to obtain its data by variable        #
 # indirect expansion. The variables that are defined for an installation determine its behaviour.                      #
-# Each installations has its own FEATUREKEYNAME, which is an string that matches an unique feature. We use the name of #
+# Each installations has its own FEATUREKEYNAME, which is an string that matches a unique feature. We use the name of  #
 # the main terminal command installed by the feature used to run it. This string must be added to the array            #
 # feature_keynames in data_common.sh to be recognised by the customizer as an available installation.                  #
 # The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY. Some variables can be defined in all features,  #
-# some are only used depending on the installation type and others have to be defined always for each feature.         #
+# some are only used depending on the installation type (TODO deprecate)
+#  and others have to be defined always for each feature.         #
 #                                                                                                                      #
 #                                                                                                                      #
 ###### Available properties:                                                                                           #
@@ -54,7 +55,8 @@ fi
 #    "--viSual_Studio", etc.                                                                                           #
 #    The list of FEATUREKEYNAMEs is also used as first source of arguments, since it should contain the names of the   #
 #    commands that are going to be installed, which is something that we can suppose unique.                           #
-#  - FEATUREKEYNAME_installationtype. Define the type of installation, which sets a fixed behaviour that obtains its   #
+#  - FEATUREKEYNAME_installationtype. TODO deprecate.
+#    Define the type of installation, which sets a fixed behaviour that obtains its   #
 #    input from predefined sets of properties for each installation type (check next section Installation type         #
 #    dependent properties). This can be set to:                                                                        #
 #    * "packageinstall": Downloads a .deb package and installs it using dpkg.                                          #
@@ -62,13 +64,32 @@ fi
 #    * "userinherit": Downloads a compressed file containing an unique folder.                                         #
 #    * "repositoryclone": Clone a repository inside the directory of the current feature installing.                   #
 #    * "environmental": Uses only the common part of every installation type. Has no type-dependent properties.        #
-#  - FEATUREKEYNAME_readmeline: Contains the readme line of the table for each feature.                                #
-#  - FEATUREKEYNAME_name: Stores the feature's name. Property 'Name=' of the desktop launcher.                                                                  #
-#  - FEATUREKEYNAME_version: Feature version. Property 'Version=' of the desktop launcher.                                                                          #
-#  - FEATUREKEYNAME_description: Feature description. Property 'GenericName=' of the desktop launcher.                                                            #
-#  - FEATUREKEYNAME_commentary: Commentary for desktop launcher. Property 'Comment=' of the desktop launcher.
-#  - FEATUREKEYNAME_tags: System categories for the feature Property 'Keywords=' of the desktop launcher.
-#  - FEATUREKEYNAME_systemcategories: Property 'Categories=' of the desktop launcher.
+#  - FEATUREKEYNAME_readmeline: Contains the readme line of the table for each feature.    TODO deprecate
+#  - FEATUREKEYNAME_name: Stores the feature's name. Maps to property 'Name=' of the desktop launcher if not
+#    overridden.                                                                  #
+#  - FEATUREKEYNAME_version: Feature version. For downloaded programs is the version of the downloaded bundle or binary
+#    and for package manager installations or external feature is "System dependent" or "enterprise dependent"; for
+#    example Google documents is "Google dependent". Maps to property 'Version=' of the desktop launcher if not
+#    overridden.                                                                           #
+#  - FEATUREKEYNAME_description: Feature objective description. Defines what is that you are installing. Maps to
+#    property 'GenericName=' of the desktop launcher if not overridden.                                                           #
+#  - FEATUREKEYNAME_commentary: Commentary for the feature. It can be anything relevant to comment about the feature or
+#    its usage, but not its description (we have a metadata for that). Property 'Comment=' of the desktop launcher.
+#  - FEATUREKEYNAME_tags: Contains keywords related with the feature. This keywords will be used to add the feature to
+#    the wrapper with the same name as the tag that it is in. Maps to the property 'Keywords=' of the desktop launcher
+#    if not overridden.
+#  - FEATUREKEYNAME_icon: A name of the filename including its extension in
+#    ${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME} that contains an image to represent the
+#    feature. Maps to property 'Icon=' of the desktop launcher if not overridden. If an icon is not defined, the icon
+#    will be deduced to
+#    ${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.${file_extension}
+#    where ${file_extension} is svg or png. If this icon is not found, the icon will be the logo of the customizer, in
+#    ${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png .
+#  - FEATUREKEYNAME_systemcategories: Property 'Categories=' of the desktop launcher. It is used by Gnome to put the
+#    launchers in the respective containers in the dashboard. This keywords will be used to add the feature to the
+#    wrapper with the same name as the tag that it is in. Maps to the property 'SystemCategories=' of the desktop
+#    launcher if not overridden.
+
 #    Building Debugger IDE GUIDesigner Profiling RevisionControl Translation Calendar ContactManagement Database
 #    Dictionary Chart Email Finance FlowChart PDA ProjectManagement Presentation Spreadsheet WordProcessor 2DGraphics
 #    VectorGraphics RasterGraphics 3DGraphics Scanning OCR Photography Publishing Viewer TextTools DesktopSettings
@@ -83,7 +104,7 @@ fi
 #    TextEditor Documentation Adult Core KDE GNOME XFCE GTK Qt Motif Java ConsoleOnly Screensaver TrayIcon Applet Shell
 #    AudioVideo Audio Video Development Education Game Graphics Network Office Science Settings System Utility
 #
-#    This categories translate to thw following dash categories, used to group launchers:
+#    This categories translate to the following dash categories, used to group launchers:
 ########################################################################################################################
 #    Launcher categories:
 #    These are the classes in which the desktop launchers are classified. To know if a desktop launchers belongs to a
@@ -105,15 +126,15 @@ fi
 #    wine              |        Wine, X-Wine, Wine-Programs-Accessories
 ########################################################################################################################
 
-#  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
-#    static data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
 ### Optional properties                                                                                                #
-#  - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder of the system.   #
+#  - FEATUREKEYNAME_launchernames: TODO depreacate
+#    Array of names of launchers to be copied from the launchers folder of the system.   #
 #    Used as fallback for autostart and associatedfiletypes.                                                           #
 #  - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to      #
 #    binaries that will be added to the PATH. Its name in the PATH is added by using a ";" to separate it from the     #
 #    relative path: "binaries/common/handbreak.sh;handbreak". It will be used to inherit when there is no overrrite.   #
-#  - FEATUREKEYNAME_launchercontents: Array of contents of launchers to be created in the desktop and dashboard.       #
+#  - FEATUREKEYNAME_launchercontents: TODO depreacate
+#    Array of contents of launchers to be created in the desktop and dashboard.       #
 #    They are used as fallback for autostart too.                                                                      #
 #  - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be executed on the start of every terminal        #
 #    session, in our case .bashrc.                                                                                     #
@@ -146,34 +167,43 @@ fi
 #  - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation.    #
 #    Used in: packageinstall, packagemanager.                                                                          #
 #  - FEATUREKEYNAME_movefiles: Allows file moving from installation folder to other ones in the system, matching *     #
-#  - FEATUREKEYNAME_package_manager_override: Allows to load another package manager and its calls for a certain       #
+#  - FEATUREKEYNAME_package_manager_override: Allows to load7bd571be2a4a93fa2d266d6d8b6cd5852379748d another package manager and its calls for a certain       #
 #    feature, reloading it back after its installation.                                                                #
-#  - FEATUREKEYNAME_launcherkeynames: Keynames to expand features properties of the desktop launcher when overriding. #                                                                                              #
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_name:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_version:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_commentary:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_tags:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_icon:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_description:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_mimetypes:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_exec:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_systemcategories:
+#  - FEATUREKEYNAME_launcherkeynames: Keynames to expand features properties of the desktop launcher when overriding.
+#    A desktop launcher will be created for each keyname defined in this property                                      #
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_name: Overrides the Name field in the overridden launcher.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_version: Overrides the Version field in the overridden launcher.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_commentary: Overrides the Commentary field in the overridden launcher.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_tags: Overrides the Keywords field in the overridden launcher.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_icon: Overrides the Icon field in the overridden launcher.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_description: Overrides the GenericName field in the overridden launcher.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_mimetypes: Overrides the Mimetype field in the overridden launcher.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_exec: Overrides the Exec field in the overridden launcher. If not present the
+#      Exec field will be deduced from the first position of the binariesinstalledpaths property.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_systemcategories: Overrides the SystemCategories field in the overridden launcher.
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_terminal: By default is 'false', but if defined the supplied value is overridden.
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_notify: Shows an hourglass in the cursor until the app is loaded. By default true
 #      but overridden by this variable.
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_windowclass: Used to group multiple windows launched from the same launcher and
-#      in other situations. By default the feaurekeyname but overriden by this variable.
+#      in other situations. By default the feaurekeyname overrides by this variable.
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_nodisplay: Used to show or not show launcher in the dashboard. By default the
 #      feaurekeyname but overriden by this variable.
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autostartcondition:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autorestart:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autorestartdelay:
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_windowclass: Used to group multiple windows launched from the same launcher and
-#    * FEATUREKEYNAME_LAUNCHERKEYNAME_actionkeynames:
-#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_name:
-#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_exec:
-#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_icon: By default customizer logo if no icon at feature level
-#        provided. If not, overridden by this variable
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autostartcondition: Sets the AutostartCondition field. Not added if not present.
+#      This is used to autostart the app thrown by the launcher if a certain condition is met.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autorestart: Sets the X-GNOME-AutoRestart field. Not added if not present. This is
+#      used by Gnome to restart the application if shut down. Useful for services such as the graphical service in Nemo
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_autorestartdelay: Sets the X-GNOME-Autostart-Delay field of the launcher. Not added
+#      if not present. This is used by Gnome to wait a certain amount of time before autostarting the application of the
+#      launcher .
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_windowclass: Used to group multiple windows launched from the same launcher. It
+#      overrides the WindowsClass field of the desktop launcher. If not present is deduced to be the
+#      ${CURRENT_INSTALLATION_KEYNAME}
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_actionkeynames: Sets as many actions as needed by adding keynames to them.
+#      For each keyname defined we need to define the following three properties.
+#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_name: Name of the action
+#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_exec: Value of the command to execute in this action.
+#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_icon: Customizer logo if no icon at feature level
+#        provided. If not, overridden by the value of this variable
 ### Installation type dependent properties                                                                             #
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
 #    feature. Used in: packageinstall, packagemanager.                                                                 #
@@ -192,6 +222,7 @@ fi
 #  - FEATUREKEYNAME_donotinherit: It does not expect a directory into a compressed file only to decompress in place.   #
 ########################################################################################################################
 
+####################### UNHOLY LINE OF TESTING. UPWARDS IS TESTED, BELOW IS NOT ##############################
 
 a_installationtype="environmental"
 a_arguments=("a")
@@ -374,11 +405,13 @@ axel_version="1.6"
 axel_systemcategories=("FileTransfer" "Utility")
 axel_tags=("downloader" "network")
 
+####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
+
+
 B_installationtype="environmental"
 B_arguments=("B" "B_function")
 B_bashfunctions=("B.sh")
 B_readmeline="| Function \`B\` | Alias for \`bash\` | Alias \`B\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 
 b_installationtype="environmental"
 b_arguments=("b" "b_function")
