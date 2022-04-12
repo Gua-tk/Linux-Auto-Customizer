@@ -626,12 +626,11 @@ dynamic_launcher_deduce_icon()
 # - Description: Override .desktop Desktop launchers feature properties
 # - Permissions:
 # Argument 1: Launcher keyname
-# Argument 2: Program keyname
-# Argument 3:
+# Argument 2: Name for the launcher file (launcher keyname + string anticollision)
 create_dynamic_launcher() {
   # feature name
-  override_name="$2_$1_name"
-  metadata_name="$2_name"
+  override_name="${CURRENT_INSTALLATION_KEYNAME}_$1_name"
+  metadata_name="${CURRENT_INSTALLATION_KEYNAME}_name"
   text="[Desktop Entry]
 Type=Application
 Encoding=UTF-8
@@ -643,16 +642,16 @@ NoDisplay=false"
   fi
 
   # Version
-  override_version="$2_$1_version"
-  metadata_version="$2_version"
+  override_version="${CURRENT_INSTALLATION_KEYNAME}_$1_version"
+  metadata_version="${CURRENT_INSTALLATION_KEYNAME}_version"
   if [ ! -z "${!override_version}" ]; then
     text+=$'\n'"Version=${!override_version}"
   else
     text+=$'\n'"Version=${!metadata_version}"
   fi
 
-  override_genericname_pointer="$2_$1_description"
-  metadata_genericname_pointer="$2_description"
+  override_genericname_pointer="${CURRENT_INSTALLATION_KEYNAME}_$1_description"
+  metadata_genericname_pointer="${CURRENT_INSTALLATION_KEYNAME}_description"
   if [ ! -z "${!override_genericname_pointer}" ]; then
     text+=$'\n'"GenericName=${!override_genericname_pointer}"
   else
@@ -660,8 +659,8 @@ NoDisplay=false"
   fi
 
   # Commentary
-  override_commentary="$2_$1_commentary"
-  metadata_commentary="$2_commentary"
+  override_commentary="${CURRENT_INSTALLATION_KEYNAME}_$1_commentary"
+  metadata_commentary="${CURRENT_INSTALLATION_KEYNAME}_commentary"
   if [ ! -z "${!override_commentary}" ]; then
     text+=$'\n'"Comment=${!override_commentary}"
   else
@@ -669,8 +668,8 @@ NoDisplay=false"
   fi
 
   # Tags
-  override_tags="$2_$1_tags[@]"
-  metadata_tags="$2_tags[@]"
+  override_tags="${CURRENT_INSTALLATION_KEYNAME}_$1_tags[@]"
+  metadata_tags="${CURRENT_INSTALLATION_KEYNAME}_tags[@]"
   if [ ! -z "${!override_tags}" ]; then
     text+=$'\n'"Keywords="
     for tag_override in "${!override_tags}"; do
@@ -689,8 +688,8 @@ NoDisplay=false"
   text+=$'\n'"Icon=${icon_temp}"
 
   # Categories from systemcategories
-  override_systemcategories="$2_$1_systemcategories[@]"
-  metadata_systemcategories="$2_systemcategories[@]"
+  override_systemcategories="${CURRENT_INSTALLATION_KEYNAME}_$1_systemcategories[@]"
+  metadata_systemcategories="${CURRENT_INSTALLATION_KEYNAME}_systemcategories[@]"
   if [ ! -z "${!override_systemcategories}" ]; then
     text+=$'\n'"Categories="
     for category_override in "${!override_systemcategories}"; do
@@ -714,7 +713,7 @@ NoDisplay=false"
   fi
 
   # Terminal by default is set to false, true if overridden
-  local -r override_terminal="$2_$1_terminal"
+  local -r override_terminal="${CURRENT_INSTALLATION_KEYNAME}_$1_terminal"
   if [ ! -z "${!override_terminal}" ]; then
     text+=$'\n'"Terminal=${!override_terminal}"
   else
@@ -722,8 +721,8 @@ NoDisplay=false"
   fi
 
   # Override mimetypes over associatedfiletypes
-  override_mime="$2_$1_mimetypes[@]"
-  metadata_mime="$2_associatedfiletypes[@]"
+  override_mime="${CURRENT_INSTALLATION_KEYNAME}_$1_mimetypes[@]"
+  metadata_mime="${CURRENT_INSTALLATION_KEYNAME}_associatedfiletypes[@]"
   if [ ! -z "${!override_mime}" ]; then
     text+=$'\n'"MimeType="
     for mime_override in "${!override_mime}"; do
@@ -737,7 +736,7 @@ NoDisplay=false"
   fi
 
   # Override start up notify over the default true
-  local -r override_notify="$2_$1_notify"
+  local -r override_notify="${CURRENT_INSTALLATION_KEYNAME}_$1_notify"
   if [ ! -z "${!override_notify}" ]; then
     text+=$'\n'"StartupNotify=${!override_notify}"
   else
@@ -745,16 +744,16 @@ NoDisplay=false"
   fi
 
   # Override Windows Manager Class over the default with the feature keyname
-  local -r override_windowclass="$2_$1_windowclass"
+  local -r override_windowclass="${CURRENT_INSTALLATION_KEYNAME}_$1_windowclass"
   if [ ! -z "${!override_windowclass}" ]; then
     text+=$'\n'"StartupWMClass=${!override_windowclass}"
   else
-    text+=$'\n'"StartupWMClass=$2"
+    text+=$'\n'"StartupWMClass=${CURRENT_INSTALLATION_KEYNAME}"
   fi
 
   # https://askubuntu.com/questions/1370616/whats-the-point-of-a-desktop-file-with-nodisplay-true
   # Override nodisplay option over the default true
-  local -r override_nodisplay="$2_$1_nodisplay"
+  local -r override_nodisplay="${CURRENT_INSTALLATION_KEYNAME}_$1_nodisplay"
   if [ ! -z "${!override_nodisplay}" ]; then
     text+=$'\n'"NoDisplay=${!override_nodisplay}"
   else
@@ -763,27 +762,27 @@ NoDisplay=false"
 
   # https://unix.stackexchange.com/questions/491299/understanding-autostartcondition-key-in-desktop-files
   # Override autostart condition over the default nothing
-  local -r override_autostartcondition="$2_$1_autostartcondition"
+  local -r override_autostartcondition="${CURRENT_INSTALLATION_KEYNAME}_$1_autostartcondition"
   if [ ! -z "${!override_autostartcondition}" ]; then
     text+=$'\n'"AutostartCondition=${!override_autostartcondition}"
   fi
 
   # //RF Maybe deprecated?
   # Override the X-GNOME-AutoRestart over the default nothing
-  local -r override_autorestart="$2_$1_autorestart"
+  local -r override_autorestart="${CURRENT_INSTALLATION_KEYNAME}_$1_autorestart"
   if [ ! -z "${!override_autorestart}" ]; then
     text+=$'\n'"X-GNOME-AutoRestart=${!override_autorestart}"
   fi
 
   # //RF Maybe deprecated?
   # Override the X-GNOME-AutoRestart over the default nothing
-  local -r override_autorestartdelay="$2_$1_autorestartdelay"
+  local -r override_autorestartdelay="${CURRENT_INSTALLATION_KEYNAME}_$1_autorestartdelay"
   if [ ! -z "${!override_autorestartdelay}" ]; then
     text+=$'\n'"X-GNOME-Autostart-Delay=${!override_autorestartdelay}"
   fi
 
   # Add actions for this particular launcher
-  override_actionkeynames="$2_$1_actionkeynames[@]"
+  override_actionkeynames="${CURRENT_INSTALLATION_KEYNAME}_$1_actionkeynames[@]"
   if [ ! -z "$(echo "${!override_actionkeynames}" )" ]; then
     text+=$'\n'"Actions="
     for actionkeyname_override in "${!override_actionkeynames}"; do
@@ -791,28 +790,28 @@ NoDisplay=false"
     done
 
     for actionkeyname_override in $(echo "${!override_actionkeynames}"); do
-      local actionkeyname_name="$2_$1_${actionkeyname_override}_name"
-      local actionkeyname_exec="$2_$1_${actionkeyname_override}_exec"
-      local actionkeyname_icon="$2_$1_${actionkeyname_override}_icon"
+      local actionkeyname_name="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_name"
+      local actionkeyname_exec="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_exec"
+      local actionkeyname_icon="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_icon"
       text+=$'\n'$'\n'"[Desktop Action ${actionkeyname_override}]"
       text+=$'\n'"Name=${!actionkeyname_name}"
       text+=$'\n'"Exec=${!actionkeyname_exec}"
       local action_icon=""
-      local feature_icon_pointer="$2_icon"
+      local feature_icon_pointer="${CURRENT_INSTALLATION_KEYNAME}_icon"
       if [ -z "${!actionkeyname_icon}" ]; then
         if [ -z "${!feature_icon_pointer}" ]; then
           action_icon="${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png"
         else
-          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!feature_icon_pointer}"
+          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!feature_icon_pointer}"
         fi
       else
-        action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/$2/${!actionkeyname_icon}"
+        action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!actionkeyname_icon}"
       fi
       text+=$'\n'"Icon=${action_icon}"
     done
   fi
 
-  create_manual_launcher "${text}" "$3"
+  create_manual_launcher "${text}" "$2"
 }
 
 
