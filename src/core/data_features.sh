@@ -405,23 +405,37 @@ axel_version="1.6"
 axel_systemcategories=("FileTransfer" "Utility")
 axel_tags=("downloader" "network")
 
-####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
-
-
 B_installationtype="environmental"
 B_arguments=("B" "B_function")
+B_name="Function B"
+B_description="Function that do source ~/.profile"
+B_version="1.0"
+B_tags=("bashfunctions" "profile")
+B_systemcategories=("System" "Utility")
+B_commentary="B reload environment"
 B_bashfunctions=("B.sh")
-B_readmeline="| Function \`B\` | Alias for \`bash\` | Alias \`B\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 b_installationtype="environmental"
 b_arguments=("b" "b_function")
+b_name="Function b"
+b_description="Alias for bash"
+b_version="1.0"
+b_tags=("bashfunctions" "bash")
+b_systemcategories=("System" "Utility")
+b_commentary="b reload bash environment"
 b_bashfunctions=("b.sh")
-b_readmeline="| Function \`b\` | Alias for \`bash\` | Alias \`b\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 bashcolors_installationtype="environmental"
 bashcolors_arguments=("bash_colors" "colors" "colours")
+bashcolors_name="Function b"
+bashcolors_description="Bring color to terminal"
+bashcolors_version="1.0"
+bashcolors_tags=("bashfunctions" "bashrc")
+bashcolors_systemcategories=("System" "Utility")
+bashcolors_commentary="Terminal colors"
 bashcolors_bashfunctions=("bashcolors.sh")
-bashcolors_readmeline="| bashcolors | bring color to terminal | Command \`bashcolors\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
 
 blender_installationtype="userinherit"
 blender_compressedfileurl="https://ftp.nluug.nl/pub/graphics/blender/release/Blender2.93/blender-2.93.3-linux-x64.tar.xz"
