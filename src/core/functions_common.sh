@@ -866,12 +866,13 @@ generic_installation() {
   fi
 
   "generic_${FLAG_MODE}_dependencies" "${featurename}"
+  "generic_${FLAG_MODE}_packages"
 
   case ${!installationtype} in
     # Using package manager such as $DEFAULT_PACKAGE_MANAGER
-    packagemanager)
-      "packagemanager_${FLAG_MODE}ation_type" "${featurename}"
-    ;;
+    #packagemanager)
+    #  "packagemanager_${FLAG_MODE}ation_type" "${featurename}"
+    #;;
     # Downloading a package and installing it using a package manager such as dpkg
     packageinstall)
       "packageinstall_${FLAG_MODE}ation_type" "${featurename}"

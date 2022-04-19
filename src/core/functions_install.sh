@@ -1255,6 +1255,20 @@ download_and_install_package() {
 }
 
 
+# - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER which corresponds to the the preferred package
+#   manager depending on the operating system.
+# - Permissions: Expected to be run by root user.
+generic_install_packages() {
+  # Name of the package names to be installed with the package manager if present
+  local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
+
+  for packagename in ${!packagenames}; do
+    ${PACKAGE_MANAGER_FIXBROKEN}
+    ${PACKAGE_MANAGER_INSTALL} "${packagename}"
+    ${PACKAGE_MANAGER_FIXBROKEN}
+  done
+}
+
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
 ########################################################################################################################
@@ -1310,18 +1324,10 @@ repositoryclone_installation_type() {
 
 
 
-# - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER
-# - Permissions: Expected to be run by normal user.
-# - Argument 1: String that matches a variable in data_features.
-packagemanager_installation_type() {
-  # Name of the package names to be installed with the package manager if present
-  local -r packagenames="$1_packagenames[@]"
 
-  for packagename in ${!packagenames}; do
-    ${PACKAGE_MANAGER_INSTALL} "${packagename}"
-    ${PACKAGE_MANAGER_FIXBROKEN}
-  done
-}
+
+
+
 
 
 # - Description: Download a file into BIN_FOLDER, decompress it assuming that there is a directory inside it.

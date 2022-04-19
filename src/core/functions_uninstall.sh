@@ -392,6 +392,15 @@ generic_uninstall_dependencies() {
 }
 
 
+# - Description: Uninstalls a package using the package manager depending on the operating system.
+# - Permissions: It is expected to be called as root.
+generic_uninstall_packages() {
+  local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
+  for packagename in ${!packagenames}; do
+    ${PACKAGE_MANAGER_UNINSTALLPACKAGE} "${packagename}"
+  done
+}
+
 ########################################################################################################################
 #################################### GENERIC UNINSTALL FUNCTIONS - INSTALLATION TYPES ##################################
 ########################################################################################################################
@@ -410,14 +419,6 @@ pythonvenv_uninstallation_type() {
 #   installation data.
 repositoryclone_uninstallation_type() {
   remove_folder "${BIN_FOLDER}/$1"
-}
-
-
-packageinstall_uninstallation_type() {
-  local -r packagenames="$1_packagenames[@]"
-  for packagename in ${!packagenames}; do
-    ${PACKAGE_MANAGER_UNINSTALLPACKAGE} "${packagename}"
-  done
 }
 
 
