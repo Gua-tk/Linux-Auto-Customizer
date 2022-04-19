@@ -392,15 +392,6 @@ generic_uninstall_dependencies() {
 }
 
 
-# - Description: Uninstalls a package using the package manager depending on the operating system.
-# - Permissions: It is expected to be called as root.
-generic_uninstall_packages() {
-  local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
-  for packagename in ${!packagenames}; do
-    ${PACKAGE_MANAGER_UNINSTALLPACKAGE} "${packagename}"
-  done
-}
-
 ########################################################################################################################
 #################################### GENERIC UNINSTALL FUNCTIONS - INSTALLATION TYPES ##################################
 ########################################################################################################################
@@ -422,7 +413,17 @@ repositoryclone_uninstallation_type() {
 }
 
 
-packagemanager_uninstallation_type() {
+# - Description: Uninstalls a package using the package manager depending on the system.
+# - Permissions: It is expected to be called as root.
+packageinstall_uninstallation_type() {
+  local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
+  for packagename in ${!packagenames}; do
+    ${PACKAGE_MANAGER_UNINSTALLPACKAGE} "${packagename}"
+  done
+}
+
+
+generic_uninstall_packageManager() {
   local -r packagenames="$1_packagenames[@]"
   for packagename in ${!packagenames}; do
     ${PACKAGE_MANAGER_UNINSTALL} "${packagename}"

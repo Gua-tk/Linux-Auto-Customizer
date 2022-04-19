@@ -108,7 +108,7 @@ fi
 #  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
 #    static data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
 ### Optional properties                                                                                                #
-#  - FEATUREKEYNAME_launchernames: Array of names of launchers to be copied from the launchers folder of the system.   #
+#  - FEATUREKEYNAME_launchernames: #TODO deprecate Array of names of launchers to be copied from the launchers folder of the system.   #
 #    Used as fallback for autostart and associatedfiletypes.                                                           #
 #  - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to      #
 #    binaries that will be added to the PATH. Its name in the PATH is added by using a ";" to separate it from the     #
@@ -126,6 +126,28 @@ fi
 #  - FEATUREKEYNAME_downloads: Array of links to a valid download file separated by ";" from the desired name or full  #
 #    pathfor that file.                                                                                                #
 #    It will downloaded in ${BIN_FOLDER}/APPNAME/DESIREDFILENAME                                                       #
+#  - FEATUREKEYNAME_downloadKeys: Array of keys that references a new download.
+#    Each download can be configured with additional properties:
+#    * FEATUREKEYNAME_DOWNLOADKEY_type: Optional property that can be "compressed", "package" or "regular". If not
+#      defined, the behaviour will be one of the three below depending on the mimetype of the downloaded file.
+#      "compressed": Means that after the download is completed in BIN_FOLDER it will try to decompress the file in
+#      place if a single folder exists in the root of the compressed file, if not it will be decompressed in
+#      BIN_FOLDER/CURRENT_INSTALLATION_KEYNAME .
+#      "package": Means that after the download is completed in BIN_FOLDER/CURRENT_INSTALLATION_KEYNAME the downloaded
+#      file will be installed as a package using the default package manager for the current operating system. If the
+#      downloaded file is a compressed file, the file will be decompressed and all the packages inside will be installed recursively.
+#      "regular": Means that the file has to be downloaded in BIN_FOLDER/CURRENT_INSTALLATION_KEYNAME and nothing more.
+#    * FEATUREKEYNAME_DOWNLOADKEY_doNotInherit: If this variable is defined with some text in it and the type defined
+#      or deduced for this download is "compressed", the file will be forced to be decompressed in place instead of
+#      the decision between being decompressed in place if a single folder exists in the root of the compressed file or
+#      being decompressed in BIN_FOLDER/CURRENT_INSTALLATION_KEYNAME in place.
+#    * FEATUREKEYNAME_DOWNLOADKEY_downloadPath: if this variable exists the data in it will be used as the place where
+#      the downloaded file will be placed.
+#    * FEATUREKEYNAME_DOWNLOADKEY_URL: URL that will be used for the download.
+#    * FEATUREKEYNAME_DOWNLOADKEY_installedPackages: This property is mandatory for completeness of the uninstallation
+#      if the downloaded file is or contains packages to be installed. It enumerates the names of the installed
+#      packages, so they can be used by uninstall to know which packages to uninstall using the default package manager.
+
 #  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from  #
 #    a function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,               #
 #    install_FEATUREKEYNAME_post.                                                                                      #
@@ -1461,14 +1483,14 @@ Version=1.0
 ")
 googlecalendar_readmeline="| Google Calendar | ${googlecalendar_description} | Command \`googlecalendar\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-google_chrome_installationtype="packageinstall"
+#google_chrome_installationtype="packageinstall"
 google_chrome_arguments=("google_chrome")
 google_chrome_bashfunctions=("google_chrome.sh")
 google_chrome_flagsoverride=";;;;1;"
 google_chrome_arguments=("chrome" "google_chrome" "googlechrome")
 google_chrome_packagenames=("google-chrome-stable")
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
-google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
+#google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
 google_chrome_package_manager_override="apt-get"
 google_chrome_launchernames=("google-chrome")
 google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
@@ -2963,7 +2985,11 @@ pycharm_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "D
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharm_bashfunctions=("pycharm.sh")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
-pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
+
+
+pycharm_downloadKeys=("bundle")
+pycharm_bundle_URL="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
+
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
 pycharm_launcherkeynames=("launcher")
 pycharm_launcher_exec="pycharm %F"
