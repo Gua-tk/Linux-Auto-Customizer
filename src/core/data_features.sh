@@ -107,10 +107,7 @@ fi
 #    Engineering FileTools FileManager TerminalEmulator Filesystem Monitor Security Accessibility Calculator Clock
 #    TextEditor Documentation Adult Core KDE GNOME XFCE GTK Qt Motif Java ConsoleOnly Screensaver TrayIcon Applet Shell
 #
-#    This categories translate to the following dash categories, used to group launchers:
-#    accessories, 'chrome-apps', 'games', 'graphics', 'internet', 'office', 'programming', 'science', 'sound---video', 'system-tools', 'universal-access', 'wine'
-########################################################################################################################
-#    Launcher categories:
+#    Launcher categories in the dash (sorted when nemo is installed):
 #    These are the classes in which the desktop launchers are classified. To know if a desktop launchers belongs to a
 #    certain class the "Categories" field of a desktop launcher is used. This field contains a list of categories that
 #    categorize the desktop launcher. These are used to group the desktop launchers in the dash.
@@ -409,6 +406,9 @@ axel_version="1.6"
 axel_systemcategories=("FileTransfer" "Utility")
 axel_tags=("downloader" "network")
 
+####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
+
+
 B_installationtype="environmental"
 B_arguments=("B" "B_function")
 B_name="Function B"
@@ -439,7 +439,6 @@ bashcolors_systemcategories=("System" "Utility")
 bashcolors_commentary="Terminal colors"
 bashcolors_bashfunctions=("bashcolors.sh")
 
-####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
 
 blender_installationtype="userinherit"
 blender_compressedfileurl="https://ftp.nluug.nl/pub/graphics/blender/release/Blender2.93/blender-2.93.3-linux-x64.tar.xz"
