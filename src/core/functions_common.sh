@@ -859,80 +859,74 @@ generic_installation() {
   local -r featurename="${1//-/_}"
   local -r installationtype=${featurename}_installationtype
   local -r manualcontentavailable="$1_manualcontentavailable"
-  if [ -n "${!installationtype}" ]; then
-    generic_package_manager_override "${featurename}"
+  generic_package_manager_override "${featurename}"
 
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
-      "${FLAG_MODE}_$1_pre"
-    fi
+  if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
+    "${FLAG_MODE}_$1_pre"
+  fi
 
-    "generic_${FLAG_MODE}_dependencies" "${featurename}"
+  "generic_${FLAG_MODE}_dependencies" "${featurename}"
 
-    case ${!installationtype} in
-      # Using package manager such as $DEFAULT_PACKAGE_MANAGER
-      packagemanager)
-        "packagemanager_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Downloading a package and installing it using a package manager such as dpkg
-      packageinstall)
-        "packageinstall_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Download and decompress a file that contains a folder
-      userinherit)
-        "userinherit_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Clone a repository
-      repositoryclone)
-        "repositoryclone_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Create a virtual environment to install the feature
-      pythonvenv)
-        "pythonvenv_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Only uses the common part of the generic installation
-      environmental)
-        : # no-op
-      ;;
-      *)
-        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" "${FLAG_QUIETNESS}"
-        exit 1
-      ;;
-    esac
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
-      "${FLAG_MODE}_$1_mid"
-    fi
+  case ${!installationtype} in
+    # Using package manager such as $DEFAULT_PACKAGE_MANAGER
+    packagemanager)
+      "packagemanager_${FLAG_MODE}ation_type" "${featurename}"
+    ;;
+    # Downloading a package and installing it using a package manager such as dpkg
+    packageinstall)
+      "packageinstall_${FLAG_MODE}ation_type" "${featurename}"
+    ;;
+    # Download and decompress a file that contains a folder
+    userinherit)
+      "userinherit_${FLAG_MODE}ation_type" "${featurename}"
+    ;;
+    # Clone a repository
+    repositoryclone)
+      "repositoryclone_${FLAG_MODE}ation_type" "${featurename}"
+    ;;
+    # Create a virtual environment to install the feature
+    pythonvenv)
+      "pythonvenv_${FLAG_MODE}ation_type" "${featurename}"
+    ;;
+    *)
+      output_proxy_executioner "echo WARNING: (debug) The installation type detected \"${!installationtype}\" is not a hardcoded one, proceeding with full generic installation" "${FLAG_QUIETNESS}"
+      #exit 1
+    ;;
+  esac
+  if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
+    "${FLAG_MODE}_$1_mid"
+  fi
 
-    "generic_${FLAG_MODE}_downloads" "${featurename}"
-    "generic_${FLAG_MODE}_files" "${featurename}"
-    "generic_${FLAG_MODE}_movefiles" "${featurename}"
-    #"generic_${FLAG_MODE}_manual_launchers" "${featurename}"
-    #"generic_${FLAG_MODE}_copy_launcher" "${featurename}"
-    "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"
-    if [ "${OS_NAME}" == "WSL2" ]; then
-      "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
+  "generic_${FLAG_MODE}_downloads" "${featurename}"
+  "generic_${FLAG_MODE}_files" "${featurename}"
+  "generic_${FLAG_MODE}_movefiles" "${featurename}"
+  #"generic_${FLAG_MODE}_manual_launchers" "${featurename}"
+  #"generic_${FLAG_MODE}_copy_launcher" "${featurename}"
+  "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
+  fi
+  "generic_${FLAG_MODE}_functions" "${featurename}"
+  "generic_${FLAG_MODE}_initializations" "${featurename}"
+  "generic_${FLAG_MODE}_autostart" "${featurename}"
+  "generic_${FLAG_MODE}_favorites" "${featurename}"
+  "generic_${FLAG_MODE}_file_associations" "${featurename}"
+  "generic_${FLAG_MODE}_keybindings" "${featurename}"
+  "generic_${FLAG_MODE}_pathlinks" "${featurename}"
+  if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
+    "${FLAG_MODE}_$1_post"
+  fi
+  if [ "${FLAG_MODE}" == "install" ]; then
+    if ! grep -qE "^$1\$" < "${INSTALLED_FEATURES}"; then
+      echo "$1" >> "${INSTALLED_FEATURES}"
     fi
-    "generic_${FLAG_MODE}_functions" "${featurename}"
-    "generic_${FLAG_MODE}_initializations" "${featurename}"
-    "generic_${FLAG_MODE}_autostart" "${featurename}"
-    "generic_${FLAG_MODE}_favorites" "${featurename}"
-    "generic_${FLAG_MODE}_file_associations" "${featurename}"
-    "generic_${FLAG_MODE}_keybindings" "${featurename}"
-    "generic_${FLAG_MODE}_pathlinks" "${featurename}"
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
-      "${FLAG_MODE}_$1_post"
-    fi
-    if [ "${FLAG_MODE}" == "install" ]; then
-      if ! grep -qE "^$1\$" < "${INSTALLED_FEATURES}"; then
-        echo "$1" >> "${INSTALLED_FEATURES}"
-      fi
-    elif [ "${FLAG_MODE}" == "uninstall" ]; then
-      remove_line "$1" "${INSTALLED_FEATURES}"
-    fi
+  elif [ "${FLAG_MODE}" == "uninstall" ]; then
+    remove_line "$1" "${INSTALLED_FEATURES}"
+  fi
 
-    if [ "${POP_PACKAGE_MANAGER}" == 1 ]; then
-      "initialize_package_manager_${STACKED_PACKAGE_MANAGER}"
-      POP_PACKAGE_MANAGER=0
-    fi
+  if [ "${POP_PACKAGE_MANAGER}" == 1 ]; then
+    "initialize_package_manager_${STACKED_PACKAGE_MANAGER}"
+    POP_PACKAGE_MANAGER=0
   fi
 }
 

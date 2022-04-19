@@ -1264,7 +1264,6 @@ download_and_install_package() {
 # - Permissions: Expected to be run by root.
 # - Argument 1: String that matches a set of variables in data_features.
 packageinstall_installation_type() {
-  echo MARCA2
   local -r packageurls="$1_packageurls[@]"
   local name_suffix_anticollision=""
   for packageurl in "${!packageurls}"; do
