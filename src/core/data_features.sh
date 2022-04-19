@@ -89,7 +89,11 @@ fi
 #    launchers in the respective containers in the dashboard. This keywords will be used to add the feature to the
 #    wrapper with the same name as the tag that it is in. Maps to the property 'SystemCategories=' of the desktop
 #    launcher if not overridden.
-
+#
+#    * Main categories (all desktop launchers must have one of these categories)
+#      AudioVideo Audio Video Development Education Game Graphics Network Office Science Settings System Utility
+#
+#    * Additional categories (provide additional info, can be added as many as needed)
 #    Building Debugger IDE GUIDesigner Profiling RevisionControl Translation Calendar ContactManagement Database
 #    Dictionary Chart Email Finance FlowChart PDA ProjectManagement Presentation Spreadsheet WordProcessor 2DGraphics
 #    VectorGraphics RasterGraphics 3DGraphics Scanning OCR Photography Publishing Viewer TextTools DesktopSettings
@@ -102,9 +106,9 @@ fi
 #    Physics Robotics Spirituality Sports ParallelComputing Amusement Archiving Compression Electronics Emulator
 #    Engineering FileTools FileManager TerminalEmulator Filesystem Monitor Security Accessibility Calculator Clock
 #    TextEditor Documentation Adult Core KDE GNOME XFCE GTK Qt Motif Java ConsoleOnly Screensaver TrayIcon Applet Shell
-#    AudioVideo Audio Video Development Education Game Graphics Network Office Science Settings System Utility
 #
 #    This categories translate to the following dash categories, used to group launchers:
+#    accessories, 'chrome-apps', 'games', 'graphics', 'internet', 'office', 'programming', 'science', 'sound---video', 'system-tools', 'universal-access', 'wine'
 ########################################################################################################################
 #    Launcher categories:
 #    These are the classes in which the desktop launchers are classified. To know if a desktop launchers belongs to a
