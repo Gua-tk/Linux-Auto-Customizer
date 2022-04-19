@@ -1483,18 +1483,24 @@ Version=1.0
 ")
 googlecalendar_readmeline="| Google Calendar | ${googlecalendar_description} | Command \`googlecalendar\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-#google_chrome_installationtype="packageinstall"
+google_chrome_name="Google Chrome"
 google_chrome_arguments=("google_chrome")
 google_chrome_bashfunctions=("google_chrome.sh")
 google_chrome_flagsoverride=";;;;1;"
 google_chrome_arguments=("chrome" "google_chrome" "googlechrome")
-google_chrome_packagenames=("google-chrome-stable")
+google_chrome_commentary="The all-in-one browser"
+google_chrome_version="Google dependent"
+google_chrome_tags=("browser" "network")
+google_chrome_systemcategories=("Network" "WebBrowser")
+google_chrome_launcherkeynames=("default")
+google_chrome_default_exec="google-chrome"
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
-#google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
+google_chrome_downloadKeys=("debianPackage")
+google_chrome_debianPackage_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+google_chrome_debianPackage_installedPackages="google-chrome-stable"
 google_chrome_package_manager_override="apt-get"
-google_chrome_launchernames=("google-chrome")
+google_chrome_launcherkeys=("default")
 google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
-google_chrome_readmeline="| Google Chrome | Cross-platform web browser | Command \`google-chrome\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gpaint_installationtype="packagemanager"
 gpaint_arguments=("gpaint")
