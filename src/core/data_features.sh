@@ -225,7 +225,6 @@ fi
 
 ####################### UNHOLY LINE OF TESTING. UPWARDS IS TESTED, BELOW IS NOT ##############################
 
-a_installationtype="environmental"
 a_arguments=("a")
 a_name="Function a"
 a_description="Function that displays environment aliases using compgen -a"
@@ -235,7 +234,6 @@ a_systemcategories=("System" "Utility")
 a_commentary="A terminal shortcut"
 a_bashfunctions=("a.sh")
 
-add_installationtype="environmental"
 add_arguments=("add" "add_function")
 add_name="Function add"
 add_description="Alias to git add with completion"
@@ -245,7 +243,6 @@ add_systemcategories=("System" "Utility")
 add_commentary="A git terminal shortcut"
 add_bashfunctions=("add.sh")
 
-aircrack_ng_installationtype="packagemanager"
 aircrack_ng_arguments=("aircrack_ng" "aircrackng")
 aircrack_ng_packagenames=("aircrack-ng")
 aircrack_ng_name="Aircrack-ng"
@@ -255,7 +252,6 @@ aircrack_ng_tags=("attack" "network" "security")
 aircrack_ng_systemcategories=("System" "Utility" "Security" "Network" "Development")
 aircrack_ng_commentary="Very complete"
 
-aisleriot_installationtype="packagemanager"
 aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
 aisleriot_name="AisleRiot Solitaire"
 aisleriot_commentary="Implementation of the classical game solitaire"
@@ -269,7 +265,6 @@ aisleriot_default_exec="sol"
 aisleriot_launchernames=("sol")
 aisleriot_packagenames=("aisleriot")
 
-alert_installationtype="environmental"
 alert_arguments=("alert" "alert_alias" "alias_alert")
 alert_name="Function alert"
 alert_description="Alias to show a notification at the end of a commands"
@@ -280,7 +275,6 @@ alert_systemcategories=("Utility" "System" "Calendar")
 alert_commentary="Useful to remember events"
 alert_bashfunctions=("alert.sh")
 
-ansible_installationtype="packagemanager"
 ansible_arguments=("ansible")
 ansible_name="Ansible"
 ansible_commentary="IT automation engine that automates cloud provisioning, configuration management, application deployment"
@@ -290,7 +284,6 @@ ansible_tags=("automation" "development" "deployment")
 ansible_systemcategories=("Development" "ProjectManagement" "ComputerScience" "Monitor")
 ansible_packagenames=("ansible")
 
-ant_installationtype="userinherit"
 ant_arguments=("ant" "apache_ant")
 ant_name="Ant"
 ant_commentary="Tool to automatize repetitive tasks, usually during the compilation, building and deployment phase of the software development"
@@ -303,7 +296,6 @@ ant_binariesinstalledpaths=("bin/ant;ant")
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_flagsoverride="1;;;;;"
 
-anydesk_installationtype="userinherit"
 anydesk_arguments=("any_desk")
 anydesk_name="Anydesk"
 anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
@@ -317,7 +309,6 @@ anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd6
 anydesk_description="PC Remote controller"
 anydesk_launcherkeynames=("default")
 
-apache2_installationtype="packagemanager"
 apache2_arguments=("apache2")
 apache2_name="Apache httpd server project"
 apache2_commentary="open-source HTTP server for modern operating systems including UNIX and Windows"
@@ -327,7 +318,6 @@ apache2_tags=("development" "deployment")
 apache2_systemcategories=("Development" "WebDevelopment" )
 apache2_packagenames=("apache2" "apache2-utils")
 
-ardour_installationtype="packagemanager"
 ardour_arguments=("ardour")
 ardour_name="Ardour5"
 ardour_commentary="Music development in one place"
@@ -342,7 +332,6 @@ ardour_bashfunctions=("ardour.sh")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
 
-aspell_installationtype="packagemanager"
 aspell_arguments=("aspell")
 aspell_name="GNU Aspell"
 aspell_commentary="Free and open source spell checker in Linux. Can be used to check spelling from provided files or stdin"
@@ -352,7 +341,6 @@ aspell_version="0.60.8"
 aspell_tags=("development" "deployment" "Education" "Office" "Utility" "Documentation" "FileTools" "Humanities" "Languages" "WordProcessor" "Dictionary" "Translation")
 aspell_packagenames=("aspell-es" "aspell-ca")
 
-atom_installationtype="packageinstall"
 atom_arguments=("atom")
 atom_name="Atom"
 atom_commentary="Text and source code editor"
@@ -365,7 +353,6 @@ atom_default_exec="atom"
 atom_launchernames=("atom")
 atom_packageurls=("https://atom.io/download/deb")
 
-audacity_installationtype="packagemanager"
 audacity_arguments=("audacity")
 audacity_name="Audacity"
 audacity_commentary="Digital audio editor and recording"
@@ -379,7 +366,6 @@ audacity_bashfunctions=("audacity.sh")
 audacity_launchernames=("audacity")
 audacity_packagenames=("audacity" "audacity-data")
 
-AutoFirma_installationtype="packageinstall"
 AutoFirma_arguments=("auto_firma")
 AutoFirma_name="AutoFirma"
 AutoFirma_commentary="For the spanish DNI v3.0"
@@ -396,7 +382,6 @@ AutoFirma_launchernames=("afirma")
 AutoFirma_packagedependencies=("libnss3-tools")
 AutoFirma_packagenames=("AutoFirma")
 
-axel_installationtype="packagemanager"
 axel_arguments=("axel")
 axel_packagenames=("axel")
 axel_name="axel"
@@ -408,18 +393,15 @@ axel_tags=("downloader" "network")
 
 ####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
 
-
-B_installationtype="environmental"
 B_arguments=("B" "B_function")
 B_name="Function B"
-B_description="Function that do source ~/.profile"
+B_description="Function that source ~/.profile and ~/.bashrc"
 B_version="1.0"
-B_tags=("bashfunctions" "profile")
+B_tags=("bashfunctions" "profile" "bashrc")
 B_systemcategories=("System" "Utility")
 B_commentary="B reload environment"
 B_bashfunctions=("B.sh")
 
-b_installationtype="environmental"
 b_arguments=("b" "b_function")
 b_name="Function b"
 b_description="Alias for bash"
@@ -429,121 +411,50 @@ b_systemcategories=("System" "Utility")
 b_commentary="b reload bash environment"
 b_bashfunctions=("b.sh")
 
-bashcolors_installationtype="environmental"
 bashcolors_arguments=("bash_colors" "colors" "colours")
-bashcolors_name="Function b"
-bashcolors_description="Bring color to terminal"
+bashcolors_name="Function colors"
+bashcolors_description="Function and variables to use color in terminal"
 bashcolors_version="1.0"
-bashcolors_tags=("bashfunctions" "bashrc")
+bashcolors_tags=("bashfunctions" "bashrc" "color")
 bashcolors_systemcategories=("System" "Utility")
-bashcolors_commentary="Terminal colors"
+bashcolors_commentary="Bring color to the terminal text"
 bashcolors_bashfunctions=("bashcolors.sh")
 
-
-blender_installationtype="userinherit"
-blender_compressedfileurl="https://ftp.nluug.nl/pub/graphics/blender/release/Blender2.93/blender-2.93.3-linux-x64.tar.xz"
+blender_downloadKeys=("bundle")
+blender_bundle_URL="https://ftp.nluug.nl/pub/graphics/blender/release/Blender2.93/blender-2.93.3-linux-x64.tar.xz"
 blender_arguments=("blender" "blender_3d")
+blender_name="Blender"
+blender_description="2D and 3D image modeling and animation, fx, video edit..."
+blender_version="1.0"
+blender_tags=("animation" "3D" "FX" "3d" "cg modeling" "animation" "painting" "sculpting" "texturing" "video editing" "video tracking" "rendering" "render engine" "cycles" "game engine" "python")
+blender_systemcategories=("2DGraphics" "3DGraphics" "Graphics" "Video" "Art" "ImageProcessing")
+blender_commentary="3D modeling, animation, rendering and post-production"
 blender_binariesinstalledpaths=("blender;blender")
-blender_readmeline="| Blender | 2D and 3D image and animation, fx, video edit... | Command \`blender\`, desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-blender_launchercontents=("[Desktop Entry]
-Name=Blender
-GenericName=3D modeler
-GenericName[ar]=3D المنمذج ثلاثي الأبعاد
-GenericName[ca]=Modelador 3D
-GenericName[cs]=3D modelování
-GenericName[da]=3D-modellering
-GenericName[de]=3D-Modellierer
-GenericName[el]=Μοντελοποιητής 3D
-GenericName[es]=Modelador 3D
-GenericName[et]=3D modelleerija
-GenericName[fi]=3D-mallintaja
-GenericName[fr]=Modeleur 3D
-GenericName[gl]=Modelador 3D
-GenericName[hu]=3D modellező
-GenericName[it]=Modellatore 3D
-GenericName[ja]=3D モデラー
-GenericName[lt]=3D modeliavimas
-GenericName[nb]=3D-modellering
-GenericName[nl]=3D-modeller
-GenericName[pl]=Modelowanie 3D
-GenericName[pt_BR]=Modelador 3D
-GenericName[ro]=Arhitect 3D
-GenericName[ru]=Редактор 3D-моделей
-GenericName[tr]=3D modelleyici
-GenericName[uk]=Редактор 3D-моделей
-GenericName[wa]=Modeleu 3D
-GenericName[zh_CN]=3D 建模
-GenericName[zh_TW]=3D 模型
-Comment=3D modeling, animation, rendering and post-production
-Comment[ar]=3D النمذجة، الرسوم المتحركة، والتجسيد، وما بعد الإنتاج
-Comment[ast]=Modeláu 3D, animación, renderizáu y postproducción
-Comment[eu]=3D modelatzea, animazioa, errendatzea eta post-produkzioa
-Comment[be]=Праграма прасторавага мадэлявання, анімацыі, апрацоўкі відэа і давядзення відэапрадукцыі
-Comment[bn]=ত্রিমাত্রিক মডেল, অ্যানিমেশন, রেন্ডারিং এবং পোস্ট-উৎপাদন
-Comment[bs]=3D modeliranje, animacija, obrada i postprodukcija
-Comment[bg]=3D моделиране, анимиране, рендиране и пост-продукция
-Comment[ca]=Modelat 3D, animació, renderització i post-producció
-Comment[ca@valencia]=Modelat 3D, animació, renderització i post-producció
-Comment[crh]=3B modelleme, animasyon, işleme ve son üretim
-Comment[cs]=3D modelování, animace, rederování a postprodukce
-Comment[da]=3D-modellering, animation, rendering og efterbehandling
-Comment[de]=3D-Modellierung, Animation, Rendering und Nachbearbeitung
-Comment[nl]=3d-modelleren, animeren, renderen en post-productie
-Comment[el]=Μοντελοποίηση 3D, κινούμενα σχέδια, αποτύπωση και οργάνωση διαδικασίας μετά-την-παραγωγή
-Comment[eo]=3D-modelado, animacio, renderado kaj postproduktado
-Comment[es]=Modelado 3D, animación, renderizado y post-producción
-Comment[et]=Kolmemõõtmeline modelleerimine, animeerimine, esitlemine ja järeltöötlemine
-Comment[fi]=3D-mallinnus, -animaatiot, -renderöinti ja -tuotanto
-Comment[fr]=Modélisation 3D, animation, rendu et post-production
-Comment[fr_CA]=Modélisation 3D, animation, rendu et post-production
-Comment[gl]=Modelado 3D, animación, renderizado e postprodución
-Comment[hu]=3D modellek és animációk létrehozása és szerkesztése
-Comment[is]=Þrívíddarmódel, hreyfimyndir, myndgerð og frágangur myndskeiða
-Comment[it]=Modellazione 3D, animazione, rendering e post-produzione
-Comment[ja]=3Dモデリング、アニメーション、レンダリング、ポストプロダクションのツール
-Comment[ko]=3D 모델링, 애니메이션, 렌더링과 포스트 프로덕션
-Comment[lt]=3D modeliavimas, animacijų kūrimas, atvaizdavimas ir tobulinimas
-Comment[lv]=3D modelēšana, animācija, renderēšana un pēcapstrāde
-Comment[ms]=Pemodelan, animasi, penerapan dan post-produksi 3D
-Comment[nb]=3D-modellering, animasjon, rendering og postproduksjon
-Comment[oc]=Modelizacion 3D, animacion, rendut e post-produccion
-Comment[pl]=Modelowanie 3D, animacja, renderowanie i postprodukcja
-Comment[pt]=Modelação 3D, animação, renderização e pós-produção
-Comment[pt_BR]=Modelagem 3D, animação, renderização e pós-produção
-Comment[ro]=Modelare, animare, afișare și post-producție 3D
-Comment[ru]=3D-моделирование, анимация, рендеринг и компоновка
-Comment[sl]=3D modeliranje, animacija, izrisovanje in nadaljnje obdelovanje
-Comment[sq]=Animacion i modeleve 3D, rregullim dhe më pas prodhim
-Comment[sr]=3Д моделовање, анимација, исцртавање и постпродукција
-Comment[sv]=3d-modellering, animering, rendering och efterbehandling
-Comment[ta]=முப்பரிமாண ஒப்புருவாக்கம், அசைவூட்டம், காட்சியாக்கம் மற்றும் உருவாக்கத்துக்கு பிந்தைய செயல்பாடுகள்
-Comment[tg]=Моделсозии 3D, аниматсия, пешниҳод ва истеҳсоли баъдӣ
-Comment[tr]=3B modelleme, animasyon, işleme ve son üretim
-Comment[uk]=Програма просторового моделювання, анімації, обробки відео та доведення відеопродуктів
-Comment[vi]=Tạo hình mẫu 3D, hoạt họa, dựng hình và các công việc hậu kỳ
-Comment[wa]=Modelaedje 3D, animåcion, rindou eyet après-produccion
-Comment[zh_HK]=3D 模型、動畫、算圖和後製
-Comment[zh_CN]=3D 建模、动画、渲染和后期制作
-Comment[zh_TW]=3D 模型、動畫、算圖和後製
-Keywords=3d;cg;modeling;animation;painting;sculpting;texturing;video editing;video tracking;rendering;render engine;cycles;game engine;python;
-Exec=blender %f
-Icon=${BIN_FOLDER}/blender/blender.svg
-Terminal=false
-Type=Application
-Categories=Graphics;3DGraphics;
-MimeType=application/x-blender;")
+blender_launcherkeynames=("defaultLauncher")
+blender_defaultLauncher_exec="blender %f"
+blender_defaultLauncher_mimetypes=("application/x-blender")
 
-branch_installationtype="environmental"
+branch_name="Function branch"
+branch_description="Alias for git branch"
+branch_version="1.0"
+branch_tags=("bashfunctions" "bash" "gitbashfunctions")
+branch_systemcategories=("System" "Utility")
+branch_commentary="branch creates a new branch of the git repository"
 branch_arguments=("branch")
 branch_bashfunctions=("branch.sh")
-branch_readmeline="| Function \`branch\` | alias for \`git branch -vv\` | Command \`branch\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 brasero_installationtype="packagemanager"
 brasero_arguments=("brasero")
+brasero_description="Software for image burning"
+brasero_version="1.0"
+brasero_tags=("bashfunctions" "bash" "gitbashfunctions")
+brasero_systemcategories=("System" "Utility")
+brasero_commentary="branch creates a new branch of the git repository"
 brasero_bashfunctions=("brasero.sh")
-brasero_launchernames=("brasero")
+brasero_launcherkeynames=("defaultLauncher")
+brasero_defaultLauncher_exec="brasero"
+# TODO: brasero_launchernames=("brasero")
 brasero_packagenames=("brasero")
-brasero_readmeline="| Brasero | Software for image burning | Command \`brasero\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 c_installationtype="environmental"
 c_arguments=("c")
@@ -810,60 +721,71 @@ uninstall_customizer_post()
   remove_file /usr/bin/customizer-uninstall
 }
 
-d_installationtype="environmental"
 d_arguments=("d")
+d_name="Function d"
+d_description="Function for dif or git diff"
+d_version="1.0"
+d_tags=("bashfunctions" "bash" "gitbashfunctions")
+d_systemcategories=("System" "Utility")
+d_commentary="See changes of files"
 d_bashfunctions=("d.sh")
-d_readmeline="| Function \`d\` | Function for \`diff\` and \`git diff\` usage | Command \`diff\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-dbeaver_installationtype="packageinstall"
 dbeaver_arguments=("dbeaver")
 dbeaver_packageurls=("https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb")
+dbeaver_name="DBeaver"
+dbeaver_description="SQL Client IDE"
+dbeaver_version="1.0"
+dbeaver_tags=("bashfunctions" "bash" "gitbashfunctions")
+dbeaver_systemcategories=("IDE" "Database" "Network" "Development")
+dbeaver_commentary="Manage several instances of SQL databases"
 dbeaver_package_manager_override="apt-get"
-dbeaver_launchernames=("dbeaver-ce")
-dbeaver_readmeline="| DBeaver | SQL Client IDE | Command \`dbeaver\` desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+# TODO: dbeaver_launchernames=("dbeaver-ce")
+dbeaver_launcherkeynames=("defaultLauncher")
+dbeaver_defaultLauncher_exec="dbeaver"
 
-dconf_editor_installationtype="packagemanager"
 dconf_editor_arguments=("dconf_editor" "dconf")
-dconf_editor_launchernames=("ca.desrt.dconf-editor")
+dconf_editor_name="dconf-editor"
+dconf_editor_description="Editor settings"
+dconf_editor_version="1.0"
+dconf_editor_tags=("editor" "settings")
+dconf_editor_systemcategories=("System" "Utility" "Settings" "GNOME" "DesktopSettings")
+dconf_editor_commentary="Edit system environment variables"
+# TODO: dconf_editor_launchernames=("ca.desrt.dconf-editor")
+dconf_editor_launcherkeynames=("defaultLauncher")
+dconf_editor_defaultLauncher_exec="dconf-editor"
 dconf_editor_packagenames=("dconf-editor")
-dconf_editor_readmeline="| dconf-editor | Editor settings | Command \`dconf-editor\` and desktop and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-dia_installationtype="packagemanager"
 dia_arguments=("dia")
+dia_name="Dia"
+dia_description="Graph and relational"
+dia_version="1.0"
+dia_tags=("graph" "relational")
+dia_systemcategories=("FlowChart" "Graphics" "Development")
+dia_commentary="Diagrams for developers"
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")
 dia_bashfunctions=("dia.sh")
-dia_readmeline="| Dia | Graph and relational  | Command \`dia\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-discord_installationtype="userinherit"
 discord_arguments=("discord")
-discord_bashfunctions=("alias discord=\"nohup discord &>/dev/null &\"
-")
-discord_binariesinstalledpaths=("Discord;discord")
-discord_compressedfileurl="https://discord.com/api/download?platform=linux&format=tar.gz"
-discord_launchercontents=("
-[Desktop Entry]
-Categories=Network;InstantMessaging;
-Comment=${discord_description}
-Encoding=UTF-8
-Exec=discord
-GenericName=Internet Messenger
-Icon=${BIN_FOLDER}/discord/discord.png
-Keywords=VoiceChat;Messaging;Social;
-MimeType=
-Name=Discord
-StartupNotify=true
-StartupWMClass=discord
-Terminal=false
-TryExec=discord
-Type=Application
-Version=1.0
-")
+discord_name="Discord"
 discord_description="All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone."
-discord_readmeline="| Discord | ${discord_description} | Command \`discord\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+discord_version="Discord dependent"
+discord_tags=("VoiceChat" "Messaging" "Social")
+discord_systemcategories=("InstantMessaging" "Network")
+discord_commentary="Chat and video stream online"
+discord_bashfunctions=("discord.sh")
+discord_binariesinstalledpaths=("Discord;discord")
+discord_downloadKeys=("bundle")
+discord_bundle_URL="https://discord.com/api/download?platform=linux&format=tar.gz"
 
 docker_installationtype="userinherit"
 docker_arguments=("docker")
+docker_name="Docker"
+docker_description="Containerization service"
+docker_version="20.10.6"
+docker_tags=("development" "containerization" "system")
+docker_systemcategories=("System" "Utility")
+docker_commentary="See changes of files"
 docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 docker_readmeline="| Docker | Containerization service | Command \`docker\`, \`containerd\`, \`containerd-shim\`, \`containerd-shim-runc-v2\`, \`ctr\`, \`dockerd\`, \`docker-init\`, \`docker-proxy\`, \`runc\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
