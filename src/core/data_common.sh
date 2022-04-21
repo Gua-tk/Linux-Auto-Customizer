@@ -71,7 +71,7 @@ if [ -f "/etc/os-release" ]; then
     declare OS_NAME="TermuxUbuntu"
   else
     declare OS_NAME
-    OS_NAME="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2 | tr -d '"' | cut -d " " -f1 ) < "/etc/os-release" )"
+    OS_NAME="$( (grep -Eo "^NAME=.*\$" | cut -d "=" -f2- | tr -d '"' ) < "/etc/os-release" )"
   fi
 else
   subsys_Android="$(uname -a | rev | cut -d " " -f1 | rev)"
@@ -103,6 +103,9 @@ case "${OS_NAME}" in
     initialize_package_manager_apt-get
   ;;
   Trisquel)
+    initialize_package_manager_apt-get
+  ;;
+  "Linux Mint")
     initialize_package_manager_apt-get
   ;;
   WSL2)
