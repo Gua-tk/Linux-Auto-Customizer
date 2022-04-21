@@ -609,16 +609,33 @@ dynamic_launcher_deduce_icon()
 {
   override_icon="${CURRENT_INSTALLATION_KEYNAME}_$1_icon"
   metadata_icon="${CURRENT_INSTALLATION_KEYNAME}_icon"
+  create_folder "${CURRENT_INSTALLATION_FOLDER}"
   if [ ! -z "${!override_icon}" ]; then
-    create_folder "${CURRENT_INSTALLATION_FOLDER}"
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
-  else
-    create_folder "${CURRENT_INSTALLATION_FOLDER}"
+  elif [ ! -z "${!metadata_icon}" ]; then
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
+  else
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" ]; then
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" "${CURRENT_INSTALLATION_FOLDER}"
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
+      echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
+    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" ]; then
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" "${CURRENT_INSTALLATION_FOLDER}"
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
+      echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
+    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" ]; then
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" "${CURRENT_INSTALLATION_FOLDER}"
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
+      echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
+    else
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png" "${CURRENT_INSTALLATION_FOLDER}"
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/logo.png"
+      echo "${CURRENT_INSTALLATION_FOLDER}/logo.png"
+    fi
   fi
 }
 
@@ -970,19 +987,7 @@ generic_install_keybindings() {
 }
 
 
-# - Description: Expands downloads and saves it to BIN_FOLDER/FEATUREKEYNAME/NAME_OF_DOWNLOADED_FILE_i
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_downloads
-#   and the name of the first argument in the common_data.sh table
-generic_install_downloads() {
-  local -r downloads="$1_downloads[@]"
-  for each_download in ${!downloads}; do
-    create_folder "${BIN_FOLDER}/$1"
-    local -r url="$(echo "${each_download}" | cut -d ";" -f1)"
-    local -r name="$(echo "${each_download}" | cut -d ";" -f2)"
-    download "${url}" "${BIN_FOLDER}/$1/${name}"
-  done
-}
+
 
 
 # - Description: Expands autostarting program option if set to 'yes' it'll expand launcher names to autostart
@@ -1216,6 +1221,40 @@ generic_install_clone() {
 }
 
 
+
+
+# - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER which corresponds to the the preferred package
+#   manager depending on the operating system.
+# - Permissions: Expected to be run by root user.
+generic_install_packageManager() {
+  # Name of the package names to be installed with the package manager if present
+  local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
+
+  for packagename in ${!packagenames}; do
+    ${PACKAGE_MANAGER_FIXBROKEN}
+    ${PACKAGE_MANAGER_INSTALL} "${packagename}"
+    ${PACKAGE_MANAGER_FIXBROKEN}
+  done
+}
+
+########################################################################################################################
+################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
+########################################################################################################################
+
+# - Description: Installs packages using the default low-level package installation transparently. In the case of
+#   apt-get it will be dpkg, and in the case of yum it will be rpm.
+# - Permissions: Expected to be run by root.
+# - Argument 1: String that matches a set of variables in data_features.
+packageinstall_installation_type() {
+  local -r packageurls="$1_packageurls[@]"
+  local name_suffix_anticollision=""
+  for packageurl in "${!packageurls}"; do
+    download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
+}
+
+
 # - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
 #   dpkg -i.
 # - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
@@ -1232,7 +1271,6 @@ download_and_install_package() {
 
   local mime_type=
   mime_type="$(mimetype "${BIN_FOLDER}/${file_name}" | cut -d ":" -f2 | tr -d " ")"
-  echo MARCAAAA
   case "${mime_type}" in
     "application/zip"|"application/x-bzip-compressed-tar"|"application/gzip"|"application/x-xz")
       decompress "${BIN_FOLDER}/${file_name}" "${file_name}_decompressed"  # Decompressing
@@ -1255,37 +1293,114 @@ download_and_install_package() {
 }
 
 
-########################################################################################################################
-################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
-########################################################################################################################
 
-# - Description: Installs packages using the default low-level package installation transparently. In the case of
-#   apt-get it will be dpkg, and in the case of yum it will be rpm.
-# - Permissions: Expected to be run by root.
-# - Argument 1: String that matches a set of variables in data_features.
-packageinstall_installation_type() {
-  echo MARCA2
-  local -r packageurls="$1_packageurls[@]"
+# Argument 1: download key
+# Argument 2: anticollisioner
+generic_install_download()
+{
+  local -r pointer_url="${CURRENT_INSTALLATION_KEYNAME}_$1_URL"
+  local -r pointer_type="${CURRENT_INSTALLATION_KEYNAME}_$1_type"
+  local -r pointer_downloadPath="${CURRENT_INSTALLATION_KEYNAME}_$1_downloadPath"
+
+  local defaultpath="${BIN_FOLDER}"
+  if [ -n "${!pointer_downloadPath}" ]; then
+    defaultpath="${!pointer_downloadPath}"
+  fi
+
+  create_folder "${defaultpath}"
+
+  download "${!pointer_url}" "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"
+
+
+  if [ -n "${!pointer_type}" ]; then
+    case "${!pointer_type}" in
+      "compressed")
+        # Setting the mime_type as an arbitrary compressed file so it enters in the correct case
+        local mime_type="application/zip"
+      ;;
+      "package")
+        local true_mime="$(file --mime-type "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" | cut -d ":" -f2 | tr -d " ")"
+        if [ "${true_mime}" == "application/zip" ] || [ "${true_mime}" == "application/x-bzip-compressed-tar" ] || [ "${true_mime}" == "application/x-bzip2" ] || [ "${true_mime}" == "application/gzip" ] || [ "${true_mime}" == "application/x-xz" ]; then
+          local mime_type="packageInCompressed"
+        else
+          local mime_type="application/vnd.debian.binary-package"
+        fi
+      ;;
+      *)
+        # Fill with some value different of a mimetype so it goes to a regular file
+        local mime_type="somethingElse"
+      ;;
+    esac
+  else
+    mime_type="$(file --mime-type "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" | cut -d ":" -f2 | tr -d " ")"
+  fi
+
+  case "${mime_type}" in
+    "application/zip" | "application/x-bzip-compressed-tar" | "application/x-bzip2" | "application/gzip" | "application/x-xz")
+      local pointer_doNotInherit="${CURRENT_INSTALLATION_KEYNAME}_$1_doNotInherit"
+      if [ -n "${!pointer_doNotInherit}" ]; then
+        decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"
+        apply_permissions_recursively "${defaultpath}"
+      else
+        decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_KEYNAME}$2"
+        apply_permissions_recursively "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}$2"
+      fi
+    ;;
+    "application/vnd.debian.binary-package")
+      ${PACKAGE_MANAGER_FIXBROKEN}
+      ${PACKAGE_MANAGER_INSTALLPACKAGE} "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"  # Notice that this variable is not the same as the next
+      ${PACKAGE_MANAGER_FIXBROKEN}
+    ;;
+    "packageInCompressed")
+      decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"
+      ${PACKAGE_MANAGER_FIXBROKEN}
+      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"  # Notice the S at the end of this variable...
+      ${PACKAGE_MANAGER_FIXBROKEN}
+      # Remove decompressed folder that contains the installable packages
+      rm -Rf "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"
+    ;;
+    *)
+      # Move only if we are not overriding the download path. We do it like this because if not we can not decompress
+      if [ -z "${!pointer_downloadPath}" ]; then
+        mv "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_FOLDER}"
+      fi
+    ;;
+  esac
+}
+
+
+# - Description: Downloads
+# - Permissions: Can be executed as root or user, but if a downloaded file requires package installation the function
+#   needs to be run as root.
+generic_install_downloads() {
+  local -r downloads="${CURRENT_INSTALLATION_KEYNAME}_downloadKeys[@]"
   local name_suffix_anticollision=""
-  for packageurl in "${!packageurls}"; do
-    download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
+  for each_download in ${!downloads}; do
+    generic_install_download "${each_download}" "${name_suffix_anticollision}"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
-
 }
+
+
+
 
 # - Description: Installs packages using python environment.
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
-pythonvenv_installation_type() {
+generic_install_pythonVirtualEnvironment() {
+
+  local -r pipinstallations="$1_pipinstallations[@]"
+  local -r pythoncommands="$1_pythoncommands[@]"
+  if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
+    return
+  fi
+
   rm -Rf "${BIN_FOLDER:?}/$1"
   python3 -m venv "${BIN_FOLDER}/$1"
   "${BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
   "${BIN_FOLDER}/$1/bin/pip" install wheel
 
-  local -r pipinstallations="$1_pipinstallations[@]"
-  local -r pythoncommands="$1_pythoncommands[@]"
   for pipinstallation in ${!pipinstallations}; do
     "${BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
   done
@@ -1304,58 +1419,22 @@ pythonvenv_installation_type() {
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
-repositoryclone_installation_type() {
-  local -r repositoryurl="$1_repositoryurl"
-  generic_install_clone "$1" "${!repositoryurl}"
-}
-
-
-
-# - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER
-# - Permissions: Expected to be run by normal user.
-# - Argument 1: String that matches a variable in data_features.
-packagemanager_installation_type() {
-  # Name of the package names to be installed with the package manager if present
-  local -r packagenames="$1_packagenames[@]"
-
-  for packagename in ${!packagenames}; do
-    ${PACKAGE_MANAGER_INSTALL} "${packagename}"
-    ${PACKAGE_MANAGER_FIXBROKEN}
-  done
-}
-
-
-# - Description: Download a file into BIN_FOLDER, decompress it assuming that there is a directory inside it.
-# - Permissions: Expected to be run by normal user.
-# - Argument 1: String that matches a set of variables in data_features.
-userinherit_installation_type() {
-  # Declare name of variables for indirect expansion
-
-  # Files to be downloaded that have to be decompressed
-  local -r compressedfileurl="$1_compressedfileurl"
-  # All decompression type options for each compressed file defined
-  local -r compressedfiletype="$1_compressedfiletype"
-  # Obtain override download location if present
-  local -r compressedfilepathoverride="$1_compressedfilepathoverride"
-  # Pointer for expanding inheritance
-  local -r donotinherit_pointer="$1_donotinherit"
-  local defaultpath="${BIN_FOLDER}"
-
-  if [ -n "${!compressedfilepathoverride}" ]; then
-    create_folder "${!compressedfilepathoverride}"
-    defaultpath="${!compressedfilepathoverride}"
-  fi
-
-  create_folder "${defaultpath}"
-  download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
-  if [ "${!donotinherit_pointer}" == "yes" ]; then
-    decompress "${defaultpath}/$1_compressed_file"
-    apply_permissions_recursively "${defaultpath}"
-  else
-    decompress "${defaultpath}/$1_compressed_file" "$1"
-    apply_permissions_recursively "${defaultpath}/$1"
+# TODO: do for many repositories
+generic_install_cloneRepositories() {
+  local -r repositoryurl="${CURRENT_INSTALLATION_KEYNAME}_repositoryurl"
+  if [ -n "${!repositoryurl}" ]; then
+    generic_install_clone "${CURRENT_INSTALLATION_KEYNAME}" "${!repositoryurl}"
   fi
 }
+
+
+
+
+
+
+
+
+
 
 
 ########################################################################################################################
