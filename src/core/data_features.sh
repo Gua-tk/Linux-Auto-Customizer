@@ -456,10 +456,14 @@ brasero_defaultLauncher_exec="brasero"
 # TODO: brasero_launchernames=("brasero")
 brasero_packagenames=("brasero")
 
-c_installationtype="environmental"
 c_arguments=("c")
+c_name="Function b"
+c_description="Function that changes the directory or clears the screen"
+c_version="1.0"
+c_tags=("bashfunctions" "bash")
+c_systemcategories=("System" "Utility")
+c_commentary="cd and clear the screen"
 c_bashfunctions=("c.sh")
-c_readmeline="| Function \`c\` | Function \`c\` that changes the directory or clears the screen | Function \`c \` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 caffeine_installationtype="packagemanager"
 caffeine_arguments=("caffeine" "coffee" "cafe")
@@ -675,35 +679,58 @@ Type=Application
 Categories=IDE;Programming;
 ")
 
-commit_installationtype="environmental"
 commit_arguments=("commit")
+commit_name="Function commit"
+commit_description="Function that makes git commit -am"
+commit_version="1.0"
+commit_tags=("gitbashfunctions" "git")
+commit_systemcategories=("System" "Utility")
+commit_commentary="Save current local file changes to git repository"
 commit_bashfunctions=("commit.sh")
-commit_readmeline="| Function \`commit\` | Function \`commit\` that makes \`git commit -am \"\$1\"\` | Function \`commit\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
 
-config_installationtype="environmental"
 config_arguments=("config" "git_config" "config_function")
-config_readmeline="| Function \`config\` | Function \`config\` that does a git config accepting two parameters username and email | Function \`config\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> "
+config_name="Function config"
+config_description="Function that does a git config accepting two parameters username and email"
+config_version="1.0"
+config_tags=("bashfunctions" "git-user-configuration" "gitbashfunctions")
+config_systemcategories=("System" "Utility")
+config_commentary="Configure your git username and email"
 config_bashfunctions=("config.sh")
 
-converters_installationtype="repositoryclone"
 converters_arguments=("converters")
+converters_name="Functions converters"
+converters_description="Convert any number to any numeric system"
+converters_version="1.0"
+converters_tags=("gitbashfunctions" "convert")
+converters_systemcategories=("System" "Utility")
+converters_commentary="bintodec, decobin, hextodec..."
 converters_bashfunctions=("converters.sh")
 converters_binariesinstalledpaths=("converters/to.py;to" "converters/dectoutf.py;dectoutf" "converters/utftodec.py;utftodec")
-converters_readmeline="| Converters | Set of converter Python scripts that integrate in your environment as \`bash\` commands | Commands \`bintodec\`, \`dectobin\`, \`dectohex\`, \`dectoutf\`, \`escaper\`, \`hextodec\`, \`to\` and \`utftodec\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 converters_repositoryurl="https://github.com/Axlfc/converters"
 
 copyq_installationtype="packagemanager"
 copyq_arguments=("copyq")
+copyq_name="Functions converters"
+copyq_description="A clipboard manager application that comes with extra features such as editing and scripting"
+copyq_version="1.0"
+copyq_tags=("history" "clipboard")
+copyq_systemcategories=("System" "Utility")
+copyq_commentary="Autostart enabled"
 copyq_launchernames=("com.github.hluk.copyq")
 copyq_packagenames=("copyq")
-copyq_readmeline="| copyq | A clipboard manager application that comes with extra features such as editing and scripting | Command \`copyq\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 copyq_flagsoverride=";;;;;1"  # Always autostart
 
-curl_installationtype="packagemanager"
 curl_arguments=("curl")
+curl_name="Functions converters"
+curl_description="Curl is a CLI command for retrieving or sending data to a server"
+curl_version="1.0"
+curl_tags=("history" "clipboard")
+curl_systemcategories=("System" "Utility")
+curl_commentary="Autostart enabled"
 curl_packagenames=("curl")
-curl_readmeline="| Curl | Curl is a CLI command for retrieving or sending data to a server | Command \`curl\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+curl_readmeline="| Curl |  | Command \`curl\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO: CUSTOMIZER 1.0
 customizer_installationtype="environmental"
 customizer_arguments=("customizer" "linux_auto_customizer" "auto_customizer" "linux_customizer")
 customizer_repositoryurl="https://github.com/AleixMT/Linux-Auto-Customizer"
@@ -858,38 +885,35 @@ uninstall_drupal_post()
   remove_folder /var/www/html/drupal/
 }
 
-duckduckgo_installationtype="environmental"
 duckduckgo_arguments=("duckduckgo")
+duckduckgo_name="Duckduckgo"
+duckduckgo_description="Duckduckgo opening in Chrome"
+duckduckgo_version="Google dependent"
+duckduckgo_bashfunctions=("documents.sh")
+duckduckgo_launcherkeynames=("default")
+duckduckgo_systemcategories=("Office" "Documentation" "WebBrowser" "WordProcessor" "FlowChart")
+duckduckgo_commentary="take notes or edit rich text documents"
+duckduckgo_tags=("search")
 duckduckgo_url="https://duckduckgo.com/"
 duckduckgo_bashfunctions=("duckduckgo.sh")
-duckduckgo_downloads=("https://raw.githubusercontent.com/Axlfc/icons/master/images/duckduckgo/duckduckgo_icon.svg;duckduckgo_icon.svg")
 duckduckgo_description="Opens DuckDuckGo in Chrome"
-duckduckgo_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${duckduckgo_description}
-Encoding=UTF-8
-Exec=xdg-open ${duckduckgo_url}
-Icon=${BIN_FOLDER}/duckduckgo/duckduckgo_icon.svg
-GenericName=DuckDuckGo
-Keywords=duckduckgo
-Name=DuckDuckGo
-StartupNotify=true
-StartupWMClass=DuckDuckGo
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-duckduckgo_readmeline="| DuckDuckGo | ${duckduckgo_description} | Command \`duckduckgo\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-vommit_installationtype="environmental"
 vommit_arguments=("vommit")
+vommit_name="Function b"
+vommit_description="Function that do git add -a, git commit commit, git push"
+vommit_version="1.0"
+vommit_tags=("bashfunctions" "bash")
+vommit_systemcategories=("System" "Utility")
+vommit_commentary="Dummy commit"
 vommit_bashfunctions=("vommit.sh")
-vommit_readmeline="| Function \`vommit\` | Do the following commands \`git add -a\` \`git commit -am \$1\` \`git push\` | Command \`vommit\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-e_installationtype="environmental"
 e_arguments=("e")
+e_name="Function e"
+e_description="Multi function to edit a file or project in folder"
+e_version="1.0"
+e_tags=("bashfunctions" "bash")
+e_systemcategories=("System" "Utility")
+e_commentary="edit files or projects"
 e_bashfunctions=("e.sh")
 e_readmeline="| Function \`e\` | Multi Function \`e\` to edit a file or project in folder | Function \`e\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
