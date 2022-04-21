@@ -507,37 +507,12 @@ argument_processing()
 add_programs_with_x_permissions()
 {
   for i in "${feature_keynames[@]}"; do
-    local flags_pointer="${i}_flagsoverride"
-    # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
-    local flag_privileges=
-    flag_privileges="$(get_field "${!flags_pointer}" ";" "1")"
-    if [ -z "${flag_privileges}" ]; then
-      # If override not present, check if we need to use a package manager or install a package to deduce if we need
-      # special permissions
-      local packageNames="${matched_keyname}_packagenames"
-      local downloadKeys="${matched_keyname}_downloadKeys[@]"
-      if [ -n "${!packageNames}" ]; then
-        flag_privileges=0
-      elif [ -n "${!downloadKeys}" ]; then
-        # We do not enforce require permissions unless we see a package download type
-        local special_permission=0
-        for downloadKey in ${!downloadKeys}; do
-          local download_type="${matched_keyname}_${downloadKey}_type"
-          if [ "${download_type}" == "package" ]; then
-            special_permission=1
-          fi
-        done
-        if [ "${special_permission}" -eq 1 ]; then
-          flag_privileges=0
-        else
-          flag_privileges=2
-        fi
-      else
-        flag_privileges=2
+    if [ "$1" -ne 2 ]; then
+      flag_privileges="$(deduce_privileges "${matched_keyname}")"
+      if [ "$1" -eq "${flag_privileges}" ]; then
+        add_program "$i"
       fi
-    fi
-
-    if [ ${flag_privileges} -eq "$1" ]; then
+    else
       add_program "$i"
     fi
   done
@@ -555,6 +530,47 @@ add_programs()
     add_program "$1"
     shift
   done
+}
+
+deduce_privileges()
+{
+  local -r flags_override_pointer="$1_flagsoverride"
+  local flags_override_stringbuild=""
+  if [ -n "${!flags_override_pointer}" ]; then  # If flagsoverride property is defined for this feature
+    flags_override_stringbuild="${!flags_override_pointer}"
+  else  # flagsoverride not defined, load template
+    flags_override_stringbuild="${flagsoverride_template}"
+  fi
+
+  # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
+  local flag_privileges=
+  flag_privileges="$(get_field "${flags_override_stringbuild}" ";" "1")"
+  if [ -z "${flag_privileges}" ]; then
+    # If override not present, check if we need to use a package manager or install a package to deduce if we need
+    # special permissions
+    local -r packageNames="$1_packagenames"
+    local -r downloadKeys="$1_downloadKeys[@]"
+    if [ -n "${!packageNames}" ]; then
+      flag_privileges=0
+    elif [ -n "${!downloadKeys}" ]; then
+      # We do not enforce require permissions unless we see a package download type
+      local special_permission=0
+      for downloadKey in ${!downloadKeys}; do
+        local download_type="$1_${downloadKey}_type"
+        if [ "${download_type}" == "package" ]; then
+          special_permission=1
+        fi
+      done
+      if [ "${special_permission}" -eq 1 ]; then
+        flag_privileges=0
+      else
+        flag_privileges=2
+      fi
+    else
+      flag_privileges=2
+    fi
+  fi
+  echo $flag_privileges
 }
 
 
@@ -623,7 +639,6 @@ add_program()
       fi
     fi
 
-
     # Addition mode, we need to add keyname to added_feature_keynames and build flags
     local -r flags_override_pointer="${matched_keyname}_flagsoverride"
     local flags_override_stringbuild=""
@@ -635,34 +650,7 @@ add_program()
 
     # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
     local flag_privileges=
-    flag_privileges="$(get_field "${flags_override_stringbuild}" ";" "1")"
-    if [ -z "${flag_privileges}" ]; then
-      # If override not present, check if we need to use a package manager or install a package to deduce if we need
-      # special permissions
-      local -r packageNames="${matched_keyname}_packagenames"
-      local -r downloadKeys="${matched_keyname}_downloadKeys[@]"
-      if [ -n "${!packageNames}" ]; then
-        flag_privileges=0
-      elif [ -n "${!downloadKeys}" ]; then
-        # We do not enforce require permissions unless we see a package download type
-        local special_permission=0
-        for downloadKey in ${!downloadKeys}; do
-          local download_type="${matched_keyname}_${downloadKey}_type"
-          if [ "${download_type}" == "package" ]; then
-            special_permission=1
-          fi
-        done
-        if [ "${special_permission}" -eq 1 ]; then
-          flag_privileges=0
-        else
-          flag_privileges=2
-        fi
-      else
-        flag_privileges=2
-      fi
-    fi
-
-
+    flag_privileges="$(deduce_privileges "${matched_keyname}")"
     # Process FLAG_SKIP_PRIVILEGES_CHECK. If 1 skip privilege check
     if [ "${FLAG_SKIP_PRIVILEGES_CHECK}" -eq 0 ] && [ "${flag_privileges}" -ne 2 ]; then
       if [ "${EUID}" -eq 0 ] && [ "${flag_privileges}" -eq 1 ]; then
@@ -739,8 +727,8 @@ add_program()
       if [ "${added_feature_keynames[i]}" == "${matched_keyname}" ]; then
         unset "added_feature_keynames[${i}]"
       fi
-      i=$(( i+1 ))
     done
+    added_feature_keynames=("${added_feature_keynames[@]}")
   fi
 }
 
