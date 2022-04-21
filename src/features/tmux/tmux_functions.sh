@@ -214,7 +214,9 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
 
     # This is a blocking synchronous call. We will continue executing this point of the code when tmux exits, which only
     # happens if we exit or kill its process.
-    tmux attach -t "${attach_session}"
+    echo $PWD
+    sleep 5
+    tmux attach -c "${PWD}" -t "${attach_session}"
     # When we exit tmux, we call reset, so the bug of the mouse does not affect us.
     # https://github.com/tmux/tmux/issues/2116
     echo -en '\e[?1003l'

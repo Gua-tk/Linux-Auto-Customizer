@@ -148,6 +148,28 @@ fi
 #  - FEATUREKEYNAME_downloads: Array of links to a valid download file separated by ";" from the desired name or full  #
 #    pathfor that file.                                                                                                #
 #    It will downloaded in ${BIN_FOLDER}/APPNAME/DESIREDFILENAME                                                       #
+#  - FEATUREKEYNAME_downloadKeys: Array of keys that references a new download.
+#    Each download can be configured with additional properties:
+#    * FEATUREKEYNAME_DOWNLOADKEY_type: Optional property that can be "compressed", "package" or "regular". If not
+#      defined, the behaviour will be one of the three below depending on the mimetype of the downloaded file.
+#      "compressed": Means that after the download is completed in BIN_FOLDER it will try to decompress the file in
+#      place if a single folder exists in the root of the compressed file, if not it will be decompressed in
+#      BIN_FOLDER/CURRENT_INSTALLATION_KEYNAME .
+#      "package": Means that after the download is completed in BIN_FOLDER/CURRENT_INSTALLATION_KEYNAME the downloaded
+#      file will be installed as a package using the default package manager for the current operating system. If the
+#      downloaded file is a compressed file, the file will be decompressed and all the packages inside will be installed recursively.
+#      "regular": Means that the file has to be downloaded in BIN_FOLDER/CURRENT_INSTALLATION_KEYNAME and nothing more.
+#    * FEATUREKEYNAME_DOWNLOADKEY_doNotInherit: If this variable is defined with some text in it and the type defined
+#      or deduced for this download is "compressed", the file will be forced to be decompressed in place instead of
+#      the decision between being decompressed in place if a single folder exists in the root of the compressed file or
+#      being decompressed in BIN_FOLDER/CURRENT_INSTALLATION_KEYNAME in place.
+#    * FEATUREKEYNAME_DOWNLOADKEY_downloadPath: if this variable exists the data in it will be used as the place where
+#      the downloaded file will be placed.
+#    * FEATUREKEYNAME_DOWNLOADKEY_URL: URL that will be used for the download.
+#    * FEATUREKEYNAME_DOWNLOADKEY_installedPackages: This property is mandatory for completeness of the uninstallation
+#      if the downloaded file is or contains packages to be installed. It enumerates the names of the installed
+#      packages, so they can be used by uninstall to know which packages to uninstall using the default package manager.
+
 #  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from  #
 #    a function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,               #
 #    install_FEATUREKEYNAME_post.                                                                                      #
@@ -208,10 +230,10 @@ fi
 ### Installation type dependent properties                                                                             #
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
 #    feature. Used in: packageinstall, packagemanager.                                                                 #
-#  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.                           #
-#  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit and in packageinstall  #
+#  - FEATUREKEYNAME_packageurls: TODO deprecated Link to the .deb file to download. Used in: packageinstall.                           #
+#  - FEATUREKEYNAME_compressedfileurl: TODO deprecated Internet link to a compressed file. Used in: userinherit and in packageinstall  #
 #    as fallback if no urls are supplied in packageurls; in that case will also need a compressedfiletype.             #
-#  - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform download and decompression.            #
+#  - FEATUREKEYNAME_compressedfilepathoverride: TODO deprecated Designs another path to perform download and decompression.            #
 #    Used in: userinherit.                                                                                             #
 #  - FEATUREKEYNAME_repositoryurl: Repository to be cloned. Used in: repositoryclone.                                  #
 #  - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if  #
@@ -220,7 +242,7 @@ fi
 #  - FEATUREKEYNAME_pipinstallations: Array containing set of programs to be installed via pip. Used in: pythonvenv.   #
 #  - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3.     #
 #    Used in: pythonvenv.                                                                                              #
-#  - FEATUREKEYNAME_donotinherit: It does not expect a directory into a compressed file only to decompress in place.   #
+#  - FEATUREKEYNAME_donotinherit: TODO deprecated It does not expect a directory into a compressed file only to decompress in place.   #
 ########################################################################################################################
 
 ####################### UNHOLY LINE OF TESTING. UPWARDS IS TESTED, BELOW IS NOT ##############################
@@ -1207,13 +1229,14 @@ git_readmeline="| git | Software for tracking changes in any set of files, usual
 gitcm_installationtype="userinherit"
 gitcm_arguments=("git_c_m")
 gitcm_binariesinstalledpaths=("git-credential-manager-core;gitcm")
-gitcm_compressedfileurl="https://github.com/microsoft/Git-Credential-Manager-Core/releases/download/v2.0.498/gcmcore-linux_amd64.2.0.498.54650.tar.gz"
+gitcm_compressedfileurl="https://github.com/GitCredentialManager/git-credential-manager/releases/download/v2.0.696/gcmcore-linux_amd64.2.0.696.tar.gz"
 gitcm_compressedfilepathoverride="${BIN_FOLDER}/gitcm"  # It has not a folder inside
 gitcm_donotinherit="yes"
 gitcm_readmeline="| Git Credentials Manager | Plug-in for git to automatically use personal tokens | Command \`gitcm\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 gitcm_manualcontentavailable="0;0;1"
 install_gitcm_post()
 {
+  gitcm configure
   git config --global credential.credentialStore plaintext
 }
 uninstall_gitcm_post()
@@ -1440,18 +1463,24 @@ Version=1.0
 ")
 googlecalendar_readmeline="| Google Calendar | ${googlecalendar_description} | Command \`googlecalendar\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-google_chrome_installationtype="packageinstall"
+google_chrome_name="Google Chrome"
 google_chrome_arguments=("google_chrome")
 google_chrome_bashfunctions=("google_chrome.sh")
 google_chrome_flagsoverride=";;;;1;"
 google_chrome_arguments=("chrome" "google_chrome" "googlechrome")
-google_chrome_packagenames=("google-chrome-stable")
+google_chrome_commentary="The all-in-one browser"
+google_chrome_version="Google dependent"
+google_chrome_tags=("browser" "network")
+google_chrome_systemcategories=("Network" "WebBrowser")
+google_chrome_launcherkeynames=("default")
+google_chrome_default_exec="google-chrome"
 google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
-google_chrome_packageurls=("https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
+google_chrome_downloadKeys=("debianPackage")
+google_chrome_debianPackage_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+google_chrome_debianPackage_installedPackages="google-chrome-stable"
 google_chrome_package_manager_override="apt-get"
-google_chrome_launchernames=("google-chrome")
+google_chrome_launcherkeys=("default")
 google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
-google_chrome_readmeline="| Google Chrome | Cross-platform web browser | Command \`google-chrome\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gpaint_installationtype="packagemanager"
 gpaint_arguments=("gpaint")
@@ -1661,8 +1690,8 @@ j_readmeline="| Function \`j\` | alias for jobs -l | Commands \`j\` || <ul><li>-
 java_installationtype="userinherit"
 java_arguments=("java" "java_development_kit" "java_development" "java_development_kit_8" "jdk" "jdk_8")
 java_bashfunctions=("java.sh")
-java_binariesinstalledpaths=("bin/java;java")
-java_compressedfileurl="https://download.java.net/openjdk/jdk8u41/ri/openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz"
+java_binariesinstalledpaths=("bin/java;java" "bin/keytool;keytool")
+java_compressedfileurl="https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u262-b10/openlogic-openjdk-8u262-b10-linux-x64.tar.gz"
 java_readmeline="| Java Development Kit 8 | Implementation of version 8 of the Java (programming language) SE Platform | Commands \`java\`, \`javac\` and \`jar\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 julia_installationtype="userinherit"
@@ -2948,7 +2977,11 @@ pycharm_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "D
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharm_bashfunctions=("pycharm.sh")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
-pycharm_compressedfileurl="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
+
+
+pycharm_downloadKeys=("bundle")
+pycharm_bundle_URL="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
+
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
 pycharm_launcherkeynames=("launcher")
 pycharm_launcher_exec="pycharm %F"
