@@ -794,7 +794,7 @@ generic_installation() {
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_mid"
   fi
 
-  "generic_${FLAG_MODE}_downloads" "${featurename}"
+  "generic_${FLAG_MODE}_downloads"
   "generic_${FLAG_MODE}_files" "${featurename}"
   "generic_${FLAG_MODE}_movefiles" "${featurename}"
   "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"

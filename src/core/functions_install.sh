@@ -1254,38 +1254,6 @@ packageinstall_installation_type() {
   done
 }
 
-# - Description: Download a file into BIN_FOLDER, decompress it assuming that there is a directory inside it.
-# - Permissions: Expected to be run by normal user.
-# - Argument 1: String that matches a set of variables in data_features.
-userinherit_installation_type() {
-  # Declare name of variables for indirect expansion
-
-  # Files to be downloaded that have to be decompressed
-  local -r compressedfileurl="$1_compressedfileurl"
-  # All decompression type options for each compressed file defined
-  local -r compressedfiletype="$1_compressedfiletype"
-  # Obtain override download location if present
-  local -r compressedfilepathoverride="$1_compressedfilepathoverride"
-  # Pointer for expanding inheritance
-  local -r donotinherit_pointer="$1_donotinherit"
-  local defaultpath="${BIN_FOLDER}"
-
-  if [ -n "${!compressedfilepathoverride}" ]; then
-    create_folder "${!compressedfilepathoverride}"
-    defaultpath="${!compressedfilepathoverride}"
-  fi
-
-  create_folder "${defaultpath}"
-  download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
-  if [ "${!donotinherit_pointer}" == "yes" ]; then
-    decompress "${defaultpath}/$1_compressed_file"
-    apply_permissions_recursively "${defaultpath}"
-  else
-    decompress "${defaultpath}/$1_compressed_file" "$1"
-    apply_permissions_recursively "${defaultpath}/$1"
-  fi
-}
-
 
 # - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
 #   dpkg -i.
@@ -1326,6 +1294,8 @@ download_and_install_package() {
 
 
 
+# Argument 1: download key
+# Argument 2: anticollisioner
 generic_install_download()
 {
   local -r pointer_url="${CURRENT_INSTALLATION_KEYNAME}_$1_URL"
@@ -1372,8 +1342,8 @@ generic_install_download()
         decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"
         apply_permissions_recursively "${defaultpath}"
       else
-        decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_KEYNAME}"
-        apply_permissions_recursively "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}"
+        decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_KEYNAME}$2"
+        apply_permissions_recursively "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}$2"
       fi
     ;;
     "application/vnd.debian.binary-package")
@@ -1390,7 +1360,10 @@ generic_install_download()
       rm -Rf "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"
     ;;
     *)
-      mv "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_FOLDER}"
+      # Move only if we are not overriding the download path. We do it like this because if not we can not decompress
+      if [ -z "${!pointer_downloadPath}" ]; then
+        mv "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_FOLDER}"
+      fi
     ;;
   esac
 }
@@ -1401,8 +1374,10 @@ generic_install_download()
 #   needs to be run as root.
 generic_install_downloads() {
   local -r downloads="${CURRENT_INSTALLATION_KEYNAME}_downloadKeys[@]"
+  local name_suffix_anticollision=""
   for each_download in ${!downloads}; do
-    generic_install_download "${each_download}"
+    generic_install_download "${each_download}" "${name_suffix_anticollision}"
+    name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
 

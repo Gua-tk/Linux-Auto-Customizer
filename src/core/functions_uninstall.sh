@@ -400,31 +400,30 @@ generic_uninstall_dependencies() {
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
-pythonvenv_uninstallation_type() {
-  remove_folder "${BIN_FOLDER:?}/$1"
+generic_uninstall_pythonVirtualEnvironment() {
+  local -r pipinstallations="$1_pipinstallations[@]"
+  local -r pythoncommands="$1_pythoncommands[@]"
+  if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
+    return
+  fi
+  remove_folder "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
 }
 
 # - Description: removes git repository in BIN_FOLDER
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
-repositoryclone_uninstallation_type() {
-  remove_folder "${BIN_FOLDER}/$1"
+generic_uninstall_cloneRepositories() {
+  local -r repositoryurl="${CURRENT_INSTALLATION_KEYNAME}_repositoryurl"
+  if [ -n "${!repositoryurl}" ]; then
+    remove_folder "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
+  fi
 }
-
 
 # - Description: Uninstalls a package using the package manager depending on the system.
 # - Permissions: It is expected to be called as root.
-packageinstall_uninstallation_type() {
-  local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
-  for packagename in ${!packagenames}; do
-    ${PACKAGE_MANAGER_UNINSTALLPACKAGE} "${packagename}"
-  done
-}
-
-
 generic_uninstall_packageManager() {
-  local -r packagenames="$1_packagenames[@]"
+  local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
   for packagename in ${!packagenames}; do
     ${PACKAGE_MANAGER_UNINSTALL} "${packagename}"
   done
@@ -434,14 +433,76 @@ generic_uninstall_packageManager() {
 # - Description: Remove file from BIN_FOLDER
 # - Permissions: Expected to be run by normal user.
 # - Argument 1: String that matches a set of variables in data_features.
-userinherit_uninstallation_type() {
-  # Obtain override download location if present
-  local -r compressedfilepathoverride="$1_compressedfilepathoverride"
-  local defaultpath="${BIN_FOLDER}"
-  if [ -n "${!compressedfilepathoverride}" ]; then
-    defaultpath="${!compressedfilepathoverride}"
-  fi
-  remove_folder "${defaultpath}/$1"
+generic_uninstall_downloads() {
+  local -r downloads="${CURRENT_INSTALLATION_KEYNAME}_downloadKeys[@]"
+  local name_suffix_anticollision=""
+  for each_download in ${!downloads}; do
+    local pointer_type="${CURRENT_INSTALLATION_KEYNAME}_${each_download}_type"
+    local pointer_downloadPath="${CURRENT_INSTALLATION_KEYNAME}_${each_download}_downloadPath"
+    local pointer_installedPackages="${CURRENT_INSTALLATION_KEYNAME}_${each_download}_installedPackages[@]"
+    local pointer_doNotInherit="${CURRENT_INSTALLATION_KEYNAME}_$1_doNotInherit"
+
+    case "${!pointer_type}" in
+      "compressed")
+        if [ -n "${!pointer_downloadPath}" ]; then
+          if [ -n "${!pointer_doNotInherit}" ]; then
+            # Decompression in place in arbitrary directory. Delete folder
+            remove_folder "${!pointer_downloadPath}"
+          else
+            # Decompression in arbitrary directory with inheritance
+            remove_folder "${!pointer_downloadPath}/${CURRENT_INSTALLATION_KEYNAME}$2"
+          fi
+        else
+          if [ -n "${!pointer_doNotInherit}" ]; then
+            # Decompression in default folder (BIN_FOLDER) but not inheriting. We cannot delete anything since we
+            # would need to know the contents of the compressed file. We will remove teh feature folder.
+            remove_folder "${CURRENT_INSTALLATION_FOLDER}"
+          else
+            # Decompression in default directory with inheritance (default case). Delete the folder feature in
+            # BIN_FOLDER
+            remove_folder "${CURRENT_INSTALLATION_FOLDER}"
+          fi
+        fi
+      ;;
+      "package")
+        if [ -n "${!pointer_installedPackages}" ]; then
+          for package in "${!pointer_installedPackages}"; do
+            ${PACKAGE_MANAGER_UNINSTALL} "${package}"
+          done
+        fi
+      ;;
+      "regular")
+        if [ -n "${!pointer_downloadPath}" ]; then
+          remove_file "${!pointer_downloadPath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"
+        else
+          remove_folder "${CURRENT_INSTALLATION_FOLDER}"
+        fi
+      ;;
+      *)
+        # In this case we do not know what type of file is in the download (we would need to download it) so we can
+        # at least do the logic in some safe scenarios
+        if [ -n "${!pointer_downloadPath}" ]; then
+          if [ -n "${!pointer_doNotInherit}" ]; then
+            # Decompression in place in arbitrary directory. Delete folder.
+            remove_folder "${!pointer_downloadPath}"
+          else
+            # Decompression in arbitrary directory with inheritance
+            remove_folder "${!pointer_downloadPath}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
+          fi
+        else
+          if [ -n "${!pointer_doNotInherit}" ]; then
+            # Decompression in default folder (BIN_FOLDER) but not inheriting. We cannot delete anything since we
+            # would need to know the contents of the compressed file. We will remove the feature folder.
+            remove_folder "${CURRENT_INSTALLATION_FOLDER}"
+          else
+            remove_folder "${CURRENT_INSTALLATION_FOLDER}"
+          fi
+        fi
+      ;;
+    esac
+
+    name_suffix_anticollision="${name_suffix_anticollision}_"
+  done
 }
 
 
