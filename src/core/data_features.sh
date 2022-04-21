@@ -199,10 +199,10 @@ fi
 ### Installation type dependent properties                                                                             #
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
 #    feature. Used in: packageinstall, packagemanager.                                                                 #
-#  - FEATUREKEYNAME_packageurls: Link to the .deb file to download. Used in: packageinstall.                           #
-#  - FEATUREKEYNAME_compressedfileurl: Internet link to a compressed file. Used in: userinherit and in packageinstall  #
+#  - FEATUREKEYNAME_packageurls: TODO deprecated Link to the .deb file to download. Used in: packageinstall.                           #
+#  - FEATUREKEYNAME_compressedfileurl: TODO deprecated Internet link to a compressed file. Used in: userinherit and in packageinstall  #
 #    as fallback if no urls are supplied in packageurls; in that case will also need a compressedfiletype.             #
-#  - FEATUREKEYNAME_compressedfilepathoverride: Designs another path to perform download and decompression.            #
+#  - FEATUREKEYNAME_compressedfilepathoverride: TODO deprecated Designs another path to perform download and decompression.            #
 #    Used in: userinherit.                                                                                             #
 #  - FEATUREKEYNAME_repositoryurl: Repository to be cloned. Used in: repositoryclone.                                  #
 #  - FEATUREKEYNAME_manualcontent: String containing three elements separated by ; that can be 1 or 0 and indicate if  #
@@ -211,7 +211,7 @@ fi
 #  - FEATUREKEYNAME_pipinstallations: Array containing set of programs to be installed via pip. Used in: pythonvenv.   #
 #  - FEATUREKEYNAME_pythoncommands: Array containing set of instructions to be executed by the venv using python3.     #
 #    Used in: pythonvenv.                                                                                              #
-#  - FEATUREKEYNAME_donotinherit: It does not expect a directory into a compressed file only to decompress in place.   #
+#  - FEATUREKEYNAME_donotinherit: TODO deprecated It does not expect a directory into a compressed file only to decompress in place.   #
 ########################################################################################################################
 
 

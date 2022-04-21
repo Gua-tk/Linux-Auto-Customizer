@@ -194,60 +194,8 @@ update_environment()
 # - Permissions: Can be called as root or user with the same behaviour.
 autogen_help()
 {
-  local packagemanager_lines=
-  local user_lines=
-  local root_lines=
-  local root_num=0
-  local user_num=0
-
-  for program in "${feature_keynames[@]}"; do
-    local readme_line_pointer="${program}_readmeline"
-    local installationtype_pointer="${program}_installationtype"
-    local arguments_pointer="${program}_arguments[@]"
-
-    local readme_line=
-    readme_line="${!readme_line_pointer}"
-    local installation_type=
-    installation_type="${!installationtype_pointer}"
-    local program_argument=
-    program_argument="${program}"
-
-    local program_features=
-    program_features="$(echo "${readme_line}" | cut -d "|" -f4)"
-    local program_commands=
-    program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " " | sed "s/\.[a-z]*//g" | sed 's/^ *//g')"
-    local help_line="${program_argument};${program_commands}"
-    case ${installation_type} in
-      packagemanager|packageinstall)
-        root_lines+=("${help_line}")
-        root_num=$(( root_num + 1 ))
-      ;;
-      repositoryclone|userinherit|environmental|pythonvenv)
-        user_lines+=("${help_line}")
-        user_num=$(( user_num + 1 ))
-      ;;
-    esac
-  done
-  local program_headers="ARGUMENT;COMMANDS"
-
-  local -r newline=$'\n'
-  local user_lines_final=
-  for line in "${user_lines[@]}"; do
-    user_lines_final="${user_lines_final}${line}${newline}"
-  done
-  user_lines_final="$(echo "${user_lines_final}" | sort)"
-  column -ts ";" <<< "${program_headers}${newline}${user_lines_final}"
-
-  echo "${newline}"
-
-  local root_lines_final=
-  for line in "${root_lines[@]}"; do
-    root_lines_final="${root_lines_final}${line}${newline}"
-  done
-  root_lines_final="$(echo "${root_lines_final}" | sort)"
-  column -ts ";" <<< "${program_headers}${newline}${root_lines_final}"
-
-  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total"
+  # TODO: create autogen_help with new metadata
+  echo
 }
 
 
@@ -558,41 +506,39 @@ argument_processing()
 
 add_programs_with_x_permissions()
 {
-  for keyname in "${feature_keynames[@]}"; do
-    local installationtype_pointer="${keyname}_installationtype"
-    if [ "$1" -eq 0 ]; then
-      case ${!installationtype_pointer} in
-        packagemanager)
-          add_program "${keyname}"
-        ;;
-        packageinstall)
-          add_program "${keyname}"
-        ;;
-      esac
-    elif [ "$1" -eq 1 ] ; then
-      case ${!installationtype_pointer} in
-        # Download and decompress a file that contains a folder
-        userinherit)
-          add_program "${keyname}"
-        ;;
-        # Clone a repository
-        repositoryclone)
-          add_program "${keyname}"
-        ;;
-        # Create a virtual environment to install the feature
-        pythonvenv)
-          add_program "${keyname}"
-        ;;
-        # Only uses the common part of the generic installation
-        environmental)
-          add_program "${keyname}"
-        ;;
-      esac
-    elif [ "$1" -eq 2 ]; then
-      add_program "${keyname}"
-    else
-      output_proxy_executioner "echo ERROR: $1 is not a possible permission level." "${FLAG_QUIETNESS}"
-      exit 1
+  for i in "${feature_keynames[@]}"; do
+    local flags_pointer="${i}_flagsoverride"
+    # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
+    local flag_privileges=
+    flag_privileges="$(get_field "${!flags_pointer}" ";" "1")"
+    if [ -z "${flag_privileges}" ]; then
+      # If override not present, check if we need to use a package manager or install a package to deduce if we need
+      # special permissions
+      local -r packageNames="${matched_keyname}_packagenames"
+      local -r downloadKeys="${matched_keyname}_downloadKeys[@]"
+      if [ -n "${!packageNames}" ]; then
+        flag_privileges=0
+      elif [ -n "${!downloadKeys}" ]; then
+        # We do not enforce require permissions unless we see a package download type
+        local special_permission=0
+        for downloadKey in ${!downloadKeys}; do
+          local download_type="${matched_keyname}_${downloadKey}_type"
+          if [ "${download_type}" == "package" ]; then
+            special_permission=1
+          fi
+        done
+        if [ "${special_permission}" -eq 1 ]; then
+          flag_privileges=0
+        else
+          flag_privileges=2
+        fi
+      else
+        flag_privileges=2
+      fi
+    fi
+
+    if [ ${flag_privileges} -eq "$1" ]; then
+      add_program "$i"
     fi
   done
 }
@@ -691,41 +637,32 @@ add_program()
     local flag_privileges=
     flag_privileges="$(get_field "${flags_override_stringbuild}" ";" "1")"
     if [ -z "${flag_privileges}" ]; then
-      # If override not present, check installation type
-      local -r installationtype_pointer="${matched_keyname}_installationtype"
-
-      case ${!installationtype_pointer} in
-        # Using default package manager such as $DEFAULT_PACKAGE_MANAGER
-        packagemanager)
+      # If override not present, check if we need to use a package manager or install a package to deduce if we need
+      # special permissions
+      local -r packageNames="${matched_keyname}_packagenames"
+      local -r downloadKeys="${matched_keyname}_downloadKeys[@]"
+      if [ -n "${!packageNames}" ]; then
+        flag_privileges=0
+      elif [ -n "${!downloadKeys}" ]; then
+        # We do not enforce require permissions unless we see a package download type
+        local special_permission=0
+        for downloadKey in ${!downloadKeys}; do
+          local download_type="${matched_keyname}_${downloadKey}_type"
+          if [ "${download_type}" == "package" ]; then
+            special_permission=1
+          fi
+        done
+        if [ "${special_permission}" -eq 1 ]; then
           flag_privileges=0
-        ;;
-        # Downloading a package and installing it using a package manager such as dpkg
-        packageinstall)
-          flag_privileges=0
-        ;;
-        # Download and decompress a file that contains a folder
-        userinherit)
+        else
           flag_privileges=2
-        ;;
-        # Clone a repository
-        repositoryclone)
-          flag_privileges=1
-        ;;
-        # Create a virtual environment to install the feature
-        pythonvenv)
-          flag_privileges=2
-        ;;
-        # Only uses the common part of the generic installation
-        environmental)
-          flag_privileges=2
-        ;;
-        # If not recognized put 2, so we do not care
-        *)
-          flag_privileges=2
-        ;;
-      esac
-
+        fi
+      else
+        flag_privileges=2
+      fi
     fi
+
+
     # Process FLAG_SKIP_PRIVILEGES_CHECK. If 1 skip privilege check
     if [ "${FLAG_SKIP_PRIVILEGES_CHECK}" -eq 0 ] && [ "${flag_privileges}" -ne 2 ]; then
       if [ "${EUID}" -eq 0 ] && [ "${flag_privileges}" -eq 1 ]; then
@@ -798,10 +735,9 @@ add_program()
     # Deletion mode
 
     # Delete from the result array
-    local i=0
-    for keyname in "${added_feature_keynames[@]}"; do
-      if [ "${keyname}" == "${matched_keyname}" ]; then
-        unset added_feature_keynames[${i}]
+    for i in "${!added_feature_keynames[@]}"; do
+      if [ "${added_feature_keynames[i]}" == "${matched_keyname}" ]; then
+        unset "added_feature_keynames[${i}]"
       fi
       i=$(( i+1 ))
     done
@@ -852,57 +788,27 @@ execute_installation()
 #   Also performs the manual execution of paths of the feature and calls generic functions to install the common
 #   part of the features such as desktop launchers, sourced .bashrc functions...
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
-#   name of the first argument in the common_data.sh table
 generic_installation() {
   # Substitute dashes for underscores. Dashes are not allowed in variable names
-  local -r featurename="${1//-/_}"
-  local -r installationtype=${featurename}_installationtype
-  local -r manualcontentavailable="$1_manualcontentavailable"
+  local -r featurename="${CURRENT_INSTALLATION_KEYNAME//-/_}"
+  local -r manualcontentavailable="${CURRENT_INSTALLATION_KEYNAME}_manualcontentavailable"
   generic_package_manager_override "${featurename}"
 
   if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
-    "${FLAG_MODE}_$1_pre"
+    "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_pre"
   fi
 
   "generic_${FLAG_MODE}_dependencies" "${featurename}"
   "generic_${FLAG_MODE}_packageManager"
-
-  case ${!installationtype} in
-    # Using package manager such as $DEFAULT_PACKAGE_MANAGER
-    #packagemanager)
-    #  "packagemanager_${FLAG_MODE}ation_type" "${featurename}"
-    #;;
-    # Downloading a package and installing it using a package manager such as dpkg
-    #packageinstall)
-    #  "packageinstall_${FLAG_MODE}ation_type" "${featurename}"
-    #;;
-    # Download and decompress a file that contains a folder
-    #userinherit)
-    #  "userinherit_${FLAG_MODE}ation_type" "${featurename}"
-    #;;
-    # Clone a repository
-    repositoryclone)
-      "repositoryclone_${FLAG_MODE}ation_type" "${featurename}"
-    ;;
-    # Create a virtual environment to install the feature
-    pythonvenv)
-      "pythonvenv_${FLAG_MODE}ation_type" "${featurename}"
-    ;;
-    *)
-      output_proxy_executioner "echo WARNING: (debug) The installation type detected \"${!installationtype}\" is not a hardcoded one, proceeding with full generic installation" "${FLAG_QUIETNESS}"
-      #exit 1
-    ;;
-  esac
+  "generic_${FLAG_MODE}_cloneRepositories"
+  "generic_${FLAG_MODE}_pythonVirtualEnvironment"
   if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
-    "${FLAG_MODE}_$1_mid"
+    "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_mid"
   fi
 
   "generic_${FLAG_MODE}_downloads" "${featurename}"
   "generic_${FLAG_MODE}_files" "${featurename}"
   "generic_${FLAG_MODE}_movefiles" "${featurename}"
-  #"generic_${FLAG_MODE}_manual_launchers" "${featurename}"
-  #"generic_${FLAG_MODE}_copy_launcher" "${featurename}"
   "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"
   if [ "${OS_NAME}" == "WSL2" ]; then
     "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
@@ -915,14 +821,14 @@ generic_installation() {
   "generic_${FLAG_MODE}_keybindings" "${featurename}"
   "generic_${FLAG_MODE}_pathlinks" "${featurename}"
   if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
-    "${FLAG_MODE}_$1_post"
+    "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_post"
   fi
   if [ "${FLAG_MODE}" == "install" ]; then
-    if ! grep -qE "^$1\$" < "${INSTALLED_FEATURES}"; then
-      echo "$1" >> "${INSTALLED_FEATURES}"
+    if ! grep -qE "^${CURRENT_INSTALLATION_KEYNAME}\$" < "${INSTALLED_FEATURES}"; then
+      echo "${CURRENT_INSTALLATION_KEYNAME}" >> "${INSTALLED_FEATURES}"
     fi
   elif [ "${FLAG_MODE}" == "uninstall" ]; then
-    remove_line "$1" "${INSTALLED_FEATURES}"
+    remove_line "${CURRENT_INSTALLATION_KEYNAME}" "${INSTALLED_FEATURES}"
   fi
 
   if [ "${POP_PACKAGE_MANAGER}" == 1 ]; then

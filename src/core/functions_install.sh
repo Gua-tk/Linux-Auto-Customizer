@@ -1406,20 +1406,6 @@ generic_install_downloads() {
   done
 }
 
-# - Description: Expands downloads and saves it to BIN_FOLDER/FEATUREKEYNAME/NAME_OF_DOWNLOADED_FILE_i
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_downloads
-#   and the name of the first argument in the common_data.sh table
-old_generic_install_downloads() {
-  local -r downloads="$1_downloads[@]"
-  for each_download in ${!downloads}; do
-    create_folder "${BIN_FOLDER}/$1"
-    local -r url="$(echo "${each_download}" | cut -d ";" -f1)"
-    local -r name="$(echo "${each_download}" | cut -d ";" -f2)"
-    download "${url}" "${BIN_FOLDER}/$1/${name}"
-  done
-}
-
 
 
 
@@ -1427,14 +1413,19 @@ old_generic_install_downloads() {
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
-pythonvenv_installation_type() {
+generic_install_pythonVirtualEnvironment() {
+
+  local -r pipinstallations="$1_pipinstallations[@]"
+  local -r pythoncommands="$1_pythoncommands[@]"
+  if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
+    return
+  fi
+
   rm -Rf "${BIN_FOLDER:?}/$1"
   python3 -m venv "${BIN_FOLDER}/$1"
   "${BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
   "${BIN_FOLDER}/$1/bin/pip" install wheel
 
-  local -r pipinstallations="$1_pipinstallations[@]"
-  local -r pythoncommands="$1_pythoncommands[@]"
   for pipinstallation in ${!pipinstallations}; do
     "${BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
   done
@@ -1453,9 +1444,12 @@ pythonvenv_installation_type() {
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
-repositoryclone_installation_type() {
-  local -r repositoryurl="$1_repositoryurl"
-  generic_install_clone "$1" "${!repositoryurl}"
+# TODO: do for many repositories
+generic_install_cloneRepositories() {
+  local -r repositoryurl="${CURRENT_INSTALLATION_KEYNAME}_repositoryurl"
+  if [ -n "${!repositoryurl}" ]; then
+    generic_install_clone "${CURRENT_INSTALLATION_KEYNAME}" "${!repositoryurl}"
+  fi
 }
 
 
