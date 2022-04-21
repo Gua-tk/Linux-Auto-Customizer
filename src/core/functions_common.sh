@@ -514,8 +514,8 @@ add_programs_with_x_permissions()
     if [ -z "${flag_privileges}" ]; then
       # If override not present, check if we need to use a package manager or install a package to deduce if we need
       # special permissions
-      local -r packageNames="${matched_keyname}_packagenames"
-      local -r downloadKeys="${matched_keyname}_downloadKeys[@]"
+      local packageNames="${matched_keyname}_packagenames"
+      local downloadKeys="${matched_keyname}_downloadKeys[@]"
       if [ -n "${!packageNames}" ]; then
         flag_privileges=0
       elif [ -n "${!downloadKeys}" ]; then
