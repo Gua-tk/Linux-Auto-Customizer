@@ -2589,12 +2589,18 @@ o_arguments=("o")
 o_bashfunctions=("o.sh")
 o_readmeline="| Function \`o\` | Alias for \`nemo-desktop\` | Alias \`o\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-obs_studio_installationtype="packagemanager"
+obs_studio_name="Open Broadcaster Software Studio"
+obs_studio_commentary="The basic tool for a streamer"
+obs_studio_description="Streaming and recording software"
+obs_studio_version="System dependent"
+obs_studio_tags=("stream" "online")
+obs_studio_systemcategories=("Utility" "Recorder")
 obs_studio_arguments=("obs_studio" "obs")
-obs_studio_launchernames=("com.obsproject.Studio")
+# TODO port info obs_studio_launchernames=("com.obsproject.Studio")
+obs_studio_launcherkeynames=("defautLauncher")
+obs_studio_defaultLauncher_exec="obs"
 obs_studio_packagedependencies=("ffmpeg")
 obs_studio_packagenames=("obs-studio")
-obs_studio_readmeline="| OBS | Streaming and recording program | Command \`obs\`, desktop launcher and dashboard launcher. ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 octave_installationtype="packagemanager"
 octave_arguments=("octave" "gnu_octave" "octave_cli")
