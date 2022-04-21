@@ -778,19 +778,16 @@ discord_binariesinstalledpaths=("Discord;discord")
 discord_downloadKeys=("bundle")
 discord_bundle_URL="https://discord.com/api/download?platform=linux&format=tar.gz"
 
-docker_installationtype="userinherit"
 docker_arguments=("docker")
 docker_name="Docker"
 docker_description="Containerization service"
 docker_version="20.10.6"
 docker_tags=("development" "containerization" "system")
 docker_systemcategories=("System" "Utility")
-docker_commentary="See changes of files"
+docker_commentary="Application isolation"
 docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
-docker_readmeline="| Docker | Containerization service | Command \`docker\`, \`containerd\`, \`containerd-shim\`, \`containerd-shim-runc-v2\`, \`ctr\`, \`dockerd\`, \`docker-init\`, \`docker-proxy\`, \`runc\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-documents_installationtype="environmental"
 documents_arguments=("documents" "google_document" "google_documents" "document")
 documents_name="Google Documents"
 documents_description="Google Documents opening in Chrome"
@@ -802,31 +799,16 @@ documents_commentary="take notes or edit rich text documents"
 documents_tags=("internet_shortcuts")
 documents_default_exec="xdg-open https://docs.google.com/document/"
 
-drive_installationtype="environmental"
 drive_arguments=("drive" "google_drive")
-drive_url="https://drive.google.com/"
-drive_bashfunctions=("drive.sh")
-drive_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg;drive_icon.svg")
+drive_name="Google Drive"
 drive_description="Google Drive opening in Chrome"
-drive_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${drive_description}
-Encoding=UTF-8
-GenericName=drive
-Keywords=drive;
-MimeType=
-Name=Google Drive
-StartupNotify=true
-StartupWMClass=Google Drive
-Terminal=false
-Exec=xdg-open ${drive_url}
-Icon=${BIN_FOLDER}/drive/drive_icon.svg
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-drive_readmeline="| Google Drive | ${drive_description} | Command \`drive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+drive_version="Google dependent"
+drive_bashfunctions=("drive.sh")
+drive_launcherkeynames=("default")
+drive_systemcategories=("ProjectManagement" "Documentation" "WordProcessor")
+drive_commentary="File hosting service from Google"
+drive_tags=("internet_shortcuts")
+drive_default_exec="xdg-open https://drive.google.com/"
 
 dropbox_installationtype="packageinstall"
 dropbox_arguments=("dropbox")
