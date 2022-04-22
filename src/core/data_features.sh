@@ -550,7 +550,11 @@ changebg_manualcontentavailable="0;0;1"
 changebg_readmeline="| Function \`changebg\` | Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes | Function \`changebg\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
 install_changebg_post() {
-  (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/changebg/.cronjob") | crontab -u "${SUDO_USER}" -
+  if [ -n "${SUDO_USER}" ]; then
+    (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/changebg/cronjob") | crontab -u "${SUDO_USER}" -
+  else
+    (crontab -l ; cat "${BIN_FOLDER}/changebg/cronjob") | crontab -
+  fi
 }
 uninstall_changebg_post() {
   :
@@ -3619,8 +3623,11 @@ tmux_cronjob_content="cronjob"
 tmux_cronjob_path="cronjob"
 tmux_manualcontentavailable="0;0;1"
 install_tmux_post() {
-  # Append to the crontab of the current user
-  (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/tmux/cronjob") | crontab -u "${SUDO_USER}" -
+  if [ -n "${SUDO_USER}" ]; then
+    (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/tmux/cronjob") | crontab -u "${SUDO_USER}" -
+  else
+    (crontab -l ; cat "${BIN_FOLDER}/tmux/cronjob") | crontab -
+  fi
 }
 uninstall_tmux_post() {
   :

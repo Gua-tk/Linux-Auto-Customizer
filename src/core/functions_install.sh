@@ -1155,7 +1155,7 @@ generic_install_dependencies() {
   local -r packagedependencies="$1_packagedependencies[*]"
   if [ "${EUID}" -ne 0 ]; then
     if [ -n "${!packagedependencies}" ]; then
-      output_proxy_executioner "echo WARNING: $1 has this dependencies: ${!packagedependencies} but are not going to be installed because you are not root. To install them, rerun installation with sudo." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "echo WARNING: $1 has this dependencies to install with the package manager: ${!packagedependencies} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "${FLAG_QUIETNESS}"
       return
     fi
   fi
@@ -1221,15 +1221,18 @@ generic_install_clone() {
 }
 
 
-
-
 # - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER which corresponds to the the preferred package
 #   manager depending on the operating system.
 # - Permissions: Expected to be run by root user.
 generic_install_packageManager() {
   # Name of the package names to be installed with the package manager if present
   local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
-
+  if [ "${EUID}" -ne 0 ]; then
+    if [ ! -z "${!packagenames}" ]; then
+      output_proxy_executioner "echo WARNING: ${CURRENT_INSTALLATION_KEYNAME} needs to install the following packages using the package manager: ${!packagenames} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "${FLAG_QUIETNESS}"
+      return
+    fi
+  fi
   for packagename in ${!packagenames}; do
     ${PACKAGE_MANAGER_FIXBROKEN}
     ${PACKAGE_MANAGER_INSTALL} "${packagename}"
@@ -1240,59 +1243,6 @@ generic_install_packageManager() {
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
 ########################################################################################################################
-
-# - Description: Installs packages using the default low-level package installation transparently. In the case of
-#   apt-get it will be dpkg, and in the case of yum it will be rpm.
-# - Permissions: Expected to be run by root.
-# - Argument 1: String that matches a set of variables in data_features.
-packageinstall_installation_type() {
-  local -r packageurls="$1_packageurls[@]"
-  local name_suffix_anticollision=""
-  for packageurl in "${!packageurls}"; do
-    download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
-  done
-}
-
-
-# - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
-#   dpkg -i.
-# - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
-# - Argument 1: Link to the package file to download.
-# - Argument 2 (Optional): Tho show the name of the program downloading and thus change the name of the downloaded
-#   package.
-download_and_install_package() {
-  if [ -z "$2" ]; then
-    local file_name="${RANDOM}_package_file"
-  else
-    local file_name="$2"
-  fi
-  download "$1" "${BIN_FOLDER}/${file_name}"
-
-  local mime_type=
-  mime_type="$(mimetype "${BIN_FOLDER}/${file_name}" | cut -d ":" -f2 | tr -d " ")"
-  case "${mime_type}" in
-    "application/zip"|"application/x-bzip-compressed-tar"|"application/gzip"|"application/x-xz")
-      decompress "${BIN_FOLDER}/${file_name}" "${file_name}_decompressed"  # Decompressing
-      ${PACKAGE_MANAGER_FIXBROKEN}
-      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/${file_name}_decompressed"  # Notice the S at the end of this variable...
-      ${PACKAGE_MANAGER_FIXBROKEN}
-      # Remove decompressed folder that contains the installable packages
-      rm -Rf "${BIN_FOLDER:?}/${file_name}_decompressed"
-    ;;
-    "application/vnd.debian.binary-package")
-      ${PACKAGE_MANAGER_FIXBROKEN}
-      ${PACKAGE_MANAGER_INSTALLPACKAGE} "${BIN_FOLDER}/${file_name}"  # ...is not the same as this variable.
-      ${PACKAGE_MANAGER_FIXBROKEN}
-    ;;
-    *)
-      output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the package file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
-      exit 1
-    ;;
-  esac
-}
-
-
 
 # Argument 1: download key
 # Argument 2: anticollisioner
@@ -1380,8 +1330,6 @@ generic_install_downloads() {
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
-
-
 
 
 # - Description: Installs packages using python environment.
