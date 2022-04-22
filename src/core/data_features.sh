@@ -3614,8 +3614,14 @@ tmux_tmuxconf_path="${HOME_FOLDER}/.tmux.conf"
 
 tomcat_installationtype="userinherit"
 tomcat_arguments=("tomcat" "apache_tomcat" "tomcat_server" "apache")
-tomcat_compressedfileurl="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
-tomcat_readmeline="| Apache Tomcat 9.0.43 | Open-source server to run web apps written in Jakarta Server Pages | Tomcat available in \${USER_BIN_FOLDER} to deploy web apps || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul>|"
+tomcat_name="Apache Tomcat Server"
+tomcat_description="Servlet container"
+tomcat_version="9.0.43"
+tomcat_tags=("server" "web")
+tomcat_systemcategories=("System" "Utility" "Development" "Network")
+tomcat_commentary="Basic tool for web development using Java servlets"
+tomcat_downloadKeys=("bundle")
+tomcat_bundle_URL="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
 
 tor_installationtype="packagemanager"
 tor_arguments=("tor" "tor_browser")
