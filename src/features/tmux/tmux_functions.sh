@@ -182,7 +182,6 @@ tm()
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   attach_session="$(tmux ls -F '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' 2> /dev/null | awk '/^0/ { if ($2 > t) { t = $2; s = $3 } }; END { if (s) printf "%s", s }')"
   if [ -n "$attach_session" ]; then
-
     # * Putting this into .bashrc can give some problems, since all the functions that are after this file will not be
     #   loaded, since the terminal is blocked executing the tmux line. This means that when bash is loaded when
     #   launching a terminal, if the tmux is not loaded, the .bashrc will be loaded into this "first" bash environment
@@ -233,7 +232,7 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
     fi
     # This is a blocking synchronous call. We will continue executing this point of the code when tmux exits, which only
     # happens if we exit or kill its process.
-    tmux -f "€{HOME_FOLDER}/.tmux.conf" attach-session -t "${attach_session}"
+    tmux attach-session -t "${attach_session}"
     # When we exit tmux, we call reset, so the bug of the mouse does not affect us.
     # https://github.com/tmux/tmux/issues/2116
     echo -en '\e[?1003l'

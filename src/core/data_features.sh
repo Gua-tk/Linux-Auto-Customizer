@@ -165,7 +165,7 @@ fi
 #    ${HOME_FOLDER}/.profile.                                                                                          #
 #  - FEATUREKEYNAME_autostartlaunchers: Array containing autostart launchers explicitly to respond to FLAG_AUTOSTART   #
 #    and autostart on boot the feature where they are defined in.                                                      #
-#  - FEATUREKEYNAME_dependencies: Array of name of packages to be installed using apt-get before main installation.    #
+#  - FEATUREKEYNAME_packagedependencies: Array of name of packages to be installed using apt-get before main installation.    #
 #    Used in: packageinstall, packagemanager.                                                                          #
 #  - FEATUREKEYNAME_movefiles: Allows file moving from installation folder to other ones in the system, matching *     #
 #  - FEATUREKEYNAME_package_manager_override: Allows to load another package manager and its calls for a certain       #
@@ -550,9 +550,9 @@ changebg_manualcontentavailable="0;0;1"
 changebg_readmeline="| Function \`changebg\` | Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes | Function \`changebg\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
 install_changebg_post() {
-  crontab "${BIN_FOLDER}/changebg/.cronjob"
+  (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/changebg/.cronjob") | crontab -u "${SUDO_USER}" -
 }
-install_changebg_post() {
+uninstall_changebg_post() {
   :
   #crontab "${USR_BIN_FOLDER}/changebg/cronjob"
 }
@@ -3598,34 +3598,34 @@ tilix_packagenames=("tilix")
 tilix_readmeline="| Tilix | Advanced GTK3 tiling terminal emulator | Command \`tilix\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 tmux_installationtype="packagemanager"
-tmux_arguments=("tmux")
-tmux_packagedependencies=("xdotool" "xclip" "tmuxp" "bash-completion")
-tmux_description="Terminal multiplexer for Unix-like operating systems"
-tmux_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${tmux_description}
-Encoding=UTF-8
-Exec=tmux
-GenericName=Terminal multiplexor with special mnemo-rules 'Ctrl+a'
-Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/carla_carla.png
-Keywords=tmux;
-MimeType=
-Name=tmux
-StartupNotify=true
-StartupWMClass=tmux
-Terminal=true
-TryExec=tmux
-Type=Application
-Version=1.0")
+tmux_arguments=("termux")
+tmux_version="System dependent"
+tmux_name="Terminal multiplexor"
+tmux_description="Terminal multiplexor"
+tmux_launcherkeynames=("defaultLauncher")
+tmux_commentary="Increase productivity using terminal. Manage sessions, windows and panes."
+tmux_systemcategories=("System" "Utility")
+tmux_tags=("terminal")
+tmux_defaultLauncher_exec="tmux"
 tmux_packagenames=("tmux")
-tmux_readmeline="| Tmux | ${tmux_description} | Command \`tmux\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+tmux_packagedependencies=("xdotool" "xclip" "tmuxp" "bash-completion")
 tmux_bashfunctions=("tmux_functions.sh")
-tmux_filekeys=("tmuxconf" "clockmoji")
+tmux_filekeys=("tmuxconf" "clockmoji" "cronjob")
 tmux_clockmoji_content="tmux_clockmoji.sh"
 tmux_clockmoji_path="clockmoji.sh"
 tmux_tmuxconf_content="tmux.conf"
 tmux_tmuxconf_path="${HOME_FOLDER}/.tmux.conf"
+tmux_cronjob_content="cronjob"
+tmux_cronjob_path="cronjob"
+tmux_manualcontentavailable="0;0;1"
+install_tmux_post() {
+  # Append to the crontab of the current user
+  (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/tmux/cronjob") | crontab -u "${SUDO_USER}" -
+}
+uninstall_tmux_post() {
+  :
+  #crontab "${USR_BIN_FOLDER}/changebg/cronjob"
+}
 
 tomcat_installationtype="userinherit"
 tomcat_arguments=("tomcat" "apache_tomcat" "tomcat_server" "apache")
