@@ -3612,7 +3612,6 @@ tmux_clockmoji_path="clockmoji.sh"
 tmux_tmuxconf_content="tmux.conf"
 tmux_tmuxconf_path="${HOME_FOLDER}/.tmux.conf"
 
-tomcat_installationtype="userinherit"
 tomcat_arguments=("tomcat" "apache_tomcat" "tomcat_server" "apache")
 tomcat_name="Apache Tomcat Server"
 tomcat_description="Servlet container"
@@ -3623,12 +3622,17 @@ tomcat_commentary="Basic tool for web development using Java servlets"
 tomcat_downloadKeys=("bundle")
 tomcat_bundle_URL="https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz"
 
-tor_installationtype="packagemanager"
 tor_arguments=("tor" "tor_browser")
+tor_name="The Onion Router browser"
+tor_description="Browser focused on security and privacy. Can browse through the onion protocol"
+tor_version="System dependent"
+tor_tags=("security" "web" "browser")
+tor_systemcategories=("System" "Utility" "Development" "Network" "WebBrowser" "Security")
+tor_commentary="Browse the Internet with maximum privacy."
 tor_launchernames=("torbrowser")
 tor_packagenames=("torbrowser-launcher")
-tor_readmeline="| Tor browser | Software for enabling anonymous communication by directing Internet traffic. | Command \`tor\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 translator_installationtype="environmental"
 translator_arguments=("translator")
 translator_url="https://translate.google.com/"
@@ -3661,6 +3665,7 @@ transmission_gtk_launchernames=("transmission-gtk")
 transmission_gtk_packagenames=("transmission")
 transmission_gtk_readmeline="| Transmission | A set of lightweight Torrent client (in GUI, CLI and daemon form) | Executable \`transmission\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 trello_installationtype="environmental"
 trello_arguments=("trello")
 trello_url="https://trello.com"
@@ -3687,6 +3692,7 @@ Version=1.0
 ")
 trello_readmeline="| Trello | ${trello_description} | Command \`trello\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 tumblr_installationtype="environmental"
 tumblr_arguments=("tumblr")
 tumblr_url="https://www.tumblr.com/"
@@ -3713,6 +3719,7 @@ Version=1.0
 ")
 tumblr_readmeline="| Tumblr | ${tumblr_description} | Command \`tumblr\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 twitch_arguments=("twitch" "twitch_tv")
 twitch_name="Twitch TV"
 twitch_commentary="Social media to perform live streams from your own computer"
@@ -3724,6 +3731,7 @@ twitch_launcherkeynames=("default")
 twitch_default_exec="xdg-open https://twitch.tv/"
 twitch_bashfunctions=("twitch.sh")
 
+# TODO @AleixMT wontfix
 twitter_installationtype="environmental"
 twitter_arguments=("twitter")
 twitter_url="https://twitter.com/"
@@ -3750,10 +3758,14 @@ Version=1.0
 ")
 twitter_readmeline="| Twitter | ${twitter_description} | Command \`twitter\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-u_installationtype="environmental"
+u_name="Function u"
+u_description="Opens given link in default web browser"
+u_version="1.0"
+u_tags=("bashfunctions" "web" "browser")
+u_systemcategories=("System" "Utility" "Network" "WebBrowser")
+u_commentary="Terminal shortcut to open a URL from terminal"
 u_arguments=("u")
 u_bashfunctions=("u.sh")
-u_readmeline="| Function \`u\` | Opens given link in default web browser | Command \`u\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 uget_installationtype="packagemanager"
 uget_arguments=("uget")
