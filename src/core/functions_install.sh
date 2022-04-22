@@ -1159,6 +1159,10 @@ generic_install_movefiles() {
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the array $1_packagedependencies
 generic_install_dependencies() {
+  if [ "${FLAG_IGNORE_DEPENDENCIES}" -eq 1 ]; then
+    return
+  fi
+
   # Other dependencies to install with the package manager before the main package of software if present
   local -r packagedependencies="$1_packagedependencies[*]"
   if [ "${EUID}" -ne 0 ]; then
@@ -1167,6 +1171,7 @@ generic_install_dependencies() {
       return
     fi
   fi
+
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
     ${PACKAGE_MANAGER_FIXBROKEN}

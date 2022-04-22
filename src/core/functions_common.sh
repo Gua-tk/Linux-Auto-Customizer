@@ -342,11 +342,9 @@ argument_processing()
         FLAG_IGNORE_ERRORS=1
       ;;
 
-      -d|--dirty|--no-autoclean)
-        FLAG_AUTOCLEAN=0
-      ;;
+      # TODO flag autoclean reduce to two states
       -c|--clean)
-        FLAG_AUTOCLEAN=1
+        FLAG_AUTOCLEAN=0
       ;;
       -C|-Clean)
         FLAG_AUTOCLEAN=2
@@ -404,6 +402,13 @@ argument_processing()
         FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES=0
       ;;
 
+      # TODO propagate state to each installation, so it follow s the customizer convention of state machine
+      -d|--dependencies)
+        FLAG_IGNORE_DEPENDENCIES=0
+      ;;
+      -D|--ignore-dependencies)
+        FLAG_IGNORE_DEPENDENCIES=1
+      ;;
 
       --commands)  # Print list of possible arguments and finish the program
         local all_arguments+=("${feature_keynames[@]}")

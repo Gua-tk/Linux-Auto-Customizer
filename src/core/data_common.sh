@@ -394,6 +394,8 @@ FLAG_FAVORITES=0
 FLAG_AUTOSTART=0
 FLAG_SKIP_PRIVILEGES_CHECK=0
 FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES=0
+# In install if set to 1 does not install dependencies, in uninstall if set to 1 uninstall dependencies of the feature
+FLAG_IGNORE_DEPENDENCIES=0
 
 # Common behaviour flags
 FLAG_UPGRADE=1
