@@ -291,7 +291,7 @@ alert_arguments=("alert" "alert_alias" "alias_alert")
 alert_name="Function alert"
 alert_description="Alias to show a notification at the end of a commands"
 alert_version="1.0"
-alert_packagedepedencies=("libnotify-bin")
+alert_packagedependencies=("libnotify-bin")
 alert_tags=("bashfunctions" "notify" "notification")
 alert_systemcategories=("Utility" "System" "Calendar")
 alert_commentary="Useful to remember events"
@@ -3809,6 +3809,7 @@ vncviewer_launcherkeynames=("default")
 vncviewer_binariesinstalledpaths=("vncviewer;vncviewer")
 vncviewer_compressedfileurl=("https://downloads.realvnc.com/download/file/viewer.files/VNC-Viewer-6.21.1109-Linux-x64-ANY.tar.gz")
 
+# TODO @AleixMT wontfix
 whatsapp_installationtype="environmental"
 whatsapp_arguments=("whatsapp")
 whatsapp_url="https://web.whatsapp.com/"
@@ -3835,6 +3836,7 @@ Version=1.0
 ")
 whatsapp_readmeline="| Whatsapp Web | ${whatsapp_description} | Command \`whatsapp\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 wikipedia_installationtype="environmental"
 wikipedia_arguments=("wikipedia")
 wikipedia_url="https://www.wikipedia.org/"
@@ -4069,31 +4071,17 @@ z_arguments=("z" "z_function")
 z_readmeline="| Function \`z\` | function to compress files given a type and a set of pats to files | Command \`z\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
 z_bashfunctions=("z.sh")
 
-zoom_installationtype="userinherit"
+
+####### LINE OF TRIMMING, BELOW IS TRIMMED AND TESTED ########
 zoom_arguments=("zoom")
-zoom_packagedependencies=("libglib2.0-0"
-#"libgstreamer-plugins-base0.10-0"
-"libxcb-shape0" "libxcb-shm0" "libxcb-xfixes0" "libxcb-randr0" "libxcb-image0" "libfontconfig1" "libgl1-mesa-glx" "libxi6" "libsm6" "libxrender1" "libpulse0" "libxcomposite1" "libxslt1.1" "libsqlite3-0" "libxcb-keysyms1" "ibus" "libxcb-xtest0" "libqt5quickwidgets5")
+zoom_description="Live video streaming for meetings and productivity"
+zoom_commentary="Yet another videochat application"
+zoom_tags=("social" "videoCalls" "communication")
+zoom_name="Zoom"
+zoom_version="Vendor dependent"
+zoom_systemcategories=("AudioVideo" "Network" "Education")
+zoom_packagedependencies=("libglib2.0-0" "libxcb-shape0" "libxcb-shm0" "libxcb-xfixes0" "libxcb-randr0" "libxcb-image0" "libfontconfig1" "libgl1-mesa-glx" "libxi6" "libsm6" "libxrender1" "libpulse0" "libxcomposite1" "libxslt1.1" "libsqlite3-0" "libxcb-keysyms1" "ibus" "libxcb-xtest0" "libqt5quickwidgets5")
 zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
-zoom_compressedfileurl="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
-zoom_downloads=("https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/zoom.svg;zoom_icon.svg")
-zoom_description="Live Video Streaming for Meetings"
-zoom_launchercontents=("
-[Desktop Entry]
-Categories=Social;Communication;
-Comment=${zoom_description}
-Encoding=UTF-8
-GenericName=Video multiple calls
-Icon=${BIN_FOLDER}/zoom/zoom_icon.svg
-Keywords=Social;VideoCalls;
-MimeType=
-Name=Zoom
-StartupNotify=true
-StartupWMClass=zoom
-Terminal=false
-TryExec=ZoomLauncher
-Type=Application
-Version=1.0
-Exec=ZoomLauncher
-")
-zoom_readmeline="| Zoom | ${zoom_description} | Command \`zoom\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+zoom_downloadKeys=("bundle")
+zoom_bundle_URL="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
+zoom_launcherkeynames=("defaultLauncher")

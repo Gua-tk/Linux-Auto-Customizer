@@ -549,8 +549,11 @@ deduce_privileges()
     # If override not present, check if we need to use a package manager or install a package to deduce if we need
     # special permissions
     local -r packageNames="$1_packagenames"
-    local -r downloadKeys="$1_downloadKeys[@]"
+    local -r downloadKeys="$1_downloadKeys[*]"
+    local -r dependencies="$1_packagedependencies[*]"
     if [ -n "${!packageNames}" ]; then
+      flag_privileges=0
+    elif [ -n "${!dependencies}" ]; then
       flag_privileges=0
     elif [ -n "${!downloadKeys}" ]; then
       # We do not enforce require permissions unless we see a package download type
