@@ -385,9 +385,10 @@ audacity_systemcategories=("Audio" "Music")
 audacity_launcherkeynames=("default")
 audacity_default_exec="audacity"
 audacity_bashfunctions=("audacity.sh")
-audacity_launchernames=("audacity")
+audacity_launchernames=("audacity") # TODO @AleixMT imort launcher data
 audacity_packagenames=("audacity" "audacity-data")
 
+# TODO @AleixMT chnage keyname to be in small letter
 AutoFirma_arguments=("auto_firma")
 AutoFirma_name="AutoFirma"
 AutoFirma_commentary="For the spanish DNI v3.0"
@@ -837,6 +838,7 @@ docker_commentary="Application isolation"
 docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 
+# TODO @AleixMT wontfix
 documents_arguments=("documents" "google_document" "google_documents" "document")
 documents_name="Google Documents"
 documents_description="Google Documents opening in Chrome"
@@ -848,6 +850,7 @@ documents_commentary="take notes or edit rich text documents"
 documents_tags=("internet_shortcuts")
 documents_default_exec="xdg-open https://docs.google.com/document/"
 
+# TODO @AleixMT wontfix
 drive_arguments=("drive" "google_drive")
 drive_name="Google Drive"
 drive_description="Google Drive opening in Chrome"
@@ -868,6 +871,7 @@ dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbo
 dropbox_package_manager_override="apt-get"
 dropbox_readmeline="| Dropbox | File hosting service | Command \`dropbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix, trim and test. if not working will be deleted
 drupal_installationtype="userinherit"
 drupal_arguments=("drupal")
 drupal_compressedfilepathoverride="/var/www/html"
@@ -907,6 +911,7 @@ uninstall_drupal_post()
   remove_folder /var/www/html/drupal/
 }
 
+# TODO @AleixMT wontfix
 duckduckgo_arguments=("duckduckgo")
 duckduckgo_name="Duckduckgo"
 duckduckgo_description="Duckduckgo opening in Chrome"
@@ -920,6 +925,7 @@ duckduckgo_url="https://duckduckgo.com/"
 duckduckgo_bashfunctions=("duckduckgo.sh")
 duckduckgo_description="Opens DuckDuckGo in Chrome"
 
+# TODO @AleixMT reorder
 vommit_arguments=("vommit")
 vommit_name="Function b"
 vommit_description="Function that do git add -a, git commit commit, git push"
@@ -1015,6 +1021,7 @@ Version=1.0
 ")
 f_irc_readmeline="| f-irc | ${f_irc_description} | Command \`f-irc\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 facebook_installationtype="environmental"
 facebook_arguments=("facebook")
 facebook_url="https://facebook.com/"
@@ -1141,6 +1148,7 @@ fonts_roboto_arguments=("fonts_roboto")
 fonts_roboto_packagenames=("fonts-roboto")
 fonts_roboto_readmeline="| fonts-roboto | Installs font| Install roboto font ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 forms_installationtype="environmental"
 forms_arguments=("forms" "google_forms")
 forms_url="https://docs.google.com/forms/"
@@ -1244,6 +1252,7 @@ uninstall_gitcm_post()
   :
 }
 
+# TODO @AleixMT wontfix or delete in favor of github desktop
 github_installationtype="environmental"
 github_arguments=("github")
 github_url="https://github.com/"
@@ -1285,6 +1294,7 @@ gitk_bashfunctions=("gitk.sh")
 gitk_packagenames=("gitk")
 gitk_readmeline="| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix (change to gitlab software)
 gitlab_installationtype="environmental"
 gitlab_arguments=("gitlab")
 gitlab_url="https://gitlab.com/"
@@ -1317,6 +1327,7 @@ gitprompt_bashfunctions=("gitprompt.sh")
 gitprompt_readmeline="| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 gitprompt_repositoryurl="https://github.com/magicmonty/bash-git-prompt.git"
 
+# TODO @AleixMT wontfix
 gmail_installationtype="environmental"
 gmail_arguments=("gmail")
 gmail_url="https://mail.google.com/"
@@ -1360,30 +1371,35 @@ Keywords=ide;editor;ada;c
 gnat_gps_packagenames=("gnat-gps")
 gnat_gps_readmeline="| GNAT | ${gnat_gps_description} | Command \`gnat-gps\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT change to one word keyname
 gnome_calculator_installationtype="packagemanager"
 gnome_calculator_arguments=("gnome_calculator" "calculator" "calc")
 gnome_calculator_launchernames=("org.gnome.Calculator")
 gnome_calculator_packagenames=("gnome-calculator")
 gnome_calculator_readmeline="| Calculator | GUI calculator| Commmand \`calculator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT change to one word keyname
 gnome_chess_installationtype="packagemanager"
 gnome_chess_arguments=("gnome_chess" "chess")
 gnome_chess_launchernames=("org.gnome.Chess")
 gnome_chess_packagenames=("gnome-chess")
 gnome_chess_readmeline="| Chess | Plays a full game of chess against a human being or other computer program | Command \`gnome-chess\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT change to one word keyname
 gnome_mahjongg_installationtype="packagemanager"
 gnome_mahjongg_arguments=("gnome_mahjongg" "mahjongg")
 gnome_mahjongg_launchernames=("org.gnome.Mahjongg")
 gnome_mahjongg_packagenames=("gnome-mahjongg")
 gnome_mahjongg_readmeline="| Mahjongg | Implementation for GNU systems of the famous popular chinese game Mahjongg | Command \`gnome-mahjongg\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT change to one word keyname
 gnome_mines_installationtype="packagemanager"
 gnome_mines_arguments=("gnome_mines" "mines")
 gnome_mines_launchernames=("org.gnome.Mines")
 gnome_mines_packagenames=("gnome-mines")
 gnome_mines_readmeline="| Mines | Implementation for GNU systems of the famous game mines | Command \`gnome-mines\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT change to one word keyname
 gnome_sudoku_installationtype="packagemanager"
 gnome_sudoku_arguments=("gnome_sudoku" "sudoku")
 gnome_sudoku_launchernames=("org.gnome.Sudoku")
@@ -1397,6 +1413,7 @@ gnome_terminal_launchernames=("org.gnome.Terminal")
 gnome_terminal_packagenames=("gnome-terminal")
 gnome_terminal_readmeline="| GNOME terminal | Terminal of the system | Command \`gnome-terminal\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT change to one word keyname
 gnome_tweak_tool_installationtype="packagemanager"
 gnome_tweak_tool_arguments=("gnome_tweak_tool" "tweaks" "gnome_tweak" "gnome_tweak_tools" "gnome_tweaks")
 gnome_tweak_tool_packagenames=("gnome-tweak-tool")
@@ -1411,6 +1428,7 @@ go_flagsoverride="0;;;;;"  # Install always as root
 go_bashinitializations=("go.sh")
 go_readmeline="| go | programming language | command \`go\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 google_installationtype="environmental"
 google_arguments=("google")
 google_url="https://www.google.com/"
@@ -1463,6 +1481,7 @@ Version=1.0
 ")
 googlecalendar_readmeline="| Google Calendar | ${googlecalendar_description} | Command \`googlecalendar\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT chnage keyname to chrome
 google_chrome_name="Google Chrome"
 google_chrome_arguments=("google_chrome")
 google_chrome_bashfunctions=("google_chrome.sh")
@@ -1541,6 +1560,7 @@ hardinfo_packagenames=("hardinfo")
 hardinfo_launchernames=("hardinfo")
 hardinfo_readmeline="| Hardinfo | Check pc hardware info | Command \`hardinfo\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT change keyname to one word
 history_optimization_installationtype="environmental"
 history_optimization_arguments=("history_optimization")
 history_optimization_bashfunctions=("history_optimization.sh")
@@ -1614,6 +1634,7 @@ inkscape_launchernames=("inkscape")
 inkscape_packagenames=("inkscape")
 inkscape_readmeline="| Inkscape | Vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format | Command \`inkscape\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 instagram_installationtype="environmental"
 instagram_arguments=("instagram")
 instagram_url="https://instagram.com"
@@ -1711,6 +1732,7 @@ Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;P
 ")
 julia_readmeline="| Julia and IJulia | ${julia_description} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT change keyname to single word such jupyter
 jupyter_lab_installationtype="pythonvenv"
 jupyter_lab_arguments=("jupyter_lab" "jupyter" "lab")
 jupyter_lab_bashfunctions=("jupyter_lab.sh")
@@ -1792,6 +1814,7 @@ k_arguments=("k")
 k_bashfunctions=("k.sh")
 k_readmeline="| Function \`k\` | Kill processes by PID and name of process | Command \`k\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
+# TODO @AleixMT wontfix
 keep_installationtype="environmental"
 keep_arguments=("keep" "google_keep")
 keep_url="https://keep.google.com/"
@@ -1864,16 +1887,19 @@ latex_packagedependencies=("perl-tk" )
 latex_packagenames=("texlive-latex-extra" "texmaker" "perl-tk")
 latex_readmeline="| LaTeX | ${latex_description} | Command \`tex\` (LaTeX compiler) and \`texmaker\` (LaTeX IDE), desktop launchers for \`texmaker\` and LaTeX documentation ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT integrate into anydesk
 libgtkglext1_installationtype="packagemanager"
 libgtkglext1_arguments=("libgtkglext1" "anydesk_dependencies")
 libgtkglext1_packagenames=("libgtkglext1")
 libgtkglext1_readmeline="| libgtkglext1 | Anydesk dependency | Used when Anydesk is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT integrate into ? (discover what program has dependency) or delete
 libkrb5_dev_installationtype="packagemanager"
 libkrb5_dev_arguments=("libkrb5_dev" "kerberos_dependencies")
 libkrb5_dev_packagenames=("libkrb5-dev")
 libkrb5_dev_readmeline="| libkrb5-dev | Kerberos dependency | Used when Jupiter Lab is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT integrate into zoom
 libxcb_xtest0_installationtype="packagemanager"
 libxcb_xtest0_arguments=("libxcb_xtest0")
 libxcb_xtest0_packagenames=("libxcb-xtest0")
@@ -2577,6 +2603,7 @@ NoDisplay=false
 nemo_flagsoverride=";;;;;1"  # Always autostart
 nemo_keybindings=("nemo;<Super>e;Nemo File Explorer")
 
+# TODO @AleixMT wontfix
 netflix_installationtype="environmental"
 netflix_arguments=("netflix")
 netflix_url="https://www.netflix.com"
@@ -2631,6 +2658,7 @@ notepadqq_packagenames=("notepadqq")
 notepadqq_launchernames=("notepadqq")
 notepadqq_readmeline="| Notepadqq | Text editor that is designed by developers for the developers. It supports more than 100 programming languages | Command \`notepadqq\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 notflix_installationtype="environmental"
 notflix_arguments=("notflix")
 notflix_packagedependencies=("curl" "vlc")
@@ -2668,6 +2696,7 @@ okular_launchernames=("org.kde.okular")
 okular_packagenames=("okular")
 okular_readmeline="| Okular | PDF viewer | Command \`okular\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix substitute by github.com/abraunegg/onedrive with clone install
 onedrive_installationtype="environmental"
 onedrive_arguments=("onedrive")
 onedrive_url="https://onedrive.live.com/"
@@ -2692,7 +2721,6 @@ TryExec=xdg-open
 Type=Application
 Version=1.0
 ")
-
 onedrive_readmeline="| OneDrive | ${onedrive_description} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 libreoffice_installationtype="packagemanager"
@@ -2744,7 +2772,7 @@ uninstall_openssh_server_post()
   done
 }
 
-
+# TODO @AleixMT wontfix
 outlook_installationtype="environmental"
 outlook_arguments=("outlook")
 outlook_url="https://outlook.live.com"
@@ -2771,6 +2799,7 @@ Version=1.0
 ")
 outlook_readmeline="| Outlook | ${outlook_description} | Command \`outlook\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 overleaf_installationtype="environmental"
 overleaf_arguments=("overleaf")
 overleaf_url="https://www.overleaf.com/"
@@ -2919,6 +2948,7 @@ Categories=Development;
 ")
 postman_readmeline="| Postman | ${postman_description} | Command \`postman\`, desktop launcher and dashboard launcher  ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 presentation_installationtype="environmental"
 presentation_arguments=("presentation" "google_presentation")
 presentation_url="https://docs.google.com/presentation/"
@@ -2977,11 +3007,8 @@ pycharm_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "D
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharm_bashfunctions=("pycharm.sh")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
-
-
 pycharm_downloadKeys=("bundle")
 pycharm_bundle_URL="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
-
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
 pycharm_launcherkeynames=("launcher")
 pycharm_launcher_exec="pycharm %F"
@@ -3058,6 +3085,7 @@ R_packagenames=("r-base")
 R_packagedependencies=("libzmq3-dev" "python3-zmq")
 R_readmeline="| R | Programming language | Commands \`R\`, Dashboard Launcher, Desktop Launcher|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
+# TODO @AleixMT wontfix
 reddit_installationtype="environmental"
 reddit_arguments=("reddit")
 reddit_url="https://www.reddit.com/"
@@ -3240,6 +3268,7 @@ shotwell_launchernames=("shotwell")
 shotwell_packagenames=("shotwell")
 shotwell_readmeline="| Shotwell | Cross-platform video editing | Command \`shotwell\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 skype_installationtype="packageinstall"
 skype_arguments=("skype")
 skype_packagenames=("skype")
@@ -3268,6 +3297,7 @@ sonic_pi_launchernames=("sonic-pi")
 sonic_pi_packagenames=("sonic-pi")
 sonic_pi_readmeline="| Sonic Pi | programming language that ouputs sounds as compilation product | Command \`sonic-pi\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
+# TODO @AleixMT wontfix
 soundcloud_installationtype="environmental"
 soundcloud_arguments=("soundcloud")
 soundcloud_url="https://www.soundcloud.com/"
@@ -3320,6 +3350,7 @@ spotify_package_manager_override="apt-get"
 spotify_packagedependencies=("libgconf-2-4")
 spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
+# TODO @AleixMT wontfix
 spreadsheets_installationtype="environmental"
 spreadsheets_arguments=("spreadsheets" "google_spreadsheets")
 spreadsheets_url="https://docs.google.com/spreadsheets/"
@@ -3512,6 +3543,7 @@ teams_packagenames=("teams")
 teams_packageurls=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")
 teams_readmeline="| Microsoft Teams | Video Conference, calls and meetings | Command \`teams\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
+# TODO @AleixMT wontfix
 telegram_installationtype="userinherit"
 telegram_arguments=("telegram")
 telegram_binariesinstalledpaths=("Telegram;telegram")
@@ -4004,6 +4036,7 @@ xclip_arguments=("x_clip")
 xclip_packagenames=("xclip")
 xclip_readmeline="| \`xclip\` | Utility for pasting. | Command \`xclip\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 youtube_installationtype="environmental"
 youtube_arguments=("youtube")
 youtube_url="https://youtube.com/"
@@ -4037,6 +4070,7 @@ youtube_dl_binariesinstalledpaths=("youtube-dl;youtube-dl")
 youtube_dl_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl")
 youtube_dl_readmeline="| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command \`youtube-dl\` in the PATH and alias \`youtube-wav\` to scratch a mp3 from youtube || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT wontfix
 youtubemusic_installationtype="environmental"
 youtubemusic_url="https://music.youtube.com"
 youtubemusic_filekeys=("youtubemusicscript")
