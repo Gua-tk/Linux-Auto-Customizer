@@ -4100,13 +4100,18 @@ Version=1.0
 ")
 youtubemusic_readmeline="| Youtube Music | ${youtubemusic_description} | Command \`youtubemusic\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+####### LINE OF TRIMMING, BELOW IS TRIMMED ########
+
 z_installationtype="environmental"
 z_arguments=("z" "z_function")
-z_readmeline="| Function \`z\` | function to compress files given a type and a set of pats to files | Command \`z\` || <ul><li>- [x] Ubuntu</li><li>- [ ] Debian</li></ul> |"
+z_description="Function to compress files given a format and a set of pats to files"
+z_commentary="You may now forget all particular commands to compress a file"
+z_tags=("utility" "system" "bashFunction")
+z_name="Function z"
+z_version="1.0"
+z_systemcategories=("Utility" "System")
 z_bashfunctions=("z.sh")
 
-
-####### LINE OF TRIMMING, BELOW IS TRIMMED AND TESTED ########
 zoom_arguments=("zoom")
 zoom_description="Live video streaming for meetings and productivity"
 zoom_commentary="Yet another videochat application"
@@ -4119,3 +4124,5 @@ zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
 zoom_downloadKeys=("bundle")
 zoom_bundle_URL="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
 zoom_launcherkeynames=("defaultLauncher")
+
+####### LINE OF TESTING, BELOW IS TESTED ########
