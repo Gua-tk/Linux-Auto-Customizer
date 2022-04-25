@@ -284,7 +284,7 @@ aisleriot_systemcategories=("Game" "CardGame")
 aisleriot_bashfunctions=("aisleriot.sh")
 aisleriot_launcherkeynames=("default")
 aisleriot_default_exec="sol"
-aisleriot_launchernames=("sol")
+aisleriot_launchernames=("sol")  # TODO @AleixMT extract launcher data
 aisleriot_packagenames=("aisleriot")
 
 alert_arguments=("alert" "alert_alias" "alias_alert")
@@ -351,7 +351,7 @@ ardour_systemcategories=("Audio" "Music")
 ardour_launcherkeynames=("default")
 ardour_default_exec="ardour5"
 ardour_bashfunctions=("ardour.sh")
-ardour_packagenames=("ardour")
+ardour_packagenames=("ardour")  # TODO @AleixMT extract launcher data
 ardour_launchernames=("ardour")
 
 aspell_arguments=("aspell")
@@ -372,7 +372,7 @@ atom_icon="atom.png"
 atom_systemcategories=("IDE" "TextTools" "TextEditor" "Development")
 atom_launcherkeynames=("default")
 atom_default_exec="atom"
-atom_launchernames=("atom")
+atom_launchernames=("atom")  # TODO @AleixMT extract launcher data
 atom_packageurls=("https://atom.io/download/deb")
 
 audacity_arguments=("audacity")
@@ -401,7 +401,7 @@ AutoFirma_launcherkeynames=("default")
 AutoFirma_default_exec="AutoFirma"
 AutoFirma_bashfunctions=("AutoFirma.sh")
 AutoFirma_packageurls=("https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip")
-AutoFirma_launchernames=("afirma")
+AutoFirma_launchernames=("afirma")  # TODO @AleixMT extract launcher data
 AutoFirma_packagedependencies=("libnss3-tools")
 AutoFirma_packagenames=("AutoFirma")
 
@@ -490,7 +490,7 @@ c_bashfunctions=("c.sh")
 
 caffeine_installationtype="packagemanager"
 caffeine_arguments=("caffeine" "coffee" "cafe")
-caffeine_launchernames=("caffeine-indicator")
+caffeine_launchernames=("caffeine-indicator")  # TODO @AleixMT extract launcher data
 caffeine_manualcontentavailable="1;0;1"
 caffeine_packagenames=("caffeine")
 caffeine_readmeline="| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the sleep power saving mode. | Commands \`caffeine\`, \`caffeinate\` and \`caffeine-indicator\`, desktop launcher for \`caffeine\`, dashboard launcher for \`caffeine\` and \`caffeine-indicator\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
@@ -515,7 +515,7 @@ calibre_installationtype="packagemanager"
 calibre_arguments=("calibre")
 calibre_bashfunctions=("calibre.sh")
 calibre_launchernames=("calibre-gui")
-calibre_packagenames=("calibre")
+calibre_packagenames=("calibre")  # TODO @AleixMT extract launcher data
 calibre_readmeline="| Calibre | e-book reader| Commmand \`calibre\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 changebg_installationtype="repositoryclone"
@@ -552,7 +552,7 @@ checkout_readmeline="| Function \`checkout\` | alias for \`git checkout\` | Comm
 cheese_installationtype="packagemanager"
 cheese_arguments=("cheese")
 cheese_bashfunctions=("cheese.sh")
-cheese_launchernames=("org.gnome.Cheese")
+cheese_launchernames=("org.gnome.Cheese")  # TODO @AleixMT extract launcher data
 cheese_packagenames=("cheese")
 cheese_readmeline="| Cheese | GNOME webcam application | Command \`cheese\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -564,7 +564,7 @@ clean_readmeline="| Function \`clean\` | Remove files and contents from the tras
 clementine_installationtype="packagemanager"
 clementine_arguments=("clementine")
 clementine_bashfunctions=("clementine.sh")
-clementine_launchernames=("clementine")
+clementine_launchernames=("clementine")  # TODO @AleixMT extract launcher data
 clementine_packagenames=("clementine")
 clementine_readmeline="| Clementine | Modern music player and library organizer | Command \`clementine\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -681,7 +681,7 @@ code_readmeline="| Visual Studio Code | ${code_description} | Command \`code\`, 
 codeblocks_installationtype="packagemanager"
 codeblocks_arguments=("codeblocks" "code::blocks")
 codeblocks_bashfunctions=("codeblocks.sh")
-codeblocks_launchernames=("codeblocks")
+codeblocks_launchernames=("codeblocks")  # TODO @AleixMT extract launcher data
 codeblocks_packagenames=("codeblocks")
 codeblocks_readmeline="| Code::Blocks | IDE for programming  | Command \`codeblocks\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -740,7 +740,7 @@ copyq_tags=("history" "clipboard")
 copyq_systemcategories=("System" "Utility")
 copyq_commentary="Autostart enabled"
 copyq_launchernames=("com.github.hluk.copyq")
-copyq_packagenames=("copyq")
+copyq_packagenames=("copyq")  # TODO @AleixMT extract launcher data
 copyq_flagsoverride=";;;;;1"  # Always autostart
 
 curl_arguments=("curl")
@@ -4063,6 +4063,7 @@ Version=1.0
 ")
 youtube_readmeline="| Youtube | ${youtube_description} | Command \`youtube\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO @AleixMT refactor feature name
 youtube_dl_installationtype="environmental"
 youtube_dl_arguments=("youtube_dl")
 youtube_dl_bashfunctions=("youtube_dl.sh")
