@@ -838,7 +838,6 @@ docker_commentary="Application isolation"
 docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 
-# TODO @AleixMT wontfix
 documents_arguments=("documents" "google_document" "google_documents" "document")
 documents_name="Google Documents"
 documents_description="Google Documents opening in Chrome"
@@ -847,19 +846,18 @@ documents_bashfunctions=("documents.sh")
 documents_launcherkeynames=("default")
 documents_systemcategories=("Office" "Documentation" "WebBrowser" "WordProcessor" "FlowChart")
 documents_commentary="take notes or edit rich text documents"
-documents_tags=("internet_shortcuts")
+documents_tags=("google" "internet_shortcuts")
 documents_default_exec="xdg-open https://docs.google.com/document/"
 
-# TODO @AleixMT wontfix
 drive_arguments=("drive" "google_drive")
 drive_name="Google Drive"
 drive_description="Google Drive opening in Chrome"
 drive_version="Google dependent"
 drive_bashfunctions=("drive.sh")
 drive_launcherkeynames=("default")
-drive_systemcategories=("ProjectManagement" "Documentation" "WordProcessor")
+drive_systemcategories=("ProjectManagement" "Documentation")
 drive_commentary="File hosting service from Google"
-drive_tags=("internet_shortcuts")
+drive_tags=("google" "internet_shortcuts")
 drive_default_exec="xdg-open https://drive.google.com/"
 
 dropbox_installationtype="packageinstall"
@@ -911,29 +909,17 @@ uninstall_drupal_post()
   remove_folder /var/www/html/drupal/
 }
 
-# TODO @AleixMT wontfix
 duckduckgo_arguments=("duckduckgo")
 duckduckgo_name="Duckduckgo"
 duckduckgo_description="Duckduckgo opening in Chrome"
 duckduckgo_version="Google dependent"
-duckduckgo_bashfunctions=("documents.sh")
-duckduckgo_launcherkeynames=("default")
-duckduckgo_systemcategories=("Office" "Documentation" "WebBrowser" "WordProcessor" "FlowChart")
+duckduckgo_systemcategories=("WebBrowser")
 duckduckgo_commentary="take notes or edit rich text documents"
-duckduckgo_tags=("search")
-duckduckgo_url="https://duckduckgo.com/"
+duckduckgo_tags=("search" "internet_shortcuts")
 duckduckgo_bashfunctions=("duckduckgo.sh")
+duckduckgo_launcherkeynames=("default")
+duckduckgo_default_exec="xdg-open https://duckduckgo.com/"
 duckduckgo_description="Opens DuckDuckGo in Chrome"
-
-# TODO @AleixMT reorder
-vommit_arguments=("vommit")
-vommit_name="Function b"
-vommit_description="Function that do git add -a, git commit commit, git push"
-vommit_version="1.0"
-vommit_tags=("bashfunctions" "bash")
-vommit_systemcategories=("System" "Utility")
-vommit_commentary="Dummy commit"
-vommit_bashfunctions=("vommit.sh")
 
 e_arguments=("e")
 e_name="Function e"
@@ -1021,31 +1007,17 @@ Version=1.0
 ")
 f_irc_readmeline="| f-irc | ${f_irc_description} | Command \`f-irc\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix
-facebook_installationtype="environmental"
 facebook_arguments=("facebook")
-facebook_url="https://facebook.com/"
 facebook_bashfunctions=("facebook.sh")
-facebook_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg;facebook_icon.svg")
-facebook_description="Desktop app to facebook from Chrome"
-facebook_launchercontents=("[Desktop Entry]
-Categories=Network;
-Comment=${facebook_description}
-Encoding=UTF-8
-Exec=xdg-open ${facebook_url}
-Icon=${BIN_FOLDER}/facebook/facebook_icon.svg
-GenericName=Facebook
-Keywords=facebook;
-MimeType=
-Name=Facebook
-StartupNotify=true
-StartupWMClass=Facebook
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-facebook_readmeline="| Facebook | ${facebook_description} | Command \`facebook\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+facebook_name="Facebook"
+facebook_description="Facebook opening in Chrome"
+facebook_version="Google dependent"
+facebook_systemcategories=("InstantMessaging" "Chat" "Feed")
+facebook_commentary="Social media"
+facebook_tags=("social" "internet_shortcuts")
+facebook_bashfunctions=("facebook.sh")
+facebook_launcherkeynames=("default")
+facebook_default_exec="xdg-open https://facebook.com/"
 
 fastcommands_installationtype="environmental"
 fastcommands_arguments=("fast_commands")
@@ -1148,31 +1120,16 @@ fonts_roboto_arguments=("fonts_roboto")
 fonts_roboto_packagenames=("fonts-roboto")
 fonts_roboto_readmeline="| fonts-roboto | Installs font| Install roboto font ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix
-forms_installationtype="environmental"
 forms_arguments=("forms" "google_forms")
-forms_url="https://docs.google.com/forms/"
-forms_bashfunctions=("forms.sh")
-forms_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Forms_2020_Logo.svg;forms_icon.svg")
+forms_name="Google Forms"
 forms_description="Google Forms opening in Chrome"
-forms_launchercontents=("[Desktop Entry]
-Categories=Network;
-Comment=${forms_description}
-Encoding=UTF-8
-Exec=xdg-open ${forms_url}
-Icon=${BIN_FOLDER}/forms/forms_icon.svg
-GenericName=Document
-Keywords=forms;
-MimeType=
-Name=Google Forms
-StartupNotify=true
-StartupWMClass=Google Forms
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-forms_readmeline="| Forms | ${forms_description} | Command \`forms\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+forms_version="Google dependent"
+forms_systemcategories=("Documentation")
+forms_commentary="make polls and surveys to retrieve statistical data"
+forms_tags=("google" "internet_shortcuts")
+forms_bashfunctions=("forms.sh")
+forms_launcherkeynames=("default")
+forms_default_exec="xdg-open https://docs.google.com/forms/"
 
 freecad_installationtype="packagemanager"
 freecad_arguments=("freecad")
@@ -1252,32 +1209,16 @@ uninstall_gitcm_post()
   :
 }
 
-# TODO @AleixMT wontfix or delete in favor of github desktop
-github_installationtype="environmental"
 github_arguments=("github")
-github_url="https://github.com/"
+github_name="Github"
+github_description="Github opening in Chrome"
+github_version="Google dependent"
+github_systemcategories=("RevisionControl")
+github_commentary="Hosting repositories online"
+github_tags=("internet_shortcuts")
 github_bashfunctions=("github.sh")
-github_downloads=("https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg;github_icon.svg")
-github_description="GitHub opening in Chrome"
-github_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${github_description}
-Encoding=UTF-8
-Exec=xdg-open ${github_url}
-Icon=${BIN_FOLDER}/github/github_icon.svg
-GenericName=GitHub
-Keywords=github;
-MimeType=
-Name=GitHub
-StartupNotify=true
-StartupWMClass=GitHub
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-github_readmeline="| GitHub | ${github_description} | Command \`github\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+github_launcherkeynames=("default")
+github_default_exec="xdg-open https://github.com/"
 
 github_desktop_installationtype="packageinstall"
 github_desktop_arguments=("github_desktop")
@@ -1294,32 +1235,16 @@ gitk_bashfunctions=("gitk.sh")
 gitk_packagenames=("gitk")
 gitk_readmeline="| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix (change to gitlab software)
-gitlab_installationtype="environmental"
-gitlab_arguments=("gitlab")
-gitlab_url="https://gitlab.com/"
-gitlab_bashfunctions=("gitlab.sh")
-gitlab_downloads=("https://about.gitlab.com/images/press/logo/svg/gitlab-icon-rgb.svg;gitlab_icon.svg")
+gitlab_arguments=("git_lab")
+gitlab_name="Gitlab"
 gitlab_description="Gitlab opening in Chrome"
-gitlab_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${gitlab_description}
-Encoding=UTF-8
-Exec=xdg-open ${gitlab_url}
-Icon=${BIN_FOLDER}/gitlab/gitlab_icon.svg
-GenericName=Code repository online
-Keywords=gitlab;
-MimeType=
-Name=GitLab
-StartupNotify=true
-StartupWMClass=GitLab
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-gitlab_readmeline="| GitLab | ${gitlab_description} | Command || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+gitlab_version="Google dependent"
+gitlab_systemcategories=("RevisionControl")
+gitlab_commentary="Hosting repositories online"
+gitlab_tags=("search" "internet_shortcuts")
+gitlab_bashfunctions=("gitlab.sh")
+gitlab_launcherkeynames=("default")
+gitlab_default_exec="xdg-open https://gitlab.com/"
 
 gitprompt_installationtype="repositoryclone"
 gitprompt_arguments=("git_prompt")
@@ -1327,32 +1252,16 @@ gitprompt_bashfunctions=("gitprompt.sh")
 gitprompt_readmeline="| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 gitprompt_repositoryurl="https://github.com/magicmonty/bash-git-prompt.git"
 
-# TODO @AleixMT wontfix
-gmail_installationtype="environmental"
-gmail_arguments=("gmail")
-gmail_url="https://mail.google.com/"
+gmail_arguments=("gmail" "google_mail")
+gmail_name="Gmail"
+gmail_version="Google dependent"
+gmail_systemcategories=("Email")
+gmail_commentary="Send/Receive e-mails"
+gmail_tags=("email" "internet_shortcuts")
 gmail_bashfunctions=("gmail.sh")
-gmail_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg;gmail_icon.svg")
+gmail_launcherkeynames=("default")
+gmail_default_exec="xdg-open https://mail.google.com/"
 gmail_description="Gmail opening in Chrome"
-gmail_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${gmail_description}
-Encoding=UTF-8
-Exec=xdg-open ${gmail_url}
-Icon=${BIN_FOLDER}/gmail/gmail_icon.svg
-GenericName=Gmail
-Keywords=gmail;
-MimeType=
-Name=Gmail
-StartupNotify=true
-StartupWMClass=Gmail
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-gmail_readmeline="| Gmail | ${gmail_description} | Command \`gmail\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gnat_gps_installationtype="packagemanager"
 gnat_gps_arguments=("gnat_gps")
@@ -1428,58 +1337,27 @@ go_flagsoverride="0;;;;;"  # Install always as root
 go_bashinitializations=("go.sh")
 go_readmeline="| go | programming language | command \`go\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix
-google_installationtype="environmental"
 google_arguments=("google")
-google_url="https://www.google.com/"
+google_name="Google"
+google_version="Google dependent"
+google_systemcategories=("Documentation")
+google_commentary="Search any content in the internet"
+google_tags=("search" "internet_shortcuts")
 google_bashfunctions=("google.sh")
-google_downloads=("https://upload.wikimedia.org/wikipedia/commons/5/53/Google_\"G\"_Logo.svg;google_icon.svg")
-google_description="Google opening in Chrome"
-google_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${google_description}
-Encoding=UTF-8
-Exec=xdg-open ${google_url}
-Icon=${BIN_FOLDER}/google/google_icon.svg
-GenericName=Google
-Keywords=google;
-MimeType=
-Name=Google
-StartupNotify=true
-StartupWMClass=Google
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-google_readmeline="| Google | ${google_description} | Command \`google\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+google_launcherkeynames=("default")
+google_default_exec="xdg-open https://www.google.com/"
+google_description="google opening in Chrome"
 
-googlecalendar_installationtype="environmental"
 googlecalendar_arguments=("google_calendar")
-googlecalendar_url="https://calendar.google.com/"
+googlecalendar_name="Google Calendar"
+googlecalendar_version="Google dependent"
+googlecalendar_systemcategories=("Calendar")
+googlecalendar_commentary="Calendar, add, edit and remove events"
+googlecalendar_tags=("search" "internet_shortcuts")
 googlecalendar_bashfunctions=("googlecalendar.sh")
-googlecalendar_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg;googlecalendar_icon.svg")
+googlecalendar_launcherkeynames=("default")
+googlecalendar_default_exec="xdg-open https://calendar.google.com/"
 googlecalendar_description="Google Calendar opening in Chrome"
-googlecalendar_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${googlecalendar_description}
-Encoding=UTF-8
-Exec=xdg-open ${googlecalendar_url}
-Icon=${BIN_FOLDER}/googlecalendar/googlecalendar_icon.svg
-GenericName=Google Calendar
-Keywords=google-calendar;
-MimeType=
-Name=Google Calendar
-StartupNotify=true
-StartupWMClass=Google Calendar
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-googlecalendar_readmeline="| Google Calendar | ${googlecalendar_description} | Command \`googlecalendar\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 # TODO @AleixMT chnage keyname to chrome
 google_chrome_name="Google Chrome"
@@ -1634,32 +1512,16 @@ inkscape_launchernames=("inkscape")
 inkscape_packagenames=("inkscape")
 inkscape_readmeline="| Inkscape | Vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format | Command \`inkscape\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix
-instagram_installationtype="environmental"
 instagram_arguments=("instagram")
-instagram_url="https://instagram.com"
+instagram_name="Instagram"
+instagram_version="Google dependent"
+instagram_systemcategories=("Calendar")
+instagram_commentary="Calendar, add and remove events"
+instagram_tags=("search" "internet_shortcuts")
 instagram_bashfunctions=("instagram.sh")
-instagram_downloads=("https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg;instagram_icon.svg")
-instagram_description="Opens Instagram in Chrome"
-instagram_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${instagram_description}
-Encoding=UTF-8
-Exec=xdg-open ${instagran_url}
-Icon=${BIN_FOLDER}/instagram/instagram_icon.svg
-GenericName=instagram
-Keywords=instagram
-MimeType=
-Name=Instagram
-StartupNotify=true
-StartupWMClass=Instagram
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-instagram_readmeline="| Instagram | ${instagram_description} | Command \`instagram\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+instagram_launcherkeynames=("default")
+instagram_default_exec="xdg-open https://instagram.com"
+instagram_description="Instagram opening in Chrome"
 
 ipe_installationtype="environmental"
 ipe_arguments=("ipe")
@@ -1814,32 +1676,16 @@ k_arguments=("k")
 k_bashfunctions=("k.sh")
 k_readmeline="| Function \`k\` | Kill processes by PID and name of process | Command \`k\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
-# TODO @AleixMT wontfix
-keep_installationtype="environmental"
 keep_arguments=("keep" "google_keep")
-keep_url="https://keep.google.com/"
+keep_name="Google Keep"
+keep_version="Google dependent"
+keep_systemcategories=("Documentation")
+keep_commentary="Add and remove notes online"
+keep_tags=("search" "internet_shortcuts")
 keep_bashfunctions=("keep.sh")
-keep_downloads=("https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Keep_icon_%282015-2020%29.svg;keep_icon.svg")
-keep_description="Google Keep opening in Chrome"
-keep_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${keep_description}
-Encoding=UTF-8
-Exec=xdg-open ${keep_url}
-Icon=${BIN_FOLDER}/keep/keep_icon.svg
-GenericName=Google Calendar
-Keywords=google-keep;keep;
-MimeType=
-Name=Google Keep
-StartupNotify=true
-StartupWMClass=Google Keep
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-keep_readmeline="| Google Keep | ${keep_description} | Command \`keep\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+keep_launcherkeynames=("default")
+keep_default_exec="xdg-open https://keep.google.com"
+keep_description="keep opening in Chrome"
 
 keyboardfix_installationtype="environmental"
 keyboardfix_arguments=("keyboard_fix" "fix_keyboard")
@@ -2603,32 +2449,16 @@ NoDisplay=false
 nemo_flagsoverride=";;;;;1"  # Always autostart
 nemo_keybindings=("nemo;<Super>e;Nemo File Explorer")
 
-# TODO @AleixMT wontfix
-netflix_installationtype="environmental"
-netflix_arguments=("netflix")
-netflix_url="https://www.netflix.com"
+netflix_arguments=("netflix" "google_netflix")
+netflix_name="Netflix"
+netflix_version="Google dependent"
+netflix_systemcategories=("Player")
+netflix_commentary="View films and TV series online"
+netflix_tags=("film" "television" "internet_shortcuts")
 netflix_bashfunctions=("netflix.sh")
-netflix_downloads=("https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg;netflix_icon.svg")
+netflix_launcherkeynames=("default")
+netflix_default_exec="xdg-open https://www.netflix.com"
 netflix_description="Netflix opening in Chrome"
-netflix_launchercontents=("
-[Desktop Entry]
-Categories=Network;VideoStreaming;Film;
-Comment=${netflix_description}
-Encoding=UTF-8
-Exec=xdg-open ${netflix_url}
-Icon=${BIN_FOLDER}/netflix/netflix_icon.svg
-GenericName=Netflix
-Keywords=netflix;
-MimeType=
-Name=Netflix
-StartupNotify=true
-StartupWMClass=Netflix
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-netflix_readmeline="| Netflix | ${netflix_description} | Command \`netflix\`. Desktop launcher and dashboard launcher for the file manager | --netflix --Netflix |  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 net_tools_installationtype="packagemanager"
 net_tools_arguments=("net_tools")
@@ -2772,59 +2602,27 @@ uninstall_openssh_server_post()
   done
 }
 
-# TODO @AleixMT wontfix
-outlook_installationtype="environmental"
-outlook_arguments=("outlook")
-outlook_url="https://outlook.live.com"
+outlook_arguments=("outlook" "microsoft_outlook")
+outlook_name="Outlook"
+outlook_version="Google dependent"
+outlook_systemcategories=("Email")
+outlook_commentary="Email client from Microsoft"
+outlook_tags=("search" "internet_shortcuts")
 outlook_bashfunctions=("outlook.sh")
-outlook_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg;outlook_icon.svg")
-outlook_description="Microsoft Outlook e-mail opening in Chrome"
-outlook_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${outlook_description}
-Encoding=UTF-8
-Exec=xdg-open ${outlook_url}
-Icon=${BIN_FOLDER}/outlook/outlook_icon.svg
-GenericName=Outlook
-Keywords=outlook;
-MimeType=
-Name=Outlook
-StartupNotify=true
-StartupWMClass=Outlook
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-outlook_readmeline="| Outlook | ${outlook_description} | Command \`outlook\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+outlook_launcherkeynames=("default")
+outlook_default_exec="xdg-open https://outlook.live.com"
+outlook_description="outlook opening in Chrome"
 
-# TODO @AleixMT wontfix
-overleaf_installationtype="environmental"
 overleaf_arguments=("overleaf")
-overleaf_url="https://www.overleaf.com/"
+overleaf_name="Overleaf"
+overleaf_version="Google dependent"
+overleaf_systemcategories=("ProjectManagement" "Documentation" "TextEditor")
+overleaf_commentary="Email client from Microsoft"
+overleaf_tags=("LaTeX" "text_editor" "internet_shortcuts")
 overleaf_bashfunctions=("overleaf.sh")
-overleaf_downloads="https://images.ctfassets.net/nrgyaltdicpt/h9dpHuVys19B1sOAWvbP6/5f8d4c6d051f63e4ba450befd56f9189/ologo_square_colour_light_bg.svg;overleaf_icon.svg"
-overleaf_description="Online LaTeX editor opening in Chrome"
-overleaf_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${overleaf_description}
-Encoding=UTF-8
-Exec=xdg-open ${overleaf_url}
-Icon=${BIN_FOLDER}/overleaf/overleaf_icon.svg
-GenericName=Overleaf
-Keywords=overleaf;
-MimeType=
-Name=Overleaf
-StartupNotify=true
-StartupWMClass=Overleaf
-#Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-overleaf_readmeline="| Overleaf | ${overleaf_description} | Command \`overleaf\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+overleaf_launcherkeynames=("default")
+overleaf_default_exec="xdg-open https://www.overleaf.com"
+overleaf_description="overleaf opening in Chrome"
 
 p_installationtype="environmental"
 p_arguments=("p" "port" "port_function")
@@ -2891,7 +2689,6 @@ uninstall_pgadmin_mid() {
   :
 }
 
-
 php_installationtype="packagemanager"
 php_arguments=("php")
 php_packagenames=("php" "libapache2-mod-php" "php7.4" "libapache2-mod-php7.4" "php7.4-mysql" "php-common" "php7.4-cli" "php7.4-common" "php7.4-json" "php7.4-opcache" "php7.4-readline")
@@ -2948,32 +2745,16 @@ Categories=Development;
 ")
 postman_readmeline="| Postman | ${postman_description} | Command \`postman\`, desktop launcher and dashboard launcher  ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix
-presentation_installationtype="environmental"
 presentation_arguments=("presentation" "google_presentation")
-presentation_url="https://docs.google.com/presentation/"
+presentation_name="Google Presentation"
+presentation_version="Google dependent"
+presentation_systemcategories=("ProjectManagement" "Documentation" "TextEditor")
+presentation_commentary="Create presentations online"
+presentation_tags=("presentation" "google" "internet_shortcuts")
 presentation_bashfunctions=("presentation.sh")
-presentation_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;presentation_icon.svg")
+presentation_launcherkeynames=("default")
+presentation_default_exec="xdg-open https://docs.google.com/presentation/"
 presentation_description="Google Presentation opening in Chrome"
-presentation_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=D${presentation_description}
-Encoding=UTF-8
-Exec=xdg-open ${presentation_url}
-Icon=${BIN_FOLDER}/presentation/presentation_icon.svg
-GenericName=Document
-Keywords=presentations;
-MimeType=
-Name=Google Presentation
-StartupNotify=true
-StartupWMClass=Google Presentation
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-presentation_readmeline="| Presentation | ${presentation_description} | Command \`presentation\`, desktop launcher and dashboard launcher||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 prompt_installationtype="environmental"
 prompt_arguments=("prompt")
@@ -3085,32 +2866,17 @@ R_packagenames=("r-base")
 R_packagedependencies=("libzmq3-dev" "python3-zmq")
 R_readmeline="| R | Programming language | Commands \`R\`, Dashboard Launcher, Desktop Launcher|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
-# TODO @AleixMT wontfix
-reddit_installationtype="environmental"
 reddit_arguments=("reddit")
-reddit_url="https://www.reddit.com/"
+reddit_name="Reddit"
+reddit_version="Google dependent"
+reddit_systemcategories=("InstantMessaging" "Chat")
+reddit_commentary="Reddit forum"
+reddit_tags=("forum" "internet_shortcuts")
 reddit_bashfunctions=("reddit.sh")
-reddit_downloads=("https://www.svgrepo.com/download/14413/reddit.svg;reddit_icon.svg")
-reddit_description="Opens Reddit in Chrome"
-reddit_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${reddit_description}
-Encoding=UTF-8
-Exec=xdg-open ${reddit_url}
-Icon=${BIN_FOLDER}/reddit/reddit_icon.svg
-GenericName=reddit
-Keywords=reddit
-MimeType=
-Name=Reddit
-StartupNotify=true
-StartupWMClass=Reddit
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-reddit_readmeline="| Reddit | ${reddit_description} | Commands \`reddit\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+reddit_launcherkeynames=("default")
+reddit_default_exec="xdg-open https://www.reddit.com"
+reddit_description="Google reddit opening in Chrome"
+
 
 remmina_installationtype="packagemanager"
 remmina_arguments=("remmina")
@@ -3297,32 +3063,16 @@ sonic_pi_launchernames=("sonic-pi")
 sonic_pi_packagenames=("sonic-pi")
 sonic_pi_readmeline="| Sonic Pi | programming language that ouputs sounds as compilation product | Command \`sonic-pi\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
-# TODO @AleixMT wontfix
-soundcloud_installationtype="environmental"
-soundcloud_arguments=("soundcloud")
-soundcloud_url="https://www.soundcloud.com/"
+soundcloud_arguments=("soudcloud")
+soundcloud_name="Soudcloud"
+soundcloud_version="Google dependent"
+soundcloud_systemcategories=("Music" "Player")
+soundcloud_commentary="soundcloud listen music online"
+soundcloud_tags=("music" "internet_shortcuts")
 soundcloud_bashfunctions=("soundcloud.sh")
-soundcloud_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/a2/Antu_soundcloud.svg;soundcloud_icon.svg")
-soundcloud_description="SoundCloud opening in Chrome"
-soundcloud_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${soundcloud_description}
-Encoding=UTF-8
-Exec=xdg-open ${soundcloud_url}
-Icon=${BIN_FOLDER}/soundcloud/soundcloud_icon.svg
-GenericName=Soundcloud
-Keywords=sound;
-MimeType=
-Name=SoundCloud
-StartupNotify=true
-StartupWMClass=Soundcloud
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-soundcloud_readmeline="| Soundcloud | ${soundcloud_description} | Command \`soundcloud\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+soundcloud_launcherkeynames=("default")
+soundcloud_default_exec="xdg-open https://www.soundcloud.com"
+soundcloud_description="Soudcloud opening in Chrome"
 
 spotify_installationtype="packageinstall"
 spotify_arguments=("spotify")
@@ -3840,6 +3590,15 @@ vncviewer_systemcategories=("Utility" "Network" "Viewer" "Monitor" "RemoteAccess
 vncviewer_launcherkeynames=("default")
 vncviewer_binariesinstalledpaths=("vncviewer;vncviewer")
 vncviewer_compressedfileurl=("https://downloads.realvnc.com/download/file/viewer.files/VNC-Viewer-6.21.1109-Linux-x64-ANY.tar.gz")
+
+vommit_arguments=("vommit")
+vommit_name="Function vommit"
+vommit_description="Function that do git add -a, git commit commit, git push"
+vommit_version="1.0"
+vommit_tags=("bashfunctions" "bash")
+vommit_systemcategories=("System" "Utility")
+vommit_commentary="Dummy commit"
+vommit_bashfunctions=("vommit.sh")
 
 # TODO @AleixMT wontfix
 whatsapp_installationtype="environmental"

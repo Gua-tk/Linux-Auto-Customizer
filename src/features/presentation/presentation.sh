@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias presentation="nohup xdg-open €{presentation_url} &>/dev/null &"
+alias presentation="nohup €{presentation_default_exec} &>/dev/null &"

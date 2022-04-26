@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias netflix="nohup xdg-open €{netflix_url} &>/dev/null &"
+alias netflix="nohup €{netflix_default_exec} &>/dev/null &"

@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias instagram="nohup xdg-open €{instagram_url} &>/dev/null &"
+alias instagram="nohup €{instagram_default_exec} &>/dev/null &"

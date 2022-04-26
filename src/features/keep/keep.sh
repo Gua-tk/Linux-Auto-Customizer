@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias keep="nohup xdg-open €{keep_url} &>/dev/null &"
+alias keep="nohup €{keep_default_exec} &>/dev/null &"

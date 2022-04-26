@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias googlecalendar="nohup xdg-open €{googlecalendar_url} &>/dev/null &"
+alias googlecalendar="nohup €{googlecalendar_default_exec} &>/dev/null &"

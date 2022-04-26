@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias reddit="nohup xdg-open €{reddit_url} &>/dev/null &"
+alias reddit="nohup €{reddit_default_exec} &>/dev/null &"

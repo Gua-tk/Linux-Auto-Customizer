@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias duckduckgo="nohup xdg-open https://duckduckgo.com/ &>/dev/null &"
+alias duckduckgo="nohup €{duckduckgo_default_exec} &>/dev/null &"

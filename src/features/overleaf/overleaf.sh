@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias overleaf="nohup xdg-open €{overleaf_url} &>/dev/null &"
+alias overleaf="nohup €{overleaf_default_exec} &>/dev/null &"
