@@ -5,3 +5,4 @@ alias up="sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt --fix-br
 alias services="sudo systemctl --type=service"
 alias cls="clear"
 alias services="sudo systemctl --type=service"
+alias q="exit"

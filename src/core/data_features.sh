@@ -251,7 +251,7 @@ a_arguments=("a")
 a_name="Function a"
 a_description="Function that displays environment aliases using compgen -a"
 a_version="1.0"
-a_tags=("bashfunctions" "aliases")
+a_tags=("bashfunctions" "aliases" "info")
 a_systemcategories=("System" "Utility")
 a_commentary="A terminal shortcut"
 a_bashfunctions=("a.sh")
@@ -292,7 +292,7 @@ alert_name="Function alert"
 alert_description="Alias to show a notification at the end of a commands"
 alert_version="1.0"
 alert_packagedependencies=("libnotify-bin")
-alert_tags=("bashfunctions" "notify" "notification")
+alert_tags=("bashfunctions" "notify" "notification" "info")
 alert_systemcategories=("Utility" "System" "Calendar")
 alert_commentary="Useful to remember events"
 alert_bashfunctions=("alert.sh")
@@ -723,7 +723,7 @@ config_arguments=("git_config" "config_function")
 config_name="Function config"
 config_description="Function that does a git config accepting two parameters username and email"
 config_version="1.0"
-config_tags=("bashfunctions" "git-user-configuration" "gitbashfunctions")
+config_tags=("git-user-configuration" "gitbashfunctions")
 config_systemcategories=("System" "Utility")
 config_commentary="Configure your git username and email"
 config_bashfunctions=("config.sh")
@@ -732,7 +732,7 @@ converters_arguments=("converters")
 converters_name="Functions converters"
 converters_description="Convert any number to any numeric system"
 converters_version="1.0"
-converters_tags=("gitbashfunctions" "convert")
+converters_tags=("bashfunctions" "convert" "info")
 converters_systemcategories=("System" "Utility")
 converters_commentary="bintodec, decobin, hextodec..."
 converters_bashfunctions=("converters.sh")
@@ -783,7 +783,7 @@ d_arguments=("d")
 d_name="Function d"
 d_description="Function for dif or git diff"
 d_version="1.0"
-d_tags=("bashfunctions" "bash" "gitbashfunctions")
+d_tags=("bash" "gitbashfunctions" "info")
 d_systemcategories=("System" "Utility")
 d_commentary="See changes of files"
 d_bashfunctions=("d.sh")
@@ -989,7 +989,7 @@ evolution_readmeline="| evolution | User calendar agend, planning | Command \`ev
 F_name="Function F"
 F_description="Function to find strings in files in the directory in the 1st argument"
 F_version="1.0"
-F_tags=("bashfunctions" "bash")
+F_tags=("bashfunctions" "bash" "info")
 F_systemcategories=("System" "Utility")
 F_commentary="A terminal shortcut"
 F_arguments=("F")
@@ -998,7 +998,7 @@ F_bashfunctions=("F.sh")
 f_name="Function f"
 f_description="Function for finding strings in files, files in directories and show found files"
 f_version="1.0"
-f_tags=("bashfunctions" "bash")
+f_tags=("bashfunctions" "bash" "info")
 f_systemcategories=("System" "Utility")
 f_commentary="A terminal shortcut"
 f_arguments=("f")
@@ -1438,7 +1438,7 @@ h_description="Search in your history for previous commands entered, stands by h
 h_version="1.0"
 h_systemcategories=("System" "Utility")
 h_commentary="Search your previous terminal commands"
-h_tags=("bashfunctions" "terminal")
+h_tags=("bashfunctions" "terminal" "info")
 h_arguments=("h")
 h_bashfunctions=("h.sh")
 
@@ -1448,10 +1448,14 @@ handbrake_launchernames=("fr.handbrake.ghb")
 handbrake_packagenames=("handbrake")
 handbrake_readmeline="| Handbrake | Video Transcoder | Command \`handbrake\`, Desktop and dashboard launchers || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-hard_installationtype="environmental"
-hard_arguments=("hard")
+hard_name="Function h"
+hard_description="Alias for git reset HEAD --hard"
+hard_version="1.0"
+hard_systemcategories=("System" "Utility")
+hard_commentary="A terminal shortcut for git"
+hard_tags=("gitbashfunctions" "terminal")
+hard_arguments=("hard" "hard_git" "git_hard")
 hard_bashfunctions=("hard.sh")
-hard_readmeline="| Function \`hard\` | alias for \`git reset HEAD --hard\` | <-- || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 hardinfo_installationtype="packagemanager"
 hardinfo_arguments=("hardinfo")
@@ -1459,16 +1463,23 @@ hardinfo_packagenames=("hardinfo")
 hardinfo_launchernames=("hardinfo")
 hardinfo_readmeline="| Hardinfo | Check pc hardware info | Command \`hardinfo\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT change keyname to one word
-history_optimization_installationtype="environmental"
-history_optimization_arguments=("history_optimization")
-history_optimization_bashfunctions=("history_optimization.sh")
-history_optimization_readmeline="| history optimization | Increased the size of bash history, store multiline commands in just one line, force append and not overwrite to history, ignore repeated commands when appending to history, deleted tracking history of some simple commands: \`ls\`, \`cd\`, \`gitk\`... | <-- || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+historyoptimization_name="Function history optimization"
+historyoptimization_description="Shared history in terminal session and other tweaks for the terminal history"
+historyoptimization_version="1.0"
+historyoptimization_systemcategories=("System" "Utility")
+historyoptimization_commentary="Increased the size of bash history, store multiline commands in just one line, force append and not overwrite to history, ignore repeated commands when appending to history, deleted tracking history of some simple commands: \`ls\`, \`cd\`, \`gitk\`... "
+historyoptimization_tags=("bashfunctions" "terminal")
+historyoptimization_arguments=("history_optimization")
+historyoptimization_bashfunctions=("history_optimization.sh")
 
-i_installationtype="environmental"
-i_arguments=("i" "i_function")
+i_name="Function i"
+i_description="Shows folder structures"
+i_version="1.0"
+i_systemcategories=("System" "Utility")
+i_commentary="A terminal shortcut"
+i_tags=("bashfunctions" "terminal" "info")
+i_arguments=("i" "i_function" "info")
 i_bashfunctions=("i.sh")
-i_readmeline="| Function \`i\` | Shows folder structures | Command \`i\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ideac_installationtype="userinherit"
 ideac_arguments=("ideac" "intellij_community")
@@ -1544,20 +1555,32 @@ instagram_launcherkeynames=("default")
 instagram_default_exec="xdg-open https://instagram.com"
 instagram_description="Instagram opening in Chrome"
 
-ipe_installationtype="environmental"
+ipe_name="Function ipe"
+ipe_description="Returns the public IP"
+ipe_version="1.0"
+ipe_systemcategories=("System" "Utility")
+ipe_commentary="A terminal shortcut"
+ipe_tags=("bashfunctions" "terminal" "network" "info")
 ipe_arguments=("ipe")
 ipe_bashfunctions=("ipe.sh")
-ipe_readmeline="| Function \`ipe\` | Returns the public IP | Command \`ipe\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-ipi_installationtype="environmental"
+ipi_name="Function ipi"
+ipi_description="Returns the private IP"
+ipi_version="1.0"
+ipi_systemcategories=("System" "Utility")
+ipi_commentary="A terminal shortcut"
+ipi_tags=("bashfunctions" "terminal" "network" "info")
 ipi_arguments=("ipi")
 ipi_bashfunctions=("ipi.sh")
-ipi_readmeline="| Function \`ipi\` | Returns the private IP | Command \`ipi\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-ips_installationtype="environmental"
-ips_arguments=("ipi")
+ips_name="Function ips"
+ips_description="Returns the IP information"
+ips_version="1.0"
+ips_systemcategories=("System" "Utility")
+ips_commentary="A terminal shortcut"
+ips_tags=("bashfunctions" "terminal" "network" "info")
+çips_arguments=("ips")
 ips_bashfunctions=("ips.sh")
-ips_readmeline="| Function \`ips\` | Returns the IP information | Command \`ips\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 iqmol_installationtype="packageinstall"
 iqmol_arguments=("iqmol")
@@ -1586,10 +1609,14 @@ iqmol_packageurls=("http://www.iqmol.org/download.php?get=iqmol_2.14.deb")
 iqmol_package_manager_override="apt-get"
 iqmol_readmeline="| IQmol | ${iqmol_description} | Command \`iqmol\`, silent alias, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-j_installationtype="environmental"
+j_name="Function j"
+j_description="Alias for jobs -l"
+j_version="1.0"
+j_systemcategories=("System" "Utility")
+j_commentary="A terminal shortcut"
+j_tags=("bashfunctions" "terminal" "system" "info")
 j_arguments=("j")
 j_bashfunctions=("j.sh")
-j_readmeline="| Function \`j\` | alias for jobs -l | Commands \`j\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 java_installationtype="userinherit"
 java_arguments=("java" "java_development_kit" "java_development" "java_development_kit_8" "jdk" "jdk_8")
@@ -1692,10 +1719,14 @@ uninstall_jupyter_lab_mid() {
   :
 }
 
-k_installationtype="environmental"
+k_name="Function k"
+k_description="Kill processes by PID and name of process"
+k_version="1.0"
+k_systemcategories=("System" "Utility")
+k_commentary="A terminal shortcut"
+k_tags=("bashfunctions" "terminal" "system")
 k_arguments=("k")
 k_bashfunctions=("k.sh")
-k_readmeline="| Function \`k\` | Kill processes by PID and name of process | Command \`k\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
 keep_arguments=("keep" "google_keep")
 keep_name="Google Keep"
@@ -1726,15 +1757,23 @@ uninstall_keyboardfix_pre()
 }
 
 
-L_installationtype="environmental"
+L_name="Function L"
+L_description="Function that lists files in a directory, but listing the directory sizes"
+L_version="1.0"
+L_systemcategories=("System" "Utility")
+L_commentary="A terminal shortcut"
+L_tags=("bashfunctions" "terminal" "info")
 L_arguments=("L")
 L_bashfunctions=("L.sh")
-L_readmeline="| Function \`L\` | Function that lists files in a directory, but listing the directory sizes | Function \`L\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-l_installationtype="environmental"
+l_name="Function l"
+l_description="alias for \`ls\`"
+l_version="1.0"
+l_systemcategories=("System" "Utility")
+l_commentary="A terminal shortcut"
+l_tags=("bashfunctions" "terminal" "system" "info")
 l_arguments=("l")
 l_bashfunctions=("l.sh")
-l_readmeline="| Function \`l\` | alias for \`ls\` | command \`l\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 latex_installationtype="packagemanager"
 latex_arguments=("latex")
@@ -1779,16 +1818,24 @@ lmms_packagenames=("lmms")
 lmms_launchernames=("lmms")
 lmms_readmeline="| lmms | Software for making music | command \`lmms\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-loc_installationtype="environmental"
+loc_name="Function loc"
+loc_description="Counts lines of code"
+loc_version="1.0"
+loc_systemcategories=("System" "Utility")
+loc_commentary="A terminal shortcut"
+loc_tags=("bashfunctions" "terminal" "system" "info")
 loc_arguments=("loc" "function_loc")
 loc_bashfunctions=("loc.sh")
-loc_readmeline="| Function \`loc\` | Counts lines of code | command \`loc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-lolcat_installationtype="packagemanager"
+lolcat_name="Function lolcat"
+lolcat_description="Same as the command \`cat\` but outputting the text in rainbow color and concatenate string"
+lolcat_version="System dependent"
+lolcat_systemcategories=("System" "Utility")
+lolcat_commentary="Terminal rainbow font"
+lolcat_tags=("terminal" "system")
 lolcat_arguments=("lolcat")
 lolcat_bashfunctions=("lolcat.sh")
 lolcat_packagenames=("lolcat")
-lolcat_readmeline="| lolcat | Same as the command \`cat\` but outputting the text in rainbow color and concatenate string | command \`lolcat\`, alias \`lol\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 matlab_installationtype="userinherit"
 matlab_arguments=("matlab" "mat_lab" "math_works")
@@ -2063,10 +2110,14 @@ MimeType=x-scheme-handler/mendeley;application/pdf;text/x-bibtex;
 X-Mendeley-Version=1
 ")
 
-merge_installationtype="environmental"
+merge_name="Function merge"
+merge_description="Function for git merge"
+merge_version="1.0"
+merge_tags=("gitbashfunctions" "git")
+merge_systemcategories=("System" "Utility")
+merge_commentary="A terminal function for merging in git"
+merge_arguments=("merge" "merge_function" "function_merge" "git_merge")
 merge_bashfunctions=("merge.sh")
-merge_arguments=("merge" "function_merge")
-merge_readmeline="| Function \`merge\` | Function for \`git merge\`|  Command \`merge\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_arguments=("msttcorefonts")
@@ -2516,11 +2567,6 @@ notflix_packagedependencies=("curl" "vlc")
 notflix_bashfunctions=("notflix.sh")
 notflix_readmeline="| Function \`notflix\` | Stream title movies via console magnet tracking | Function \`notflix\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-o_installationtype="environmental"
-o_arguments=("o")
-o_bashfunctions=("o.sh")
-o_readmeline="| Function \`o\` | Alias for \`nemo-desktop\` | Alias \`o\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 obs_studio_name="Open Broadcaster Software Studio"
 obs_studio_commentary="The basic tool for a streamer"
 obs_studio_description="Streaming and recording software"
@@ -2593,7 +2639,6 @@ openssh_server_packagenames=("openssh-server")
 openssh_server_bashfunctions=("openssh_server.sh")
 openssh_server_readmeline="| openssh-server | SSH server | Used for running an SSH server ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 openssh_server_manualcontentavailable="0;0;1"
-
 openssh_server_conf=(
 "Port 3297  # Change default port for ssh server to listen"
 "LogLevel VERBOSE  # Verbose on logs"
@@ -2645,10 +2690,14 @@ overleaf_launcherkeynames=("default")
 overleaf_default_exec="xdg-open https://www.overleaf.com"
 overleaf_description="overleaf opening in Chrome"
 
-p_installationtype="environmental"
-p_arguments=("p" "port" "port_function")
+p_name="Function p"
+p_description="Check processes names and PID's from given port"
+p_version="1.0"
+p_tags=("bashfunctions" "bash" "info")
+p_systemcategories=("System" "Utility")
+p_commentary="A terminal shortcut"
+p_arguments=("p" "port" "port_function" "p_function" "function_p")
 p_bashfunctions=("p.sh")
-p_readmeline="| Function \`port\` | Check processes names and PID's from given port | Command \`port\` ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 pacman_installationtype="packagemanager"
 pacman_arguments=("pacman")
@@ -2777,10 +2826,14 @@ presentation_launcherkeynames=("default")
 presentation_default_exec="xdg-open https://docs.google.com/presentation/"
 presentation_description="Google Presentation opening in Chrome"
 
-prompt_installationtype="environmental"
+prompt_name="Function prompt"
+prompt_description="Installs a new colourful prompt on terminal window"
+prompt_version="1.0"
+prompt_tags=("bashfunctions" "terminal" "info")
+prompt_systemcategories=("System" "Utility")
+prompt_commentary="Adds a personalized prompt that shows the date, return code of last executed program, user, group and working directory. It also changes the prompt colour of introduced text to green. It changes the terminal windows title, adds colourful aliases and ensures completion"
 prompt_arguments=("prompt")
 prompt_bashfunctions=("prompt.sh" "prompt_command.sh")
-prompt_readmeline="| prompt | Installs a new colourful prompt on terminal window including and upgrading the default ones in Ubuntu | Adds a personalized prompt that shows the date, return code of last executed program, user, group and working directory. It also changes the prompt colour of introduced text to green. It changes the terminal windows title, adds colourful aliases and ensures completion || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 psql_installationtype="packagemanager"
 psql_arguments=("psql" "postgresql")
@@ -2788,15 +2841,23 @@ psql_packagedependencies=("libc6-i386" "lib32stdc++6" "libc6=2.31-0ubuntu9.2")
 psql_packagenames=("postgresql-client-12" "postgresql-12" "libpq-dev" "postgresql-server-dev-12")
 psql_readmeline="| PostGreSQL | Installs \`psql\`|  Command \`psql\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-pull_installationtype="environmental"
+pull_name="Function pull"
+pull_description="Decorates call to git pull forcing to not fast-forward"
+pull_version="1.0"
+pull_tags=("gitbashfunctions" "git")
+pull_systemcategories=("System" "Utility")
+pull_commentary="A terminal function for git"
 pull_arguments=("pull")
 pull_bashfunctions=("pull.sh")
-pull_readmeline="| Function \`pull\` | Alias for \`git pull\`|  Command \`pull\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-push_installationtype="environmental"
+push_name="Function push"
+push_description="Decorates call to git push by setting upstream branch if needed"
+push_version="1.0"
+push_tags=("gitbashfunctions" "git")
+push_systemcategories=("System" "Utility")
+push_commentary="A terminal function for git"
 push_arguments=("push")
 push_bashfunctions=("push.sh")
-push_readmeline="| Function \`push\` | Alias for \`git push\`|  Command \`push\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 pycharm_installationtype="userinherit"
 pycharm_arguments=("pycharm" "pycharm_community")
@@ -2867,11 +2928,6 @@ python3_bashfunctions=("v.sh")
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel" "python3.8-venv")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
 python3_readmeline="| Python3 | Interpreted, high-level and general-purpose programming language | Commands \`python\`, \`python3\`, \`pip3\` and Function \`v\` is for activate/deactivate python3 virtual environments (venv) can be used as default \`v\` as a command creates the /venv/ environment we can activate/deactivate new or existing virtual environments, command \`v namevenv\` creates /namevenv/ we can activate the virtual environment again using \`v namenv\` or deactivate same again, using \`v namenv\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
-q_installationtype="environmental"
-q_arguments=("q")
-q_bashfunctions=("q.sh")
-q_readmeline="| Function \`q\` | Programming language | Commands \`R\`, Dashboard Launcher, Desktop Launcher|| <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
-
 R_installationtype="packagemanager"
 R_arguments=("R" "r_base")
 R_jupyter_lab_function=("
@@ -2897,7 +2953,6 @@ reddit_bashfunctions=("reddit.sh")
 reddit_launcherkeynames=("default")
 reddit_default_exec="xdg-open https://www.reddit.com"
 reddit_description="Google reddit opening in Chrome"
-
 
 remmina_installationtype="packagemanager"
 remmina_arguments=("remmina")
@@ -2955,10 +3010,14 @@ rustc_packagedependencies=("cmake" "build-essential")
 rustc_readmeline="| Rust | Programming Language | Installs \`rustc\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 # rustc_url=("https://sh.rustup.rs")
 
-s_installationtype="environmental"
+s_name="Function s"
+s_description="Function to execute any program silently and in the background"
+s_version="1.0"
+s_tags=("bashfunctions" "terminal")
+s_systemcategories=("System" "Utility")
+s_commentary="A terminal function"
 s_arguments=("s")
 s_bashfunctions=("s.sh")
-s_readmeline="| Function \`s\` | Function to execute any program silently and in the background | Function \`s \"command\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 scala_installationtype="packagemanager"
 scala_arguments=("scala")
@@ -3021,10 +3080,15 @@ uninstall_sherlock_post() {
   :
 }
 
-shortcuts_installationtype="environmental"
+shortcuts_name="Path shortcuts"
+shortcuts_description="Installs custom variables pointing to interesting folders regarding customizer"
+shortcuts_version="1.0"
+shortcuts_tags=("bashfunctions")
+shortcuts_systemcategories=("System" "Utility")
+shortcuts_commentary="A terminal function"
 shortcuts_arguments=("shortcuts")
 shortcuts_bashfunctions=("shortcuts.sh")
-shortcuts_readmeline="| shortcuts | Installs custom key commands | variables... (\$DESK...) || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+shortcuts_readmeline="| shortcuts |  | variables... (\$DESK...) || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 shotcut_installationtype="packagemanager"
 shotcut_arguments=("shotcut")
@@ -3157,10 +3221,14 @@ Version=1.0
 ")
 ssh_readmeline="| ssh | SSH client | Using SSH connections ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-status_installationtype="environmental"
+status_name="Function status"
+status_description="Alias of git status"
+status_version="1.0"
+status_tags=("gitbashfunctions" "terminal")
+status_systemcategories=("System" "Utility")
+status_commentary="A terminal function"
 status_arguments=("status")
 status_bashfunctions=("status.sh")
-status_readmeline="| Functions \`status\` | \`git status\` | Command \`status\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 steam_installationtype="packageinstall"
 steam_arguments=("steam")
@@ -3326,7 +3394,12 @@ Version=1.0
 ")
 telegram_readmeline="| Telegram | ${telegram_description} | Command \`telegram\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
-templates_installationtype="environmental"
+templates_name="Templates"
+templates_description="Different collection of templates for starting code projects: Python3 script (\`.py\`), Bash script (\`.sh\`), LaTeX document (\`.tex\`), C script (\`.c\`), C header script (\`.h\`), makefile example (\`makefile\`) and empty text file (\`.txt\`)"
+templates_version="1.0"
+templates_tags=("bashfunctions" "terminal")
+templates_systemcategories=("System" "Utility")
+templates_commentary="In the file explorer, right click on any folder to see the contextual menu of \"create document\", where all the templates are located"
 templates_arguments=("templates")
 templates_filekeys=("c" "headers" "makefile" "python" "bash" "latex" "empty")
 templates_c_path="${XDG_TEMPLATES_DIR}/c_script.c"
@@ -3343,7 +3416,6 @@ templates_latex_path="${XDG_TEMPLATES_DIR}/latex_document.tex"
 templates_latex_content="latex_document.tex"
 templates_empty_path="${XDG_TEMPLATES_DIR}/empty_text_file.txt"
 templates_empty_content="empty_text_file.txt"
-templates_readmeline="| Templates | Different collection of templates for starting code projects: Python3 script (\`.py\`), Bash script (\`.sh\`), LaTeX document (\`.tex\`), C script (\`.c\`), C header script (\`.h\`), makefile example (\`makefile\`) and empty text file (\`.txt\`) | In the file explorer, right click on any folder to see the contextual menu of \"create document\", where all the templates are located || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 terminal_background_installationtype="environmental"
 terminal_background_arguments=("terminal_background")
@@ -3496,7 +3568,6 @@ uget_packagedependencies=("aria2")
 uget_packagenames=("uget")
 uget_readmeline="| uget | GUI utility to manage downloads | Command \`uget\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-upgrade_installationtype="environmental"
 upgrade_arguments=("upgrade")
 upgrade_name="Function Upgrade"
 upgrade_commentary="Update, upgrade and clean packages in a single command"
@@ -3692,11 +3763,15 @@ Categories=Network;Monitor;Qt;
 wireshark_packagenames=("wireshark")
 wireshark_readmeline="| Wireshark | Net sniffer | Command \`wireshark\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-x_installationtype="environmental"
+x_name="Function x"
+x_description="Function to extract from a compressed file, no matter its format"
+x_version="1.0"
+x_tags=("bashfunctions" "terminal")
+x_systemcategories=("System" "Utility")
+x_commentary="A terminal function"
 x_arguments=("x" "extract" "extract_function")
 x_packagedependencies=("libfile-mimeinfo-perl")
 x_bashfunctions=("x.sh")
-x_readmeline="| Function \`x\` | Function to extract from a compressed file, no matter its format | Function \`x \"filename\"\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 xclip_installationtype="packagemanager"
 xclip_arguments=("x_clip")
@@ -3735,14 +3810,13 @@ ytmusic_description="YT Music opening in Chrome"
 
 ####### LINE OF TRIMMING, BELOW IS TRIMMED ########
 
-z_installationtype="environmental"
-z_arguments=("z" "z_function")
-z_description="Function to compress files given a format and a set of pats to files"
-z_commentary="You may now forget all particular commands to compress a file"
-z_tags=("utility" "system" "bashFunction")
 z_name="Function z"
+z_description="Function to compress files given a format and a set of pats to files"
 z_version="1.0"
+z_tags=("utility" "system" "bashFunction")
 z_systemcategories=("Utility" "System")
+z_commentary="You may now forget all particular commands to compress a file"
+z_arguments=("z" "z_function")
 z_bashfunctions=("z.sh")
 
 zoom_arguments=("zoom")
