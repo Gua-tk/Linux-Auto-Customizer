@@ -182,7 +182,6 @@ tm()
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   attach_session="$(tmux ls -F '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' 2> /dev/null | awk '/^0/ { if ($2 > t) { t = $2; s = $3 } }; END { if (s) printf "%s", s }')"
   if [ -n "$attach_session" ]; then
-
     # * Putting this into .bashrc can give some problems, since all the functions that are after this file will not be
     #   loaded, since the terminal is blocked executing the tmux line. This means that when bash is loaded when
     #   launching a terminal, if the tmux is not loaded, the .bashrc will be loaded into this "first" bash environment
@@ -212,11 +211,28 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
     #   the tmux call. This means that this call should be the last to load in .bashrc, but because our bashrc features
     #   are independent, we can not make sure that this line will be the last to load (by now).
 
+    # When there is a session created we can not change the directory since tmux is not a shell. Only the shell running
+    # in that pane is the one capable of changing the current directory. To do so we need to "talk" to tmux in order to
+    # inject the cd command into the shell in order to change the PWD of the active pane of the session. So, cding when
+    # the session is already loaded is a thing that only the inner shell can do so we need to communicate with it from
+    # outside using tmux command and sending the literal commands that we want to execute.
+
+    # https://github.com/tmux/tmux/issues/2332
+    # Of course we can find many edge cases in which we cannot change the directory because the terminal is busy:
+    # - Because we are in the middle of a blocking call and then bash is not interpreting. --> Solution. We can check if
+    #   bash is running. If bash is running we are not "probably" in a blocking call, so we can issue the command.
+    #   Notice that this is not truly robust since sometimes you execute a bash program and the terminal is blocked, so
+    #   it could be wrong sometimes.
+    # - Because the buffer of the command input is filled with a half issued command --> Solution is adding the shortcut
+    #   key M-#, which corresponds to Alt + #. This is a bash shortcut to put a # before the current line (silencing it)
+    #   and then issuing enter to issue just a commentary.
+
+    if [ "$(tmux list-panes -t 0 -F '#{pane_active} #{pane_current_command}' | grep -Eo "^1 .*$" | cut -d " " -f2-)" == "bash" ]; then
+      tmux send-keys -t "${attach_session}" M-# "cd \"${PWD}\" " Enter
+    fi
     # This is a blocking synchronous call. We will continue executing this point of the code when tmux exits, which only
     # happens if we exit or kill its process.
-    echo $PWD
-    sleep 5
-    tmux attach -c "${PWD}" -t "${attach_session}"
+    tmux attach-session -t "${attach_session}"
     # When we exit tmux, we call reset, so the bug of the mouse does not affect us.
     # https://github.com/tmux/tmux/issues/2116
     echo -en '\e[?1003l'
@@ -228,11 +244,12 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
       # back after killing the tmux server
       #exec tmux
       # This is a blocking synchronous call. We will continue executing this point of the code when tmux exits, which only happens if we exit or kill its process.
-      tmux
+      # Forces to load the config file, changes the current directory (to be compatible with the option open terminal here)
+      # And finally loads a new tmux instance
+      tmux -f "€{HOME_FOLDER}/.tmux.conf" -c "cd ${PWD}" && tmux
       # When we exit tmux, we call reset, so the bug of the mouse does not affect us.
       # https://github.com/tmux/tmux/issues/2116
       echo -en '\e[?1003l'
     fi
   fi
 fi
-
