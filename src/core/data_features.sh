@@ -544,10 +544,14 @@ cheat_binariesinstalledpaths=("cht.sh;cheat")
 cheat_downloads=("https://cht.sh/:cht.sh;cht.sh")
 cheat_readmeline="| cheat.sh | Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages | Command \`cheat\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-checkout_installationtype="environmental"
+checkout_name="Function checkout"
+checkout_description="Alias for git checkout"
+checkout_version="1.0"
+checkout_tags=("bashfunctions" "aliases" "gitbashfunctions")
+checkout_systemcategories=("System" "Utility")
+checkout_commentary="A terminal shortcut for git"
 checkout_arguments=("checkout")
 checkout_bashfunctions=("checkout.sh")
-checkout_readmeline="| Function \`checkout\` | alias for \`git checkout\` | Command \`checkout\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 cheese_installationtype="packagemanager"
 cheese_arguments=("cheese")
@@ -556,10 +560,14 @@ cheese_launchernames=("org.gnome.Cheese")  # TODO @AleixMT extract launcher data
 cheese_packagenames=("cheese")
 cheese_readmeline="| Cheese | GNOME webcam application | Command \`cheese\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-clean_installationtype="environmental"
+clean_name="Function checkout"
+clean_description="Remove files and contents from the trash bin and performs sudo apt-get -y autoclean and sudo apt-get -y autoremove."
+clean_version="1.0"
+clean_tags=("bashfunctions" "aliases" "gitbashfunctions" "shortcuts")
+clean_systemcategories=("System" "Utility")
+clean_commentary="Remove usesles packages from cache and empty your trash bin"
 clean_arguments=("clean")
 clean_bashfunctions=("clean.sh")
-clean_readmeline="| Function \`clean\` | Remove files and contents from the trash bin and performs \`sudo apt-get -y autoclean\` and \`sudo apt-get -y autoremove\`. | Command \`clean\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 clementine_installationtype="packagemanager"
 clementine_arguments=("clementine")
@@ -711,7 +719,7 @@ commit_systemcategories=("System" "Utility")
 commit_commentary="Save current local file changes to git repository"
 commit_bashfunctions=("commit.sh")
 
-config_arguments=("config" "git_config" "config_function")
+config_arguments=("git_config" "config_function")
 config_name="Function config"
 config_description="Function that does a git config accepting two parameters username and email"
 config_version="1.0"
@@ -746,12 +754,11 @@ copyq_flagsoverride=";;;;;1"  # Always autostart
 curl_arguments=("curl")
 curl_name="Functions converters"
 curl_description="Curl is a CLI command for retrieving or sending data to a server"
-curl_version="1.0"
-curl_tags=("history" "clipboard")
+curl_version="System dependent"
+curl_tags=("terminal" "web")
 curl_systemcategories=("System" "Utility")
 curl_commentary="Autostart enabled"
 curl_packagenames=("curl")
-curl_readmeline="| Curl |  | Command \`curl\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 # TODO: CUSTOMIZER 1.0
 customizer_installationtype="environmental"
@@ -768,6 +775,7 @@ install_customizer_post()
 }
 uninstall_customizer_post()
 {
+  remove_file /usr/bin/customizer-install
   remove_file /usr/bin/customizer-uninstall
 }
 
@@ -921,19 +929,23 @@ duckduckgo_launcherkeynames=("default")
 duckduckgo_default_exec="xdg-open https://duckduckgo.com/"
 duckduckgo_description="Opens DuckDuckGo in Chrome"
 
-e_arguments=("e")
 e_name="Function e"
 e_description="Multi function to edit a file or project in folder"
 e_version="1.0"
 e_tags=("bashfunctions" "bash")
 e_systemcategories=("System" "Utility")
 e_commentary="edit files or projects"
+e_arguments=("e")
 e_bashfunctions=("e.sh")
-e_readmeline="| Function \`e\` | Multi Function \`e\` to edit a file or project in folder | Function \`e\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-E_installationtype="environmental"
+E_name="Function E"
+E_description="Multi Function to edit a set of hardcoded key files using an argument"
+E_version="1.0"
+E_tags=("bashfunctions" "bash")
+E_systemcategories=("System" "Utility")
+E_commentary="A terminal shortcut"
+E_arguments=("E")
 E_bashfunctions=("E.sh")
-E_readmeline="| Function \`E\` | Multi Function \`E\` to edit a set of hardcoded key files using an argument | Function \`E\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 eclipse_installationtype="userinherit"
 eclipse_arguments=("eclipse")
@@ -974,40 +986,36 @@ evolution_launchernames=("evolution-calendar")
 evolution_packagenames=("evolution" )
 evolution_readmeline="| evolution | User calendar agend, planning | Command \`evolution\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-F_installationtype="environmental"
+F_name="Function F"
+F_description="Function to find strings in files in the directory in the 1st argument"
+F_version="1.0"
+F_tags=("bashfunctions" "bash")
+F_systemcategories=("System" "Utility")
+F_commentary="A terminal shortcut"
 F_arguments=("F")
 F_bashfunctions=("F.sh")
-F_readmeline="| Function \`F\` | Function to find strings in files in the directory in the 1st argument | Command \`F\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-f_installationtype="environmental"
+f_name="Function f"
+f_description="Function for finding strings in files, files in directories and show found files"
+f_version="1.0"
+f_tags=("bashfunctions" "bash")
+f_systemcategories=("System" "Utility")
+f_commentary="A terminal shortcut"
 f_arguments=("f")
 f_bashfunctions=("f.sh")
-f_readmeline="| Function \`f\` | Function for finding strings in files, files in directories and show found files | Command \`f\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-f_irc_installationtype="packagemanager"
-f_irc_arguments=("f_irc")
-f_irc_packagenames=("f-irc")
-f_irc_description="CLI IRC client"
-f_irc_launchercontents=("[Desktop Entry]
-Categories=InstantMessaging;Communication;
-Comment=${f_irc_description}
-Encoding=UTF-8
-Exec=f-irc
-GenericName=IRC client
-Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/flightgear_flightgear.png
-Keywords=InstantMessaging;irc;
-MimeType=
-Name=F-irc
-StartupNotify=true
-StartupWMClass=f-irc
-Terminal=true
-TryExec=f-irc
-Type=Application
-Version=1.0
-")
-f_irc_readmeline="| f-irc | ${f_irc_description} | Command \`f-irc\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+firc_name="F-irc"
+firc_description="CLI IRC client"
+firc_version="1.0"
+firc_tags=("irc" "chat" "terminal" "social" "instantmessaging")
+firc_systemcategories=("ConsoleOnly" "Communication" "InstantMessaging")
+firc_commentary="Dedicated servers to chat in terminal"
+firc_arguments=("f_irc")
+firc_packagenames=("f-irc")
+firc_launcherkeynames=("terminalLauncher")
+firc_terminalLauncher_exec="f-irc"
+firc_terminalLauncher_terminal="true"
 
-facebook_arguments=("facebook")
 facebook_bashfunctions=("facebook.sh")
 facebook_name="Facebook"
 facebook_description="Facebook opening in Chrome"
@@ -1015,24 +1023,33 @@ facebook_version="Google dependent"
 facebook_systemcategories=("InstantMessaging" "Chat" "Feed")
 facebook_commentary="Social media"
 facebook_tags=("social" "internet_shortcuts")
+facebook_arguments=("facebook")
 facebook_bashfunctions=("facebook.sh")
 facebook_launcherkeynames=("default")
 facebook_default_exec="xdg-open https://facebook.com/"
 
-fastcommands_installationtype="environmental"
+fastcommands_name="Fast commands"
+fastcommands_description="Collection of multi-purpose commands"
+fastcommands_version="1.0"
+fastcommands_systemcategories=("System" "Utility")
+fastcommands_commentary="The useful arguments you always forget from commands you love."
+fastcommands_tags=("fast" "terminal" "bashfunctions")
 fastcommands_arguments=("fast_commands")
 fastcommands_bashfunctions=("fastcommands.sh")
-fastcommands_readmeline="| fast commands | Generic multi-purpose | Commands \`...\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 fdupes_installationtype="packagemanager"
 fdupes_arguments=("fdupes")
 fdupes_packagenames=("fdupes")
 fdupes_readmeline="| Fdupes | Searches for duplicated files within given directories | Command \`fdupes\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-fetch_installationtype="environmental"
+fetch_name="Function fetch"
+fetch_description="Alias for git fetch --prune"
+fetch_version="1.0"
+fetch_systemcategories=("System" "Utility")
+fetch_commentary="A terminal shortcut for git."
+fetch_tags=("gitbashfunctions" "terminal")
 fetch_arguments=("fetch")
 fetch_bashfunctions=("fetch.sh")
-fetch_readmeline="| Function \`fetch\` | \`git fetch\`| Command \`fetch\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ffmpeg_installationtype="packagemanager"
 ffmpeg_arguments=("ffmpeg" "youtube_dl_dependencies")
@@ -1416,10 +1433,14 @@ gvim_launchernames=("gvim")
 gvim_packagenames=("vim-gtk3")
 gvim_readmeline="| Gvim | Vim with a built-in GUI | Command \`gvim\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-h_installationtype="environmental"
+h_name="Function h"
+h_description="Search in your history for previous commands entered, stands by history | grep \"\$@\""
+h_version="1.0"
+h_systemcategories=("System" "Utility")
+h_commentary="Search your previous terminal commands"
+h_tags=("bashfunctions" "terminal")
 h_arguments=("h")
 h_bashfunctions=("h.sh")
-h_readmeline="| Function \`h\` | Search in your history for previous commands entered, stands by \`history | grep \"\$@\"\` | Command \`h\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 handbrake_installationtype="packagemanager"
 handbrake_arguments=("handbrake")

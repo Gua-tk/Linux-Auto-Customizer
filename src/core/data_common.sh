@@ -476,7 +476,7 @@ declare -r feature_keynames=(
   "evolution"
   "F"
   "f"
-  "f_irc"
+  "firc"
   "facebook"
   "fastcommands"
   "fdupes"
