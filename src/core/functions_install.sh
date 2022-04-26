@@ -703,7 +703,6 @@ NoDisplay=false"
       text+="${tag_metadata};"
     done
   fi
-
   # Icon
   local icon_temp=
   icon_temp="$(dynamic_launcher_deduce_icon "$1")"
