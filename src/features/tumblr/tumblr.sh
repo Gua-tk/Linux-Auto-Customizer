@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias tumblr="nohup xdg-open €{tumblr_url} &>/dev/null &"
+alias tumblr="nohup €{tumblr_default_exec} &>/dev/null &"

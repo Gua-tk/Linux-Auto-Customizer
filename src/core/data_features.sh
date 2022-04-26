@@ -3100,32 +3100,16 @@ spotify_package_manager_override="apt-get"
 spotify_packagedependencies=("libgconf-2-4")
 spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
-# TODO @AleixMT wontfix
-spreadsheets_installationtype="environmental"
 spreadsheets_arguments=("spreadsheets" "google_spreadsheets")
-spreadsheets_url="https://docs.google.com/spreadsheets/"
-spreadsheets_bashfunctions=("spreadheets.sh")
-spreadsheets_downloads=("https://upload.wikimedia.org/wikipedia/commons/a/ae/Google_Sheets_2020_Logo.svg;spreadsheets_icon.svg")
+spreadsheets_name="Google Spreadsheets"
+spreadsheets_version="Google dependent"
+spreadsheets_systemcategories=("Documentation" "Spreadsheet")
+spreadsheets_commentary="spreadsheets editor online"
+spreadsheets_tags=("google" "spreadsheets" "internet_shortcuts")
+spreadsheets_bashfunctions=("spreadsheets.sh")
+spreadsheets_launcherkeynames=("default")
+spreadsheets_default_exec="xdg-open https://docs.google.com/spreadsheets"
 spreadsheets_description="Google Spreadsheets opening in Chrome"
-spreadsheets_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${spreadsheets_description}
-Encoding=UTF-8
-Exec=xdg-open ${spreadsheets_url}
-Icon=${BIN_FOLDER}/spreadsheets/spreadsheets_icon.svg
-GenericName=Spreadsheets
-Keywords=spreadsheets;
-MimeType=
-Name=Google Spreadsheets
-StartupNotify=true
-StartupWMClass=Google Spreadsheets
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-spreadsheets_readmeline="| Spreadsheets | ${spreadsheets_description} | Command \`spreadsheets\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 ssh_installationtype="packagemanager"
 ssh_arguments=("ssh")
@@ -3414,32 +3398,16 @@ tor_commentary="Browse the Internet with maximum privacy."
 tor_launchernames=("torbrowser")
 tor_packagenames=("torbrowser-launcher")
 
-# TODO @AleixMT wontfix
-translator_installationtype="environmental"
-translator_arguments=("translator")
-translator_url="https://translate.google.com/"
-translator_bashfunctions=("translator.sh")
-translator_downloads=("https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png;translator_icon.png")
-translator_description="Google Translate opening in Chrome"
-translator_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${translator_description}
-Encoding=UTF-8
-Exec=xdg-open ${translator_url}
-Icon=${BIN_FOLDER}/translator/translator_icon.png
-GenericName=Google Translator
-Keywords=google;
-MimeType=
-Name=Google Translate
-StartupNotify=true
-StartupWMClass=Google Translator
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-translator_readmeline="| Translator | ${google_description} | Command \`translator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+traductor_arguments=("traductor" "google_traductor")
+traductor_name="Google Traductor"
+traductor_version="Google dependent"
+traductor_systemcategories=("Translation")
+traductor_commentary="Traduce to any language"
+traductor_tags=("google" "traductor" "internet_shortcuts")
+traductor_bashfunctions=("traductor.sh")
+traductor_launcherkeynames=("default")
+traductor_default_exec="xdg-open https://translate.google.com"
+traductor_description="Google Traductor opening in Chrome"
 
 transmission_gtk_installationtype="packagemanager"
 transmission_gtk_arguments=("transmission_gtk" "transmission")
@@ -3447,98 +3415,49 @@ transmission_gtk_launchernames=("transmission-gtk")
 transmission_gtk_packagenames=("transmission")
 transmission_gtk_readmeline="| Transmission | A set of lightweight Torrent client (in GUI, CLI and daemon form) | Executable \`transmission\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix
-trello_installationtype="environmental"
 trello_arguments=("trello")
-trello_url="https://trello.com"
+trello_name="Trello"
+trello_version="Google dependent"
+trello_systemcategories=("ProjectManagement")
+trello_commentary="Project administration"
+trello_tags=("administration" "internet_shortcuts")
 trello_bashfunctions=("trello.sh")
-trello_downloads=("https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/trello-512.png;trello_icon.png")
-trello_description="Trello web opens in Chrome"
-trello_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${trello_description}
-Encoding=UTF-8
-Exec=xdg-open ${trello_url}
-Icon=${BIN_FOLDER}/trello/trello_icon.png
-GenericName=Trello
-Keywords=trello;
-MimeType=
-Name=Trello
-StartupNotify=true
-StartupWMClass=Trello
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-trello_readmeline="| Trello | ${trello_description} | Command \`trello\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+trello_launcherkeynames=("default")
+trello_default_exec="xdg-open https://trello.com"
+trello_description="Google trello opening in Chrome"
 
-# TODO @AleixMT wontfix
-tumblr_installationtype="environmental"
 tumblr_arguments=("tumblr")
-tumblr_url="https://www.tumblr.com/"
+tumblr_name="Tumblr"
+tumblr_version="Google dependent"
+tumblr_systemcategories=("Feed")
+tumblr_commentary="Blogs multimedia"
+tumblr_tags=("internet_shortcuts")
 tumblr_bashfunctions=("tumblr.sh")
-tumblr_downloads=("https://upload.wikimedia.org/wikipedia/commons/4/43/Tumblr.svg;tumblr_icon.svg")
-tumblr_description="Tumblr web opens in Chrome"
-tumblr_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${tumblr_description}
-Encoding=UTF-8
-Exec=xdg-open ${tumblr_url}
-Icon=${BIN_FOLDER}/tumblr/tumblr_icon.svg
-GenericName=tumblr
-Keywords=tumblr
-MimeType=
-Name=Tumblr
-StartupNotify=true
-StartupWMClass=Tumblr
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-tumblr_readmeline="| Tumblr | ${tumblr_description} | Command \`tumblr\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+tumblr_launcherkeynames=("default")
+tumblr_default_exec="xdg-open https://www.tumblr.com/"
+tumblr_description="Tumblr opening in Chrome"
 
-# TODO @AleixMT wontfix
-twitch_arguments=("twitch" "twitch_tv")
-twitch_name="Twitch TV"
-twitch_commentary="Social media to perform live streams from your own computer"
-twitch_description="Internet browser shortcut to streaming platform"
-twitch_version="1.0"
-twitch_tags=("Streaming" "stream")
-twitch_systemcategories=("Video" "Network" "Chat")
-twitch_launcherkeynames=("default")
-twitch_default_exec="xdg-open https://twitch.tv/"
+twitch_arguments=("twitch")
+twitch_name="Twitch"
+twitch_version="Google dependent"
+twitch_systemcategories=("VideoConference")
+twitch_commentary="Online streaming platform"
+twitch_tags=("streaming" "internet_shortcuts")
 twitch_bashfunctions=("twitch.sh")
+twitch_launcherkeynames=("default")
+twitch_default_exec="xdg-open https://twitch.tv"
+twitch_description="Twitch.tv opening in Chrome"
 
-# TODO @AleixMT wontfix
-twitter_installationtype="environmental"
 twitter_arguments=("twitter")
-twitter_url="https://twitter.com/"
+twitter_name="Twitter"
+twitter_version="Google dependent"
+twitter_systemcategories=("InstantMessaging" "Chat" "Feed")
+twitter_commentary="Microblogging online social platform"
+twitter_tags=("internet_shortcuts")
 twitter_bashfunctions=("twitter.sh")
-twitter_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/19/Twitter_icon.svg;twitter_icon.svg")
-twitter_description="Twitter web opens in Chrome"
-twitter_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${twitter_description}
-Encoding=UTF-8
-Exec=xdg-open ${twitter_url}
-Icon=${BIN_FOLDER}/twitter/twitter_icon.svg
-GenericName=Twitter
-Keywords=twitter
-MimeType=
-Name=Twitter
-StartupNotify=true
-StartupWMClass=Twitter
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-twitter_readmeline="| Twitter | ${twitter_description} | Command \`twitter\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+twitter_launcherkeynames=("default")
+twitter_default_exec="xdg-open https://twitter.com"
+twitter_description="twitter.tv opening in Chrome"
 
 u_name="Function u"
 u_description="Opens given link in default web browser"
@@ -3600,59 +3519,27 @@ vommit_systemcategories=("System" "Utility")
 vommit_commentary="Dummy commit"
 vommit_bashfunctions=("vommit.sh")
 
-# TODO @AleixMT wontfix
-whatsapp_installationtype="environmental"
-whatsapp_arguments=("whatsapp")
-whatsapp_url="https://web.whatsapp.com/"
+whatsapp_arguments=("whatsapp" "whatsapp_web")
+whatsapp_name="Whatsapp Web"
+whatsapp_version="Google dependent"
+whatsapp_systemcategories=("InstantMessaging" "Chat")
+whatsapp_commentary="Whatsapp Web for messaging"
+whatsapp_tags=("internet_shortcuts")
 whatsapp_bashfunctions=("whatsapp.sh")
-whatsapp_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg;whatsapp_icon.svg")
-whatsapp_description="Whatsapp web opens in Chrome"
-whatsapp_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${whatsapp_description}
-Encoding=UTF-8
-Exec=xdg-open ${whatsapp_url}
-Icon=${BIN_FOLDER}/whatsapp/whatsapp_icon.svg
-GenericName=WhatsApp Web
-Keywords=whatsapp;
-MimeType=
-Name=WhatsApp Web
-StartupNotify=true
-StartupWMClass=WhatsApp
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-whatsapp_readmeline="| Whatsapp Web | ${whatsapp_description} | Command \`whatsapp\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+whatsapp_launcherkeynames=("default")
+whatsapp_default_exec="xdg-open https://web.whatsapp.com"
+whatsapp_description="Whatsapp Web opening in Chrome"
 
-# TODO @AleixMT wontfix
-wikipedia_installationtype="environmental"
 wikipedia_arguments=("wikipedia")
-wikipedia_url="https://www.wikipedia.org/"
+wikipedia_name="Wikipedia"
+wikipedia_version="Google dependent"
+wikipedia_systemcategories=("Documentation")
+wikipedia_commentary="Free encyclopedia"
+wikipedia_tags=("internet_shortcuts")
 wikipedia_bashfunctions=("wikipedia.sh")
-wikipedia_downloads=("https://upload.wikimedia.org/wikipedia/commons/2/20/Wikipedia-logo-simple.svg;wikipedia_icon.svg")
-wikipedia_description="Wikipedia web opens in Chrome"
-wikipedia_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${wikipedia_description}
-Encoding=UTF-8
-Exec=xdg-open ${wikipedia_url}
-Icon=${BIN_FOLDER}/wikipedia/wikipedia_icon.svg
-GenericName=reddit
-Keywords=wikipedia
-MimeType=
-Name=Wikipedia
-StartupNotify=true
-StartupWMClass=Wikipedia
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-wikipedia_readmeline="| Wikipedia | ${wikipedia_description} | Command \`wikipedia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+wikipedia_launcherkeynames=("default")
+wikipedia_default_exec="xdg-open https://www.wikipedia.org"
+wikipedia_description="Wikipedia opening in Chrome"
 
 wikit_installationtype="environmental"
 wikit_manualcontentavailable=";1;"
@@ -3795,32 +3682,16 @@ xclip_arguments=("x_clip")
 xclip_packagenames=("xclip")
 xclip_readmeline="| \`xclip\` | Utility for pasting. | Command \`xclip\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix
-youtube_installationtype="environmental"
 youtube_arguments=("youtube")
-youtube_url="https://youtube.com/"
+youtube_name="Youtube"
+youtube_version="Google dependent"
+youtube_systemcategories=("VideoConference")
+youtube_commentary="Watch videos online"
+youtube_tags=("internet_shortcuts")
 youtube_bashfunctions=("youtube.sh")
-youtube_downloads=("https://upload.wikimedia.org/wikipedia/commons/4/4f/YouTube_social_white_squircle.svg;youtube_icon.svg")
-youtube_description="YouTube opens in Chrome"
-youtube_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${youtube_description}
-Encoding=UTF-8
-Exec=xdg-open ${youtube_url}
-Icon=${BIN_FOLDER}/youtube/youtube_icon.svg
-GenericName=YouTube
-Keywords=youtube;
-MimeType=
-Name=YouTube
-StartupNotify=true
-StartupWMClass=YouTube
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-youtube_readmeline="| Youtube | ${youtube_description} | Command \`youtube\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+youtube_launcherkeynames=("default")
+youtube_default_exec="xdg-open https://www.youtube.com"
+youtube_description="Youtube opening in Chrome"
 
 # TODO @AleixMT refactor feature name
 youtube_dl_installationtype="environmental"
@@ -3830,35 +3701,16 @@ youtube_dl_binariesinstalledpaths=("youtube-dl;youtube-dl")
 youtube_dl_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl")
 youtube_dl_readmeline="| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command \`youtube-dl\` in the PATH and alias \`youtube-wav\` to scratch a mp3 from youtube || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix
-youtubemusic_installationtype="environmental"
-youtubemusic_url="https://music.youtube.com"
-youtubemusic_filekeys=("youtubemusicscript")
-youtubemusic_youtubemusicscript_path="youtubemusic.sh"
-youtubemusic_youtubemusicscript_content="youtubemusic.sh"
-youtubemusic_binariesinstalledpaths=("youtubemusic.sh;youtubemusic")
-youtubemusic_arguments=("youtube_music")
-youtubemusic_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg;youtubemusic_icon.svg")
-youtubemusic_description="YouTube music opens in Chrome."
-youtubemusic_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${youtubemusic_description}
-Encoding=UTF-8
-Exec=xdg-open ${youtubemusic_url}
-Icon=${BIN_FOLDER}/youtubemusic/youtubemusic_icon.svg
-GenericName=YouTube Music
-Keywords=youtubemusic;
-MimeType=
-Name=YouTube Music
-StartupNotify=true
-StartupWMClass=YouTube Music
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-youtubemusic_readmeline="| Youtube Music | ${youtubemusic_description} | Command \`youtubemusic\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+ytmusic_arguments=("yt_music" "youtubemusic" "youtube_music")
+ytmusic_name="YT Music"
+ytmusic_version="Google dependent"
+ytmusic_systemcategories=("Music")
+ytmusic_commentary="Listen music and watch videoclips online"
+ytmusic_tags=("internet_shortcuts")
+ytmusic_bashfunctions=("ytmusic.sh")
+ytmusic_launcherkeynames=("default")
+ytmusic_default_exec="xdg-open https://music.youtube.com"
+ytmusic_description="YT Music opening in Chrome"
 
 ####### LINE OF TRIMMING, BELOW IS TRIMMED ########
 

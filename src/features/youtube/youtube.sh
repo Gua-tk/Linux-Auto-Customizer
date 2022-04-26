@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias youtube="nohup xdg-open €{youtube_url} &>/dev/null &"
+alias youtube="nohup €{youtube_default_exec} &>/dev/null &"

@@ -644,7 +644,7 @@ declare -r feature_keynames=(
   "tmux"
   "tomcat"
   "tor"
-  "translator"
+  "traductor"
   "transmission_gtk"
   "trello"
   "tumblr"
@@ -665,7 +665,7 @@ declare -r feature_keynames=(
   "xclip"
   "youtube"
   "youtube_dl"
-  "youtubemusic"
+  "ytmusic"
   "z"
   "zoom"
 )
