@@ -411,7 +411,7 @@ FLAG_CACHE=1
 # for each installation.                                                                                               #
 ########################################################################################################################
 
-declare -r feature_keynames=(
+declare feature_keynames=(
   "a"
   "add"
   "aircrack_ng"
