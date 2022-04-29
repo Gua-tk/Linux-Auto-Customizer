@@ -189,6 +189,19 @@ update_environment()
 }
 
 
+# - Description: Ensures that the customizer_options.sh is present and sources it into the customizer environment.
+# - Permission: Can be called as root or user.
+ensure_and_import_custom_options()
+{
+  # Ensure that customizer_option.sh exists in DATA_FOLDER, but do not overwrite it if exists. Then source its ocntent
+  # for user custom options, flags and features
+  if [ ! -f "${DATA_FOLDER}/customizer_options.sh" ]; then
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/core/customizer_options.sh" "${DATA_FOLDER}/customizer_options.sh"
+  fi
+  source "${DATA_FOLDER}/customizer_options.sh"
+}
+
+
 # - Description: Prints to standard output a table that contains all the arguments that customizer accepts along with
 #   the commands that installs.
 # - Permissions: Can be called as root or user with the same behaviour.
