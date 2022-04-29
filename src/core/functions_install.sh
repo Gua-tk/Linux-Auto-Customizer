@@ -1470,7 +1470,7 @@ data_and_file_structures_initialization() {
   #if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
   #  create_file "${PROGRAM_KEYBINDINGS_PATH}"
   #fi
-  add_bash_initialization "" "keybindings.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/favorites.sh"
+  add_bash_initialization "" "keybindings.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/keybindings.sh"
 
   # We source from the bashrc of the current user or all the users depending on out permissions with priority
   # in being sourced from BASHRC_ALL_USERS_PATH
