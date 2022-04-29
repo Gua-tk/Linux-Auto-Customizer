@@ -347,7 +347,7 @@ declare CURRENT_INSTALLATION_KEYNAME=""
 ########################################################################################################################
 ################################################## RUNTIME FLAGS #######################################################
 ########################################################################################################################
-# Global variables used for the program to communicate different functions and modules with themselves. They also      #
+# Global variables used for the program to communicate different functions and subsystems with themselves. They also      #
 # record the internal state of the software, which in many cases change the way in which an installation is performed  #
 # or the general behaviour of the program. Some of the flags are saved for every installation in add_program() to be   #
 # interpreted later in execute_installation(). During the installation each flag will hold its default value until a   #

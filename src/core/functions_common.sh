@@ -801,6 +801,7 @@ generic_installation() {
   if [ "${OS_NAME}" == "WSL2" ]; then
     "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
   fi
+
   "generic_${FLAG_MODE}_functions" "${featurename}"
   "generic_${FLAG_MODE}_initializations" "${featurename}"
   "generic_${FLAG_MODE}_autostart" "${featurename}"
