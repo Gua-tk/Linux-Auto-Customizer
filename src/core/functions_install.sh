@@ -1459,17 +1459,10 @@ data_and_file_structures_initialization() {
   # Updates initializations
   # Avoid running bash functions non-interactively
   # Adds to the path the folder where we will put our soft links
-  add_bash_function "${bash_functions_init}" "init.sh"
-  # Create and / or update built-in favourites subsystem
-  #if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
-  #  create_file "${PROGRAM_FAVORITES_PATH}"
-  #fi
+  add_bash_function "" "init.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/init.sh"
+
   add_bash_initialization "" "favorites.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/favorites.sh"
 
-  # Create and / or update built-in keybinding subsystem
-  #if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
-  #  create_file "${PROGRAM_KEYBINDINGS_PATH}"
-  #fi
   add_bash_initialization "" "keybindings.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/keybindings.sh"
 
   # We source from the bashrc of the current user or all the users depending on out permissions with priority
