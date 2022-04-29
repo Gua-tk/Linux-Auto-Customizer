@@ -1085,9 +1085,11 @@ generic_install_functions() {
     if [[ "${bashfunction}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
       add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
-    else
+    elif ! grep -Eq "/"; then
       # Only one line we guess it is a partial path
       add_bash_function "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
+    else
+      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${bashfunction}"
     fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
