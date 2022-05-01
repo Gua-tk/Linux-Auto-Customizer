@@ -1252,14 +1252,23 @@ generic_install_download()
   local -r pointer_type="${CURRENT_INSTALLATION_KEYNAME}_$1_type"
   local -r pointer_downloadPath="${CURRENT_INSTALLATION_KEYNAME}_$1_downloadPath"
 
+
+  local defaultName="${CURRENT_INSTALLATION_KEYNAME}_$1_file"
   local defaultpath="${BIN_FOLDER}"
   if [ -n "${!pointer_downloadPath}" ]; then
-    defaultpath="${!pointer_downloadPath}"
+    if echo "${!pointer_downloadPath}" | grep -Eq "/\$"; then
+      # Is a folder ending with /
+      defaultpath="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f1- | rev)"
+    elif echo "${!pointer_downloadPath}" | grep -Eq "^/"; then
+      defaultpath="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f2- | rev)"
+      defaultName="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f1 | rev)"
+    fi
   fi
+
 
   create_folder "${defaultpath}"
 
-  download "${!pointer_url}" "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"
+  download "${!pointer_url}" "${defaultpath}/${defaultName}"
 
 
   if [ -n "${!pointer_type}" ]; then
@@ -1269,7 +1278,7 @@ generic_install_download()
         local mime_type="application/zip"
       ;;
       "package")
-        local true_mime="$(file --mime-type "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" | cut -d ":" -f2 | tr -d " ")"
+        local true_mime="$(file --mime-type "${defaultpath}/${defaultName}" | cut -d ":" -f2 | tr -d " ")"
         if [ "${true_mime}" == "application/zip" ] || [ "${true_mime}" == "application/x-bzip-compressed-tar" ] || [ "${true_mime}" == "application/x-bzip2" ] || [ "${true_mime}" == "application/gzip" ] || [ "${true_mime}" == "application/x-xz" ]; then
           local mime_type="packageInCompressed"
         else
@@ -1282,37 +1291,37 @@ generic_install_download()
       ;;
     esac
   else
-    mime_type="$(file --mime-type "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" | cut -d ":" -f2 | tr -d " ")"
+    mime_type="$(file --mime-type "${defaultpath}/${defaultName}" | cut -d ":" -f2 | tr -d " ")"
   fi
 
   case "${mime_type}" in
     "application/zip" | "application/x-bzip-compressed-tar" | "application/x-bzip2" | "application/gzip" | "application/x-xz")
       local pointer_doNotInherit="${CURRENT_INSTALLATION_KEYNAME}_$1_doNotInherit"
       if [ -n "${!pointer_doNotInherit}" ]; then
-        decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"
+        decompress "${defaultpath}/${defaultName}"
         apply_permissions_recursively "${defaultpath}"
       else
-        decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_KEYNAME}$2"
+        decompress "${defaultpath}/${defaultName}" "${CURRENT_INSTALLATION_KEYNAME}$2"
         apply_permissions_recursively "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}$2"
       fi
     ;;
     "application/vnd.debian.binary-package")
       ${PACKAGE_MANAGER_FIXBROKEN}
-      ${PACKAGE_MANAGER_INSTALLPACKAGE} "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"  # Notice that this variable is not the same as the next
+      ${PACKAGE_MANAGER_INSTALLPACKAGE} "${defaultpath}/${defaultName}"  # Notice that this variable is not the same as the next
       ${PACKAGE_MANAGER_FIXBROKEN}
     ;;
     "packageInCompressed")
-      decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"
+      decompress "${defaultpath}/${defaultName}" "${defaultName}_decompressed"
       ${PACKAGE_MANAGER_FIXBROKEN}
-      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"  # Notice the S at the end of this variable...
+      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${defaultpath}/${defaultName}_decompressed"  # Notice the S at the end of this variable...
       ${PACKAGE_MANAGER_FIXBROKEN}
       # Remove decompressed folder that contains the installable packages
-      rm -Rf "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"
+      rm -Rf "${defaultpath}/${defaultName}_decompressed"
     ;;
     *)
       # Move only if we are not overriding the download path. We do it like this because if not we can not decompress
       if [ -z "${!pointer_downloadPath}" ]; then
-        mv "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_FOLDER}"
+        mv "${defaultpath}/${defaultName}" "${CURRENT_INSTALLATION_FOLDER}"
       fi
     ;;
   esac

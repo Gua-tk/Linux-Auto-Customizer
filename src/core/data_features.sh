@@ -106,7 +106,7 @@ fi
 ########################################################################################################################
 
 #  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
-#    static data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
+#    features data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
 ### Optional properties                                                                                                #
 #  - FEATUREKEYNAME_launchernames: #TODO deprecate Array of names of launchers to be copied from the launchers folder of the system.   #
 #    Used as fallback for autostart and associatedfiletypes.                                                           #

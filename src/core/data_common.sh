@@ -411,7 +411,7 @@ FLAG_CACHE=1
 # for each installation.                                                                                               #
 ########################################################################################################################
 
-declare -r feature_keynames=(
+declare feature_keynames=(
   "a"
   "add"
   "aircrack_ng"
@@ -719,7 +719,7 @@ declare -r wrapper_iochemuser=("anydesk" "telegram" "eclipse" "fastcommands" "ch
 ########################################################################################################################
 ############################################ COMMON DATA VARIABLES #####################################################
 ########################################################################################################################
-# Variables that contain static data for both parts of the program (install.sh / uninstall.sh) but are not strictly    #
+# Variables that contain features data for both parts of the program (install.sh / uninstall.sh) but are not strictly    #
 # related to an installation feature. This include data templates, output messages, etc.                               #
 ########################################################################################################################
 
