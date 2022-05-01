@@ -611,24 +611,26 @@ dynamic_launcher_deduce_icon()
   metadata_icon="${CURRENT_INSTALLATION_KEYNAME}_icon"
   create_folder "${CURRENT_INSTALLATION_FOLDER}"
   if [ ! -z "${!override_icon}" ]; then
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
   elif [ ! -z "${!metadata_icon}" ]; then
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
   else
-    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" ]; then
-      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" "${CURRENT_INSTALLATION_FOLDER}"
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" ]; then
+      echo dddddddmarka
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" "${CURRENT_INSTALLATION_FOLDER}"
+      echo  aaaaaaaaaaaamarka
       apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
       echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
-    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" ]; then
-      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" "${CURRENT_INSTALLATION_FOLDER}"
+    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" ]; then
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" "${CURRENT_INSTALLATION_FOLDER}"
       apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
       echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
-    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" ]; then
-      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" "${CURRENT_INSTALLATION_FOLDER}"
+    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" ]; then
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" "${CURRENT_INSTALLATION_FOLDER}"
       apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
       echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
     else
@@ -819,10 +821,10 @@ NoDisplay=false"
         if [ -z "${!feature_icon_pointer}" ]; then
           action_icon="${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png"
         else
-          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!feature_icon_pointer}"
+          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!feature_icon_pointer}"
         fi
       else
-        action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!actionkeyname_icon}"
+        action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!actionkeyname_icon}"
       fi
       text+=$'\n'"Icon=${action_icon}"
     done
