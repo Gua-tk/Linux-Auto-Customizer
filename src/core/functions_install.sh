@@ -611,10 +611,11 @@ dynamic_launcher_deduce_icon()
   metadata_icon="${CURRENT_INSTALLATION_KEYNAME}_icon"
   create_folder "${CURRENT_INSTALLATION_FOLDER}"
   if [ ! -z "${!override_icon}" ]; then
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
   elif [ ! -z "${!metadata_icon}" ]; then
+<<<<<<< HEAD
     create_folder "${CURRENT_INSTALLATION_FOLDER}"
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
@@ -633,6 +634,24 @@ dynamic_launcher_deduce_icon()
     elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" ]; then
       create_folder "${CURRENT_INSTALLATION_FOLDER}"
       cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" "${CURRENT_INSTALLATION_FOLDER}"
+=======
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
+    echo "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
+  else
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" ]; then
+      echo dddddddmarka
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" "${CURRENT_INSTALLATION_FOLDER}"
+      echo  aaaaaaaaaaaamarka
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
+      echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
+    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" ]; then
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" "${CURRENT_INSTALLATION_FOLDER}"
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
+      echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
+    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" ]; then
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" "${CURRENT_INSTALLATION_FOLDER}"
+>>>>>>> 5d121be5d800d78886423c74e6dcb06b91112955
       apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
       echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
     else
@@ -824,12 +843,19 @@ NoDisplay=false"
           cp "${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png" "${CURRENT_INSTALLATION_FOLDER}"
           action_icon="${CURRENT_INSTALLATION_FOLDER}/logo.png"
         else
+<<<<<<< HEAD
           cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!feature_icon_pointer}" "${CURRENT_INSTALLATION_FOLDER}"
           action_icon="${CURRENT_INSTALLATION_FOLDER}/${!feature_icon_pointer}"
         fi
       else
         cp "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${!actionkeyname_icon}" "${CURRENT_INSTALLATION_FOLDER}"
         action_icon="${CURRENT_INSTALLATION_FOLDER}/${!actionkeyname_icon}"
+=======
+          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!feature_icon_pointer}"
+        fi
+      else
+        action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!actionkeyname_icon}"
+>>>>>>> 5d121be5d800d78886423c74e6dcb06b91112955
       fi
       text+=$'\n'"Icon=${action_icon}"
     done
@@ -1073,8 +1099,11 @@ generic_install_initializations() {
     if [[ "${bashinit}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
       add_bash_initialization "${bashinit}" "$1${name_suffix_anticollision}.sh"
+    elif ! echo "${bashinit}" | grep -Eq "/"; then
+      # Only one line we guess it is a partial path
+      add_bash_initialization "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
     else
-      add_bash_initialization "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashinit}"
+      add_bash_initialization "" "$1${name_suffix_anticollision}.sh" "${bashinit}"
     fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
@@ -1092,12 +1121,15 @@ generic_install_functions() {
     if [[ "${bashfunction}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
       add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
-    else
+    elif ! echo "${bashfunction}" | grep -Eq "/"; then
       # Only one line we guess it is a partial path
       add_bash_function "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
+    else
+      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${bashfunction}"
     fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
+
 }
 
 
@@ -1264,14 +1296,23 @@ generic_install_download()
   local -r pointer_type="${CURRENT_INSTALLATION_KEYNAME}_$1_type"
   local -r pointer_downloadPath="${CURRENT_INSTALLATION_KEYNAME}_$1_downloadPath"
 
+
+  local defaultName="${CURRENT_INSTALLATION_KEYNAME}_$1_file"
   local defaultpath="${BIN_FOLDER}"
   if [ -n "${!pointer_downloadPath}" ]; then
-    defaultpath="${!pointer_downloadPath}"
+    if echo "${!pointer_downloadPath}" | grep -Eq "/\$"; then
+      # Is a folder ending with /
+      defaultpath="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f1- | rev)"
+    elif echo "${!pointer_downloadPath}" | grep -Eq "^/"; then
+      defaultpath="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f2- | rev)"
+      defaultName="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f1 | rev)"
+    fi
   fi
+
 
   create_folder "${defaultpath}"
 
-  download "${!pointer_url}" "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"
+  download "${!pointer_url}" "${defaultpath}/${defaultName}"
 
 
   if [ -n "${!pointer_type}" ]; then
@@ -1281,7 +1322,7 @@ generic_install_download()
         local mime_type="application/zip"
       ;;
       "package")
-        local true_mime="$(file --mime-type "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" | cut -d ":" -f2 | tr -d " ")"
+        local true_mime="$(file --mime-type "${defaultpath}/${defaultName}" | cut -d ":" -f2 | tr -d " ")"
         if [ "${true_mime}" == "application/zip" ] || [ "${true_mime}" == "application/x-bzip-compressed-tar" ] || [ "${true_mime}" == "application/x-bzip2" ] || [ "${true_mime}" == "application/gzip" ] || [ "${true_mime}" == "application/x-xz" ]; then
           local mime_type="packageInCompressed"
         else
@@ -1294,37 +1335,37 @@ generic_install_download()
       ;;
     esac
   else
-    mime_type="$(file --mime-type "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" | cut -d ":" -f2 | tr -d " ")"
+    mime_type="$(file --mime-type "${defaultpath}/${defaultName}" | cut -d ":" -f2 | tr -d " ")"
   fi
 
   case "${mime_type}" in
     "application/zip" | "application/x-bzip-compressed-tar" | "application/x-bzip2" | "application/gzip" | "application/x-xz")
       local pointer_doNotInherit="${CURRENT_INSTALLATION_KEYNAME}_$1_doNotInherit"
       if [ -n "${!pointer_doNotInherit}" ]; then
-        decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"
+        decompress "${defaultpath}/${defaultName}"
         apply_permissions_recursively "${defaultpath}"
       else
-        decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_KEYNAME}$2"
+        decompress "${defaultpath}/${defaultName}" "${CURRENT_INSTALLATION_KEYNAME}$2"
         apply_permissions_recursively "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}$2"
       fi
     ;;
     "application/vnd.debian.binary-package")
       ${PACKAGE_MANAGER_FIXBROKEN}
-      ${PACKAGE_MANAGER_INSTALLPACKAGE} "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"  # Notice that this variable is not the same as the next
+      ${PACKAGE_MANAGER_INSTALLPACKAGE} "${defaultpath}/${defaultName}"  # Notice that this variable is not the same as the next
       ${PACKAGE_MANAGER_FIXBROKEN}
     ;;
     "packageInCompressed")
-      decompress "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"
+      decompress "${defaultpath}/${defaultName}" "${defaultName}_decompressed"
       ${PACKAGE_MANAGER_FIXBROKEN}
-      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"  # Notice the S at the end of this variable...
+      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${defaultpath}/${defaultName}_decompressed"  # Notice the S at the end of this variable...
       ${PACKAGE_MANAGER_FIXBROKEN}
       # Remove decompressed folder that contains the installable packages
-      rm -Rf "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file_decompressed"
+      rm -Rf "${defaultpath}/${defaultName}_decompressed"
     ;;
     *)
       # Move only if we are not overriding the download path. We do it like this because if not we can not decompress
       if [ -z "${!pointer_downloadPath}" ]; then
-        mv "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file" "${CURRENT_INSTALLATION_FOLDER}"
+        mv "${defaultpath}/${defaultName}" "${CURRENT_INSTALLATION_FOLDER}"
       fi
     ;;
   esac
@@ -1465,18 +1506,11 @@ data_and_file_structures_initialization() {
   # Updates initializations
   # Avoid running bash functions non-interactively
   # Adds to the path the folder where we will put our soft links
-  add_bash_function "${bash_functions_init}" "init.sh"
-  # Create and / or update built-in favourites subsystem
-  if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
-    create_file "${PROGRAM_FAVORITES_PATH}"
-  fi
-  add_bash_initialization "${favorites_function}" "favorites.sh"
+  add_bash_function "" "init.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/init.sh"
 
-  # Create and / or update built-in keybinding subsystem
-  if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
-    create_file "${PROGRAM_KEYBINDINGS_PATH}"
-  fi
-  add_bash_initialization "${keybinding_function}" "keybinding.sh"
+  add_bash_initialization "" "favorites.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/favorites.sh"
+
+  add_bash_initialization "" "keybindings.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/keybindings.sh"
 
   # We source from the bashrc of the current user or all the users depending on out permissions with priority
   # in being sourced from BASHRC_ALL_USERS_PATH
@@ -1537,140 +1571,3 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_common.sh not found. Aborting..."
   exit 1
 fi
-
-
-########################################################################################################################
-######################################### INSTALL SUBSYSTEMS FUNCTIONS #################################################
-########################################################################################################################
-
-# - Description: This functions is the basic piece of the favorites subsystem, but is not a function that it is
-# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
-# is invoked. This function and its necessary files such as $PROGRAM_FAVORITES_PATH are always present during the
-# execution of install.
-# This function basically processes and applies the results of the call to add_to_favorites function.
-# - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
-# add_to_favorites instead, can be called as root or user, so root and user executions can be added
-
-favorites_function="
-# Check if gsettings command is available
-if ! command -v gsettings &> /dev/null
-then
-  return
-fi
-
-if [ -f \"${PROGRAM_FAVORITES_PATH}\" ]; then
-  while IFS= read -r line; do
-    favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
-    if [ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]; then
-      if [ -z \"\$(echo \$favorite_apps | grep -Fo \"[]\")\" ]; then
-        # List with at least an element
-        gsettings set org.gnome.shell favorite-apps \"\$(echo \"\$favorite_apps\" | sed s/.\$//), '\$line']\"
-      else
-        # List empty
-        gsettings set org.gnome.shell favorite-apps \"['\$line']\"
-      fi
-    fi
-  done < \"${PROGRAM_FAVORITES_PATH}\"
-fi
-"
-
-# https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal
-# - Description: This function is the basic piece of the keybinding subsystem, but is not a function that it is
-# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBINDINGS_PATH every time a terminal
-# is invoked. This function and its necessary files such as $PROGRAM_KEYBINDINGS_PATH are always present during the
-# execution of install. Also, for simplicity, we consider that each keybinding
-# This function basically processes and applies the results of the call to add_custom_keybinding function.
-# - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
-# add_custom_keybinding instead, can be called as root or user, so root and user executions can be added
-
-# Name, Command, Binding...
-# 1st argument Name of the feature
-# 2nd argument Command of the feature
-# 3rd argument Bind Key Combination of the feature ex(<Primary><Alt><Super>a)
-# 4th argument Number of the feature array position slot of the added custom command (custom0, custom1, custom2...)
-keybinding_function="
-# Check if gsettings command is available
-if ! command -v gsettings &> /dev/null
-then
-  return
-fi
-
-if ! gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings &> /dev/null; then
-  return
-fi
-
-
-# Check if there are keybindings available
-if [ -f \"${PROGRAM_KEYBINDINGS_PATH}\" ]; then
-  # regenerate list of active keybindings
-  declare -a active_keybinds=\"\$(echo \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)\" | sed 's/@as //g' | tr -d \",\" | tr \"[\" \"(\" | tr \"]\" \")\" | tr \"'\" \"\\\"\")\"
-
-  # Every iteration is a line. IFS (internal field separator) set to empty
-  while IFS= read -r line; do
-    if [ -z \"\$line\" ]; then
-      continue
-    fi
-    field_command=\"\$(echo \"\${line}\" | cut -d \";\" -f1)\"
-    field_binding=\"\$(echo \"\${line}\" | cut -d \";\" -f2)\"
-    field_name=\"\$(echo \"\${line}\" | cut -d \";\" -f3)\"
-
-    i=0
-    isInstalled=0
-    # while custom keybinding i is occupied... try to update custom keybinding i if the keybinding to add and the one in position i have same name
-    while [ -n \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; do
-      # Overwrite keybinding if there is a collision in the name with previous defined keybindings
-      if [ \"\${field_name}\" == \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | tr -d \"'\")\" ]; then
-        # Overwrite
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\${field_command}'\"
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\${field_binding}'\"
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\${field_name}'\"
-        # Make sure that the keybinding data that we just uploaded is active
-        isActive=0
-        for active_keybind in \${active_keybinds[@]}; do
-          if [ \"\${active_keybind}\" == \"/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/\" ]; then
-            # The updated keybinding is active, mark as active to avoid further processing and escape the inner loop
-            isActive=1
-            break
-          fi
-        done
-        # If is not active, active it by adding to the activated keybindings array
-        if [ \${isActive} == 0 ]; then
-          active_keybinds+=(/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/)
-        fi
-        # The keybind data was already in the table, no need for occupying a new custom keybind. Mark as installed to avoid post processing and escape de loop
-        isInstalled=1
-        break
-      fi
-      i=\$((i+1))
-    done
-    if [ \${isInstalled} == 0 ]; then
-      # No collision: This is a new keybind. Append new keybinding data in a non occupied custom keybinding in position i, which at this point is empty
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\${field_command}'\"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\${field_binding}'\"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\${field_name}'\"
-      # Make sure that the keybinding data that we just uploaded is active
-      isActive=0
-      for active_keybind in \${active_keybinds[@]}; do
-        if [ \"\${active_keybind}\" == \"/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/\" ]; then
-          isActive=1
-          break
-        fi
-      done
-      # If is not active, active it by adding to the activated keybindings array
-      if [ \${isActive} == 0 ]; then
-        active_keybinds+=(/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/)
-      fi
-    fi
-  done < \"${PROGRAM_KEYBINDINGS_PATH}\"
-  # Build string for gsettings set for the active custom keybindings from the array of active keybinds that we have been building
-  active_keybinds_str=\"[\"
-  for active_keybind in \${active_keybinds[@]}; do
-    active_keybinds_str+=\"'\${active_keybind}', \"
-  done
-  # remove last comma and add the ] to close the array
-  active_keybinds_str=\"\$(echo \"\${active_keybinds_str}\" | sed 's/, $//g')]\"
-
-  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings \"\${active_keybinds_str}\"
-  #echo \"gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings \"\${active_keybinds_str}\" \"
-fi
-"

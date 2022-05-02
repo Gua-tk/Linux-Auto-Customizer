@@ -127,6 +127,11 @@ fi
 #    wine              |        Wine, X-Wine, Wine-Programs-Accessories
 ########################################################################################################################
 
+<<<<<<< HEAD
+=======
+#  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
+#    features data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
+>>>>>>> 5d121be5d800d78886423c74e6dcb06b91112955
 ### Optional properties                                                                                                #
 #  - FEATUREKEYNAME_launchernames: TODO depreacate
 #    Array of names of launchers to be copied from the launchers folder of the system.   #
@@ -1491,12 +1496,12 @@ ideac_name="IntelliJ Community"
 ideac_commentary="Integrated development environment written in Java for developing computer software"
 ideac_version="2021.3"
 ideac_tags=("IDE" "development" "text editor" "dev" "programming" "java")
-ideac_icon="ideac.png"
 ideac_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
 ideac_associatedfiletypes=("text/x-java")
 ideac_bashfunctions=("ideac.sh")
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
-ideac_compressedfileurl="https://download.jetbrains.com/idea/ideaIC-2021.3.tar.gz"
+ideac_downloadKeys=("bundle")
+ideac_bundle_URL="https://download.jetbrains.com/idea/ideaIC-2021.3.tar.gz"
 ideac_launcherkeynames=("launcher")
 ideac_launcher_exec="ideac %f"
 ideac_launcher_windowclass="jetbrains-ideac"
@@ -1511,7 +1516,6 @@ ideau_commentary="Integrated development environment written in Java for develop
 ideau_version="2021.3"
 ideau_tags=("IDE" "development" "text editor" "dev" "programming" "java")
 ideau_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
-ideau_icon="ideau.png"
 ideau_associatedfiletypes=("text/x-java")
 ideau_bashfunctions=("ideau.sh")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
@@ -2910,18 +2914,18 @@ pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux6
 pypy3_manualcontentavailable="0;1;0"
 pypy3_readmeline="| pypy3 | Faster interpreter for the Python3 programming language | Commands \`pypy3\` and \`pypy3-pip\` in the PATH || <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 pypy3_packagedependencies=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
-# Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
+# Installs pypy3 dependencies, pypy3 and basic subsystems (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 install_pypy3_mid() {
-  # Install modules using pip
+  # Install subsystems using pip
   "${BIN_FOLDER}/pypy3/bin/pypy3" -m ensurepip
 
-  # Forces download of pip and of modules
+  # Forces download of pip and of subsystems
   "${BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir -q install --upgrade pip
   "${BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir install cython numpy
   # Currently not supported
   # ${BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
 }
-# Installs pypy3 dependencies, pypy3 and basic modules (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
+# Installs pypy3 dependencies, pypy3 and basic subsystems (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 uninstall_pypy3_mid() {
   :
 }

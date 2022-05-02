@@ -347,7 +347,7 @@ declare CURRENT_INSTALLATION_KEYNAME=""
 ########################################################################################################################
 ################################################## RUNTIME FLAGS #######################################################
 ########################################################################################################################
-# Global variables used for the program to communicate different functions and modules with themselves. They also      #
+# Global variables used for the program to communicate different functions and subsystems with themselves. They also      #
 # record the internal state of the software, which in many cases change the way in which an installation is performed  #
 # or the general behaviour of the program. Some of the flags are saved for every installation in add_program() to be   #
 # interpreted later in execute_installation(). During the installation each flag will hold its default value until a   #
@@ -413,7 +413,7 @@ FLAG_CACHE=1
 # for each installation.                                                                                               #
 ########################################################################################################################
 
-declare -r feature_keynames=(
+declare feature_keynames=(
   "a"
   "add"
   "aircrack_ng"
@@ -703,7 +703,7 @@ declare -r wrapper_artcore=("audacity" "shotcut" "gimp" "obs" "inkscape")
 declare -r wrapper_gamesinstall=("steam" "cmatrix")
 declare -r wrapper_internetshortcuts=("documents" "drive" "duckduckgo" "facebook" "forms" "github" "gitlab" "gmail" "google" "googlecalendar" "instagram" "keep" "netflix" "onedrive" "outlook" "overleaf" "presentation" "reddit" "soundcloud" "spreadsheets" "translator" "trello" "tumblr" "twitch" "twitter" "whatsapp" "wikipedia" "youtube" "youtubemusic")
 declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley" "GNU_parallel" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
-declare -r wrapper_bashfunctions=("a" "b" "B" "c" "E" "e" "F" "f" "h" "i" "j" "k" "L" "l" "o" "p" "q" "s" "u" "x" "z")
+declare -r wrapper_bashfunctions=("a" "b" "B" "c" "E" "e" "F" "f" "h" "i" "j" "k" "L" "l" "p" "s" "u" "x" "z")
 declare -r wrapper_desktopfunctions=("changebg" "screenshots" "system_fonts" "templates")
 declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters" "bashcolors" "fastcommands" "emojis")
 declare -r wrapper_network=("ipe" "ipi" "ips")
@@ -719,7 +719,7 @@ declare -r wrapper_iochemuser=("anydesk" "telegram" "eclipse" "fastcommands" "ch
 ########################################################################################################################
 ############################################ COMMON DATA VARIABLES #####################################################
 ########################################################################################################################
-# Variables that contain static data for both parts of the program (install.sh / uninstall.sh) but are not strictly    #
+# Variables that contain features data for both parts of the program (install.sh / uninstall.sh) but are not strictly    #
 # related to an installation feature. This include data templates, output messages, etc.                               #
 ########################################################################################################################
 

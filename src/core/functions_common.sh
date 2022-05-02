@@ -189,6 +189,19 @@ update_environment()
 }
 
 
+# - Description: Ensures that the customizer_options.sh is present and sources it into the customizer environment.
+# - Permission: Can be called as root or user.
+ensure_and_import_custom_options()
+{
+  # Ensure that customizer_option.sh exists in DATA_FOLDER, but do not overwrite it if exists. Then source its ocntent
+  # for user custom options, flags and features
+  if [ ! -f "${DATA_FOLDER}/customizer_options.sh" ]; then
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/core/customizer_options.sh" "${DATA_FOLDER}/customizer_options.sh"
+  fi
+  source "${DATA_FOLDER}/customizer_options.sh"
+}
+
+
 # - Description: Prints to standard output a table that contains all the arguments that customizer accepts along with
 #   the commands that installs.
 # - Permissions: Can be called as root or user with the same behaviour.
@@ -484,13 +497,11 @@ argument_processing()
 
         local wrapper_key=
         wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
-        local set_of_features="wrapper_${wrapper_key}[@]"
-        # Useless echo? usually yes shellcheck, but not when you are indirect expanding an array
-        # shellcheck disable=SC2116
-        if [ -z "$(echo "${!set_of_features}")" ]; then
+        local set_of_features="wrapper_${wrapper_key}[*]"
+        if [ -z "${!set_of_features}" ]; then
           add_program "${key}"
         else
-          add_programs "${!set_of_features}"
+          add_programs ${!set_of_features}
         fi
       ;;
     esac
@@ -555,11 +566,20 @@ deduce_privileges()
     # special permissions
     local -r packageNames="$1_packagenames"
     local -r downloadKeys="$1_downloadKeys[*]"
+<<<<<<< HEAD
     local -r dependencies="$1_packagedependencies[*]"
     if [ -n "${!packageNames}" ]; then
       flag_privileges=0
     elif [ -n "${!dependencies}" ]; then
       flag_privileges=0
+=======
+    # If there are needed dependencies, do not consider them when determining the permissions needed for the features
+    # local -r dependencies="$1_packagedependencies[*]"
+    if [ -n "${!packageNames}" ]; then
+      flag_privileges=0
+    # elif [ -n "${!dependencies}" ]; then
+    #   flag_privileges=0
+>>>>>>> 5d121be5d800d78886423c74e6dcb06b91112955
     elif [ -n "${!downloadKeys}" ]; then
       # We do not enforce require permissions unless we see a package download type
       local special_permission=0
@@ -809,6 +829,7 @@ generic_installation() {
   if [ "${OS_NAME}" == "WSL2" ]; then
     "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
   fi
+
   "generic_${FLAG_MODE}_functions" "${featurename}"
   "generic_${FLAG_MODE}_initializations" "${featurename}"
   "generic_${FLAG_MODE}_autostart" "${featurename}"
