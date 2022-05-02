@@ -566,20 +566,12 @@ deduce_privileges()
     # special permissions
     local -r packageNames="$1_packagenames"
     local -r downloadKeys="$1_downloadKeys[*]"
-<<<<<<< HEAD
-    local -r dependencies="$1_packagedependencies[*]"
-    if [ -n "${!packageNames}" ]; then
-      flag_privileges=0
-    elif [ -n "${!dependencies}" ]; then
-      flag_privileges=0
-=======
     # If there are needed dependencies, do not consider them when determining the permissions needed for the features
     # local -r dependencies="$1_packagedependencies[*]"
     if [ -n "${!packageNames}" ]; then
       flag_privileges=0
     # elif [ -n "${!dependencies}" ]; then
     #   flag_privileges=0
->>>>>>> 5d121be5d800d78886423c74e6dcb06b91112955
     elif [ -n "${!downloadKeys}" ]; then
       # We do not enforce require permissions unless we see a package download type
       local special_permission=0

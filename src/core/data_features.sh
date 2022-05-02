@@ -127,11 +127,8 @@ fi
 #    wine              |        Wine, X-Wine, Wine-Programs-Accessories
 ########################################################################################################################
 
-<<<<<<< HEAD
-=======
 #  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
 #    features data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
->>>>>>> 5d121be5d800d78886423c74e6dcb06b91112955
 ### Optional properties                                                                                                #
 #  - FEATUREKEYNAME_launchernames: TODO depreacate
 #    Array of names of launchers to be copied from the launchers folder of the system.   #
