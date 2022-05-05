@@ -90,7 +90,7 @@ case "${OS_NAME}" in
   Ubuntu)
     initialize_package_manager_apt-get
   ;;
-  Debian)
+  "Debian GNU/Linux")
     initialize_package_manager_apt-get
   ;;
   ElementaryOS)
@@ -99,10 +99,7 @@ case "${OS_NAME}" in
   Fedora)
     initialize_package_manager_yum
   ;;
-  Parrot)
-    initialize_package_manager_apt-get
-  ;;
-  Trisquel)
+  "Parrot OS")
     initialize_package_manager_apt-get
   ;;
   "Linux Mint")
