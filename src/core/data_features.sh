@@ -3630,6 +3630,7 @@ install_tmux_post() {
 }
 uninstall_tmux_post() {
   :
+  # TODO
   #crontab "${USR_BIN_FOLDER}/changebg/cronjob"
 }
 

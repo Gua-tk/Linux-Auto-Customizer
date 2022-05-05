@@ -1,0 +1,1 @@
+@reboot tmux -f "€{HOME_FOLDER}/.tmux.conf"
