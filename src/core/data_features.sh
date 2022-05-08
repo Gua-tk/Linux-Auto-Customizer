@@ -125,6 +125,16 @@ fi
 #    system-tools      |        System, Settings
 #    universal-access  |        Accessibility
 #    wine              |        Wine, X-Wine, Wine-Programs-Accessories
+#
+#    * The order for the mandatory properties is:
+#    FEATUREKEYNAME_name
+#    FEATUREKEYNAME_description
+#    FEATUREKEYNAME_version
+#    FEATUREKEYNAME_tags
+#    FEATUREKEYNAME_systemcategories
+#    FEATUREKEYNAME_commentary
+#    FEATUREKEYNAME_arguments
+#
 ########################################################################################################################
 
 #  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
@@ -250,104 +260,103 @@ fi
 
 ####################### UNHOLY LINE OF TESTING. UPWARDS IS TESTED, BELOW IS NOT ##############################
 
-a_arguments=("a")
 a_name="Function a"
 a_description="Function that displays environment aliases using compgen -a"
 a_version="1.0"
 a_tags=("bashfunctions" "aliases" "info")
 a_systemcategories=("System" "Utility")
 a_commentary="A terminal shortcut"
+a_arguments=("a")
 a_bashfunctions=("a.sh")
 
-add_arguments=("add" "add_function")
 add_name="Function add"
 add_description="Alias to git add with completion"
 add_version="1.0"
 add_tags=("gitbashfunctions" "bashfunctions" "git")
 add_systemcategories=("System" "Utility")
 add_commentary="A git terminal shortcut"
+add_arguments=("add" "add_function")
 add_bashfunctions=("add.sh")
 
-aircrack_ng_arguments=("aircrack_ng" "aircrackng")
-aircrack_ng_packagenames=("aircrack-ng")
-aircrack_ng_name="Aircrack-ng"
-aircrack_ng_description="Complete suite of security tools to assess WiFi network security"
-aircrack_ng_version="1.6"
-aircrack_ng_tags=("attack" "network" "security")
-aircrack_ng_systemcategories=("System" "Utility" "Security" "Network" "Development")
-aircrack_ng_commentary="Very complete"
+aircrackng_arguments=("aircrack_ng" "aircrackng")
+aircrackng_packagenames=("aircrack-ng")
+aircrackng_name="Aircrack-ng"
+aircrackng_description="Complete suite of security tools to assess WiFi network security"
+aircrackng_version="1.6"
+aircrackng_tags=("attack" "network" "security")
+aircrackng_systemcategories=("System" "Utility" "Security" "Network" "Development")
+aircrackng_commentary="Very complete"
 
-aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
 aisleriot_name="AisleRiot Solitaire"
-aisleriot_commentary="Implementation of the classical game solitaire"
 aisleriot_description="Solitaire Classic Card Game"
 aisleriot_version="3.22.9"
 aisleriot_tags=("cards" "game" "cardsgame")
 aisleriot_systemcategories=("Game" "CardGame")
+aisleriot_commentary="Implementation of the classical game solitaire"
+aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
 aisleriot_bashfunctions=("aisleriot.sh")
 aisleriot_launcherkeynames=("default")
 aisleriot_default_exec="sol"
 aisleriot_launchernames=("sol")  # TODO @AleixMT extract launcher data
 aisleriot_packagenames=("aisleriot")
 
-alert_arguments=("alert" "alert_alias" "alias_alert")
 alert_name="Function alert"
 alert_description="Alias to show a notification at the end of a commands"
 alert_version="1.0"
-alert_packagedependencies=("libnotify-bin")
 alert_tags=("bashfunctions" "notify" "notification" "info")
 alert_systemcategories=("Utility" "System" "Calendar")
 alert_commentary="Useful to remember events"
+alert_arguments=("alert" "alert_alias" "alias_alert")
+alert_packagedependencies=("libnotify-bin")
 alert_bashfunctions=("alert.sh")
 
-ansible_arguments=("ansible")
 ansible_name="Ansible"
-ansible_commentary="IT automation engine that automates cloud provisioning, configuration management, application deployment"
 ansible_description="Application deployment engine"
 ansible_version="5.0.0"
 ansible_tags=("automation" "development" "deployment")
 ansible_systemcategories=("Development" "ProjectManagement" "ComputerScience" "Monitor")
+ansible_commentary="IT automation engine that automates cloud provisioning, configuration management, application deployment"
+ansible_arguments=("ansible")
 ansible_packagenames=("ansible")
 
-ant_arguments=("ant" "apache_ant")
 ant_name="Ant"
-ant_commentary="Tool to automatize repetitive tasks, usually during the compilation, building and deployment phase of the software development"
 ant_description="Automation tool for software build"
 ant_version="1.10.11"
 ant_tags=("automation" "development" "deployment")
 ant_systemcategories=("Development" "Building" "Utility")
+ant_commentary="Tool to automatize repetitive tasks, usually during the compilation, building and deployment phase of the software development"
+ant_arguments=("ant" "apache_ant")
 ant_bashfunctions=("ant.sh")
 ant_binariesinstalledpaths=("bin/ant;ant")
 ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_flagsoverride="1;;;;;"
 
-anydesk_arguments=("any_desk")
 anydesk_name="Anydesk"
-anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
+anydesk_description="PC Remote controller"
 anydesk_version="6.1.1"
 anydesk_tags=("remote" "control" "cloud")
 anydesk_systemcategories=("Accessibility" "Network" "RemoteAccess" "FileTransfer" "P2P")
+anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
+anydesk_arguments=("any_desk")
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")
 anydesk_bashfunctions=("anydesk.sh")
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
-anydesk_description="PC Remote controller"
 anydesk_launcherkeynames=("default")
 
-apache2_arguments=("apache2")
 apache2_name="Apache httpd server project"
-apache2_commentary="open-source HTTP server for modern operating systems including UNIX and Windows"
 apache2_description="Web server"
 apache2_version="2.4.52"
 apache2_tags=("development" "deployment")
 apache2_systemcategories=("Development" "WebDevelopment" )
+apache2_commentary="open-source HTTP server for modern operating systems including UNIX and Windows"
+apache2_arguments=("apache2")
 apache2_packagenames=("apache2" "apache2-utils")
 
-ardour_arguments=("ardour")
 ardour_name="Ardour5"
+ardour_description="Audio editor"
 ardour_commentary="Music development in one place"
 ardour_version="System dependent"
-ardour_description="Software for music production"
 ardour_tags=("music" "audio" "production")
 ardour_icon="ardour.svg"
 ardour_systemcategories=("Audio" "Music")
@@ -357,34 +366,34 @@ ardour_bashfunctions=("ardour.sh")
 ardour_packagenames=("ardour")  # TODO @AleixMT extract launcher data
 ardour_launchernames=("ardour")
 
-aspell_arguments=("aspell")
 aspell_name="GNU Aspell"
-aspell_commentary="Free and open source spell checker in Linux. Can be used to check spelling from provided files or stdin"
 aspell_description="Spell checker"
-aspell_systemcategories=("Translation" "System" "Settings" "Dictionary")
 aspell_version="0.60.8"
 aspell_tags=("development" "deployment" "Education" "Office" "Utility" "Documentation" "FileTools" "Humanities" "Languages" "WordProcessor" "Dictionary" "Translation")
+aspell_systemcategories=("Translation" "System" "Settings" "Dictionary")
+aspell_commentary="Free and open source spell checker in Linux. Can be used to check spelling from provided files or stdin"
+aspell_arguments=("aspell")
 aspell_packagenames=("aspell-es" "aspell-ca")
 
-atom_arguments=("atom")
 atom_name="Atom"
-atom_commentary="Text and source code editor"
+atom_description="Text and source code editor"
 atom_version="1.59.0"
 atom_tags=("IDE" "programming")
-atom_icon="atom.png"
 atom_systemcategories=("IDE" "TextTools" "TextEditor" "Development")
+atom_commentary="Lightweight"
+atom_arguments=("atom")
 atom_launcherkeynames=("default")
 atom_default_exec="atom"
 atom_launchernames=("atom")  # TODO @AleixMT extract launcher data
 atom_packageurls=("https://atom.io/download/deb")
 
-audacity_arguments=("audacity")
 audacity_name="Audacity"
-audacity_commentary="Digital audio editor and recording"
+audacity_description="Digital audio editor and recording"
 audacity_version="2.3.3"
 audacity_tags=("music" "audio" "producing")
-audacity_icon="audacity.svg"
 audacity_systemcategories=("Audio" "Music")
+audacity_commentary="You can create and edit your own music"
+audacity_arguments=("audacity")
 audacity_launcherkeynames=("default")
 audacity_default_exec="audacity"
 audacity_bashfunctions=("audacity.sh")
@@ -392,14 +401,13 @@ audacity_launchernames=("audacity") # TODO @AleixMT imort launcher data
 audacity_packagenames=("audacity" "audacity-data")
 
 # TODO @AleixMT chnage keyname to be in small letter
-AutoFirma_arguments=("auto_firma")
 AutoFirma_name="AutoFirma"
-AutoFirma_commentary="For the spanish DNI v3.0"
 AutoFirma_description="Electronic signature application"
 AutoFirma_version="1.0"
 AutoFirma_tags=("digitalsign")
-AutoFirma_icon="AutoFirma.png"
 AutoFirma_systemcategories=("Utility")
+AutoFirma_commentary="For the spanish DNI v3.0"
+AutoFirma_arguments=("auto_firma")
 AutoFirma_launcherkeynames=("default")
 AutoFirma_default_exec="AutoFirma"
 AutoFirma_bashfunctions=("AutoFirma.sh")
@@ -408,53 +416,51 @@ AutoFirma_launchernames=("afirma")  # TODO @AleixMT extract launcher data
 AutoFirma_packagedependencies=("libnss3-tools")
 AutoFirma_packagenames=("AutoFirma")
 
-axel_arguments=("axel")
-axel_packagenames=("axel")
 axel_name="axel"
 axel_description="Download manager"
-axel_commentary="Like wget but fancier and faster"
 axel_version="1.6"
-axel_systemcategories=("FileTransfer" "Utility")
 axel_tags=("downloader" "network")
+axel_systemcategories=("FileTransfer" "Utility")
+axel_commentary="Like wget but fancier and faster"
+axel_arguments=("axel")
+axel_packagenames=("axel")
 
-####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
-
-B_arguments=("B" "B_function")
 B_name="Function B"
 B_description="Function that source ~/.profile and ~/.bashrc"
 B_version="1.0"
 B_tags=("bashfunctions" "profile" "bashrc")
 B_systemcategories=("System" "Utility")
 B_commentary="B reload environment"
+B_arguments=("B" "B_function")
 B_bashfunctions=("B.sh")
 
-b_arguments=("b" "b_function")
 b_name="Function b"
 b_description="Alias for bash"
 b_version="1.0"
 b_tags=("bashfunctions" "bash")
 b_systemcategories=("System" "Utility")
 b_commentary="b reload bash environment"
+b_arguments=("b" "b_function")
 b_bashfunctions=("b.sh")
 
-bashcolors_arguments=("bash_colors" "colors" "colours")
 bashcolors_name="Function colors"
 bashcolors_description="Function and variables to use color in terminal"
 bashcolors_version="1.0"
 bashcolors_tags=("bashfunctions" "bashrc" "color")
 bashcolors_systemcategories=("System" "Utility")
 bashcolors_commentary="Bring color to the terminal text"
+bashcolors_arguments=("bash_colors" "colors" "colours")
 bashcolors_bashfunctions=("bashcolors.sh")
 
-blender_downloadKeys=("bundle")
-blender_bundle_URL="https://ftp.nluug.nl/pub/graphics/blender/release/Blender2.93/blender-2.93.3-linux-x64.tar.xz"
-blender_arguments=("blender" "blender_3d")
 blender_name="Blender"
 blender_description="2D and 3D image modeling and animation, fx, video edit..."
 blender_version="1.0"
 blender_tags=("animation" "3D" "FX" "3d" "cg modeling" "animation" "painting" "sculpting" "texturing" "video editing" "video tracking" "rendering" "render engine" "cycles" "game engine" "python")
 blender_systemcategories=("2DGraphics" "3DGraphics" "Graphics" "Video" "Art" "ImageProcessing")
 blender_commentary="3D modeling, animation, rendering and post-production"
+blender_arguments=("blender" "blender_3d")
+blender_downloadKeys=("bundle")
+blender_bundle_URL="https://ftp.nluug.nl/pub/graphics/blender/release/Blender2.93/blender-2.93.3-linux-x64.tar.xz"
 blender_binariesinstalledpaths=("blender;blender")
 blender_launcherkeynames=("defaultLauncher")
 blender_defaultLauncher_exec="blender %f"
@@ -469,34 +475,38 @@ branch_commentary="branch creates a new branch of the git repository"
 branch_arguments=("branch")
 branch_bashfunctions=("branch.sh")
 
-brasero_installationtype="packagemanager"
-brasero_arguments=("brasero")
+# TODO: Tested
+brasero_name="Brasero"
 brasero_description="Software for image burning"
 brasero_version="1.0"
 brasero_tags=("bashfunctions" "bash" "gitbashfunctions")
 brasero_systemcategories=("System" "Utility")
 brasero_commentary="branch creates a new branch of the git repository"
+brasero_arguments=("brasero")
 brasero_bashfunctions=("brasero.sh")
 brasero_launcherkeynames=("defaultLauncher")
 brasero_defaultLauncher_exec="brasero"
-# TODO: brasero_launchernames=("brasero")
 brasero_packagenames=("brasero")
 
-c_arguments=("c")
 c_name="Function b"
 c_description="Function that changes the directory or clears the screen"
 c_version="1.0"
 c_tags=("bashfunctions" "bash")
 c_systemcategories=("System" "Utility")
 c_commentary="cd and clear the screen"
+c_arguments=("c")
 c_bashfunctions=("c.sh")
 
-caffeine_installationtype="packagemanager"
+caffeine_name="Caffeine"
+caffeine_description="Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the sleep power saving mode."
+caffeine_version="System dependent"
+caffeine_tags=("utility")
+caffeine_systemcategories=("System" "Utility")
+caffeine_commentary="You will never see a lock screen again. "
 caffeine_arguments=("caffeine" "coffee" "cafe")
 caffeine_launchernames=("caffeine-indicator")  # TODO @AleixMT extract launcher data
 caffeine_manualcontentavailable="1;0;1"
 caffeine_packagenames=("caffeine")
-caffeine_readmeline="| Caffeine | Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the sleep power saving mode. | Commands \`caffeine\`, \`caffeinate\` and \`caffeine-indicator\`, desktop launcher for \`caffeine\`, dashboard launcher for \`caffeine\` and \`caffeine-indicator\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_caffeine_pre()
 {
   apt-get purge -y caffeine
@@ -514,15 +524,25 @@ uninstall_caffeine_post()
  :
 }
 
-calibre_installationtype="packagemanager"
+calibre_name="Calibre"
+calibre_description="e-book reader"
+calibre_version="System dependent"
+calibre_tags="office"
+calibre_systemcategories=("Office")
+calibre_commentary="To organize the digital books that you have"
 calibre_arguments=("calibre")
 calibre_bashfunctions=("calibre.sh")
 calibre_launchernames=("calibre-gui")
 calibre_packagenames=("calibre")  # TODO @AleixMT extract launcher data
-calibre_readmeline="| Calibre | e-book reader| Commmand \`calibre\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-changebg_installationtype="repositoryclone"
-changebg_arguments=("change_bg" "wallpaper" "wallpapers")
+# TODO: tested
+changebg_name="Change Background"
+changebg_description="Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes"
+changebg_version="1.0"
+changebg_tags=("utility" "terminal")
+changebg_systemcategories=("System" "Utility" "Settings")
+changebg_commentary="Just like in Windows"
+changebg_arguments=("change_bg" "wallpaper" "wallpapers" "backgrounds" "desktop_back_grounds" "change_back_grounds")
 changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES_DIR}/wallpapers" "*.jpeg;${XDG_PICTURES_DIR}/wallpapers" )
 changebg_binariesinstalledpaths=("cronscript.sh;changebg")
 changebg_cronscript_content="cronscript.sh"
@@ -531,7 +551,6 @@ changebg_cronjob_content="cronjob"
 changebg_cronjob_path="cronjob"
 changebg_filekeys=("cronscript" "cronjob")
 changebg_manualcontentavailable="0;0;1"
-changebg_readmeline="| Function \`changebg\` | Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes | Function \`changebg\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
 install_changebg_post() {
   if [ -n "${SUDO_USER}" ]; then
@@ -545,11 +564,18 @@ uninstall_changebg_post() {
   #crontab "${USR_BIN_FOLDER}/changebg/cronjob"
 }
 
-cheat_installationtype="environmental"
+cheat_name="Cheat"
+cheat_description="Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages"
+cheat_version="Cheat creator dependent"
+cheat_tags=("terminal" "utility" "info" "develop" "scripts")
+cheat_systemcategories=("Terminal" "Utility")
+cheat_commentary="Literally cheats for programming"
 cheat_arguments=("cheat" "cht.sh")
+cheat_dependencies=("curl")
 cheat_binariesinstalledpaths=("cht.sh;cheat")
-cheat_downloads=("https://cht.sh/:cht.sh;cht.sh")
-cheat_readmeline="| cheat.sh | Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages | Command \`cheat\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+cheat_downloadKeys=("script")
+cheat_script_URL="https://cht.sh/:cht.sh"
+cheat_script_downloadPath="cht.sh"
 
 checkout_name="Function checkout"
 checkout_description="Alias for git checkout"
@@ -560,12 +586,18 @@ checkout_commentary="A terminal shortcut for git"
 checkout_arguments=("checkout")
 checkout_bashfunctions=("checkout.sh")
 
-cheese_installationtype="packagemanager"
+# TODO DBusActivatable=true #X-Ubuntu-Gettext-Domain=cheese
+# TODO tested
+cheese_name="Cheese"
+cheese_description="Webcam Booth"
+cheese_version="System dependent"
+cheese_tags=("photo" "video" "webcam")
+cheese_systemcategories=("Video")
+cheese_commentary="Take photos and videos with your webcam, with fun graphical effects"
 cheese_arguments=("cheese")
 cheese_bashfunctions=("cheese.sh")
-cheese_launchernames=("org.gnome.Cheese")  # TODO @AleixMT extract launcher data
+cheese_launchernames=("org.gnome.Cheese")
 cheese_packagenames=("cheese")
-cheese_readmeline="| Cheese | GNOME webcam application | Command \`cheese\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 clean_name="Function clean"
 clean_description="Remove files and contents from the trash bin and performs sudo apt-get -y autoclean and sudo apt-get -y autoremove."
@@ -576,12 +608,17 @@ clean_commentary="Remove usesles packages from cache and empty your trash bin"
 clean_arguments=("clean")
 clean_bashfunctions=("clean.sh")
 
-clementine_installationtype="packagemanager"
+# TODO tested
+clementine_name="Clementine"
+clementine_description="Music player"
+clementine_version="System dependent"
+clementine_tags=("music")
+clementine_systemcategories=("Music" "Audio")
+clementine_commentary="Modern music player and library organizer"
 clementine_arguments=("clementine")
 clementine_bashfunctions=("clementine.sh")
 clementine_launchernames=("clementine")  # TODO @AleixMT extract launcher data
 clementine_packagenames=("clementine")
-clementine_readmeline="| Clementine | Modern music player and library organizer | Command \`clementine\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 clion_name="CLion"
 clion_description="Cross-platform C/C++ IDE"
@@ -608,28 +645,18 @@ clone_commentary="Download repository from url"
 clone_arguments=("clone")
 clone_bashfunctions=("clone.sh")
 
-clonezilla_installationtype="packagemanager"
+# TODO: tested
+clonezilla_name="Clonezilla"
+clonezilla_description="Disk image utility"
+clonezilla_version="System dependent"
+clonezilla_tags=("disk" "backup" "drives")
+clonezilla_systemcategories=("Filesystem" "ConsoleOnly" "System" "Utility" "Backup" "Images" "Restoration" "Boot")
+clonezilla_commentary="Disk cloning, disk imaging, data recovery, and deployment"
 clonezilla_arguments=("clonezilla")
 clonezilla_packagenames=("clonezilla")
-clonezilla_description="Disk cloning, disk imaging, data recovery, and deployment"
-clonezilla_readmeline="| CloneZilla | ${clonezilla_description} | Command \`clonezilla\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-clonezilla_launchercontents=("[Desktop Entry]
-Categories=backup;images;restoration;boot;
-Comment=${clonezilla_description}
-Encoding=UTF-8
-Exec=sudo clonezilla
-GenericName=Disk image utility
-Icon=/usr/share/gdm/themes/drbl-gdm/clonezilla/ocslogo-1.png
-Keywords=clonezilla;CloneZilla;iso
-MimeType=
-Name=CloneZilla
-StartupNotify=true
-StartupWMClass=CloneZilla
-Terminal=true
-TryExec=clonezilla
-Type=Application
-Version=1.0
-")
+clonezilla_launcherkeynames=("defaultLauncher")
+clonezilla_defaultLauncher_exec="sudo clonezilla"
+clonezilla_defaultLauncher_terminal="true"
 
 cmake_name="Cmake"
 cmake_description="Compile C and c make"
@@ -637,36 +664,23 @@ cmake_version="3.21.1-linux-x86_64"
 cmake_tags=("development" "c")
 cmake_systemcategories=("Development" "Utility")
 cmake_commentary="Automatize compilation of C / C++ projects"
+cmake_arguments=("cmake" "c_make")
 cmake_binariesinstalledpaths=("bin/ccmake;ccmake" "bin/cmake;cmake" "bin/cmake-gui;cmake-gui" "bin/cpack;cpack" "bin/ctest;ctest")
 cmake_compressedfileurl="https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-linux-x86_64.tar.gz"
 cmake_downloadKeys=("bundle")
 cmake_bundle_URL="https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-linux-x86_64.tar.gz"
-cmake_arguments=("cmake" "c_make")
 
-cmatrix_installationtype="packagemanager"
+cmatrix_name="Cmatrix"
+cmatrix_description="Enter The Matrix"
+cmatrix_version="System dependent"
+cmatrix_tags=("terminal" "matrix")
+cmatrix_systemcategories=("ConsoleOnly")
+cmatrix_commentary="Cool terminal screensaver"
 cmatrix_arguments=("cmatrix")
+cmatrix_launcherkeynames=("default")
+cmatrix_default_terminal="true"
 cmatrix_bashfunctions=("cmatrix.sh")
-cmatrix_launchercontents=("
-[Desktop Entry]
-Categories=matrix;
-Comment=Matrix
-Encoding=UTF-8
-Exec=cmatrix
-GenericName=cmatrix
-Icon=/var/lib/app-info/icons/ubuntu-focal-universe/64x64/bless_bless-48x48.png
-Keywords=cmatrix;matrix;
-MimeType=
-Name=CMatrix
-StartupNotify=true
-StartupWMClass=cmatrix
-Terminal=true
-TryExec=cmatrix
-Type=Application
-Version=1.0
-")
 cmatrix_packagenames=("cmatrix")
-cmatrix_description="Terminal screensaver from The Matrix"
-cmatrix_readmeline="| Cmatrix | ${cmatrix_description} | Command \`cmatrix\`, function \`matrix\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 code_name="Visual Studio Code"
 code_description="General purpose IDE"
@@ -683,12 +697,27 @@ code_launcherkeynames="default"
 code_default_exec="code %f"
 code_default_windowclass="visual-studio-code"
 
-codeblocks_installationtype="packagemanager"
+####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
+#FEATUREKEYNAME_name=""
+#FEATUREKEYNAME_description=""
+#FEATUREKEYNAME_version="System dependent"
+#FEATUREKEYNAME_tags=""
+#FEATUREKEYNAME_systemcategories=()
+#FEATUREKEYNAME_commentary=""
+#FEATUREKEYNAME_arguments=()
+
+####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
+
+codeblocks_name="Code::Blocks"
+codeblocks_description="IDE for programming"
+codeblocks_version="System dependent"
+codeblocks_tags=("development")
+codeblocks_systemcategories=("Development" "IDE" "Building")
+codeblocks_commentary="Program in C without about the compiler"
 codeblocks_arguments=("codeblocks" "code::blocks")
 codeblocks_bashfunctions=("codeblocks.sh")
 codeblocks_launchernames=("codeblocks")  # TODO @AleixMT extract launcher data
 codeblocks_packagenames=("codeblocks")
-codeblocks_readmeline="| Code::Blocks | IDE for programming  | Command \`codeblocks\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 codium_name="VSCodium"
 codium_description="Community-driven distribution of Microsoft’s editor VSCode."
@@ -705,31 +734,31 @@ codium_bundle_downloadPath="${BIN_FOLDER}/codium"
 codium_bundle_URL="https://github.com/VSCodium/vscodium/releases/download/1.62.2/VSCodium-linux-x64-1.62.2.tar.gz"
 codium_launcherkeynames=("default")
 
-commit_arguments=("commit")
 commit_name="Function commit"
 commit_description="Function that makes git commit -am"
 commit_version="1.0"
 commit_tags=("gitbashfunctions" "git")
 commit_systemcategories=("System" "Utility")
 commit_commentary="Save current local file changes to git repository"
+commit_arguments=("commit")
 commit_bashfunctions=("commit.sh")
 
-config_arguments=("git_config" "config_function")
 config_name="Function config"
 config_description="Function that does a git config accepting two parameters username and email"
 config_version="1.0"
 config_tags=("git-user-configuration" "gitbashfunctions")
 config_systemcategories=("System" "Utility")
 config_commentary="Configure your git username and email"
+config_arguments=("git_config" "config_function")
 config_bashfunctions=("config.sh")
 
-converters_arguments=("converters")
 converters_name="Functions converters"
 converters_description="Convert any number to any numeric system"
 converters_version="1.0"
 converters_tags=("bashfunctions" "convert" "info")
 converters_systemcategories=("System" "Utility")
 converters_commentary="bintodec, decobin, hextodec..."
+converters_arguments=("converters")
 converters_bashfunctions=("converters.sh")
 converters_binariesinstalledpaths=("converters/to.py;to" "converters/dectoutf.py;dectoutf" "converters/utftodec.py;utftodec")
 converters_repositoryurl="https://github.com/Axlfc/converters"
@@ -746,13 +775,13 @@ copyq_launchernames=("com.github.hluk.copyq")
 copyq_packagenames=("copyq")  # TODO @AleixMT extract launcher data
 copyq_flagsoverride=";;;;;1"  # Always autostart
 
-curl_arguments=("curl")
 curl_name="Functions converters"
 curl_description="Curl is a CLI command for retrieving or sending data to a server"
 curl_version="System dependent"
 curl_tags=("terminal" "web")
 curl_systemcategories=("System" "Utility")
 curl_commentary="Autostart enabled"
+curl_arguments=("curl")
 curl_packagenames=("curl")
 
 customizer_name="Linux Auto Customizer"
@@ -776,93 +805,93 @@ uninstall_customizer_post()
   remove_file /usr/bin/customizer-uninstall
 }
 
-d_arguments=("d")
 d_name="Function d"
 d_description="Function for dif or git diff"
 d_version="1.0"
 d_tags=("bash" "gitbashfunctions" "info")
 d_systemcategories=("System" "Utility")
 d_commentary="See changes of files"
+d_arguments=("d")
 d_bashfunctions=("d.sh")
 
-dbeaver_arguments=("dbeaver")
-dbeaver_packageurls=("https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb")
 dbeaver_name="DBeaver"
 dbeaver_description="SQL Client IDE"
 dbeaver_version="1.0"
 dbeaver_tags=("bashfunctions" "bash" "gitbashfunctions")
 dbeaver_systemcategories=("IDE" "Database" "Network" "Development")
 dbeaver_commentary="Manage several instances of SQL databases"
+dbeaver_arguments=("dbeaver")
+dbeaver_packageurls=("https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb")
 dbeaver_package_manager_override="apt-get"
 # TODO: dbeaver_launchernames=("dbeaver-ce")
 dbeaver_launcherkeynames=("defaultLauncher")
 dbeaver_defaultLauncher_exec="dbeaver"
 
-dconf_editor_arguments=("dconf_editor" "dconf")
 dconf_editor_name="dconf-editor"
 dconf_editor_description="Editor settings"
 dconf_editor_version="1.0"
 dconf_editor_tags=("editor" "settings")
 dconf_editor_systemcategories=("System" "Utility" "Settings" "GNOME" "DesktopSettings")
 dconf_editor_commentary="Edit system environment variables"
+dconf_editor_arguments=("dconf_editor" "dconf")
 # TODO: dconf_editor_launchernames=("ca.desrt.dconf-editor")
 dconf_editor_launcherkeynames=("defaultLauncher")
 dconf_editor_defaultLauncher_exec="dconf-editor"
 dconf_editor_packagenames=("dconf-editor")
 
-dia_arguments=("dia")
 dia_name="Dia"
 dia_description="Graph and relational"
 dia_version="1.0"
 dia_tags=("graph" "relational")
 dia_systemcategories=("FlowChart" "Graphics" "Development")
 dia_commentary="Diagrams for developers"
+dia_arguments=("dia")
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")
 dia_bashfunctions=("dia.sh")
 
-discord_arguments=("discord")
 discord_name="Discord"
 discord_description="All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone."
 discord_version="Discord dependent"
 discord_tags=("VoiceChat" "Messaging" "Social")
 discord_systemcategories=("InstantMessaging" "Network")
 discord_commentary="Chat and video stream online"
+discord_arguments=("discord")
 discord_bashfunctions=("discord.sh")
 discord_binariesinstalledpaths=("Discord;discord")
 discord_downloadKeys=("bundle")
 discord_bundle_URL="https://discord.com/api/download?platform=linux&format=tar.gz"
 
-docker_arguments=("docker")
 docker_name="Docker"
 docker_description="Containerization service"
 docker_version="20.10.6"
 docker_tags=("development" "containerization" "system")
 docker_systemcategories=("System" "Utility")
 docker_commentary="Application isolation"
+docker_arguments=("docker")
 docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 
-documents_arguments=("documents" "google_document" "google_documents" "document")
 documents_name="Google Documents"
 documents_description="Google Documents opening in Chrome"
 documents_version="Google dependent"
-documents_bashfunctions=("documents.sh")
-documents_launcherkeynames=("default")
+documents_tags=("google" "internet_shortcuts")
 documents_systemcategories=("Office" "Documentation" "WebBrowser" "WordProcessor" "FlowChart")
 documents_commentary="take notes or edit rich text documents"
-documents_tags=("google" "internet_shortcuts")
+documents_arguments=("documents" "google_document" "google_documents" "document")
+documents_bashfunctions=("documents.sh")
+documents_launcherkeynames=("default")
 documents_default_exec="xdg-open https://docs.google.com/document/"
 
-drive_arguments=("drive" "google_drive")
 drive_name="Google Drive"
 drive_description="Google Drive opening in Chrome"
+drive_tags=("google" "internet_shortcuts")
 drive_version="Google dependent"
-drive_bashfunctions=("drive.sh")
-drive_launcherkeynames=("default")
 drive_systemcategories=("ProjectManagement" "Documentation")
 drive_commentary="File hosting service from Google"
-drive_tags=("google" "internet_shortcuts")
+drive_arguments=("drive" "google_drive")
+drive_bashfunctions=("drive.sh")
+drive_launcherkeynames=("default")
 drive_default_exec="xdg-open https://drive.google.com/"
 
 dropbox_installationtype="packageinstall"

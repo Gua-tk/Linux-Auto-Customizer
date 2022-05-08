@@ -416,7 +416,7 @@ FLAG_CACHE=1
 declare feature_keynames=(
   "a"
   "add"
-  "aircrack_ng"
+  "aircrackng"
   "aisleriot"
   "alert"
   "ansible"
