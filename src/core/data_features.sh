@@ -3014,31 +3014,21 @@ steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_package_manager_override="apt-get"
 steam_readmeline="| Steam | Video game digital distribution service | Command \`steam\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-studio_installationtype="userinherit"
+@TODO tested
+studio_name="Android Studio"
+studio_description="IDE for Android, Google's operating system"
+studio_version="Google dependent"
+studio_tags=("ide" "graphical" "programming" "android" "studio" "dev")
+studio_systemcategories=("Development" "Java" "WebDevelopment" "IDE")
+studio_commentary="The choice when developing Android apps"
 studio_arguments=("studio" "android_studio")
 studio_bashfunctions=("studio.sh")
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
-studio_compressedfileurl="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2020.3.1.24/android-studio-2020.3.1.24-linux.tar.gz"
-studio_description="Development environment for Google's Android operating system"
-studio_launchercontents=("
-[Desktop Entry]
-Categories=Development;IDE;
-Comment=${studio_description}
-Encoding=UTF-8
-Exec=studio %F
-GenericName=studio
-Icon=${BIN_FOLDER}/studio/bin/studio.svg
-Keywords=IDE;programming;android;studio;dev;
-MimeType=
-Name=Android Studio
-StartupNotify=true
-StartupWMClass=jetbrains-android-studio
-Terminal=false
-TryExec=studio
-Type=Application
-Version=1.0
-")
-studio_readmeline="| Android Studio | ${studio_description} | Command \`studio\`, alias \`studio\` and desktop and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+studio_downloadKeys=("bundleCompressed")
+studio_bundleCompressed_URL="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2020.3.1.24/android-studio-2020.3.1.24-linux.tar.gz"
+studio_launcherkeynames=("defaultLauncher")
+studio_defaultLauncher_exec="studio %F"
+studio_defaultLauncher_windowclass="jetbrains-android-studio"
 
 sublime_name="Sublime Text"
 sublime_description="Source code editor with an emphasis on source code editing"
