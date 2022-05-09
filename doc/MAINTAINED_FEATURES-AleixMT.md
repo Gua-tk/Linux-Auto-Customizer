@@ -1,73 +1,73 @@
  - [ ] a
- - [ ] add
+ - [x] add
  - [ ] aircrackng
  - [ ] aisleriot
- - [ ] alert
- - [ ] ansible
- - [ ] ant
- - [ ] anydesk
+ - [x] alert
+ - [x] ansible
+ - [x] ant
+ - [x] anydesk
  - [ ] apache2
  - [ ] ardour
  - [ ] aspell
  - [ ] atom
  - [ ] audacity
- - [ ] AutoFirma
+ - [x] AutoFirma
  - [ ] axel
- - [ ] B
- - [ ] b
- - [ ] bashcolors
+ - [x] B
+ - [x] b
+ - [x] bashcolors
  - [ ] blender
- - [ ] branch
+ - [x] branch
  - [ ] brasero
  - [ ] c
  - [ ] caffeine
  - [ ] calibre
- - [ ] changebg
- - [ ] cheat
- - [ ] checkout
- - [ ] cheese
- - [ ] clean
+ - [x] changebg
+ - [x] cheat
+ - [x] checkout
+ - [x] cheese
+ - [x] clean
  - [ ] clementine
- - [ ] clion
- - [ ] clone
- - [ ] clonezilla
- - [ ] cmake
- - [ ] cmatrix
- - [ ] code
- - [ ] codeblocks
+ - [x] clion
+ - [x] clone
+ - [x] clonezilla
+ - [x] cmake
+ - [x] cmatrix
+ - [x] code
+ - [x] codeblocks
  - [ ] codium
- - [ ] commit
- - [ ] config
+ - [x] commit
+ - [x] config
  - [ ] converters
- - [ ] copyq
- - [ ] curl
- - [ ] customizer
+ - [x] copyq
+ - [x] curl
+ - [x] customizer
  - [ ] d
  - [ ] dbeaver
- - [ ] dconf_editor
- - [ ] dia
- - [ ] discord
- - [ ] docker
+ - [x] dconf_editor
+ - [x] dia
+ - [x] discord
+ - [x] docker
  - [ ] documents
  - [ ] drive
- - [ ] dropbox
+ - [x] dropbox
  - [ ] drupal
  - [ ] duckduckgo
- - [ ] E
- - [ ] e
- - [ ] eclipse
- - [ ] emojis
+ - [x] E
+ - [x] e
+ - [x] eclipse
+ - [x] emojis
  - [ ] evolution
- - [ ] F
- - [ ] f
+ - [x] F
+ - [x] f
  - [ ] firc
  - [ ] facebook
- - [ ] fastcommands
- - [ ] fdupes
- - [ ] fetch
- - [ ] ffmpeg
- - [ ] filezilla
- - [ ] firefox
+ - [x] fastcommands
+ - [x] fdupes
+ - [x] fetch
+ - [x] ffmpeg
+ - [x] filezilla
+ - [x] firefox
  - [ ] fonts_alegreya_sans
  - [ ] fonts_firacode
  - [ ] fonts_hack
@@ -79,32 +79,33 @@
  - [ ] fonts_roboto
  - [ ] forms
  - [ ] freecad
- - [ ] gcc
+ - [x] gcc
  - [ ] geany
- - [ ] geogebra
- - [ ] ghostwriter
- - [ ] gimp
- - [ ] git
- - [ ] gitcm
+ - [x] geogebra
+ - [x] ghostwriter
+ - [x] gimp
+ - [x] git
+ - [x] gitcm
  - [ ] github
- - [ ] github_desktop
- - [ ] gitk
+ - [x] github_desktop
+ - [x] gitk
  - [ ] gitlab
- - [ ] gitprompt
+ - [x] gitprompt
  - [ ] gmail
  - [ ] gnat_gps
- - [ ] gnome_calculator
- - [ ] gnome_chess
- - [ ] gnome_mahjongg
- - [ ] gnome_mines
- - [ ] gnome_sudoku
- - [ ] gnome_terminal
- - [ ] gnome_tweak_tool
- - [ ] go
+ - [x] gnome_calculator
+ - [x] gnome_chess
+ - [x] gnome_mahjongg
+ - [x] gnome_mines
+ - [x] gnome_sudoku
+ - [x] gnome_terminal
+ - [x] gnome_tweak_tool
+ - [x] go
  - [ ] google
  - [ ] googlecalendar
  - [ ] google_chrome
- - [ ] gpaint
+ - [x] gpaint
+ ...
  - [ ] gparted
  - [ ] guake
  - [ ] gvim
