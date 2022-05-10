@@ -814,6 +814,18 @@ d_commentary="See changes of files"
 d_arguments=("d")
 d_bashfunctions=("d.sh")
 
+# TODO: tested
+dart_name="Dart"
+dart_description="General purpose programming language, specialized on front-end"
+dart_version="2.16.2 Linux x64"
+dart_tags=("developing" "programming")
+dart_systemcategories=("Programming" "WebProgramming")
+dart_commentary="Used in the Customizer GUI"
+dart_arguments=("dart")
+dart_downloadKeys=("bundleCompressed")
+dart_bundleCompressed_URL="https://storage.googleapis.com/dart-archive/channels/stable/release/2.16.2/sdk/dartsdk-linux-x64-release.zip"
+dart_binariesinstalledpaths=("bin/dart;dart" "bin/dart2js;dart2js" "bin/dartanalyzer;dartanalyzer" "bin/dartaotruntime;dartaotruntime" "bin/dartdevc;dartdevc" "bin/dartdoc;dartdoc" "bin/pub;pub")
+
 dbeaver_name="DBeaver"
 dbeaver_description="SQL Client IDE"
 dbeaver_version="1.0"
@@ -1408,6 +1420,18 @@ gparted_arguments=("gparted")
 gparted_launchernames=("gparted")
 gparted_packagenames=("gparted")
 gparted_readmeline="| GParted | Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems | Command \`gparted\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+
+#
+gradle_name="Function alert"
+gradle_description="Alias to show a notification at the end of a commands"
+gradle_version="1.0"
+gradle_tags=("bashfunctions" "notify" "notification" "info")
+gradle_systemcategories=("Utility" "System" "Calendar")
+gradle_commentary="Useful to remember events"
+gradle_arguments=("alert" "alert_alias" "alias_alert")
+gradle_downloadKeys=("bundleCompressed")
+gradle_bundleCompressed_URL="https://gradle.org/next-steps/?version=7.4.2&format=all"
+
 
 guake_installationtype="packagemanager"
 guake_arguments=("guake")
