@@ -788,7 +788,7 @@ customizer_name="Linux Auto Customizer"
 customizer_description="Custom local installation manager"
 customizer_version="developer dependent"
 customizer_tags=("development" "GNU" "environment")
-customizer_systemcategories=("Development" "Utility" "System" "Programming")
+customizer_systemcategories=("Development" "Utility" "System" "Programming" "PackageManager" "Settings")
 customizer_commentary="Collection of fast and custom all types of installations and uninstallations in GNU/Linux"
 customizer_arguments=("customizer" "linux_auto_customizer" "auto_customizer" "linux_customizer")
 customizer_manualcontentavailable="0;0;1"
@@ -2910,28 +2910,17 @@ shortcuts_arguments=("shortcuts")
 shortcuts_bashfunctions=("shortcuts.sh")
 shortcuts_readmeline="| shortcuts |  | variables... (\$DESK...) || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-shotcut_installationtype="packagemanager"
-shotcut_arguments=("shotcut")
+shotcut_name="Shotcut"
 shotcut_description="Cross-platform video editing"
-shotcut_launchercontents=("
-[Desktop Entry]
-Categories=video;
-Comment=${shotcut_description}
-Encoding=UTF-8
-Exec=shotcut
-GenericName=shotcut
-Icon=/usr/share/icons/hicolor/64x64/apps/org.shotcut.Shotcut.png
-Keywords=video;editing;editor;VideoEdit;
-MimeType=
-Name=Shotcut
-StartupNotify=true
-StartupWMClass=ShotCut
-Terminal=false
-TryExec=shotcut
-Type=Application
-Version=1.0")
+shotcut_version="System dependent"
+shotcut_tags=("video" "editVideo" "videoEdit" "editor" "editing")
+shotcut_systemcategories=("VideoEdit" "Video")
+shotcut_commentary="Cut scenes and sequences to edit films and videos."
+shotcut_arguments=("shotcut")
+shotcut_launcherkeynames="default"
+shotcut_default_exec="shotcut"
+shotcut_default_windowclass="ShotCut"
 shotcut_packagenames=("shotcut")
-shotcut_readmeline="| ShotCut | ${shotcut_description} | Command \`shotcut\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 shotwell_installationtype="packagemanager"
 shotwell_arguments=("shotwell")
@@ -3092,26 +3081,18 @@ sublime_launcherkeynames=("default")
 sublime_default_exec="sublime %F"
 sublime_default_windowclass="Sublime"
 
-synaptic_installationtype="packagemanager"
+# TODO: X-Ubuntu-Gettext-Domain=synaptic
+synaptic_name="Synaptic Package Manager"
+synaptic_description="Package Manager"
+synaptic_version="System dependent"
+synaptic_tags=("packageManager")
+synaptic_systemcategories=("PackageManager" "GTK" "System" "Settings")
+synaptic_commentary="Graphical installation manager to install, remove and upgrade software packages"
 synaptic_arguments=("synaptic")
 synaptic_packagenames=("synaptic")
-synaptic_launchernames=("synaptic")
-synaptic_description="Graphical installation manager to install, remove and upgrade software packages"
-synaptic_readmeline="| Synaptic | ${synaptic_description} | Command \`synaptic\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
-synaptic_launchercontents=("
-[Desktop Entry]
-Name=Synaptic Package Manager
-GenericName=Package Manager
-Comment=${synaptic_description}
-Exec=synaptic
-Icon=synaptic
-Terminal=false
-Type=Application
-Categories=PackageManager;GTK;System;Settings;
-X-Ubuntu-Gettext-Domain=synaptic
-StartupNotify=true
-StartupWMClass=synaptic
-")
+synaptic_launcherkeynames=("default")
+synaptic_default_windowclass="synaptic"
+synaptic_default_exec="synaptic"
 
 sysmontask_installationtype="repositoryclone"
 sysmontask_arguments=("sysmontask")
@@ -3165,33 +3146,22 @@ teams_packagenames=("teams")
 teams_packageurls=("https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&culture=es-es&country=ES")
 teams_readmeline="| Microsoft Teams | Video Conference, calls and meetings | Command \`teams\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
-# TODO @AleixMT wontfix
-telegram_installationtype="userinherit"
+# TODO: Tested
+telegram_name="Telegram"
+telegram_description="Cloud-based instant messaging software and application servic"
+telegram_version="System dependent"
+telegram_tags=("chat" "network" "social")
+telegram_systemcategories=("Network" "Chat")
+telegram_commentary="Open source messaging platform"
 telegram_arguments=("telegram")
 telegram_binariesinstalledpaths=("Telegram;telegram")
 telegram_bashfunctions=("telegram.sh")
-telegram_compressedfileurl="https://telegram.org/dl/desktop/linux"
-telegram_downloads=("https://telegram.org/img/t_logo.svg;telegram_icon.svg")
-telegram_description="Cloud-based instant messaging software and application service"
-telegram_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${telegram_description}
-Encoding=UTF-8
-Exec=telegram -- %u
-GenericName=Telegram
-Icon=${BIN_FOLDER}/telegram/telegram_icon.svg
-Keywords=telegram;
-MimeType=x-scheme-handler/tg;
-Name=Telegram
-StartupNotify=true
-StartupWMClass=Telegram
-Terminal=false
-TryExec=telegram
-Type=Application
-Version=1.0
-")
-telegram_readmeline="| Telegram | ${telegram_description} | Command \`telegram\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+telegram_downloadKeys=("bundle")
+telegram_bundle_URL="https://telegram.org/dl/desktop/linux"
+telegram_launcherkeynames=("default")
+telegram_default_windowclass="Telegram"
+telegram_default_exec="telegram -- %u"
+telegram_associatedfiletypes=("x-scheme-handler/tg")
 
 templates_name="Templates"
 templates_description="Different collection of templates for starting code projects: Python3 script (\`.py\`), Bash script (\`.sh\`), LaTeX document (\`.tex\`), C script (\`.c\`), C header script (\`.h\`), makefile example (\`makefile\`) and empty text file (\`.txt\`)"
@@ -3449,6 +3419,7 @@ uninstall_wikit_mid() {
   npm remove wikit -g
 }
 
+# TODO: Tested
 wireshark_name="Wireshark"
 wireshark_description="Network Analyzer"
 wireshark_version="System dependent"
