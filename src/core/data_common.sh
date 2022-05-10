@@ -485,6 +485,7 @@ declare feature_keynames=(
   "ffmpeg"
   "filezilla"
   "firefox"
+  "flutter"
   "fonts_alegreya_sans"
   "fonts_firacode"
   "fonts_hack"

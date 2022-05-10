@@ -1098,6 +1098,18 @@ firefox_launchernames=("firefox")
 firefox_packagenames=("firefox")
 firefox_readmeline="| Firefox | Free web browser | Command \`firefox\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+flutter_name="Flutter"
+flutter_description="Tool to create responsive GUIs"
+flutter_version="2.10.5-stable"
+flutter_tags=("programming" "development" "webProgramming")
+flutter_systemcategories=("WebDevelopment" "Development")
+flutter_commentary="For the customizer GUI"
+flutter_arguments=("flutter")
+flutter_dependencies=("bash" "curl" "file" "git" "mkdir" "rm" "unzip" "which" "xz-utils" "zip")
+flutter_downloadKeys=("bundleCompressed")
+flutter_bundleCompressed_URL="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.5-stable.tar.xz"
+flutter_binariesinstalledpaths=("bin/dart;dart" "bin/flutter;flutter" "bin/dart.bat;dart.bat" "bin/flutter.bat;flutter.bat")
+
 fonts_alegreya_sans_installationtype="userinherit"
 fonts_alegreya_sans_arguments=("fonts_alegreya_sans")
 fonts_alegreya_sans_compressedfilepathoverride="${FONTS_FOLDER}"
@@ -1421,7 +1433,6 @@ gparted_launchernames=("gparted")
 gparted_packagenames=("gparted")
 gparted_readmeline="| GParted | Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems | Command \`gparted\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-#
 gradle_name="Function alert"
 gradle_description="Alias to show a notification at the end of a commands"
 gradle_version="1.0"
@@ -1431,7 +1442,7 @@ gradle_commentary="Useful to remember events"
 gradle_arguments=("alert" "alert_alias" "alias_alert")
 gradle_downloadKeys=("bundleCompressed")
 gradle_bundleCompressed_URL="https://gradle.org/next-steps/?version=7.4.2&format=all"
-
+gradle_binariesinstalledpath=("bin/gradle;gradle" "bin/gradle.bat;gradle.bat")
 
 guake_installationtype="packagemanager"
 guake_arguments=("guake")
