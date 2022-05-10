@@ -1106,10 +1106,19 @@ flutter_tags=("programming" "development" "webProgramming")
 flutter_systemcategories=("WebDevelopment" "Development")
 flutter_commentary="For the customizer GUI"
 flutter_arguments=("flutter")
-flutter_dependencies=("bash" "curl" "file" "git" "mkdir" "rm" "unzip" "which" "xz-utils" "zip")
+flutter_dependencies=("bash" "curl" "file" "git" "mkdir" "rm" "unzip" "which" "xz-utils" "zip" "clang" "cmake" "ninja-build" "pkg-config" "libgtk-3-dev" "liblzma-dev")
 flutter_downloadKeys=("bundleCompressed")
 flutter_bundleCompressed_URL="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.5-stable.tar.xz"
 flutter_binariesinstalledpaths=("bin/dart;dart" "bin/flutter;flutter" "bin/dart.bat;dart.bat" "bin/flutter.bat;flutter.bat")
+flutter_manualcontentavailable="0;0;1"
+flutter_install_post()
+{
+   flutter config --enable-linux-desktop
+}
+flutter_uninstall_post()
+{
+  :
+}
 
 fonts_alegreya_sans_installationtype="userinherit"
 fonts_alegreya_sans_arguments=("fonts_alegreya_sans")
@@ -1443,7 +1452,7 @@ gradle_commentary="Yet another meta-compiler"
 gradle_arguments=("gradle" "gradle_build")
 gradle_downloadKeys=("bundleCompressed")
 gradle_bundleCompressed_URL="https://services.gradle.org/distributions/gradle-7.4.2-all.zip"
-gradle_binariesinstalledpath=("bin/gradle;gradle" "bin/gradle.bat;gradle.bat")
+gradle_binariesinstalledpaths=("bin/gradle;gradle" "bin/gradle.bat;gradle.bat")
 
 guake_installationtype="packagemanager"
 guake_arguments=("guake")
