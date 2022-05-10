@@ -1098,6 +1098,7 @@ firefox_launchernames=("firefox")
 firefox_packagenames=("firefox")
 firefox_readmeline="| Firefox | Free web browser | Command \`firefox\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
+# TODO: tested
 flutter_name="Flutter"
 flutter_description="Tool to create responsive GUIs"
 flutter_version="2.10.5-stable"
@@ -1433,15 +1434,15 @@ gparted_launchernames=("gparted")
 gparted_packagenames=("gparted")
 gparted_readmeline="| GParted | Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems | Command \`gparted\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-gradle_name="Function alert"
-gradle_description="Alias to show a notification at the end of a commands"
-gradle_version="1.0"
-gradle_tags=("bashfunctions" "notify" "notification" "info")
-gradle_systemcategories=("Utility" "System" "Calendar")
-gradle_commentary="Useful to remember events"
-gradle_arguments=("alert" "alert_alias" "alias_alert")
+gradle_name="Gradle"
+gradle_description="Automatize building applications"
+gradle_version="7.4.2-all"
+gradle_tags=("developing" "programming" "automatization")
+gradle_systemcategories=("Utility" "System" "WebDevelopment" "Development")
+gradle_commentary="Yet another meta-compiler"
+gradle_arguments=("gradle" "gradle_build")
 gradle_downloadKeys=("bundleCompressed")
-gradle_bundleCompressed_URL="https://gradle.org/next-steps/?version=7.4.2&format=all"
+gradle_bundleCompressed_URL="https://services.gradle.org/distributions/gradle-7.4.2-all.zip"
 gradle_binariesinstalledpath=("bin/gradle;gradle" "bin/gradle.bat;gradle.bat")
 
 guake_installationtype="packagemanager"
