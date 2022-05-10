@@ -108,50 +108,50 @@
  - [x] gparted
  - [x] guake
  - [ ] gvim
- - [ ] h
- - [ ] handbrake
- - [ ] hard
+ - [x] h
+ - [x] handbrake
+ - [x] hard
  - [ ] hardinfo
- - [ ] historyoptimization
- - [ ] i
- - [ ] ideac
- - [ ] ideau
+ - [x] historyoptimization
+ - [x] i
+ - [x] ideac
+ - [x] ideau
  - [ ] inkscape
  - [ ] instagram
- - [ ] ipe
- - [ ] ipi
- - [ ] ips
- - [ ] iqmol
+ - [x] ipe
+ - [x] ipi
+ - [x] ips
+ - [x] iqmol
  - [ ] j
- - [ ] java
+ - [x] java
  - [ ] julia
- - [ ] jupyter_lab
- - [ ] k
+ - [x] jupyter_lab
+ - [x] k
  - [ ] keep
- - [ ] keyboardfix
- - [ ] L
- - [ ] l
- - [ ] latex
- - [ ] libgtkglext1
- - [ ] libkrb5_dev
- - [ ] libreoffice
- - [ ] libxcb_xtest0
+ - [x] keyboardfix
+ - [x] L
+ - [x] l
+ - [x] latex
+ - [x] libgtkglext1
+ - [x] libkrb5_dev
+ - [x] libreoffice
+ - [x] libxcb_xtest0
  - [ ] lmms
- - [ ] loc
- - [ ] lolcat
- - [ ] matlab
+ - [x] loc
+ - [x] lolcat
+ - [x] matlab
  - [ ] mdadm
- - [ ] megasync
- - [ ] meld
- - [ ] mendeley
- - [ ] merge
- - [ ] msttcorefonts
- - [ ] mvn
- - [ ] nano
- - [ ] nautilus
+ - [x] megasync
+ - [x] meld
+ - [x] mendeley
+ - [x] merge
+ - [ ] msttcorefonts FONTS TODO
+ - [x] mvn
+ - [x] nano
+ - [x] nautilus
  - [ ] ncat
  - [ ] nedit
- - [ ] nemo
+ - [x] nemo
  - [ ] netflix
  - [ ] net_tools
  - [ ] nmap
@@ -159,93 +159,93 @@
  - [ ] npm
  - [ ] notepadqq
  - [ ] notflix
- - [ ] obs_studio
- - [ ] octave
+ - [x] obs_studio
+ - [x] octave
  - [ ] okular
  - [ ] onedrive
  - [ ] openssl102
- - [ ] openssh_server
+ - [x] openssh_server
  - [ ] outlook
  - [ ] overleaf
  - [ ] p
  - [ ] pacman
- - [ ] parallel
- - [ ] pdfgrep
- - [ ] pgadmin
+ - [x] parallel
+ - [x] pdfgrep
+ - [x] pgadmin
  - [ ] php
  - [ ] phppgadmin
- - [ ] pluma
- - [ ] postman
+ - [x] pluma
+ - [x] postman
  - [ ] presentation
- - [ ] prompt
- - [ ] psql
- - [ ] pull
- - [ ] push
- - [ ] pycharm
- - [ ] pycharmpro
- - [ ] pypy3
- - [ ] python3
- - [ ] R
+ - [x] prompt
+ - [x] psql
+ - [x] pull
+ - [x] push
+ - [x] pycharm
+ - [x] pycharmpro
+ - [x] pypy3
+ - [x] python3
+ - [x] R
  - [ ] reddit
  - [ ] remmina
  - [ ] rosegarden
- - [ ] rstudio
- - [ ] rsync
- - [ ] rustc
+ - [x] rstudio
+ - [x] rsync
+ - [x] rustc
  - [ ] s
- - [ ] scala
- - [ ] scilab
- - [ ] screenshots
- - [ ] sherlock
- - [ ] shortcuts
+ - [x] scala
+ - [x] scilab
+ - [x] screenshots
+ - [x] sherlock
+ - [x] shortcuts
  - [ ] shotcut
  - [ ] shotwell
  - [ ] skype
  - [ ] slack
- - [ ] sonarqube
- - [ ] sonic_pi
+ - [x] sonarqube
+ - [x] sonic_pi
  - [ ] soundcloud
- - [ ] spotify
+ - [x] spotify
  - [ ] spreadsheets
- - [ ] ssh
- - [ ] status
- - [ ] steam
+ - [x] ssh
+ - [x] status
+ - [x] steam
  - [x] studio
- - [ ] sublime
+ - [x] sublime
  - [ ] synaptic
  - [ ] sysmontask
  - [ ] system_fonts
  - [ ] teamviewer
- - [ ] teams
+ - [x] teams
  - [ ] telegram
- - [ ] templates
- - [ ] terminal_background
+ - [x] templates
+ - [x] terminal_background
  - [ ] terminator
- - [ ] thunderbird
+ - [x] thunderbird
  - [ ] tilix
- - [ ] tmux
- - [ ] tomcat
- - [ ] tor
+ - [x] tmux
+ - [x] tomcat
+ - [x] tor
  - [ ] traductor
- - [ ] transmission_gtk
+ - [x] transmission_gtk
  - [ ] trello
  - [ ] tumblr
  - [ ] twitch
  - [ ] twitter
  - [ ] u
  - [ ] uget
- - [ ] upgrade
- - [ ] virtualbox
- - [ ] vlc
- - [ ] vncviewer
- - [ ] vommit
+ - [x] upgrade
+ - [x] virtualbox
+ - [x] vlc
+ - [x] vncviewer
+ - [x] vommit
  - [ ] whatsapp
  - [ ] wikipedia
  - [ ] wikit
- - [ ] wireshark
- - [ ] x
- - [ ] xclip
+ - [x] wireshark
+ - [x] x
+ - [x] xclip
  - [ ] youtube
  - [ ] youtube_dl
  - [ ] ytmusic
- - [ ] z
+ - [x] z
