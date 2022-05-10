@@ -105,9 +105,8 @@
  - [ ] googlecalendar
  - [ ] google_chrome
  - [x] gpaint
- ...
- - [ ] gparted
- - [ ] guake
+ - [x] gparted
+ - [x] guake
  - [ ] gvim
  - [ ] h
  - [ ] handbrake

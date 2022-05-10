@@ -3014,7 +3014,7 @@ steam_packageurls=("https://steamcdn-a.akamaihd.net/client/installer/steam.deb")
 steam_package_manager_override="apt-get"
 steam_readmeline="| Steam | Video game digital distribution service | Command \`steam\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-@TODO tested
+# @TODO tested
 studio_name="Android Studio"
 studio_description="IDE for Android, Google's operating system"
 studio_version="Google dependent"
@@ -3025,7 +3025,7 @@ studio_arguments=("studio" "android_studio")
 studio_bashfunctions=("studio.sh")
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
 studio_downloadKeys=("bundleCompressed")
-studio_bundleCompressed_URL="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2020.3.1.24/android-studio-2020.3.1.24-linux.tar.gz"
+studio_bundleCompressed_URL="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2021.2.1.14/android-studio-2021.2.1.14-linux.tar.gz"
 studio_launcherkeynames=("defaultLauncher")
 studio_defaultLauncher_exec="studio %F"
 studio_defaultLauncher_windowclass="jetbrains-android-studio"
