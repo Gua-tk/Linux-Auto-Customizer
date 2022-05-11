@@ -818,8 +818,8 @@ customizerGUI_downloadKeys=("bundleSource")
 customizerGUI_bundleSource_URL="https://github.com/bugy/script-server/archive/refs/heads/master.zip"
 customizerGUI_pipinstallations=("-r ${BIN_FOLDER}/customizerGUI/requirements.txt")  # TODO: when extract files allow CURRENT_INSTALLATION_FOLDER to be available
 customizerGUI_binariesinstalledpaths=("launcher.py;customizerGUI")
-customizerGUI_manualcontentavailable="0;0,1"
-customizerGUI_install_post()
+customizerGUI_manualcontentavailable="0;0;1"
+install_customizerGUI_post()
 {
   # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
   # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
@@ -830,7 +830,7 @@ customizerGUI_install_post()
   echo "#!${BIN_FOLDER}/customizerGUI/bin/python3" | cat - "${BIN_FOLDER}/customizerGUI/launcher.py" > "${BIN_FOLDER}/customizerGUI/launcher.py.tmp" && mv "${BIN_FOLDER}/customizerGUI/launcher.py.tmp" "${BIN_FOLDER}/customizerGUI/launcher.py"
   chmod +x "${BIN_FOLDER}/customizerGUI/launcher.py"
 }
-customizerGUI_uninstall_post()
+uninstall_customizerGUI_post()
 {
   :
 }
