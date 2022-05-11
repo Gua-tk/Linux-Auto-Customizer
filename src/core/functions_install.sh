@@ -1382,6 +1382,7 @@ generic_install_pythonVirtualEnvironment() {
     return
   fi
 
+echo MARCADENETRADA
 
   # rm -Rf "${BIN_FOLDER:?}/$1" TODO: make idempotent by deleting all the generated files of the venv when trying ot install venv
   python3 -m venv "${BIN_FOLDER}/$1"
