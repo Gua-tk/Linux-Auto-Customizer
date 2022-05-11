@@ -154,6 +154,9 @@ PATCH version when you make backwards compatible bug fixes.
 Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 
 
+## Git hooks
+Commits on develop branch and master branch are forbidden. Merge in develop and master branch hasve to be forcibly with the option --no-ff 
+
 # Business Rules
 These are a set of rules that are used to build the installation of each feature in the customizer environment to 
 maximize the usability and fanciness of each of them and the different capabilities and subsystems available.
