@@ -41,6 +41,9 @@ main()
 DIR=$(dirname "$(realpath "$0")")
 CUSTOMIZER_PROJECT_FOLDER="$(cd "${DIR}/../.." &>/dev/null && pwd)"
 
+# Activate customizer hooks to enforce repository rules
+bash "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/activate_hooks.sh"
+
 if [ -f "${DIR}/functions_uninstall.sh" ]; then
   source "${DIR}/functions_uninstall.sh"
 else
