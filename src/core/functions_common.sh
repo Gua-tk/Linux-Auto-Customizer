@@ -810,9 +810,13 @@ generic_installation() {
   fi
 
   "generic_${FLAG_MODE}_dependencies" "${featurename}"
-  "generic_${FLAG_MODE}_downloads"
-  sleep 10
+  ls -la $CURRENT_INSTALLATION_FOLDER
   echo "MARCA"
+  sleep 30
+  "generic_${FLAG_MODE}_downloads"
+  ls -la $CURRENT_INSTALLATION_FOLDER
+  echo "MARCA"
+  sleep 30
   ls -la $CURRENT_INSTALLATION_FOLDER
   sleep 10
 
