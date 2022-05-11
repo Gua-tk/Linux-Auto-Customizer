@@ -488,7 +488,7 @@ argument_processing()
               continue
             ;;
             --flush=cache)
-              rm -f "${CACHE_FOLDER}/"*
+              rm -Rf "${CACHE_FOLDER}"
               shift
               continue
             ;;
@@ -810,9 +810,9 @@ generic_installation() {
   fi
 
   "generic_${FLAG_MODE}_dependencies" "${featurename}"
-  ls -la $CURRENT_INSTALLATION_FOLDER
+  #ls -la $CURRENT_INSTALLATION_FOLDER
   echo "MARCA"
-  sleep 30
+  sleep 10
   "generic_${FLAG_MODE}_downloads"
   ls -la $CURRENT_INSTALLATION_FOLDER
   echo "MARCA"
