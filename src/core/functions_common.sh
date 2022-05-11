@@ -807,6 +807,8 @@ generic_installation() {
   fi
 
   "generic_${FLAG_MODE}_dependencies" "${featurename}"
+  "generic_${FLAG_MODE}_downloads"
+
   "generic_${FLAG_MODE}_packageManager"
   "generic_${FLAG_MODE}_cloneRepositories"
   "generic_${FLAG_MODE}_pythonVirtualEnvironment"
@@ -814,7 +816,6 @@ generic_installation() {
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_mid"
   fi
 
-  "generic_${FLAG_MODE}_downloads"
   "generic_${FLAG_MODE}_files" "${featurename}"
   "generic_${FLAG_MODE}_movefiles" "${featurename}"
   "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"

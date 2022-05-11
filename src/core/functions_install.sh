@@ -1376,29 +1376,28 @@ generic_install_downloads() {
 #   installation data.
 generic_install_pythonVirtualEnvironment() {
 
-  local -r pipinstallations="$1_pipinstallations[@]"
-  local -r pythoncommands="$1_pythoncommands[@]"
+  local -r pipinstallations="${CURRENT_INSTALLATION_KEYNAME}_pipinstallations[@]"
+  local -r pythoncommands="${CURRENT_INSTALLATION_KEYNAME}_pythoncommands[@]"
+
   if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
     return
   fi
 
-echo MARCADENETRADA
-
   # rm -Rf "${BIN_FOLDER:?}/$1" TODO: make idempotent by deleting all the generated files of the venv when trying ot install venv
-  python3 -m venv "${BIN_FOLDER}/$1"
-  "${BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
-  "${BIN_FOLDER}/$1/bin/pip" install wheel
+  python3 -m venv "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
+  "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m pip install -U pip
+  "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install wheel
 
-  for pipinstallation in ${!pipinstallations}; do
-    "${BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
+  for pipinstallation in "${!pipinstallations}"; do
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install "${pipinstallation}"
   done
   for pythoncommand in "${!pythoncommands}"; do
-    "${BIN_FOLDER}/$1/bin/python3" "${pythoncommand}"
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" "${pythoncommand}"
   done
 
   # If we are root change permissions
   if [ "${EUID}" -eq 0 ]; then
-    apply_permissions_recursively "${BIN_FOLDER:?}/$1"
+    apply_permissions_recursively "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
   fi
 }
 
