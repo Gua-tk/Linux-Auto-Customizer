@@ -1,5 +1,12 @@
 # Activate customizer hooks to enforce repository rules
-# Use hooks in the repo if git is installed
+
+# Check if git is installed
 if which git &>/dev/null; then
-  git config --local core.hooksPath "${CUSTOMIZER_PROJECT_FOLDER}/.githooks/"
+  # Check that we are in a git repository
+  if git rev-parse --is-inside-work-tree 2>/dev/null; then
+    # Check that this repository is the Customizer
+    if [ "$(git rev-parse --show-toplevel | rev | cut -d "/" -f1 | rev)" = "Linux-Auto-Customizer" ]; then
+      git config --local core.hooksPath "${CUSTOMIZER_PROJECT_FOLDER}/.githooks/"
+    fi
+  fi
 fi
