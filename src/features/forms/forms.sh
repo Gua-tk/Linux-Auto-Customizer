@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias forms="nohup xdg-open €{forms_url} &>/dev/null &"
+alias forms="nohup €{forms_default_exec} &>/dev/null &"

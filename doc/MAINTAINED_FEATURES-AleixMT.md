@@ -1,0 +1,251 @@
+ - [ ] a
+ - [x] add
+ - [ ] aircrackng
+ - [ ] aisleriot
+ - [x] alert
+ - [x] ansible
+ - [x] ant
+ - [x] anydesk
+ - [ ] apache2
+ - [ ] ardour
+ - [ ] aspell
+ - [ ] atom
+ - [ ] audacity
+ - [x] AutoFirma
+ - [ ] axel
+ - [x] B
+ - [x] b
+ - [x] bashcolors
+ - [ ] blender
+ - [x] branch
+ - [ ] brasero
+ - [ ] c
+ - [ ] caffeine
+ - [ ] calibre
+ - [x] changebg
+ - [x] cheat
+ - [x] checkout
+ - [x] cheese
+ - [x] clean
+ - [ ] clementine
+ - [x] clion
+ - [x] clone
+ - [x] clonezilla
+ - [x] cmake
+ - [x] cmatrix
+ - [x] code
+ - [x] codeblocks
+ - [ ] codium
+ - [x] commit
+ - [x] config
+ - [ ] converters
+ - [x] copyq
+ - [x] curl
+ - [x] customizer
+ - [ ] d
+ - [ ] dbeaver
+ - [x] dconf_editor
+ - [x] dia
+ - [x] discord
+ - [x] docker
+ - [ ] documents
+ - [ ] drive
+ - [x] dropbox
+ - [ ] drupal
+ - [ ] duckduckgo
+ - [x] E
+ - [x] e
+ - [x] eclipse
+ - [x] emojis
+ - [ ] evolution
+ - [x] F
+ - [x] f
+ - [ ] firc
+ - [ ] facebook
+ - [x] fastcommands
+ - [x] fdupes
+ - [x] fetch
+ - [x] ffmpeg
+ - [x] filezilla
+ - [x] firefox
+ - [ ] fonts_alegreya_sans
+ - [ ] fonts_firacode
+ - [ ] fonts_hack
+ - [ ] fonts_hermit
+ - [ ] fonts_lato
+ - [ ] fonts_noto_sans
+ - [ ] fonts_oswald
+ - [ ] fonts_oxygen
+ - [ ] fonts_roboto
+ - [ ] forms
+ - [ ] freecad
+ - [x] gcc
+ - [ ] geany
+ - [x] geogebra
+ - [x] ghostwriter
+ - [x] gimp
+ - [x] git
+ - [x] gitcm
+ - [ ] github
+ - [x] github_desktop
+ - [x] gitk
+ - [ ] gitlab
+ - [x] gitprompt
+ - [ ] gmail
+ - [ ] gnat_gps
+ - [x] gnome_calculator
+ - [x] gnome_chess
+ - [x] gnome_mahjongg
+ - [x] gnome_mines
+ - [x] gnome_sudoku
+ - [x] gnome_terminal
+ - [x] gnome_tweak_tool
+ - [x] go
+ - [ ] google
+ - [ ] googlecalendar
+ - [ ] google_chrome
+ - [x] gpaint
+ - [x] gparted
+ - [x] guake
+ - [ ] gvim
+ - [x] h
+ - [x] handbrake
+ - [x] hard
+ - [ ] hardinfo
+ - [x] historyoptimization
+ - [x] i
+ - [x] ideac
+ - [x] ideau
+ - [ ] inkscape
+ - [ ] instagram
+ - [x] ipe
+ - [x] ipi
+ - [x] ips
+ - [x] iqmol
+ - [ ] j
+ - [x] java
+ - [ ] julia
+ - [x] jupyter_lab
+ - [x] k
+ - [ ] keep
+ - [x] keyboardfix
+ - [x] L
+ - [x] l
+ - [x] latex
+ - [x] libgtkglext1
+ - [x] libkrb5_dev
+ - [x] libreoffice
+ - [x] libxcb_xtest0
+ - [ ] lmms
+ - [x] loc
+ - [x] lolcat
+ - [x] matlab
+ - [ ] mdadm
+ - [x] megasync
+ - [x] meld
+ - [x] mendeley
+ - [x] merge
+ - [ ] msttcorefonts FONTS TODO
+ - [x] mvn
+ - [x] nano
+ - [x] nautilus
+ - [ ] ncat
+ - [ ] nedit
+ - [x] nemo
+ - [ ] netflix
+ - [ ] net_tools
+ - [ ] nmap
+ - [ ] nodejs
+ - [ ] npm
+ - [ ] notepadqq
+ - [ ] notflix
+ - [x] obs_studio
+ - [x] octave
+ - [ ] okular
+ - [ ] onedrive
+ - [ ] openssl102
+ - [x] openssh_server
+ - [ ] outlook
+ - [ ] overleaf
+ - [ ] p
+ - [ ] pacman
+ - [x] parallel
+ - [x] pdfgrep
+ - [x] pgadmin
+ - [ ] php
+ - [ ] phppgadmin
+ - [x] pluma
+ - [x] postman
+ - [ ] presentation
+ - [x] prompt
+ - [x] psql
+ - [x] pull
+ - [x] push
+ - [x] pycharm
+ - [x] pycharmpro
+ - [x] pypy3
+ - [x] python3
+ - [x] R
+ - [ ] reddit
+ - [ ] remmina
+ - [ ] rosegarden
+ - [x] rstudio
+ - [x] rsync
+ - [x] rustc
+ - [ ] s
+ - [x] scala
+ - [x] scilab
+ - [x] screenshots
+ - [x] sherlock
+ - [x] shortcuts
+ - [ ] shotcut
+ - [ ] shotwell
+ - [ ] skype
+ - [ ] slack
+ - [x] sonarqube
+ - [x] sonic_pi
+ - [ ] soundcloud
+ - [x] spotify
+ - [ ] spreadsheets
+ - [x] ssh
+ - [x] status
+ - [x] steam
+ - [x] studio
+ - [x] sublime
+ - [ ] synaptic
+ - [ ] sysmontask
+ - [ ] system_fonts
+ - [ ] teamviewer
+ - [x] teams
+ - [ ] telegram
+ - [x] templates
+ - [x] terminal_background
+ - [ ] terminator
+ - [x] thunderbird
+ - [ ] tilix
+ - [x] tmux
+ - [x] tomcat
+ - [x] tor
+ - [ ] traductor
+ - [x] transmission_gtk
+ - [ ] trello
+ - [ ] tumblr
+ - [ ] twitch
+ - [ ] twitter
+ - [ ] u
+ - [ ] uget
+ - [x] upgrade
+ - [x] virtualbox
+ - [x] vlc
+ - [x] vncviewer
+ - [x] vommit
+ - [ ] whatsapp
+ - [ ] wikipedia
+ - [ ] wikit
+ - [x] wireshark
+ - [x] x
+ - [x] xclip
+ - [ ] youtube
+ - [ ] youtube_dl
+ - [ ] ytmusic
+ - [x] z

@@ -228,7 +228,7 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
     #   and then issuing enter to issue just a commentary.
 
     if [ "$(tmux list-panes -t 0 -F '#{pane_active} #{pane_current_command}' | grep -Eo "^1 .*$" | cut -d " " -f2-)" == "bash" ]; then
-      tmux send-keys -t "${attach_session}" M-# "cd \"${PWD}\" " Enter
+      tmux send-keys -t "${attach_session}" M-# "cd \"${PWD}\" && clear" Enter
     fi
     # This is a blocking synchronous call. We will continue executing this point of the code when tmux exits, which only
     # happens if we exit or kill its process.

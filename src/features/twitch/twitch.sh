@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias twitch="nohup xdg-open €{twitch_url} &>/dev/null &"
+alias twitch="nohup €{twitch_default_exec} &>/dev/null &"

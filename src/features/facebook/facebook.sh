@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias facebook="nohup xdg-open €{facebook_url} &>/dev/null &"
+alias facebook="nohup €{facebook_default_exec} &>/dev/null &"

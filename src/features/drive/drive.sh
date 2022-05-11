@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias drive="nohup xdg-open €{drive_url} &>/dev/null &"
+alias drive="nohup €{drive_default_exec} &>/dev/null &"

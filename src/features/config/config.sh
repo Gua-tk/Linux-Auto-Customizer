@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-config()
+gitconfig()
 {
   if [ -z "$1" ]; then
     echo "ERROR: config needs two arguments"
@@ -17,3 +17,4 @@ config()
   git config user.name "$1"
   git config user.email "$2"
 }
+alias config="gitconfig"

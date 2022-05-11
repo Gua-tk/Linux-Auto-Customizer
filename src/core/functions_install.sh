@@ -615,25 +615,28 @@ dynamic_launcher_deduce_icon()
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
   elif [ ! -z "${!metadata_icon}" ]; then
+    create_folder "${CURRENT_INSTALLATION_FOLDER}"
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
     apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
     echo "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
   else
     if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" ]; then
-      echo dddddddmarka
+      create_folder "${CURRENT_INSTALLATION_FOLDER}"
       cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" "${CURRENT_INSTALLATION_FOLDER}"
-      echo  aaaaaaaaaaaamarka
       apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
       echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
     elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" ]; then
+      create_folder "${CURRENT_INSTALLATION_FOLDER}"
       cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" "${CURRENT_INSTALLATION_FOLDER}"
       apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
       echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
     elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" ]; then
+      create_folder "${CURRENT_INSTALLATION_FOLDER}"
       cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" "${CURRENT_INSTALLATION_FOLDER}"
       apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
       echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
     else
+      create_folder "${CURRENT_INSTALLATION_FOLDER}"
       cp "${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png" "${CURRENT_INSTALLATION_FOLDER}"
       apply_permissions "${CURRENT_INSTALLATION_FOLDER}/logo.png"
       echo "${CURRENT_INSTALLATION_FOLDER}/logo.png"
@@ -700,7 +703,6 @@ NoDisplay=false"
       text+="${tag_metadata};"
     done
   fi
-
   # Icon
   local icon_temp=
   icon_temp="$(dynamic_launcher_deduce_icon "$1")"
@@ -819,12 +821,15 @@ NoDisplay=false"
       local feature_icon_pointer="${CURRENT_INSTALLATION_KEYNAME}_icon"
       if [ -z "${!actionkeyname_icon}" ]; then
         if [ -z "${!feature_icon_pointer}" ]; then
-          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png"
+          cp "${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png" "${CURRENT_INSTALLATION_FOLDER}"
+          action_icon="${CURRENT_INSTALLATION_FOLDER}/logo.png"
         else
-          action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!feature_icon_pointer}"
+          cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!feature_icon_pointer}" "${CURRENT_INSTALLATION_FOLDER}"
+          action_icon="${CURRENT_INSTALLATION_FOLDER}/${!feature_icon_pointer}"
         fi
       else
-        action_icon="${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!actionkeyname_icon}"
+        cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!actionkeyname_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+        action_icon="${CURRENT_INSTALLATION_FOLDER}/${!actionkeyname_icon}"
       fi
       text+=$'\n'"Icon=${action_icon}"
     done
@@ -1159,6 +1164,10 @@ generic_install_movefiles() {
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the array $1_packagedependencies
 generic_install_dependencies() {
+  if [ "${FLAG_IGNORE_DEPENDENCIES}" -eq 1 ]; then
+    return
+  fi
+
   # Other dependencies to install with the package manager before the main package of software if present
   local -r packagedependencies="$1_packagedependencies[*]"
   if [ "${EUID}" -ne 0 ]; then
@@ -1167,6 +1176,7 @@ generic_install_dependencies() {
       return
     fi
   fi
+
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
     ${PACKAGE_MANAGER_FIXBROKEN}

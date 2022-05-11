@@ -394,6 +394,8 @@ FLAG_FAVORITES=0
 FLAG_AUTOSTART=0
 FLAG_SKIP_PRIVILEGES_CHECK=0
 FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES=0
+# In install if set to 1 does not install dependencies, in uninstall if set to 1 uninstall dependencies of the feature
+FLAG_IGNORE_DEPENDENCIES=0
 
 # Common behaviour flags
 FLAG_UPGRADE=1
@@ -414,7 +416,7 @@ FLAG_CACHE=1
 declare feature_keynames=(
   "a"
   "add"
-  "aircrack_ng"
+  "aircrackng"
   "aisleriot"
   "alert"
   "ansible"
@@ -457,6 +459,7 @@ declare feature_keynames=(
   "curl"
   "customizer"
   "d"
+  "dart"
   "dbeaver"
   "dconf_editor"
   "dia"
@@ -474,7 +477,7 @@ declare feature_keynames=(
   "evolution"
   "F"
   "f"
-  "f_irc"
+  "firc"
   "facebook"
   "fastcommands"
   "fdupes"
@@ -482,6 +485,7 @@ declare feature_keynames=(
   "ffmpeg"
   "filezilla"
   "firefox"
+  "flutter"
   "fonts_alegreya_sans"
   "fonts_firacode"
   "fonts_hack"
@@ -520,13 +524,14 @@ declare feature_keynames=(
   "google_chrome"
   "gpaint"
   "gparted"
+  "gradle"
   "guake"
   "gvim"
   "h"
   "handbrake"
   "hard"
   "hardinfo"
-  "history_optimization"
+  "historyoptimization"
   "i"
   "ideac"
   "ideau"
@@ -573,7 +578,6 @@ declare feature_keynames=(
   "npm"
   "notepadqq"
   "notflix"
-  "o"
   "obs_studio"
   "octave"
   "okular"
@@ -600,7 +604,6 @@ declare feature_keynames=(
   "pycharmpro"
   "pypy3"
   "python3"
-  "q"
   "R"
   "reddit"
   "remmina"
@@ -642,7 +645,7 @@ declare feature_keynames=(
   "tmux"
   "tomcat"
   "tor"
-  "translator"
+  "traductor"
   "transmission_gtk"
   "trello"
   "tumblr"
@@ -663,7 +666,7 @@ declare feature_keynames=(
   "xclip"
   "youtube"
   "youtube_dl"
-  "youtubemusic"
+  "ytmusic"
   "z"
   "zoom"
 )

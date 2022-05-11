@@ -376,6 +376,10 @@ generic_uninstall_movefiles() {
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the array $1_packagedependencies
 generic_uninstall_dependencies() {
+  # By default ignores the installation of dependencies
+  if [ "${FLAG_IGNORE_DEPENDENCIES}" -eq 0 ]; then
+    return
+  fi
 # Other dependencies to install with the package manager before the main package of software if present
   local -r packagedependencies="$1_packagedependencies[*]"
 

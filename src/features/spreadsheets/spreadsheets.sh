@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias spreadsheets="nohup xdg-open €{spreadsheets_url} &>/dev/null &"
+alias spreadsheets="nohup €{spreadsheets_default_exec} &>/dev/null &"

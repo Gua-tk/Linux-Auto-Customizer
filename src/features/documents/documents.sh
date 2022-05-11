@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-alias documents="nohup xdg-open €{documents_url} &>/dev/null &"
+alias documents="nohup €{documents_default_exec} &>/dev/null &"
