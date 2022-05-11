@@ -808,14 +808,14 @@ uninstall_customizer_post()
 # http://localhost:5000
 customizerGUI_name="Linux Auto Customizer Graphical Interface"
 customizerGUI_description="Graphical interface for the customizer"
-customizerGUI_version="developer dependent"
+customizerGUI_version="1.17.1"
 customizerGUI_tags=("development" "GNU" "environment")
 customizerGUI_systemcategories=("Development" "Utility" "System" "Programming" "PackageManager" "Settings")
 customizerGUI_commentary="Access customizer with a Web Interface"
 customizerGUI_arguments=("customizer_gui")
 # https://github.com/bugy/script-server/wiki/Installing-on-virtualenv-(linux)
 customizerGUI_downloadKeys=("bundleSource")
-customizerGUI_bundleSource_URL="https://github.com/bugy/script-server/archive/refs/heads/master.zip"
+customizerGUI_bundleSource_URL="https://github.com/bugy/script-server/releases/download/1.17.1/script-server.zip"
 customizerGUI_pipinstallations=("-r ${BIN_FOLDER}/customizerGUI/requirements.txt")  # TODO: when extract files allow CURRENT_INSTALLATION_FOLDER to be available
 customizerGUI_binariesinstalledpaths=("launcher.py;customizerGUI")
 customizerGUI_manualcontentavailable="0;0;1"

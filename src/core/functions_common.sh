@@ -802,12 +802,19 @@ generic_installation() {
   local -r manualcontentavailable="${CURRENT_INSTALLATION_KEYNAME}_manualcontentavailable"
   generic_package_manager_override "${featurename}"
 
+  # Remove the installation folder to avoid collisions
+  rm -Rf "${CURRENT_INSTALLATION_FOLDER}"
+  sleep 5
   if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_pre"
   fi
 
   "generic_${FLAG_MODE}_dependencies" "${featurename}"
   "generic_${FLAG_MODE}_downloads"
+  sleep 10
+  echo "MARCA"
+  ls -la $CURRENT_INSTALLATION_FOLDER
+  sleep 10
 
   "generic_${FLAG_MODE}_packageManager"
   "generic_${FLAG_MODE}_cloneRepositories"
