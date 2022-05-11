@@ -458,6 +458,7 @@ declare feature_keynames=(
   "copyq"
   "curl"
   "customizer"
+  "customizerGUI"
   "d"
   "dart"
   "dbeaver"

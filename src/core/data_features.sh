@@ -805,6 +805,36 @@ uninstall_customizer_post()
   remove_file /usr/bin/customizer-uninstall
 }
 
+# http://localhost:5000
+customizerGUI_name="Linux Auto Customizer Graphical Interface"
+customizerGUI_description="Graphical interface for the customizer"
+customizerGUI_version="developer dependent"
+customizerGUI_tags=("development" "GNU" "environment")
+customizerGUI_systemcategories=("Development" "Utility" "System" "Programming" "PackageManager" "Settings")
+customizerGUI_commentary="Access customizer with a Web Interface"
+customizerGUI_arguments=("customizer_gui")
+# https://github.com/bugy/script-server/wiki/Installing-on-virtualenv-(linux)
+customizerGUI_downloadKeys=("bundleSource")
+customizerGUI_bundleSource_URL="https://github.com/bugy/script-server/archive/refs/heads/master.zip"
+customizerGUI_pipinstallations=("-r ${BIN_FOLDER}/customizerGUI/requirements.txt")  # TODO: when extract files allow CURRENT_INSTALLATION_FOLDER to be available
+customizerGUI_binariesinstalledpaths=("launcher.py;customizerGUI")
+customizerGUI_manualcontentavailable="0;0,1"
+customizerGUI_install_post()
+{
+  # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
+  # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
+  # information on how to call the script using the correct python interpreter, which is the one in the virtual
+  # environment an not the python system interpreter.
+
+  # Prepend shebang line to python3 interpreter of the venv
+  echo "#!${BIN_FOLDER}/customizerGUI/bin/python3" | cat - "${BIN_FOLDER}/customizerGUI/launcher.py" > "${BIN_FOLDER}/customizerGUI/launcher.py.tmp" && mv "${BIN_FOLDER}/customizerGUI/launcher.py.tmp" "${BIN_FOLDER}/customizerGUI/launcher.py"
+  chmod +x "${BIN_FOLDER}/customizerGUI/launcher.py"
+}
+customizerGUI_uninstall_post()
+{
+  :
+}
+
 d_name="Function d"
 d_description="Function for dif or git diff"
 d_version="1.0"
@@ -1683,7 +1713,7 @@ Exec=jupyter-lab &
 ")
 jupyter_lab_manualcontentavailable="1;1;0"
 jupyter_lab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
-jupyter_lab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
+jupyter_lab_pythoncommands=("-m bash_kernel.install" "-m iarm_kernel.install" "-m ansible_kernel.install" "-m vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
 jupyter_lab_readmeline="| Jupyter Lab | ${jupyter_lab_description} | alias \`lab\`, commands \`jupyter-lab\`, \`jupyter-lab\`, \`ipython\`, \`ipython3\`, desktop launcher and dashboard launcher. Recognized programming languages: Python, Ansible, Bash, IArm, Kotlin, PowerShell, Vim. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_jupyter_lab_pre() {
   local -r dependencies=("npm" "R" "julia")

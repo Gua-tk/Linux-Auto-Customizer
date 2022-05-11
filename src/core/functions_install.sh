@@ -1380,7 +1380,7 @@ generic_install_pythonVirtualEnvironment() {
     "${BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
   done
   for pythoncommand in "${!pythoncommands}"; do
-    "${BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
+    "${BIN_FOLDER}/$1/bin/python3" "${pythoncommand}"
   done
 
   # If we are root change permissions
