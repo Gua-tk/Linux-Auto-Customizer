@@ -804,22 +804,12 @@ generic_installation() {
 
   # Remove the installation folder to avoid collisions
   rm -Rf "${CURRENT_INSTALLATION_FOLDER}"
-  sleep 5
   if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_pre"
   fi
 
   "generic_${FLAG_MODE}_dependencies" "${featurename}"
-  #ls -la $CURRENT_INSTALLATION_FOLDER
-  echo "MARCA"
-  sleep 10
   "generic_${FLAG_MODE}_downloads"
-  ls -la $CURRENT_INSTALLATION_FOLDER
-  echo "MARCA"
-  sleep 30
-  ls -la $CURRENT_INSTALLATION_FOLDER
-  sleep 10
-
   "generic_${FLAG_MODE}_packageManager"
   "generic_${FLAG_MODE}_cloneRepositories"
   "generic_${FLAG_MODE}_pythonVirtualEnvironment"
