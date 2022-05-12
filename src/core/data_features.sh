@@ -819,6 +819,7 @@ customizerGUI_bundleSource_URL="https://github.com/bugy/script-server/releases/d
 customizerGUI_pipinstallations=("-r ${BIN_FOLDER}/customizerGUI/requirements.txt")  # TODO: when extract files allow CURRENT_INSTALLATION_FOLDER to be available
 customizerGUI_binariesinstalledpaths=("launcher.py;customizerGUI")
 customizerGUI_manualcontentavailable="0;0;1"
+customizerGUI_movefiles=("${CUSTOMIZER_PROJECT_FOLDER}/data/core/conf-customizer.json;${BIN_FOLDER}/customizerGUI/conf/runners")
 install_customizerGUI_post()
 {
   # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a

@@ -1162,9 +1162,18 @@ generic_install_movefiles() {
         fi
       done
     else
-      mv "${BIN_FOLDER}/$1/${origin_files}" "${destiny_directory}"
-      if [ ${EUID} -eq 0 ]; then
-        apply_permissions "${destiny_directory}/${origin_files}"
+      # If it is an absolute path
+      if echo "${origin_files}" | grep -Eq "^/"; then
+        cp "${origin_files}" "${destiny_directory}"  # We copy here since we could be moving an installation file that
+        # can be needed later another time
+        if [ ${EUID} -eq 0 ]; then
+          apply_permissions "${destiny_directory}"
+        fi
+      else  # it is not an absolute path
+        mv "${BIN_FOLDER}/$1/${origin_files}" "${destiny_directory}"
+        if [ ${EUID} -eq 0 ]; then
+          apply_permissions "${destiny_directory}"
+        fi
       fi
     fi 
   done
