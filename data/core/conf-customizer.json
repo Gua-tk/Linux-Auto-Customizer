@@ -1,0 +1,16 @@
+{
+  "name": "CUSTOMIZER COMMANDS",
+  "script_path": "customizer-install",
+  "parameters":
+  [
+    {
+      "type": "no_value",
+      "name": "verbose flag",
+      "param": "-v"
+    },
+    {
+      "name": "command list",
+      "param": "--commands"
+    }
+  ]
+}
