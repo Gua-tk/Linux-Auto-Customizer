@@ -79,6 +79,59 @@ bell_sound()
 }
 
 
+# - Description: Receives the file path of a file text which contents will be evaluated by this function to look for
+#   variables with the € format (€{variable}) and translate its symbol by the actual value in running memory.
+# - Permissions: Needs writing permission to the received file because it will be overwritten in place.
+# - Arguments:
+#   * Argument 1: Absolute path to the file which will be parsed and its € variables translated.
+translate_variables()
+{
+  if [ ! -f "$1" ]; then
+    output_proxy_executioner "echo WARNING: The file $1 is not present or is not accesible"
+    return
+  fi
+  detected_variables=($(grep -Eo "€{([A-Z]|[a-z]|_)*}" < "$1" | uniq))
+  for variable in "${detected_variables[@]}"; do
+    # Obtain only the variable name
+    real_variable_name="$(echo "${variable}" | cut -d "{" -f2 | cut -d "}" -f1)"
+    # Change variable for its real value
+    sed "s@${variable}@${!real_variable_name}@g" -i "$1"
+  done
+}
+
+
+# - Description: Apply standard permissions and set owner and group to the user who called root.
+# - Permissions: This functions can be called as root or user.
+# - Arguments:
+#   * Argument 1: Path to the file or directory whose permissions are changed.
+#   * Argument 2 (optional): Custom mask of permissions
+apply_permissions()
+{
+  if [ -z "$2" ]; then
+    permission_mask="755"
+  else
+    permission_mask="$2"
+  fi
+
+  if [ -f "$1" ]; then
+    if [ ${EUID} == 0 ]; then  # file
+      chgrp "${SUDO_USER}" "$1"
+      chown "${SUDO_USER}" "$1"
+    fi
+    chmod "${permission_mask}" "$1"
+  elif [ -d "$1" ]; then
+    if [ ${EUID} == 0 ]; then  # directory
+      chgrp "${SUDO_USER}" "$1"
+      chown "${SUDO_USER}" "$1"
+    fi
+    chmod "${permission_mask}" "$1"
+  else
+    output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." "${FLAG_QUIETNESS}"
+  fi
+  unset permission_mask
+}
+
+
 # - Description: Receives a Linux based path (using / as separator) and returns it converted to Windows path using
 #   stdout.
 # - Permission: Does not need any special permission.
@@ -198,6 +251,7 @@ ensure_and_import_custom_options()
   if [ ! -f "${DATA_FOLDER}/customizer_options.sh" ]; then
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/core/customizer_options.sh" "${DATA_FOLDER}/customizer_options.sh"
   fi
+  apply_permissions "${DATA_FOLDER}/customizer_options.sh"
   source "${DATA_FOLDER}/customizer_options.sh"
 }
 
