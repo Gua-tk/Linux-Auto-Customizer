@@ -165,38 +165,6 @@ apply_permissions_recursively()
 }
 
 
-# - Description: Apply standard permissions and set owner and group to the user who called root.
-# - Permissions: This functions can be called as root or user.
-# - Arguments:
-#   * Argument 1: Path to the file or directory whose permissions are changed.
-#   * Argument 2 (optional): Custom mask of permissions
-apply_permissions()
-{
-  if [ -z "$2" ]; then
-    permission_mask="755"
-  else
-    permission_mask="$2"
-  fi
-
-  if [ -f "$1" ]; then
-    if [ ${EUID} == 0 ]; then  # file
-      chgrp "${SUDO_USER}" "$1"
-      chown "${SUDO_USER}" "$1"
-    fi
-    chmod "${permission_mask}" "$1"
-  elif [ -d "$1" ]; then
-    if [ ${EUID} == 0 ]; then  # directory
-      chgrp "${SUDO_USER}" "$1"
-      chown "${SUDO_USER}" "$1"
-    fi
-    chmod "${permission_mask}" "$1"
-  else
-    output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." "${FLAG_QUIETNESS}"
-  fi
-  unset permission_mask
-}
-
-
 # - Description: Creates the file with $1 specifying location and name of the file. Afterwards, apply permissions to it,
 # to make it property of the $SUDO_USER user (instead of root), which is the user that originally ran the sudo command
 # to run this script.
@@ -558,28 +526,6 @@ register_file_associations() {
     output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "${FLAG_QUIETNESS}"
   fi
 }
-
-
-# - Description: Receives the file path of a file text which contents will be evaluated by this function to look for
-#   variables with the € format (€{variable}) and translate its symbol by the actual value in running memory.
-# - Permissions: Needs writing permission to the received file because it will be overwritten in place.
-# - Arguments:
-#   * Argument 1: Absolute path to the file which will be parsed and its € variables translated.
-translate_variables()
-{
-  if [ ! -f "$1" ]; then
-    output_proxy_executioner "echo WARNING: The file $1 is not present or is not accesible"
-    return
-  fi
-  detected_variables=($(grep -Eo "€{([A-Z]|[a-z]|_)*}" < "$1" | uniq))
-  for variable in "${detected_variables[@]}"; do
-    # Obtain only the variable name
-    real_variable_name="$(echo "${variable}" | cut -d "{" -f2 | cut -d "}" -f1)"
-    # Change variable for its real value
-    sed "s@${variable}@${!real_variable_name}@g" -i "$1"
-  done
-}
-
 
 
 # - Description: Returns the exec field from the received launcher keyname of the CURRENT_INSTALLATION_KEYNAME
