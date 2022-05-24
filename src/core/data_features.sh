@@ -1278,16 +1278,25 @@ gitk_bashfunctions=("gitk.sh")
 gitk_packagenames=("gitk")
 gitk_readmeline="| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-gitlab_arguments=("git_lab")
 gitlab_name="Gitlab"
 gitlab_description="Gitlab opening in Chrome"
 gitlab_version="Google dependent"
 gitlab_systemcategories=("RevisionControl")
 gitlab_commentary="Hosting repositories online"
 gitlab_tags=("search" "internet_shortcuts")
+gitlab_arguments=("git_lab")
 gitlab_bashfunctions=("gitlab.sh")
 gitlab_launcherkeynames=("default")
 gitlab_default_exec="xdg-open https://gitlab.com/"
+
+gitPristine_name="git pristine alias"
+gitPristine_description="Alias to obtain a pristine last version of a git repository"
+gitPristine_version="1.0"
+gitPristine_systemcategories=("Utility" "Terminal")
+gitPristine_commentary="Handy alias to obtain a clean state in a git repository"
+gitPristine_tags=("git" "gitFunctions" "terminal")
+gitPristine_arguments=("pristine" "git_pristine")
+gitPristine_bashfunctions=("pristine.sh")
 
 gitprompt_installationtype="repositoryclone"
 gitprompt_arguments=("git_prompt")

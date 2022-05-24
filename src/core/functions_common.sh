@@ -244,15 +244,11 @@ update_environment()
 
 # - Description: Ensures that the customizer_options.sh is present and sources it into the customizer environment.
 # - Permission: Can be called as root or user.
-ensure_and_import_custom_options()
+import_custom_options()
 {
-  # Ensure that customizer_option.sh exists in DATA_FOLDER, but do not overwrite it if exists. Then source its ocntent
-  # for user custom options, flags and features
-  if [ ! -f "${DATA_FOLDER}/customizer_options.sh" ]; then
-    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/core/customizer_options.sh" "${DATA_FOLDER}/customizer_options.sh"
+  if [ -f "${DATA_FOLDER}/customizer_options.sh" ]; then
+    source "${DATA_FOLDER}/customizer_options.sh"
   fi
-  apply_permissions "${DATA_FOLDER}/customizer_options.sh"
-  source "${DATA_FOLDER}/customizer_options.sh"
 }
 
 
@@ -877,7 +873,7 @@ generic_installation() {
   fi
 
   "generic_${FLAG_MODE}_functions" "${featurename}"
-  "generic_${FLAG_MODE}_initializations" "${featurename}"
+  "generic_${FLAG_MODE}_initializations"
   "generic_${FLAG_MODE}_autostart" "${featurename}"
   "generic_${FLAG_MODE}_favorites" "${featurename}"
   "generic_${FLAG_MODE}_file_associations" "${featurename}"
