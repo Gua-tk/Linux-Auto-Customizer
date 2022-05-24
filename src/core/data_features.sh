@@ -400,22 +400,23 @@ audacity_bashfunctions=("audacity.sh")
 audacity_launchernames=("audacity") # TODO @AleixMT imort launcher data
 audacity_packagenames=("audacity" "audacity-data")
 
-# TODO @AleixMT chnage keyname to be in small letter
+# TODO: Tested
 AutoFirma_name="AutoFirma"
 AutoFirma_description="Electronic signature application"
 AutoFirma_version="1.0"
 AutoFirma_tags=("digitalsign")
-AutoFirma_systemcategories=("Utility")
-AutoFirma_commentary="For the spanish DNI v3.0"
+AutoFirma_systemcategories=("GNOME" "Application" "Office")
+AutoFirma_commentary="Cliente @firma"
 AutoFirma_arguments=("auto_firma")
 AutoFirma_launcherkeynames=("default")
-AutoFirma_default_exec="AutoFirma"
+AutoFirma_default_exec="/usr/bin/AutoFirma %u"
+AutoFirma_default_windowclass="autofirma"
+AutoFirma_associatedfiletypes=("x-scheme-handler/afirma")
 AutoFirma_bashfunctions=("AutoFirma.sh")
 AutoFirma_downloadKeys=("bundle")
 AutoFirma_bundle_URL="https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip"
 AutoFirma_bundle_type="package"
 AutoFirma_bundle_installedPackages=("AutoFirma")
-# AutoFirma_launchernames=("afirma")  # TODO @AleixMT extract launcher data
 AutoFirma_packagedependencies=("libnss3-tools")
 
 axel_name="axel"
@@ -986,7 +987,12 @@ eclipse_bundle_URL="http://www.eclipse.org/downloads/download.php?file=/eclipse/
 eclipse_launcherkeynames=("default")
 eclipse_default_windowclass="Eclipse"
 
-emojis_installationtype="environmental"
+emojis_name="Function emojis"
+emojis_description="Function to find strings in files in the directory in the 1st argument"
+emojis_version="1.0"
+emojis_tags=("bashfunctions" "emojis" "info")
+emojis_systemcategories=("System" "Utility")
+emojis_commentary="A terminal shortcut"
 emojis_arguments=("emojis" "emoji")
 emojis_packagedependencies=("fonts-symbola")
 emojis_bashfunctions=("emojis.sh")
@@ -1644,12 +1650,17 @@ j_tags=("bashfunctions" "terminal" "system" "info")
 j_arguments=("j")
 j_bashfunctions=("j.sh")
 
-java_installationtype="userinherit"
+java_name="Java Development Kit 8"
+java_description="Implementation of version 8 of the Java (programming language) SE Platform"
+java_version="openlogic-openjdk-8u262-b10-linux-x64"
+java_systemcategories=("Development")
+java_commentary="To execute java applications"
+java_tags=("programming" "development")
 java_arguments=("java" "java_development_kit" "java_development" "java_development_kit_8" "jdk" "jdk_8")
 java_bashfunctions=("java.sh")
 java_binariesinstalledpaths=("bin/java;java" "bin/keytool;keytool")
-java_compressedfileurl="https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u262-b10/openlogic-openjdk-8u262-b10-linux-x64.tar.gz"
-java_readmeline="| Java Development Kit 8 | Implementation of version 8 of the Java (programming language) SE Platform | Commands \`java\`, \`javac\` and \`jar\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+java_downloadKeys=("bundle")
+java_bundle_URL="https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u262-b10/openlogic-openjdk-8u262-b10-linux-x64.tar.gz"
 
 julia_installationtype="userinherit"
 julia_arguments=("julia")

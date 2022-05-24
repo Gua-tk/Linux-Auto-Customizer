@@ -538,7 +538,7 @@ argument_processing()
               continue
             ;;
             --flush=cache)
-              rm -f "${CACHE_FOLDER}/"*
+              rm -Rf "${CACHE_FOLDER}"
               shift
               continue
             ;;
