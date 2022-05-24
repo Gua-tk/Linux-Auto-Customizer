@@ -3,6 +3,7 @@
 pristine()
 {
   local delete_ignored_files="no"
+  local branch
   for arg in "$@"; do
     if [ "${arg}" == "--ignored" ]; then
       delete_ignored_files="yes"
@@ -11,7 +12,7 @@ pristine()
 
   # Check if in git repository and obtain current branch
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    local branch="$(git rev-parse --abbrev-ref HEAD)"
+    branch="$(git rev-parse --abbrev-ref HEAD)"
   else
     echo "ERROR: Current directory is not under git version control"
     exit 1
