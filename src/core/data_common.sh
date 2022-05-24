@@ -508,6 +508,7 @@ declare feature_keynames=(
   "github_desktop"
   "gitk"
   "gitlab"
+  "gitPristine"
   "gitprompt"
   "gmail"
   "gnat_gps"
