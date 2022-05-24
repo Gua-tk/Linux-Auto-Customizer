@@ -15,7 +15,7 @@ pristine()
     branch="$(git rev-parse --abbrev-ref HEAD)"
   else
     echo "ERROR: Current directory is not under git version control"
-    exit 1
+    return 1
   fi
 
   # Obtain pristine last version of the project in the currently active branch
