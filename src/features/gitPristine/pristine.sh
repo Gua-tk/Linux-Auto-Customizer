@@ -40,3 +40,4 @@ pristine()
 
 alias git-pristine="pristine"
 alias gitpristine="pristine"
+alias gpristine="pristine"
