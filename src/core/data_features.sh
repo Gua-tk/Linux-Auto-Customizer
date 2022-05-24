@@ -411,10 +411,12 @@ AutoFirma_arguments=("auto_firma")
 AutoFirma_launcherkeynames=("default")
 AutoFirma_default_exec="AutoFirma"
 AutoFirma_bashfunctions=("AutoFirma.sh")
-AutoFirma_packageurls=("https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip")
-AutoFirma_launchernames=("afirma")  # TODO @AleixMT extract launcher data
+AutoFirma_downloadKeys=("bundle")
+AutoFirma_bundle_URL="https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip"
+AutoFirma_bundle_type="package"
+AutoFirma_bundle_installedPackages=("AutoFirma")
+# AutoFirma_launchernames=("afirma")  # TODO @AleixMT extract launcher data
 AutoFirma_packagedependencies=("libnss3-tools")
-AutoFirma_packagenames=("AutoFirma")
 
 axel_name="axel"
 axel_description="Download manager"
@@ -3186,6 +3188,7 @@ templates_latex_content="latex_document.tex"
 templates_empty_path="${XDG_TEMPLATES_DIR}/empty_text_file.txt"
 templates_empty_content="empty_text_file.txt"
 
+# TODO: Tested
 terminalBackground_name="Terminal Background"
 terminalBackground_description="Change color palette and apply other custom settings of gnome-terminal"
 terminalBackground_version="1.0"
