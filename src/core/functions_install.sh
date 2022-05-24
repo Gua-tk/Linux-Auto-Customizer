@@ -1013,7 +1013,7 @@ generic_install_copy_launcher() {
 # - Argument 1: Name of the feature to install, matching the variable $1_bashinitializations
 #   and the name of the first argument in the common_data.sh table
 generic_install_initializations() {
-  local -r bashinitializations="$1_bashinitializations[@]"
+  local -r bashinitializations="${CURRENT_INSTALLATION_KEYNAME}_bashinitializations[@]"
   local name_suffix_anticollision=""
   for bashinit in "${!bashinitializations}"; do
     if [[ "${bashinit}" = *$'\n'* ]]; then
@@ -1021,9 +1021,9 @@ generic_install_initializations() {
       add_bash_initialization "${bashinit}" "$1${name_suffix_anticollision}.sh"
     elif ! echo "${bashinit}" | grep -Eq "/"; then
       # Only one line we guess it is a partial path
-      add_bash_initialization "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
+      add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashinit}"
     else
-      add_bash_initialization "" "$1${name_suffix_anticollision}.sh" "${bashinit}"
+      add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashinit}"
     fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
@@ -1383,6 +1383,14 @@ data_and_file_structures_initialization() {
   create_folder "${CACHE_FOLDER}"
   create_folder "${TEMP_FOLDER}"
   create_folder "${DATA_FOLDER}"
+
+  # Ensure that customizer_option.sh exists in DATA_FOLDER, but do not overwrite it if exists. Then source its content
+  # for user custom options, flags and features
+  if [ ! -f "${DATA_FOLDER}/customizer_options.sh" ]; then
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/core/customizer_options.sh" "${DATA_FOLDER}/customizer_options.sh"
+  fi
+  apply_permissions "${DATA_FOLDER}/customizer_options.sh"
+
   create_folder "${BIN_FOLDER}"
   create_folder "${FUNCTIONS_FOLDER}"
   create_folder "${INITIALIZATIONS_FOLDER}"
