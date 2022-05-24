@@ -638,7 +638,7 @@ declare feature_keynames=(
   "teams"
   "telegram"
   "templates"
-  "terminal_background"
+  "terminalBackground"
   "terminator"
   "thunderbird"
   "tilix"

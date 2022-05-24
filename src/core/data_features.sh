@@ -730,7 +730,7 @@ codium_bashfunctions=("codium.sh")
 codium_binariesinstalledpaths=("bin/codium;codium")
 codium_downloadKeys=("bundle")
 codium_bundle_doNotInherit="yes"
-codium_bundle_downloadPath="${BIN_FOLDER}/codium"
+codium_bundle_downloadPath="${BIN_FOLDER}/codium/"
 codium_bundle_URL="https://github.com/VSCodium/vscodium/releases/download/1.62.2/VSCodium-linux-x64-1.62.2.tar.gz"
 codium_launcherkeynames=("default")
 
@@ -1238,7 +1238,7 @@ gitcm_binariesinstalledpaths=("git-credential-manager-core;gitcm")
 gitcm_downloadKeys=("bundle")
 gitcm_bundle_URL="https://github.com/GitCredentialManager/git-credential-manager/releases/download/v2.0.696/gcmcore-linux_amd64.2.0.696.tar.gz"
 gitcm_bundle_doNotInherit="yes"
-gitcm_bundle_downloadPath="${BIN_FOLDER}/gitcm"
+gitcm_bundle_downloadPath="${BIN_FOLDER}/gitcm/"
 gitcm_manualcontentavailable="0;0;1"
 install_gitcm_post()
 {
@@ -3186,10 +3186,14 @@ templates_latex_content="latex_document.tex"
 templates_empty_path="${XDG_TEMPLATES_DIR}/empty_text_file.txt"
 templates_empty_content="empty_text_file.txt"
 
-terminal_background_installationtype="environmental"
-terminal_background_arguments=("terminal_background")
-terminal_background_bashinitializations=("terminal_background.sh")
-terminal_background_readmeline="| Terminal background | Change background of the terminal to black | Every time you open a terminal || <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+terminalBackground_name="Terminal Background"
+terminalBackground_description="Change color palette and apply other custom settings of gnome-terminal"
+terminalBackground_version="1.0"
+terminalBackground_tags=("terminal" "customization" "palette")
+terminalBackground_systemcategories=("Terminal")
+terminalBackground_commentary="Fancy"
+terminalBackground_arguments=("terminal_background")
+terminalBackground_bashinitializations=("terminal_background.sh")
 
 terminator_installationtype="packagemanager"
 terminator_arguments=("terminator")
