@@ -1346,11 +1346,15 @@ gnome_calculator_packagenames=("gnome-calculator")
 gnome_calculator_readmeline="| Calculator | GUI calculator| Commmand \`calculator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 # TODO @AleixMT change to one word keyname
-gnome_chess_installationtype="packagemanager"
-gnome_chess_arguments=("gnome_chess" "chess")
-gnome_chess_launchernames=("org.gnome.Chess")
-gnome_chess_packagenames=("gnome-chess")
-gnome_chess_readmeline="| Chess | Plays a full game of chess against a human being or other computer program | Command \`gnome-chess\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+chess_name="GNOME Chess"
+chess_description="Plays a full game of chess against a human being or other computer program"
+chess_version="1.0"
+chess_tags=("chess" "game" "gnome")
+chess_systemcategories=("System" "Utility")
+chess_commentary="Play the game of chess"
+chess_arguments=("gnome_chess" "chess")
+chess_launchernames=("org.gnome.Chess")
+chess_packagenames=("gnome-chess")
 
 # TODO @AleixMT change to one word keyname
 gnome_mahjongg_installationtype="packagemanager"
