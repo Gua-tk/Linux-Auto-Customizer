@@ -359,7 +359,7 @@ argument_processing()
       -c|--clean)
         FLAG_AUTOCLEAN=0
       ;;
-      -C|-Clean)
+      -C|--Clean)
         FLAG_AUTOCLEAN=2
       ;;
 
