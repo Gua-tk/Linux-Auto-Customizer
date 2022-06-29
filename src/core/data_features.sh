@@ -805,6 +805,7 @@ uninstall_customizer_post()
   remove_file /usr/bin/customizer-uninstall
 }
 
+
 # http://localhost:5000
 customizerGUI_name="Linux Auto Customizer Graphical Interface"
 customizerGUI_description="Graphical interface for the customizer"
@@ -819,7 +820,14 @@ customizerGUI_bundleSource_URL="https://github.com/bugy/script-server/releases/d
 customizerGUI_pipinstallations=("-r ${BIN_FOLDER}/customizerGUI/requirements.txt")  # TODO: when extract files allow CURRENT_INSTALLATION_FOLDER to be available
 customizerGUI_binariesinstalledpaths=("launcher.py;customizerGUI")
 customizerGUI_manualcontentavailable="0;0;1"
-customizerGUI_movefiles=("${CUSTOMIZER_PROJECT_FOLDER}/data/core/conf-customizer.json;${BIN_FOLDER}/customizerGUI/conf/runners")
+customizerGUI_filekeys=("multinstall" "multiuninstall" "debug")
+customizerGUI_multinstall_path="${BIN_FOLDER}/customizerGUI/conf/runners/multinstall.json"
+customizerGUI_multinstall_content="multinstall.json"
+customizerGUI_multiuninstall_path="${BIN_FOLDER}/customizerGUI/conf/runners/multiuninstall.json"
+customizerGUI_multiuninstall_content="multiuninstall.json"
+customizerGUI_debug_path="${BIN_FOLDER}/customizerGUI/conf/runners/debug.json"
+customizerGUI_debug_content="debug.json"
+
 install_customizerGUI_post()
 {
   # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a

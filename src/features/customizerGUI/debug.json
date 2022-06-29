@@ -1,0 +1,5 @@
+{
+  "name": "Customizer debug",
+  "description": "Access to customizer prompt",
+  "script_path": "customizer-install --debug"
+}
