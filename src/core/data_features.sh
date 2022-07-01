@@ -1969,16 +1969,22 @@ merge_commentary="A terminal function for merging in git"
 merge_arguments=("merge" "merge_function" "function_merge" "git_merge")
 merge_bashfunctions=("merge.sh")
 
+# TODO: merge with fonts
 msttcorefonts_installationtype="packagemanager"
 msttcorefonts_arguments=("msttcorefonts")
 msttcorefonts_packagenames=("msttcorefonts")
 msttcorefonts_readmeline="| font Msttcorefonts | Windows classic fonts | Install mscore fonts ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
-mvn_installationtype="userinherit"
+mvn_name="Apache Maven"
+mvn_description="Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM)"
+mvn_version="3.6.3"
+mvn_tags=("echempad" "development")
+mvn_systemcategories=("ConsoleOnly" "Java" "PackageManager")
+mvn_commentary="Useful with Java projects"
 mvn_arguments=("mvn")
 mvn_binariesinstalledpaths=("bin/mvn;mvn")
-mvn_compressedfileurl="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
-mvn_readmeline="| Maven | Build automation tool used primarily for Java projects | Command \`mvn\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li><li>- [x] Fedora</li></ul> |"
+mvn_downloadKeys=("bundleCompressed")
+mvn_bundleCompressed_URL="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 mvn_bashfunctions=("mvn.sh")
 
 nano_installationtype="packagemanager"
