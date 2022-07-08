@@ -888,7 +888,7 @@ docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 
 documents_name="Google Documents"
-documents_description="Google Documents opening in Chrome"
+documents_description="Google Documents opening in Browser"
 documents_version="Google dependent"
 documents_tags=("google" "internet_shortcuts")
 documents_systemcategories=("Office" "Documentation" "WebBrowser" "WordProcessor" "FlowChart")
@@ -899,7 +899,7 @@ documents_launcherkeynames=("default")
 documents_default_exec="xdg-open https://docs.google.com/document/"
 
 drive_name="Google Drive"
-drive_description="Google Drive opening in Chrome"
+drive_description="Google Drive opening in Browser"
 drive_tags=("google" "internet_shortcuts")
 drive_version="Google dependent"
 drive_systemcategories=("ProjectManagement" "Documentation")
@@ -945,7 +945,7 @@ uninstall_drupal_post()
 
 duckduckgo_arguments=("duckduckgo")
 duckduckgo_name="Duckduckgo"
-duckduckgo_description="Duckduckgo opening in Chrome"
+duckduckgo_description="Duckduckgo opening in Browser"
 duckduckgo_version="Google dependent"
 duckduckgo_systemcategories=("WebBrowser")
 duckduckgo_commentary="take notes or edit rich text documents"
@@ -1039,7 +1039,7 @@ firc_terminalLauncher_exec="f-irc"
 firc_terminalLauncher_terminal="true"
 
 facebook_name="Facebook"
-facebook_description="Facebook opening in Chrome"
+facebook_description="Facebook opening in Browser"
 facebook_version="Google dependent"
 facebook_systemcategories=("InstantMessaging" "Chat" "Feed")
 facebook_commentary="Social media"
@@ -1185,7 +1185,7 @@ fonts_roboto_packagenames=("fonts-roboto")
 fonts_roboto_readmeline="| fonts-roboto | Installs font| Install roboto font ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 forms_name="Google Forms"
-forms_description="Google Forms opening in Chrome"
+forms_description="Google Forms opening in Browser"
 forms_version="Google dependent"
 forms_systemcategories=("Documentation")
 forms_commentary="make polls and surveys to retrieve statistical data"
@@ -1294,7 +1294,7 @@ uninstall_gitcm_post()
 
 github_arguments=("github")
 github_name="Github"
-github_description="Github opening in Chrome"
+github_description="Github opening in Browser"
 github_version="Google dependent"
 github_systemcategories=("RevisionControl")
 github_commentary="Hosting repositories online"
@@ -1319,7 +1319,7 @@ gitk_packagenames=("gitk")
 gitk_readmeline="| Gitk | GUI for git | Command \`gitk\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gitlab_name="Gitlab"
-gitlab_description="Gitlab opening in Chrome"
+gitlab_description="Gitlab opening in Browser"
 gitlab_version="Google dependent"
 gitlab_systemcategories=("RevisionControl")
 gitlab_commentary="Hosting repositories online"
@@ -1345,7 +1345,7 @@ gitprompt_readmeline="| gitprompt | Special prompt in git repositories | Command
 gitprompt_repositoryurl="https://github.com/magicmonty/bash-git-prompt.git"
 
 gmail_name="Gmail"
-gmail_description="Gmail opening in Chrome"
+gmail_description="Gmail opening in Browser"
 gmail_version="Google dependent"
 gmail_systemcategories=("Email")
 gmail_commentary="Send/Receive e-mails"
@@ -1435,27 +1435,27 @@ go_flagsoverride="0;;;;;"  # Install always as root
 go_bashinitializations=("go.sh")
 go_readmeline="| go | programming language | command \`go\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-google_arguments=("google")
 google_name="Google"
+google_description="google opening in Browser"
 google_version="Google dependent"
 google_systemcategories=("Documentation")
 google_commentary="Search any content in the internet"
 google_tags=("search" "internet_shortcuts")
+google_arguments=("google")
 google_bashfunctions=("google.sh")
 google_launcherkeynames=("default")
 google_default_exec="xdg-open https://www.google.com/"
-google_description="google opening in Chrome"
 
-googlecalendar_arguments=("google_calendar")
 googlecalendar_name="Google Calendar"
+googlecalendar_description="Google Calendar opening in Browser"
 googlecalendar_version="Google dependent"
 googlecalendar_systemcategories=("Calendar")
 googlecalendar_commentary="Calendar, add, edit and remove events"
 googlecalendar_tags=("search" "internet_shortcuts")
+googlecalendar_arguments=("google_calendar")
 googlecalendar_bashfunctions=("googlecalendar.sh")
 googlecalendar_launcherkeynames=("default")
 googlecalendar_default_exec="xdg-open https://calendar.google.com/"
-googlecalendar_description="Google Calendar opening in Chrome"
 
 # TODO @AleixMT chnage keyname to chrome
 google_chrome_name="Google Chrome"
@@ -1616,16 +1616,16 @@ inkscape_launchernames=("inkscape")
 inkscape_packagenames=("inkscape")
 inkscape_readmeline="| Inkscape | Vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format | Command \`inkscape\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-instagram_arguments=("instagram")
 instagram_name="Instagram"
+instagram_description="Instagram opening in Browser"
 instagram_version="Google dependent"
 instagram_systemcategories=("Calendar")
 instagram_commentary="Calendar, add and remove events"
 instagram_tags=("search" "internet_shortcuts")
+instagram_arguments=("instagram")
 instagram_bashfunctions=("instagram.sh")
 instagram_launcherkeynames=("default")
 instagram_default_exec="xdg-open https://instagram.com"
-instagram_description="Instagram opening in Chrome"
 
 ipe_name="Function ipe"
 ipe_description="Returns the public IP"
@@ -1805,16 +1805,17 @@ k_tags=("bashfunctions" "terminal" "system")
 k_arguments=("k")
 k_bashfunctions=("k.sh")
 
-keep_arguments=("keep" "google_keep")
+
 keep_name="Google Keep"
+keep_description="keep opening in Browser"
 keep_version="Google dependent"
 keep_systemcategories=("Documentation")
 keep_commentary="Add and remove notes online"
 keep_tags=("search" "internet_shortcuts")
+keep_arguments=("keep" "google_keep")
 keep_bashfunctions=("keep.sh")
 keep_launcherkeynames=("default")
 keep_default_exec="xdg-open https://keep.google.com"
-keep_description="keep opening in Chrome"
 
 keyboardfix_installationtype="environmental"
 keyboardfix_arguments=("keyboard_fix" "fix_keyboard")
@@ -2420,7 +2421,7 @@ netflix_tags=("film" "television" "internet_shortcuts")
 netflix_bashfunctions=("netflix.sh")
 netflix_launcherkeynames=("default")
 netflix_default_exec="xdg-open https://www.netflix.com"
-netflix_description="Netflix opening in Chrome"
+netflix_description="Netflix opening in Browser"
 
 net_tools_installationtype="packagemanager"
 net_tools_arguments=("net_tools")
@@ -2489,7 +2490,7 @@ onedrive_arguments=("onedrive")
 onedrive_url="https://onedrive.live.com/"
 onedrive_bashfunctions=("onedrive.sh")
 onedrive_downloads=("https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg;onedrive_icon.svg")
-onedrive_description="Microsoft OneDrive opening in Chrome"
+onedrive_description="Microsoft OneDrive opening in Browser"
 onedrive_launchercontents=("
 [Desktop Entry]
 Categories=FileSharing;
@@ -2567,7 +2568,7 @@ outlook_tags=("search" "internet_shortcuts")
 outlook_bashfunctions=("outlook.sh")
 outlook_launcherkeynames=("default")
 outlook_default_exec="xdg-open https://outlook.live.com"
-outlook_description="outlook opening in Chrome"
+outlook_description="outlook opening in Browser"
 
 overleaf_arguments=("overleaf")
 overleaf_name="Overleaf"
@@ -2578,7 +2579,7 @@ overleaf_tags=("LaTeX" "text_editor" "internet_shortcuts")
 overleaf_bashfunctions=("overleaf.sh")
 overleaf_launcherkeynames=("default")
 overleaf_default_exec="xdg-open https://www.overleaf.com"
-overleaf_description="overleaf opening in Chrome"
+overleaf_description="overleaf opening in Browser"
 
 p_name="Function p"
 p_description="Check processes names and PID's from given port"
@@ -2714,7 +2715,7 @@ presentation_tags=("presentation" "google" "internet_shortcuts")
 presentation_bashfunctions=("presentation.sh")
 presentation_launcherkeynames=("default")
 presentation_default_exec="xdg-open https://docs.google.com/presentation/"
-presentation_description="Google Presentation opening in Chrome"
+presentation_description="Google Presentation opening in Browser"
 
 prompt_name="Function prompt"
 prompt_description="Installs a new colourful prompt on terminal window"
@@ -2840,7 +2841,7 @@ reddit_tags=("forum" "internet_shortcuts")
 reddit_bashfunctions=("reddit.sh")
 reddit_launcherkeynames=("default")
 reddit_default_exec="xdg-open https://www.reddit.com"
-reddit_description="Google reddit opening in Chrome"
+reddit_description="Google reddit opening in Browser"
 
 remmina_installationtype="packagemanager"
 remmina_arguments=("remmina")
@@ -3034,7 +3035,7 @@ soundcloud_tags=("music" "internet_shortcuts")
 soundcloud_bashfunctions=("soundcloud.sh")
 soundcloud_launcherkeynames=("default")
 soundcloud_default_exec="xdg-open https://www.soundcloud.com"
-soundcloud_description="Soudcloud opening in Chrome"
+soundcloud_description="Soudcloud opening in Browser"
 
 spotify_installationtype="packageinstall"
 spotify_arguments=("spotify")
@@ -3071,7 +3072,7 @@ spreadsheets_tags=("google" "spreadsheets" "internet_shortcuts")
 spreadsheets_bashfunctions=("spreadsheets.sh")
 spreadsheets_launcherkeynames=("default")
 spreadsheets_default_exec="xdg-open https://docs.google.com/spreadsheets"
-spreadsheets_description="Google Spreadsheets opening in Chrome"
+spreadsheets_description="Google Spreadsheets opening in Browser"
 
 ssh_installationtype="packagemanager"
 ssh_arguments=("ssh")
@@ -3351,7 +3352,7 @@ traductor_tags=("google" "traductor" "internet_shortcuts")
 traductor_bashfunctions=("traductor.sh")
 traductor_launcherkeynames=("default")
 traductor_default_exec="xdg-open https://translate.google.com"
-traductor_description="Google Traductor opening in Chrome"
+traductor_description="Google Traductor opening in Browser"
 
 transmission_gtk_installationtype="packagemanager"
 transmission_gtk_arguments=("transmission_gtk" "transmission")
@@ -3368,7 +3369,7 @@ trello_tags=("administration" "internet_shortcuts")
 trello_bashfunctions=("trello.sh")
 trello_launcherkeynames=("default")
 trello_default_exec="xdg-open https://trello.com"
-trello_description="Google trello opening in Chrome"
+trello_description="Google trello opening in Browser"
 
 tumblr_arguments=("tumblr")
 tumblr_name="Tumblr"
@@ -3379,7 +3380,7 @@ tumblr_tags=("internet_shortcuts")
 tumblr_bashfunctions=("tumblr.sh")
 tumblr_launcherkeynames=("default")
 tumblr_default_exec="xdg-open https://www.tumblr.com/"
-tumblr_description="Tumblr opening in Chrome"
+tumblr_description="Tumblr opening in Browser"
 
 twitch_arguments=("twitch")
 twitch_name="Twitch"
@@ -3390,7 +3391,7 @@ twitch_tags=("streaming" "internet_shortcuts")
 twitch_bashfunctions=("twitch.sh")
 twitch_launcherkeynames=("default")
 twitch_default_exec="xdg-open https://twitch.tv"
-twitch_description="Twitch.tv opening in Chrome"
+twitch_description="Twitch.tv opening in Browser"
 
 twitter_arguments=("twitter")
 twitter_name="Twitter"
@@ -3401,7 +3402,7 @@ twitter_tags=("internet_shortcuts")
 twitter_bashfunctions=("twitter.sh")
 twitter_launcherkeynames=("default")
 twitter_default_exec="xdg-open https://twitter.com"
-twitter_description="twitter.tv opening in Chrome"
+twitter_description="twitter.tv opening in Browser"
 
 u_name="Function u"
 u_description="Opens given link in default web browser"
@@ -3473,7 +3474,7 @@ whatsapp_tags=("internet_shortcuts")
 whatsapp_bashfunctions=("whatsapp.sh")
 whatsapp_launcherkeynames=("default")
 whatsapp_default_exec="xdg-open https://web.whatsapp.com"
-whatsapp_description="Whatsapp Web opening in Chrome"
+whatsapp_description="Whatsapp Web opening in Browser"
 
 wikipedia_arguments=("wikipedia")
 wikipedia_name="Wikipedia"
@@ -3484,7 +3485,7 @@ wikipedia_tags=("internet_shortcuts")
 wikipedia_bashfunctions=("wikipedia.sh")
 wikipedia_launcherkeynames=("default")
 wikipedia_default_exec="xdg-open https://www.wikipedia.org"
-wikipedia_description="Wikipedia opening in Chrome"
+wikipedia_description="Wikipedia opening in Browser"
 
 wikit_installationtype="environmental"
 wikit_manualcontentavailable=";1;"
@@ -3539,7 +3540,7 @@ youtube_tags=("internet_shortcuts")
 youtube_bashfunctions=("youtube.sh")
 youtube_launcherkeynames=("default")
 youtube_default_exec="xdg-open https://www.youtube.com"
-youtube_description="Youtube opening in Chrome"
+youtube_description="Youtube opening in Browser"
 
 # TODO @AleixMT refactor feature name
 youtube_dl_installationtype="environmental"
@@ -3558,7 +3559,7 @@ ytmusic_tags=("internet_shortcuts")
 ytmusic_bashfunctions=("ytmusic.sh")
 ytmusic_launcherkeynames=("default")
 ytmusic_default_exec="xdg-open https://music.youtube.com"
-ytmusic_description="YT Music opening in Chrome"
+ytmusic_description="YT Music opening in Browser"
 
 ####### LINE OF TRIMMING, BELOW IS TRIMMED ########
 
