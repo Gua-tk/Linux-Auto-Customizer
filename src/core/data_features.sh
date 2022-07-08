@@ -992,18 +992,21 @@ emojis_description="Function to find strings in files in the directory in the 1s
 emojis_version="1.0"
 emojis_tags=("bashfunctions" "emojis" "info")
 emojis_systemcategories=("System" "Utility")
-emojis_commentary="A terminal shortcut"
+emojis_commentary="Print emojis name in terminal when passing an emoji and prints emoji name when an emoji is passed to it. "
 emojis_arguments=("emojis" "emoji")
 emojis_packagedependencies=("fonts-symbola")
 emojis_bashfunctions=("emojis.sh")
-emojis_readmeline="| Function \`emojis\` | Print emojis name in terminal when passing an emoji and prints emoji name when an emoji is passed to it. | Command \`emoji\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-evolution_installationtype="packagemanager"
+evolution_name="Evolution"
+evolution_description="User calendar agend, planning"
+evoltion_version="1.0"
+evolution_tags=("bashfunctions" "bash")
+evolution_systemcategories=("System" "Utility")
+evolution_commentary="edit files or projects"
 evolution_arguments=("evolution")
 evolution_bashfunctions=("evolution.sh")
-evolution_launchernames=("evolution-calendar")
-evolution_packagenames=("evolution" )
-evolution_readmeline="| evolution | User calendar agend, planning | Command \`evolution\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+# TODO: Extract properties evolution_launchernames=("evolution-calendar")
+evolution_packagenames=("evolution")
 
 F_name="Function F"
 F_description="Function to find strings in files in the directory in the 1st argument"
@@ -1035,7 +1038,6 @@ firc_launcherkeynames=("terminalLauncher")
 firc_terminalLauncher_exec="f-irc"
 firc_terminalLauncher_terminal="true"
 
-facebook_bashfunctions=("facebook.sh")
 facebook_name="Facebook"
 facebook_description="Facebook opening in Chrome"
 facebook_version="Google dependent"
@@ -1056,10 +1058,14 @@ fastcommands_tags=("fast" "terminal" "bashfunctions")
 fastcommands_arguments=("fast_commands")
 fastcommands_bashfunctions=("fastcommands.sh")
 
-fdupes_installationtype="packagemanager"
+fdupes_name="fdupes"
+fdupes_description="Searches for duplicated files within given directories"
+fdupes_version="System dependent"
+fdupes_systemcategories=("System" "Utility")
+fdupes_commentary="Search for identic files"
+fdupes_tags=("files" "duplication")
 fdupes_arguments=("fdupes")
 fdupes_packagenames=("fdupes")
-fdupes_readmeline="| Fdupes | Searches for duplicated files within given directories | Command \`fdupes\`|| <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 fetch_name="Function fetch"
 fetch_description="Alias for git fetch --prune"
@@ -1070,41 +1076,39 @@ fetch_tags=("gitbashfunctions" "terminal")
 fetch_arguments=("fetch")
 fetch_bashfunctions=("fetch.sh")
 
-ffmpeg_installationtype="packagemanager"
+ffmpeg_name="ffmpeg"
+ffmpeg_description="Super fast video / audio encoder"
+ffmpeg_version="System dependent"
+ffmpeg_systemcategories=("Utility")
+ffmpeg_commentary="Terminal media encoder"
+ffmpeg_tags=("media" "video" "encoder")
 ffmpeg_arguments=("ffmpeg" "youtube_dl_dependencies")
 ffmpeg_packagenames=("ffmpeg")
-ffmpeg_readmeline="| ffmpeg | Super fast video / audio encoder | Command \`ffmpeg\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-filezilla_installationtype="packagemanager"
+filezilla_name="FileZilla"
+filezilla_description="FTP Client & Server"
+filezilla_version="System dependent"
+filezilla_systemcategories=("FileManager" "Network")
+filezilla_commentary="Open source ftp"
+filezilla_tags=("ftp")
 filezilla_arguments=("filezilla")
 filezilla_bashfunctions=("filezilla.sh")
 filezilla_packagenames=("filezilla")
-filezilla_downloads=("https://upload.wikimedia.org/wikipedia/commons/0/01/FileZilla_logo.svg;filezilla_icon.svg")
-filezilla_readmeline="| FileZilla | FTP Client & Server | Command \`filezilla\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-filezilla_launchercontents=("[Desktop Entry]
-Categories=Network;
-Comment=FTP Client & Server
-Encoding=UTF-8
-Exec=filezilla
-Icon=${BIN_FOLDER}/filezilla/filezilla_icon.svg
-GenericName=Document
-Keywords=forms;
-MimeType=
-Name=FileZilla
-StartupNotify=true
-StartupWMClass=FileZilla
-Terminal=false
-TryExec=filezilla
-Type=Application
-Version=1.0
-")
+filezilla_launcherkeynames=("default")
+filezilla_default_windowclass="FileZilla"
 
-firefox_installationtype="packagemanager"
+firefox_name="Firefox"
+firefox_description="Web browser"
+firefox_version="System dependent"
+firefox_systemcategories=("Network" "WebBrowser")
+firefox_commentary="Free web browser"
+firefox_tags=("browser")
 firefox_arguments=("firefox")
 firefox_bashfunctions=("firefox.sh")
-firefox_launchernames=("firefox")
+# TODO: firefox_launchernames=("firefox")
 firefox_packagenames=("firefox")
-firefox_readmeline="| Firefox | Free web browser | Command \`firefox\`, desktop launcher, dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+firefox_launcherkeynames=("default")
+firefox_default_exec="firefox"
 
 # TODO: tested
 flutter_name="Flutter"
@@ -1127,6 +1131,8 @@ flutter_uninstall_post()
 {
   :
 }
+
+# TODO: Font unification
 
 fonts_alegreya_sans_installationtype="userinherit"
 fonts_alegreya_sans_arguments=("fonts_alegreya_sans")
@@ -1178,34 +1184,50 @@ fonts_roboto_arguments=("fonts_roboto")
 fonts_roboto_packagenames=("fonts-roboto")
 fonts_roboto_readmeline="| fonts-roboto | Installs font| Install roboto font ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-forms_arguments=("forms" "google_forms")
 forms_name="Google Forms"
 forms_description="Google Forms opening in Chrome"
 forms_version="Google dependent"
 forms_systemcategories=("Documentation")
 forms_commentary="make polls and surveys to retrieve statistical data"
 forms_tags=("google" "internet_shortcuts")
+forms_arguments=("forms" "google_forms")
 forms_bashfunctions=("forms.sh")
 forms_launcherkeynames=("default")
 forms_default_exec="xdg-open https://docs.google.com/forms/"
 
-freecad_installationtype="packagemanager"
+freecad_name="FreeCAD"
+freecad_description="General-purpose parametric 3D computer-aided design modeler and a building information modeling"
+freecad_version="System dependent"
+freecad_systemcategories=("3D") # TODO
+freecad_commentary="Create 3D shapes"
+freecad_tags=("3D" "design")
 freecad_arguments=("freecad")
-freecad_launchernames=("freecad")
+# TODO: freecad_launchernames=("freecad")
+freecad_launcherkeynames=("default")
+freecad_default_exec="freecad"
 freecad_packagenames=("freecad")
-freecad_readmeline="| FreeCAD | General-purpose parametric 3D computer-aided design modeler and a building information modeling | Command \`freecad\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
-gcc_installationtype="packagemanager"
+gcc_name="gcc"
+gcc_description="C compiler for GNU systems"
+gcc_version="System dependent"
+gcc_systemcategories=("System" "Utility")
+gcc_commentary="Typical dependency for any compilation"
+gcc_tags=("GNU" "C")
 gcc_arguments=("gcc")
 gcc_bashfunctions=("gcc.sh")
 gcc_packagenames=("gcc")
-gcc_readmeline="| GNU C Compiler | C compiler for GNU systems | Command \`gcc\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-geany_installationtype="packagemanager"
+geany_name="Geany"
+geany_description="Lightweight GUI text editor using Scintilla and GTK, including basic IDE features"
+geany_version="System dependent"
+geany_systemcategories=("IDE") # TODO
+geany_commentary="Classic text editor"
+geany_tags=("TextEditor")
 geany_arguments=("geany")
-geany_launchernames=("geany")
+# TODO: geany_launchernames=("geany")
+geany_launcherkeynames=("default")
+geany_default_exec="geany"
 geany_packagenames=("geany")
-geany_readmeline="| Geany | Lightweight GUI text editor using Scintilla and GTK, including basic IDE features | Command \`geany\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 geogebra_name="GeoGebra"
 geogebra_description="Geometry visualization plotter and calculator with GUI"
@@ -1218,17 +1240,29 @@ geogebra_binariesinstalledpaths=("GeoGebra;geogebra")
 geogebra_downloadKeys=("bundle")
 geogebra_bundle_URL="https://download.geogebra.org/package/linux-port6"
 
-ghostwriter_installationtype="packagemanager"
+ghostwriter_name="GhostWriter"
+ghostwriter_description="Text editor without distractions."
+ghostwriter_version="System dependent"
+ghostwriter_tags=("text_editor" "writer")
+ghostwriter_systemcategories=("TextEditor")
+ghostwriter_commentary="To render markdown"
 ghostwriter_arguments=("ghostwriter")
-ghostwriter_launchernames=("ghostwriter")
+# TODO ghostwriter_launchernames=("ghostwriter")
+ghostwriter_launcherkeynames=("default")
+ghostwriter_default_exec="ghostwriter"
 ghostwriter_packagenames=("ghostwriter")
-ghostwriter_readmeline="| GhostWriter | Text editor without distractions. | Command \`ghostwriter, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-gimp_installationtype="packagemanager"
+gimp_name="Gimp"
+gimp_description="Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats."
+gimp_version="System dependent"
+gimp_tags=("GeoGebra" "geogebra")
+gimp_systemcategories=("Viewer") # TODO
+gimp_commentary="The alternative to Photoshop"
 gimp_arguments=("gimp")
-gimp_launchernames=("gimp")
+#TODO: gimp_launchernames=("gimp")
+gimp_launcherkeynames=("default")
+gimp_default_exec="gimp"
 gimp_packagenames=("gimp")
-gimp_readmeline="| Gimp | Raster graphics editor used for image manipulation and image editing, free-form drawing, transcoding between different image file formats. | Command \`gimp\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 git_installationtype="packagemanager"
 git_arguments=("git")
@@ -1310,16 +1344,16 @@ gitprompt_bashfunctions=("gitprompt.sh")
 gitprompt_readmeline="| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 gitprompt_repositoryurl="https://github.com/magicmonty/bash-git-prompt.git"
 
-gmail_arguments=("gmail" "google_mail")
 gmail_name="Gmail"
+gmail_description="Gmail opening in Chrome"
 gmail_version="Google dependent"
 gmail_systemcategories=("Email")
 gmail_commentary="Send/Receive e-mails"
 gmail_tags=("email" "internet_shortcuts")
+gmail_arguments=("gmail" "google_mail")
 gmail_bashfunctions=("gmail.sh")
 gmail_launcherkeynames=("default")
 gmail_default_exec="xdg-open https://mail.google.com/"
-gmail_description="Gmail opening in Chrome"
 
 gnat_gps_installationtype="packagemanager"
 gnat_gps_arguments=("gnat_gps")
