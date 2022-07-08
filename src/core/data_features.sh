@@ -2484,32 +2484,24 @@ okular_launchernames=("org.kde.okular")
 okular_packagenames=("okular")
 okular_readmeline="| Okular | PDF viewer | Command \`okular\`, desktop launcher and dashboard launcher ||   <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-# TODO @AleixMT wontfix substitute by github.com/abraunegg/onedrive with clone install
-onedrive_installationtype="environmental"
-onedrive_arguments=("onedrive")
-onedrive_url="https://onedrive.live.com/"
-onedrive_bashfunctions=("onedrive.sh")
-onedrive_downloads=("https://upload.wikimedia.org/wikipedia/commons/3/3c/Microsoft_Office_OneDrive_%282019%E2%80%93present%29.svg;onedrive_icon.svg")
-onedrive_description="Microsoft OneDrive opening in Browser"
-onedrive_launchercontents=("
-[Desktop Entry]
-Categories=FileSharing;
-Comment=${onedrive_description}
-Encoding=UTF-8
-Exec=xdg-open ${onedrive_url}
-Icon=${BIN_FOLDER}/onedrive/onedrive_icon.svg
-GenericName=OneDrive
-Keywords=onedrive;
-MimeType=
-Name=OneDrive
-StartupNotify=true
-StartupWMClass=onedrive
-Terminal=false
-TryExec=xdg-open
-Type=Application
-Version=1.0
-")
-onedrive_readmeline="| OneDrive | ${onedrive_description} | Command \`onedrive\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+onedrive_name="OneDrive client"
+onedrive_description="A free Microsoft OneDrive Client"
+onedrive_version="2.4.13-1build1_amd64"
+onedrive_tags=("iochem")
+onedrive_systemcategories=("System" "Utility")
+onedrive_commentary="Supports OneDrive Personal, OneDrive for Business, OneDrive for Office365 and SharePoint"
+onedrive_arguments=("one_drive")
+onedrive_downloadKeys=("debPackage")
+onedrive_debPackage_installedPackages=("onedrive")
+onedrive_debPackage_URL="http://es.archive.ubuntu.com/ubuntu/pool/universe/o/onedrive/onedrive_2.4.13-1build1_amd64.deb"
+onedrive_launcherkeynames=("defaultLauncher")
+onedrive_defaultLauncher_exec="onedrive --monitor --verbose ; sleep 5"
+onedrive_defaultLauncher_terminal="true"
+onedrive_defaultLauncher_actionkeynames=("sync" "reauthorize")
+onedrive_defaultLauncher_sync_name="Sync files"
+onedrive_defaultLauncher_sync_exec="onedrive --monitor --verbose ; sleep 5"
+onedrive_defaultLauncher_reauthorize_name="Reauthorize"
+onedrive_defaultLauncher_reauthorize_exec="onedrive --monitor --verbose --logout re-authorize ; sleep 5"
 
 libreoffice_installationtype="packagemanager"
 libreoffice_arguments=("open_office" "office" "libre_office")
