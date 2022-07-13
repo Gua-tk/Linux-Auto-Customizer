@@ -826,6 +826,12 @@ execute_installation()
     CURRENT_INSTALLATION_KEYNAME="${keyname}"
 
     output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${keyname}." "${FLAG_QUIETNESS}"
+
+    # Load metadata of the feature if its .dat file exists
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh" ]; then
+      source "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh"
+    fi
+
     output_proxy_executioner "generic_installation ${keyname}" "${FLAG_QUIETNESS}"
     output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." "${FLAG_QUIETNESS}"
 

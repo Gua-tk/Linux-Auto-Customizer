@@ -260,14 +260,6 @@ fi
 
 ####################### UNHOLY LINE OF TESTING. UPWARDS IS TESTED, BELOW IS NOT ##############################
 
-a_name="Function a"
-a_description="Function that displays environment aliases using compgen -a"
-a_version="1.0"
-a_tags=("bashfunctions" "aliases" "info")
-a_systemcategories=("System" "Utility")
-a_commentary="A terminal shortcut"
-a_arguments=("a")
-a_bashfunctions=("a.sh")
 
 add_name="Function add"
 add_description="Alias to git add with completion"
