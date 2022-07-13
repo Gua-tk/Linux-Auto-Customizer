@@ -711,7 +711,7 @@ codeblocks_systemcategories=("Development" "IDE" "Building")
 codeblocks_commentary="Program in C without about the compiler"
 codeblocks_arguments=("codeblocks" "code::blocks")
 codeblocks_bashfunctions=("codeblocks.sh")
-codeblocks_launchernames=("codeblocks")  # TODO @AleixMT extract launcher data
+# codeblocks_launchernames=("codeblocks")  # TODO @AleixMT extract launcher data
 codeblocks_packagenames=("codeblocks")
 
 codium_name="VSCodium"
@@ -901,14 +901,18 @@ drive_bashfunctions=("drive.sh")
 drive_launcherkeynames=("default")
 drive_default_exec="xdg-open https://drive.google.com/"
 
-dropbox_installationtype="packageinstall"
+dropbox_name="Dropbox"
+dropbox_description="File hosting service"
+dropbox_version="2020.03.04_amd64"
+dropbox_tags=("file_hostig" "cloud" "storage")
+dropbox_systemcategories=("CMS" "WebDevelopment" "Web")
+dropbox_commentary="Web file hosting"
 dropbox_arguments=("dropbox")
 dropbox_packagenames=("dropbox")
-dropbox_launchernames=("dropbox")
+# TODO: dropbox_launchernames=("dropbox")
 dropbox_packagedependencies=("python3-gpg")
 dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
 dropbox_package_manager_override="apt-get"
-dropbox_readmeline="| Dropbox | File hosting service | Command \`dropbox\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 # TODO @AleixMT wontfix, trim and test. if not working will be deleted
 drupal_name="Drupal"
@@ -935,13 +939,13 @@ uninstall_drupal_post()
   remove_folder /var/www/html/drupal/
 }
 
-duckduckgo_arguments=("duckduckgo")
 duckduckgo_name="Duckduckgo"
 duckduckgo_description="Duckduckgo opening in Browser"
 duckduckgo_version="Google dependent"
 duckduckgo_systemcategories=("WebBrowser")
 duckduckgo_commentary="take notes or edit rich text documents"
 duckduckgo_tags=("search" "internet_shortcuts")
+duckduckgo_arguments=("duckduckgo")
 duckduckgo_bashfunctions=("duckduckgo.sh")
 duckduckgo_launcherkeynames=("default")
 duckduckgo_default_exec="xdg-open https://duckduckgo.com/"
@@ -1347,29 +1351,26 @@ gmail_bashfunctions=("gmail.sh")
 gmail_launcherkeynames=("default")
 gmail_default_exec="xdg-open https://mail.google.com/"
 
-gnat_gps_installationtype="packagemanager"
-gnat_gps_arguments=("gnat_gps")
-gnat_gps_description="Programming Studio for Ada and C"
-gnat_gps_launchercontents=("
-[Desktop Entry]
-Type=Application
-Name=GNAT Programming Studio
-Comment=${gnat_gps_description}
-Exec=/usr/bin/gnat-gps
-Icon=/usr/share/doc/gnat-gps/html/users_guide/_static/favicon.ico
-Terminal=false
-Categories=Development;IDE
-Keywords=ide;editor;ada;c
-")
-gnat_gps_packagenames=("gnat-gps")
-gnat_gps_readmeline="| GNAT | ${gnat_gps_description} | Command \`gnat-gps\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+gnatGps_name="GNAT Programming Studio"
+gnatGps_description="Programming Studio for Ada and C"
+gnatGps_version="System dependent"
+gnatGps_systemcategories=("Development" "IDE")
+gnatGps_commentary="Send/Receive e-mails"
+gnatGps_tags=("ide" "editor" "ada" "c")
+gnatGps_arguments=("gnatGps")
+gnatGps_launcherkeynames=("default")
+gnatGps_default_exec="/usr/bin/gnat-gps"
+gnatGps_packagenames=("gnat-gps")
 
-# TODO @AleixMT change to one word keyname
-gnome_calculator_installationtype="packagemanager"
-gnome_calculator_arguments=("gnome_calculator" "calculator" "calc")
-gnome_calculator_launchernames=("org.gnome.Calculator")
-gnome_calculator_packagenames=("gnome-calculator")
-gnome_calculator_readmeline="| Calculator | GUI calculator| Commmand \`calculator\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+calculator_name="GNOME calculator"
+calculator_description="GUI calculator"
+calculator_version="System dependent"
+calculator_tags=("calculator" "gnome")
+calculator_systemcategories=("GNOME" "GTK" "Calculator" "Math")
+calculator_commentary="2+2=?"
+calculator_arguments=("gnome_calculator" "calculator" "calc")
+calculator_launchernames=("org.gnome.Calculator")
+calculator_packagenames=("gnome-calculator")
 
 chess_name="GNOME Chess"
 chess_description="Plays a full game of chess against a human being or other computer program"
@@ -1384,48 +1385,79 @@ chess_defaultLauncher_exec="gnome-chess"
 chess_associatedfiletypes=("application/x-chess-pgn")
 # TODO X-Ubuntu-Gettext-Domain=gnome-chess
 
-# TODO @AleixMT change to one word keyname
-gnome_mahjongg_installationtype="packagemanager"
-gnome_mahjongg_arguments=("gnome_mahjongg" "mahjongg")
-gnome_mahjongg_launchernames=("org.gnome.Mahjongg")
-gnome_mahjongg_packagenames=("gnome-mahjongg")
-gnome_mahjongg_readmeline="| Mahjongg | Implementation for GNU systems of the famous popular chinese game Mahjongg | Command \`gnome-mahjongg\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+mahjongg_name="GNOME Mahjongg"
+mahjongg_description="Implementation for GNU systems of the famous popular chinese game Mahjongg"
+mahjongg_version="System dependent"
+mahjongg_tags=("mahjongg" "game" "gnome" "strategy")
+mahjongg_systemcategories=("BoardGame" "LogicGame" "GNOME" "GTK" "Game" "BoardGame")
+mahjongg_commentary="Click and play"
+mahjongg_arguments=("gnome_mahjongg" "mahjongg")
+# TODO mahjongg_launchernames=("org.gnome.Mahjongg")
+mahjongg_launcherkeynames=("default")
+mahjongg_default_exec="gnome-mahjongg"
+mahjongg_packagenames=("gnome-mahjongg")
 
-# TODO @AleixMT change to one word keyname
-gnome_mines_installationtype="packagemanager"
-gnome_mines_arguments=("gnome_mines" "mines")
-gnome_mines_launchernames=("org.gnome.Mines")
-gnome_mines_packagenames=("gnome-mines")
-gnome_mines_readmeline="| Mines | Implementation for GNU systems of the famous game mines | Command \`gnome-mines\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+mines_name="GNOME Mines"
+mines_description="Implementation for GNU systems of the famous game mines"
+mines_version="System dependent"
+mines_tags=("mines" "game" "gnome" "strategy")
+mines_systemcategories=("BoardGame" "LogicGame" "GNOME" "GTK" "Game" "BoardGame")
+mines_commentary="Click and play"
+mines_arguments=("gnome_mines" "mines")
+# TODO mines_launchernames=("org.gnome.Mines")
+mines_launcherkeynames=("default")
+mines_default_exec="gnome-mines"
+mines_packagenames=("gnome-mines")
 
-# TODO @AleixMT change to one word keyname
-gnome_sudoku_installationtype="packagemanager"
-gnome_sudoku_arguments=("gnome_sudoku" "sudoku")
-gnome_sudoku_launchernames=("org.gnome.Sudoku")
-gnome_sudoku_packagenames=("gnome-sudoku")
-gnome_sudoku_readmeline="| sudoku | Implementation for GNU systems of the famous popular mathematical game sudoku | Command \`gnome-sudoku\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+sudoku_name="GNOME Sudoku"
+sudoku_description="Implementation for GNU systems of the famous popular mathematical game sudoku"
+sudoku_version="System dependent"
+sudoku_tags=("sudoku" "game" "gnome" "strategy")
+sudoku_systemcategories=("BoardGame" "LogicGame" "GNOME" "GTK" "Game" "BoardGame")
+sudoku_commentary="Click and play"
+sudoku_arguments=("gnome_sudoku" "sudoku")
+# TODO sudoku_launchernames=("org.gnome.Sudoku")
+sudoku_launcherkeynames=("default")
+sudoku_default_exec="gnome-sudoku"
+sudoku_packagenames=("gnome-sudoku")
 
-gnome_terminal_installationtype="packagemanager"
-gnome_terminal_arguments=("gnome_terminal")
-gnome_terminal_keybindings=("gnome-terminal;<Primary><Alt><Super>t;GNOME Terminal")
-gnome_terminal_launchernames=("org.gnome.Terminal")
-gnome_terminal_packagenames=("gnome-terminal")
-gnome_terminal_readmeline="| GNOME terminal | Terminal of the system | Command \`gnome-terminal\` ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+terminal_name="GNOME Terminal"
+terminal_description="Terminal of the system"
+terminal_version="System dependent"
+terminal_tags=("terminal")
+terminal_systemcategories=("GNOME" "GTK")
+terminal_commentary="Open a new gnome-terminal window"
+terminal_arguments=("gnome_terminal")
+terminal_keybindings=("gnome-terminal;<Primary><Alt><Super>t;GNOME Terminal")
+# TODO: terminal_launchernames=("org.gnome.Terminal")
+terminal_launcherkeynames=("default")
+terminal_default_exec="gnome-terminal"
+terminal_packagenames=("gnome-terminal")
 
-# TODO @AleixMT change to one word keyname
-gnome_tweak_tool_installationtype="packagemanager"
-gnome_tweak_tool_arguments=("gnome_tweak_tool" "tweaks" "gnome_tweak" "gnome_tweak_tools" "gnome_tweaks")
-gnome_tweak_tool_packagenames=("gnome-tweak-tool")
-gnome_tweak_tool_launchernames=("org.gnome.tweaks")
-gnome_tweak_tool_readmeline="| GNOME Tweaks | GUI for system customization | command and desktop launcher... ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+tweaks_name="GNOME Tweaks"
+tweaks_description="GUI for system customization"
+tweaks_version="System dependent"
+tweaks_tags=("tweaks" "game" "gnome" "strategy")
+tweaks_systemcategories=("GNOME" "GTK")
+tweaks_commentary="Tweaks for system"
+tweaks_arguments=("gnome_tweak_tool" "tweaks" "gnome_tweak" "gnome_tweak_tools" "gnome_tweaks")
+tweaks_packagenames=("gnome-tweak-tool")
+# TODO: tweaks_launchernames=("org.gnome.tweaks")
+tweaks_launcherkeynames=("default")
+tweaks_default_exec="gnome-tweak-tool"
 
-go_installationtype="userinherit"
+go_name="go language"
+go_description="google programming language"
+go_version="1.17.linux-amd64"
+go_systemcategories=("Programming")
+go_commentary="To develop API REST"
+go_tags=("search" "internet_shortcuts")
 go_arguments=("go" "go_lang")
-go_compressedfileurl="https://golang.org/dl/go1.17.linux-amd64.tar.gz"
-go_compressedfilepathoverride="/usr/local"
+go_downloadkeys=("bundle")
+go_bundle_URL="https://golang.org/dl/go1.17.linux-amd64.tar.gz"
+go_bundle_downloadPath="/usr/local"
 go_flagsoverride="0;;;;;"  # Install always as root
 go_bashinitializations=("go.sh")
-go_readmeline="| go | programming language | command \`go\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 google_name="Google"
 google_description="google opening in Browser"
@@ -1449,48 +1481,47 @@ googlecalendar_bashfunctions=("googlecalendar.sh")
 googlecalendar_launcherkeynames=("default")
 googlecalendar_default_exec="xdg-open https://calendar.google.com/"
 
-# TODO @AleixMT chnage keyname to chrome
-google_chrome_name="Google Chrome"
-google_chrome_arguments=("google_chrome")
-google_chrome_bashfunctions=("google_chrome.sh")
-google_chrome_flagsoverride=";;;;1;"
-google_chrome_arguments=("chrome" "google_chrome" "googlechrome")
-google_chrome_commentary="The all-in-one browser"
-google_chrome_version="Google dependent"
-google_chrome_tags=("browser" "network")
-google_chrome_systemcategories=("Network" "WebBrowser")
-google_chrome_launcherkeynames=("default")
-google_chrome_default_exec="google-chrome"
-google_chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
-google_chrome_downloadKeys=("debianPackage")
-google_chrome_debianPackage_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
-google_chrome_debianPackage_installedPackages="google-chrome-stable"
-google_chrome_package_manager_override="apt-get"
-google_chrome_launcherkeys=("default")
-google_chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
+chrome_name="Google Chrome"
+chrome_description="Web Browser"
+chrome_version="Google dependent"
+chrome_tags=("browser" "network")
+chrome_systemcategories=("Network" "WebBrowser")
+chrome_commentary="The all-in-one browser"
+chrome_arguments=("google_chrome")
+chrome_bashfunctions=("google_chrome.sh")
+chrome_flagsoverride=";;;;1;"
+chrome_arguments=("chrome" "google_chrome" "googlechrome")
+chrome_launcherkeynames=("default")
+chrome_default_exec="google-chrome"
+chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
+chrome_downloadKeys=("debianPackage")
+chrome_debianPackage_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+chrome_debianPackage_installedPackages="google-chrome-stable"
+chrome_package_manager_override="apt-get"
+chrome_launcherkeys=("default")
+chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
 
-gpaint_installationtype="packagemanager"
+gpaint_name="GNU Paint"
+gpaint_description="Raster graphics editor similar to Microsoft Paint"
+gpaint_version="Google dependent"
+gpaint_tags=("browser" "network")
+gpaint_systemcategories=("Graphics" "2DGraphics" "RasterGraphics")
+gpaint_commentary="A small-scale painting program for GNOME, the GNU Desktop"
 gpaint_arguments=("gpaint")
-gpaint_launchercontents=("
-[Desktop Entry]
-Name=GNU Paint
-Comment=A small-scale painting program for GNOME, the GNU Desktop
-TryExec=gpaint
-Exec=gpaint
-Icon=/usr/share/icons/hicolor/scalable/apps/gpaint.svg
-Terminal=0
-Type=Application
-Categories=Graphics;2DGraphics;RasterGraphics;
-X-Ubuntu-Gettext-Domain=gpaint-2
-")
+gpaint_launcherkeynames=("default")
+gpaint_default_exec="gpaint"
+# TODO X-Ubuntu-Gettext-Domain=gpaint-2
 gpaint_packagenames=("gpaint")
-gpaint_readmeline="| Gpaint | Raster graphics editor similar to Microsoft Paint | Command \`gpaint\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-gparted_installationtype="packagemanager"
+gparted_name="GParted"
+gparted_description="Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems"
+gparted_version="System dependent"
+gparted_tags=("disk" "utility")
+gparted_systemcategories=("System" "Utility" "FileTools" "GNOME")
+gparted_commentary="GUI to manage local disks and partitions"
 gparted_arguments=("gparted")
 gparted_launchernames=("gparted")
 gparted_packagenames=("gparted")
-gparted_readmeline="| GParted | Creating, deleting, resizing, moving, checking, and copying disk partitions and their file systems | Command \`gparted\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gradle_name="Gradle"
 gradle_description="Automatize building applications"
@@ -1503,34 +1534,52 @@ gradle_downloadKeys=("bundleCompressed")
 gradle_bundleCompressed_URL="https://services.gradle.org/distributions/gradle-7.4.2-all.zip"
 gradle_binariesinstalledpaths=("bin/gradle;gradle" "bin/gradle.bat;gradle.bat")
 
-guake_installationtype="packagemanager"
+guake_name="Guake Terminal"
+guake_description="Terminal Emulator"
+guake_version="System dependent"
+guake_tags=("terminal" "utility")
+# TODO guake_systemcategories=("System" "Utility" "FileTools" "GNOME")
+guake_commentary="Press F12 to display a terminal"
 guake_arguments=("guake")
 guake_bashfunctions=("guake.sh")
 guake_packagenames=("guake")
-guake_launchernames=("guake")
-guake_readmeline="| guake | Press F12 to display a terminal | Command \`guake\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+# TODO guake_launchernames=("guake")
+guake_launcherkeynames=("default")
+guake_default_exec="guake"
 guake_flagsoverride=";;;;;1"  # Always autostart
 
-gvim_installationtype="packagemanager"
+gvim_name="GVim"
+gvim_description="Text Editor"
+gvim_version="System dependent"
+gvim_tags=("terminal" "utility")
+# TODO gvim_systemcategories=("System" "Utility" "FileTools" "GNOME")
+gvim_commentary="Vim with a built-in GUI"
 gvim_arguments=("gvim" "vim_gtk3")
-gvim_launchernames=("gvim")
+#TODO gvim_launchernames=("gvim")
+gvim_launcherkeynames=("default")
+gvim_default_exec="gvim"
 gvim_packagenames=("vim-gtk3")
-gvim_readmeline="| Gvim | Vim with a built-in GUI | Command \`gvim\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 h_name="Function h"
 h_description="Search in your history for previous commands entered, stands by history | grep \"\$@\""
 h_version="1.0"
 h_systemcategories=("System" "Utility")
-h_commentary="Search your previous terminal commands"
 h_tags=("bashfunctions" "terminal" "info")
+h_commentary="Search your previous terminal commands"
 h_arguments=("h")
 h_bashfunctions=("h.sh")
 
-handbrake_installationtype="packagemanager"
+handbrake_name="Handbrake"
+handbrake_description="Text Editor"
+handbrake_version="System dependent"
+handbrake_tags=("terminal" "utility")
+# TODO handbrake_systemcategories=("System" "Utility" "FileTools" "GNOME")
+handbrake_commentary="Video Transcoder"
 handbrake_arguments=("handbrake")
-handbrake_launchernames=("fr.handbrake.ghb")
+# TODO handbrake_launchernames=("fr.handbrake.ghb")
+handbrake_launcherkeynames=("default")
+handbrake_default_exec="handbrake"
 handbrake_packagenames=("handbrake")
-handbrake_readmeline="| Handbrake | Video Transcoder | Command \`handbrake\`, Desktop and dashboard launchers || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 hard_name="Function h"
 hard_description="Alias for git reset HEAD --hard"

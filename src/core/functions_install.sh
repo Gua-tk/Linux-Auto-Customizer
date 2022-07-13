@@ -1226,12 +1226,14 @@ generic_install_download()
     elif echo "${!pointer_downloadPath}" | grep -Eq "^/"; then
       defaultpath="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f2- | rev)"
       defaultName="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f1 | rev)"
+    elif ! echo "${!pointer_downloadPath}" | grep -Eq "/"; then
+      defaultName="${!pointer_downloadPath}"
+      defaultpath="${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
     fi
   fi
 
 
   create_folder "${defaultpath}"
-
   download "${!pointer_url}" "${defaultpath}/${defaultName}"
 
 
