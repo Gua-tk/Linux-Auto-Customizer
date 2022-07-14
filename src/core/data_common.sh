@@ -571,7 +571,7 @@ declare feature_keynames=(
   "nedit"
   "nemo"
   "netflix"
-  "net_tools"
+  "netTools"
   "nmap"
   "nodejs"
   "npm"
