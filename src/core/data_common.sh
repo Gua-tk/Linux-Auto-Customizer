@@ -552,8 +552,6 @@ declare feature_keynames=(
   "L"
   "l"
   "latex"
-  "libgtkglext1"
-  "libkrb5_dev"
   "libreoffice"
   "libxcb_xtest0"
   "lmms"

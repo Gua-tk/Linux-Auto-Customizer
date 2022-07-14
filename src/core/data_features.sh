@@ -1581,7 +1581,7 @@ handbrake_launcherkeynames=("default")
 handbrake_default_exec="handbrake"
 handbrake_packagenames=("handbrake")
 
-hard_name="Function h"
+hard_name="Function hard"
 hard_description="Alias for git reset HEAD --hard"
 hard_version="1.0"
 hard_systemcategories=("System" "Utility")
@@ -1590,11 +1590,17 @@ hard_tags=("gitbashfunctions" "terminal")
 hard_arguments=("hard" "hard_git" "git_hard")
 hard_bashfunctions=("hard.sh")
 
-hardinfo_installationtype="packagemanager"
+hardinfo_name="Hardinfo"
+hardinfo_description=""
+hardinfo_version="System dependent"
+hardinfo_tags=("info" "hardware")
+# TODO hardinfo_systemcategories=()
+hardinfo_commentary="Check pc hardware info"
 hardinfo_arguments=("hardinfo")
 hardinfo_packagenames=("hardinfo")
-hardinfo_launchernames=("hardinfo")
-hardinfo_readmeline="| Hardinfo | Check pc hardware info | Command \`hardinfo\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+hardinfo_launcherkeynames=("default")
+hardinfo_default_exec="hardinfo"
+# TODO hardinfo_launchernames=("hardinfo")
 
 historyoptimization_name="Function history optimization"
 historyoptimization_description="Shared history in terminal session and other tweaks for the terminal history"
@@ -1651,11 +1657,17 @@ ideau_launcher_actionkeynames=("newwindow")
 ideau_launcher_newwindow_name="IntelliJ Community New Window"
 ideau_launcher_newwindow_exec="ideau"
 
-inkscape_installationtype="packagemanager"
+inkscape_name="Inkscape"
+inkscape_description="Vector Graphics Editor"
+inkscape_version="System dependent"
+inkscape_tags=("design" "graphics")
+#TODO inkscape_systemcategories=()
+inkscape_commentary="Vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format"
 inkscape_arguments=("ink_scape")
-inkscape_launchernames=("inkscape")
+# TODO inkscape_launchernames=("inkscape")
+inkscape_launcherkeynames=("default")
+inkscape_default_exec="inkscape"
 inkscape_packagenames=("inkscape")
-inkscape_readmeline="| Inkscape | Vector graphics editor used to create vector images, primarily in Scalable Vector Graphics format | Command \`inkscape\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 instagram_name="Instagram"
 instagram_description="Instagram opening in Browser"
@@ -1765,6 +1777,7 @@ jupyter_lab_installationtype="pythonvenv"
 jupyter_lab_arguments=("jupyter_lab" "jupyter" "lab")
 jupyter_lab_bashfunctions=("jupyter_lab.sh")
 jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
+jupyter_lab_dependencies=("libkrb5-dev")
 jupyter_lab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
 jupyter_lab_description="IDE with a lot of possible customization and usable for different programming languages."
 jupyter_lab_launchercontents=("
@@ -1846,7 +1859,6 @@ k_tags=("bashfunctions" "terminal" "system")
 k_arguments=("k")
 k_bashfunctions=("k.sh")
 
-
 keep_name="Google Keep"
 keep_description="keep opening in Browser"
 keep_version="Google dependent"
@@ -1858,9 +1870,13 @@ keep_bashfunctions=("keep.sh")
 keep_launcherkeynames=("default")
 keep_default_exec="xdg-open https://keep.google.com"
 
-keyboardfix_installationtype="environmental"
-keyboardfix_arguments=("keyboard_fix" "fix_keyboard")
+keyboardfix_name="Fix Fn key Keychron K8 ISO UK"
 keyboardfix_description="Fixes the Fn key in combination with the Function keys F1, F2, etc. which happens to not work in some keyboards"
+keyboardfix_version="System dependent"
+# TODO keyboardfix_tags=()
+# TODO keyboardfix_systemcategories=()
+keyboardfix_commentary="To properly using the Fn key"
+keyboardfix_arguments=("keyboard_fix" "fix_keyboard")
 keyboardfix_filekeys=("keyboardconf")
 keyboardfix_keyboardconf_path="/etc/modprobe.d/hid_apple.conf"
 keyboardfix_keyboardconf_content="keyboard.conf"
@@ -1911,24 +1927,6 @@ latex_launchernames=("texmaker")
 latex_packagedependencies=("perl-tk" )
 latex_packagenames=("texlive-latex-extra" "texmaker" "perl-tk")
 latex_readmeline="| LaTeX | ${latex_description} | Command \`tex\` (LaTeX compiler) and \`texmaker\` (LaTeX IDE), desktop launchers for \`texmaker\` and LaTeX documentation ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-# TODO @AleixMT integrate into anydesk
-libgtkglext1_installationtype="packagemanager"
-libgtkglext1_arguments=("libgtkglext1" "anydesk_dependencies")
-libgtkglext1_packagenames=("libgtkglext1")
-libgtkglext1_readmeline="| libgtkglext1 | Anydesk dependency | Used when Anydesk is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-# TODO @AleixMT integrate into ? (discover what program has dependency) or delete
-libkrb5_dev_installationtype="packagemanager"
-libkrb5_dev_arguments=("libkrb5_dev" "kerberos_dependencies")
-libkrb5_dev_packagenames=("libkrb5-dev")
-libkrb5_dev_readmeline="| libkrb5-dev | Kerberos dependency | Used when Jupiter Lab is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-# TODO @AleixMT integrate into zoom
-libxcb_xtest0_installationtype="packagemanager"
-libxcb_xtest0_arguments=("libxcb_xtest0")
-libxcb_xtest0_packagenames=("libxcb-xtest0")
-libxcb_xtest0_readmeline="| libxcb-xtest0 | Zoom dependency | Used when Zoom is run ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 lmms_installationtype="packagemanager"
 lmms_arguments=("lmms")
@@ -1990,19 +1988,32 @@ uninstall_matlab_mid()
   :
 }
 
-mdadm_installationtype="packagemanager"
+mdadm_name="mdadm"
+mdadm_description="Manage RAID systems"
+mdadm_version="2021.3"
+mdadm_tags=("raid" "drive")
+# TODO mdadm_systemcategories=("Development")
+mdadm_commentary="Program disk data mirroring for backups"
 mdadm_arguments=("mdadm")
 mdadm_packagenames=("mdadm")
-mdadm_readmeline="| mdadm | Manage RAID systems | Command \`mdadm\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-megasync_installationtype="packageinstall"
+megasync_name="MegaSync"
+megasync_description="Synchronises folders between your computer and your MEGA Cloud Drive"
+megasync_version="4.6.1-2.1_amd64"
+megasync_tags=("hosting" "cloud")
+# TODO megasync_systemcategories=("GTK" "Development")
+megasync_commentary="Access it with your MEGA account."
 megasync_arguments=("megasync" "mega")
 megasync_packagedependencies=("nemo" "libc-ares2" "libmediainfo0v5" "libqt5x11extras5" "libzen0v5")
-megasync_packageurls=("https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.6.1-2.1_amd64.deb" "https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb")
+megasync_downloadKeys=("packageDefault" "packageDesktop")
+megasync_packageDefault_URL="https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/megasync_4.6.1-2.1_amd64.deb"
+megasync_packageDefault_installedPackages="megasync"
+megasync_packageDesktop_URL="https://mega.nz/linux/MEGAsync/xUbuntu_20.04/amd64/nemo-megasync_4.0.2_amd64.deb"
+megasync_packageDesktop_installedPackages="nemo-megasync"
 megasync_package_manager_override="apt-get"
-megasync_launchernames=("megasync")
-megasync_packagenames=("nautilus-megasync" "megasync")
-megasync_readmeline="| MegaSync | Synchronises folders between your computer and your MEGA Cloud Drive | Command \`megasync\`, desktop launcher, dashboard launcher and integration with \`nemo\` file explorer ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+# TODO megasync_launchernames=("megasync")
+megasync_launcherkeynames=("default")
+megasync_default_exec="megasync"
 
 meld_name="Meld"
 meld_description="Diff viewer to compare and merge your files"
@@ -2063,10 +2074,14 @@ mvn_downloadKeys=("bundleCompressed")
 mvn_bundleCompressed_URL="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
 mvn_bashfunctions=("mvn.sh")
 
-nano_installationtype="packagemanager"
+nano_name="nano"
+nano_description=""
+nano_version="System dependent"
+# TODO nano_tags=()
+# TODO nano_systemcategories=()
+nano_commentary="CLI File editor"
 nano_arguments=("nano")
 nano_packagenames=("nano")
-nano_readmeline="| nano | CLI File editor | Command \`nano\` and syntax highlighting ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 nano_filekeys=("conf")
 nano_conf_path="${HOME_FOLDER}/.nanorc"
 nano_conf_content=("nanorc")
@@ -2100,7 +2115,12 @@ uninstall_nano_post()
 
 }
 
-nautilus_installationtype="packagemanager"
+nautilus_name=""
+ME_description=""
+ME_version="System dependent"
+ME_tags=()
+ME_systemcategories=()
+ME_commentary=""
 nautilus_arguments=("nautilus")
 nautilus_bashinitializations=("nautilus.sh")
 nautilus_launchernames=("org.gnome.Nautilus")
