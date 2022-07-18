@@ -12,18 +12,6 @@
 # - License: GPL v2.0                                                                                                  #
 ########################################################################################################################
 
-########################################################################################################################
-######################################### IMPORT COMMON VARIABLES ######################################################
-########################################################################################################################
-
-if [ -f "${DIR}/data_common.sh" ]; then
-  source "${DIR}/data_common.sh"
-else
-  # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
-  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: data_common.sh not found. Aborting..."
-  exit 1
-fi
-
 
 ########################################################################################################################
 ######################################## INSTALLATION SPECIFIC VARIABLES ###############################################
@@ -32,7 +20,7 @@ fi
 # indirect expansion. The variables that are defined for an installation determine its behaviour.                      #
 # Each installations has its own FEATUREKEYNAME, which is an string that matches a unique feature. We use the name of  #
 # the main terminal command installed by the feature used to run it. This string must be added to the array            #
-# feature_keynames in data_common.sh to be recognised by the customizer as an available installation.                  #
+# feature_keynames in common_data.sh to be recognised by the customizer as an available installation.                  #
 # The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY. Some variables can be defined in all features,  #
 # some are only used depending on the installation type (TODO deprecate)
 #  and others have to be defined always for each feature.         #

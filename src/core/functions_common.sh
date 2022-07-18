@@ -878,7 +878,7 @@ execute_installation()
 ################################################## GENERIC INSTALL #####################################################
 ########################################################################################################################
 
-# - Description: Installs a user program in a generic way relying on variables declared in data_features.sh and the name
+# - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
 #   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
 #   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
 #   Depending on the properties set, some subfunctions will be activated to install related features.
@@ -936,10 +936,11 @@ generic_installation() {
 }
 
 
-if [ -f "${DIR}/data_features.sh" ]; then
-  source "${DIR}/data_features.sh"
+if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/core/common_data.sh" ]; then
+  source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/common_data.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
-  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: data_features.sh not found. Aborting..."
+  # yet
+  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: common_data.sh not found. Aborting..."
   exit 1
 fi
