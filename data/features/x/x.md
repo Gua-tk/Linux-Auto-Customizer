@@ -1,0 +1,1 @@
+Function to extract from a compressed file, no matter its format

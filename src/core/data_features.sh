@@ -3260,16 +3260,6 @@ uninstall_wikit_mid() {
   npm remove wikit -g
 }
 
-x_name="Function x"
-x_description="Function to extract from a compressed file, no matter its format"
-x_version="1.0"
-x_tags=("bashfunctions" "terminal")
-x_systemcategories=("System" "Utility")
-x_commentary="A terminal function"
-x_arguments=("x" "extract" "extract_function")
-x_packagedependencies=("libfile-mimeinfo-perl")
-x_bashfunctions=("x.sh")
-
 xclip_installationtype="packagemanager"
 xclip_arguments=("x_clip")
 xclip_packagenames=("xclip")
