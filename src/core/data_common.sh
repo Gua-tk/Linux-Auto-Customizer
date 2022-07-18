@@ -664,8 +664,8 @@ declare feature_keynames=(
   "x"
   "xclip"
   "youtube"
-  "youtube_dl"
-  "ytmusic"
+  "youtubeDL"
+  "youtubeMusic"
   "z"
   "zoom"
 )

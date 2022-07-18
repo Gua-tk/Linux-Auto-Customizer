@@ -3313,24 +3313,13 @@ youtube_default_exec="xdg-open https://www.youtube.com"
 youtube_description="Youtube opening in Browser"
 
 # TODO @AleixMT refactor feature name
-youtube_dl_packagedependencies=("ffmpeg")
-youtube_dl_installationtype="environmental"
-youtube_dl_arguments=("youtube_dl")
-youtube_dl_bashfunctions=("youtube_dl.sh")
-youtube_dl_binariesinstalledpaths=("youtube-dl;youtube-dl")
-youtube_dl_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl")
-youtube_dl_readmeline="| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command \`youtube-dl\` in the PATH and alias \`youtube-wav\` to scratch a mp3 from youtube || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-ytmusic_arguments=("yt_music" "youtubemusic" "youtube_music")
-ytmusic_name="YT Music"
-ytmusic_version="Google dependent"
-ytmusic_systemcategories=("Music")
-ytmusic_commentary="Listen music and watch videoclips online"
-ytmusic_tags=("internet_shortcuts")
-ytmusic_bashfunctions=("ytmusic.sh")
-ytmusic_launcherkeynames=("default")
-ytmusic_default_exec="xdg-open https://music.youtube.com"
-ytmusic_description="YT Music opening in Browser"
+youtubeDL_packagedependencies=("ffmpeg")
+youtubeDL_installationtype="environmental"
+youtubeDL_arguments=("youtube_dl")
+youtubeDL_bashfunctions=("youtube_dl.sh")
+youtubeDL_binariesinstalledpaths=("youtube-dl;youtube-dl")
+youtubeDL_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl")
+youtubeDL_readmeline="| youtube-dl | Download manager for video and audio from YouTube and over 1000 other video hosting websites. | Command \`youtube-dl\` in the PATH and alias \`youtube-wav\` to scratch a mp3 from youtube || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 ####################### UNHOLY LINE OF TRIMMING. UPWARDS IS LEGACY, BELOW IS NEW ##############################
 #FEATUREKEYNAME_name=""
