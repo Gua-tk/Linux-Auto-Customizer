@@ -3226,15 +3226,6 @@ vncviewer_binariesinstalledpaths=("vncviewer;vncviewer")
 vncviewer_downloadKeys=("bundle")
 vncviewer_bundle_URL="https://downloads.realvnc.com/download/file/viewer.files/VNC-Viewer-6.21.1109-Linux-x64-ANY.tar.gz"
 
-vommit_arguments=("vommit")
-vommit_name="Function vommit"
-vommit_description="Function that do git add -a, git commit commit, git push"
-vommit_version="1.0"
-vommit_tags=("bashfunctions" "bash")
-vommit_systemcategories=("System" "Utility")
-vommit_commentary="Dummy commit"
-vommit_bashfunctions=("vommit.sh")
-
 whatsapp_arguments=("whatsapp" "whatsapp_web")
 whatsapp_name="Whatsapp Web"
 whatsapp_version="Google dependent"
