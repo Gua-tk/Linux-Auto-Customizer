@@ -3338,28 +3338,8 @@ ytmusic_description="YT Music opening in Browser"
 #FEATUREKEYNAME_version="System dependent"
 #FEATUREKEYNAME_tags=""
 #FEATUREKEYNAME_systemcategories=()
-#FEATUREKEYNAME_commentary=""
 #FEATUREKEYNAME_arguments=()
 
 ####################### UNHOLY LINE OF TRIMMING. UPWARDS IS LEGACY, BELOW IS NEW ##############################
 
-z_name="Function z"
-z_description="Function to compress files given a format and a set of pats to files"
-z_version="1.0"
-z_tags=("utility" "system" "bashFunction")
-z_systemcategories=("Utility" "System")
-z_commentary="You may now forget all particular commands to compress a file"
-z_arguments=("z" "z_function")
-z_bashfunctions=("z.sh")
 
-zoom_name="Zoom"
-zoom_description="Live video streaming for meetings and productivity"
-zoom_version="Vendor dependent"
-zoom_tags=("social" "videoCalls" "communication")
-zoom_systemcategories=("AudioVideo" "Network" "Education")
-zoom_arguments=("zoom")
-zoom_packagedependencies=("libglib2.0-0" "libxcb-shape0" "libxcb-shm0" "libxcb-xfixes0" "libxcb-randr0" "libxcb-image0" "libfontconfig1" "libgl1-mesa-glx" "libxi6" "libsm6" "libxrender1" "libpulse0" "libxcomposite1" "libxslt1.1" "libsqlite3-0" "libxcb-keysyms1" "ibus" "libxcb-xtest0" "libqt5quickwidgets5")
-zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
-zoom_downloadKeys=("bundle")
-zoom_bundle_URL="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
-zoom_launcherkeynames=("defaultLauncher")
