@@ -674,12 +674,24 @@ declare feature_keynames=(
 added_feature_keynames=()
 
 ########################################################################################################################
+############################################## FEATURE ARGUMENTS #######################################################
+########################################################################################################################
+# Contains the arguments that can be used to select each feature. They need to be here at the initialization to be     #
+# recognised; since now the properties are dynamically loaded.                                                         #
+########################################################################################################################
+
+youtubeMusic_arguments=("yt_music" "youtubemusic" "youtube_music")
+z_arguments=("z" "z_function")
+zoom_arguments=("zoom")
+
+
+
+########################################################################################################################
 ############################################ BEHAVIOURAL ARGUMENTS #####################################################
 ########################################################################################################################
 # Array containing all the possible auxiliary arguments that can be used to modify the behaviour of each installation  #
 # and the general behaviour of the program. This is used for the autocompletion of this script.                        #
 ########################################################################################################################
-
 declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C" "-k" "-u" "-U" "-f" "-z" "-a" "-r" "-n" "-y" "-p" "-P" "-h" "-H" "--debug" "--commands" "--custom1" "--iochem" "--user" "--root" "--ALL")
 
 

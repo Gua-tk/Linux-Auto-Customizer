@@ -1,10 +1,9 @@
-ytmusic_name="YT Music"
-ytmusic_description="YT Music opening in Browser"
-ytmusic_version="Google dependent"
-ytmusic_tags=("internet_shortcuts")
-ytmusic_systemcategories=("Music")
-ytmusic_arguments=("yt_music" "youtubemusic" "youtube_music")
+youtubeMusic_name="YT Music"
+youtubeMusic_description="YT Music opening in Browser"
+youtubeMusic_version="Google dependent"
+youtubeMusic_tags=("internet_shortcuts")
+youtubeMusic_systemcategories=("Music")
 
-ytmusic_bashfunctions=("ytmusic.sh")
-ytmusic_launcherkeynames=("default")
-ytmusic_default_exec="xdg-open https://music.youtube.com"
+youtubeMusic_bashfunctions=("youtubeMusic.sh")
+youtubeMusic_launcherkeynames=("default")
+youtubeMusic_default_exec="xdg-open https://music.youtube.com"
