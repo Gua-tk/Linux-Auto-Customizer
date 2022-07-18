@@ -566,7 +566,7 @@ cheat_tags=("terminal" "utility" "info" "develop" "scripts")
 cheat_systemcategories=("Terminal" "Utility")
 cheat_commentary="Literally cheats for programming"
 cheat_arguments=("cheat" "cht.sh")
-cheat_dependencies=("curl")
+cheat_packagedependencies=("curl")
 cheat_binariesinstalledpaths=("cht.sh;cheat")
 cheat_downloadKeys=("script")
 cheat_script_URL="https://cht.sh/:cht.sh"
@@ -691,17 +691,6 @@ code_bundle_URL="https://go.microsoft.com/fwlink/?LinkID=620884"
 code_launcherkeynames="default"
 code_default_exec="code %f"
 code_default_windowclass="visual-studio-code"
-
-####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
-#FEATUREKEYNAME_name=""
-#FEATUREKEYNAME_description=""
-#FEATUREKEYNAME_version="System dependent"
-#FEATUREKEYNAME_tags=""
-#FEATUREKEYNAME_systemcategories=()
-#FEATUREKEYNAME_commentary=""
-#FEATUREKEYNAME_arguments=()
-
-####################### UNHOLY LINE OF TRIMMING. UPWARDS IS NEW, BELOW IS LEGACY ##############################
 
 codeblocks_name="Code::Blocks"
 codeblocks_description="IDE for programming"
@@ -1114,7 +1103,7 @@ flutter_tags=("programming" "development" "webProgramming")
 flutter_systemcategories=("WebDevelopment" "Development")
 flutter_commentary="For the customizer GUI"
 flutter_arguments=("flutter")
-flutter_dependencies=("bash" "curl" "file" "git" "mkdir" "rm" "unzip" "which" "xz-utils" "zip" "clang" "cmake" "ninja-build" "pkg-config" "libgtk-3-dev" "liblzma-dev")
+flutter_packagedependencies=("bash" "curl" "file" "git" "mkdir" "rm" "unzip" "which" "xz-utils" "zip" "clang" "cmake" "ninja-build" "pkg-config" "libgtk-3-dev" "liblzma-dev")
 flutter_downloadKeys=("bundleCompressed")
 flutter_bundleCompressed_URL="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.5-stable.tar.xz"
 flutter_binariesinstalledpaths=("bin/dart;dart" "bin/flutter;flutter" "bin/dart.bat;dart.bat" "bin/flutter.bat;flutter.bat")
@@ -1777,7 +1766,7 @@ jupyter_lab_installationtype="pythonvenv"
 jupyter_lab_arguments=("jupyter_lab" "jupyter" "lab")
 jupyter_lab_bashfunctions=("jupyter_lab.sh")
 jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
-jupyter_lab_dependencies=("libkrb5-dev")
+jupyter_lab_packagedependencies=("libkrb5-dev")
 jupyter_lab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
 jupyter_lab_description="IDE with a lot of possible customization and usable for different programming languages."
 jupyter_lab_launchercontents=("
@@ -3324,6 +3313,7 @@ youtube_default_exec="xdg-open https://www.youtube.com"
 youtube_description="Youtube opening in Browser"
 
 # TODO @AleixMT refactor feature name
+youtube_dl_packagedependencies=("ffmpeg")
 youtube_dl_installationtype="environmental"
 youtube_dl_arguments=("youtube_dl")
 youtube_dl_bashfunctions=("youtube_dl.sh")
@@ -3342,7 +3332,16 @@ ytmusic_launcherkeynames=("default")
 ytmusic_default_exec="xdg-open https://music.youtube.com"
 ytmusic_description="YT Music opening in Browser"
 
-####### LINE OF TRIMMING, BELOW IS TRIMMED ########
+####################### UNHOLY LINE OF TRIMMING. UPWARDS IS LEGACY, BELOW IS NEW ##############################
+#FEATUREKEYNAME_name=""
+#FEATUREKEYNAME_description=""
+#FEATUREKEYNAME_version="System dependent"
+#FEATUREKEYNAME_tags=""
+#FEATUREKEYNAME_systemcategories=()
+#FEATUREKEYNAME_commentary=""
+#FEATUREKEYNAME_arguments=()
+
+####################### UNHOLY LINE OF TRIMMING. UPWARDS IS LEGACY, BELOW IS NEW ##############################
 
 z_name="Function z"
 z_description="Function to compress files given a format and a set of pats to files"
@@ -3353,17 +3352,15 @@ z_commentary="You may now forget all particular commands to compress a file"
 z_arguments=("z" "z_function")
 z_bashfunctions=("z.sh")
 
-zoom_arguments=("zoom")
-zoom_description="Live video streaming for meetings and productivity"
-zoom_commentary="Yet another videochat application"
-zoom_tags=("social" "videoCalls" "communication")
 zoom_name="Zoom"
+zoom_description="Live video streaming for meetings and productivity"
 zoom_version="Vendor dependent"
+zoom_tags=("social" "videoCalls" "communication")
 zoom_systemcategories=("AudioVideo" "Network" "Education")
+zoom_commentary="Yet another videochat application"
+zoom_arguments=("zoom")
 zoom_packagedependencies=("libglib2.0-0" "libxcb-shape0" "libxcb-shm0" "libxcb-xfixes0" "libxcb-randr0" "libxcb-image0" "libfontconfig1" "libgl1-mesa-glx" "libxi6" "libsm6" "libxrender1" "libpulse0" "libxcomposite1" "libxslt1.1" "libsqlite3-0" "libxcb-keysyms1" "ibus" "libxcb-xtest0" "libqt5quickwidgets5")
 zoom_binariesinstalledpaths=("ZoomLauncher;ZoomLauncher" "zoom;zoom")
 zoom_downloadKeys=("bundle")
 zoom_bundle_URL="https://zoom.us/client/latest/zoom_x86_64.tar.xz"
 zoom_launcherkeynames=("defaultLauncher")
-
-####### LINE OF TESTING, BELOW IS TESTED ########
