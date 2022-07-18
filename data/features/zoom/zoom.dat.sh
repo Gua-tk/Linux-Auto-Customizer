@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 zoom_name="Zoom"
 zoom_description="Live video streaming for meetings and productivity"
 zoom_version="Vendor dependent"

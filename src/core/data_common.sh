@@ -679,16 +679,7 @@ added_feature_keynames=()
 # Contains the arguments that can be used to select each feature. They need to be here at the initialization to be     #
 # recognised; since now the properties are dynamically loaded.                                                         #
 ########################################################################################################################
-a_arguments=("a_function")
-
-
-vommit_arguments=("dummy_commit")
-wireshark_arguments=("wire_shark")
-x_arguments=("extract" "extract_function")
-youtubeMusic_arguments=("yt_music" "youtube_music")
-z_arguments=("z_function")
-zoom_arguments=("zoom_call")
-
+source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_arguments.sh"
 
 
 ########################################################################################################################

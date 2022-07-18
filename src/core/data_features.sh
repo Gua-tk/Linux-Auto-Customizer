@@ -3278,8 +3278,6 @@ youtube_description="Youtube opening in Browser"
 
 # TODO @AleixMT refactor feature name
 youtubeDL_packagedependencies=("ffmpeg")
-youtubeDL_installationtype="environmental"
-youtubeDL_arguments=("youtube_dl")
 youtubeDL_bashfunctions=("youtube_dl.sh")
 youtubeDL_binariesinstalledpaths=("youtube-dl;youtube-dl")
 youtubeDL_downloads=("https://yt-dl.org/downloads/latest/youtube-dl;youtube-dl")

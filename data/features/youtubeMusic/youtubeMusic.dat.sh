@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 youtubeMusic_name="YT Music"
 youtubeMusic_description="YT Music opening in Browser"
 youtubeMusic_version="Google dependent"
