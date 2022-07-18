@@ -7,3 +7,4 @@ if which git &>/dev/null; then
     git config --local core.hooksPath "${CUSTOMIZER_PROJECT_FOLDER}/.githooks/"
   )
 fi
+

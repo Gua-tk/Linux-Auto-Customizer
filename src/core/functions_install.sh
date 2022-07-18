@@ -1043,7 +1043,7 @@ generic_install_functions() {
       add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
     elif ! echo "${bashfunction}" | grep -Eq "/"; then
       # Only one line we guess it is a partial path
-      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
+      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
     else
       add_bash_function "" "$1${name_suffix_anticollision}.sh" "${bashfunction}"
     fi
@@ -1226,12 +1226,14 @@ generic_install_download()
     elif echo "${!pointer_downloadPath}" | grep -Eq "^/"; then
       defaultpath="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f2- | rev)"
       defaultName="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f1 | rev)"
+    elif ! echo "${!pointer_downloadPath}" | grep -Eq "/"; then
+      defaultName="${!pointer_downloadPath}"
+      defaultpath="${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
     fi
   fi
 
 
   create_folder "${defaultpath}"
-
   download "${!pointer_url}" "${defaultpath}/${defaultName}"
 
 

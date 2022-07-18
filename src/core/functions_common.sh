@@ -210,6 +210,42 @@ append_text()
 }
 
 
+# - Description: Generate the list that contains the list of included programs for each wrapper.
+# - Permissions: Can be executed indifferently as root or user.
+# - Arguments: Reads the tags property of each feature and maps that feature to a wrapper with the name of each tag.
+generate_wrappers()
+{
+  declare -Ag wrapper_dict
+  for feature_name in "${feature_keynames[@]}"; do
+    load_feature_properties "${feature_name}"
+    tags_pointer="${feature_name}_tags[@]"
+    for tag in "${!tags_pointer}"; do
+      if [[ -v wrapper_dict["${tag}"] ]]; then
+        wrapper_dict[$tag]+=" ${feature_name}"
+      else
+        wrapper_dict[$tag]="${feature_name}"
+      fi
+    done
+  done
+
+  for key in $(echo "${!wrapper_dict[@]}" | tr ' ' $'\n' | sort -h); do
+    echo "Tag: ${key} --- Feature: ${wrapper_dict[$key]}"
+  done
+}
+
+# - Description: Generate the list that contains the list of included programs for each wrapper.
+# - Permissions: Can be executed indifferently as root or user.
+# - Argument 1: Keyname of the properties to import
+load_feature_properties()
+{
+    # Load metadata of the feature if its .dat file exists
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh" ]; then
+      source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh"
+    else
+      output_proxy_executioner "echo WARNING: Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh does not exist" "${FLAG_QUIETNESS}"
+    fi
+}
+
 # - Description: Performs a post-install clean by using cleaning option of package manager
 # - Permission: Can be called as root or user.
 post_install_clean()
@@ -538,7 +574,7 @@ argument_processing()
               continue
             ;;
             --flush=cache)
-              rm -f "${CACHE_FOLDER}/"*
+              rm -Rf "${CACHE_FOLDER}"
               shift
               continue
             ;;
@@ -826,6 +862,9 @@ execute_installation()
     CURRENT_INSTALLATION_KEYNAME="${keyname}"
 
     output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${keyname}." "${FLAG_QUIETNESS}"
+
+    load_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
+
     output_proxy_executioner "generic_installation ${keyname}" "${FLAG_QUIETNESS}"
     output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." "${FLAG_QUIETNESS}"
 
@@ -839,7 +878,7 @@ execute_installation()
 ################################################## GENERIC INSTALL #####################################################
 ########################################################################################################################
 
-# - Description: Installs a user program in a generic way relying on variables declared in data_features.sh and the name
+# - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
 #   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
 #   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
 #   Depending on the properties set, some subfunctions will be activated to install related features.
@@ -897,10 +936,11 @@ generic_installation() {
 }
 
 
-if [ -f "${DIR}/data_features.sh" ]; then
-  source "${DIR}/data_features.sh"
+if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/core/common_data.sh" ]; then
+  source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/common_data.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
-  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: data_features.sh not found. Aborting..."
+  # yet
+  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: common_data.sh not found. Aborting..."
   exit 1
 fi
