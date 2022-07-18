@@ -680,6 +680,7 @@ added_feature_keynames=()
 # recognised; since now the properties are dynamically loaded.                                                         #
 ########################################################################################################################
 
+wireshark_arguments=("wireshark")
 youtubeMusic_arguments=("yt_music" "youtubemusic" "youtube_music")
 z_arguments=("z" "z_function")
 zoom_arguments=("zoom")
