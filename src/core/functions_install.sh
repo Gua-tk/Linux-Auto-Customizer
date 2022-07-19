@@ -91,7 +91,7 @@ add_to_favorites() {
       if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
         echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
       else
-        output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "WARNING"
         return
       fi
     fi
@@ -113,7 +113,7 @@ autostart_program() {
         apply_permissions "$1"
       fi
     else
-      output_proxy_executioner "echo WARNING: The file $1 does not exist, skipping..." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The file $1 does not exist, skipping..." "WARNING"
       return
     fi
   else # Else relative path from ALL_USERS_LAUNCHERS_DIR or PERSONAL_LAUNCHERS_DIR
@@ -129,7 +129,7 @@ autostart_program() {
         apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
       fi
     else
-      output_proxy_executioner "echo WARNING: The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." "WARNING"
       return
     fi
   fi
@@ -160,7 +160,7 @@ apply_permissions_recursively()
     fi
     chmod 755 -R "$1"
   else
-    output_proxy_executioner "echo WARNING: This functions only accepts a directory as an argument, Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "This functions only accepts a directory as an argument, Skipping..." "WARNING"
   fi
 }
 
@@ -185,7 +185,7 @@ create_file()
       apply_permissions "$1"
       translate_variables "$1"
     else
-      output_proxy_executioner "echo WARNING: The specified path to a customizer internal file $3 does not exist. It will be skipped" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The specified path to a customizer internal file $3 does not exist. It will be skipped" "WARNING"
     fi
   else
     if [ -n "${filename}" ]; then
@@ -193,7 +193,7 @@ create_file()
       echo -n "$2" > "$1"
       apply_permissions "$1"
     else
-      output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "WARNING"
     fi
   fi
 }
@@ -225,7 +225,7 @@ copy_launcher() {
     cp "${PERSONAL_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}/$1"
     apply_permissions "${XDG_DESKTOP_DIR}/$1"
   else
-    output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}." "WARNING"
   fi
 }
 
@@ -331,8 +331,7 @@ decompress() {
         local -r internal_folder_name=$( (tar -tJf - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
       ;;
       *)
-        output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
-        exit 1
+        output_proxy_executioner "${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "ERROR"
       ;;
     esac
 
@@ -379,13 +378,11 @@ decompress() {
         ) < "${dir_name}/${file_name}"
       ;;
       *)
-        output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
-        exit 1
+        output_proxy_executioner "${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "ERROR"
       ;;
     esac
   else
-    output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist" "${FLAG_QUIETNESS}"
-    exit 1
+    output_proxy_executioner "The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist" "ERROR"
   fi
   # Delete file. Now that it has been decompressed is just trash
   rm -f "${dir_name}/${file_name}"
@@ -435,8 +432,7 @@ download() {
         dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
         file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
         if [ ! -d "${dir_name}" ]; then
-          output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
-          exit
+          output_proxy_executioner "the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "ERROR"
         fi
       fi
     else
@@ -451,8 +447,7 @@ download() {
           dir_name="${BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
           file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
           if [ ! -d "${dir_name}" ]; then
-            output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
-            exit
+            output_proxy_executioner "the directory passed is relative but it is not a directory and its first subdirectory does not exist" "ERROR"
           fi
         fi
       else
@@ -523,7 +518,7 @@ register_file_associations() {
       fi
     fi
   else
-    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "WARNING"
   fi
 }
 
@@ -1118,7 +1113,7 @@ generic_install_dependencies() {
   local -r packagedependencies="$1_packagedependencies[*]"
   if [ "${EUID}" -ne 0 ]; then
     if [ -n "${!packagedependencies}" ]; then
-      output_proxy_executioner "echo WARNING: $1 has this dependencies to install with the package manager: ${!packagedependencies} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "$1 has this dependencies to install with the package manager: ${!packagedependencies} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
       return
     fi
   fi
@@ -1193,7 +1188,7 @@ generic_install_packageManager() {
   local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
   if [ "${EUID}" -ne 0 ]; then
     if [ ! -z "${!packagenames}" ]; then
-      output_proxy_executioner "echo WARNING: ${CURRENT_INSTALLATION_KEYNAME} needs to install the following packages using the package manager: ${!packagenames} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${CURRENT_INSTALLATION_KEYNAME} needs to install the following packages using the package manager: ${!packagenames} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
       return
     fi
   fi
@@ -1367,7 +1362,7 @@ generic_install_cloneRepositories() {
 # - Description: Initialize common subsystems and common subfeatures
 # - Permissions: Same behaviour being root or normal user.
 data_and_file_structures_initialization() {
-  output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
+  output_proxy_executioner "Initializing data and file structures." "INFO"
 
   if [ "${EUID}" == 0 ]; then
     if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
@@ -1468,14 +1463,14 @@ data_and_file_structures_initialization() {
 pre_install_update() {
   if [ "${EUID}" == 0 ]; then
     if [ "${FLAG_UPGRADE}" -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_UPDATE}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: System updated." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPDATE}" "COMMAND"
+      output_proxy_executioner "System updated." "INFO"
     fi
     if [ "${FLAG_UPGRADE}" == 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to upgrade system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_UPGRADE}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: System upgraded." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to upgrade system via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPGRADE}" "COMMAND"
+      output_proxy_executioner "System upgraded." "INFO"
     fi
   fi
 }
@@ -1483,13 +1478,13 @@ pre_install_update() {
 # - Description: Performs update of system fonts and bash environment.
 # - Permissions: Same behaviour being root or normal user.
 update_environment() {
-  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Reloading bash features" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Finished execution" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Rebuilding path cache" "INFO"
+  output_proxy_executioner "hash -r" "COMMAND"
+  output_proxy_executioner "echo INFO: Rebuilding font cache" "INFO"
+  output_proxy_executioner "fc-cache -f" "COMMAND"
+  output_proxy_executioner "echo INFO: Reloading bash features" "INFO"
+  output_proxy_executioner "source ${FUNCTIONS_PATH}" "COMMAND"
+  output_proxy_executioner "echo INFO: Finished execution" "INFO"
 }
 
 
