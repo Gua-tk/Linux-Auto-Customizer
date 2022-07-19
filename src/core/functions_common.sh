@@ -86,7 +86,7 @@ bell_sound()
 translate_variables()
 {
   if [ ! -f "$1" ]; then
-    output_proxy_executioner "echo WARNING: The file $1 is not present or is not accesible"
+    output_proxy_executioner "The file $1 is not present or is not accessible" "WARNING"
     return
   fi
   detected_variables=($(grep -Eo "€{([A-Z]|[a-z]|_)*}" < "$1" | uniq))
@@ -125,7 +125,7 @@ apply_permissions()
     fi
     chmod "${permission_mask}" "$1"
   else
-    output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." "WARNING"
   fi
   unset permission_mask
 }
@@ -191,7 +191,7 @@ remove_line()
   if [ -f "$2" ]; then
     sed "s@^$1\$@@g" -i "$2"
   else
-    output_proxy_executioner "echo WARNING: file $2 is not present, so the text $1 cannot be removed from the file. Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "file $2 is not present, so the text $1 cannot be removed from the file. Skipping..." "WARNING"
   fi
 }
 
@@ -241,7 +241,7 @@ load_feature_properties()
     if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh" ]; then
       source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh"
     else
-      output_proxy_executioner "echo WARNING: Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh does not exist" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh does not exist" "WARNING"
     fi
 }
 
@@ -251,14 +251,14 @@ post_install_clean()
 {
   if [ "${EUID}" -eq 0 ]; then
     if [ "${FLAG_AUTOCLEAN}" -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_AUTOCLEAN}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_AUTOCLEAN}" "COMMAND"
+      output_proxy_executioner "Finished." "INFO"
     fi
     if [ "${FLAG_AUTOCLEAN}" -eq 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_AUTOREMOVE}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_AUTOREMOVE}" "COMMAND"
+      output_proxy_executioner "Finished." "INFO"
     fi
   fi
 }
@@ -268,12 +268,12 @@ post_install_clean()
 # - Permission: Can be called as root or as user.
 update_environment()
 {
-  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Reload .bashrc shell environment" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "Rebuilding path cache" "INFO"
+  output_proxy_executioner "hash -r" "COMMAND"
+  output_proxy_executioner "Rebuilding font cache" "INFO"
+  output_proxy_executioner "fc-cache -f" "COMMAND"
+  output_proxy_executioner "Reload .bashrc shell environment" "INFO"
+  output_proxy_executioner "source ${FUNCTIONS_PATH}" "COMMAND"
 }
 
 
@@ -389,9 +389,9 @@ generic_package_manager_override() {
           return
         fi
       done
-      output_proxy_executioner "echo ERROR: ${!package_manager_override} is not a recognised package manager, so its
+      output_proxy_executioner "${!package_manager_override} is not a recognised package manager, so its
   configuration will not be loaded. Variable $1_package_manager_override needs to be one of the following elements:
-  ${RECOGNISED_PACKAGE_MANAGERS[*]}" "${FLAG_QUIETNESS}"
+  ${RECOGNISED_PACKAGE_MANAGERS[*]}" "ERROR"
       exit 1
     fi
   fi
@@ -425,7 +425,7 @@ argument_processing()
 
       -s|--skip|--skip-if-installed)
         if [ "${FLAG_MODE}" == "uninstall" ]; then
-          output_proxy_executioner "echo ERROR: You have set to not overwrite features in uninstall mode, this will uninstall only the features that are not installed." "${FLAG_QUIETNESS}"
+          output_proxy_executioner "You have set to not overwrite features in uninstall mode, this will uninstall only the features that are not installed." "WARNING"
         fi
         FLAG_OVERWRITE=0
       ;;
@@ -525,11 +525,11 @@ argument_processing()
       ;;
 
       -h)
-        output_proxy_executioner "echo ${help_common}${help_simple}" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "echo ${help_common}${help_simple}" "COMMAND"
         exit 0
       ;;
       -H|--help)
-        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" "COMMAND"
         exit 0
       ;;
 
@@ -598,12 +598,7 @@ argument_processing()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [ ${#added_feature_keynames[@]} -eq 0 ]; then
-    if [ ${FLAG_IGNORE_ERRORS} -eq 0 ]; then
-      output_proxy_executioner "echo ERROR: No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "${FLAG_QUIETNESS}"
-      exit 1
-    else
-      output_proxy_executioner "echo WARNING: No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "${FLAG_QUIETNESS}"
-    fi
+    output_proxy_executioner "No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "WARNING"
   fi
 }
 
@@ -721,13 +716,7 @@ add_program()
 
   # If we do not have a match after checking all args, this arg is not valid
   if [ -z "${matched_keyname}" ]; then
-    if [ "${FLAG_IGNORE_ERRORS}" -eq 0 ]; then
-      output_proxy_executioner "echo ERROR: $1 is not a recognized command. Installation will abort." "${FLAG_QUIETNESS}"
-      exit 1
-    else
-      output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument..." "${FLAG_QUIETNESS}"
-      return
-    fi
+    output_proxy_executioner "$1 is not a recognized command, skipping to next argument" "WARNING"
   fi
 
   # Here matched_keyname matches a valid feature. Process its flagsoverride and add or remove from added_feature_keynames
@@ -737,13 +726,8 @@ add_program()
       # Check if there is an override and if it is different from the current package manager
       local -r package_manager_override="${matched_keyname}_package_manager_override"
       if [ -n "${!package_manager_override}" ] && [ "${!package_manager_override}" != "${DEFAULT_PACKAGE_MANAGER}" ]; then
-        if [ ${FLAG_IGNORE_ERRORS} -eq 1 ]; then
-          output_proxy_executioner "echo WARNING: A change in the default package managers to perform installations is required to install ${matched_keyname}, use -O to allow overrides. Skipping this feature..." "${FLAG_QUIETNESS}"
-          return
-        else
-          output_proxy_executioner "echo ERROR: A change in the default package managers to perform installations is required to install ${matched_keyname}, use -O to allow overrides." "${FLAG_QUIETNESS}"
-          exit 1
-        fi
+        output_proxy_executioner "A change in the default package managers to perform installations is required to install ${matched_keyname}, use -O to allow overrides. Skipping this feature..." "WARNING"
+        return
       fi
     fi
 
@@ -762,12 +746,10 @@ add_program()
     # Process FLAG_SKIP_PRIVILEGES_CHECK. If 1 skip privilege check
     if [ "${FLAG_SKIP_PRIVILEGES_CHECK}" -eq 0 ] && [ "${flag_privileges}" -ne 2 ]; then
       if [ "${EUID}" -eq 0 ] && [ "${flag_privileges}" -eq 1 ]; then
-        output_proxy_executioner "echo ERROR: $1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." "${FLAG_QUIETNESS}"
-        exit 1
+        output_proxy_executioner "$1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." "ERROR"
       fi
       if [ "${EUID}" -ne 0 ] && [ "${flag_privileges}" -eq 0 ]; then
-        output_proxy_executioner "echo ERROR: $1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." "${FLAG_QUIETNESS}"
-        exit 1
+        output_proxy_executioner "$1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." "ERROR"
       fi
     fi
     # No need to pass to the execute installation the permissions of each feature, they are already processed here
@@ -784,7 +766,7 @@ add_program()
     if [ "${flag_overwrite}" -eq 0 ]; then
       # Change of _ to - again to allow the matches of commands that have - in its name
       if grep -qE "^${matched_keyname}\$" < "${INSTALLED_FEATURES}"; then
-        output_proxy_executioner "echo WARNING: ${matched_keyname} is installed. Continuing installation without selecting this feature... Use -o to skip this behaviour and select this feature." "${FLAG_QUIETNESS}"
+        output_proxy_executioner "${matched_keyname} is installed. Continuing installation without selecting this feature... Use -o to skip this behaviour and select this feature." "WARNING"
         return 1
       fi
     fi
@@ -863,12 +845,12 @@ execute_installation()
     CURRENT_INSTALLATION_FOLDER="${BIN_FOLDER}/${keyname}"
     CURRENT_INSTALLATION_KEYNAME="${keyname}"
 
-    output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${keyname}." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "Attemptying to ${FLAG_MODE} ${keyname}." "INFO"
 
     load_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
 
-    output_proxy_executioner "generic_installation ${keyname}" "${FLAG_QUIETNESS}"
-    output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "generic_installation ${keyname}" "COMMAND"
+    output_proxy_executioner "${keyname} ${FLAG_MODE}ed." "INFO"
 
     # Return flag errors to bash defaults (ignore errors)
     set +e
