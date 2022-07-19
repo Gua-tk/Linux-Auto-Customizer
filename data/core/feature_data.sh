@@ -2280,7 +2280,6 @@ libreoffice_readmeline="| OpenOffice | Office suite for open-source systems | Co
 
 openssl102_installationtype="packageinstall"
 openssl102_arguments=("openssl102")
-openssl102_packageurls=("http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb")
 opensll102_package_manager_override="apt-get"
 openssl102_readmeline="| openssl1.0 | RStudio dependency | Used for running rstudio ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -2616,33 +2615,22 @@ rosegarden_packagenames=("rosegarden")
 rosegarden_launchernames=("com.rosegardenmusic.rosegarden")
 rosegarden_readmeline="| Rosegarden | Software for music production | Commands \`rosegarden\`, Desktop launcher and Icon || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
-rstudio_installationtype="userinherit"
+rstudio_name="RStudio"
+rstudio_description="Default application for .R files "
+rstudio_version="System dependent"
+rstudio_tags=("rstudio")
+rstudio_systemcategories=("Network")
 rstudio_arguments=("r_studio")
 rstudio_associatedfiletypes=("text/plain")
 rstudio_bashfunctions=("rstudio.sh")
 rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
-rstudio_compressedfileurl="https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz"
-rstudio_description="Default application for .R files "
-rstudio_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${rstudio_description}
-Encoding=UTF-8
-Exec=rstudio
-GenericName=RStudio
-Icon=${BIN_FOLDER}/rstudio/www/images/favicon.ico
-Keywords=rstudio
-MimeType=text/plain;
-Name=RStudio
-StartupNotify=true
-StartupWMClass=RStudio
-Terminal=false
-TryExec=rstudio
-Type=Application
-Version=1.0
-")
+rstudio_downloadKeys=("bundle" "packageDependency")
+rstudio_packageDependency_URL="http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb"
+rstudio_bundle_URL="https://download1.rstudio.org/desktop/debian9/x86_64/rstudio-1.4.1717-amd64-debian.tar.gz"
+rstudio_launcherkeynames=("default")
+rstudio_default_windowClass="RStudio"
+rstudio_associatedfiletypes=("text/plain")
 rstudio_packagedependencies=("libssl-dev")
-rstudio_readmeline="| RStudio | ${rstudio_description} | Commands \`rstudio\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |  "
 
 rsync_installationtype="packagemanager"
 rsync_arguments=("rsync" "grsync")
