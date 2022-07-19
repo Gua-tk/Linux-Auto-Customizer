@@ -3267,18 +3267,6 @@ youtube_default_exec="xdg-open https://www.youtube.com"
 youtube_description="Youtube opening in Browser"
 
 
-# TODO @AleixMT refactor feature name
-youtubeDL_name="youtube-dl"
-youtubeDL_description="HTML video scratcher for YouTube"
-youtubeDL_version="youtube-dl dependent"
-youtubeDL_tags=("video" "download")
-# TODO: youtubeDL_systemcategories=()
-youtubeDL_packagedependencies=("ffmpeg")
-youtubeDL_bashfunctions=("youtube_dl.sh")
-youtubeDL_binariesinstalledpaths=("youtube-dl;youtube-dl")
-youtubeDl_downloadKeys=("bundle")
-youtubeDl_bundle_URL="https://yt-dl.org/downloads/latest/youtube-dl"
-
 ####################### UNHOLY LINE OF TRIMMING. UPWARDS IS LEGACY, BELOW IS NEW ##############################
 #FEATUREKEYNAME_name=""
 #FEATUREKEYNAME_description=""

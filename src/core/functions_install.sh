@@ -1291,6 +1291,8 @@ generic_install_download()
     *)
       # Move only if we are not overriding the download path. We do it like this because if not we can not decompress
       if [ -z "${!pointer_downloadPath}" ]; then
+        rm -Rf "${CURRENT_INSTALLATION_FOLDER}"
+        create_folder "${CURRENT_INSTALLATION_FOLDER}"
         mv "${defaultpath}/${defaultName}" "${CURRENT_INSTALLATION_FOLDER}"
       fi
     ;;
