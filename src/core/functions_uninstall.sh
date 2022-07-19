@@ -87,7 +87,7 @@ remove_folder() {
 # - Permissions: This function can be called as root or as user.
 # - Argument 1: Absolute path of folder to be removed
 remove_copied_launcher() {
-  if [ ${EUID} == 0 ]; then
+  if isRoot; then
     remove_file "${ALL_USERS_LAUNCHERS_DIR}/$1"
   fi
   remove_file "${XDG_DESKTOP_DIR}/$1"
@@ -103,7 +103,7 @@ remove_links_in_path() {
   else
     # We leave a dangling link in path unremoved if a feature has been installed as root but uninstalled as user.
     # We can not change the permissions of a symlink in order to allow uninstall as user a posteriori remove the symlink
-    if [ ${EUID} == 0 ]; then  # root
+    if isRoot; then  # root
       remove_file "${ALL_USERS_PATH_POINTED_FOLDER}/$1"
     fi
   fi
@@ -114,7 +114,7 @@ remove_links_in_path() {
 # - Permissions: This function can be called as root or as user.
 # - Argument 1: Launcher name.
 remove_manual_launcher() {
-  if [ ${EUID} == 0 ]; then  # root
+  if isRoot; then  # root
     remove_file "${ALL_USERS_LAUNCHERS_DIR}/$1"
   else
     remove_file "${PERSONAL_LAUNCHERS_DIR}/$1"
@@ -132,7 +132,7 @@ remove_file_associations()
       remove_line ".*=$1" "${MIME_ASSOCIATION_PATH}"
     fi
   else
-    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $1 cannot be removed from favourites. Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "${MIME_ASSOCIATION_PATH} is not present, so $1 cannot be removed from favourites. Skipping..." "WARNING"
   fi
 }
 
@@ -383,9 +383,9 @@ generic_uninstall_dependencies() {
 # Other dependencies to install with the package manager before the main package of software if present
   local -r packagedependencies="$1_packagedependencies[*]"
 
-  if [ "${EUID}" -ne 0 ]; then
+  if ! isRoot; then
     if [ -n "${!packagedependencies}" ]; then
-      output_proxy_executioner "echo WARNING: $1 has this dependencies: ${!packagedependencies} but are not going to be uninstalled because you are not root. To uninstall them, rerun uninstallation with sudo." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "$1 has this dependencies: ${!packagedependencies} but are not going to be uninstalled because you are not root. To uninstall them, rerun uninstallation with sudo." "WARNING"
       return
     fi
   fi

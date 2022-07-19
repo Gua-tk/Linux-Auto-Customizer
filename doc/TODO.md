@@ -10,7 +10,14 @@
       feature into the src/features/FEATUREKEYNAME/FEATUREKEYNAME_metadata.sh
 - [ ] After general metadata refactor, commentary has to be moved to individual `.md` files for each
       feature into the src/features/FEATUREKEYNAME/FEATUREKEYNAME_documentation.sh
-
+- [ ] Make all relevant bars local and -r if necessary.
+- [x] Make change to output proxy executioner so it handles the logic of the flag ignore errors,
+- [x] Create new flag all warnings are errors that is handled also by output proxy
+- [x] Create function isRoot and substitute in all the if that check the euid value
+- [x] Add property to dynamic launcher X Ubuntu getext domain. 
+- [x] Make dynamicLauncher deduce windowclass property from key name
+- [ ] AutoFirma should work without explicit decompression paths. 
+- [ ] Upgrade anticollisioner with number
 
 ### @AleixMT
 - [x] Create reading of external file in .customizer to load custom flags and variables

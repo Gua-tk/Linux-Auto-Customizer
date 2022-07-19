@@ -569,7 +569,7 @@ checkout_commentary="A terminal shortcut for git"
 checkout_arguments=("checkout")
 checkout_bashfunctions=("checkout.sh")
 
-# TODO DBusActivatable=true #X-Ubuntu-Gettext-Domain=cheese
+# TODO DBusActivatable=true
 # TODO tested
 cheese_name="Cheese"
 cheese_description="Webcam Booth"
@@ -581,6 +581,8 @@ cheese_arguments=("cheese")
 cheese_bashfunctions=("cheese.sh")
 cheese_launchernames=("org.gnome.Cheese")
 cheese_packagenames=("cheese")
+cheese_launcherkeynames=("defaultLauncher")
+cheese_defaultLauncher_ubuntuGetText="cheese"
 
 clean_name="Function clean"
 clean_description="Remove files and contents from the trash bin and performs sudo apt-get -y autoclean and sudo apt-get -y autoremove."
@@ -1359,8 +1361,8 @@ chess_arguments=("gnome_chess" "chess")
 chess_packagenames=("gnome-chess")
 chess_launcherkeynames=("defaultLauncher")
 chess_defaultLauncher_exec="gnome-chess"
+chess_defaultLauncher_ubuntuGetText="gnome-chess"
 chess_associatedfiletypes=("application/x-chess-pgn")
-# TODO X-Ubuntu-Gettext-Domain=gnome-chess
 
 mahjongg_name="GNOME Mahjongg"
 mahjongg_description="Implementation for GNU systems of the famous popular chinese game Mahjongg"
@@ -1487,7 +1489,7 @@ gpaint_commentary="A small-scale painting program for GNOME, the GNU Desktop"
 gpaint_arguments=("gpaint")
 gpaint_launcherkeynames=("default")
 gpaint_default_exec="gpaint"
-# TODO X-Ubuntu-Gettext-Domain=gpaint-2
+gpaint_default_ubuntuGetText="gpaint-2"
 gpaint_packagenames=("gpaint")
 
 gparted_name="GParted"
@@ -2071,7 +2073,7 @@ install_nano_post()
   fi
 
   # Set editor to nano using the entry displayed in update-alternatives --list editor
-  if [ ${EUID} == 0 ]; then
+  if isRoot; then
     nano_default_path="$(update-alternatives --list editor | grep -Eo "^.*nano.*$" | head -1)"
     if [ -n "${nano_default_path}" ]; then
       update-alternatives --set editor "${nano_default_path}"
@@ -2081,7 +2083,7 @@ install_nano_post()
 uninstall_nano_post()
 {
   # Restore editor to the default one (usually vim)
-  if [ ${EUID} == 0 ]; then
+  if isRoot; then
     update-alternatives --auto editor
   fi
 
@@ -2141,6 +2143,7 @@ nemo_description="File and desktop manager, usually with better options and less
 nemo_launcherkeynames=("defaultLauncher" "autostartLauncher")
 nemo_defaultLauncher_exec="nemo %U"
 nemo_defaultLauncher_name="Files"
+nemo_defaultLauncher_ubuntuGetText="nemo"
 nemo_defaultLauncher_actions=("openhome" "opencomputer" "opentrash" "openserver")
 nemo_defaultLauncher_openhome_name="Home"
 nemo_defaultLauncher_openhome_exec="nemo %U"
@@ -2155,7 +2158,6 @@ nemo_associatedfiletypes=("inode/directory" "application/x-gnome-saved-search")
 nemo_launchercontents=("
 [Desktop Entry]
 OnlyShowIn=GNOME;Unity;KDE;
-X-Ubuntu-Gettext-Domain=nemo
 StartupNotify=false
 
 ")
@@ -2908,7 +2910,6 @@ sublime_launcherkeynames=("default")
 sublime_default_exec="sublime %F"
 sublime_default_windowclass="Sublime"
 
-# TODO: X-Ubuntu-Gettext-Domain=synaptic
 synaptic_name="Synaptic Package Manager"
 synaptic_description="Package Manager"
 synaptic_version="System dependent"
@@ -2920,6 +2921,7 @@ synaptic_packagenames=("synaptic")
 synaptic_launcherkeynames=("default")
 synaptic_default_windowclass="synaptic"
 synaptic_default_exec="synaptic"
+synaptic_default_ubuntuGetText="synaptic"
 
 sysmontask_installationtype="repositoryclone"
 sysmontask_arguments=("sysmontask")
