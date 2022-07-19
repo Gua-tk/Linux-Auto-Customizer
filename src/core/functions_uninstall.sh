@@ -132,7 +132,7 @@ remove_file_associations()
       remove_line ".*=$1" "${MIME_ASSOCIATION_PATH}"
     fi
   else
-    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $1 cannot be removed from favourites. Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "${MIME_ASSOCIATION_PATH} is not present, so $1 cannot be removed from favourites. Skipping..." "WARNING"
   fi
 }
 
@@ -385,7 +385,7 @@ generic_uninstall_dependencies() {
 
   if [ "${EUID}" -ne 0 ]; then
     if [ -n "${!packagedependencies}" ]; then
-      output_proxy_executioner "echo WARNING: $1 has this dependencies: ${!packagedependencies} but are not going to be uninstalled because you are not root. To uninstall them, rerun uninstallation with sudo." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "$1 has this dependencies: ${!packagedependencies} but are not going to be uninstalled because you are not root. To uninstall them, rerun uninstallation with sudo." "WARNING"
       return
     fi
   fi
