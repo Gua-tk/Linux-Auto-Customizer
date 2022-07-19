@@ -30,7 +30,7 @@ add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
   create_file "${FUNCTIONS_FOLDER}/$2" "$1" "$3"
   # If we are root apply permission to the file
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     apply_permissions "${FUNCTIONS_FOLDER}/$2"
   fi
 
@@ -53,7 +53,7 @@ add_bash_initialization() {
   # Write code to bash initializations folder with the name of the feature we want to install
   create_file "${INITIALIZATIONS_FOLDER}/$2" "$1" "$3"
   # If we are root apply permission to the file
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     apply_permissions "${INITIALIZATIONS_FOLDER}/$2"
   fi
 
@@ -91,7 +91,7 @@ add_to_favorites() {
       if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
         echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
       else
-        output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "WARNING"
         return
       fi
     fi
@@ -109,27 +109,27 @@ autostart_program() {
     # If it is a file, make it autostart
     if [ -f "$1" ]; then
       cp "$1" "${AUTOSTART_FOLDER}"
-      if [ ${EUID} -eq 0 ]; then
+      if isRoot; then
         apply_permissions "$1"
       fi
     else
-      output_proxy_executioner "echo WARNING: The file $1 does not exist, skipping..." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The file $1 does not exist, skipping..." "WARNING"
       return
     fi
   else # Else relative path from ALL_USERS_LAUNCHERS_DIR or PERSONAL_LAUNCHERS_DIR
   echo "${AUTOSTART_FOLDER}"
     if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]; then
       cp "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
-      if [ ${EUID} -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
       fi
     elif [ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]; then
       cp "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
-      if [ ${EUID} -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
       fi
     else
-      output_proxy_executioner "echo WARNING: The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." "WARNING"
       return
     fi
   fi
@@ -154,13 +154,13 @@ custom_permission()
 apply_permissions_recursively()
 {
   if [ -d "$1" ]; then
-    if [ ${EUID} == 0 ]; then  # directory
+    if isRoot; then  # directory
       chgrp -R "${SUDO_USER}" "$1"
       chown -R "${SUDO_USER}" "$1"
     fi
     chmod 755 -R "$1"
   else
-    output_proxy_executioner "echo WARNING: This functions only accepts a directory as an argument, Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "This functions only accepts a directory as an argument, Skipping..." "WARNING"
   fi
 }
 
@@ -185,7 +185,7 @@ create_file()
       apply_permissions "$1"
       translate_variables "$1"
     else
-      output_proxy_executioner "echo WARNING: The specified path to a customizer internal file $3 does not exist. It will be skipped" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The specified path to a customizer internal file $3 does not exist. It will be skipped" "WARNING"
     fi
   else
     if [ -n "${filename}" ]; then
@@ -193,7 +193,7 @@ create_file()
       echo -n "$2" > "$1"
       apply_permissions "$1"
     else
-      output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "WARNING"
     fi
   fi
 }
@@ -225,7 +225,7 @@ copy_launcher() {
     cp "${PERSONAL_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}/$1"
     apply_permissions "${XDG_DESKTOP_DIR}/$1"
   else
-    output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}." "WARNING"
   fi
 }
 
@@ -238,7 +238,7 @@ copy_launcher() {
 # - Argument 2: Name of the command that will be added to your environment to execute the previous binary.
 # - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2.
 create_links_in_path() {
-  if [ ${EUID} == 0 ]; then  # user
+  if isRoot; then  # user
     local -r directory="${ALL_USERS_PATH_POINTED_FOLDER}"
   else
     local -r directory="${PATH_POINTED_FOLDER}"
@@ -258,7 +258,7 @@ create_links_in_path() {
 # Argument 1: The string of the text representing the content of the desktop launcher that we want to create.
 # Argument 2: The name of the launcher. This argument can be any name with no consequences.
 create_manual_launcher() {
-  if [ ${EUID} == 0 ]; then  # root
+  if isRoot; then  # root
     create_file "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
     cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
   else
@@ -331,8 +331,7 @@ decompress() {
         local -r internal_folder_name=$( (tar -tJf - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
       ;;
       *)
-        output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
-        exit 1
+        output_proxy_executioner "${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "ERROR"
       ;;
     esac
 
@@ -379,13 +378,11 @@ decompress() {
         ) < "${dir_name}/${file_name}"
       ;;
       *)
-        output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
-        exit 1
+        output_proxy_executioner "${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "ERROR"
       ;;
     esac
   else
-    output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist" "${FLAG_QUIETNESS}"
-    exit 1
+    output_proxy_executioner "The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist" "ERROR"
   fi
   # Delete file. Now that it has been decompressed is just trash
   rm -f "${dir_name}/${file_name}"
@@ -435,8 +432,7 @@ download() {
         dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
         file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
         if [ ! -d "${dir_name}" ]; then
-          output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
-          exit
+          output_proxy_executioner "the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "ERROR"
         fi
       fi
     else
@@ -451,8 +447,7 @@ download() {
           dir_name="${BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
           file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
           if [ ! -d "${dir_name}" ]; then
-            output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
-            exit
+            output_proxy_executioner "the directory passed is relative but it is not a directory and its first subdirectory does not exist" "ERROR"
           fi
         fi
       else
@@ -466,7 +461,7 @@ download() {
   # Check if it is cached
   if [ -f "${CACHE_FOLDER}/${file_name}" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
     cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
-    if [ "${EUID}" -eq 0 ]; then
+    if isRoot; then
         apply_permissions "${dir_name}/${file_name}"
     fi
   else  # Not cached or we do not use cache: we have to download
@@ -478,19 +473,19 @@ download() {
       # Move to cache folder to construct cache
       mv "${TEMP_FOLDER}/${file_name}" "${CACHE_FOLDER}/${file_name}"
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${CACHE_FOLDER}/${file_name}"
       fi
       # Copy file to the desired place of download
       cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${dir_name}/${file_name}"
       fi
     else
       # Move directly to the desired place of download
       mv "${TEMP_FOLDER}/${file_name}" "${dir_name}/${file_name}"
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${dir_name}/${file_name}"
       fi
     fi
@@ -523,7 +518,7 @@ register_file_associations() {
       fi
     fi
   else
-    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "WARNING"
   fi
 }
 
@@ -748,6 +743,15 @@ NoDisplay=false"
     text+=$'\n'"X-GNOME-Autostart-Delay=${!override_autorestartdelay}"
   fi
 
+  # //RF Maybe deprecated?
+  # Override the X-GNOME-AutoRestart over the default nothing
+  local -r overrideUbuntuGetText="${CURRENT_INSTALLATION_KEYNAME}_$1_ubuntuGetText"
+  if [ ! -z "${!overrideUbuntuGetText}" ]; then
+    text+=$'\n'"X-Ubuntu-Gettext-Domain=${!overrideUbuntuGetText}"
+  fi
+
+
+
   # Add actions for this particular launcher
   override_actionkeynames="${CURRENT_INSTALLATION_KEYNAME}_$1_actionkeynames[@]"
   if [ ! -z "$(echo "${!override_actionkeynames}" )" ]; then
@@ -805,7 +809,7 @@ create_WSL2_dynamic_launcher() {
 
   # Ensure convert dependency is present
   if ! which convert &>/dev/null; then
-    if [ $EUID != 0 ]; then
+    if ! isRoot; then
       echo "ERROR: Icon could not be created due to convert is not installed, install it or run again with sudo"
       return
     else
@@ -1092,13 +1096,13 @@ generic_install_movefiles() {
     if echo "${origin_files}" | grep -q '\*' ; then
       for filename in "${BIN_FOLDER}/$1/"${origin_files}; do
         mv -f "${filename}" "${destiny_directory}"
-        if [ ${EUID} -eq 0 ]; then
+        if isRoot; then
           apply_permissions "${filename}"
         fi
       done
     else
       mv "${BIN_FOLDER}/$1/${origin_files}" "${destiny_directory}"
-      if [ ${EUID} -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${destiny_directory}/${origin_files}"
       fi
     fi 
@@ -1116,9 +1120,9 @@ generic_install_dependencies() {
 
   # Other dependencies to install with the package manager before the main package of software if present
   local -r packagedependencies="$1_packagedependencies[*]"
-  if [ "${EUID}" -ne 0 ]; then
+  if ! isRoot; then
     if [ -n "${!packagedependencies}" ]; then
-      output_proxy_executioner "echo WARNING: $1 has this dependencies to install with the package manager: ${!packagedependencies} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "$1 has this dependencies to install with the package manager: ${!packagedependencies} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
       return
     fi
   fi
@@ -1140,7 +1144,7 @@ generic_install_clone() {
   if [ -d "${CACHE_FOLDER}/$1_repository" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
     rm -Rf "${BIN_FOLDER:?}/$1"
     cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
-    if [ "${EUID}" -eq 0 ]; then
+    if isRoot; then
       apply_permissions_recursively "${BIN_FOLDER}/$1"
     fi
   else  # Not cached or we do not use cache: we have to download
@@ -1158,7 +1162,7 @@ generic_install_clone() {
       cp -r "${TEMP_FOLDER}/$1_repository" "${CACHE_FOLDER}"
       rm -Rf "${TEMP_FOLDER}/$1_repository"
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions_recursively "${CACHE_FOLDER}/$1_repository"
       fi
 
@@ -1166,7 +1170,7 @@ generic_install_clone() {
       rm -Rf "${BIN_FOLDER:?}/$1"
       # Copy file to the desired place of download
       cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions_recursively "${BIN_FOLDER}/$1"
       fi
     else
@@ -1177,7 +1181,7 @@ generic_install_clone() {
       rm -Rf "${TEMP_FOLDER}/$1_repository"
 
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions_recursively "${BIN_FOLDER}/$1"
       fi
     fi
@@ -1191,9 +1195,9 @@ generic_install_clone() {
 generic_install_packageManager() {
   # Name of the package names to be installed with the package manager if present
   local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
-  if [ "${EUID}" -ne 0 ]; then
+  if ! isRoot; then
     if [ ! -z "${!packagenames}" ]; then
-      output_proxy_executioner "echo WARNING: ${CURRENT_INSTALLATION_KEYNAME} needs to install the following packages using the package manager: ${!packagenames} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${CURRENT_INSTALLATION_KEYNAME} needs to install the following packages using the package manager: ${!packagenames} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
       return
     fi
   fi
@@ -1332,7 +1336,7 @@ generic_install_pythonVirtualEnvironment() {
   done
 
   # If we are root change permissions
-  if [ "${EUID}" -eq 0 ]; then
+  if isRoot; then
     apply_permissions_recursively "${BIN_FOLDER:?}/$1"
   fi
 }
@@ -1367,9 +1371,9 @@ generic_install_cloneRepositories() {
 # - Description: Initialize common subsystems and common subfeatures
 # - Permissions: Same behaviour being root or normal user.
 data_and_file_structures_initialization() {
-  output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
+  output_proxy_executioner "Initializing data and file structures." "INFO"
 
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
       if ! users | grep -q "Android"; then
         adduser --gecos "" --disabled-password "Android"
@@ -1407,7 +1411,7 @@ data_and_file_structures_initialization() {
 
   # Initialize whoami file
   if [ "${OS_NAME}" == "WSL2" ]; then
-    if [ ${EUID} != 0 ]; then
+    if ! isRoot; then
       username_wsl2="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' 2> /dev/null | sed -e 's/\r//g')"
       if [ -z "${username_wsl2}" ]; then
         echo "ERROR: The user of Windows could not have been captured"
@@ -1445,7 +1449,7 @@ data_and_file_structures_initialization() {
   # We source from the bashrc of the current user or all the users depending on out permissions with priority
   # in being sourced from BASHRC_ALL_USERS_PATH
   if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}" &>/dev/null; then
-    if [ "${EUID}" == 0 ]; then
+    if isRoot; then
       echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
       if grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}" &>/dev/null; then
         remove_line "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
@@ -1466,16 +1470,16 @@ data_and_file_structures_initialization() {
 # - Description: Update the system using $DEFAULT_PACKAGE_MANAGER -y update or $DEFAULT_PACKAGE_MANAGER -y upgrade depending a
 # - Permissions: Can be called as root or user but user will not do anything.
 pre_install_update() {
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     if [ "${FLAG_UPGRADE}" -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_UPDATE}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: System updated." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPDATE}" "COMMAND"
+      output_proxy_executioner "System updated." "INFO"
     fi
     if [ "${FLAG_UPGRADE}" == 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to upgrade system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_UPGRADE}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: System upgraded." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to upgrade system via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPGRADE}" "COMMAND"
+      output_proxy_executioner "System upgraded." "INFO"
     fi
   fi
 }
@@ -1483,13 +1487,13 @@ pre_install_update() {
 # - Description: Performs update of system fonts and bash environment.
 # - Permissions: Same behaviour being root or normal user.
 update_environment() {
-  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Reloading bash features" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Finished execution" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Rebuilding path cache" "INFO"
+  output_proxy_executioner "hash -r" "COMMAND"
+  output_proxy_executioner "echo INFO: Rebuilding font cache" "INFO"
+  output_proxy_executioner "fc-cache -f" "COMMAND"
+  output_proxy_executioner "echo INFO: Reloading bash features" "INFO"
+  output_proxy_executioner "source ${FUNCTIONS_PATH}" "COMMAND"
+  output_proxy_executioner "echo INFO: Finished execution" "INFO"
 }
 
 
