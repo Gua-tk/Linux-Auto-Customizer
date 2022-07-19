@@ -743,6 +743,15 @@ NoDisplay=false"
     text+=$'\n'"X-GNOME-Autostart-Delay=${!override_autorestartdelay}"
   fi
 
+  # //RF Maybe deprecated?
+  # Override the X-GNOME-AutoRestart over the default nothing
+  local -r overrideUbuntuGetText="${CURRENT_INSTALLATION_KEYNAME}_$1_ubuntuGetText"
+  if [ ! -z "${!overrideUbuntuGetText}" ]; then
+    text+=$'\n'"X-Ubuntu-Gettext-Domain=${!overrideUbuntuGetText}"
+  fi
+
+
+
   # Add actions for this particular launcher
   override_actionkeynames="${CURRENT_INSTALLATION_KEYNAME}_$1_actionkeynames[@]"
   if [ ! -z "$(echo "${!override_actionkeynames}" )" ]; then

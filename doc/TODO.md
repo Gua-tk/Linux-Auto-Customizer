@@ -14,8 +14,8 @@
 - [x] Make change to output proxy executioner so it handles the logic of the flag ignore errors,
 - [x] Create new flag all warnings are errors that is handled also by output proxy
 - [x] Create function isRoot and substitute in all the if that check the euid value
-- [ ] Add property to dynamic launcher X Ubuntu getext domain. 
-- [ ] Make dynamicLauncher deduce windowclass property from key name
+- [x] Add property to dynamic launcher X Ubuntu getext domain. 
+- [x] Make dynamicLauncher deduce windowclass property from key name
 - [ ] AutoFirma should work without explicit decompression paths. 
 - [ ] Upgrade anticollisioner with number
 
