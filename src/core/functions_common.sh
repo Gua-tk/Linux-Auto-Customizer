@@ -20,10 +20,10 @@
 ############################################### COMMON API FUNCTIONS ###################################################
 ########################################################################################################################
 
-# - Description: Execute the command received in the first argument and redirect the standard and error output depending
-#   on the quietness level defined in the second argument. If the command in the first argument is an echo, adds the
-#   date to the echo and tries to detect what type of message contains this echo: INFO, WARNING or ERROR. Each message
-#   type has an associated colour which will be printed by this function.
+# - Description: Executes the command received in argument 1 or prints it with a certain format depending on
+#   argument 2, which can be: INFO, WARNING, ERROR, COMMAND.
+#   Depending on argument 2 and the global var FLAG_IGNORE_ERRORS we may exit the program. Also, redirect the standard
+#   and error output depending on the verbosity level defined in the global var FLAG_QUIETNESS.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Bash command to execute.
 # - Argument 2: Quietness level [0, 1, 2]:
@@ -31,41 +31,40 @@
 #   * 1: Quiet: Display echoes but silences output from other commands
 #   * 2: Full quiet: No output any executed commands
 output_proxy_executioner() {
-  # If the command to execute is an echo, capture echo type and apply format to it depending on the message type
-  local -r command_name=$(echo "$1" | head -1 | cut -d " " -f1)
-  if [ "${command_name}" == "echo" ]; then
-    local echo_processed_command=""
-    local echo_command_arguments=
-    echo_command_arguments="$(echo "$1" | sed '1 s@^echo @@')"
-    local -r echo_message_type="$(echo "${echo_command_arguments}" | head -1 | cut -d ":" -f1)"
-    if [ "${echo_message_type}" == "WARNING" ]; then
-      echo_processed_command+="\e[33m"  # Activate yellow color
-    elif [ "${echo_message_type}" == "INFO" ]; then
-      echo_processed_command+="\e[36m"  # Activate cyan color
-    elif [ "${echo_message_type}" == "ERROR" ]; then
-      echo_processed_command+="\e[91m"  # Activate red color
-    fi
-    # If we need to process an echo and we are not in full quietness mode print the prefix with date for each echo
-    echo_processed_command+="$(date +%Y-%m-%d_%T) -- "
-    echo_processed_command+="${echo_command_arguments}"
-    echo_processed_command+="\e[0m"  # deactivate color after the echo
-  fi
+  if [ "$2" == "INFO" ] || [ "$2" == "WARNING" ] || [ "$2" == "ERROR" ]; then
+    if [ "${FLAG_QUIETNESS}" -ne 2 ]; then
+      processedMessage=""
+      abortProgram=0
+      if [ "$2" == "INFO" ]; then
+        processedMessage+="\e[36m"  # Activate cyan color
+      elif [ "$2" == "WARNING" ]; then
+        processedMessage+="\e[33m"  # Activate yellow color
+        if [ ${FLAG_IGNORE_ERRORS} -eq 0 ]; then
+          abortProgram=1
+        fi
+      elif [ "$2" == "ERROR" ]; then
+        processedMessage+="\e[91m"  # Activate red color
+        if [ ${FLAG_IGNORE_ERRORS} -lt 2 ]; then
+          abortProgram=1
+        fi
+      fi
+      processedMessage+="$(date +%Y-%m-%d_%T) -- ${2}: $1"
+      processedMessage+="\e[0m"  # deactivate color after the echo
+      echo -e "${processedMessage}"
 
-  # Execute command with verbosity depending on quietness level and if the command_name is an echo or not
-  if [ "$2" -eq 0 ]; then
-    if [ "${command_name}" == "echo" ]; then
-      echo -e "$echo_processed_command"
-    else
-      $1
+      if [ ${abortProgram} -eq 1 ]; then
+        output_proxy_executioner "The default behaviour for the previous message specified by the current error tolerance defines that the customizer now must exit, use -i or -w to ignore errors or to ignore warnings if you want to change this behaviour." "INFO"
+        exit 1
+      fi
     fi
-  elif [ "$2" -eq 1 ]; then
-    if [ "${command_name}" == "echo" ]; then
-      echo -e "$echo_processed_command"
+  elif [ "$2" == "COMMAND" ]; then
+    if [ "${FLAG_QUIETNESS}" -eq 0 ]; then
+      $2
     else
-      $1 &>/dev/null
+      $2 &>/dev/null
     fi
-  elif [ "$2" -eq 2 ]; then
-    $1 &>/dev/null
+  else
+    output_proxy_executioner "The function output_proxy_executioner does not recognize $2 as a valid argument" "ERROR"
   fi
 }
 
@@ -434,11 +433,14 @@ argument_processing()
         FLAG_OVERWRITE=1
       ;;
 
-      -e|--exit|--exit-on-error)
+      -w|--warning|--exit-on-warning)
         FLAG_IGNORE_ERRORS=0
       ;;
-      -i|--ignore|--ignore-errors)
+      -e|--exit|--exit-on-error)
         FLAG_IGNORE_ERRORS=1
+      ;;
+      -i|--ignore|--ignore-errors)
+        FLAG_IGNORE_ERRORS=2
       ;;
 
       # TODO flag autoclean reduce to two states

@@ -11,7 +11,7 @@
 - [ ] After general metadata refactor, commentary has to be moved to individual `.md` files for each
       feature into the src/features/FEATUREKEYNAME/FEATUREKEYNAME_documentation.sh
 - [ ] Make all relevant bars local and -r if necessary.
-- [ ] Make change to output proxy executioner so it handles the logic of the flag ignore errors,
+- [~] Make change to output proxy executioner so it handles the logic of the flag ignore errors,
 - [ ] Create new flag all warnings are errors that is handled also by output proxy
 - [ ] Restore copy launchers property
 - [ ] Create function isRoot and substitute in all the if that check the euid value

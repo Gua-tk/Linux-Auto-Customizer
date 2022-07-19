@@ -364,8 +364,9 @@ declare CURRENT_INSTALLATION_KEYNAME=""
 #     features from the pull of features to install or uninstall, depending on the mode we are.                        #
 #   - FLAG_QUIETNESS: By default "0". Can be set to "0", "1" or "2" with -v, -q or -Q, which will cause the            #
 #     installation and general program to be fully verbose, show only echoes or by completely silent, respectively.    #
-#   - FLAG_IGNORE_ERRORS: By default "0". Can be set to "0" or "1" with -e or -i, which will cause to exit when        #
-#     finding an error during an installation or continue installation ignoring errors, respectively.                  #
+#   - FLAG_IGNORE_ERRORS: By default "1". Can be set to "0", "1", "2" with -e, -w or -i, which will cause to exit when
+#     finding a warning, to exit when finding an error during an installation or continue installation ignoring
+#     everything.                  #
 #   - FLAG_FAVORITES: By default "0". Can be set to "0" or "1" with -z or -f, which will cause to do nothing or add    #
 #     the installed programs to the favorite apps of the taskbar by using the desktop launchers of each feature.       #
 #   - FLAG_AUTOSTART: By default "0". Can be set to "0" or "1" with -a or -r, which will cause to do nothing or        #
@@ -389,7 +390,7 @@ FLAG_MODE=
 FLAG_OVERWRITE=0
 FLAG_INSTALL=1
 FLAG_QUIETNESS=1
-FLAG_IGNORE_ERRORS=0
+FLAG_IGNORE_ERRORS=1
 FLAG_FAVORITES=0
 FLAG_AUTOSTART=0
 FLAG_SKIP_PRIVILEGES_CHECK=0
