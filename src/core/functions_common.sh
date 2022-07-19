@@ -59,9 +59,9 @@ output_proxy_executioner() {
     fi
   elif [ "$2" == "COMMAND" ]; then
     if [ "${FLAG_QUIETNESS}" -eq 0 ]; then
-      $2
+      $1
     else
-      $2 &>/dev/null
+      $1 &>/dev/null
     fi
   else
     output_proxy_executioner "The function output_proxy_executioner does not recognize $2 as a valid argument" "ERROR"
