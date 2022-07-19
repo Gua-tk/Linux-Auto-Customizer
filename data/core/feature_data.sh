@@ -2071,7 +2071,7 @@ install_nano_post()
   fi
 
   # Set editor to nano using the entry displayed in update-alternatives --list editor
-  if [ ${EUID} == 0 ]; then
+  if isRoot; then
     nano_default_path="$(update-alternatives --list editor | grep -Eo "^.*nano.*$" | head -1)"
     if [ -n "${nano_default_path}" ]; then
       update-alternatives --set editor "${nano_default_path}"
@@ -2081,7 +2081,7 @@ install_nano_post()
 uninstall_nano_post()
 {
   # Restore editor to the default one (usually vim)
-  if [ ${EUID} == 0 ]; then
+  if isRoot; then
     update-alternatives --auto editor
   fi
 

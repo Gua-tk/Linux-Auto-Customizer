@@ -78,6 +78,15 @@ bell_sound()
 }
 
 
+isRoot()
+{
+  if [ "${EUID}" == 0 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 # - Description: Receives the file path of a file text which contents will be evaluated by this function to look for
 #   variables with the € format (€{variable}) and translate its symbol by the actual value in running memory.
 # - Permissions: Needs writing permission to the received file because it will be overwritten in place.
@@ -113,13 +122,13 @@ apply_permissions()
   fi
 
   if [ -f "$1" ]; then
-    if [ ${EUID} == 0 ]; then  # file
+    if isRoot; then  # file
       chgrp "${SUDO_USER}" "$1"
       chown "${SUDO_USER}" "$1"
     fi
     chmod "${permission_mask}" "$1"
   elif [ -d "$1" ]; then
-    if [ ${EUID} == 0 ]; then  # directory
+    if isRoot; then  # directory
       chgrp "${SUDO_USER}" "$1"
       chown "${SUDO_USER}" "$1"
     fi
@@ -249,7 +258,7 @@ load_feature_properties()
 # - Permission: Can be called as root or user.
 post_install_clean()
 {
-  if [ "${EUID}" -eq 0 ]; then
+  if isRoot; then
     if [ "${FLAG_AUTOCLEAN}" -gt 0 ]; then
       output_proxy_executioner "Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
       output_proxy_executioner "${PACKAGE_MANAGER_AUTOCLEAN}" "COMMAND"
@@ -745,10 +754,10 @@ add_program()
     flag_privileges="$(deduce_privileges "${matched_keyname}")"
     # Process FLAG_SKIP_PRIVILEGES_CHECK. If 1 skip privilege check
     if [ "${FLAG_SKIP_PRIVILEGES_CHECK}" -eq 0 ] && [ "${flag_privileges}" -ne 2 ]; then
-      if [ "${EUID}" -eq 0 ] && [ "${flag_privileges}" -eq 1 ]; then
+      if isRoot && [ "${flag_privileges}" -eq 1 ]; then
         output_proxy_executioner "$1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." "ERROR"
       fi
-      if [ "${EUID}" -ne 0 ] && [ "${flag_privileges}" -eq 0 ]; then
+      if ! isRoot && [ "${flag_privileges}" -eq 0 ]; then
         output_proxy_executioner "$1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." "ERROR"
       fi
     fi

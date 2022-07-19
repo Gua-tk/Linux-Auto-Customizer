@@ -30,7 +30,7 @@ add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
   create_file "${FUNCTIONS_FOLDER}/$2" "$1" "$3"
   # If we are root apply permission to the file
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     apply_permissions "${FUNCTIONS_FOLDER}/$2"
   fi
 
@@ -53,7 +53,7 @@ add_bash_initialization() {
   # Write code to bash initializations folder with the name of the feature we want to install
   create_file "${INITIALIZATIONS_FOLDER}/$2" "$1" "$3"
   # If we are root apply permission to the file
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     apply_permissions "${INITIALIZATIONS_FOLDER}/$2"
   fi
 
@@ -109,7 +109,7 @@ autostart_program() {
     # If it is a file, make it autostart
     if [ -f "$1" ]; then
       cp "$1" "${AUTOSTART_FOLDER}"
-      if [ ${EUID} -eq 0 ]; then
+      if isRoot; then
         apply_permissions "$1"
       fi
     else
@@ -120,12 +120,12 @@ autostart_program() {
   echo "${AUTOSTART_FOLDER}"
     if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]; then
       cp "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
-      if [ ${EUID} -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
       fi
     elif [ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]; then
       cp "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
-      if [ ${EUID} -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
       fi
     else
@@ -154,7 +154,7 @@ custom_permission()
 apply_permissions_recursively()
 {
   if [ -d "$1" ]; then
-    if [ ${EUID} == 0 ]; then  # directory
+    if isRoot; then  # directory
       chgrp -R "${SUDO_USER}" "$1"
       chown -R "${SUDO_USER}" "$1"
     fi
@@ -238,7 +238,7 @@ copy_launcher() {
 # - Argument 2: Name of the command that will be added to your environment to execute the previous binary.
 # - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2.
 create_links_in_path() {
-  if [ ${EUID} == 0 ]; then  # user
+  if isRoot; then  # user
     local -r directory="${ALL_USERS_PATH_POINTED_FOLDER}"
   else
     local -r directory="${PATH_POINTED_FOLDER}"
@@ -258,7 +258,7 @@ create_links_in_path() {
 # Argument 1: The string of the text representing the content of the desktop launcher that we want to create.
 # Argument 2: The name of the launcher. This argument can be any name with no consequences.
 create_manual_launcher() {
-  if [ ${EUID} == 0 ]; then  # root
+  if isRoot; then  # root
     create_file "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
     cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
   else
@@ -461,7 +461,7 @@ download() {
   # Check if it is cached
   if [ -f "${CACHE_FOLDER}/${file_name}" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
     cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
-    if [ "${EUID}" -eq 0 ]; then
+    if isRoot; then
         apply_permissions "${dir_name}/${file_name}"
     fi
   else  # Not cached or we do not use cache: we have to download
@@ -473,19 +473,19 @@ download() {
       # Move to cache folder to construct cache
       mv "${TEMP_FOLDER}/${file_name}" "${CACHE_FOLDER}/${file_name}"
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${CACHE_FOLDER}/${file_name}"
       fi
       # Copy file to the desired place of download
       cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${dir_name}/${file_name}"
       fi
     else
       # Move directly to the desired place of download
       mv "${TEMP_FOLDER}/${file_name}" "${dir_name}/${file_name}"
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${dir_name}/${file_name}"
       fi
     fi
@@ -800,7 +800,7 @@ create_WSL2_dynamic_launcher() {
 
   # Ensure convert dependency is present
   if ! which convert &>/dev/null; then
-    if [ $EUID != 0 ]; then
+    if ! isRoot; then
       echo "ERROR: Icon could not be created due to convert is not installed, install it or run again with sudo"
       return
     else
@@ -1087,13 +1087,13 @@ generic_install_movefiles() {
     if echo "${origin_files}" | grep -q '\*' ; then
       for filename in "${BIN_FOLDER}/$1/"${origin_files}; do
         mv -f "${filename}" "${destiny_directory}"
-        if [ ${EUID} -eq 0 ]; then
+        if isRoot; then
           apply_permissions "${filename}"
         fi
       done
     else
       mv "${BIN_FOLDER}/$1/${origin_files}" "${destiny_directory}"
-      if [ ${EUID} -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${destiny_directory}/${origin_files}"
       fi
     fi 
@@ -1111,7 +1111,7 @@ generic_install_dependencies() {
 
   # Other dependencies to install with the package manager before the main package of software if present
   local -r packagedependencies="$1_packagedependencies[*]"
-  if [ "${EUID}" -ne 0 ]; then
+  if ! isRoot; then
     if [ -n "${!packagedependencies}" ]; then
       output_proxy_executioner "$1 has this dependencies to install with the package manager: ${!packagedependencies} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
       return
@@ -1135,7 +1135,7 @@ generic_install_clone() {
   if [ -d "${CACHE_FOLDER}/$1_repository" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
     rm -Rf "${BIN_FOLDER:?}/$1"
     cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
-    if [ "${EUID}" -eq 0 ]; then
+    if isRoot; then
       apply_permissions_recursively "${BIN_FOLDER}/$1"
     fi
   else  # Not cached or we do not use cache: we have to download
@@ -1153,7 +1153,7 @@ generic_install_clone() {
       cp -r "${TEMP_FOLDER}/$1_repository" "${CACHE_FOLDER}"
       rm -Rf "${TEMP_FOLDER}/$1_repository"
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions_recursively "${CACHE_FOLDER}/$1_repository"
       fi
 
@@ -1161,7 +1161,7 @@ generic_install_clone() {
       rm -Rf "${BIN_FOLDER:?}/$1"
       # Copy file to the desired place of download
       cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions_recursively "${BIN_FOLDER}/$1"
       fi
     else
@@ -1172,7 +1172,7 @@ generic_install_clone() {
       rm -Rf "${TEMP_FOLDER}/$1_repository"
 
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions_recursively "${BIN_FOLDER}/$1"
       fi
     fi
@@ -1186,7 +1186,7 @@ generic_install_clone() {
 generic_install_packageManager() {
   # Name of the package names to be installed with the package manager if present
   local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
-  if [ "${EUID}" -ne 0 ]; then
+  if ! isRoot; then
     if [ ! -z "${!packagenames}" ]; then
       output_proxy_executioner "${CURRENT_INSTALLATION_KEYNAME} needs to install the following packages using the package manager: ${!packagenames} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
       return
@@ -1327,7 +1327,7 @@ generic_install_pythonVirtualEnvironment() {
   done
 
   # If we are root change permissions
-  if [ "${EUID}" -eq 0 ]; then
+  if isRoot; then
     apply_permissions_recursively "${BIN_FOLDER:?}/$1"
   fi
 }
@@ -1364,7 +1364,7 @@ generic_install_cloneRepositories() {
 data_and_file_structures_initialization() {
   output_proxy_executioner "Initializing data and file structures." "INFO"
 
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
       if ! users | grep -q "Android"; then
         adduser --gecos "" --disabled-password "Android"
@@ -1402,7 +1402,7 @@ data_and_file_structures_initialization() {
 
   # Initialize whoami file
   if [ "${OS_NAME}" == "WSL2" ]; then
-    if [ ${EUID} != 0 ]; then
+    if ! isRoot; then
       username_wsl2="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' 2> /dev/null | sed -e 's/\r//g')"
       if [ -z "${username_wsl2}" ]; then
         echo "ERROR: The user of Windows could not have been captured"
@@ -1440,7 +1440,7 @@ data_and_file_structures_initialization() {
   # We source from the bashrc of the current user or all the users depending on out permissions with priority
   # in being sourced from BASHRC_ALL_USERS_PATH
   if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}" &>/dev/null; then
-    if [ "${EUID}" == 0 ]; then
+    if isRoot; then
       echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
       if grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}" &>/dev/null; then
         remove_line "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
@@ -1461,7 +1461,7 @@ data_and_file_structures_initialization() {
 # - Description: Update the system using $DEFAULT_PACKAGE_MANAGER -y update or $DEFAULT_PACKAGE_MANAGER -y upgrade depending a
 # - Permissions: Can be called as root or user but user will not do anything.
 pre_install_update() {
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     if [ "${FLAG_UPGRADE}" -gt 0 ]; then
       output_proxy_executioner "Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
       output_proxy_executioner "${PACKAGE_MANAGER_UPDATE}" "COMMAND"

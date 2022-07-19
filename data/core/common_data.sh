@@ -205,7 +205,7 @@ declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum" "pkg")
 ########################################################################################################################
 
 # User variables
-if [ "${EUID}" != 0 ]; then
+if ! isRoot; then
   if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
     declare -r HOME_FOLDER="/home/$(whoami)"
   elif [ "${OS_NAME}" == "WSL2" ]; then
