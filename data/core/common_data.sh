@@ -426,7 +426,6 @@ declare feature_keynames=(
   "apache2"
   "ardour"
   "aspell"
-  "atom"
   "audacity"
   "AutoFirma"
   "axel"

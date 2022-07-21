@@ -308,7 +308,8 @@ ant_arguments=("ant" "apache_ant")
 ant_commentary="Tool to automatize repetitive tasks, usually during the compilation, building and deployment phase of the software development"
 ant_bashfunctions=("ant.sh")
 ant_binariesinstalledpaths=("bin/ant;ant")
-ant_compressedfileurl="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
+ant_downloadKeys=("bundle")
+ant_bundle_URL="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
 ant_flagsoverride="1;;;;;"
 
 anydesk_name="Anydesk"
@@ -321,7 +322,8 @@ anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")
 anydesk_bashfunctions=("anydesk.sh")
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
-anydesk_compressedfileurl="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
+anydesk_downloadKeys=("bundle")
+anydesk_bundle_URL="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
 anydesk_launcherkeynames=("default")
 
 apache2_name="Apache httpd server project"
@@ -356,18 +358,6 @@ aspell_arguments=("aspell")
 aspell_commentary="Free and open source spell checker in Linux. Can be used to check spelling from provided files or stdin"
 aspell_packagenames=("aspell-es" "aspell-ca")
 
-atom_name="Atom"
-atom_description="Text and source code editor"
-atom_version="1.59.0"
-atom_tags=("IDE" "programming")
-atom_systemcategories=("IDE" "TextTools" "TextEditor" "Development")
-atom_arguments=("atom")
-atom_commentary="Lightweight"
-atom_launcherkeynames=("default")
-atom_default_exec="atom"
-atom_launchernames=("atom")  # TODO @AleixMT extract launcher data
-atom_packageurls=("https://atom.io/download/deb")
-
 audacity_name="Audacity"
 audacity_description="Digital audio editor and recording"
 audacity_version="2.3.3"
@@ -378,7 +368,7 @@ audacity_commentary="You can create and edit your own music"
 audacity_launcherkeynames=("default")
 audacity_default_exec="audacity"
 audacity_bashfunctions=("audacity.sh")
-audacity_launchernames=("audacity") # TODO @AleixMT imort launcher data
+# TODO @AleixMT import launcher data audacity_launchernames=("audacity")
 audacity_packagenames=("audacity" "audacity-data")
 
 # TODO: Tested
@@ -485,7 +475,7 @@ caffeine_name="Caffeine"
 caffeine_description="Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the sleep power saving mode."
 caffeine_version="System dependent"
 caffeine_tags=("utility")
-caffeine_systemcategories=("System" "Utility")
+caffeine_systemcategories=("System" "Utility" "Settings")
 caffeine_arguments=("caffeine" "coffee" "cafe")
 caffeine_commentary="You will never see a lock screen again. "
 caffeine_launchernames=("caffeine-indicator")  # TODO @AleixMT extract launcher data
@@ -552,7 +542,7 @@ cheat_name="Cheat"
 cheat_description="Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages"
 cheat_version="Cheat creator dependent"
 cheat_tags=("terminal" "utility" "info" "develop" "scripts")
-cheat_systemcategories=("Terminal" "Utility")
+cheat_systemcategories=("Terminal" "Utility" "ConsoleOnly")
 cheat_arguments=("cheat" "cht.sh")
 cheat_commentary="Literally cheats for programming"
 cheat_packagedependencies=("curl")
@@ -652,7 +642,6 @@ cmake_systemcategories=("Development" "Utility")
 cmake_commentary="Automatize compilation of C / C++ projects"
 cmake_arguments=("cmake" "c_make")
 cmake_binariesinstalledpaths=("bin/ccmake;ccmake" "bin/cmake;cmake" "bin/cmake-gui;cmake-gui" "bin/cpack;cpack" "bin/ctest;ctest")
-cmake_compressedfileurl="https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-linux-x86_64.tar.gz"
 cmake_downloadKeys=("bundle")
 cmake_bundle_URL="https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-linux-x86_64.tar.gz"
 
@@ -807,7 +796,8 @@ dbeaver_tags=("bashfunctions" "bash" "gitbashfunctions")
 dbeaver_systemcategories=("IDE" "Database" "Network" "Development")
 dbeaver_arguments=("dbeaver")
 dbeaver_commentary="Manage several instances of SQL databases"
-dbeaver_packageurls=("https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb")
+dbeaver_downloadKeys=("bundle")
+dbeaver_bundle_URL="https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb"
 dbeaver_package_manager_override="apt-get"
 # TODO: dbeaver_launchernames=("dbeaver-ce")
 dbeaver_launcherkeynames=("defaultLauncher")
@@ -855,7 +845,8 @@ docker_tags=("development" "containerization" "system")
 docker_systemcategories=("System" "Utility")
 docker_arguments=("docker")
 docker_commentary="Application isolation"
-docker_compressedfileurl="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
+docker_downloadKeys=("bundle")
+docker_bundle_URL="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 
 documents_name="Google Documents"
@@ -890,7 +881,8 @@ dropbox_commentary="Web file hosting"
 dropbox_packagenames=("dropbox")
 # TODO: dropbox_launchernames=("dropbox")
 dropbox_packagedependencies=("python3-gpg")
-dropbox_packageurls=("https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb")
+dropbox_downloadKeys=("bundle")
+dropbox_bundle_URL="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
 dropbox_package_manager_override="apt-get"
 
 # TODO @AleixMT wontfix, trim and test. if not working will be deleted
@@ -1579,7 +1571,8 @@ ideau_commentary="Integrated development environment written in Java for develop
 ideau_associatedfiletypes=("text/x-java")
 ideau_bashfunctions=("ideau.sh")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
-ideau_compressedfileurl="https://download.jetbrains.com/idea/ideaIU-2021.3.tar.gz"
+ideau_downloadKeys=("bundle")
+ideau_bundle_URL="https://download.jetbrains.com/idea/ideaIU-2021.3.tar.gz"
 ideau_launcherkeynames=("launcher")
 ideau_launcher_exec="ideau %f"
 ideau_launcher_windowclass="jetbrains-idea"
@@ -1637,11 +1630,17 @@ ips_arguments=("ips")
 ips_commentary="A terminal shortcut"
 ips_bashfunctions=("ips.sh")
 
-iqmol_installationtype="packageinstall"
+iqmol_name="IQmol"
+iqmol_description="Molecule visualizer"
+iqmol_version="System dependent"
+# TODO iqmol_tags=()
+# TODO iqmol_systemcategories=()
 iqmol_arguments=("iqmol")
 iqmol_bashfunctions=("iqmol.sh")
-iqmol_downloads=("http://www.iqmol.org/images/icon.png;iqmol_icon.png")
+# iqmol_downloads=("http://www.iqmol.org/images/icon.png;iqmol_icon.png")
 iqmol_description="Program to visualize molecular data"
+iqmol_launcherkeynames=("defaultLauncher")
+iqmol_defaultLauncher_exec="iqmol"
 iqmol_launchercontents=("
 [Desktop Entry]
 Categories=Visualization;
@@ -1660,7 +1659,9 @@ TryExec=iqmol
 Type=Application
 Version=1.0
 ")
-iqmol_packageurls=("http://www.iqmol.org/download.php?get=iqmol_2.14.deb")
+iqmol_downloadKeys=("bundle")
+iqmol_bundle_URL="http://www.iqmol.org/download.php?get=iqmol_2.14.deb"
+
 iqmol_package_manager_override="apt-get"
 iqmol_readmeline="| IQmol | ${iqmol_description} | Command \`iqmol\`, silent alias, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
@@ -1685,11 +1686,15 @@ java_binariesinstalledpaths=("bin/java;java" "bin/keytool;keytool")
 java_downloadKeys=("bundle")
 java_bundle_URL="https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u262-b10/openlogic-openjdk-8u262-b10-linux-x64.tar.gz"
 
-julia_installationtype="userinherit"
+julia_name="Julia and IJulia"
+julia_description="High-level, high-performance dynamic language for technical computing"
+julia_version="julia-1.0.5-linux-x86_64"
+# TODO julia_tags=()
+# TODO julia_systemcategories=()
 julia_arguments=("julia")
 julia_binariesinstalledpaths=("bin/julia;julia")
-julia_compressedfileurl="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
-julia_description="High-level, high-performance dynamic language for technical computing"
+julia_downloadKeys=("bundle")
+julia_bundle_URL="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
 julia_launchercontents=("
 [Desktop Entry]
 Name=Julia
@@ -1901,18 +1906,25 @@ mahjongg_launcherkeynames=("default")
 mahjongg_default_exec="gnome-mahjongg"
 mahjongg_packagenames=("gnome-mahjongg")
 
-matlab_installationtype="userinherit"
+matlab_name="Matlab"
+matlab_description="IDE + programming language specialized in matrix operations"
+matlab_version="Matlab dependent"
+# TODO matlab_tags=()
+# TODO matlab_systemcategories=()
 matlab_arguments=("matlab" "mat_lab" "math_works")
 # Matlab can only be downloaded by creating an account, making it impossible to download the file programmatically.
 # Instead, download the linux installation file of matlab and manually cache it into customizer cache in order to
 # install matlab. To do so, put this file into $CACHE_FOLDER and rename it to "matlab_compressed_file"
-matlab_compressedfileurl="https://es.mathworks.com/downloads/web_downloads"
+matlab_downloadKeys=("bundle")
+matlab_bundle_URL="https://es.mathworks.com/downloads/web_downloads"
+
 # It is an installer. Decompress in temporal folder to install and remove afterwards
 matlab_compressedfilepathoverride="${TEMP_FOLDER}"
 # When following the graphical installation of matlab, install it in $BIN_FOLDER/matlab in order to find the executables
 # when creating these links in the path.
 matlab_binariesinstalledpaths=("bin/matlab;matlab" "bin/mex;mex")
-matlab_downloads=('https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png;matlab_icon.svg')
+matlab_launcherkeynames=("defaultLauncher")
+matlab_defaultLauncher_exec="matlab -desktop"
 matlab_launchercontents=(
 "[Desktop Entry]
 Version=1.0
@@ -1924,7 +1936,6 @@ Terminal=false
 ")
 matlab_manualcontentavailable="0;1;0"
 matlab_bashfunctions=("matlab.sh")
-matlab_readmeline="| Matlab | IDE + programming language specialized in matrix operations | command \`matlab\`, \'mex\' ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [x] Debian</li></ul> |"
 install_matlab_mid()
 {
   "${TEMP_FOLDER}/matlab/install"  # Execute installer
@@ -2283,7 +2294,6 @@ libreoffice_version="System dependent"
 # TODO libreoffice_systemcategories=()
 libreoffice_arguments=("open_office" "office" "libre_office")
 libreoffice_packagenames=("libreoffice-base-core" "libreoffice-impress" "libreoffice-calc" "libreoffice-math" "libreoffice-common" "libreoffice-ogltrans" "libreoffice-core" "libreoffice-pdfimport" "libreoffice-draw" "libreoffice-style-breeze" "libreoffice-gnome" "libreoffice-style-colibre" "libreoffice-gtk3" "libreoffice-style-elementary" "libreoffice-help-common" "libreoffice-style-tango" "libreoffice-help-en-us" "libreoffice-writer")
-#openoffice_packageurls=("https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.9/binaries/en-US/Apache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.9%2Fbinaries%2Fen-US%2FApache_OpenOffice_4.1.9_Linux_x86-64_install-deb_en-US.tar.gz%2Fdownload&ts=1614201028")
 # TODO libreoffice_launchernames=("libreoffice-impress" "libreoffice-calc" "libreoffice-draw" "libreoffice-math" "libreoffice-startcenter" "libreoffice-writer")  # "libreoffice-xsltfilter"
 
 opensshServer_name="openssh-server"
@@ -2470,11 +2480,17 @@ pluma_packagenames=("pluma")
 pluma_launcherkeynames=("defaultLauncher")
 pluma_defaultLauncher_exec="pluma"
 
-postman_installationtype="userinherit"
+postman_name="=Postman"
+postman_description="Application to maintain and organize collections of REST API calls"
+postman_version="System dependent"
+# TODO postman_tags=()
+# TODO postman_systemcategories=()
 postman_arguments=("postman")
 postman_binariesinstalledpaths=("Postman;postman")
-postman_compressedfileurl="https://dl.pstmn.io/download/latest/linux64"
-postman_description="Application to maintain and organize collections of REST API calls"
+postman_downloadKeys=("bundle")
+postman_bundle_URL="https://dl.pstmn.io/download/latest/linux64"
+postman_launcherkeynames=("defaultLauncher")
+postman_defaultLauncher_exec="postman"
 postman_launchercontents=("
 [Desktop Entry]
 Encoding=UTF-8
@@ -2486,7 +2502,6 @@ Terminal=false
 Type=Application
 Categories=Development;
 ")
-postman_readmeline="| Postman | ${postman_description} | Command \`postman\`, desktop launcher and dashboard launcher  ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 presentation_name="Google Presentation"
 presentation_version="Google dependent"
@@ -2565,7 +2580,8 @@ pycharmpro_icon="pycharmpro.png"
 pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharmpro_bashfunctions=("pycharmpro.sh")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
-pycharmpro_compressedfileurl="https://download.jetbrains.com/python/pycharm-professional-2021.3.tar.gz"
+pycharmpro_downloadKeys=("bundle")
+pycharmpro_bundle_URL="https://download.jetbrains.com/python/pycharm-professional-2021.3.tar.gz"
 pycharmpro_launcherkeynames=("launcher")
 pycharmpro_launcher_exec="pycharmpro %F"
 pycharmpro_launcher_windowclass="jetbrains-pycharmpro"
@@ -2573,12 +2589,16 @@ pycharmpro_launcher_actionkeynames=("newwindow")
 pycharmpro_launcher_newwindow_name="Pycharm Professional New Window"
 pycharmpro_launcher_newwindow_exec="pycharmpro"
 
-pypy3_installationtype="userinherit"
+pypy3_name="pypy3"
+pypy3_description="Faster interpreter for the Python3 programming language"
+pypy3_version="System dependent"
+# TODO pypy3_tags=()
+# TODO pypy3_systemcategories=()
 pypy3_arguments=("pypy3" "pypy")
 pypy3_binariesinstalledpaths=("bin/pypy3;pypy3" "bin/pip3.6;pypy3-pip")
-pypy3_compressedfileurl="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
+pypy3_downloadKeys=("bundle")
+pypy3_bundle_URL="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
 pypy3_manualcontentavailable="0;1;0"
-pypy3_readmeline="| pypy3 | Faster interpreter for the Python3 programming language | Commands \`pypy3\` and \`pypy3-pip\` in the PATH || <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 pypy3_packagedependencies=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
 # Installs pypy3 dependencies, pypy3 and basic subsystems (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 install_pypy3_mid() {
@@ -3070,7 +3090,8 @@ teamviewer_version="System dependent"
 # TODO teamviewer_systemcategories=()
 teamviewer_arguments=("teamviewer")
 # TODO teamviewer_launchernames=("com.teamviewer.TeamViewer")
-teamviewer_packageurls=("https://download.teamviewer.com/download/linux/teamviewer_amd64.deb")
+teamviewer_downloadKeys=("bundle")
+teamviewer_bundle_URL="https://download.teamviewer.com/download/linux/teamviewer_amd64.deb"
 teamviewer_package_manager_override="apt-get"
 teamviewer_launcherkeynames=("defaultLauncher")
 teamviewer_defaultLauncher_exec="teamviewer"
@@ -3361,7 +3382,8 @@ virtualbox_bashfunctions=("virtualbox.sh")
 virtualbox_launchernames=("virtualbox")
 virtualbox_packagedependencies=("make" "gcc" "perl" "python" "build-essential" "dkms" "libsdl1.2debian" "virtualbox-guest-utils" "libqt5printsupport5" "libqt5x11extras5" "libcurl4" "virtualbox-guest-dkms" "linux-headers-$(uname -r)" "libqt5opengl5" "linux-headers-generic" "linux-source" "linux-generic" "linux-signed-generic")
 virtualbox_packagenames=("virtualbox-6.1")
-virtualbox_packageurls=("https://download.virtualbox.org/virtualbox/6.1.28/virtualbox-6.1_6.1.28-147628~Ubuntu~eoan_amd64.deb")
+virtualbox_downloadKeys=("bundle")
+virtualbox_bundle_URL="https://download.virtualbox.org/virtualbox/6.1.28/virtualbox-6.1_6.1.28-147628~Ubuntu~eoan_amd64.deb"
 virtualbox_package_manager_override="apt-get"
 virtualbox_launcherkeynames=("defaultLauncher")
 virtualbox_defaultLauncher_exec="virtualbox"
