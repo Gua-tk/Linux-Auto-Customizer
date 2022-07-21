@@ -1858,12 +1858,17 @@ latex_packagedependencies=("perl-tk" )
 latex_packagenames=("texlive-latex-extra" "texmaker" "perl-tk")
 latex_readmeline="| LaTeX | ${latex_description} | Command \`tex\` (LaTeX compiler) and \`texmaker\` (LaTeX IDE), desktop launchers for \`texmaker\` and LaTeX documentation ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-lmms_installationtype="packagemanager"
+lmms_name="lmms"
+lmms_description="Software for making music"
+lmms_version="System dependent"
+# TODO lmms_tags=()
+# TODO lmms_systemcategories=()
 lmms_arguments=("lmms")
 lmms_bashfunctions=("lmms.sh")
 lmms_packagenames=("lmms")
-lmms_launchernames=("lmms")
-lmms_readmeline="| lmms | Software for making music | command \`lmms\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+# TODO lmms_launchernames=("lmms")
+lmms_launcherkeynames=("defaultLauncher")
+lmms_defaultLauncher_exec="lmms"
 
 loc_name="Function loc"
 loc_description="Counts lines of code"
