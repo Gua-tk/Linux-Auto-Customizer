@@ -813,17 +813,17 @@ dbeaver_package_manager_override="apt-get"
 dbeaver_launcherkeynames=("defaultLauncher")
 dbeaver_defaultLauncher_exec="dbeaver"
 
-dconf_editor_name="dconf-editor"
-dconf_editor_description="Editor settings"
-dconf_editor_version="1.0"
-dconf_editor_tags=("editor" "settings")
-dconf_editor_systemcategories=("System" "Utility" "Settings" "GNOME" "DesktopSettings")
-dconf_editor_commentary="Edit system environment variables"
-dconf_editor_arguments=("dconf_editor" "dconf")
-# TODO: dconf_editor_launchernames=("ca.desrt.dconf-editor")
-dconf_editor_launcherkeynames=("defaultLauncher")
-dconf_editor_defaultLauncher_exec="dconf-editor"
-dconf_editor_packagenames=("dconf-editor")
+dconfEditor_name="dconf-editor"
+dconfEditor_description="Editor settings"
+dconfEditor_version="1.0"
+dconfEditor_tags=("editor" "settings")
+dconfEditor_systemcategories=("System" "Utility" "Settings" "GNOME" "DesktopSettings")
+dconfEditor_commentary="Edit system environment variables"
+dconfEditor_arguments=("dconf_editor" "dconf")
+# TODO: dconfEditor_launchernames=("ca.desrt.dconf-editor")
+dconfEditor_launcherkeynames=("defaultLauncher")
+dconfEditor_defaultLauncher_exec="dconf-editor"
+dconfEditor_packagenames=("dconf-editor")
 
 dia_name="Dia"
 dia_description="Graph and relational"
@@ -1278,13 +1278,13 @@ github_bashfunctions=("github.sh")
 github_launcherkeynames=("default")
 github_default_exec="xdg-open https://github.com/"
 
-github_desktop_installationtype="packageinstall"
-github_desktop_arguments=("github_desktop")
-github_desktop_launchernames=("github-desktop")
-github_desktop_packagenames=("github")
-github_desktop_packageurls=("https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb")
-github_desktop_package_manager_override="apt-get"
-github_desktop_readmeline="| GitHub Desktop | GitHub Application | Command \`github-desktop\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+githubDesktop_installationtype="packageinstall"
+githubDesktop_arguments=("github_desktop")
+githubDesktop_launchernames=("github-desktop")
+githubDesktop_packagenames=("github")
+githubDesktop_packageurls=("https://github.com/shiftkey/desktop/releases/download/release-2.6.3-linux1/GitHubDesktop-linux-2.6.3-linux1.deb")
+githubDesktop_package_manager_override="apt-get"
+githubDesktop_readmeline="| GitHub Desktop | GitHub Application | Command \`github-desktop\` || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 gitk_installationtype="packagemanager"
 gitk_arguments=("gitk")
@@ -1752,17 +1752,17 @@ Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;P
 julia_readmeline="| Julia and IJulia | ${julia_description} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 # TODO @AleixMT change keyname to single word such jupyter
-jupyter_lab_installationtype="pythonvenv"
-jupyter_lab_arguments=("jupyter_lab" "jupyter" "lab")
-jupyter_lab_bashfunctions=("jupyter_lab.sh")
-jupyter_lab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
-jupyter_lab_packagedependencies=("libkrb5-dev")
-jupyter_lab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
-jupyter_lab_description="IDE with a lot of possible customization and usable for different programming languages."
-jupyter_lab_launchercontents=("
+jupyterLab_installationtype="pythonvenv"
+jupyterLab_arguments=("jupyter_lab" "jupyter" "lab")
+jupyterLab_bashfunctions=("jupyter_lab.sh")
+jupyterLab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
+jupyterLab_packagedependencies=("libkrb5-dev")
+jupyterLab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
+jupyterLab_description="IDE with a lot of possible customization and usable for different programming languages."
+jupyterLab_launchercontents=("
 [Desktop Entry]
 Categories=IDE; text_editor;
-Comment=${jupyter_lab_description}
+Comment=${jupyterLab_description}
 Encoding=UTF-8
 GenericName=jupyter-lab
 Keywords=jupyter; programming; text; webpage;
@@ -1773,14 +1773,14 @@ StartupWMClass=jupyter
 Terminal=false
 Type=Application
 Version=1.0
-Icon=${BIN_FOLDER}/jupyter_lab/share/icons/hicolor/scalable/apps/notebook.svg
+Icon=${BIN_FOLDER}/jupyterLab/share/icons/hicolor/scalable/apps/notebook.svg
 Exec=jupyter-lab &
 ")
-jupyter_lab_manualcontentavailable="1;1;0"
-jupyter_lab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
-jupyter_lab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
-jupyter_lab_readmeline="| Jupyter Lab | ${jupyter_lab_description} | alias \`lab\`, commands \`jupyter-lab\`, \`jupyter-lab\`, \`ipython\`, \`ipython3\`, desktop launcher and dashboard launcher. Recognized programming languages: Python, Ansible, Bash, IArm, Kotlin, PowerShell, Vim. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-install_jupyter_lab_pre() {
+jupyterLab_manualcontentavailable="1;1;0"
+jupyterLab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
+jupyterLab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
+jupyterLab_readmeline="| Jupyter Lab | ${jupyterLab_description} | alias \`lab\`, commands \`jupyter-lab\`, \`jupyter-lab\`, \`ipython\`, \`ipython3\`, desktop launcher and dashboard launcher. Recognized programming languages: Python, Ansible, Bash, IArm, Kotlin, PowerShell, Vim. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+install_jupyterLab_pre() {
   local -r dependencies=("npm" "R" "julia")
   for dependency in "${dependencies[@]}"; do
 
@@ -1790,12 +1790,12 @@ install_jupyter_lab_pre() {
     fi
   done
 }
-install_jupyter_lab_mid() {
+install_jupyterLab_mid() {
   # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
-  "${BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension install @telamonian/theme-darcula
-  "${BIN_FOLDER}/jupyter_lab/bin/jupyter" labextension enable @telamonian/theme-darcula
+  "${BIN_FOLDER}/jupyterLab/bin/jupyter" labextension install @telamonian/theme-darcula
+  "${BIN_FOLDER}/jupyterLab/bin/jupyter" labextension enable @telamonian/theme-darcula
 
-  "${BIN_FOLDER}/jupyter_lab/bin/jupyter" lab build
+  "${BIN_FOLDER}/jupyterLab/bin/jupyter" lab build
 
   # ijs legacy install
   npm config set prefix "${HOME_FOLDER}/.local"
@@ -1816,10 +1816,10 @@ install_jupyter_lab_mid() {
   Pkg.add("IJulia")
   Pkg.build("IJulia")'
 }
-uninstall_jupyter_lab_pre() {
+uninstall_jupyterLab_pre() {
   :
 }
-uninstall_jupyter_lab_mid() {
+uninstall_jupyterLab_mid() {
 
   # install jupyter-lab dependencies down
   #julia -e '#!/.local/bin/julia
@@ -2226,18 +2226,18 @@ notflix_packagedependencies=("curl" "vlc")
 notflix_bashfunctions=("notflix.sh")
 notflix_readmeline="| Function \`notflix\` | Stream title movies via console magnet tracking | Function \`notflix\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-obs_studio_name="Open Broadcaster Software Studio"
-obs_studio_commentary="The basic tool for a streamer"
-obs_studio_description="Streaming and recording software"
-obs_studio_version="System dependent"
-obs_studio_tags=("stream" "online")
-obs_studio_systemcategories=("Utility" "Recorder")
-obs_studio_arguments=("obs_studio" "obs")
-# TODO port info obs_studio_launchernames=("com.obsproject.Studio")
-obs_studio_launcherkeynames=("defautLauncher")
-obs_studio_defaultLauncher_exec="obs"
-obs_studio_packagedependencies=("ffmpeg")
-obs_studio_packagenames=("obs-studio")
+obsStudio_name="Open Broadcaster Software Studio"
+obsStudio_commentary="The basic tool for a streamer"
+obsStudio_description="Streaming and recording software"
+obsStudio_version="System dependent"
+obsStudio_tags=("stream" "online")
+obsStudio_systemcategories=("Utility" "Recorder")
+obsStudio_arguments=("obs_studio" "obs")
+# TODO port info obsStudio_launchernames=("com.obsproject.Studio")
+obsStudio_launcherkeynames=("defautLauncher")
+obsStudio_defaultLauncher_exec="obs"
+obsStudio_packagedependencies=("ffmpeg")
+obsStudio_packagenames=("obs-studio")
 
 octave_installationtype="packagemanager"
 octave_arguments=("octave" "gnu_octave" "octave_cli")
@@ -2283,13 +2283,13 @@ openssl102_arguments=("openssl102")
 opensll102_package_manager_override="apt-get"
 openssl102_readmeline="| openssl1.0 | RStudio dependency | Used for running rstudio ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-openssh_server_installationtype="packagemanager"
-openssh_server_arguments=("openssh_server")
-openssh_server_packagenames=("openssh-server")
-openssh_server_bashfunctions=("openssh_server.sh")
-openssh_server_readmeline="| openssh-server | SSH server | Used for running an SSH server ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-openssh_server_manualcontentavailable="0;0;1"
-openssh_server_conf=(
+opensshServer_installationtype="packagemanager"
+opensshServer_arguments=("openssh_server")
+opensshServer_packagenames=("openssh-server")
+opensshServer_bashfunctions=("openssh_server.sh")
+opensshServer_readmeline="| openssh-server | SSH server | Used for running an SSH server ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+opensshServer_manualcontentavailable="0;0;1"
+opensshServer_conf=(
 "Port 3297  # Change default port for ssh server to listen"
 "LogLevel VERBOSE  # Verbose on logs"
 "LoginGraceTime 60  # Time allowed for a successful connection"
@@ -2305,15 +2305,15 @@ openssh_server_conf=(
 "PubkeyAuthentication yes  # Used to accept login by public keys infrastructure"
 "RSAAuthentication yes  # Allow authentication with RSA key generation algorithm"
 )
-install_openssh_server_post()
+install_opensshServer_post()
 {
-  for conf_element in "${openssh_server_conf[@]}"; do
+  for conf_element in "${opensshServer_conf[@]}"; do
     append_text "${conf_element}" "${SSH_GLOBAL_CONF_PATH}"
   done
 }
-uninstall_openssh_server_post()
+uninstall_opensshServer_post()
 {
-  for conf_element in "${openssh_server_conf[@]}"; do
+  for conf_element in "${opensshServer_conf[@]}"; do
     remove_line "${conf_element}" "${SSH_GLOBAL_CONF_PATH}"
   done
 }
@@ -2578,7 +2578,7 @@ python3_readmeline="| Python3 | Interpreted, high-level and general-purpose prog
 
 R_installationtype="packagemanager"
 R_arguments=("R" "r_base")
-R_jupyter_lab_function=("
+R_jupyterLab_function=("
 install.packages('IRkernel')
 install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
                   repos = c('http://irkernel.github.io/',
@@ -2768,11 +2768,11 @@ sonarqube_binariesinstalledpaths=("bin/linux-x86-64/sonar.sh;sonar")
 sonarqube_compressedfileurl="https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.0.1.46107.zip"
 sonarqube_readmeline="| Sonarqube | Platform to evaluate source code | Command Icon Launcher ||  <ul><li>- [ ] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
-sonic_pi_installationtype="packagemanager"
-sonic_pi_arguments=("sonic_pi")
-sonic_pi_launchernames=("sonic-pi")
-sonic_pi_packagenames=("sonic-pi")
-sonic_pi_readmeline="| Sonic Pi | programming language that ouputs sounds as compilation product | Command \`sonic-pi\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+sonicPi_installationtype="packagemanager"
+sonicPi_arguments=("sonic_pi")
+sonicPi_launchernames=("sonic-pi")
+sonicPi_packagenames=("sonic-pi")
+sonicPi_readmeline="| Sonic Pi | programming language that ouputs sounds as compilation product | Command \`sonic-pi\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 soundcloud_arguments=("soudcloud")
 soundcloud_name="Soudcloud"
@@ -2929,9 +2929,9 @@ uninstall_sysmontask_mid() {
   :
 }
 
-system_fonts_installationtype="environmental"
-system_fonts_arguments=("system_fonts")
-system_fonts_bashinitializations=("
+systemFonts_installationtype="environmental"
+systemFonts_arguments=("system_fonts")
+systemFonts_bashinitializations=("
   # Check if gsettings command is available
   if ! command -v gsettings &> /dev/null
   then
@@ -2947,7 +2947,7 @@ system_fonts_bashinitializations=("
   # Inherited window titles
   gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
 ")
-system_fonts_readmeline="| Change default fonts | Sets pre-defined fonts to desktop environment. | A new set of fonts is updated in the system's screen. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
+systemFonts_readmeline="| Change default fonts | Sets pre-defined fonts to desktop environment. | A new set of fonts is updated in the system's screen. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 teamviewer_installationtype="packageinstall"
 teamviewer_arguments=("teamviewer")
@@ -3102,11 +3102,11 @@ traductor_launcherkeynames=("default")
 traductor_default_exec="xdg-open https://translate.google.com"
 traductor_description="Google Traductor opening in Browser"
 
-transmission_gtk_installationtype="packagemanager"
-transmission_gtk_arguments=("transmission_gtk" "transmission")
-transmission_gtk_launchernames=("transmission-gtk")
-transmission_gtk_packagenames=("transmission")
-transmission_gtk_readmeline="| Transmission | A set of lightweight Torrent client (in GUI, CLI and daemon form) | Executable \`transmission\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+transmission_installationtype="packagemanager"
+transmission_arguments=("transmission_gtk" "transmission")
+transmission_launchernames=("transmission-gtk")
+transmission_packagenames=("transmission")
+transmission_readmeline="| Transmission | A set of lightweight Torrent client (in GUI, CLI and daemon form) | Executable \`transmission\`, desktop launcher and dashboard launcher ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 trello_arguments=("trello")
 trello_name="Trello"
@@ -3238,7 +3238,11 @@ uninstall_wikit_mid() {
   npm remove wikit -g
 }
 
-xclip_installationtype="packagemanager"
+xclip_name="xclip"
+xclip_description="Utility for pasting."
+xclip_version="System dependent"
+xclip_tags=("paste")
+# TODO xclip_systemcategories=()
 xclip_arguments=("x_clip")
 xclip_packagenames=("xclip")
 xclip_readmeline="| \`xclip\` | Utility for pasting. | Command \`xclip\` || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
