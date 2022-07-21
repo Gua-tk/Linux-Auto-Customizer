@@ -1,0 +1,1 @@
+Alias to git add with completion

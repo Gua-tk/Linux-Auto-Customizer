@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 a_arguments=("a_function")
+add_arguments=("add" "add_function")
 
 
 vommit_arguments=("dummy_commit")

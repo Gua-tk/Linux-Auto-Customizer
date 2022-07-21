@@ -248,16 +248,6 @@
 
 ####################### UNHOLY LINE OF TESTING. UPWARDS IS TESTED, BELOW IS NOT ##############################
 
-
-add_name="Function add"
-add_description="Alias to git add with completion"
-add_version="1.0"
-add_tags=("gitbashfunctions" "bashfunctions" "git")
-add_systemcategories=("System" "Utility")
-add_arguments=("add" "add_function")
-add_commentary="A git terminal shortcut"
-add_bashfunctions=("add.sh")
-
 aircrackng_name="Aircrack-ng"
 aircrackng_description="Complete suite of security tools to assess WiFi network security"
 aircrackng_version="1.6"
