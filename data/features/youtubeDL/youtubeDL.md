@@ -1,0 +1,1 @@
+In the terminal use the command p `youtube-dl` to download links from YouTube.

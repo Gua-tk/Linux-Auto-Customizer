@@ -18,6 +18,7 @@
 - [x] Make dynamicLauncher deduce windowclass property from key name
 - [ ] AutoFirma should work without explicit decompression paths. 
 - [ ] Upgrade anticollisioner with number
+- [ ] In Keywords property of desktop launcher load feature keyname, feature arguments, feature keywords
 
 ### @AleixMT
 - [x] Create reading of external file in .customizer to load custom flags and variables
