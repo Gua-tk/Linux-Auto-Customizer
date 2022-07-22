@@ -461,33 +461,6 @@ c_commentary="cd and clear the screen"
 c_arguments=("c")
 c_bashfunctions=("c.sh")
 
-caffeine_name="Caffeine"
-caffeine_description="Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the sleep power saving mode."
-caffeine_version="System dependent"
-caffeine_tags=("utility")
-caffeine_systemcategories=("System" "Utility" "Settings")
-caffeine_arguments=("caffeine" "coffee" "cafe")
-caffeine_commentary="You will never see a lock screen again. "
-caffeine_launchernames=("caffeine-indicator")  # TODO @AleixMT extract launcher data
-caffeine_manualcontentavailable="1;0;1"
-caffeine_packagenames=("caffeine")
-install_caffeine_pre()
-{
-  apt-get purge -y caffeine
-}
-install_caffeine_post()
-{
-  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
-}
-uninstall_caffeine_pre()
-{
- :
-}
-uninstall_caffeine_post()
-{
- :
-}
-
 calibre_name="Calibre"
 calibre_description="e-book reader"
 calibre_version="System dependent"

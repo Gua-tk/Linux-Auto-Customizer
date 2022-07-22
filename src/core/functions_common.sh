@@ -249,6 +249,14 @@ load_feature_properties()
     # Load metadata of the feature if its .dat file exists
     if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh" ]; then
       source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh"
+
+      # If we find the property manual_content_available declared, we should import the function file too
+      local -r manualContentPointer="${CURRENT_INSTALLATION_KEYNAME}_manualcontentavailable"
+      if [ -n "${!manualContentPointer}" ]; then
+        if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.func.sh" ]; then
+          source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.func.sh"
+        fi
+      fi
     else
       output_proxy_executioner "Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh does not exist" "WARNING"
     fi
