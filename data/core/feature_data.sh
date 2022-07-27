@@ -1277,10 +1277,14 @@ gitPristine_tags=("git" "gitFunctions" "terminal")
 gitPristine_arguments=("pristine" "git_pristine")
 gitPristine_bashfunctions=("pristine.sh")
 
-gitprompt_installationtype="repositoryclone"
+gitprompt_name="gitprompt"
+gitprompt_description="Special prompt in git repositories"
+gitprompt_version="Google dependent"
+gitprompt_systemcategories=("ConsoleOnly")
+gitprompt_commentary="Send/Receive e-mails"
+gitprompt_tags=("git" "gitbashfunctions")
 gitprompt_arguments=("git_prompt")
 gitprompt_bashfunctions=("gitprompt.sh")
-gitprompt_readmeline="| gitprompt | Special prompt in git repositories | Command \`gitprompt\`|| <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 gitprompt_repositoryurl="https://github.com/magicmonty/bash-git-prompt.git"
 
 gmail_name="Gmail"
@@ -2627,12 +2631,16 @@ screenshots_screenshotfull_content="screenshot_full.sh"
 screenshots_binariesinstalledpaths=("screenshot_area.sh;scr-area" "screenshot_window.sh;scr-window" "screenshot_full.sh;scr-full")
 screenshots_packagedependencies=("gnome-screenshot" "xclip")
 
-sherlock_installationtype="repositoryclone"
+sherlock_name="Sherlock"
+sherlock_description="Tool to obtain linked social media accounts using user name"
+sherlock_version="1.0"
+sherlock_tags=("bashfunctions")
+sherlock_systemcategories=("System" "Utility" "ConsoleOnly")
 sherlock_arguments=("sherlock")
+sherlock_commentary=""
 sherlock_bashfunctions=("sherlock.sh")
 sherlock_repositoryurl="https://github.com/sherlock-project/sherlock.git"
 sherlock_manualcontentavailable="0;0;1"
-sherlock_readmeline="| Sherlock | Tool to obtain linked social media accounts using user name | Commands \`sherlock\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_sherlock_post() {
   python3 -m pip install -r "${BIN_FOLDER}/sherlock/requirements.txt"
 }
@@ -2860,7 +2868,6 @@ synaptic_default_windowclass="synaptic"
 synaptic_default_exec="synaptic"
 synaptic_default_ubuntuGetText="synaptic"
 
-sysmontask_installationtype="repositoryclone"
 sysmontask_name="Sysmontask"
 sysmontask_description="Control panel for linux"
 sysmontask_version="System dependent"
