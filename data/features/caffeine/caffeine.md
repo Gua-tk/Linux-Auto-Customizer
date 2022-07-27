@@ -1,0 +1,2 @@
+Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the sleep power saving mode.
+You will never see a lock screen again. Manually control activation of the screensaver and sleep mode

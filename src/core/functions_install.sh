@@ -750,7 +750,12 @@ NoDisplay=false"
     text+=$'\n'"X-Ubuntu-Gettext-Domain=${!overrideUbuntuGetText}"
   fi
 
-
+  # //RF Maybe deprecated?
+  # Override the OnlyShowIn over the default nothing
+  local -r overrideOnlyShowIn="${CURRENT_INSTALLATION_KEYNAME}_$1_OnlyShowIn[@]"
+  if [ ! -z "${!overrideOnlyShowIn}" ]; then
+    text+=$'\n'"OnlyShowIn=${!overrideOnlyShowIn}"
+  fi
 
   # Add actions for this particular launcher
   override_actionkeynames="${CURRENT_INSTALLATION_KEYNAME}_$1_actionkeynames[@]"

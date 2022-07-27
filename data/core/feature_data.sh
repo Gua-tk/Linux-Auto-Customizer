@@ -248,16 +248,6 @@
 
 ####################### UNHOLY LINE OF TESTING. UPWARDS IS TESTED, BELOW IS NOT ##############################
 
-
-add_name="Function add"
-add_description="Alias to git add with completion"
-add_version="1.0"
-add_tags=("gitbashfunctions" "bashfunctions" "git")
-add_systemcategories=("System" "Utility")
-add_arguments=("add" "add_function")
-add_commentary="A git terminal shortcut"
-add_bashfunctions=("add.sh")
-
 aircrackng_name="Aircrack-ng"
 aircrackng_description="Complete suite of security tools to assess WiFi network security"
 aircrackng_version="1.6"
@@ -470,33 +460,6 @@ c_systemcategories=("System" "Utility")
 c_commentary="cd and clear the screen"
 c_arguments=("c")
 c_bashfunctions=("c.sh")
-
-caffeine_name="Caffeine"
-caffeine_description="Simple indicator applet on Ubuntu panel that allows to temporarily prevent the activation of the screensaver, screen lock, and the sleep power saving mode."
-caffeine_version="System dependent"
-caffeine_tags=("utility")
-caffeine_systemcategories=("System" "Utility" "Settings")
-caffeine_arguments=("caffeine" "coffee" "cafe")
-caffeine_commentary="You will never see a lock screen again. "
-caffeine_launchernames=("caffeine-indicator")  # TODO @AleixMT extract launcher data
-caffeine_manualcontentavailable="1;0;1"
-caffeine_packagenames=("caffeine")
-install_caffeine_pre()
-{
-  apt-get purge -y caffeine
-}
-install_caffeine_post()
-{
-  wget -O - https://gist.githubusercontent.com/syneart/aa8f2f27a103a7f1e1812329fa192e65/raw/caffeine-indicator.patch | patch /usr/bin/caffeine-indicator
-}
-uninstall_caffeine_pre()
-{
- :
-}
-uninstall_caffeine_post()
-{
- :
-}
 
 calibre_name="Calibre"
 calibre_description="e-book reader"
