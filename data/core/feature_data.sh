@@ -2857,7 +2857,6 @@ systemFonts_oxygen_downloadPath="${FONTS_FOLDER}"
 systemFonts_oxygen_URL="https://fonts.google.com/download?family=Oxygen"
 systemFonts_oxygen_doNotInherit="yes"
 
-
 teamviewer_name="Team Viewer"
 teamviewer_description="Video remote pc control"
 teamviewer_version="System dependent"
