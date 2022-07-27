@@ -70,3 +70,5 @@ wget-log
 
 # Used by customizer in WSL2 to store the user name
 whoami
+
+tools/Linux-Auto-Customizer
