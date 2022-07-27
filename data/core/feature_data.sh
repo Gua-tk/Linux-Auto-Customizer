@@ -1059,58 +1059,6 @@ flutter_uninstall_post()
   :
 }
 
-# TODO: Font unification
-
-fonts_alegreya_sans_installationtype="userinherit"
-fonts_alegreya_sans_arguments=("fonts_alegreya_sans")
-fonts_alegreya_sans_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_alegreya_sans_compressedfileurl="https://fonts.google.com/download?family=Alegreya%20Sans"
-fonts_alegreya_sans_readmeline="| fonts-alegreya_sans | Installs font | Install alegreya font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-fonts_firacode_installationtype="packagemanager"
-fonts_firacode_arguments=("fonts_firacode")
-fonts_firacode_packagenames=("fonts-firacode")
-fonts_firacode_readmeline="| fonts-firacode | Installs font | Install firacode font ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-fonts_hack_installationtype="packagemanager"
-fonts_hack_arguments=("fonts_hack")
-fonts_hack_packagenames=("fonts-hack")
-fonts_hack_readmeline="| fonts-hack | Installs font | Install hack font ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-fonts_hermit_installationtype="packagemanager"
-fonts_hermit_arguments=("fonts_hermit")
-fonts_hermit_packagenames=("fonts-hermit")
-fonts_hermit_readmeline="| fonts-hermit | Installs font | Install hermit font ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-fonts_lato_installationtype="userinherit"
-fonts_lato_arguments=("fonts_lato")
-fonts_lato_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_lato_compressedfileurl="https://fonts.google.com/download?family=Lato"
-fonts_lato_readmeline="| fonts-lato | Installs font | Install lato font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-fonts_noto_sans_installationtype="userinherit"
-fonts_noto_sans_arguments=("fonts_noto_sans")
-fonts_noto_sans_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_noto_sans_compressedfileurl="https://fonts.google.com/download?family=Noto%20Sans"
-fonts_noto_sans_readmeline="| fonts-noto_sans | Installs font| Install noto_sans font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-fonts_oswald_installationtype="userinherit"
-fonts_oswald_arguments=("fonts_oswald")
-fonts_oswald_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_oswald_compressedfileurl="https://fonts.google.com/download?family=Oswald"
-fonts_oswald_readmeline="| fonts-oswald | Installs font| Install oswald font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-fonts_oxygen_installationtype="userinherit"
-fonts_oxygen_arguments=("fonts_oxygen")
-fonts_oxygen_compressedfilepathoverride="${FONTS_FOLDER}"
-fonts_oxygen_compressedfileurl="https://fonts.google.com/download?family=Oxygen"
-fonts_oxygen_readmeline="| fonts-oxygen | Installs font | Install oxygen font || <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
-fonts_roboto_installationtype="packagemanager"
-fonts_roboto_arguments=("fonts_roboto")
-fonts_roboto_packagenames=("fonts-roboto")
-fonts_roboto_readmeline="| fonts-roboto | Installs font| Install roboto font ||  <ul><li>- [x] Ubuntu</li><li>- [x] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-
 forms_name="Google Forms"
 forms_description="Google Forms opening in Browser"
 forms_version="Google dependent"
@@ -1936,12 +1884,6 @@ mines_commentary="Click and play"
 mines_launcherkeynames=("default")
 mines_default_exec="gnome-mines"
 mines_packagenames=("gnome-mines")
-
-# TODO: merge with fonts
-msttcorefonts_installationtype="packagemanager"
-msttcorefonts_arguments=("msttcorefonts")
-msttcorefonts_packagenames=("msttcorefonts")
-msttcorefonts_readmeline="| font Msttcorefonts | Windows classic fonts | Install mscore fonts ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 mvn_name="Apache Maven"
 mvn_description="Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM)"
@@ -2889,7 +2831,6 @@ uninstall_sysmontask_mid() {
   :
 }
 
-systemFonts_installationtype="environmental"
 systemFonts_name="Change default fonts"
 systemFonts_description="Sets pre-defined fonts to desktop environment."
 systemFonts_version="System dependent"
@@ -2897,23 +2838,25 @@ systemFonts_tags=("changeFonts")
 systemFonts_systemcategories=("Utility" "System")
 systemFonts_arguments=("system_fonts")
 systemFonts_commentary="A new set of fonts is updated in the system's screen."
-systemFonts_bashinitializations=("
-  # Check if gsettings command is available
-  if ! command -v gsettings &> /dev/null
-  then
-    return
-  fi
+systemFonts_bashinitializations=("fonts_initializations.sh")
+systemFonts_packagenames=("fonts-hack" "fonts-firacode" "fonts-hermit" "fonts-roboto" "msttcorefonts" )
+systemFonts_downloadKeys=("alegreyaSans" "lato" "noto" "oswald" "oxygen")
+systemFonts_alegreyaSans_downloadPath="${FONTS_FOLDER}"
+systemFonts_alegreyaSans_URL="https://fonts.google.com/download?family=Alegreya%20Sans"
+systemFonts_alegreyaSans_doNotInherit="yes"
+systemFonts_lato_downloadPath="${FONTS_FOLDER}"
+systemFonts_lato_URL="https://fonts.google.com/download?family=Lato"
+systemFonts_lato_doNotInherit="yes"
+systemFonts_noto_downloadPath="${FONTS_FOLDER}"
+systemFonts_noto_URL="https://fonts.google.com/download?family=Noto%20Sans"
+systemFonts_noto_doNotInherit="yes"
+systemFonts_oswald_downloadPath="${FONTS_FOLDER}"
+systemFonts_oswald_URL="https://fonts.google.com/download?family=Oswald"
+systemFonts_oswald_doNotInherit="yes"
+systemFonts_oxygen_downloadPath="${FONTS_FOLDER}"
+systemFonts_oxygen_URL="https://fonts.google.com/download?family=Oxygen"
+systemFonts_oxygen_doNotInherit="yes"
 
-  # Interface text
-  gsettings set org.gnome.desktop.interface font-name 'Roboto Medium 11'
-  # Document text //RF
-  gsettings set org.gnome.desktop.interface document-font-name 'Fira Code weight=453 10'
-  # Monospaced text
-  gsettings set org.gnome.desktop.interface monospace-font-name 'Hack Regular 12'
-  # Inherited window titles
-  gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Hermit Bold 9'
-")
-systemFonts_readmeline="|  |  |  || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 teamviewer_name="Team Viewer"
 teamviewer_description="Video remote pc control"
