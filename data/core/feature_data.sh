@@ -133,7 +133,7 @@
 #    Used as fallback for autostart and associatedfiletypes.                                                           #
 #  - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to      #
 #    binaries that will be added to the PATH. Its name in the PATH is added by using a ";" to separate it from the     #
-#    relative path: "binaries/common/handbreak.sh;handbreak". It will be used to inherit when there is no overrrite.   #
+#    relative path: "binaries/common/handbrake.sh;handbrake". It will be used to inherit when there is no override.   #
 #  - FEATUREKEYNAME_launchercontents: TODO depreacate
 #    Array of contents of launchers to be created in the desktop and dashboard.       #
 #    They are used as fallback for autostart too.                                                                      #
@@ -1596,37 +1596,17 @@ ips_bashfunctions=("ips.sh")
 iqmol_name="IQmol"
 iqmol_description="Molecule visualizer"
 iqmol_version="System dependent"
-iqmol_tags=("moleculeVisualizer")
-iqmol_systemcategories=("Science")
+iqmol_tags=("moleculeVisualizer" "molecules" "chemistry" "3d")
+iqmol_systemcategories=("Science" "Visualization")
 iqmol_arguments=("iqmol")
+iqmol_commentary="Program to visualize molecular data"
 iqmol_bashfunctions=("iqmol.sh")
-# iqmol_downloads=("http://www.iqmol.org/images/icon.png;iqmol_icon.png")
-iqmol_description="Program to visualize molecular data"
 iqmol_launcherkeynames=("defaultLauncher")
 iqmol_defaultLauncher_exec="iqmol"
-iqmol_launchercontents=("
-[Desktop Entry]
-Categories=Visualization;
-Comment=${iqmol_description}
-Encoding=UTF-8
-Exec=iqmol
-GenericName=Molecule visualizer
-Icon=${BIN_FOLDER}/iqmol/iqmol_icon.png
-Keywords=molecules;chemistry;3d;
-MimeType=
-Name=IQmol
-StartupNotify=true
-StartupWMClass=IQmol
-Terminal=false
-TryExec=iqmol
-Type=Application
-Version=1.0
-")
+iqmol_defaultLauncher_windowclass="IQmol"
 iqmol_downloadKeys=("bundle")
 iqmol_bundle_URL="http://www.iqmol.org/download.php?get=iqmol_2.14.deb"
-
 iqmol_package_manager_override="apt-get"
-iqmol_readmeline="| IQmol | ${iqmol_description} | Command \`iqmol\`, silent alias, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 j_name="Function j"
 j_description="Alias for jobs -l"
@@ -1653,52 +1633,30 @@ julia_name="Julia and IJulia"
 julia_description="High-level, high-performance dynamic language for technical computing"
 julia_version="julia-1.0.5-linux-x86_64"
 julia_tags=("language")
-julia_systemcategories=("Languages")
+julia_systemcategories=("Languages" "Development" "ComputerScience" "Building" "Science" "Math" "NumericalAnalysis" "ParallelComputing" "DataVisualization" "ConsoleOnly")
 julia_arguments=("julia")
 julia_binariesinstalledpaths=("bin/julia;julia")
 julia_downloadKeys=("bundle")
 julia_bundle_URL="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
-julia_launchercontents=("
-[Desktop Entry]
-Name=Julia
-Comment=${julia_description}
-Exec=julia
-Icon=${BIN_FOLDER}/julia/share/icons/hicolor/scalable/apps/julia.svg
-Terminal=true
-Type=Application
-Categories=Development;ComputerScience;Building;Science;Math;NumericalAnalysis;ParallelComputing;DataVisualization;ConsoleOnly;
-")
-julia_readmeline="| Julia and IJulia | ${julia_description} | Commands \`julia\`, desktop launcher and dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
+julia_launcherkeynames="defaultLauncher"
+julia_defaultLauncher_terminal="true"
 
-# TODO @AleixMT change keyname to single word such jupyter
-jupyterLab_installationtype="pythonvenv"
-jupyterLab_arguments=("jupyter_lab" "jupyter" "lab")
+jupyterLab_name="Jupyter Lab"
+jupyterLab_description="High-level, high-performance dynamic language for technical computing"
+jupyterLab_version="jupyter dependent"
+jupyterLab_tags=("jupyter")
+jupyterLab_systemcategories=("IDE" "Development")
+jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
+jupyterLab_commentary="IDE with a lot of possible customization and usable for different programming languages."
 jupyterLab_bashfunctions=("jupyter_lab.sh")
 jupyterLab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
 jupyterLab_packagedependencies=("libkrb5-dev")
 jupyterLab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
-jupyterLab_description="IDE with a lot of possible customization and usable for different programming languages."
-jupyterLab_launchercontents=("
-[Desktop Entry]
-Categories=IDE; text_editor;
-Comment=${jupyterLab_description}
-Encoding=UTF-8
-GenericName=jupyter-lab
-Keywords=jupyter; programming; text; webpage;
-MimeType=
-Name=Jupyter Lab
-StartupNotify=true
-StartupWMClass=jupyter
-Terminal=false
-Type=Application
-Version=1.0
-Icon=${BIN_FOLDER}/jupyterLab/share/icons/hicolor/scalable/apps/notebook.svg
-Exec=jupyter-lab &
-")
+jupyterLab_launcherkeynames="defaultLauncher"
+jupyterLab_defaultLauncher_exec="jupyter-lab &"
 jupyterLab_manualcontentavailable="1;1;0"
 jupyterLab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
 jupyterLab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
-jupyterLab_readmeline="| Jupyter Lab | ${jupyterLab_description} | alias \`lab\`, commands \`jupyter-lab\`, \`jupyter-lab\`, \`ipython\`, \`ipython3\`, desktop launcher and dashboard launcher. Recognized programming languages: Python, Ansible, Bash, IArm, Kotlin, PowerShell, Vim. || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_jupyterLab_pre() {
   local -r dependencies=("npm" "R" "julia")
   for dependency in "${dependencies[@]}"; do
@@ -1808,23 +1766,20 @@ l_arguments=("l")
 l_commentary="A terminal shortcut"
 l_bashfunctions=("l.sh")
 
-latex_installationtype="packagemanager"
-latex_arguments=("latex")
+latex_name="LaTeX"
 latex_description="Software system for document preparation"
-latex_launchercontents=("
-[Desktop Entry]
-Name=TeXdoctk
-Exec=texdoctk
-Comment=${latex_description}
-Type=Application
-Type=Application
-Terminal=false
-Categories=Settings;
-Icon=/usr/share/icons/Yaru/256x256/mimetypes/text-x-tex.png")
-latex_launchernames=("texmaker")
+latex_version="1.0"
+latex_tags=("language" "document" "editor")
+latex_systemcategories=() # TODO
+latex_arguments=("latex")
+latex_launcherkeynames=("defaultLauncher" "documentationLauncher")
+latex_documentationLauncher_exec="texdoctk"
+latex_documentationLauncher_name="TeXdoctk"
+latex_documentationLauncher_categories=("Settings")
+latex_documentationLauncher_icon="latex_doc"
+latex_launchernames=("texmaker") # TODO
 latex_packagedependencies=("perl-tk" )
 latex_packagenames=("texlive-latex-extra" "texmaker" "perl-tk")
-latex_readmeline="| LaTeX | ${latex_description} | Command \`tex\` (LaTeX compiler) and \`texmaker\` (LaTeX IDE), desktop launchers for \`texmaker\` and LaTeX documentation ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 
 lmms_name="lmms"
 lmms_description="Software for making music"
@@ -1869,9 +1824,9 @@ mahjongg_launcherkeynames=("default")
 mahjongg_default_exec="gnome-mahjongg"
 mahjongg_packagenames=("gnome-mahjongg")
 
-matlab_name="Matlab"
+matlab_name="Matlab R2021a"
 matlab_description="IDE + programming language specialized in matrix operations"
-matlab_version="Matlab dependent"
+matlab_version="R2021a"
 matlab_tags=("matlab")
 matlab_systemcategories=("Science")
 matlab_arguments=("matlab" "mat_lab" "math_works")
@@ -1888,15 +1843,7 @@ matlab_compressedfilepathoverride="${TEMP_FOLDER}"
 matlab_binariesinstalledpaths=("bin/matlab;matlab" "bin/mex;mex")
 matlab_launcherkeynames=("defaultLauncher")
 matlab_defaultLauncher_exec="matlab -desktop"
-matlab_launchercontents=(
-"[Desktop Entry]
-Version=1.0
-Type=Application
-Name=MATLAB R2021a
-Icon=${BIN_FOLDER}/matlab/matlab_icon.svg
-Exec=matlab -desktop
-Terminal=false
-")
+matlab_defaultLauncher_name="MATLAB R2021a"
 matlab_manualcontentavailable="0;1;0"
 matlab_bashfunctions=("matlab.sh")
 install_matlab_mid()
@@ -2097,6 +2044,7 @@ nemo_launcherkeynames=("defaultLauncher" "autostartLauncher")
 nemo_defaultLauncher_exec="nemo %U"
 nemo_defaultLauncher_name="Files"
 nemo_defaultLauncher_ubuntuGetText="nemo"
+nemo_defaultLauncher_OnlyShowIn=("GNOME" "Unity" "KDE")
 nemo_defaultLauncher_actions=("openhome" "opencomputer" "opentrash" "openserver")
 nemo_defaultLauncher_openhome_name="Home"
 nemo_defaultLauncher_openhome_exec="nemo %U"
@@ -2107,25 +2055,13 @@ nemo_defaultLauncher_opentrash_exec="nemo trash:///"
 nemo_defaultLauncher_openserver_name="Server Connect"
 nemo_defaultLauncher_openserver_exec="nemo-connect-server"
 nemo_associatedfiletypes=("inode/directory" "application/x-gnome-saved-search")
-# TODO 
-nemo_launchercontents=("
-[Desktop Entry]
-OnlyShowIn=GNOME;Unity;KDE;
-StartupNotify=false
-
-")
 nemo_autostartLauncher_name="Nemo"
 nemo_autostartLauncher_comment="Start Nemo desktop at log in"
 nemo_autostartLauncher_exec="nemo-desktop"
-# TODO
-nemo_autostartlaunchers=("
-[Desktop Entry]
-Type=Application
-AutostartCondition=GSettings org.nemo.desktop show-desktop-icons
-X-GNOME-AutoRestart=true
-X-GNOME-Autostart-Delay=2
-NoDisplay=false
-")
+nemo_autostartLauncher_nodisplay="false"
+nemo_autostartLauncher_autostartcondition="GSettings org.nemo.desktop show-desktop-icons"
+nemo_autostartLauncher_autorestart="true"
+nemo_autostartLauncher_autorestartdelay="2"
 nemo_flagsoverride=";;;;;1"  # Always autostart
 nemo_keybindings=("nemo;<Super>e;Nemo File Explorer")
 
@@ -2352,36 +2288,25 @@ pdfgrep_systemcategories=("Utility")
 pdfgrep_arguments=("pdfgrep")
 pdfgrep_packagenames=("pdfgrep")
 
-pgadmin_installationtype="pythonvenv"
+pgadmin_name="pgAdmin 4"
+pgadmin_description="PostgreSQL Tools"
+pgadmin_version="System dependent"
+pgadmin_tags=("pdf" "searchPDF" "pgadmin")
+pgadmin_systemcategories=("Network")
 pgadmin_arguments=("pgadmin" "pgadmin4")
+pgadmin_commentary="CLI utility that makes it possible to search for text in a PDF file without opening the file"
 pgadmin_binariesinstalledpaths=("lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
 pgadmin_confoverride_path="lib/${PYTHON_VERSION}/site-packages/pgadmin4/config_local.py"
 pgadmin_confoverride_content="config_local.py"
 pgadmin_executionscript_path="pgadmin_exec.sh"
 pgadmin_executionscript_content="pgadmin_exec.sh"
 pgadmin_filekeys=("confoverride" "executionscript")
-pgadmin_description="PostgreSQL Tools"
-pgadmin_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=${pgadmin_description}
-Encoding=UTF-8
-GenericName=pgadmin4
-Keywords=pgadmin
-MimeType=
-Name=pgAdmin 4
-StartupNotify=true
-StartupWMClass=pgadmin
-Terminal=false
-Type=Application
-Version=1.0
-Icon=${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
-Exec=bash ${BIN_FOLDER}/pgadmin/pgadmin_exec.sh
-")
+pgadmin_launcherkeynames=("defaultLauncher")
+pgadmin_defaultLauncher_windowclass="pgadmin"
+pgadmin_defaultLauncher_exec="bash ${CURRENT_INSTALLATION_FOLDER}/pgadmin_exec.sh"
 pgadmin_manualcontentavailable="0;1;0"
 pgadmin_pipinstallations=("pgadmin4")
 pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")
-pgadmin_readmeline="| pgAdmin | ${pgadmin_description} | Command \`pgadmin4\` ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
 install_pgadmin_mid() {
   # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
   # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
@@ -2404,31 +2329,18 @@ php_systemcategories=("Languages")
 php_arguments=("php")
 php_packagenames=("php" "libapache2-mod-php" "php7.4" "libapache2-mod-php7.4" "php7.4-mysql" "php-common" "php7.4-cli" "php7.4-common" "php7.4-json" "php7.4-opcache" "php7.4-readline")
 
-phppgadmin_installationtype="packagemanager"
+phppgadmin_name="phpPgAdmin"
+phppgadmin_description="GUI for SQL Database Management"
+phppgadmin_version="System dependent"
+phppgadmin_tags=("lamp" "xampp")
+phppgadmin_systemcategories=("Languages")
 phppgadmin_arguments=("phppgadmin")
+phppgadmin_commentary="It runs an instance of the program at localhost/phppgadmin"
 phppgadmin_packagenames=("phppgadmin")
-phppgadmin_downloads=("https://upload.wikimedia.org/wikipedia/commons/1/16/Google_Slides_2020_Logo.svg;phppgadmin.svg")
-phppgadmin_url="http://localhost/phppgadmin"
 phppgadmin_bashfunctions=("phppgadmin.sh")
-phppgadmin_readmeline="| phppgadmin | GUI for SQL Database Management | It runs an instance of the program at localhost/phppgadmin ||  <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> |"
-phppgadmin_launchercontents=("
-[Desktop Entry]
-Categories=Network;
-Comment=GUI for SQL Database Management
-Encoding=UTF-8
-GenericName=phppgadmin
-Keywords=phppgadmin
-MimeType=
-Name=phpPgAdmin
-StartupNotify=true
-StartupWMClass=phppggadmin
-Terminal=false
-Type=Application
-Version=1.0
-Icon=${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgadmin/static/img/logo-256.png
-Exec=nohup xdg-open ${phppgadmin_url}
-TryExec=xdg-open
-")
+phppgadmin_launcherkeynames=("default")
+phppgadmin_default_windowclass="phppggadmin"
+phppgadmin_default_exec="nohup xdg-open http://localhost/phppgadmin"
 
 pluma_name="pluma"
 pluma_description="Fork of gedit 2.0 that supports many plugins and new features"
@@ -2442,9 +2354,9 @@ pluma_packagenames=("pluma")
 pluma_launcherkeynames=("defaultLauncher")
 pluma_defaultLauncher_exec="pluma"
 
-postman_name="=Postman"
+postman_name="Postman"
 postman_description="Application to maintain and organize collections of REST API calls"
-postman_version="System dependent"
+postman_version="Postman dependent"
 postman_tags=("APIRest")
 postman_systemcategories=("Development")
 postman_arguments=("postman")
@@ -2452,18 +2364,6 @@ postman_binariesinstalledpaths=("Postman;postman")
 postman_downloadKeys=("bundle")
 postman_bundle_URL="https://dl.pstmn.io/download/latest/linux64"
 postman_launcherkeynames=("defaultLauncher")
-postman_defaultLauncher_exec="postman"
-postman_launchercontents=("
-[Desktop Entry]
-Encoding=UTF-8
-Name=Postman
-Exec=postman
-Comment=${postman_description}
-Icon=${BIN_FOLDER}/postman/app/resources/app/assets/icon.png
-Terminal=false
-Type=Application
-Categories=Development;
-")
 
 presentation_name="Google Presentation"
 presentation_version="Google dependent"
@@ -2697,39 +2597,21 @@ scala_arguments=("scala")
 scala_packagenames=("scala")
 
 scilab_name="Scilab"
-# TODO scilab_description=""
+scilab_description="Scientific software package for numerical computations"
 scilab_version="System dependent"
-scilab_tags=("science")
-scilab_systemcategories=("Science" "Network")
+scilab_tags=("science" "Simulation" "Numerical" "Math")
+scilab_systemcategories=("Science" "Math")
 scilab_arguments=("scilab")
+scilab_commentary="Scientific Software Package"
 scilab_bashfunctions=("scilab.sh")
 scilab_binariesinstalledpaths=("bin/scilab;scilab" "bin/scilab-cli;scilab-cli" "bin/scinotes;scinotes")
+scilab_associatedfiletypes=("application/x-scilab-sci" "application/x-scilab-sce" "application/x-scilab-tst" "application/x-scilab-dem" "application/x-scilab-sod" "application/x-scilab-xcos" "application/x-scilab-zcos" "application/x-scilab-bin" "application/x-scilab-cosf" "application/x-scilab-cos")
 scilab_packagedependencies=("openjdk-8-jdk-headless" "libtinfo5")
 scilab_downloadKeys=("bundle")
 scilab_bundle_URL="https://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz"
 scilab_packagenames=("scilab")
-scilab_launcherkeynames=("defaultLauncher") # TODO
-scilab_defaultLauncher_exec="bash ${BIN_FOLDER}/scilab/bin/scilab"
-scilab_launchercontents=("
-[Desktop Entry]
-Comment=Scientific software package for numerical computations
-Comment[fr]=Logiciel scientifique de calcul numérique
-Comment[de]=eine Wissenschaftssoftware für numerische Berechnungen
-Comment[ru]=Научная программа для численных расчётов
-Exec=bash ${BIN_FOLDER}/scilab/bin/scilab
-GenericName=Scientific Software Package
-GenericName[fr]=Logiciel de calcul numérique
-GenericName[de]=Wissenschaftssoftware
-GenericName[ru]=Научный программный комплекс
-Icon=${BIN_FOLDER}/scilab/share/icons/hicolor/256x256/apps/scilab.png
-MimeType=application/x-scilab-sci;application/x-scilab-sce;application/x-scilab-tst;application/x-scilab-dem;application/x-scilab-sod;application/x-scilab-xcos;application/x-scilab-zcos;application/x-scilab-bin;application/x-scilab-cosf;application/x-scilab-cos;
-Name=Scilab
-StartupNotify=false
-Terminal=false
-Type=Application
-Categories=Science;Math;
-Keywords=Science;Math;Numerical;Simulation
-")
+scilab_launcherkeynames=("defaultLauncher")
+scilab_defaultLauncher_exec="bash \"${CURRENT_INSTALLATION_FOLDER}/bin/scilab\""
 
 screenshots_name="Screenshots"
 screenshots_description="Takes a screenshot and saves it to custom ~/Images/screenshots folder and save it to the clipboard for pasting"
@@ -2887,35 +2769,19 @@ spreadsheets_bashfunctions=("spreadsheets.sh")
 spreadsheets_launcherkeynames=("default")
 spreadsheets_default_exec="xdg-open https://docs.google.com/spreadsheets"
 
-ssh_name="ssh"
-ssh_description="SSH client"
+ssh_name="SSH"
+ssh_description="Secure Shell"
 ssh_version="System dependent"
-ssh_tags=("ssh" "client")
-ssh_systemcategories=("Network" "RemoteAccess" "ConsoleOnly")
+ssh_tags=("ssh" "client" "remote" "shell")
+ssh_systemcategories=("Network" "RemoteAccess" "ConsoleOnly" "Shell")
 ssh_arguments=("ssh")
+ssh_commentary="Remote access to a server through a secure channel"
 ssh_packagenames=("ssh-client")
-# ssh_downloads=("https://upload.wikimedia.org/wikipedia/commons/6/64/Human-folder-remote-ssh.svg;ssh_icon.svg")
 ssh_bashfunctions=("ssh.sh")
 ssh_packagedependencies=("openssh-sftp-server" "openssh-client")
 ssh_launcherkeynames=("defaultLauncher")
 ssh_defaultLauncher_exec="ssh"
-ssh_launchercontents=("[Desktop Entry]
-Categories=ssh;remote;shell;
-Comment=Remote access to a server through a secure channel
-Encoding=UTF-8
-Exec=sssh
-GenericName=Secure Shell
-Icon=${BIN_FOLDER}/ssh/ssh_icon.svg
-Keywords=ssh;remote;shell
-MimeType=
-Name=SSH
-StartupNotify=true
-StartupWMClass=ssh
-Terminal=true
-TryExec=ssh
-Type=Application
-Version=1.0
-")
+ssh_defaultLauncher_terminal="true"
 
 status_name="Function status"
 status_description="Alias of git status"
