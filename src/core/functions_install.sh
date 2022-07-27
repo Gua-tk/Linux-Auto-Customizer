@@ -850,20 +850,6 @@ shell.Run comm,0"
 ########################################################################################################################
 
 
-# - Description: Expands launcher contents and add them to the desktop and dashboard.
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_launchercontents
-#   and the name of the first argument in the common_data.sh table
-generic_install_manual_launchers() {
-  local -r launchercontents="$1_launchercontents[@]"
-  local name_suffix_anticollision=""
-  for launchercontent in "${!launchercontents}"; do
-    create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
-  done
-}
-
-
 # - Description: Create a dynamic launcher for each keyname
 # - Permissions: Does not need any permission.
 generic_install_dynamic_launcher() {

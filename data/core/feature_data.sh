@@ -133,10 +133,7 @@
 #    Used as fallback for autostart and associatedfiletypes.                                                           #
 #  - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to      #
 #    binaries that will be added to the PATH. Its name in the PATH is added by using a ";" to separate it from the     #
-#    relative path: "binaries/common/handbrake.sh;handbrake". It will be used to inherit when there is no override.   #
-#  - FEATUREKEYNAME_launchercontents: TODO depreacate
-#    Array of contents of launchers to be created in the desktop and dashboard.       #
-#    They are used as fallback for autostart too.                                                                      #
+#    relative path: "binaries/common/handbrake.sh;handbrake". It will be used to inherit when there is no override.    #
 #  - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be executed on the start of every terminal        #
 #    session, in our case .bashrc.                                                                                     #
 #  - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature. Its launchers in       #
