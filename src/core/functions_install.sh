@@ -117,7 +117,6 @@ autostart_program() {
       return
     fi
   else # Else relative path from ALL_USERS_LAUNCHERS_DIR or PERSONAL_LAUNCHERS_DIR
-  echo "${AUTOSTART_FOLDER}"
     if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]; then
       cp "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
       if isRoot; then
@@ -589,8 +588,7 @@ dynamic_launcher_deduce_icon()
 # - Description: Override .desktop Desktop launchers feature properties
 # - Permissions:
 # Argument 1: Launcher keyname
-# Argument 2: Name for the launcher file (launcher keyname + string anticollision)
-create_dynamic_launcher() {
+get_dynamic_launcher() {
   # feature name
   override_name="${CURRENT_INSTALLATION_KEYNAME}_$1_name"
   metadata_name="${CURRENT_INSTALLATION_KEYNAME}_name"
@@ -753,7 +751,7 @@ NoDisplay=false"
   # //RF Maybe deprecated?
   # Override the OnlyShowIn over the default nothing
   local -r overrideOnlyShowIn="${CURRENT_INSTALLATION_KEYNAME}_$1_OnlyShowIn[@]"
-  if [ ! -z "${!overrideOnlyShowIn}" ]; then
+  if [ ! -z "$(echo "${!overrideOnlyShowIn}")" ]; then
     text+=$'\n'"OnlyShowIn=${!overrideOnlyShowIn}"
   fi
 
@@ -789,8 +787,7 @@ NoDisplay=false"
       text+=$'\n'"Icon=${action_icon}"
     done
   fi
-
-  create_manual_launcher "${text}" "$2"
+  echo "${text}"
 }
 
 
@@ -873,10 +870,40 @@ generic_install_dynamic_launcher() {
   local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
   local name_suffix_anticollision=""
 
+  if [ ! -n "$(echo "${!launcherkeynames}")" ]; then
+    return
+  fi
+
+  local is_autostart_attended=
+  if [ ${FLAG_AUTOSTART} -eq 1 ]; then
+    is_autostart_attended=0
+  else
+    is_autostart_attended=1
+  fi
+
   for launcherkeyname in "${!launcherkeynames}"; do
-    create_dynamic_launcher "${launcherkeyname}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
+    # create_manual_launcher "${text}" "$2"
+    autostart_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_autostart"
+
+    if [ "${!autostart_pointer}" == "yes" ]; then
+      current_launcher="$(get_dynamic_launcher "${launcherkeyname}")"
+      create_file "${AUTOSTART_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop" "${current_launcher}"
+      is_autostart_attended=1
+    else
+      current_launcher="$(get_dynamic_launcher "${launcherkeyname}")"
+      create_manual_launcher "${current_launcher}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
+
+    fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
+
+  if [ "${is_autostart_attended}" -eq 1 ]; then
+    return
+  fi
+
+  # Implicitly this feature has no autostart launcher, choosing the first one arbitrarily
+  local -r first_launcher_keyname="$(echo "${launcherkeynames}" | cut -d ' ' -f1)"
+  create_file "${AUTOSTART_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop" "$(get_dynamic_launcher "${first_launcher_keyname}")"
 }
 
 
