@@ -258,7 +258,7 @@ aisleriot_commentary="Implementation of the classical game solitaire"
 aisleriot_bashfunctions=("aisleriot.sh")
 aisleriot_launcherkeynames=("default")
 aisleriot_default_exec="sol"
-aisleriot_launchernames=("sol")  # TODO @AleixMT extract launcher data
+aisleriot_windowclass="aisleriot"
 aisleriot_packagenames=("aisleriot")
 
 alert_name="Function alert"
@@ -317,17 +317,17 @@ apache2_commentary="open-source HTTP server for modern operating systems includi
 apache2_packagenames=("apache2" "apache2-utils")
 
 ardour_name="Ardour5"
-ardour_description="Audio editor"
+ardour_description="Ardour Digital Audio Workstation 5"
 ardour_version="System dependent"
-ardour_tags=("music" "audio" "production")
-ardour_systemcategories=("Audio" "Music")
-ardour_commentary="Music development in one place"
+ardour_tags=("music" "audio" "production" "audio" "sound" "jackd" "DAW" "multitrack" "ladspa" "lv2" "midi")
+ardour_systemcategories=("Audio" "Music" "AudioVideo")
+ardour_commentary="Record, mix and master multi-track audio"
 ardour_arguments=("ardour")
 # ardour_icon="ardour.svg"
 ardour_launcherkeynames=("default")
 ardour_default_exec="ardour5"
 ardour_bashfunctions=("ardour.sh")
-ardour_packagenames=("ardour")  # TODO @AleixMT extract launcher data
+ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
 
 aspell_name="GNU Aspell"
@@ -337,19 +337,19 @@ aspell_tags=("development" "deployment" "Education" "Office" "Utility" "Document
 aspell_systemcategories=("Translation" "System" "Settings" "Dictionary" "Languages")
 aspell_arguments=("aspell")
 aspell_commentary="Free and open source spell checker in Linux. Can be used to check spelling from provided files or stdin"
-aspell_packagenames=("aspell-es" "aspell-ca")
+aspell_packagenames=("aspell-es"f "aspell-ca")
 
 audacity_name="Audacity"
-audacity_description="Digital audio editor and recording"
+audacity_description="Sound Editor"
 audacity_version="2.3.3"
-audacity_tags=("music" "audio" "producing")
-audacity_systemcategories=("Audio" "Music")
+audacity_tags=("music" "audio" "producing" "audio" "sound" "alsa" "jack" "editor")
+audacity_systemcategories=("Audio" "Music" "AudioVideo" "AudioVideoEditing")
 audacity_arguments=("audacity")
-audacity_commentary="You can create and edit your own music"
+audacity_commentary="Record and edit audio files"
 audacity_launcherkeynames=("default")
-audacity_default_exec="audacity"
+audacity_default_exec="audacity %F"
+audacity_associatedfiletypes=("application/x-audacity-project" "audio/aac" "audio/ac3" "audio/mp4" "audio/x-ms-wma" "video/mpeg" "audio/flac" "audio/x-flac" "audio/mpeg" "audio/basic" "audio/x-aiff" "audio/x-wav" "application/ogg" "audio/x-vorbis+ogg")
 audacity_bashfunctions=("audacity.sh")
-# TODO @AleixMT import launcher data audacity_launchernames=("audacity")
 audacity_packagenames=("audacity" "audacity-data")
 
 # TODO: Tested
@@ -453,15 +453,18 @@ c_arguments=("c")
 c_bashfunctions=("c.sh")
 
 calibre_name="Calibre"
-calibre_description="e-book reader"
+calibre_description="E-book library management"
 calibre_version="System dependent"
 calibre_tags="office"
 calibre_systemcategories=("Office")
 calibre_arguments=("calibre")
-calibre_commentary="To organize the digital books that you have"
+calibre_commentary="E-book library management: Convert, view, share, catalogue all your e-books"
 calibre_bashfunctions=("calibre.sh")
-calibre_launchernames=("calibre-gui")
-calibre_packagenames=("calibre")  # TODO @AleixMT extract launcher data
+calibre_associatedfiletypes=("application/vnd.openxmlformats-officedocument.wordprocessingml.document" "application/x-mobipocket-ebook" "image/vnd.djvu" "application/x-cbr" "application/x-mobi8-ebook" "application/oebps-package+xml" "text/fb2+xml" "application/xhtml+xml" "text/rtf" "application/x-ruby" "text/plain" "application/x-cbz" "application/x-cbc" "application/x-sony-bbeb" "application/vnd.ms-word.document.macroenabled.12" "application/vnd.oasis.opendocument.text" "application/pdf" "text/html" "application/x-mobipocket-subscription" "application/epub+zip" "text/x-markdown" "application/ereader")
+calibre_launcherkeynames=("defaultLauncher")
+calibre_defaultLauncher_exec="calibre %F"
+# TODO X-GNOME-UsesNotifications=true
+calibre_packagenames=("calibre")
 
 # TODO: tested
 changebg_name="Change Background"
@@ -540,14 +543,30 @@ clean_bashfunctions=("clean.sh")
 
 # TODO tested
 clementine_name="Clementine"
-clementine_description="Music player"
+clementine_description="Clementine Music Player"
 clementine_version="System dependent"
 clementine_tags=("music")
-clementine_systemcategories=("Music" "Audio")
+clementine_systemcategories=("Music" "Audio" "Qt" "Player" "AudioVideo")
 clementine_arguments=("clementine")
-clementine_commentary="Modern music player and library organizer"
+clementine_commentary="Plays music and last.fm streams"
 clementine_bashfunctions=("clementine.sh")
-clementine_launchernames=("clementine")  # TODO @AleixMT extract launcher data
+clementine_associatedfiletypes=("application/ogg" "application/x-ogg" "application/x-ogm-audio" "audio/aac" "audio/mp4" "audio/mpeg" "audio/mpegurl" "audio/ogg" "audio/vnd.rn-realaudio" "audio/vorbis" "audio/x-flac" "audio/x-mp3" "audio/x-mpeg" "audio/x-mpegurl" "audio/x-ms-wma" "audio/x-musepack" "audio/x-oggflac" "audio/x-pn-realaudio" "audio/x-scpls" "audio/x-speex" "audio/x-vorbis" "audio/x-vorbis+ogg" "audio/x-wav" "video/x-ms-asf" "x-content/audio-player" "x-scheme-handler/zune" "x-scheme-handler/itpc" "x-scheme-handler/itms" "x-scheme-handler/feed")
+clementine_launcherkeynames=("defaultLauncher")
+clementine_defaultLauncher_exec="clementine %U"
+clementine_defaultLauncher_notify="false"
+clementine_defaultLauncher_actions=("Play" "Pause" "Stop" "StopAfterCurrent" "Previous" "Next")
+clementine_defaultLauncher_Play_name="Play"
+clementine_defaultLauncher_Play_exec="clementine --play"
+clementine_defaultLauncher_Pause_name="Pause"
+clementine_defaultLauncher_Pause_exec="clementine --pause"
+clementine_defaultLauncher_Stop_name="Stop"
+clementine_defaultLauncher_Stop_exec="clementine --stop"
+clementine_defaultLauncher_StopAfterCurrent_name="StopAfterCurrent"
+clementine_defaultLauncher_StopAfterCurrent_exec="clementine --stop-after-current"
+clementine_defaultLauncher_Previous_name="Previous"
+clementine_defaultLauncher_Previous_exec="clementine --previous"
+clementine_defaultLauncher_Next_name="Next"
+clementine_defaultLauncher_Next_exec="clementine --next"
 clementine_packagenames=("clementine")
 
 clion_name="CLion"
