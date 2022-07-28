@@ -850,20 +850,6 @@ shell.Run comm,0"
 ########################################################################################################################
 
 
-# - Description: Expands launcher contents and add them to the desktop and dashboard.
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_launchercontents
-#   and the name of the first argument in the common_data.sh table
-generic_install_manual_launchers() {
-  local -r launchercontents="$1_launchercontents[@]"
-  local name_suffix_anticollision=""
-  for launchercontent in "${!launchercontents}"; do
-    create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
-  done
-}
-
-
 # - Description: Create a dynamic launcher for each keyname
 # - Permissions: Does not need any permission.
 generic_install_dynamic_launcher() {
@@ -1077,6 +1063,29 @@ generic_install_functions() {
     if [[ "${bashfunction}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
       add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
+    elif [ "${bashfunction}" == "silentFunction" ]; then
+      local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
+      local selectedKeyname=
+      for launcherkeyname in "${!launcherkeynames}"; do
+        autostart_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_autostart"
+        terminal_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_terminal"
+        if [ "${!autostart_pointer}" != "yes" ] && [ "${!terminal_pointer}" != "true" ]; then
+          selectedKeyname="${launcherkeyname}"
+          break
+        fi
+      done
+      if [ -z "${selectedKeyname}" ]; then
+        continue
+      fi
+      local -r silent_exec="$(dynamic_launcher_deduce_exec "${selectedKeyname}" | cut -d ' ' -f1)"
+      local -r silent_function="#!/usr/bin/env bash
+${silent_exec}()
+{
+  nohup ${silent_exec} \$@ &> /dev/null &
+}
+"
+      add_bash_function "${silent_function}" "$1${name_suffix_anticollision}.sh"
+
     elif ! echo "${bashfunction}" | grep -Eq "/"; then
       # Only one line we guess it is a partial path
       add_bash_function "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
@@ -1085,7 +1094,6 @@ generic_install_functions() {
     fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
-
 }
 
 

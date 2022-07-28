@@ -14,7 +14,6 @@ caffeine_caffeineIndicator_exec="caffeine-indicator"
 caffeine_caffeineIndicator_StartupNotify="false"
 caffeine_caffeineIndicator_autostart="yes"
 caffeine_caffeineIndicator_OnlyShowIn=("GNOME" "KDE" "LXDE" "LXQt" "MATE" "Razor" "ROX" "TDE" "Unity" "XFCE" "EDE" "Cinnamon" "Pantheon")
-# TODO caffeine autostart indicator
 
 caffeine_packagenames=("caffeine")
 caffeine_manualcontentavailable="1;0;1"
