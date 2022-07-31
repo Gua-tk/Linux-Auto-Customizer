@@ -1116,7 +1116,7 @@ generic_install_files() {
       create_file "${destiny_path}" "${!content}"
     else
       # Only one line we guess it is a path
-      create_file "${destiny_path}" "" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${!content}"
+      create_file "${destiny_path}" "" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!content}"
     fi
   done
 }
