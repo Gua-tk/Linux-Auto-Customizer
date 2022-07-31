@@ -332,7 +332,12 @@ declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
 declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
 declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
-declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
+
+if isRoot; then
+  declare -r AUTOSTART_FOLDER="/etc/xdg/autostart"
+else
+  declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
+fi
 
 # Used in certain types of features
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
