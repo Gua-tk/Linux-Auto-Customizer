@@ -334,7 +334,7 @@ declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
 
 if isRoot; then
-  declare -r AUTOSTART_FOLDER="/etc/xdg/autostart/"
+  declare -r AUTOSTART_FOLDER="/etc/xdg/autostart"
 else
   declare -r AUTOSTART_FOLDER="${HOME_FOLDER}/.config/autostart"
 fi
