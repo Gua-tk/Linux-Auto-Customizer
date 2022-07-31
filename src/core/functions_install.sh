@@ -1043,7 +1043,7 @@ generic_install_initializations() {
       add_bash_initialization "${bashinit}" "$1${name_suffix_anticollision}.sh"
     elif ! echo "${bashinit}" | grep -Eq "/"; then
       # Only one line we guess it is a partial path
-      add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashinit}"
+      add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${bashinit}"
     else
       add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashinit}"
     fi
@@ -1438,6 +1438,10 @@ data_and_file_structures_initialization() {
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/core/customizer_options.sh" "${DATA_FOLDER}/customizer_options.sh"
   fi
   apply_permissions "${DATA_FOLDER}/customizer_options.sh"
+
+  if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
+    create_file "" "${PROGRAM_KEYBINDINGS_PATH}"
+  fi
 
   create_folder "${BIN_FOLDER}"
   create_folder "${FUNCTIONS_FOLDER}"
