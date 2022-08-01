@@ -752,7 +752,10 @@ NoDisplay=false"
   # Override the OnlyShowIn over the default nothing
   local -r overrideOnlyShowIn="${CURRENT_INSTALLATION_KEYNAME}_$1_OnlyShowIn[@]"
   if [ ! -z "$(echo "${!overrideOnlyShowIn}")" ]; then
-    text+=$'\n'"OnlyShowIn=${!overrideOnlyShowIn}"
+    text+=$'\n'"OnlyShowIn="
+    for mime_override in "${!overrideOnlyShowIn}"; do
+      text+="${mime_override};"
+    done
   fi
 
   # Add actions for this particular launcher
@@ -787,6 +790,7 @@ NoDisplay=false"
       text+=$'\n'"Icon=${action_icon}"
     done
   fi
+  text+=$'\n'
   echo "${text}"
 }
 
