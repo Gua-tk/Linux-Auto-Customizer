@@ -2011,7 +2011,7 @@ nautilus_bashinitializations=("nautilus.sh")
 # TODO nautilus_launchernames=("org.gnome.Nautilus")
 nautilus_launcherkeynames=("default")
 nautilus_default_exec="nautilus"
-nautilus_packagenames=("nautilus")
+nautilus_packagenames=("nautilus" "gnome-shell-extension-desktop-icons")
 
 ncat_name="ncat"
 ncat_description="Reverse shell"
@@ -2069,7 +2069,9 @@ nemo_autostartLauncher_nodisplay="false"
 nemo_autostartLauncher_autostartcondition="GSettings org.nemo.desktop show-desktop-icons"
 nemo_autostartLauncher_autorestart="true"
 nemo_autostartLauncher_autorestartdelay="2"
-nemo_flagsoverride=";;;;;1"  # Always autostart
+nemo_autostartLauncher_ubuntuGetText="nemo"
+nemo_autostartLauncher_autostart="yes"
+# nemo_flagsoverride=";;;;;1"  # Always autostart
 nemo_keybindings=("nemo;<Super>e;Nemo File Explorer")
 
 netflix_name="Netflix"

@@ -870,7 +870,6 @@ generic_install_dynamic_launcher() {
   for launcherkeyname in "${!launcherkeynames}"; do
     # create_manual_launcher "${text}" "$2"
     autostart_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_autostart"
-
     if [ "${!autostart_pointer}" == "yes" ]; then
       current_launcher="$(get_dynamic_launcher "${launcherkeyname}")"
       create_file "${AUTOSTART_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop" "${current_launcher}"
