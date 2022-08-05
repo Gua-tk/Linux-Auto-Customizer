@@ -758,6 +758,36 @@ NoDisplay=false"
     done
   fi
 
+  # XMultipleArgs  X-MultipleArgs=false
+  local -r overrideXMultipleArgs="${CURRENT_INSTALLATION_KEYNAME}_$1_XMultipleArgs"
+  if [ ! -z "${!overrideXMultipleArgs}" ]; then
+    text+=$'\n'"X-MultipleArgs=${!overrideXMultipleArgs}"
+  fi
+
+  # usesNotifications X-GNOME-UsesNotifications
+  local -r overrideusesNotifications="${CURRENT_INSTALLATION_KEYNAME}_$1_usesNotifications"
+  if [ ! -z "${!overrideusesNotifications}" ]; then
+    text+=$'\n'"X-GNOME-UsesNotifications=${!overrideusesNotifications}"
+  fi
+
+  # dBusActivatable DBusActivatable
+  local -r overridedBusActivatable="${CURRENT_INSTALLATION_KEYNAME}_$1_dBusActivatable"
+  if [ ! -z "${!overridedBusActivatable}" ]; then
+    text+=$'\n'"DBusActivatable=${!overridedBusActivatable}"
+  fi
+
+  # path Path
+  local -r overridepath="${CURRENT_INSTALLATION_KEYNAME}_$1_path"
+  if [ ! -z "${!overridepath}" ]; then
+    text+=$'\n'"Path=${!overridepath}"
+  fi
+
+  # protocols X-KDE-Protocols
+  local -r overrideprotocols="${CURRENT_INSTALLATION_KEYNAME}_$1_protocols"
+  if [ ! -z "${!overrideprotocols}" ]; then
+    text+=$'\n'"X-KDE-Protocols=${!overrideprotocols}"
+  fi
+
   # Add actions for this particular launcher
   override_actionkeynames="${CURRENT_INSTALLATION_KEYNAME}_$1_actionkeynames[@]"
   if [ ! -z "$(echo "${!override_actionkeynames}" )" ]; then
@@ -770,9 +800,12 @@ NoDisplay=false"
       local actionkeyname_name="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_name"
       local actionkeyname_exec="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_exec"
       local actionkeyname_icon="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_icon"
+      local actionkeyname_onlyShowIn="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_onlyShowIn"
       text+=$'\n'$'\n'"[Desktop Action ${actionkeyname_override}]"
       text+=$'\n'"Name=${!actionkeyname_name}"
       text+=$'\n'"Exec=${!actionkeyname_exec}"
+      text+=$'\n'"OnlyShowIn=${!actionkeyname_onlyShowIn}"
+
       local action_icon=""
       local feature_icon_pointer="${CURRENT_INSTALLATION_KEYNAME}_icon"
       if [ -z "${!actionkeyname_icon}" ]; then
@@ -863,7 +896,6 @@ generic_install_dynamic_launcher() {
   if [ ! -n "$(echo "${!launcherkeynames}")" ]; then
     return
   fi
-
   local is_autostart_attended=
   if [ ${FLAG_AUTOSTART} -eq 1 ]; then
     is_autostart_attended=0

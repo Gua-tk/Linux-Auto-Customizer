@@ -219,12 +219,23 @@
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_windowclass: Used to group multiple windows launched from the same launcher. It
 #      overrides the WindowsClass field of the desktop launcher. If not present is deduced to be the
 #      ${CURRENT_INSTALLATION_KEYNAME}
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_ubuntuGetText: Used to set X-Ubuntu-Gettext-Domain inside desktop launcher.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_XMultipleArgs: Sets X-MultipleArgs inside desktop launcher, possibles values are:
+#      false or true. By default not defined.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_usesNotifications: Sets X-GNOME-UsesNotifications inside desktop launcher,
+#      possibles values are: true or false. By default not defined.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_dBusActivatable: Sets DBusActivatable, possibles values are: false or true. By
+#      default not defined.
+#    * FEATUREKEYNAME_LAUNCHERKEYNAME_path: Sets Path inside desktop launcher. By default not defined.
+#    * FEATUREkEYNAME_LAUNCHERKEYNAME_protocols: Sets X-KDE-Protocols inside desktop launcher. By default not defined.
 #    * FEATUREKEYNAME_LAUNCHERKEYNAME_actionkeynames: Sets as many actions as needed by adding keynames to them.
 #      For each keyname defined we need to define the following three properties.
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_name: Name of the action
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_exec: Value of the command to execute in this action.
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_icon: Customizer logo if no icon at feature level
 #        provided. If not, overridden by the value of this variable
+#      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_onlyShowIn: Sets desktop managers OnlyShowIn property in desktop #
+#         action           #
 ### Installation type dependent properties                                                                             #
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
 #    feature. Used in: packageinstall, packagemanager.                                                                 #                                                                                          #
@@ -463,7 +474,7 @@ calibre_bashfunctions=("calibre.sh")
 calibre_associatedfiletypes=("application/vnd.openxmlformats-officedocument.wordprocessingml.document" "application/x-mobipocket-ebook" "image/vnd.djvu" "application/x-cbr" "application/x-mobi8-ebook" "application/oebps-package+xml" "text/fb2+xml" "application/xhtml+xml" "text/rtf" "application/x-ruby" "text/plain" "application/x-cbz" "application/x-cbc" "application/x-sony-bbeb" "application/vnd.ms-word.document.macroenabled.12" "application/vnd.oasis.opendocument.text" "application/pdf" "text/html" "application/x-mobipocket-subscription" "application/epub+zip" "text/x-markdown" "application/ereader")
 calibre_launcherkeynames=("defaultLauncher")
 calibre_defaultLauncher_exec="calibre %F"
-# TODO X-GNOME-UsesNotifications=true
+calibre_defaultLauncher_usesNotifications="true"
 calibre_packagenames=("calibre")
 
 # TODO: tested
@@ -517,7 +528,6 @@ checkout_arguments=("checkout")
 checkout_commentary="A terminal shortcut for git"
 checkout_bashfunctions=("checkout.sh")
 
-# TODO DBusActivatable=true
 # TODO tested
 cheese_name="Cheese"
 cheese_description="Webcam Booth"
@@ -531,6 +541,7 @@ cheese_launchernames=("org.gnome.Cheese")
 cheese_packagenames=("cheese")
 cheese_launcherkeynames=("defaultLauncher")
 cheese_defaultLauncher_ubuntuGetText="cheese"
+cheese_defaultLauncher_dBusActivatable="true"
 
 clean_name="Function clean"
 clean_description="Remove files and contents from the trash bin and performs sudo apt-get -y autoclean and sudo apt-get -y autoremove."
@@ -652,12 +663,11 @@ codeblocks_tags=("development")
 codeblocks_systemcategories=("Development" "IDE" "GTK")
 codeblocks_arguments=("codeblocks" "code::blocks")
 codeblocks_commentary="Configurable and extensible IDE"
-codeblocks_bashfunctions=("codeblocks.sh")
+codeblocks_bashfunctions=("silentFunction")
 codeblocks_associatedfiletypes=("application/x-codeblocks" "application/x-codeblocks-workspace")
-# codeblocks_launchernames=("codeblocks")  # TODO @AleixMT extract launcher data
-codeblocks_lancherkeynames=("defaultLauncher")
+codeblocks_launcherkeynames=("defaultLauncher")
 codeblocks_defaultLauncher_exec="codeblocks %F"
-# TODO: X-MultipleArgs=false
+codeblocks_defaultLauncher_XMultipleArgs="false"
 codeblocks_packagenames=("codeblocks")
 
 codium_name="VSCodium"
@@ -705,15 +715,21 @@ converters_binariesinstalledpaths=("converters/to.py;to" "converters/dectoutf.py
 converters_repositoryurl="https://github.com/Axlfc/converters"
 
 copyq_name="CopyQ"
-copyq_description="A clipboard manager application that comes with extra features such as editing and scripting"
+copyq_description="Clipboard Manager"
 copyq_version="1.0"
 copyq_tags=("history" "clipboard")
-copyq_systemcategories=("System" "Utility")
-copyq_commentary="Autostart enabled"
+copyq_systemcategories=("Qt" "KDE" "Utility")
+copyq_commentary="A cut & paste history utility"
 copyq_arguments=("copyq")
-copyq_launchernames=("com.github.hluk.copyq")
-copyq_packagenames=("copyq")  # TODO @AleixMT extract launcher data
+copyq_packagenames=("copyq")
 copyq_flagsoverride=";;;;;1"  # Always autostart
+copyq_launcherkeynames=("defaultLauncher" "autostartLauncher")
+copyq_defaultLauncher_exec="copyq --start-server show"
+copyq_defaultLauncher__autorestartdelay="3"
+# TODO: X-KDE-autostart-after=panel
+# TODO: X-KDE-StartupNotify=false
+# TODO: X-KDE-UniqueApplet=true
+copyq_autostartLauncher_exec="copyq --start-server show"
 
 curl_name="curl"
 curl_description="Curl is a CLI command for retrieving or sending data to a server"
@@ -777,10 +793,9 @@ dbeaver_associatedfiletypes=("application/sql")
 dbeaver_downloadKeys=("bundle")
 dbeaver_bundle_URL="https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb"
 dbeaver_package_manager_override="apt-get"
-# TODO: dbeaver_launchernames=("dbeaver-ce")
 dbeaver_launcherkeynames=("defaultLauncher")
 dbeaver_defaultLauncher_exec="/usr/share/dbeaver-ce/dbeaver"
-# TODO: Path=/usr/share/dbeaver-ce/
+dbeaver_defaultLauncher_path="/usr/share/dbeaver-ce/"
 dbeaver_defaultLauncher_windowclass="DBeaver"
 
 dconfEditor_name="dconf-editor"
@@ -956,19 +971,17 @@ emojis_bashfunctions=("emojis.sh")
 
 evolution_name="Evolution Calendar"
 evolution_description="User calendar agend, planning"
-evoltion_version="1.0"
+evolution_version="1.0"
 evolution_tags=("bashfunctions" "bash")
 evolution_systemcategories=("System" "Utility")
 evolution_arguments=("evolution")
 evolution_commentary="edit files or projects"
-evolution_bashfunctions=("evolution.sh")
-# TODO: Extract properties evolution_launchernames=("evolution-calendar")
+evolution_packagenames=("evolution")
+evolution_bashfunctions=("silentFunction")
 evolution_launcherkeynames=("defaultLauncher")
 evolution_defaultLauncher_exec="evolution -c calendar"
-# TODO: X-Ubuntu-Gettext-Domain=gnome-shell
-# TODO: evolution_defaultLauncher_ubuntuGetText=""
-evolution_nodisplay="true"
-evolution_packagenames=("evolution")
+evolution_defaultLauncher_ubuntuGetText="gnome-shell"
+evolution_defaultLauncher_nodisplay="true"
 
 F_name="Function F"
 F_description="Function to find strings in files in the directory in the 1st argument"
@@ -1071,7 +1084,7 @@ firefox_associatedfiletypes=("text/html" "text/xml" "application/xhtml+xml" "app
 firefox_packagenames=("firefox")
 firefox_launcherkeynames=("default")
 firefox_default_exec="firefox %u"
-# TODO: X-MultipleArgs=false
+firefox_default_XMultipleArgs="false"
 firefox_default_actions=("newwindow" "newprivatewindow")
 firefox_default_newwindow_name="Open a New Window"
 firefox_default_newwindow_exec="firefox -new-window"
@@ -1119,7 +1132,6 @@ freecad_systemcategories=("3D" "Graphics" "Science" "Engineering")
 freecad_arguments=("freecad")
 freecad_commentary="Feature based Parametric Modeler"
 freecad_associatedfiletypes=("application/x-extension-fcstd")
-# TODO: freecad_launchernames=("freecad")
 freecad_launcherkeynames=("default")
 freecad_default_exec="freecad --single-instance %F"
 freecad_packagenames=("freecad")
@@ -1138,11 +1150,10 @@ geany_name="Geany"
 geany_description="Integrated Development Environment"
 geany_version="System dependent"
 geany_tags=("TextEditor" "Text" "Editor")
-geany_systemcategories=("IDE" "GTK" "Development") # TODO
+geany_systemcategories=("IDE" "GTK" "Development")
 geany_arguments=("geany")
 geany_commentary="A fast and lightweight IDE using GTK+"
 geany_associatedfiletypes=("text/plain" "text/x-chdr" "text/x-csrc" "text/x-c++hdr" "text/x-c++src" "text/x-java" "text/x-dsrc" "text/x-pascal" "text/x-perl" "text/x-python" "application/x-php" "application/x-httpd-php3" "application/x-httpd-php4" "application/x-httpd-php5" "application/xml" "text/html" "text/css" "text/x-sql" "text/x-diff")
-# TODO: geany_launchernames=("geany")
 geany_launcherkeynames=("default")
 geany_default_exec="geany %F"
 geany_packagenames=("geany")
@@ -1166,7 +1177,6 @@ ghostwriter_systemcategories=("TextEditor" "Qt" "Office" "WordProcessor")
 ghostwriter_arguments=("ghostwriter")
 ghostwriter_commentary="Distraction-free text editor for Markdown"
 ghostwriter_associatedfiletypes=("text/plain" "text/markdown" "text/x-markdown")
-# TODO ghostwriter_launchernames=("ghostwriter")
 ghostwriter_launcherkeynames=("default")
 ghostwriter_default_exec="ghostwriter %f"
 ghostwriter_packagenames=("ghostwriter")
@@ -1179,11 +1189,9 @@ gimp_systemcategories=("Viewer" "Art" "2DGraphics" "Graphics" "RasterGraphics" "
 gimp_arguments=("gimp")
 gimp_commentary="Create images and edit photographs"
 gimp_associatedfiletypes=("image/bmp" "image/g3fax" "image/gif" "image/x-fits" "image/x-pcx" "image/x-portable-anymap" "image/x-portable-bitmap" "image/x-portable-graymap" "image/x-portable-pixmap" "image/x-psd" "image/x-sgi" "image/x-tga" "image/x-xbitmap" "image/x-xwindowdump" "image/x-xcf" "image/x-compressed-xcf" "image/x-gimp-gbr" "image/x-gimp-pat" "image/x-gimp-gih" "image/tiff" "image/jpeg" "image/x-psp" "application/postscript" "image/png" "image/x-icon" "image/x-xpixmap" "image/x-exr" "image/x-webp" "image/heif" "image/heic" "image/svg+xml" "application/pdf" "image/x-wmf" "image/jp2" "image/x-xcursor")
-#TODO: gimp_launchernames=("gimp")
 gimp_launcherkeynames=("default")
 gimp_default_exec="gimp-2.10 %U"
-# TODO: X-Ubuntu-Gettext-Domain=gimp20
-# TODO: check gimp_default_ubuntuGetText="gimp20"
+gimp_default_ubuntuGetText="gimp20"
 gimp_packagenames=("gimp")
 
 git_name="git"
@@ -1440,7 +1448,6 @@ gvim_systemcategories=("TextEditor" "Utility")
 gvim_commentary="Edit text files"
 gvim_arguments=("gvim" "vim_gtk3")
 gvim_associatedfiletypes=("text/english" "text/plain" "text/x-makefile" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-java" "text/x-moc" "text/x-pascal" "text/x-tcl" "text/x-tex" "application/x-shellscript" "text/x-c" "text/x-c++")
-#TODO gvim_launchernames=("gvim")
 gvim_launcherkeynames=("default")
 gvim_default_exec="gvim -f %F"
 gvim_packagenames=("vim-gtk3")
@@ -2035,6 +2042,7 @@ nedit_packagenames=("nedit")
 nedit_launcherkeynames=("default")
 nedit_default_exec="nedit-nc %F"
 
+# TODO: Tested
 nemo_name="Nemo Desktop"
 nemo_description="Access and organize files"
 nemo_version="System dependent"
@@ -2051,7 +2059,7 @@ nemo_launcherkeynames=("defaultLauncher" "autostartLauncher")
 nemo_defaultLauncher_exec="nemo %U"
 nemo_defaultLauncher_name="Files"
 nemo_defaultLauncher_ubuntuGetText="nemo"
-nemo_defaultLauncher_OnlyShowIn=("GNOME" "Unity" "KDE")
+nemo_defaultLauncher_OnlyShowIn=("GNOME" "Unity" "KDE" "Cinnamon")
 nemo_defaultLauncher_actions=("openhome" "opencomputer" "opentrash" "openserver")
 nemo_defaultLauncher_openhome_name="Home"
 nemo_defaultLauncher_openhome_exec="nemo %U"
@@ -2071,7 +2079,6 @@ nemo_autostartLauncher_autorestart="true"
 nemo_autostartLauncher_autorestartdelay="2"
 nemo_autostartLauncher_ubuntuGetText="nemo"
 nemo_autostartLauncher_autostart="yes"
-# nemo_flagsoverride=";;;;;1"  # Always autostart
 nemo_keybindings=("nemo;<Super>e;Nemo File Explorer")
 
 netflix_name="Netflix"
@@ -2139,10 +2146,10 @@ notepadqq_default_windowclass="notepadqq"
 notepadqq_default_actions=("Window" "Document")
 notepadqq_default_Window_name="Open a New Window"
 notepadqq_default_Window_exec="notepadqq --new-window"
-# TODO: OnlyShowIn=Unity;
+notepadqq_default_Window_onlyShowIn="Unity;"
 notepadqq_default_Document_name="Open a New Document"
 notepadqq_default_Document_exec="notepadqq"
-# TODO: OnlyShowIn=Unity;
+notepadqq_default_Document_onlyShowIn="Unity;"
 
 notflix_name="Function notflix"
 notflix_description="Stream title movies via console magnet tracking"
@@ -2160,7 +2167,6 @@ obsStudio_tags=("stream" "online")
 obsStudio_systemcategories=("Utility" "Recorder")
 obsStudio_arguments=("obs_studio" "obs")
 obsStudio_commentary="The basic tool for a streamer"
-# TODO port info obsStudio_launchernames=("com.obsproject.Studio")
 obsStudio_launcherkeynames=("defautLauncher")
 obsStudio_defaultLauncher_exec="obs"
 obsStudio_packagedependencies=("ffmpeg")
@@ -2293,11 +2299,9 @@ pacman_tags=("pacman" "games" "arcade" "dots" "ghosts" "level")
 pacman_systemcategories=("Game" "ArcadeGame")
 pacman_arguments=("pacman")
 pacman_commentary="A simple clone of the classic arcade game"
-# TODO pacman_launchernames=("pacman")
+pacman_packagenames=("pacman")
 pacman_launcherkeynames=("default")
 pacman_default_exec="pacman"
-
-pacman_packagenames=("pacman")
 
 parallel_name="GNUparallel"
 parallel_description="Command-line driven utility for Linux and other Unix-like operating systems which allows the user to execute shell scripts or commands in parallel"
@@ -2378,7 +2382,6 @@ pluma_arguments=("pluma")
 pluma_commentary="Fork of gedit 2.0 that supports many plugins and new features"
 pluma_bashfunctions=("pluma.sh")
 pluma_associatedfiletypes=("text/plain")
-#TODO pluma_launchernames=("pluma")
 pluma_packagenames=("pluma")
 pluma_launcherkeynames=("defaultLauncher")
 pluma_defaultLauncher_exec="pluma %U"
@@ -2563,7 +2566,6 @@ remmina_tags=("remoteDesktop")
 remmina_systemcategories=("RemoteAccess")
 remmina_arguments=("remmina")
 remmina_packagenames=("remmina")
-# TODO remmina_launchernames=("org.remmina.Remmina")
 remmina_launcherkeynames=("defaultLauncher")
 remmina_defaultLauncher_exec="remmina"
 
@@ -2575,7 +2577,6 @@ rosegarden_systemcategories=("Music" "Audio")
 rosegarden_arguments=("rosegarden")
 rosegarden_bashfunctions=("rosegarden.sh")
 rosegarden_packagenames=("rosegarden")
-# TODO rosegarden_launchernames=("com.rosegardenmusic.rosegarden")
 rosegarden_launcherkeynames=("defaultLauncher")
 rosegarden_defaultLauncher_exec="rosegarden"
 
@@ -2604,7 +2605,6 @@ rsync_systemcategories=("Filesystem" "Utility")
 rsync_arguments=("rsync" "grsync")
 rsync_packagedependencies=("libcanberra-gtk-module" "libcanberra-gtk3-module" "libcanberra-gtk-module:i386")
 rsync_packagenames=("rsync" "grsync")
-# TODO rsync_launchernames=("grsync")
 rsync_bashfunctions=("rsync.sh")
 rsync_launcherkeynames=("grsyncLauncher")
 rsync_grsyncLauncher_exec="grsync"
@@ -2614,10 +2614,9 @@ rust_description="Programming Language"
 rust_version="System dependent"
 rust_tags=("rust")
 rust_systemcategories=("Languages")
-rustc_arguments=("rustc")
-rustc_packagenames=("rustc")
-rustc_packagedependencies=("cmake" "build-essential")
-# rustc_url=("https://sh.rustup.rs")
+rust_arguments=("rust_c")
+rust_packagenames=("rustc")
+rust_packagedependencies=("cmake" "build-essential")
 
 s_name="Function s"
 s_description="Function to execute any program silently and in the background"
@@ -2628,7 +2627,7 @@ s_arguments=("s")
 s_commentary="A terminal function"
 s_bashfunctions=("s.sh")
 
-scala_name=Scala""
+scala_name="Scala"
 scala_description="Programming language"
 scala_version="System dependent"
 scala_tags=("scala")
@@ -2720,8 +2719,8 @@ shotwell_packagenames=("shotwell")
 shotwell_associatedfiletypes=("x-content/image-dcf")
 shotwell_launcherkeynames=("defaultLauncher")
 shotwell_defaultLauncher_exec="shotwell %U"
+shotwell_defaultLauncher_ubuntuGetText="shotwell"
 # TODO: X-GIO-NoFuse=true
-# TODO: X-GNOME-Gettext-Domain=shotwell
 # TODO: X-GNOME-FullName=Shotwell Photo Manager
 
 # TODO @AleixMT wontfix
@@ -2740,7 +2739,7 @@ skype_defaultLauncher_windowclass="Skype"
 skype_defaultLauncher_actions=("QuitSkype")
 skype_defaultLauncher_QuitSkype_name="Quit Skype"
 skype_defaultLauncher_QuitSkype_exec="skypeforlinux --shutdown"
-# TODO: OnlyShowIn=Unity;
+skype_defaultLauncher_QuitSkype_onlyShowIn="Unity;"
 skype_downloadKeys=("bundle")
 skype_bundle_URL="https://go.skype.com/skypeforlinux-64.deb"
 skype_package_manager_override="apt-get"
@@ -2757,7 +2756,6 @@ slack_downloadKeys=("bundle")
 slack_bundle_URL="https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb"
 slack_package_manager_override="apt-get"
 slack_associatedfiletypes=("x-scheme-handler/slack")
-# TODO slack_launchernames=("slack")
 slack_launcherkeynames=("defaultLauncher")
 slack_defaultLauncher_exec="slack %U"
 slack_defaultLauncher_windowclass="Slack"
@@ -2778,7 +2776,6 @@ sonicPi_version="System dependent"
 sonicPi_tags=("programming" "music")
 sonicPi_systemcategories=("Languages" "Music")
 sonicPi_arguments=("sonic_pi")
-# TODO sonicPi_launchernames=("sonic-pi")
 sonicPi_packagenames=("sonic-pi")
 sonicPi_launcherkeynames=("defaultLauncher")
 sonicPi_defaultLauncher_exec="sonic-pi"
@@ -2795,12 +2792,17 @@ soundcloud_launcherkeynames=("default")
 soundcloud_default_exec="xdg-open https://www.soundcloud.com"
 
 spotify_name="Spotify"
-spotify_description="Play music in stream"
+spotify_description="Music streaming service"
 spotify_version="1.1.72"
 spotify_tags=("music" "stream")
 spotify_systemcategories=("Music" "Audio")
 spotify_arguments=("spotify")
-spotify_icon="spotify.png"
+spotify_commentary="Play music in stream"
+spotify_bashfunctions=("silentFunction")
+spotify_downloadKeys=("bundle")
+spotify_bundle_URL="https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.72.439.gc253025e_amd64.deb"
+spotify_package_manager_override="apt-get"
+spotify_packagedependencies=("libgconf-2-4")
 spotify_launcherkeynames=("launcher")
 spotify_launcher_exec="spotify %U"
 spotify_launcher_actionkeynames=("Playpause" "Next" "Previous" "Stop")
@@ -2812,13 +2814,6 @@ spotify_launcher_Previous_name="⏮"
 spotify_launcher_Previous_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
 spotify_launcher_Stop_name="⏹"
 spotify_launcher_Stop_exec="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
-spotify_bashfunctions=("spotify.sh")
-spotify_launchernames=("spotify")
-spotify_downloadKeys=("bundle")
-spotify_bundle_URL="https://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.1.72.439.gc253025e_amd64.deb"
-spotify_package_manager_override="apt-get"
-spotify_packagedependencies=("libgconf-2-4")
-spotify_readmeline="| Spotify | Music streaming service | Command \`spotify\`, desktop launcher, dashboard launcher || <ul><li>- [x] Ubuntu</li><li>- [ ] ElementaryOS</li><li>- [ ] Debian</li></ul> | "
 
 spreadsheets_name="Google Spreadsheets"
 spreadsheets_description="Google Spreadsheets opening in Browser"
@@ -2861,7 +2856,6 @@ steam_tags=("games")
 steam_systemcategories=("Game" "FileTransfer" "Network")
 steam_arguments=("steam")
 steam_commentary="Video game digital distribution service"
-# TODO steam_launchernames=("steam")
 steam_launcherkeynames=("defaultLauncher")
 steam_defaultLauncher_exec="steam %U"
 # TODO: PrefersNonDefaultGPU=true
@@ -2885,7 +2879,6 @@ steam_defaultLauncher_BigPicture_name="Big Picture"
 steam_defaultLauncher_BigPicture_exec="steam steam://open/bigpicture"
 steam_defaultLauncher_Friends_name="Friends"
 steam_defaultLauncher_Friends_exec="steam steam://open/friends"
-
 
 steam_packagenames=("steam-launcher")
 steam_associatedfiletypes=("x-scheme-handler/steam" "x-scheme-handler/steamlink")
@@ -2934,7 +2927,6 @@ sudoku_tags=("sudoku" "game" "gnome" "strategy")
 sudoku_systemcategories=("BoardGame" "LogicGame" "GNOME" "GTK" "Game" "BoardGame")
 sudoku_arguments=("gnome_sudoku" "sudoku")
 sudoku_commentary="Click and play"
-# TODO sudoku_launchernames=("org.gnome.Sudoku")
 sudoku_launcherkeynames=("default")
 sudoku_default_exec="gnome-sudoku"
 sudoku_packagenames=("gnome-sudoku")
@@ -3005,7 +2997,6 @@ teamviewer_version="System dependent"
 teamviewer_tags=("remote")
 teamviewer_systemcategories=("RemoteAccess" "Network")
 teamviewer_arguments=("teamviewer")
-# TODO teamviewer_launchernames=("com.teamviewer.TeamViewer")
 teamviewer_downloadKeys=("bundle")
 teamviewer_bundle_URL="https://download.teamviewer.com/download/linux/teamviewer_amd64.deb"
 teamviewer_package_manager_override="apt-get"
@@ -3027,12 +3018,12 @@ teams_bundle_URL="https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40a&
 teams_launcherkeynames=("defaultLauncher")
 teams_defaultLauncher_exec="teams %U"
 teams_defaultLauncher_windowclass="Microsoft Teams - Preview"
-# TODO X-KDE-Protocols=teams
-# TODO X-GNOME-UsesNotifications=true;
+teams_defaultLauncher_usesNotifications="true"
+teams_defaultLauncher_protocols="teams"
 teams_defaultLauncher_actions=("QuitTeams")
 teams_defaultLauncher_QuitTeams_name="Quit Teams"
 teams_defaultLauncher_QuitTeams_exec="/usr/bin/teams --quit"
-# TODO: (action quit) OnlyShowIn=Unity;
+teams_defaultLauncher_QuitTeams_onlyShowIn="Unity;"
 
 # TODO: Tested
 telegram_name="Telegram"
@@ -3082,7 +3073,6 @@ terminal_systemcategories=("GNOME" "GTK")
 terminal_arguments=("gnome_terminal")
 terminal_commentary="Open a new gnome-terminal window"
 terminal_keybindings=("gnome-terminal;<Primary><Alt><Super>t;GNOME Terminal")
-# TODO: terminal_launchernames=("org.gnome.Terminal")
 terminal_launcherkeynames=("default")
 terminal_default_exec="gnome-terminal"
 terminal_packagenames=("gnome-terminal")
@@ -3127,14 +3117,14 @@ thunderbird_associatedfiletypes=("x-scheme-handler/mailto" "application/x-xpinst
 thunderbird_bashfunctions=("thunderbird.sh")
 thunderbird_launcherkeynames=("defaultLauncher")
 thunderbird_defaultLauncher_exec="thunderbird %u"
-# TODO:: X-MultipleArgs=false
+thunderbird_defaultLauncher_XMultipleArgs="false"
 thunderbird_defaultLauncher_actions=("Compose" "Contacts")
 thunderbird_defaultLauncher_Compose_name="Compose New Message"
 thunderbird_defaultLauncher_Compose_exec="thunderbird -compose"
-# TODO: OnlyShowIn=Messaging Menu;Unity;
+thunderbird_defaultLauncher_Compose_onlyShowIn="Messaging Menu;Unity;"
 thunderbird_defaultLauncher_Contacts_name="Contacts"
 thunderbird_defaultLauncher_Contacts_exec="thunderbird -addressbook"
-#TODO: OnlyShowIn=Messaging Menu;Unity;
+thunderbird_defaultLauncher_Contacts_onlyShowIn="Messaging Menu;Unity;"
 
 tilix_name="Tilix"
 tilix_description="Advanced GTK3 tiling terminal emulator"
@@ -3142,7 +3132,6 @@ tilix_version="System dependent"
 tilix_tags=("multiplexor")
 tilix_systemcategories=("TerminalEmulator")
 tilix_arguments=("tilix")
-# TODO tilix_launchernames=("com.gexperts.Tilix")
 tilix_packagenames=("tilix")
 tilix_launcherkeynames=("defaultLauncher")
 tilix_defaultLauncher_exec="tilix"
@@ -3258,10 +3247,9 @@ tweaks_tags=("tweaks" "game" "gnome" "strategy")
 tweaks_systemcategories=("GNOME" "GTK")
 tweaks_arguments=("gnome_tweak_tool" "tweaks" "gnome_tweak" "gnome_tweak_tools" "gnome_tweaks")
 tweaks_commentary="Tweaks for system"
-tweaks_packagenames=("gnome-tweak-tool")
-# TODO: tweaks_launchernames=("org.gnome.tweaks")
+tweaks_packagenames=("gnome-tweaks")
 tweaks_launcherkeynames=("default")
-tweaks_default_exec="gnome-tweak-tool"
+tweaks_default_exec="gnome-tweaks"
 
 twitch_name="Twitch"
 twitch_description="Twitch.tv opening in Browser"
@@ -3339,13 +3327,11 @@ vlc_tags=("streaming" "Player" "Capture" "DVD" "Audio" "Video" "Server" "Broadca
 vlc_systemcategories=("Audio" "Music" "Player" "AudioVideo" "Recorder")
 vlc_arguments=("vlc")
 vlc_commentary="Read, capture, broadcast your multimedia streams"
-# TODO: vlc_launchernames=("vlc")
 vlc_packagenames=("vlc")
 vlc_associatedfiletypes=("application/ogg" "application/x-ogg" "audio/ogg" "audio/vorbis" "audio/x-vorbis" "audio/x-vorbis+ogg" "video/ogg" "video/x-ogm" "video/x-ogm+ogg" "video/x-theora+ogg" "video/x-theora" "audio/x-speex" "audio/opus" "application/x-flac" "audio/flac" "audio/x-flac" "audio/x-ms-asf" "audio/x-ms-asx" "audio/x-ms-wax" "audio/x-ms-wma" "video/x-ms-asf" "video/x-ms-asf-plugin" "video/x-ms-asx" "video/x-ms-wm" "video/x-ms-wmv" "video/x-ms-wmx" "video/x-ms-wvx" "video/x-msvideo" "audio/x-pn-windows-acm" "video/divx" "video/msvideo" "video/vnd.divx" "video/avi" "video/x-avi" "application/vnd.rn-realmedia" "application/vnd.rn-realmedia-vbr" "audio/vnd.rn-realaudio" "audio/x-pn-realaudio" "audio/x-pn-realaudio-plugin" "audio/x-real-audio" "audio/x-realaudio" "video/vnd.rn-realvideo" "audio/mpeg" "audio/mpg" "audio/mp1" "audio/mp2" "audio/mp3" "audio/x-mp1" "audio/x-mp2" "audio/x-mp3" "audio/x-mpeg" "audio/x-mpg" "video/mp2t" "video/mpeg" "video/mpeg-system" "video/x-mpeg" "video/x-mpeg2" "video/x-mpeg-system" "application/mpeg4-iod" "application/mpeg4-muxcodetable" "application/x-extension-m4a" "application/x-extension-mp4" "audio/aac" "audio/m4a" "audio/mp4" "audio/x-m4a" "audio/x-aac" "video/mp4" "video/mp4v-es" "video/x-m4v" "application/x-quicktime-media-link" "application/x-quicktimeplayer" "video/quicktime" "application/x-matroska" "audio/x-matroska" "video/x-matroska" "video/webm" "audio/webm" "audio/3gpp" "audio/3gpp2" "audio/AMR" "audio/AMR-WB" "video/3gp" "video/3gpp" "video/3gpp2" "x-scheme-handler/mms" "x-scheme-handler/mmsh" "x-scheme-handler/rtsp" "x-scheme-handler/rtp" "x-scheme-handler/rtmp" "x-scheme-handler/icy" "x-scheme-handler/icyx" "application/x-cd-image" "x-content/video-vcd" "x-content/video-svcd" "x-content/video-dvd" "x-content/audio-cdda" "x-content/audio-player" "application/ram" "application/xspf+xml" "audio/mpegurl" "audio/x-mpegurl" "audio/scpls" "audio/x-scpls" "text/google-video-pointer" "text/x-google-video-pointer" "video/vnd.mpegurl" "application/vnd.apple.mpegurl" "application/vnd.ms-asf" "application/vnd.ms-wpl" "application/sdp" "audio/dv" "video/dv" "audio/x-aiff" "audio/x-pn-aiff" "video/x-anim" "video/x-nsv" "video/fli" "video/flv" "video/x-flc" "video/x-fli" "video/x-flv" "audio/wav" "audio/x-pn-au" "audio/x-pn-wav" "audio/x-wav" "audio/x-adpcm" "audio/ac3" "audio/eac3" "audio/vnd.dts" "audio/vnd.dts.hd" "audio/vnd.dolby.heaac.1" "audio/vnd.dolby.heaac.2" "audio/vnd.dolby.mlp" "audio/basic" "audio/midi" "audio/x-ape" "audio/x-gsm" "audio/x-musepack" "audio/x-tta" "audio/x-wavpack" "audio/x-shorten" "application/x-shockwave-flash" "application/x-flash-video" "misc/ultravox" "image/vnd.rn-realpix" "audio/x-it" "audio/x-mod" "audio/x-s3m" "audio/x-xm" "application/mxf")
 vlc_launcherkeynames=("defaultLauncher")
 vlc_defaultLauncher_exec="/usr/bin/vlc --started-from-file %U"
-# TODO: X-KDE-Protocols=ftp,http,https,mms,rtmp,rtsp,sftp,smb
-
+vlc_defaultLauncher_protocols="ftp,http,https,mms,rtmp,rtsp,sftp,smb"
 
 vncviewer_name="VNC Viewer"
 vncviewer_description="VNC client"
