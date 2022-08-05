@@ -533,11 +533,14 @@ dynamic_launcher_deduce_exec()
   local -r override_exec="${CURRENT_INSTALLATION_KEYNAME}_$1_exec"
   local -r metadata_exec_temp="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[0]"
   local -r metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
+
+  local chosen_exec=
   if [ ! -z "${!override_exec}" ]; then
-    echo "${!override_exec}"
+    chosen_exec="${!override_exec}"
   else
-    echo "${metadata_exec}"
+    chosen_exec="${metadata_exec}"
   fi
+  echo "${chosen_exec}"
 }
 
 
@@ -1073,7 +1076,26 @@ generic_install_functions() {
       if [ -z "${selectedKeyname}" ]; then
         continue
       fi
-      local -r silent_exec="$(dynamic_launcher_deduce_exec "${selectedKeyname}" | cut -d ' ' -f1)"
+
+      local silent_exec="$(dynamic_launcher_deduce_exec "${selectedKeyname}")"
+      local -r silent_exec_first_word="$(echo "${silent_exec}" | cut -d " " -f1)"
+      if [ "${silent_exec_first_word}" == "bash" ] || [ "${silent_exec_first_word}" == "nohup" ]; then
+        silent_exec="$(echo "${silent_exec}" | cut -d " " -f2)"
+        if echo "${silent_exec}" | grep -Eq "/"; then
+          silent_exec="$(echo "${silent_exec}" | rev | cut -d "/" -f1 | rev | cut -d "." -f1)"
+        fi
+      elif ! echo "${silent_exec}" | grep -Eq "/"; then
+        silent_exec="$(echo "${silent_exec}" | cut -d " " -f1)"
+      else
+        local -r binariesPointer="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[0]"
+        if [ ! -z "$(echo "${!binariesPointer}")" ]; then
+          silent_exec="$(echo "${!binariesPointer}" | cut -d ";" -f2)"
+        else
+          # We do not have any info so we expect the keyname to be the binary
+          silent_exec="${CURRENT_INSTALLATION_KEYNAME}"
+        fi
+      fi
+
       local -r silent_function="#!/usr/bin/env bash
 ${silent_exec}()
 {
@@ -1349,7 +1371,6 @@ generic_install_pythonVirtualEnvironment() {
   local -r pipinstallations="${CURRENT_INSTALLATION_KEYNAME}_pipinstallations[@]"
   local -r pythoncommands="${CURRENT_INSTALLATION_KEYNAME}_pythoncommands[@]"
   if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
-    echo sjkdhfkshjdfkhjfsdfsdfasdfaaaaaaaaaaaaaaaaaaaaaaa
     return
   fi
 
