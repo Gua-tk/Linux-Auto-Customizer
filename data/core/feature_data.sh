@@ -466,7 +466,7 @@ c_bashfunctions=("c.sh")
 calibre_name="Calibre"
 calibre_description="E-book library management"
 calibre_version="System dependent"
-calibre_tags="office"
+calibre_tags=("office")
 calibre_systemcategories=("Office")
 calibre_arguments=("calibre")
 calibre_commentary="E-book library management: Convert, view, share, catalogue all your e-books"
@@ -476,6 +476,19 @@ calibre_launcherkeynames=("defaultLauncher")
 calibre_defaultLauncher_exec="calibre %F"
 calibre_defaultLauncher_usesNotifications="true"
 calibre_packagenames=("calibre")
+
+carbonLang_name="Carbon Language"
+carbonLang_description="Successor of C++"
+carbonLang_version="System dependent"
+carbonLang_tags=("languages")
+carbonLang_systemcategories=("Languages")
+carbonLang_arguments=("carbon_lang" "carbon_language" "carbon")
+carbonLang_bashfunctions=("carbonLang_function.sh")
+# TODO: carbonLang_gpgSignature("https://bazel.build/bazel-release.pub.gpg", "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8")
+carbonLang_commentary="Carbon is an experimental, general-purpose programming language"
+carbonLang_dependencies=("apt-transport-https" "gnupg" "clang" "lldb" "lld" "openjdk-8-jdk" "llvm" "build-essential" "libc++-dev")
+carbonLang_bashinitializations=("carbonLang.sh")
+carbonLang_repositoryurl="https://github.com/carbon-language/carbon-lang"
 
 # TODO: tested
 changebg_name="Change Background"
