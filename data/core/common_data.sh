@@ -613,7 +613,7 @@ declare feature_keynames=(
   "rosegarden"
   "rstudio"
   "rsync"
-  "rustc"
+  "rust"
   "s"
   "scala"
   "scilab"

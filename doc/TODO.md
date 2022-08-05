@@ -30,3 +30,5 @@
 ### @Axlfc
 - [ ] Rename caps named features that con bad interpreted in MacOS and Windows (L, B, F, E...)
 - [ ] launchercontents key names metadata input in data_features.sh
+- [ ] Create a desktop launcher with Terminal=true option if is terminal interpretation is possible in features that are programming languages.
+- [ ] Refactor bash functions property in graphical features with silentFunction.

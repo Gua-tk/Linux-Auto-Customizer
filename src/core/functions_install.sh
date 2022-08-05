@@ -752,7 +752,40 @@ NoDisplay=false"
   # Override the OnlyShowIn over the default nothing
   local -r overrideOnlyShowIn="${CURRENT_INSTALLATION_KEYNAME}_$1_OnlyShowIn[@]"
   if [ ! -z "$(echo "${!overrideOnlyShowIn}")" ]; then
-    text+=$'\n'"OnlyShowIn=${!overrideOnlyShowIn}"
+    text+=$'\n'"OnlyShowIn="
+    for mime_override in "${!overrideOnlyShowIn}"; do
+      text+="${mime_override};"
+    done
+  fi
+
+  # XMultipleArgs  X-MultipleArgs=false
+  local -r overrideXMultipleArgs="${CURRENT_INSTALLATION_KEYNAME}_$1_XMultipleArgs"
+  if [ ! -z "${!overrideXMultipleArgs}" ]; then
+    text+=$'\n'"X-MultipleArgs=${!overrideXMultipleArgs}"
+  fi
+
+  # usesNotifications X-GNOME-UsesNotifications
+  local -r overrideusesNotifications="${CURRENT_INSTALLATION_KEYNAME}_$1_usesNotifications"
+  if [ ! -z "${!overrideusesNotifications}" ]; then
+    text+=$'\n'"X-GNOME-UsesNotifications=${!overrideusesNotifications}"
+  fi
+
+  # dBusActivatable DBusActivatable
+  local -r overridedBusActivatable="${CURRENT_INSTALLATION_KEYNAME}_$1_dBusActivatable"
+  if [ ! -z "${!overridedBusActivatable}" ]; then
+    text+=$'\n'"DBusActivatable=${!overridedBusActivatable}"
+  fi
+
+  # path Path
+  local -r overridepath="${CURRENT_INSTALLATION_KEYNAME}_$1_path"
+  if [ ! -z "${!overridepath}" ]; then
+    text+=$'\n'"Path=${!overridepath}"
+  fi
+
+  # protocols X-KDE-Protocols
+  local -r overrideprotocols="${CURRENT_INSTALLATION_KEYNAME}_$1_protocols"
+  if [ ! -z "${!overrideprotocols}" ]; then
+    text+=$'\n'"X-KDE-Protocols=${!overrideprotocols}"
   fi
 
   # Add actions for this particular launcher
@@ -767,9 +800,12 @@ NoDisplay=false"
       local actionkeyname_name="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_name"
       local actionkeyname_exec="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_exec"
       local actionkeyname_icon="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_icon"
+      local actionkeyname_onlyShowIn="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_onlyShowIn"
       text+=$'\n'$'\n'"[Desktop Action ${actionkeyname_override}]"
       text+=$'\n'"Name=${!actionkeyname_name}"
       text+=$'\n'"Exec=${!actionkeyname_exec}"
+      text+=$'\n'"OnlyShowIn=${!actionkeyname_onlyShowIn}"
+
       local action_icon=""
       local feature_icon_pointer="${CURRENT_INSTALLATION_KEYNAME}_icon"
       if [ -z "${!actionkeyname_icon}" ]; then
@@ -787,6 +823,7 @@ NoDisplay=false"
       text+=$'\n'"Icon=${action_icon}"
     done
   fi
+  text+=$'\n'
   echo "${text}"
 }
 
@@ -859,7 +896,6 @@ generic_install_dynamic_launcher() {
   if [ ! -n "$(echo "${!launcherkeynames}")" ]; then
     return
   fi
-
   local is_autostart_attended=
   if [ ${FLAG_AUTOSTART} -eq 1 ]; then
     is_autostart_attended=0
@@ -870,7 +906,6 @@ generic_install_dynamic_launcher() {
   for launcherkeyname in "${!launcherkeynames}"; do
     # create_manual_launcher "${text}" "$2"
     autostart_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_autostart"
-
     if [ "${!autostart_pointer}" == "yes" ]; then
       current_launcher="$(get_dynamic_launcher "${launcherkeyname}")"
       create_file "${AUTOSTART_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop" "${current_launcher}"
@@ -1043,7 +1078,7 @@ generic_install_initializations() {
       add_bash_initialization "${bashinit}" "$1${name_suffix_anticollision}.sh"
     elif ! echo "${bashinit}" | grep -Eq "/"; then
       # Only one line we guess it is a partial path
-      add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashinit}"
+      add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${bashinit}"
     else
       add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashinit}"
     fi
@@ -1116,7 +1151,7 @@ generic_install_files() {
       create_file "${destiny_path}" "${!content}"
     else
       # Only one line we guess it is a path
-      create_file "${destiny_path}" "" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${!content}"
+      create_file "${destiny_path}" "" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!content}"
     fi
   done
 }
@@ -1438,6 +1473,10 @@ data_and_file_structures_initialization() {
     cp "${CUSTOMIZER_PROJECT_FOLDER}/data/core/customizer_options.sh" "${DATA_FOLDER}/customizer_options.sh"
   fi
   apply_permissions "${DATA_FOLDER}/customizer_options.sh"
+
+  if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
+    create_file "" "${PROGRAM_KEYBINDINGS_PATH}"
+  fi
 
   create_folder "${BIN_FOLDER}"
   create_folder "${FUNCTIONS_FOLDER}"
