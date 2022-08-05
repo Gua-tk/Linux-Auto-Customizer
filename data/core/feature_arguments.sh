@@ -2,6 +2,7 @@
 
 a_arguments=("a_function")
 add_arguments=("add" "add_function")
+pgadmin_arguments=("pgadmin" "pgadmin4")
 
 
 vommit_arguments=("dummy_commit")
