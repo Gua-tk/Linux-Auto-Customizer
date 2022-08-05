@@ -1033,10 +1033,21 @@ generic_install_copy_launcher() {
 }
 
 generic_install_gpgSignature() {
-  # TODO: This has not yet function implemented changing curl towards wget
-  wget ${gpgURL} | gpg --dearmor > "${signedNames}.gpg"
-  sudo mv "${names}.gpg" $GPG_TRUSTED_PATH
-  echo "${aptSources}" | sudo tee "$APT_SOURCES_LIST_PATH/${signedNames}.list"
+  # TODO: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg)
+  local -r gpgsignatures="${CURRENT_INSTALLATION_KEYNAME}_gpgSignatures[@]"
+  local name_suffix_anticollision=""
+  for sign in "${!gpgsignatures}"; do
+    if [[ "${sign}" = "https://"* ]]; then
+      gpgURL="${sign}"
+    elif [[ "${sign}" = *"[arch="* ]]; then
+      aptSources="${sign}"
+    else
+      names="${sign}"
+    fi
+  done
+  wget -q ${gpgURL} -O- -o ".data/features/${CURRENT_INSTALLATION_KEYNAME}" | gpg --dearmor > "${names}".gpg
+  sudo mv "./data/features/${CURRENT_INSTALLATION_KEYNAME}/${names}.gpg" $GPG_TRUSTED_PATH
+  echo "${aptSources}" | sudo tee "$APT_SOURCES_LIST_PATH/${names}.list" &>/dev/null
 
 }
 
