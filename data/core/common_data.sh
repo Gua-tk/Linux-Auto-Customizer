@@ -492,15 +492,6 @@ declare feature_keynames=(
   "filezilla"
   "firefox"
   "flutter"
-  "fonts_alegreya_sans"
-  "fonts_firacode"
-  "fonts_hack"
-  "fonts_hermit"
-  "fonts_lato"
-  "fonts_noto_sans"
-  "fonts_oswald"
-  "fonts_oxygen"
-  "fonts_roboto"
   "forms"
   "freecad"
   "gcc"
@@ -567,7 +558,6 @@ declare feature_keynames=(
   "meld"
   "mendeley"
   "merge"
-  "msttcorefonts"
   "mvn"
   "nano"
   "nautilus"
@@ -585,7 +575,6 @@ declare feature_keynames=(
   "octave"
   "okular"
   "onedrive"
-  "openssl102"
   "opensshServer"
   "outlook"
   "overleaf"
@@ -723,12 +712,11 @@ declare -r wrapper_gamesinstall=("steam" "cmatrix")
 declare -r wrapper_internetshortcuts=("documents" "drive" "duckduckgo" "facebook" "forms" "github" "gitlab" "gmail" "google" "googlecalendar" "instagram" "keep" "netflix" "onedrive" "outlook" "overleaf" "presentation" "reddit" "soundcloud" "spreadsheets" "translator" "trello" "tumblr" "twitch" "twitter" "whatsapp" "wikipedia" "youtube" "youtubemusic")
 declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley" "GNU_parallel" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
 declare -r wrapper_bashfunctions=("a" "b" "B" "c" "E" "e" "F" "f" "h" "i" "j" "k" "L" "l" "p" "s" "u" "x" "z")
-declare -r wrapper_desktopfunctions=("changebg" "screenshots" "system_fonts" "templates")
+declare -r wrapper_desktopfunctions=("changebg" "screenshots" "systemFonts" "templates")
 declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters" "bashcolors" "fastcommands" "emojis")
 declare -r wrapper_network=("ipe" "ipi" "ips")
 declare -r wrapper_networks=("net-tools")
-declare -r wrapper_fontsuser=("fonts-alegreya-sans", "fonts-lato", "fonts-noto-sans", "fonts-oswald", "fonts-oxygen")
-declare -r wrapper_fontsroot=("fonts-firacode", "fonts-hack", "fonts-hermit", "fonts-roboto")
+
 # Custom wrappers
 declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "curl" "git" "ffmpeg" "java" "python3")
 declare -r wrapper_gitbashfunctions=("pull" "push" "vommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch" "config")

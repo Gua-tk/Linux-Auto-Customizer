@@ -805,7 +805,6 @@ dconfEditor_tags=("editor" "settings")
 dconfEditor_systemcategories=("System" "Utility" "Settings" "GNOME" "DesktopSettings")
 dconfEditor_arguments=("dconf_editor" "dconf")
 dconfEditor_commentary="Edit system environment variables"
-# TODO: dconfEditor_launchernames=("ca.desrt.dconf-editor")
 dconfEditor_launcherkeynames=("defaultLauncher")
 dconfEditor_defaultLauncher_exec="dconf-editor"
 dconfEditor_packagenames=("dconf-editor")

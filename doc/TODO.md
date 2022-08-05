@@ -32,3 +32,4 @@
 - [ ] launchercontents key names metadata input in data_features.sh
 - [ ] Create a desktop launcher with Terminal=true option if is terminal interpretation is possible in features that are programming languages.
 - [ ] Refactor bash functions property in graphical features with silentFunction.
+- [ ] Add file in templates for every programming language using filekeys
