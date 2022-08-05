@@ -197,13 +197,11 @@ generic_uninstall_manual_launchers() {
 
 # - Description:
 # - Permissions:
-# Argument 1: Feature keyname
-# Argument 2:
 generic_uninstall_dynamic_launcher() {
-  local -r launcherkeynames="$1_launcherkeynames[@]"
+  local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
   local name_suffix_anticollision=""
   for launcherkey in "${!launcherkeynames}"; do
-    remove_manual_launcher "$1${name_suffix_anticollision}.desktop"
+    remove_manual_launcher "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
@@ -212,10 +210,10 @@ generic_uninstall_dynamic_launcher() {
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to uninstall, matching the variable $1_bashfunctions
 generic_uninstall_functions() {
-  local -r bashfunctions="$1_bashfunctions[@]"
+  local -r bashfunctions="${CURRENT_INSTALLATION_KEYNAME}_bashfunctions[@]"
   local name_suffix_anticollision=""
   for bashfunction in "${!bashfunctions}"; do
-    remove_bash_function "$1${name_suffix_anticollision}.sh"
+    remove_bash_function "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
@@ -240,16 +238,14 @@ generic_uninstall_favorites() {
 
 # - Description: Expands file associations and remove register files association desktop launchers as default application's mimetypes
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_associatedfiletypes
-#   and the name of the first argument in the common_data.sh table.
 generic_uninstall_file_associations() {
-  local -r associated_file_types="$1_associatedfiletypes[@]"
+  local -r associated_file_types="${CURRENT_INSTALLATION_KEYNAME}_associatedfiletypes[@]"
   for associated_file_type in ${!associated_file_types}; do
     if echo "${associated_file_type}" | grep -Fo ";"; then
       local associated_desktop=
       associated_desktop="$(echo "${associated_file_type}" | cut -d ";" -f2)"
     else
-      local associated_desktop="$1"
+      local associated_desktop="${CURRENT_INSTALLATION_KEYNAME}"
     fi
     remove_file_associations "${associated_desktop}.desktop"
   done
@@ -257,10 +253,8 @@ generic_uninstall_file_associations() {
 
 # - Description: Expands keybinds for functions and programs and append to keybind sub-system
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_keybinds
-#   and the name of the first argument in the common_data.sh table
 generic_uninstall_keybindings() {
-  local -r keybinds="$1_keybindings[@]"
+  local -r keybinds="${CURRENT_INSTALLATION_KEYNAME}_keybindings[@]"
   for keybind in "${!keybinds}"; do
     remove_keybinding "${keybind}"
   done
@@ -268,34 +262,10 @@ generic_uninstall_keybindings() {
 
 # - Description: Expands downloads to remove downloads from BIN_FOLDER/FEATUREKEYNAME
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_download
 generic_uninstall_downloads() {
-  local -r downloads="$1_downloads[@]"
+  local -r downloads="${CURRENT_INSTALLATION_KEYNAME}_downloads[@]"
   if [ -d "${!downloads}" ]; then
-    remove_folder "${BIN_FOLDER}/$1"
-  fi
-}
-
-# - Description: Expands to not autostart a program option if set to 'no' launcher names will expand to not autostart
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Launcher name of the feature to install, matching it with the variable $1_autostart
-generic_uninstall_autostart() {
-  local -r launchernames="$1_launchernames[@]"
-  local -r autostartlaunchers_pointer="$1_autostartlaunchers[@]"
-  if [ -n "${!autostartlaunchers_pointer}" ]; then
-    local name_suffix_anticollision=""
-    for autostartlauncher in "${!autostartlaunchers_pointer}"; do
-      remove_file "${AUTOSTART_FOLDER}/$1${name_suffix_anticollision}.desktop"
-      name_suffix_anticollision="${name_suffix_anticollision}_"
-    done
-  # If not use the launchers that are already in the system
-  elif [ -n "${!launchernames}" ]; then
-    for launchername in ${!launchernames}; do
-      remove_autostart_program "${launchername}.desktop"
-    done
-  # Fallback to keyname to try if there is a desktop launcher in the system
-  else
-    remove_autostart_program "$1.desktop"
+    remove_folder "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
   fi
 }
 
@@ -305,7 +275,7 @@ generic_uninstall_autostart() {
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the binaries of the feature to install, matching the variable $1_binariesinstalledpaths
 generic_uninstall_pathlinks() {
-  local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
+  local -r binariesinstalledpaths="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[@]"
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
     local binary_name=
     binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
@@ -318,18 +288,18 @@ generic_uninstall_pathlinks() {
   done
 }
 
-# - Description: Expands $1_filekeys to obtain the keys which are a name of a variable
+# - Description: Expands ${CURRENT_INSTALLATION_KEYNAME}_filekeys to obtain the keys which are a name of a variable
 #   that has to be expanded to obtain the data of the file.
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Absolute path of the feature to uninstall, matching the variable $1_filekeys
 generic_uninstall_files() {
-  local -r filekeys="$1_filekeys[@]"
+  local -r filekeys="${CURRENT_INSTALLATION_KEYNAME}_filekeys[@]"
   for filekey in "${!filekeys}"; do
-    local path="$1_${filekey}_path"
+    local path="${CURRENT_INSTALLATION_KEYNAME}_${filekey}_path"
     if echo "${!path}" | grep -Eqo "^/"; then
       remove_file "${!path}"
     else
-      remove_file "${BIN_FOLDER}/$1/${!path}"
+      remove_file "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${!path}"
     fi
   done
 }
@@ -338,6 +308,7 @@ generic_uninstall_files() {
 # automatic install (for example using $DEFAULT_PACKAGE_MANAGER or dpkg).
 # - Permissions: This function expects to be called as root since it uses the variable $SUDO_USER.
 # - Argument 1: name of the desktop launcher in ALL_USERS_LAUNCHERS_DIR.
+# TODO: deprectae
 generic_uninstall_copy_launcher() {
   # Name of the launchers to be used by copy_launcher
   local -r launchernames="$1_launchernames[@]"
@@ -349,12 +320,11 @@ generic_uninstall_copy_launcher() {
 
 # - Description: Expands function system initialization relative to ${HOME_FOLDER}/.profile
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to uninstall, matching the variable $1_bashinitializations
 generic_uninstall_initializations() {
-  local -r bashinitializations="$1_bashinitializations[@]"
+  local -r bashinitializations="${CURRENT_INSTALLATION_KEYNAME}_bashinitializations[@]"
   local name_suffix_anticollision=""
   for bashinit in "${!bashinitializations}"; do
-    remove_bash_initialization "$1${name_suffix_anticollision}.sh"
+    remove_bash_initialization "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
@@ -364,7 +334,7 @@ generic_uninstall_initializations() {
 # - Permissions: Can be executed as root or user.
 # - Argument 1: Name of the feature to install, matching the variable $1_movefiles
 generic_uninstall_movefiles() {
-  local -r movedfiles_pointer="$1_movedfiles[@]"
+  local -r movedfiles_pointer="${CURRENT_INSTALLATION_KEYNAME}_movedfiles[@]"
   for movedfiles_data in "${!movedfiles_pointer}"; do
     destinationpath="$(echo "${movedfiles_data}" | cut -d ";" -f2)"
     remove_file "${destinationpath}"
@@ -381,11 +351,11 @@ generic_uninstall_dependencies() {
     return
   fi
 # Other dependencies to install with the package manager before the main package of software if present
-  local -r packagedependencies="$1_packagedependencies[*]"
+  local -r packagedependencies="${CURRENT_INSTALLATION_KEYNAME}_packagedependencies[*]"
 
   if ! isRoot; then
     if [ -n "${!packagedependencies}" ]; then
-      output_proxy_executioner "$1 has this dependencies: ${!packagedependencies} but are not going to be uninstalled because you are not root. To uninstall them, rerun uninstallation with sudo." "WARNING"
+      output_proxy_executioner "${CURRENT_INSTALLATION_KEYNAME} has this dependencies: ${!packagedependencies} but are not going to be uninstalled because you are not root. To uninstall them, rerun uninstallation with sudo." "WARNING"
       return
     fi
   fi
@@ -405,8 +375,8 @@ generic_uninstall_dependencies() {
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
 generic_uninstall_pythonVirtualEnvironment() {
-  local -r pipinstallations="$1_pipinstallations[@]"
-  local -r pythoncommands="$1_pythoncommands[@]"
+  local -r pipinstallations="${CURRENT_INSTALLATION_KEYNAME}_pipinstallations[@]"
+  local -r pythoncommands="${CURRENT_INSTALLATION_KEYNAME}_pythoncommands[@]"
   if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
     return
   fi
@@ -436,7 +406,6 @@ generic_uninstall_packageManager() {
 
 # - Description: Remove file from BIN_FOLDER
 # - Permissions: Expected to be run by normal user.
-# - Argument 1: String that matches a set of variables in data_features.
 generic_uninstall_downloads() {
   local -r downloads="${CURRENT_INSTALLATION_KEYNAME}_downloadKeys[@]"
   local name_suffix_anticollision=""
@@ -444,7 +413,7 @@ generic_uninstall_downloads() {
     local pointer_type="${CURRENT_INSTALLATION_KEYNAME}_${each_download}_type"
     local pointer_downloadPath="${CURRENT_INSTALLATION_KEYNAME}_${each_download}_downloadPath"
     local pointer_installedPackages="${CURRENT_INSTALLATION_KEYNAME}_${each_download}_installedPackages[@]"
-    local pointer_doNotInherit="${CURRENT_INSTALLATION_KEYNAME}_$1_doNotInherit"
+    local pointer_doNotInherit="${CURRENT_INSTALLATION_KEYNAME}_${each_download}_doNotInherit"
 
     case "${!pointer_type}" in
       "compressed")
@@ -454,7 +423,7 @@ generic_uninstall_downloads() {
             remove_folder "${!pointer_downloadPath}"
           else
             # Decompression in arbitrary directory with inheritance
-            remove_folder "${!pointer_downloadPath}/${CURRENT_INSTALLATION_KEYNAME}$2"
+            remove_folder "${!pointer_downloadPath}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
           fi
         else
           if [ -n "${!pointer_doNotInherit}" ]; then
@@ -477,7 +446,7 @@ generic_uninstall_downloads() {
       ;;
       "regular")
         if [ -n "${!pointer_downloadPath}" ]; then
-          remove_file "${!pointer_downloadPath}/${CURRENT_INSTALLATION_KEYNAME}_$1_file"
+          remove_file "${!pointer_downloadPath}/${CURRENT_INSTALLATION_KEYNAME}_${each_download}_file"
         else
           remove_folder "${CURRENT_INSTALLATION_FOLDER}"
         fi

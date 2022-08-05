@@ -85,6 +85,7 @@ add_keybinding() {
 # - Permissions: This function can be called indistinctly as root or user.
 # - Argument 1: Name of the .desktop launcher without .desktop extension located in file in PERSONAL_LAUNCHERS_DIR or
 #   ALL_USERS_LAUNCHERS_DIR.
+# TODO refactor using get_dynamic launcher and serving the flag favorite the samw way that we serve the flag autostart
 add_to_favorites() {
   for argument in "$@"; do
     if ! grep -Eqo "${argument}" "${PROGRAM_FAVORITES_PATH}"; then
@@ -943,10 +944,9 @@ generic_install_WSL2_dynamic_launcher() {
 
 # - Description: Expands launcher names and add them to the favorites subsystem if FLAG_FAVORITES is set to 1.
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_launchernames
-#   and the name of the first argument in the common_data.sh table.
+# TODO refactor
 generic_install_favorites() {
-  local -r launchernames="$1_launchernames[@]"
+  local -r launchernames="${CURRENT_INSTALLATION_KEYNAME}_launchernames[@]"
 
   # To add to favorites if the flag is set
   if [ "${FLAG_FAVORITES}" == "1" ]; then
@@ -955,7 +955,7 @@ generic_install_favorites() {
         add_to_favorites "${launchername}"
       done
     else
-      add_to_favorites "$1"
+      add_to_favorites "${CURRENT_INSTALLATION_KEYNAME}"
     fi
   fi
 }
@@ -963,16 +963,14 @@ generic_install_favorites() {
 
 # - Description: Expands file associations and register the desktop launchers as default application's mimetypes
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_associatedfiletypes
-#   and the name of the first argument in the common_data.sh table.
 generic_install_file_associations() {
-  local -r associated_file_types="$1_associatedfiletypes[@]"
+  local -r associated_file_types="${CURRENT_INSTALLATION_KEYNAME}_associatedfiletypes[@]"
   for associated_file_type in ${!associated_file_types}; do
     if echo "${associated_file_type}" | grep -Fo ";"; then
       local associated_desktop=
       associated_desktop="$(echo "${associated_file_type}" | cut -d ";" -f2)"
     else
-      local associated_desktop="$1"
+      local associated_desktop="${CURRENT_INSTALLATION_KEYNAME}"
     fi
     register_file_associations "${associated_file_type}" "${associated_desktop}.desktop"
   done
@@ -981,10 +979,8 @@ generic_install_file_associations() {
 
 # - Description: Expands keybinds for functions and programs and append to keybind sub-system
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_keybinds
-#   and the name of the first argument in the common_data.sh table
 generic_install_keybindings() {
-  local -r keybinds="$1_keybindings[@]"
+  local -r keybinds="${CURRENT_INSTALLATION_KEYNAME}_keybindings[@]"
   for keybind in "${!keybinds}"; do
     local command=
     command="$(echo "${keybind}" | cut -d ";" -f1)"
@@ -997,37 +993,6 @@ generic_install_keybindings() {
 }
 
 
-
-
-
-# - Description: Expands autostarting program option if set to 'yes' it'll expand launcher names to autostart
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_autostart
-#   and associating it to all the launchers in $1_launchernames
-generic_install_autostart() {
-  local -r launchernames="$1_launchernames[@]"
-  local -r autostartlaunchers_pointer="$1_autostartlaunchers[@]"
-  if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
-    # If we have autostart launchers use them
-    if [ -n "${!autostartlaunchers_pointer-}" ]; then
-      local name_suffix_anticollision=""
-      for autostartlauncher in "${!autostartlaunchers_pointer}"; do
-        create_file "${AUTOSTART_FOLDER}/$1${name_suffix_anticollision}.desktop" "${autostartlauncher}"
-        name_suffix_anticollision="${name_suffix_anticollision}_"
-      done
-    # If not use the launchers that are already in the system
-    elif [ -n "${!launchernames-}" ]; then
-      for launchername in ${!launchernames}; do
-        autostart_program "${launchername}"
-      done
-    # Fallback to keyname to try if there is a desktop launcher in the system
-    else
-      autostart_program "$1"
-    fi
-  fi
-}
-
-
 # - Description: Expands $1_binariesinstalledpaths which contain the relative path
 #   from the installation folder or the absolute path separated by ';' with the name
 #   of the link created in PATH.
@@ -1035,7 +1000,7 @@ generic_install_autostart() {
 # - Argument 1: Name of the feature to install, matching the variable $1_binariesinstalledpaths
 generic_install_pathlinks() {
   # Path to the binaries to be added, with a ; with the desired name in the path
-  local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
+  local -r binariesinstalledpaths="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[@]"
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
     local binary_path=
     binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
@@ -1045,7 +1010,7 @@ generic_install_pathlinks() {
     if echo "${binary_name}" | grep -Eqo "^/"; then
       create_links_in_path "${binary_path}" "${binary_name}"
     else
-      create_links_in_path "${BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
+      create_links_in_path "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${binary_path}" "${binary_name}"
     fi
   done
 }
@@ -1067,8 +1032,6 @@ generic_install_copy_launcher() {
 
 # - Description: Expands function system initialization relative to ${HOME_FOLDER}/.profile
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_bashinitializations
-#   and the name of the first argument in the common_data.sh table
 generic_install_initializations() {
   local -r bashinitializations="${CURRENT_INSTALLATION_KEYNAME}_bashinitializations[@]"
   local name_suffix_anticollision=""
@@ -1089,15 +1052,13 @@ generic_install_initializations() {
 
 # - Description: Expands function contents and add them to .bashrc indirectly using bash_functions
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_bashfunctions
-#   and the name of the first argument in the common_data.sh table
 generic_install_functions() {
-  local -r bashfunctions="$1_bashfunctions[@]"
+  local -r bashfunctions="${CURRENT_INSTALLATION_KEYNAME}_bashfunctions[@]"
   local name_suffix_anticollision=""
   for bashfunction in "${!bashfunctions}"; do
     if [[ "${bashfunction}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
-      add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
+      add_bash_function "${bashfunction}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
     elif [ "${bashfunction}" == "silentFunction" ]; then
       local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
       local selectedKeyname=
@@ -1119,32 +1080,31 @@ ${silent_exec}()
   nohup ${silent_exec} \$@ &> /dev/null &
 }
 "
-      add_bash_function "${silent_function}" "$1${name_suffix_anticollision}.sh"
+      add_bash_function "${silent_function}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
 
     elif ! echo "${bashfunction}" | grep -Eq "/"; then
       # Only one line we guess it is a partial path
-      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
+      add_bash_function "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
     else
-      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${bashfunction}"
+      add_bash_function "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashfunction}"
     fi
     name_suffix_anticollision="${name_suffix_anticollision}_"
   done
 }
 
 
-# - Description: Expands $1_filekeys to obtain the keys which are a name of a variable
+# - Description: Expands ${CURRENT_INSTALLATION_KEYNAME}_filekeys to obtain the keys which are a name of a variable
 #   that has to be expanded to obtain the data of the file.
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_filekeys
 generic_install_files() {
-  local -r filekeys="$1_filekeys[@]"
+  local -r filekeys="${CURRENT_INSTALLATION_KEYNAME}_filekeys[@]"
   for filekey in "${!filekeys}"; do
-    local content="$1_${filekey}_content"
-    local path="$1_${filekey}_path"
+    local content="${CURRENT_INSTALLATION_KEYNAME}_${filekey}_content"
+    local path="${CURRENT_INSTALLATION_KEYNAME}_${filekey}_path"
     if echo "${!path}" | grep -Eqo "^/"; then
       local destiny_path="${!path}"
     else
-      local destiny_path="${BIN_FOLDER}/$1/${!path}"
+      local destiny_path="${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${!path}"
     fi
     if [[ "${!content}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
@@ -1159,9 +1119,8 @@ generic_install_files() {
 
 # - Description: Expands function system initialization relative to moving files
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_movefiles
 generic_install_movefiles() {
-  local -r movefiles="$1_movefiles[@]"
+  local -r movefiles="${CURRENT_INSTALLATION_KEYNAME}_movefiles[@]"
   local origin_files=""
   local destiny_directory=""
   for movedata in "${!movefiles}"; do
@@ -1169,14 +1128,14 @@ generic_install_movefiles() {
     destiny_directory="$(echo "${movedata}" | cut -d ";" -f2)"
     create_folder "${destiny_directory}"
     if echo "${origin_files}" | grep -q '\*' ; then
-      for filename in "${BIN_FOLDER}/$1/"${origin_files}; do
+      for filename in "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/"${origin_files}; do
         mv -f "${filename}" "${destiny_directory}"
         if isRoot; then
           apply_permissions "${filename}"
         fi
       done
     else
-      mv "${BIN_FOLDER}/$1/${origin_files}" "${destiny_directory}"
+      mv "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${origin_files}" "${destiny_directory}"
       if isRoot; then
         apply_permissions "${destiny_directory}/${origin_files}"
       fi
@@ -1187,17 +1146,16 @@ generic_install_movefiles() {
 
 # - Description: Expands dependency installation
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the array $1_packagedependencies
 generic_install_dependencies() {
   if [ "${FLAG_IGNORE_DEPENDENCIES}" -eq 1 ]; then
     return
   fi
 
   # Other dependencies to install with the package manager before the main package of software if present
-  local -r packagedependencies="$1_packagedependencies[*]"
+  local -r packagedependencies="${CURRENT_INSTALLATION_KEYNAME}_packagedependencies[*]"
   if ! isRoot; then
     if [ -n "${!packagedependencies}" ]; then
-      output_proxy_executioner "$1 has this dependencies to install with the package manager: ${!packagedependencies} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
+      output_proxy_executioner "${CURRENT_INSTALLATION_KEYNAME} has this dependencies to install with the package manager: ${!packagedependencies} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
       return
     fi
   fi
@@ -1212,52 +1170,51 @@ generic_install_dependencies() {
 
 # - Description: Clones a repository in the desired place and caches it if the bit is active.
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Keyname of the feature to install
-# - Argument 2: URL to clone
+# - Argument 1: URL to clone
 generic_install_clone() {
    # Check if it is cached
-  if [ -d "${CACHE_FOLDER}/$1_repository" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
-    rm -Rf "${BIN_FOLDER:?}/$1"
-    cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+  if [ -d "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
+    rm -Rf "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
+    cp -r "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
     if isRoot; then
-      apply_permissions_recursively "${BIN_FOLDER}/$1"
+      apply_permissions_recursively "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
     fi
   else  # Not cached or we do not use cache: we have to download
 
-    rm -Rf "${TEMP_FOLDER}/$1_repository"
-    create_folder "${TEMP_FOLDER}/$1_repository"
+    rm -Rf "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
+    create_folder "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
 
     echo -en '\033[1;33m'
-    git clone "$2" "${TEMP_FOLDER}/$1_repository"
+    git clone "$1" "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
     echo -en '\033[0m'
 
     if [ "${FLAG_CACHE}" -eq 1 ]; then
       # Move to cache folder to construct cache
-      rm -Rf "${CACHE_FOLDER}/$1_repository"
-      cp -r "${TEMP_FOLDER}/$1_repository" "${CACHE_FOLDER}"
-      rm -Rf "${TEMP_FOLDER}/$1_repository"
+      rm -Rf "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
+      cp -r "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" "${CACHE_FOLDER}"
+      rm -Rf "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
       # If we are root change permissions
       if isRoot; then
-        apply_permissions_recursively "${CACHE_FOLDER}/$1_repository"
+        apply_permissions_recursively "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
       fi
 
       # Avoid collisions
-      rm -Rf "${BIN_FOLDER:?}/$1"
+      rm -Rf "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
       # Copy file to the desired place of download
-      cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+      cp -r "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
       if isRoot; then
-        apply_permissions_recursively "${BIN_FOLDER}/$1"
+        apply_permissions_recursively "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
       fi
     else
       # Move directly to the desired place of download
-      rm -Rf "${BIN_FOLDER:?}/$1"
-      cp -r "${TEMP_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+      rm -Rf "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
+      cp -r "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
       # Do not construct cache
-      rm -Rf "${TEMP_FOLDER}/$1_repository"
+      rm -Rf "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
 
       # If we are root change permissions
       if isRoot; then
-        apply_permissions_recursively "${BIN_FOLDER}/$1"
+        apply_permissions_recursively "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
       fi
     fi
   fi
@@ -1311,10 +1268,8 @@ generic_install_download()
     fi
   fi
 
-
   create_folder "${defaultpath}"
   download "${!pointer_url}" "${defaultpath}/${defaultName}"
-
 
   if [ -n "${!pointer_type}" ]; then
     case "${!pointer_type}" in
@@ -1390,31 +1345,29 @@ generic_install_downloads() {
 
 # - Description: Installs packages using python environment.
 # - Permissions: It is expected to be called as user.
-# - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
-#   installation data.
 generic_install_pythonVirtualEnvironment() {
-
-  local -r pipinstallations="$1_pipinstallations[@]"
-  local -r pythoncommands="$1_pythoncommands[@]"
+  local -r pipinstallations="${CURRENT_INSTALLATION_KEYNAME}_pipinstallations[@]"
+  local -r pythoncommands="${CURRENT_INSTALLATION_KEYNAME}_pythoncommands[@]"
   if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
+    echo sjkdhfkshjdfkhjfsdfsdfasdfaaaaaaaaaaaaaaaaaaaaaaa
     return
   fi
 
-  rm -Rf "${BIN_FOLDER:?}/$1"
-  python3 -m venv "${BIN_FOLDER}/$1"
-  "${BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
-  "${BIN_FOLDER}/$1/bin/pip" install wheel
+  rm -Rf "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
+  python3 -m venv "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
+  "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m pip install -U pip
+  "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install wheel
 
   for pipinstallation in ${!pipinstallations}; do
-    "${BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install "${pipinstallation}"
   done
   for pythoncommand in "${!pythoncommands}"; do
-    "${BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m "${pythoncommand}"
   done
 
   # If we are root change permissions
   if isRoot; then
-    apply_permissions_recursively "${BIN_FOLDER:?}/$1"
+    apply_permissions_recursively "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
   fi
 }
 
@@ -1427,7 +1380,7 @@ generic_install_pythonVirtualEnvironment() {
 generic_install_cloneRepositories() {
   local -r repositoryurl="${CURRENT_INSTALLATION_KEYNAME}_repositoryurl"
   if [ -n "${!repositoryurl}" ]; then
-    generic_install_clone "${CURRENT_INSTALLATION_KEYNAME}" "${!repositoryurl}"
+    generic_install_clone "${!repositoryurl}"
   fi
 }
 

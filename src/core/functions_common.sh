@@ -896,7 +896,7 @@ generic_installation() {
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_pre"
   fi
 
-  "generic_${FLAG_MODE}_dependencies" "${featurename}"
+  "generic_${FLAG_MODE}_dependencies"
   "generic_${FLAG_MODE}_packageManager"
   "generic_${FLAG_MODE}_cloneRepositories"
   "generic_${FLAG_MODE}_pythonVirtualEnvironment"
@@ -905,20 +905,23 @@ generic_installation() {
   fi
 
   "generic_${FLAG_MODE}_downloads"
-  "generic_${FLAG_MODE}_files" "${featurename}"
-  "generic_${FLAG_MODE}_movefiles" "${featurename}"
-  "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"
+  "generic_${FLAG_MODE}_files"
+  "generic_${FLAG_MODE}_movefiles"
+  "generic_${FLAG_MODE}_dynamic_launcher"
   if [ "${OS_NAME}" == "WSL2" ]; then
     "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
   fi
 
-  "generic_${FLAG_MODE}_functions" "${featurename}"
+  "generic_${FLAG_MODE}_functions"
   "generic_${FLAG_MODE}_initializations"
-  "generic_${FLAG_MODE}_autostart" "${featurename}"
+
+  # TODO refactor using get dynamic launcher and serving the fklag install in a similar manner of how we servce the autostart flag
   "generic_${FLAG_MODE}_favorites" "${featurename}"
-  "generic_${FLAG_MODE}_file_associations" "${featurename}"
-  "generic_${FLAG_MODE}_keybindings" "${featurename}"
-  "generic_${FLAG_MODE}_pathlinks" "${featurename}"
+  # TODO refactor to remove _. Ensure that MIME_ASSOCIATION_PATH is present. Property asscoiatedfiletypes need an associated
+  # TODO desktop launcher to add the file asscoaitions, arbitrarily choose the first or extend this behaviour in get dynamic launcher
+  "generic_${FLAG_MODE}_file_associations"
+  "generic_${FLAG_MODE}_keybindings"
+  "generic_${FLAG_MODE}_pathlinks"
   if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_post"
   fi

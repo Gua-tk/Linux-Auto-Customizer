@@ -2318,8 +2318,8 @@ pdfgrep_packagenames=("pdfgrep")
 
 pgadmin_name="pgAdmin 4"
 pgadmin_description="PostgreSQL Tools"
-pgadmin_version="System dependent"
-pgadmin_tags=("pdf" "searchPDF" "pgadmin")
+pgadmin_version="Python dependent"
+pgadmin_tags=("pgadmin")
 pgadmin_systemcategories=("Network")
 pgadmin_arguments=("pgadmin" "pgadmin4")
 pgadmin_commentary="CLI utility that makes it possible to search for text in a PDF file without opening the file"
@@ -2335,6 +2335,7 @@ pgadmin_defaultLauncher_exec="bash ${CURRENT_INSTALLATION_FOLDER}/pgadmin_exec.s
 pgadmin_manualcontentavailable="0;1;0"
 pgadmin_pipinstallations=("pgadmin4")
 pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")
+pgadmin_bashfunctions=("silentFunction")
 install_pgadmin_mid() {
   # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
   # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
