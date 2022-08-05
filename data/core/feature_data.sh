@@ -1467,7 +1467,6 @@ handbrake_tags=("terminal" "utility")
 handbrake_systemcategories=("Video" "AudioVideoEditing")
 handbrake_commentary="Video Transcoder"
 handbrake_arguments=("handbrake")
-# TODO handbrake_launchernames=("fr.handbrake.ghb")
 handbrake_launcherkeynames=("default")
 handbrake_default_exec="handbrake"
 handbrake_packagenames=("handbrake")
@@ -1488,10 +1487,10 @@ hardinfo_tags=("info" "hardware")
 hardinfo_systemcategories=("System" "Utility" "HardwareSettings")
 hardinfo_arguments=("hardinfo")
 hardinfo_commentary="Check pc hardware info"
+hardinfo_bashfunctions=("silentFunction")
 hardinfo_packagenames=("hardinfo")
 hardinfo_launcherkeynames=("default")
 hardinfo_default_exec="hardinfo"
-# TODO hardinfo_launchernames=("hardinfo")
 
 historyoptimization_name="Function history optimization"
 historyoptimization_description="Shared history in terminal session and other tweaks for the terminal history"
@@ -1807,7 +1806,6 @@ lmms_commentary="Music sequencer and synthesizer"
 lmms_bashfunctions=("lmms.sh")
 lmms_associatedfiletypes=("application/x-lmms-project")
 lmms_packagenames=("lmms")
-# TODO lmms_launchernames=("lmms")
 lmms_launcherkeynames=("defaultLauncher")
 lmms_defaultLauncher_exec="lmms %f"
 
