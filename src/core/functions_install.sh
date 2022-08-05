@@ -1032,6 +1032,13 @@ generic_install_copy_launcher() {
   done
 }
 
+generic_install_gpgSignature() {
+  # TODO: This has not yet function implemented changing curl towards wget
+  wget ${gpgURL} | gpg --dearmor > "${signedNames}.gpg"
+  sudo mv "${names}.gpg" $GPG_TRUSTED_PATH
+  echo "${aptSources}" | sudo tee "$APT_SOURCES_LIST_PATH/${signedNames}.list"
+
+}
 
 # - Description: Expands function system initialization relative to ${HOME_FOLDER}/.profile
 # - Permissions: Can be executed as root or user.

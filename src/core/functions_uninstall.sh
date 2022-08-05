@@ -152,6 +152,8 @@ remove_all_functions() {
 }
 
 
+
+
 remove_all_initializations() {
   remove_file "${INITIALIZATIONS_PATH}"
 }
@@ -317,6 +319,11 @@ generic_uninstall_copy_launcher() {
     remove_copied_launcher "${launchername}.desktop"
   done
 }
+
+generic_uninstall_gpgSignature() {
+  continue
+}
+
 
 # - Description: Expands function system initialization relative to ${HOME_FOLDER}/.profile
 # - Permissions: Can be executed as root or user.

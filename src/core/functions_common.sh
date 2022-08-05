@@ -896,6 +896,7 @@ generic_installation() {
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_pre"
   fi
 
+  "generic_${FLAG_MODE}_gpgSignature"
   "generic_${FLAG_MODE}_dependencies"
   "generic_${FLAG_MODE}_packageManager"
   "generic_${FLAG_MODE}_cloneRepositories"
