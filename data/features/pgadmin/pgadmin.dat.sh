@@ -8,16 +8,29 @@ pgadmin_commentary="CLI utility that makes it possible to search for text in a P
 pgadmin_binariesinstalledpaths=("lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
 pgadmin_confoverride_path="lib/${PYTHON_VERSION}/site-packages/pgadmin4/config_local.py"
 pgadmin_confoverride_content="config_local.py"
-pgadmin_executionscript_path="pgadmin_exec.sh"
-pgadmin_executionscript_content="pgadmin_exec.sh"
+pgadmin_executionscript_path="pgadmin.sh"
+pgadmin_executionscript_content="pgadmin.sh"
 pgadmin_filekeys=("confoverride" "executionscript")
 pgadmin_launcherkeynames=("defaultLauncher")
 pgadmin_defaultLauncher_windowclass="pgadmin"
-pgadmin_defaultLauncher_exec="bash ${CURRENT_INSTALLATION_FOLDER}/pgadmin_exec.sh"
-pgadmin_manualcontentavailable="0;1;0"
+pgadmin_defaultLauncher_exec="bash ${CURRENT_INSTALLATION_FOLDER}/pgadmin.sh"
+pgadmin_manualcontentavailable="1;1;0"
 pgadmin_pipinstallations=("pgadmin4")
 pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")
 pgadmin_bashfunctions=("silentFunction")
+
+install_pgadmin_pre()
+{
+  if isRoot; then
+    create_folder "/var/lib/pgadmin"
+  fi
+}
+
+uninstall_pgadmin_pre()
+{
+  remove_folder "/var/lib/pgadmin"
+}
+
 install_pgadmin_mid() {
   # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
   # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
