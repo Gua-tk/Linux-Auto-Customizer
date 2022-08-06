@@ -814,6 +814,7 @@ customizerGUI_tags=("development" "GNU" "environment")
 customizerGUI_systemcategories=("Development" "Utility" "System" "Programming" "PackageManager" "Settings")
 customizerGUI_commentary="Access customizer with a Web Interface"
 customizerGUI_arguments=("customizer_gui")
+customizerGUI_dependencies=("python3" "python3-dev" "python3-venv")
 # https://github.com/bugy/script-server/wiki/Installing-on-virtualenv-(linux)
 customizerGUI_downloadKeys=("bundleSource")
 customizerGUI_bundleSource_URL="https://github.com/bugy/script-server/releases/download/1.17.1/script-server.zip"
@@ -827,6 +828,8 @@ customizerGUI_multiuninstall_path="${BIN_FOLDER}/customizerGUI/conf/runners/mult
 customizerGUI_multiuninstall_content="multiuninstall.json"
 customizerGUI_debug_path="${BIN_FOLDER}/customizerGUI/conf/runners/debug.json"
 customizerGUI_debug_content="debug.json"
+customizerGUI_launcherkeynames=("defaultLauncher")
+customizerGUI_defaultLauncher_exec="customizerGUI"
 
 install_customizerGUI_post()
 {
