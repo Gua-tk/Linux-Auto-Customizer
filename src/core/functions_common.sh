@@ -77,6 +77,20 @@ bell_sound()
   echo -en "\07"
 }
 
+# - Description: Removes file from system
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Absolute path of the file to be removed
+remove_file() {
+  rm -f "$1"
+}
+
+
+# - Description: Remove folder from system
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Absolute path of folder to be removed
+remove_folder() {
+  rm -Rf "$1"
+}
 
 isRoot()
 {
@@ -896,6 +910,8 @@ generic_installation() {
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_pre"
   fi
 
+  "generic_${FLAG_MODE}_gpgSignatures"
+  "generic_${FLAG_MODE}_sources"
   "generic_${FLAG_MODE}_dependencies"
   "generic_${FLAG_MODE}_packageManager"
   "generic_${FLAG_MODE}_cloneRepositories"
