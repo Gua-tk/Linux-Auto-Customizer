@@ -343,8 +343,8 @@ fi
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r BASH_COMPLETIONS_PATH="/usr/share/bash-completion/completions/git"
 declare -r SSH_GLOBAL_CONF_PATH="/etc/ssh/sshd_config"
-declare -r GPG_TRUSTED_PATH="/etc/apt/trusted.gpg.d"
-declare -r APT_SOURCES_LIST_PATH="/etc/apt/sources.list.d"
+declare -r GPG_TRUSTED_FOLDER="/etc/apt/trusted.gpg.d"
+declare -r APT_SOURCES_LIST_FOLDER="/etc/apt/sources.list.d"
 declare -r PYTHON_VERSION="$(python3 --version | tr "A-Z" "a-z" | tr -d " " | rev | cut -d "." -f2- | rev)"
 
 # To keep information about the current installation

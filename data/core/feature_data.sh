@@ -166,7 +166,8 @@
 #    * FEATUREKEYNAME_DOWNLOADKEY_installedPackages: This property is mandatory for completeness of the uninstallation
 #      if the downloaded file is or contains packages to be installed. It enumerates the names of the installed
 #      packages, so they can be used by uninstall to know which packages to uninstall using the default package manager.
-#  - FEATUREKEYNAME_gpgSignature: GPG_TRUSTED_PATH APT_SOURCES_LIST_PATH
+#  - FEATUREKEYNAME_gpgSignatures: Array of urls pointing to gpgSignatures that have to be added to GPG_TRUSTED_FOLDER.
+#  - FEATUREKEYNAME_sources: Array of strings defining sources that have to be added to APT_SOURCES_LIST_FOLDER
 #  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from  #
 #    a function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,               #
 #    install_FEATUREKEYNAME_post.                                                                                      #
@@ -484,7 +485,8 @@ carbonLang_tags=("languages")
 carbonLang_systemcategories=("Languages")
 carbonLang_arguments=("carbon_lang" "carbon_language" "carbon")
 carbonLang_bashfunctions=("carbonLang_function.sh")
-carbonLang_gpgSignatures=("bazel" "https://bazel.build/bazel-release.pub.gpg" "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8")
+carbonLang_gpgSignatures=("https://bazel.build/bazel-release.pub.gpg")
+carbonLang_sources=("deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8")
 carbonLang_commentary="Carbon is an experimental, general-purpose programming language"
 carbonLang_dependencies=("apt-transport-https" "gnupg" "clang" "lldb" "lld" "openjdk-8-jdk" "llvm" "build-essential" "libc++-dev")
 carbonLang_bashinitializations=("carbonLang.sh")

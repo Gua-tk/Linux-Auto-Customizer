@@ -67,22 +67,6 @@ remove_autostart_program() {
 }
 
 
-# - Description: Removes file from system
-# - Permissions: This function can be called as root or as user.
-# - Argument 1: Absolute path of the file to be removed
-remove_file() {
-  rm -f "$1"
-}
-
-
-# - Description: Remove folder from system
-# - Permissions: This function can be called as root or as user.
-# - Argument 1: Absolute path of folder to be removed
-remove_folder() {
-  rm -Rf "$1"
-}
-
-
 # - Description: Remove launcher from system
 # - Permissions: This function can be called as root or as user.
 # - Argument 1: Absolute path of folder to be removed
@@ -320,10 +304,15 @@ generic_uninstall_copy_launcher() {
   done
 }
 
-generic_uninstall_gpgSignature() {
-  continue
+generic_uninstall_gpgSignatures() {
+  rm -f "${GPG_TRUSTED_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"*".gpg"
 }
 
+# Description: Iterates into urls of apt keys to add them to APT_SOURCES_LIST_FOLDER/{aptSourceName}.list
+# Permissions: Can only be executed as root
+generic_uninstall_sources() {
+  rm -f "${APT_SOURCES_LIST_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"*".list"
+}
 
 # - Description: Expands function system initialization relative to ${HOME_FOLDER}/.profile
 # - Permissions: Can be executed as root or user.

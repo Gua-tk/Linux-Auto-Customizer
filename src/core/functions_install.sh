@@ -1032,23 +1032,51 @@ generic_install_copy_launcher() {
   done
 }
 
-generic_install_gpgSignature() {
-  # TODO: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg)
-  local -r gpgsignatures="${CURRENT_INSTALLATION_KEYNAME}_gpgSignatures[@]"
-  local name_suffix_anticollision=""
-  for sign in "${!gpgsignatures}"; do
-    if [[ "${sign}" = "https://"* ]]; then
-      gpgURL="${sign}"
-    elif [[ "${sign}" = *"[arch="* ]]; then
-      aptSources="${sign}"
-    else
-      names="${sign}"
-    fi
-  done
-  wget -q ${gpgURL} -O- -o ".data/features/${CURRENT_INSTALLATION_KEYNAME}" | gpg --dearmor > "${names}".gpg
-  sudo mv "./data/features/${CURRENT_INSTALLATION_KEYNAME}/${names}.gpg" $GPG_TRUSTED_PATH
-  echo "${aptSources}" | sudo tee "$APT_SOURCES_LIST_PATH/${names}.list" &>/dev/null
+# Description: Add a gpg signature to GPG_TRUSTED_FOLDER from an URL
+# Permissions: Can only be executed as root.
+# Argument 1: URL of the gpg signature file
+# Argument 2: suffix_anticollision
+add_gpgSignature() {
+  download "$1" "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.gpg"
+  gpg --dearmor < "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.gpg" > "${GPG_TRUSTED_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.gpg"
+  remove_file "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.gpg"
+}
 
+# Description: Iterates into urls of gpg keys to add them to GPG_TRUSTED_FOLDER
+# Permissions: Can only be executed as root
+generic_install_gpgSignatures() {
+  # TODO: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg)
+  if ! isRoot; then
+    return
+  fi
+  local -r gpgSignatures="${CURRENT_INSTALLATION_KEYNAME}_gpgSignatures[@]"
+  local collision=""
+  for sign in ${!gpgSignatures}; do
+    add_gpgSignature "${sign}" "${collision}"
+    collision="${collision}_"
+  done
+}
+
+# Description: Add apt source to APT_SOURCES_LIST_FOLDER/{aptSourceName}.list from an URL
+# Permissions: Can only be executed as root.
+# Argument 1: URL of the apt source
+# Argument 2: suffix_anticollision
+add_source() {
+  echo "$1" > "${APT_SOURCES_LIST_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.list"
+}
+
+# Description: Iterates into urls of apt keys to add them to APT_SOURCES_LIST_FOLDER/{aptSourceName}.list
+# Permissions: Can only be executed as root
+generic_install_sources() {
+  if ! isRoot; then
+    return
+  fi
+  local -r sources="${CURRENT_INSTALLATION_KEYNAME}_sources[@]"
+  local collision=""
+  for sign in "${!sources}"; do
+    add_source "${sign}" "${collision}"
+    collision="${collision}_"
+  done
 }
 
 # - Description: Expands function system initialization relative to ${HOME_FOLDER}/.profile
