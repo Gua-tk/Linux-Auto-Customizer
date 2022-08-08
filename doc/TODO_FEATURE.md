@@ -1,5 +1,5 @@
 ## @AleixMT
- - [ ] add
+ - [x] add
  - [ ] alert
  - [ ] ansible
  - [ ] ant
@@ -64,7 +64,7 @@
  - [ ] iqmol
  - [ ] java
  - [ ] k
- - [ ] keyboardFix
+ - [~] keyboardFix
  - [ ] L
  - [ ] l
  - [ ] latex
@@ -85,7 +85,7 @@
  - [ ] outlook
  - [ ] parallel
  - [ ] pdfgrep
- - [ ] pgadmin
+ - [x] pgadmin
  - [ ] pluma
  - [ ] postman
  - [ ] prompt
@@ -125,19 +125,19 @@
  - [ ] upgrade
  - [ ] virtualbox
  - [ ] vlc
- - [ ] vommit
- - [ ] wireshark
- - [ ] x
+ - [x] vommit
+ - [x] wireshark
+ - [x] x
  - [ ] xclip
- - [ ] z
- - [ ] zoom
+ - [x] z
+ - [x] zoom
 
 
 
 
  
 #### @Axlfc
- - [ ] a
+ - [x] a
  - [ ] aircrackng
  - [ ] aisleriot
  - [ ] apache2
@@ -195,7 +195,7 @@
  - [ ] ips
  - [ ] j
  - [ ] julia
- - [ ] jupyterLab
+ - [~] jupyterLab
  - [ ] keep
  - [ ] lmms
  - [ ] lolcat
@@ -246,4 +246,4 @@
  - [ ] wikit
  - [ ] youtube
  - [ ] youtubeDL
- - [ ] youtubeMusic
+ - [x] youtubeMusic
