@@ -22,6 +22,9 @@
       versions*
 
 ### @Axlfc
+- [~] Rename caps named features that con bad interpreted in MacOS and Windows (L, B, F, E...)
+- [~] Refactor bash functions property in graphical features with silentFunction.
+- [ ] openssh feature not working
 
 ### DONE
 - [x] Create a desktop launcher with Terminal=true option if is terminal interpretation is possible in features that are programming languages.
@@ -31,6 +34,4 @@
 - [x] Add property to dynamic launcher X Ubuntu getext domain. 
 - [x] Make dynamicLauncher deduce windowclass property from key name
 - [x] Create reading of external file in .customizer to load custom flags and variables
-- [x] Refactor bash functions property in graphical features with silentFunction.
 - [x] launchercontents key names metadata input in data_features.sh
-- [x] Rename caps named features that con bad interpreted in MacOS and Windows (L, B, F, E...)
