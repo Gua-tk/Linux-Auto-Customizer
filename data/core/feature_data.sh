@@ -22,8 +22,7 @@
 # the main terminal command installed by the feature used to run it. This string must be added to the array            #
 # feature_keynames in common_data.sh to be recognised by the customizer as an available installation.                  #
 # The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY. Some variables can be defined in all features,  #
-# some are only used depending on the installation type (TODO deprecate)
-#  and others have to be defined always for each feature.         #
+# some are only used depending on the installation type and others have to be defined always for each feature.         #
 #                                                                                                                      #
 #                                                                                                                      #
 ###### Available properties:                                                                                           #
@@ -43,16 +42,6 @@
 #    "--viSual_Studio", etc.                                                                                           #
 #    The list of FEATUREKEYNAMEs is also used as first source of arguments, since it should contain the names of the   #
 #    commands that are going to be installed, which is something that we can suppose unique.                           #
-#  - FEATUREKEYNAME_installationtype. TODO deprecate.
-#    Define the type of installation, which sets a fixed behaviour that obtains its   #
-#    input from predefined sets of properties for each installation type (check next section Installation type         #
-#    dependent properties). This can be set to:                                                                        #
-#    * "packageinstall": Downloads a .deb package and installs it using dpkg.                                          #
-#    * "packagemanager": Uses de package manager such as apt-get to install packages and dependency packages.          #
-#    * "userinherit": Downloads a compressed file containing an unique folder.                                         #
-#    * "repositoryclone": Clone a repository inside the directory of the current feature installing.                   #
-#    * "environmental": Uses only the common part of every installation type. Has no type-dependent properties.        #
-#  - FEATUREKEYNAME_readmeline: Contains the readme line of the table for each feature.    TODO deprecate
 #  - FEATUREKEYNAME_name: Stores the feature's name. Maps to property 'Name=' of the desktop launcher if not
 #    overridden.                                                                  #
 #  - FEATUREKEYNAME_version: Feature version. For downloaded programs is the version of the downloaded bundle or binary
@@ -1668,71 +1657,6 @@ julia_bundle_URL="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0
 julia_launcherkeynames="defaultLauncher"
 julia_defaultLauncher_terminal="true"
 
-jupyterLab_name="Jupyter Lab"
-jupyterLab_description="High-level, high-performance dynamic language for technical computing"
-jupyterLab_version="jupyter dependent"
-jupyterLab_tags=("jupyter")
-jupyterLab_systemcategories=("IDE" "Development")
-jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
-jupyterLab_commentary="IDE with a lot of possible customization and usable for different programming languages."
-jupyterLab_bashfunctions=("jupyter_lab.sh")
-jupyterLab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
-jupyterLab_packagedependencies=("libkrb5-dev")
-jupyterLab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
-jupyterLab_launcherkeynames="defaultLauncher"
-jupyterLab_defaultLauncher_exec="jupyter-lab &"
-jupyterLab_manualcontentavailable="1;1;0"
-jupyterLab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
-jupyterLab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
-install_jupyterLab_pre() {
-  local -r dependencies=("npm" "R" "julia")
-  for dependency in "${dependencies[@]}"; do
-
-    if ! which "${dependency}" &>/dev/null; then
-      output_proxy_executioner "echo ERROR: ${dependency} is not installed. You can installing using bash install.sh --npm --R --julia" "${FLAG_QUIETNESS}"
-      exit 1
-    fi
-  done
-}
-install_jupyterLab_mid() {
-  # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
-  "${BIN_FOLDER}/jupyterLab/bin/jupyter" labextension install @telamonian/theme-darcula
-  "${BIN_FOLDER}/jupyterLab/bin/jupyter" labextension enable @telamonian/theme-darcula
-
-  "${BIN_FOLDER}/jupyterLab/bin/jupyter" lab build
-
-  # ijs legacy install
-  npm config set prefix "${HOME_FOLDER}/.local"
-  npm install -g ijavascript
-  ijsinstall
-
-  # Set up IRKernel for R-jupyter
-  # R -e "install.packages('IRkernel')
-  # install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
-  #                repos = c('http://irkernel.github.io/',
-  #                getOption('repos')),
-  #                type = 'source')
-  # IRkernel::installspec()"
-
-  # install jupyter-lab dependencies down
-  julia -e '#!/.local/bin/julia
-  using Pkg
-  Pkg.add("IJulia")
-  Pkg.build("IJulia")'
-}
-uninstall_jupyterLab_pre() {
-  :
-}
-uninstall_jupyterLab_mid() {
-
-  # install jupyter-lab dependencies down
-  #julia -e '#!/.local/bin/julia
-  #using Pkg
-  #Pkg.add("IJulia")
-  #Pkg.build("IJulia")'
-  :
-}
-
 k_name="Function k"
 k_description="Kill processes by PID and name of process"
 k_version="1.0"
@@ -1753,26 +1677,8 @@ keep_bashfunctions=("keep.sh")
 keep_launcherkeynames=("default")
 keep_default_exec="xdg-open https://keep.google.com"
 
-keyboardfix_name="Fix Fn key Keychron K8 ISO UK"
-keyboardfix_description="Fixes the Fn key in combination with the Function keys F1, F2, etc. which happens to not work in some keyboards"
-keyboardfix_version="System dependent"
-keyboardfix_tags=("KeychronK8")
-keyboardfix_systemcategories=("Utility")
-keyboardfix_arguments=("keyboard_fix" "fix_keyboard")
-keyboardfix_commentary="To properly using the Fn key"
-keyboardfix_filekeys=("keyboardconf")
-keyboardfix_keyboardconf_path="/etc/modprobe.d/hid_apple.conf"
-keyboardfix_keyboardconf_content="keyboard.conf"
-keyboardfix_manualcontentavailable="0;0;1"
-keyboardfix_flagsoverride="0;;;;;"  # Root mode
-install_keyboardfix_post()
-{
-  update-initramfs -u -k all
-}
-uninstall_keyboardfix_pre()
-{
-  :
-}
+
+
 
 
 L_name="Function L"

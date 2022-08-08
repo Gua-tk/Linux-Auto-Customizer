@@ -547,7 +547,7 @@ declare feature_keynames=(
   "jupyterLab"
   "k"
   "keep"
-  "keyboardfix"
+  "keyboardFix"
   "L"
   "l"
   "latex"
