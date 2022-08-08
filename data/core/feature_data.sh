@@ -2347,7 +2347,7 @@ pulseaudio_systemcategories=("System" "Audio")
 pulseaudio_arguments=("pulse_audio")
 pulseaudio_commentary="Sound Server"
 pulseaudio_bashfunctions=("pulseaudio.sh")
-pulseaudio_packagedependencies=("libpulse0" "pkgconfig" "intltool" "libtool" "libsndfile1-dev" "libjson-c-dev" "build-essential" "dbus-x11" "pulseaudio-module-jack" "mocp")
+pulseaudio_packagedependencies=("libpulse0" "pkgconfig" "intltool" "libtool" "libsndfile1-dev" "libjson-c-dev" "build-essential" "dbus-x11" "pulseaudio-module-jack" "")
 pulseaudio_packagenames=("pulseaudio")
 
 push_name="Function push"
