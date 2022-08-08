@@ -381,14 +381,14 @@ axel_arguments=("axel")
 axel_commentary="Like wget but fancier and faster"
 axel_packagenames=("axel")
 
-bFunction_name="Function B"
-bFunction_description="Function that source ~/.profile and ~/.bashrc"
-bFunction_version="1.0"
-bFunction_tags=("bashfunctions" "profile" "bashrc")
-bFunction_systemcategories=("System" "Utility")
-bFunction_arguments=("B" "B_function")
-bFunction_commentary="B reload environment"
-bFunction_bashfunctions=("B.sh")
+BFunction_name="Function B"
+BFunction_description="Function that source ~/.profile and ~/.bashrc"
+BFunction_version="1.0"
+BFunction_tags=("bashfunctions" "profile" "bashrc")
+BFunction_systemcategories=("System" "Utility")
+BFunction_arguments=("B" "B_function")
+BFunction_commentary="B reload environment"
+BFunction_bashfunctions=("B.sh")
 
 b_name="Function b"
 b_description="Alias for bash"
@@ -961,14 +961,14 @@ e_arguments=("e")
 e_commentary="edit files or projects"
 e_bashfunctions=("e.sh")
 
-eFunction_name="Function E"
-eFunction_description="Multi Function to edit a set of hardcoded key files using an argument"
-eFunction_version="1.0"
-eFunction_tags=("bashfunctions" "bash")
-eFunction_systemcategories=("System" "Utility")
-eFunction_arguments=("E")
-eFunction_commentary="A terminal shortcut"
-eFunction_bashfunctions=("E.sh")
+EFunction_name="Function E"
+EFunction_description="Multi Function to edit a set of hardcoded key files using an argument"
+EFunction_version="1.0"
+EFunction_tags=("bashfunctions" "bash")
+EFunction_systemcategories=("System" "Utility")
+EFunction_arguments=("E")
+EFunction_commentary="A terminal shortcut"
+EFunction_bashfunctions=("E.sh")
 
 eclipse_name="Eclipse IDE"
 eclipse_description="IDE for Java"
@@ -1008,14 +1008,14 @@ evolution_defaultLauncher_exec="evolution -c calendar"
 evolution_defaultLauncher_ubuntuGetText="gnome-shell"
 evolution_defaultLauncher_nodisplay="true"
 
-fFunction_name="Function F"
-fFunction_description="Function to find strings in files in the directory in the 1st argument"
-fFunction_version="1.0"
-fFunction_tags=("bashfunctions" "bash" "info")
-fFunction_systemcategories=("System" "Utility")
-fFunction_arguments=("F")
-fFunction_commentary="A terminal shortcut"
-fFunction_bashfunctions=("F.sh")
+FFunction_name="Function F"
+FFunction_description="Function to find strings in files in the directory in the 1st argument"
+FFunction_version="1.0"
+FFunction_tags=("bashfunctions" "bash" "info")
+FFunction_systemcategories=("System" "Utility")
+FFunction_arguments=("F")
+FFunction_commentary="A terminal shortcut"
+FFunction_bashfunctions=("F.sh")
 
 f_name="Function f"
 f_description="Function for finding strings in files, files in directories and show found files"
@@ -1685,17 +1685,14 @@ keep_bashfunctions=("silentFunction")
 keep_launcherkeynames=("default")
 keep_default_exec="xdg-open https://keep.google.com"
 
-
-
-
-lFunction_name="Function L"
-lFunction_description="Function that lists files in a directory, but listing the directory sizes"
-lFunction_version="1.0"
-lFunction_tags=("bashfunctions" "terminal" "info")
-lFunction_systemcategories=("System" "Utility")
-lFunction_arguments=("L")
-lFunction_commentary="A terminal shortcut"
-lFunction_bashfunctions=("L.sh")
+LFunction_name="Function L"
+LFunction_description="Function that lists files in a directory, but listing the directory sizes"
+LFunction_version="1.0"
+LFunction_tags=("bashfunctions" "terminal" "info")
+LFunction_systemcategories=("System" "Utility")
+LFunction_arguments=("L")
+LFunction_commentary="A terminal shortcut"
+LFunction_bashfunctions=("L.sh")
 
 l_name="Function l"
 l_description="alias for \`ls\`"

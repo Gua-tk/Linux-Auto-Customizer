@@ -21,5 +21,6 @@ notflix() {
   query=$(printf '%s' "$*" | tr ' ' '+' )
   movie=$(curl -s https://1337x.wtf/search/$query/1/ | grep -Eo "torrent\/[0-9]{7}\/[a-zA-Z0-9?%-]*/" | head -n 1)
   magnet=$(curl -s https://1337x.wtf/$movie | grep -Po "magnet:\?xt=urn:btih:[a-zA-Z0-9]*" | head -n 1)
-  peerflix -l "${magnet}" --vlc
+  # subtitle=$(curl -s https://subscene.com/subtitles/searchbytitle)
+  peerflix -l "${magnet}" --vlc --subtitles="/mnt/d/Descargas/lifeofbrian.srt"
 }
