@@ -594,6 +594,7 @@ declare feature_keynames=(
   "prompt"
   "psql"
   "pull"
+  "pulseaudio"
   "push"
   "pycharm"
   "pycharmpro"

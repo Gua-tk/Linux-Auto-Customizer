@@ -2339,6 +2339,17 @@ pull_arguments=("pull")
 pull_commentary="A terminal function for git"
 pull_bashfunctions=("pull.sh")
 
+pulseaudio_name="Pulseaudio"
+pulseaudio_description="PulseAudio is a cross-platform, network-capable sound server."
+pulseaudio_version="1.0"
+pulseaudio_tags=("audioServer" "audio")
+pulseaudio_systemcategories=("System" "Audio")
+pulseaudio_arguments=("pulse_audio")
+pulseaudio_commentary="Sound Server"
+pulseaudio_bashfunctions=("pulseaudio.sh")
+pulseaudio_packagedependencies=("libpulse0" "pkgconfic" "intltool" "libtool" "libsndfile1-dev" "libjson-c-dev" "build-essential" "dbus-x11")
+pulseaudio_packagenames=("pulseaudio")
+
 push_name="Function push"
 push_description="Decorates call to git push by setting upstream branch if needed"
 push_version="1.0"
