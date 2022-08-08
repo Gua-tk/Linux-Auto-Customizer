@@ -874,6 +874,8 @@ discord_bashfunctions=("silentFunction")
 discord_binariesinstalledpaths=("Discord;discord")
 discord_downloadKeys=("bundle")
 discord_bundle_URL="https://discord.com/api/download?platform=linux&format=tar.gz"
+discord_launcherkeynames=("defaultLauncher")
+discord_defaultLauncher_exec="discord"
 
 docker_name="Docker"
 docker_description="Containerization service"
@@ -1778,7 +1780,6 @@ uninstall_keyboardfix_pre()
 {
   :
 }
-
 
 lFunction_name="Function L"
 lFunction_description="Function that lists files in a directory, but listing the directory sizes"
