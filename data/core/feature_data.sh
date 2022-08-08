@@ -2640,7 +2640,7 @@ scala_arguments=("scala")
 scala_packagenames=("scala")
 scala_launcherkeynames=("languageLauncher")
 scala_languageLauncher_terminal="true"
-scala_defaultLauncher_exec="gnome-terminal -e scala"
+scala_languageLauncher_exec="gnome-terminal -e scala"
 
 scilab_name="Scilab"
 scilab_description="Scientific software package for numerical computations"
