@@ -25,7 +25,7 @@ alias trefresh="tmux refresh-client -S"
 # - Permissions: Needs access to tmux server.
 _tsession_complete()
 {
-  COMPREPLY=($(compgen -W "$(tmux ls -fFunction '#S' | xargs)" -- "${COMP_WORDS[COMP_CWORD]}"))
+  COMPREPLY=($(compgen -W "$(tmux ls -F '#S' | xargs)" -- "${COMP_WORDS[COMP_CWORD]}"))
 }
 
 
@@ -66,7 +66,7 @@ tsave()
 {
 	tmuxp freeze "$1"
 }
-complete -fFunction _tsession_complete tsave
+complete -F _tsession_complete tsave
 
 
 # - Description: Load configuration from the installation folder of tmux
@@ -77,8 +77,7 @@ tload()
 {
 	tmuxp load "€{CURRENT_INSTALLATION_FOLDER}/$1"
 }
-complete -fFunction _tload tload
-
+complete -F _tsession_complete tsave
 
 # - Description: From outside tmux attaches the current client to an existing tmux session or creates a new one. From
 #   inside tmux perform a `tmux switch` to the desired session.
@@ -93,7 +92,7 @@ ta()
     tmux attach-session -t "$1"
   fi
 }
-complete -fFunction _tsession_complete ta
+complete -F _tsession_complete ta
 
 
 # - Description: Detaches from the current tmux session, returning to the original bash shell that called tmux.
@@ -104,7 +103,7 @@ td()
 {
   tmux detach-client -s "$1"
 }
-complete -fFunction _tsession_complete td
+complete -F _tsession_complete td
 
 
 # - Description: Renames the current session to the supplied argument.
@@ -115,7 +114,7 @@ trs()
 {
 	tmux rename-session "$1"
 }
-complete -fFunction _tsession_complete ts
+complete -F _tsession_complete ts
 
 
 # - Description: Switch the current session to the desired session. This allows you to control another terminal.
@@ -127,7 +126,7 @@ ts()
 {
 	tmux switch -t "$1"
 }
-complete -fFunction _tsession_complete ts
+complete -F _tsession_complete ts
 
 
 # - Description: Sends commands to the desired sessions.
@@ -142,7 +141,7 @@ tsend()
     shift; shift
   done
 }
-complete -fFunction _tsession_complete tsend
+complete -F _tsession_complete tsend
 
 
 # - Description: Kills the desired tmux session using its name. This can be consulted using `tmux ls`.
@@ -154,7 +153,7 @@ tk()
     tmux kill-session -t "${session_name}"
   done
 }
-complete -fFunction _tsession_complete tk
+complete -F _tsession_complete tk
 
 
 # - Description: Inverts the mouse state by adding "set -g mouse on" line into .tmux.conf or deleting the same line.
@@ -180,7 +179,7 @@ tm()
 #  * (2) we're in an interactive shell
 #  * (3) tmux doesn't try to run within itself
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  attach_session="$(tmux ls -fFunction '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' 2> /dev/null | awk '/^0/ { if ($2 > t) { t = $2; s = $3 } }; END { if (s) printf "%s", s }')"
+  attach_session="$(tmux ls -F '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' 2> /dev/null | awk '/^0/ { if ($2 > t) { t = $2; s = $3 } }; END { if (s) printf "%s", s }')"
   if [ -n "$attach_session" ]; then
     # * Putting this into .bashrc can give some problems, since all the functions that are after this file will not be
     #   loaded, since the terminal is blocked executing the tmux line. This means that when bash is loaded when
@@ -227,7 +226,7 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
     #   key M-#, which corresponds to Alt + #. This is a bash shortcut to put a # before the current line (silencing it)
     #   and then issuing enter to issue just a commentary.
 
-    if [ "$(tmux list-panes -t 0 -fFunction '#{pane_active} #{pane_current_command}' | grep -Eo "^1 .*$" | cut -d " " -f2-)" == "bash" ]; then
+    if [ "$(tmux list-panes -t 0 -F '#{pane_active} #{pane_current_command}' | grep -Eo "^1 .*$" | cut -d " " -f2-)" == "bash" ]; then
       tmux send-keys -t "${attach_session}" M-# "cd \"${PWD}\" && clear" Enter
     fi
     # This is a blocking synchronous call. We will continue executing this point of the code when tmux exits, which only

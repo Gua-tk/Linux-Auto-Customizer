@@ -16,7 +16,7 @@ shopt -s cmdhist
 # Store multiline commands with newlines when possible, rather that using semicolons
 #shopt -s lithist
 # To retrieve the commands correctly
-HISTTIMEFORMAT='%fFunction %T '
+HISTTIMEFORMAT='%F %T '
 # Check the windows size on every prompt and reset the number of columns and rows if necessary
 shopt -s checkwinsize  # Kinda buggy
 
