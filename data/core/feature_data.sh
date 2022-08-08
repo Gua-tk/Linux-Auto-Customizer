@@ -2142,7 +2142,7 @@ nodejs_bundle_URL="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.
 nodejs_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
 nodejs_launcherkeynames=("languageLauncher")
 nodejs_languageLauncher_terminal="true"
-nodejs_defaultLauncher_exec="gnome-terminal -e nodejs"
+nodejs_languageLauncher_exec="gnome-terminal -e nodejs"
 
 
 npm_name="npm"
@@ -2524,7 +2524,7 @@ python3_template_path="${XDG_TEMPLATES_DIR}"
 python3_template_content="python3_script.py"
 python3_launcherkeynames=("languageLauncher")
 python3_languageLauncher_terminal="true"
-python3_defaultLauncher_exec="gnome-terminal -e python3"
+python3_languageLauncher_exec="gnome-terminal -e python3"
 
 R_name="R"
 R_description="Programming language"
