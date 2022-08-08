@@ -77,8 +77,7 @@ tload()
 {
 	tmuxp load "€{CURRENT_INSTALLATION_FOLDER}/$1"
 }
-complete -F _tload tload
-
+complete -F _tsession_complete tsave
 
 # - Description: From outside tmux attaches the current client to an existing tmux session or creates a new one. From
 #   inside tmux perform a `tmux switch` to the desired session.
