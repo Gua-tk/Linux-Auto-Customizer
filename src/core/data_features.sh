@@ -829,7 +829,6 @@ customizerGUI_multiuninstall_content="multiuninstall.json"
 customizerGUI_debug_path="${BIN_FOLDER}/customizerGUI/conf/runners/debug.json"
 customizerGUI_debug_content="debug.json"
 customizerGUI_launcherkeynames=("defaultLauncher") # TODO: pgadmin launcher style, with xdg-open to https://localhost:5000
-customizerGUI_defaultLauncher_exec="customizerGUI"
 
 install_customizerGUI_post()
 {
