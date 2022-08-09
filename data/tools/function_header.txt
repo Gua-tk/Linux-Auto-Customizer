@@ -1,0 +1,8 @@
+########################################################################################################################
+# - Description: Description of the function. What this function does at specification level.
+# - Permissions: Permission that are needed to run this function or how the function changes its behaviour depending on
+#   the permissions that it received. It is not also about being root or not, it is about having the privilege to write
+#   in a certain folder, overwrite certain files, etc.
+# - Argument 1: Type of data that this argument contains and how it is used inside the function.
+# - Argument 2 (Optional): Type of data that this argument contains and how it is used inside the function.
+########################################################################################################################
