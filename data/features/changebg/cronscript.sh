@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#!/bin/bash
 ########################################################################################################################
 # - Name: Linux Auto-Customizer change background script.                                                              #
 # - Description: Script to change the background. Can be called periodically from cron to change the background        #
