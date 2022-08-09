@@ -15,3 +15,15 @@ del-key()
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$1"
   fi
 }
+
+del-branches()
+{
+  local -r branches="$(git branch | tr -s " " | cut -d " " -f2-)"
+  local -r currentBranch="$(git branch --show-current)"
+
+  for b in ${branches[@]}; do
+    if [ "${b}" != "${currentBranch}" ]; then
+      git branch -d "${b}"
+    fi
+  done
+}
