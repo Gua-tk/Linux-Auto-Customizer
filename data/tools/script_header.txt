@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+########################################################################################################################
+# - Name: Name for the script.                                                                                         #
+# - Description: Description for the script. Explain exactly what actions and operations does this script perform.     #
+#   Specification level.                                                                                               #
+# - Creation Date: 09/08/2021                                                                                          #
+# - Last Modified: 09/08/2021                                                                                          #
+# - Author & Maintainer: Aleix Mariné-Tena                                                                             #
+# - Email: aleix.marine@estudiants.urv.cat                                                                             #
+# - Permissions: Permissions that this script needs to perform correctly, or alternatively what happens if it does got #
+#   the permissions or not. Implementation level.                                                                      #
+# - Arguments:                                                                                                         #
+#    * Argument 1: Explain what type of data is expected in this argument and how this changes the behaviour of the    #
+#      script.                                                                                                         #
+#    * Argument 2: Explain what type of data is expected in this argument and how this changes the behaviour of the    #
+#      script.                                                                                                         #
+#    * Argument (3, 4), (5, 6), ... (n, n + 1): Undefined number of arguments. Explain how arguments are grouped (if)  #
+#      applicable, explain what type of data is expected in every argument and how each of them changes the behaviour  #
+#      of the script.                                                                                                  #
+# - Usage: How would you expect to use this script. Explain the basic usage cases.                                     #
+# - License: License of the code. GPL 2.0 for the customizer original files                                            #
+########################################################################################################################
