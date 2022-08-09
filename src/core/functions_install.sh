@@ -1049,12 +1049,14 @@ generic_install_gpgSignatures() {
   if ! isRoot; then
     return
   fi
+
   local -r gpgSignatures="${CURRENT_INSTALLATION_KEYNAME}_gpgSignatures[@]"
   local collision=""
   for sign in ${!gpgSignatures}; do
     add_gpgSignature "${sign}" "${collision}"
     collision="${collision}_"
   done
+  ${PACKAGE_MANAGER_UPDATE}
 }
 
 # Description: Add apt source to APT_SOURCES_LIST_FOLDER/{aptSourceName}.list from an URL
@@ -1071,12 +1073,14 @@ generic_install_sources() {
   if ! isRoot; then
     return
   fi
+
   local -r sources="${CURRENT_INSTALLATION_KEYNAME}_sources[@]"
   local collision=""
   for sign in "${!sources}"; do
     add_source "${sign}" "${collision}"
     collision="${collision}_"
   done
+  ${PACKAGE_MANAGER_UPDATE}
 }
 
 # - Description: Expands function system initialization relative to ${HOME_FOLDER}/.profile

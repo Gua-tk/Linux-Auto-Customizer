@@ -477,9 +477,11 @@ carbonLang_bashfunctions=("carbonLang_function.sh")
 carbonLang_gpgSignatures=("https://bazel.build/bazel-release.pub.gpg")
 carbonLang_sources=("deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8")
 carbonLang_commentary="Carbon is an experimental, general-purpose programming language"
-carbonLang_dependencies=("apt-transport-https" "gnupg" "clang" "lldb" "lld" "openjdk-8-jdk" "llvm" "build-essential" "libc++-dev" "bazel")
+carbonLang_dependencies=("apt-transport-https" "gnupg" "clang" "lldb" "lld" "openjdk-8-jdk" "llvm" "build-essential" "libc++-dev")
+carbonLang_packagenames=("bazel")
 carbonLang_bashinitializations=("carbonLang.sh")
 carbonLang_repositoryurl="https://github.com/carbon-language/carbon-lang"
+carbonLang_flagsoverride="0;;;;;"  # Install always as root
 
 # TODO: tested
 changebg_name="Change Background"
