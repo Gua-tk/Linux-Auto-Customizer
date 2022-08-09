@@ -6,3 +6,12 @@ alias services="sudo systemctl --type=service"
 alias cls="clear"
 alias services="sudo systemctl --type=service"
 alias q="exit"
+
+del-key()
+{
+  if [ "${EUID}" == 0 ]; then
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$1"
+  else
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$1"
+  fi
+}
