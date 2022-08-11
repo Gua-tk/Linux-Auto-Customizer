@@ -571,7 +571,6 @@ declare feature_keynames=(
   "netTools"
   "nmap"
   "nodejs"
-  "npm"
   "notepadqq"
   "notflix"
   "obsStudio"
