@@ -1,1 +1,0 @@
-@reboot tmux source-file "€{HOME_FOLDER}/.tmux.conf" && notify-send "tmux conf loaded"

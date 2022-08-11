@@ -40,4 +40,4 @@
 #  rm -Rf "${BIN_FOLDER}/donut"
 #}
 
-feature_keynames+=("donut")
+#feature_keynames+=("donut")

@@ -22,7 +22,7 @@ main() {
   ### DATA AND FILE STRUCTURES INITIALIZATIONS ###
   ################################################
   FLAG_MODE=install  # Install mode
-  ensure_and_import_custom_options
+  import_custom_options
 
   argument_processing "$@"
   data_and_file_structures_initialization

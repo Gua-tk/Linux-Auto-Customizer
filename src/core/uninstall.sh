@@ -23,7 +23,8 @@ main()
   ################################################
   FLAG_MODE=uninstall  # Uninstall mode
   FLAG_OVERWRITE=1  # Set in uninstall always to true or it skips the program if it is installed
-  ensure_and_import_custom_options
+
+  import_custom_options
   argument_processing "$@"
 
   ####################

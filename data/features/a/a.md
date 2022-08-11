@@ -1,0 +1,1 @@
+Alias that displays environment aliases using compgen -a
