@@ -343,6 +343,8 @@ fi
 declare -r FONTS_FOLDER="${HOME_FOLDER}/.fonts"
 declare -r BASH_COMPLETIONS_PATH="/usr/share/bash-completion/completions/git"
 declare -r SSH_GLOBAL_CONF_PATH="/etc/ssh/sshd_config"
+declare -r GPG_TRUSTED_FOLDER="/etc/apt/trusted.gpg.d"
+declare -r APT_SOURCES_LIST_FOLDER="/etc/apt/sources.list.d"
 declare -r PYTHON_VERSION="$(python3 --version | tr "A-Z" "a-z" | tr -d " " | rev | cut -d "." -f2- | rev)"
 
 # To keep information about the current installation
@@ -434,7 +436,7 @@ declare feature_keynames=(
   "audacity"
   "AutoFirma"
   "axel"
-  "B"
+  "BFunction"
   "b"
   "bashcolors"
   "blender"
@@ -443,6 +445,7 @@ declare feature_keynames=(
   "c"
   "caffeine"
   "calibre"
+  "carbonLang"
   "changebg"
   "cheat"
   "checkout"
@@ -476,12 +479,12 @@ declare feature_keynames=(
   "dropbox"
   "drupal"
   "duckduckgo"
-  "E"
+  "EFunction"
   "e"
   "eclipse"
   "emojis"
   "evolution"
-  "F"
+  "FFunction"
   "f"
   "firc"
   "facebook"
@@ -492,15 +495,6 @@ declare feature_keynames=(
   "filezilla"
   "firefox"
   "flutter"
-  "fonts_alegreya_sans"
-  "fonts_firacode"
-  "fonts_hack"
-  "fonts_hermit"
-  "fonts_lato"
-  "fonts_noto_sans"
-  "fonts_oswald"
-  "fonts_oxygen"
-  "fonts_roboto"
   "forms"
   "freecad"
   "gcc"
@@ -553,8 +547,8 @@ declare feature_keynames=(
   "jupyterLab"
   "k"
   "keep"
-  "keyboardfix"
-  "L"
+  "keyboardFix"
+  "LFunction"
   "l"
   "latex"
   "libreoffice"
@@ -567,7 +561,6 @@ declare feature_keynames=(
   "meld"
   "mendeley"
   "merge"
-  "msttcorefonts"
   "mvn"
   "nano"
   "nautilus"
@@ -585,7 +578,6 @@ declare feature_keynames=(
   "octave"
   "okular"
   "onedrive"
-  "openssl102"
   "opensshServer"
   "outlook"
   "overleaf"
@@ -602,6 +594,7 @@ declare feature_keynames=(
   "prompt"
   "psql"
   "pull"
+  "pulseaudio"
   "push"
   "pycharm"
   "pycharmpro"
@@ -723,12 +716,11 @@ declare -r wrapper_gamesinstall=("steam" "cmatrix")
 declare -r wrapper_internetshortcuts=("documents" "drive" "duckduckgo" "facebook" "forms" "github" "gitlab" "gmail" "google" "googlecalendar" "instagram" "keep" "netflix" "onedrive" "outlook" "overleaf" "presentation" "reddit" "soundcloud" "spreadsheets" "translator" "trello" "tumblr" "twitch" "twitter" "whatsapp" "wikipedia" "youtube" "youtubemusic")
 declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley" "GNU_parallel" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
 declare -r wrapper_bashfunctions=("a" "b" "B" "c" "E" "e" "F" "f" "h" "i" "j" "k" "L" "l" "p" "s" "u" "x" "z")
-declare -r wrapper_desktopfunctions=("changebg" "screenshots" "system_fonts" "templates")
+declare -r wrapper_desktopfunctions=("changebg" "screenshots" "systemFonts" "templates")
 declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters" "bashcolors" "fastcommands" "emojis")
 declare -r wrapper_network=("ipe" "ipi" "ips")
 declare -r wrapper_networks=("net-tools")
-declare -r wrapper_fontsuser=("fonts-alegreya-sans", "fonts-lato", "fonts-noto-sans", "fonts-oswald", "fonts-oxygen")
-declare -r wrapper_fontsroot=("fonts-firacode", "fonts-hack", "fonts-hermit", "fonts-roboto")
+
 # Custom wrappers
 declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "curl" "git" "ffmpeg" "java" "python3")
 declare -r wrapper_gitbashfunctions=("pull" "push" "vommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch" "config")

@@ -77,6 +77,20 @@ bell_sound()
   echo -en "\07"
 }
 
+# - Description: Removes file from system
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Absolute path of the file to be removed
+remove_file() {
+  rm -f "$1"
+}
+
+
+# - Description: Remove folder from system
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Absolute path of folder to be removed
+remove_folder() {
+  rm -Rf "$1"
+}
 
 isRoot()
 {
@@ -616,6 +630,7 @@ argument_processing()
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [ ${#added_feature_keynames[@]} -eq 0 ]; then
     output_proxy_executioner "No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "WARNING"
+    return
   fi
 }
 
@@ -714,6 +729,25 @@ add_program()
     fi
   done
 
+  # Try fuzzy match but with restrictions: We do not fuze caps
+  if [ -z "${matched_keyname}" ]; then
+    # We did not achieve fast match. Loop through elements in all arguments property of all features looking for match
+    processed_argument="$(echo "${processed_argument}")"  # Literal match
+    for keyname in "${feature_keynames[@]}"; do
+      local arguments_pointer="${keyname}_arguments[@]"
+      for argument in "${!arguments_pointer}"; do  # Expand arguments of each feature using feature_keyname
+        if [ "${argument}" == "${processed_argument}" ] || [ "$(echo "${argument}" | tr -d "_")" == "$(echo "${processed_argument}" | tr -d "_")" ]; then  # Flexible match
+          matched_keyname="${keyname}"  # Save the match
+          break  # Break the inner loop
+        fi
+      done
+      if [ -n "${matched_keyname}" ]; then  # If we have already matched something  break external loop and continue
+        break
+      fi
+    done
+  fi
+
+  # Try fuzzy match
   if [ -z "${matched_keyname}" ]; then
     # We did not achieve fast match. Loop through elements in all arguments property of all features looking for match
     processed_argument="$(echo "${processed_argument}" | tr '[:upper:]' '[:lower:]')"  # Convert to lowercase
@@ -731,9 +765,11 @@ add_program()
     done
   fi
 
+
   # If we do not have a match after checking all args, this arg is not valid
   if [ -z "${matched_keyname}" ]; then
     output_proxy_executioner "$1 is not a recognized command, skipping to next argument" "WARNING"
+    return
   fi
 
   # Here matched_keyname matches a valid feature. Process its flagsoverride and add or remove from added_feature_keynames
@@ -896,7 +932,9 @@ generic_installation() {
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_pre"
   fi
 
-  "generic_${FLAG_MODE}_dependencies" "${featurename}"
+  "generic_${FLAG_MODE}_gpgSignatures"
+  "generic_${FLAG_MODE}_sources"
+  "generic_${FLAG_MODE}_dependencies"
   "generic_${FLAG_MODE}_packageManager"
   "generic_${FLAG_MODE}_cloneRepositories"
   "generic_${FLAG_MODE}_pythonVirtualEnvironment"
@@ -905,20 +943,23 @@ generic_installation() {
   fi
 
   "generic_${FLAG_MODE}_downloads"
-  "generic_${FLAG_MODE}_files" "${featurename}"
-  "generic_${FLAG_MODE}_movefiles" "${featurename}"
-  "generic_${FLAG_MODE}_dynamic_launcher" "${featurename}"
+  "generic_${FLAG_MODE}_files"
+  "generic_${FLAG_MODE}_movefiles"
+  "generic_${FLAG_MODE}_dynamic_launcher"
   if [ "${OS_NAME}" == "WSL2" ]; then
     "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
   fi
 
-  "generic_${FLAG_MODE}_functions" "${featurename}"
+  "generic_${FLAG_MODE}_functions"
   "generic_${FLAG_MODE}_initializations"
-  "generic_${FLAG_MODE}_autostart" "${featurename}"
+
+  # TODO refactor using get dynamic launcher and serving the fklag install in a similar manner of how we servce the autostart flag
   "generic_${FLAG_MODE}_favorites" "${featurename}"
-  "generic_${FLAG_MODE}_file_associations" "${featurename}"
-  "generic_${FLAG_MODE}_keybindings" "${featurename}"
-  "generic_${FLAG_MODE}_pathlinks" "${featurename}"
+  # TODO refactor to remove _. Ensure that MIME_ASSOCIATION_PATH is present. Property asscoiatedfiletypes need an associated
+  # TODO desktop launcher to add the file asscoaitions, arbitrarily choose the first or extend this behaviour in get dynamic launcher
+  "generic_${FLAG_MODE}_file_associations"
+  "generic_${FLAG_MODE}_keybindings"
+  "generic_${FLAG_MODE}_pathlinks"
   if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_post"
   fi

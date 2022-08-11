@@ -22,8 +22,7 @@
 # the main terminal command installed by the feature used to run it. This string must be added to the array            #
 # feature_keynames in common_data.sh to be recognised by the customizer as an available installation.                  #
 # The variables must follow the next pattern: FEATUREKEYNAME_PROPERTY. Some variables can be defined in all features,  #
-# some are only used depending on the installation type (TODO deprecate)
-#  and others have to be defined always for each feature.         #
+# some are only used depending on the installation type and others have to be defined always for each feature.         #
 #                                                                                                                      #
 #                                                                                                                      #
 ###### Available properties:                                                                                           #
@@ -43,16 +42,6 @@
 #    "--viSual_Studio", etc.                                                                                           #
 #    The list of FEATUREKEYNAMEs is also used as first source of arguments, since it should contain the names of the   #
 #    commands that are going to be installed, which is something that we can suppose unique.                           #
-#  - FEATUREKEYNAME_installationtype. TODO deprecate.
-#    Define the type of installation, which sets a fixed behaviour that obtains its   #
-#    input from predefined sets of properties for each installation type (check next section Installation type         #
-#    dependent properties). This can be set to:                                                                        #
-#    * "packageinstall": Downloads a .deb package and installs it using dpkg.                                          #
-#    * "packagemanager": Uses de package manager such as apt-get to install packages and dependency packages.          #
-#    * "userinherit": Downloads a compressed file containing an unique folder.                                         #
-#    * "repositoryclone": Clone a repository inside the directory of the current feature installing.                   #
-#    * "environmental": Uses only the common part of every installation type. Has no type-dependent properties.        #
-#  - FEATUREKEYNAME_readmeline: Contains the readme line of the table for each feature.    TODO deprecate
 #  - FEATUREKEYNAME_name: Stores the feature's name. Maps to property 'Name=' of the desktop launcher if not
 #    overridden.                                                                  #
 #  - FEATUREKEYNAME_version: Feature version. For downloaded programs is the version of the downloaded bundle or binary
@@ -166,7 +155,8 @@
 #    * FEATUREKEYNAME_DOWNLOADKEY_installedPackages: This property is mandatory for completeness of the uninstallation
 #      if the downloaded file is or contains packages to be installed. It enumerates the names of the installed
 #      packages, so they can be used by uninstall to know which packages to uninstall using the default package manager.
-
+#  - FEATUREKEYNAME_gpgSignatures: Array of urls pointing to gpgSignatures that have to be added to GPG_TRUSTED_FOLDER.
+#  - FEATUREKEYNAME_sources: Array of strings defining sources that have to be added to APT_SOURCES_LIST_FOLDER
 #  - FEATUREKEYNAME_manualcontentavailable: 3 bits separated by ; defining if there's manual code to be executed from  #
 #    a function following the next naming rules: install_FEATUREKEYNAME_pre, install_FEATUREKEYNAME_mid,               #
 #    install_FEATUREKEYNAME_post.                                                                                      #
@@ -266,7 +256,7 @@ aisleriot_tags=("cards" "game" "cardsgame")
 aisleriot_systemcategories=("Game" "CardGame")
 aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
 aisleriot_commentary="Implementation of the classical game solitaire"
-aisleriot_bashfunctions=("aisleriot.sh")
+aisleriot_bashfunctions=("silentFunction")
 aisleriot_launcherkeynames=("default")
 aisleriot_default_exec="sol"
 aisleriot_windowclass="aisleriot"
@@ -312,7 +302,7 @@ anydesk_systemcategories=("Accessibility" "Network" "RemoteAccess" "FileTransfer
 anydesk_arguments=("any_desk")
 anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")
-anydesk_bashfunctions=("anydesk.sh")
+anydesk_bashfunctions=("silentFunction")
 anydesk_binariesinstalledpaths=("anydesk;anydesk")
 anydesk_downloadKeys=("bundle")
 anydesk_bundle_URL="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
@@ -337,7 +327,7 @@ ardour_arguments=("ardour")
 # ardour_icon="ardour.svg"
 ardour_launcherkeynames=("default")
 ardour_default_exec="ardour5"
-ardour_bashfunctions=("ardour.sh")
+ardour_bashfunctions=("silentFunction")
 ardour_packagenames=("ardour")
 ardour_launchernames=("ardour")
 
@@ -360,7 +350,7 @@ audacity_commentary="Record and edit audio files"
 audacity_launcherkeynames=("default")
 audacity_default_exec="audacity %F"
 audacity_associatedfiletypes=("application/x-audacity-project" "audio/aac" "audio/ac3" "audio/mp4" "audio/x-ms-wma" "video/mpeg" "audio/flac" "audio/x-flac" "audio/mpeg" "audio/basic" "audio/x-aiff" "audio/x-wav" "application/ogg" "audio/x-vorbis+ogg")
-audacity_bashfunctions=("audacity.sh")
+audacity_bashfunctions=("silentFunction")
 audacity_packagenames=("audacity" "audacity-data")
 
 # TODO: Tested
@@ -375,7 +365,7 @@ AutoFirma_launcherkeynames=("default")
 AutoFirma_default_exec="/usr/bin/AutoFirma %u"
 AutoFirma_default_windowclass="autofirma"
 AutoFirma_associatedfiletypes=("x-scheme-handler/afirma")
-AutoFirma_bashfunctions=("AutoFirma.sh")
+AutoFirma_bashfunctions=("silentFunction")
 AutoFirma_downloadKeys=("bundle")
 AutoFirma_bundle_URL="https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip"
 AutoFirma_bundle_type="package"
@@ -391,14 +381,14 @@ axel_arguments=("axel")
 axel_commentary="Like wget but fancier and faster"
 axel_packagenames=("axel")
 
-B_name="Function B"
-B_description="Function that source ~/.profile and ~/.bashrc"
-B_version="1.0"
-B_tags=("bashfunctions" "profile" "bashrc")
-B_systemcategories=("System" "Utility")
-B_arguments=("B" "B_function")
-B_commentary="B reload environment"
-B_bashfunctions=("B.sh")
+BFunction_name="Function B"
+BFunction_description="Function that source ~/.profile and ~/.bashrc"
+BFunction_version="1.0"
+BFunction_tags=("bashfunctions" "profile" "bashrc")
+BFunction_systemcategories=("System" "Utility")
+BFunction_arguments=("B" "B_function")
+BFunction_commentary="B reload environment"
+BFunction_bashfunctions=("B.sh")
 
 b_name="Function b"
 b_description="Alias for bash"
@@ -449,7 +439,7 @@ brasero_tags=("bashfunctions" "bash" "gitbashfunctions")
 brasero_systemcategories=("System" "Utility" "DiscBurning")
 brasero_arguments=("brasero")
 brasero_commentary="branch creates a new branch of the git repository"
-brasero_bashfunctions=("brasero.sh")
+brasero_bashfunctions=("silentFunction")
 brasero_launcherkeynames=("defaultLauncher")
 brasero_defaultLauncher_exec="brasero"
 brasero_packagenames=("brasero")
@@ -466,16 +456,32 @@ c_bashfunctions=("c.sh")
 calibre_name="Calibre"
 calibre_description="E-book library management"
 calibre_version="System dependent"
-calibre_tags="office"
+calibre_tags=("office")
 calibre_systemcategories=("Office")
 calibre_arguments=("calibre")
 calibre_commentary="E-book library management: Convert, view, share, catalogue all your e-books"
-calibre_bashfunctions=("calibre.sh")
+calibre_bashfunctions=("silentFunction")
 calibre_associatedfiletypes=("application/vnd.openxmlformats-officedocument.wordprocessingml.document" "application/x-mobipocket-ebook" "image/vnd.djvu" "application/x-cbr" "application/x-mobi8-ebook" "application/oebps-package+xml" "text/fb2+xml" "application/xhtml+xml" "text/rtf" "application/x-ruby" "text/plain" "application/x-cbz" "application/x-cbc" "application/x-sony-bbeb" "application/vnd.ms-word.document.macroenabled.12" "application/vnd.oasis.opendocument.text" "application/pdf" "text/html" "application/x-mobipocket-subscription" "application/epub+zip" "text/x-markdown" "application/ereader")
 calibre_launcherkeynames=("defaultLauncher")
 calibre_defaultLauncher_exec="calibre %F"
 calibre_defaultLauncher_usesNotifications="true"
 calibre_packagenames=("calibre")
+
+carbonLang_name="Carbon Language"
+carbonLang_description="Successor of C++"
+carbonLang_version="System dependent"
+carbonLang_tags=("languages")
+carbonLang_systemcategories=("Languages")
+carbonLang_arguments=("carbon_lang" "carbon_language" "carbon")
+carbonLang_bashfunctions=("carbonLang_function.sh")
+carbonLang_gpgSignatures=("https://bazel.build/bazel-release.pub.gpg")
+carbonLang_sources=("deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8")
+carbonLang_commentary="Carbon is an experimental, general-purpose programming language"
+carbonLang_dependencies=("apt-transport-https" "gnupg" "clang" "lldb" "lld" "openjdk-8-jdk" "llvm" "build-essential" "libc++-dev")
+carbonLang_packagenames=("bazel")
+carbonLang_bashinitializations=("carbonLang.sh")
+carbonLang_repositoryurl="https://github.com/carbon-language/carbon-lang"
+carbonLang_flagsoverride="0;;;;;"  # Install always as root
 
 # TODO: tested
 changebg_name="Change Background"
@@ -528,6 +534,26 @@ checkout_arguments=("checkout")
 checkout_commentary="A terminal shortcut for git"
 checkout_bashfunctions=("checkout.sh")
 
+chrome_name="Google Chrome"
+chrome_description="Web Browser"
+chrome_version="Google dependent"
+chrome_tags=("browser" "network")
+chrome_systemcategories=("Network" "WebBrowser")
+chrome_commentary="The all-in-one browser"
+chrome_arguments=("google_chrome")
+chrome_bashfunctions=("silentFunction")
+chrome_flagsoverride=";;;;1;"
+chrome_arguments=("chrome" "google_chrome" "googlechrome")
+chrome_launcherkeynames=("default")
+chrome_default_exec="google-chrome"
+chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
+chrome_downloadKeys=("debianPackage")
+chrome_debianPackage_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+chrome_debianPackage_installedPackages="google-chrome-stable"
+chrome_package_manager_override="apt-get"
+chrome_launcherkeys=("default")
+chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
+
 # TODO tested
 cheese_name="Cheese"
 cheese_description="Webcam Booth"
@@ -536,7 +562,7 @@ cheese_tags=("photo" "video" "webcam")
 cheese_systemcategories=("Video")
 cheese_arguments=("cheese")
 cheese_commentary="Take photos and videos with your webcam, with fun graphical effects"
-cheese_bashfunctions=("cheese.sh")
+cheese_bashfunctions=("silentFunction")
 cheese_launchernames=("org.gnome.Cheese")
 cheese_packagenames=("cheese")
 cheese_launcherkeynames=("defaultLauncher")
@@ -560,7 +586,7 @@ clementine_tags=("music")
 clementine_systemcategories=("Music" "Audio" "Qt" "Player" "AudioVideo")
 clementine_arguments=("clementine")
 clementine_commentary="Plays music and last.fm streams"
-clementine_bashfunctions=("clementine.sh")
+clementine_bashfunctions=("silentFunction")
 clementine_associatedfiletypes=("application/ogg" "application/x-ogg" "application/x-ogm-audio" "audio/aac" "audio/mp4" "audio/mpeg" "audio/mpegurl" "audio/ogg" "audio/vnd.rn-realaudio" "audio/vorbis" "audio/x-flac" "audio/x-mp3" "audio/x-mpeg" "audio/x-mpegurl" "audio/x-ms-wma" "audio/x-musepack" "audio/x-oggflac" "audio/x-pn-realaudio" "audio/x-scpls" "audio/x-speex" "audio/x-vorbis" "audio/x-vorbis+ogg" "audio/x-wav" "video/x-ms-asf" "x-content/audio-player" "x-scheme-handler/zune" "x-scheme-handler/itpc" "x-scheme-handler/itms" "x-scheme-handler/feed")
 clementine_launcherkeynames=("defaultLauncher")
 clementine_defaultLauncher_exec="clementine %U"
@@ -588,7 +614,7 @@ clion_systemcategories=("IDE" "Development")
 clion_arguments=("clion")
 clion_commentary="Very capable C++ IDE"
 clion_associatedfiletypes=("text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc")
-clion_bashfunctions=("clion.sh")
+clion_bashfunctions=("silentFunction")
 clion_binariesinstalledpaths=("bin/clion.sh;clion")
 clion_downloadKeys=("bundle")
 clion_bundle_URL="https://download.jetbrains.com/cpp/CLion-2021.3.tar.gz"
@@ -648,7 +674,7 @@ code_tags=("development" "microsoft" "code")
 code_systemcategories=("Development" "Utility")
 code_arguments=("code" "visual_studio_code" "visual_studio")
 code_commentary="The IDE of Microsoft"
-code_bashfunctions=("code.sh")
+code_bashfunctions=("silentFunction")
 code_binariesinstalledpaths=("code;code")
 code_downloadKeys="bundle"
 code_bundle_URL="https://go.microsoft.com/fwlink/?LinkID=620884"
@@ -677,7 +703,7 @@ codium_tags=("development" "microsoft" "code")
 codium_systemcategories=("Development" "IDE")
 codium_arguments=("codium" "vs_codium")
 codium_commentary="The IDE of Microsoft"
-codium_bashfunctions=("codium.sh")
+codium_bashfunctions=("silentFunction")
 codium_binariesinstalledpaths=("bin/codium;codium")
 codium_downloadKeys=("bundle")
 codium_bundle_doNotInherit="yes"
@@ -805,7 +831,6 @@ dconfEditor_tags=("editor" "settings")
 dconfEditor_systemcategories=("System" "Utility" "Settings" "GNOME" "DesktopSettings")
 dconfEditor_arguments=("dconf_editor" "dconf")
 dconfEditor_commentary="Edit system environment variables"
-# TODO: dconfEditor_launchernames=("ca.desrt.dconf-editor")
 dconfEditor_launcherkeynames=("defaultLauncher")
 dconfEditor_defaultLauncher_exec="dconf-editor"
 dconfEditor_packagenames=("dconf-editor")
@@ -819,7 +844,7 @@ dia_arguments=("dia")
 dia_commentary="Edit your Diagrams"
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")
-dia_bashfunctions=("dia.sh")
+dia_bashfunctions=("silentFunction")
 dia_associatedfiletypes=("application/x-dia-diagram")
 dia_launcherkeynames=("defaultLauncher")
 dia_defaultLauncher_exec="dia %F"
@@ -836,10 +861,12 @@ discord_tags=("VoiceChat" "Messaging" "Social")
 discord_systemcategories=("InstantMessaging" "Network")
 discord_arguments=("discord")
 discord_commentary="Chat and video stream online"
-discord_bashfunctions=("discord.sh")
+discord_bashfunctions=("silentFunction")
 discord_binariesinstalledpaths=("Discord;discord")
 discord_downloadKeys=("bundle")
 discord_bundle_URL="https://discord.com/api/download?platform=linux&format=tar.gz"
+discord_launcherkeynames=("defaultLauncher")
+discord_defaultLauncher_exec="discord"
 
 docker_name="Docker"
 docker_description="Containerization service"
@@ -859,7 +886,7 @@ documents_tags=("google" "internet_shortcuts")
 documents_systemcategories=("Office" "Documentation" "WebBrowser" "WordProcessor" "FlowChart")
 documents_arguments=("documents" "google_document" "google_documents" "document")
 documents_commentary="take notes or edit rich text documents"
-documents_bashfunctions=("documents.sh")
+documents_bashfunctions=("silentFunction")
 documents_launcherkeynames=("default")
 documents_default_exec="xdg-open https://docs.google.com/document/"
 
@@ -870,7 +897,7 @@ drive_version="Google dependent"
 drive_systemcategories=("ProjectManagement" "Documentation")
 drive_arguments=("drive" "google_drive")
 drive_commentary="File hosting service from Google"
-drive_bashfunctions=("drive.sh")
+drive_bashfunctions=("silentFunction")
 drive_launcherkeynames=("default")
 drive_default_exec="xdg-open https://drive.google.com/"
 
@@ -902,7 +929,7 @@ drupal_packagedependencies=("php-dom" "php-gd")
 drupal_downloadKeys=("bundle")
 drupal_bundle_URL="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
 drupal_bundle_downloadPath="/var/www/html"
-drupal_bashfunctions=("drupal.sh")
+drupal_bashfunctions=("silentFunction")
 drupal_launcherkeynames="default"
 drupal_default_exec="xdg-open http://localhost/drupal"
 drupal_manualcontentavailable="0;0;1"
@@ -922,7 +949,7 @@ duckduckgo_tags=("search" "internet_shortcuts")
 duckduckgo_systemcategories=("WebBrowser")
 duckduckgo_arguments=("duckduckgo")
 duckduckgo_commentary="take notes or edit rich text documents"
-duckduckgo_bashfunctions=("duckduckgo.sh")
+duckduckgo_bashfunctions=("silentFunction")
 duckduckgo_launcherkeynames=("default")
 duckduckgo_default_exec="xdg-open https://duckduckgo.com/"
 duckduckgo_description="Opens DuckDuckGo in Chrome"
@@ -936,14 +963,14 @@ e_arguments=("e")
 e_commentary="edit files or projects"
 e_bashfunctions=("e.sh")
 
-E_name="Function E"
-E_description="Multi Function to edit a set of hardcoded key files using an argument"
-E_version="1.0"
-E_tags=("bashfunctions" "bash")
-E_systemcategories=("System" "Utility")
-E_arguments=("E")
-E_commentary="A terminal shortcut"
-E_bashfunctions=("E.sh")
+EFunction_name="Function E"
+EFunction_description="Multi Function to edit a set of hardcoded key files using an argument"
+EFunction_version="1.0"
+EFunction_tags=("bashfunctions" "bash")
+EFunction_systemcategories=("System" "Utility")
+EFunction_arguments=("E")
+EFunction_commentary="A terminal shortcut"
+EFunction_bashfunctions=("E.sh")
 
 eclipse_name="Eclipse IDE"
 eclipse_description="IDE for Java"
@@ -952,7 +979,7 @@ eclipse_tags=("IDE" "programming" "development")
 eclipse_systemcategories=("Development" "IDE" "WebDevelopment" "Web")
 eclipse_arguments=("eclipse")
 eclipse_commentary="Fully functional for professional Java programming"
-eclipse_bashfunctions=("eclipse.sh")
+eclipse_bashfunctions=("silentFunction")
 eclipse_binariesinstalledpaths=("eclipse;eclipse")
 eclipse_downloadKeys=("bundle")
 eclipse_bundle_URL="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.2.2-201302041200/eclipse-SDK-4.2.2-linux-gtk-x86_64.tar.gz"
@@ -983,14 +1010,14 @@ evolution_defaultLauncher_exec="evolution -c calendar"
 evolution_defaultLauncher_ubuntuGetText="gnome-shell"
 evolution_defaultLauncher_nodisplay="true"
 
-F_name="Function F"
-F_description="Function to find strings in files in the directory in the 1st argument"
-F_version="1.0"
-F_tags=("bashfunctions" "bash" "info")
-F_systemcategories=("System" "Utility")
-F_arguments=("F")
-F_commentary="A terminal shortcut"
-F_bashfunctions=("F.sh")
+FFunction_name="Function F"
+FFunction_description="Function to find strings in files in the directory in the 1st argument"
+FFunction_version="1.0"
+FFunction_tags=("bashfunctions" "bash" "info")
+FFunction_systemcategories=("System" "Utility")
+FFunction_arguments=("F")
+FFunction_commentary="A terminal shortcut"
+FFunction_bashfunctions=("F.sh")
 
 f_name="Function f"
 f_description="Function for finding strings in files, files in directories and show found files"
@@ -1020,7 +1047,7 @@ facebook_tags=("social" "internet_shortcuts")
 facebook_systemcategories=("InstantMessaging" "Chat" "Feed")
 facebook_arguments=("facebook")
 facebook_commentary="Social media"
-facebook_bashfunctions=("facebook.sh")
+facebook_bashfunctions=("silentFunction")
 facebook_launcherkeynames=("default")
 facebook_default_exec="xdg-open https://facebook.com/"
 
@@ -1067,7 +1094,7 @@ filezilla_tags=("ftp")
 filezilla_systemcategories=("FileManager" "Network")
 filezilla_arguments=("filezilla")
 filezilla_commentary="Open source ftp"
-filezilla_bashfunctions=("filezilla.sh")
+filezilla_bashfunctions=("silentFunction")
 filezilla_packagenames=("filezilla")
 filezilla_launcherkeynames=("default")
 filezilla_default_windowclass="FileZilla"
@@ -1120,7 +1147,7 @@ forms_tags=("google" "internet_shortcuts")
 forms_systemcategories=("Documentation")
 forms_arguments=("forms" "google_forms")
 forms_commentary="make polls and surveys to retrieve statistical data"
-forms_bashfunctions=("forms.sh")
+forms_bashfunctions=("silentFunction")
 forms_launcherkeynames=("default")
 forms_default_exec="xdg-open https://docs.google.com/forms/"
 
@@ -1144,6 +1171,11 @@ gcc_systemcategories=("System" "Utility")
 gcc_arguments=("gcc")
 gcc_commentary="Typical dependency for any compilation"
 gcc_bashfunctions=("gcc.sh")
+gcc_filekeys=("template" "templateHeader")
+gcc_template_path="${XDG_TEMPLATES_DIR}"
+gcc_template_content="c_script.c"
+gcc_templateHeader_path="${XDG_TEMPLATES_DIR}"
+gcc_templateHeader_content="c_script_header.h"
 gcc_packagenames=("gcc")
 
 geany_name="Geany"
@@ -1233,7 +1265,7 @@ github_tags=("internet_shortcuts")
 github_systemcategories=("RevisionControl")
 github_commentary="Hosting repositories online"
 github_arguments=("github")
-github_bashfunctions=("github.sh")
+github_bashfunctions=("silentFunction")
 github_launcherkeynames=("default")
 github_default_exec="xdg-open https://github.com/"
 
@@ -1267,7 +1299,7 @@ gitlab_tags=("search" "internet_shortcuts")
 gitlab_systemcategories=("RevisionControl")
 gitlab_arguments=("git_lab")
 gitlab_commentary="Hosting repositories online"
-gitlab_bashfunctions=("gitlab.sh")
+gitlab_bashfunctions=("silentFunction")
 gitlab_launcherkeynames=("default")
 gitlab_default_exec="xdg-open https://gitlab.com/"
 
@@ -1297,7 +1329,7 @@ gmail_systemcategories=("Email")
 gmail_commentary="Send/Receive e-mails"
 gmail_tags=("email" "internet_shortcuts")
 gmail_arguments=("gmail" "google_mail")
-gmail_bashfunctions=("gmail.sh")
+gmail_bashfunctions=("silentFunction")
 gmail_launcherkeynames=("default")
 gmail_default_exec="xdg-open https://mail.google.com/"
 
@@ -1355,7 +1387,7 @@ google_systemcategories=("Documentation")
 google_commentary="Search any content in the internet"
 google_tags=("search" "internet_shortcuts")
 google_arguments=("google")
-google_bashfunctions=("google.sh")
+google_bashfunctions=("silentFunction")
 google_launcherkeynames=("default")
 google_default_exec="xdg-open https://www.google.com/"
 
@@ -1366,29 +1398,9 @@ googlecalendar_systemcategories=("Calendar")
 googlecalendar_commentary="Calendar, add, edit and remove events"
 googlecalendar_tags=("search" "internet_shortcuts")
 googlecalendar_arguments=("google_calendar")
-googlecalendar_bashfunctions=("googlecalendar.sh")
+googlecalendar_bashfunctions=("silentFunction")
 googlecalendar_launcherkeynames=("default")
 googlecalendar_default_exec="xdg-open https://calendar.google.com/"
-
-chrome_name="Google Chrome"
-chrome_description="Web Browser"
-chrome_version="Google dependent"
-chrome_tags=("browser" "network")
-chrome_systemcategories=("Network" "WebBrowser")
-chrome_commentary="The all-in-one browser"
-chrome_arguments=("google_chrome")
-chrome_bashfunctions=("google_chrome.sh")
-chrome_flagsoverride=";;;;1;"
-chrome_arguments=("chrome" "google_chrome" "googlechrome")
-chrome_launcherkeynames=("default")
-chrome_default_exec="google-chrome"
-chrome_packagedependencies=("libxss1" "libappindicator1" "libindicator7" "fonts-liberation")
-chrome_downloadKeys=("debianPackage")
-chrome_debianPackage_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
-chrome_debianPackage_installedPackages="google-chrome-stable"
-chrome_package_manager_override="apt-get"
-chrome_launcherkeys=("default")
-chrome_keybindings=("google-chrome;<Primary><Alt><Super>c;Google Chrome")
 
 gpaint_name="GNU Paint"
 gpaint_description="Raster graphics editor similar to Microsoft Paint"
@@ -1433,7 +1445,7 @@ guake_tags=("terminal" "utility")
 guake_systemcategories=("System" "Utility" "TerminalEmulator" "GNOME" "GTK")
 guake_commentary="Press F12 to display a terminal"
 guake_arguments=("guake")
-guake_bashfunctions=("guake.sh")
+guake_bashfunctions=("silentFunction")
 guake_packagenames=("guake")
 guake_launcherkeynames=("default")
 guake_default_exec="guake"
@@ -1468,7 +1480,6 @@ handbrake_tags=("terminal" "utility")
 handbrake_systemcategories=("Video" "AudioVideoEditing")
 handbrake_commentary="Video Transcoder"
 handbrake_arguments=("handbrake")
-# TODO handbrake_launchernames=("fr.handbrake.ghb")
 handbrake_launcherkeynames=("default")
 handbrake_default_exec="handbrake"
 handbrake_packagenames=("handbrake")
@@ -1489,10 +1500,10 @@ hardinfo_tags=("info" "hardware")
 hardinfo_systemcategories=("System" "Utility" "HardwareSettings")
 hardinfo_arguments=("hardinfo")
 hardinfo_commentary="Check pc hardware info"
+hardinfo_bashfunctions=("silentFunction")
 hardinfo_packagenames=("hardinfo")
 hardinfo_launcherkeynames=("default")
 hardinfo_default_exec="hardinfo"
-# TODO hardinfo_launchernames=("hardinfo")
 
 historyoptimization_name="Function history optimization"
 historyoptimization_description="Shared history in terminal session and other tweaks for the terminal history"
@@ -1520,7 +1531,7 @@ ideac_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Dev
 ideac_arguments=("ideac" "intellij_community")
 ideac_commentary="Integrated development environment written in Java for developing computer software"
 ideac_associatedfiletypes=("text/x-java")
-ideac_bashfunctions=("ideac.sh")
+ideac_bashfunctions=("silentFunction")
 ideac_binariesinstalledpaths=("bin/idea.sh;ideac")
 ideac_downloadKeys=("bundle")
 ideac_bundle_URL="https://download.jetbrains.com/idea/ideaIC-2021.3.tar.gz"
@@ -1539,7 +1550,7 @@ ideau_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Dev
 ideau_arguments=("ideau" "intellij_ultimate")
 ideau_commentary="Integrated development environment written in Java for developing computer software"
 ideau_associatedfiletypes=("text/x-java")
-ideau_bashfunctions=("ideau.sh")
+ideau_bashfunctions=("silentFunction")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")
 ideau_downloadKeys=("bundle")
 ideau_bundle_URL="https://download.jetbrains.com/idea/ideaIU-2021.3.tar.gz"
@@ -1576,7 +1587,7 @@ instagram_tags=("search" "internet_shortcuts")
 instagram_systemcategories=("Calendar")
 instagram_arguments=("instagram")
 instagram_commentary="Calendar, add and remove events"
-instagram_bashfunctions=("instagram.sh")
+instagram_bashfunctions=("silentFunction")
 instagram_launcherkeynames=("default")
 instagram_default_exec="xdg-open https://instagram.com"
 
@@ -1614,7 +1625,7 @@ iqmol_tags=("moleculeVisualizer" "molecules" "chemistry" "3d")
 iqmol_systemcategories=("Science" "Visualization")
 iqmol_arguments=("iqmol")
 iqmol_commentary="Program to visualize molecular data"
-iqmol_bashfunctions=("iqmol.sh")
+iqmol_bashfunctions=("silentFunction")
 iqmol_launcherkeynames=("defaultLauncher")
 iqmol_defaultLauncher_exec="iqmol"
 iqmol_defaultLauncher_windowclass="IQmol"
@@ -1652,73 +1663,9 @@ julia_arguments=("julia")
 julia_binariesinstalledpaths=("bin/julia;julia")
 julia_downloadKeys=("bundle")
 julia_bundle_URL="https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.5-linux-x86_64.tar.gz"
-julia_launcherkeynames="defaultLauncher"
+julia_launcherkeynames=("defaultLauncher")
 julia_defaultLauncher_terminal="true"
-
-jupyterLab_name="Jupyter Lab"
-jupyterLab_description="High-level, high-performance dynamic language for technical computing"
-jupyterLab_version="jupyter dependent"
-jupyterLab_tags=("jupyter")
-jupyterLab_systemcategories=("IDE" "Development")
-jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
-jupyterLab_commentary="IDE with a lot of possible customization and usable for different programming languages."
-jupyterLab_bashfunctions=("jupyter_lab.sh")
-jupyterLab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")
-jupyterLab_packagedependencies=("libkrb5-dev")
-jupyterLab_flagsoverride=";;1;;;"  # Ignore Errors to check dependencies. This is a patch
-jupyterLab_launcherkeynames="defaultLauncher"
-jupyterLab_defaultLauncher_exec="jupyter-lab &"
-jupyterLab_manualcontentavailable="1;1;0"
-jupyterLab_pipinstallations=("jupyter jupyterlab jupyterlab-git jupyterlab_markup" "bash_kernel" "pykerberos pywinrm[kerberos]" "powershell_kernel" "iarm" "ansible-kernel" "kotlin-jupyter-kernel" "vim-kernel" "theme-darcula")
-jupyterLab_pythoncommands=("bash_kernel.install" "iarm_kernel.install" "ansible_kernel.install" "vim_kernel.install")  # "powershell_kernel.install --powershell-command powershell"  "kotlin_kernel fix-kernelspec-location"
-install_jupyterLab_pre() {
-  local -r dependencies=("npm" "R" "julia")
-  for dependency in "${dependencies[@]}"; do
-
-    if ! which "${dependency}" &>/dev/null; then
-      output_proxy_executioner "echo ERROR: ${dependency} is not installed. You can installing using bash install.sh --npm --R --julia" "${FLAG_QUIETNESS}"
-      exit 1
-    fi
-  done
-}
-install_jupyterLab_mid() {
-  # Enable dark scrollbars by clicking on Settings -> JupyterLab Theme -> Theme Scrollbars in the JupyterLab menus.
-  "${BIN_FOLDER}/jupyterLab/bin/jupyter" labextension install @telamonian/theme-darcula
-  "${BIN_FOLDER}/jupyterLab/bin/jupyter" labextension enable @telamonian/theme-darcula
-
-  "${BIN_FOLDER}/jupyterLab/bin/jupyter" lab build
-
-  # ijs legacy install
-  npm config set prefix "${HOME_FOLDER}/.local"
-  npm install -g ijavascript
-  ijsinstall
-
-  # Set up IRKernel for R-jupyter
-  # R -e "install.packages('IRkernel')
-  # install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
-  #                repos = c('http://irkernel.github.io/',
-  #                getOption('repos')),
-  #                type = 'source')
-  # IRkernel::installspec()"
-
-  # install jupyter-lab dependencies down
-  julia -e '#!/.local/bin/julia
-  using Pkg
-  Pkg.add("IJulia")
-  Pkg.build("IJulia")'
-}
-uninstall_jupyterLab_pre() {
-  :
-}
-uninstall_jupyterLab_mid() {
-
-  # install jupyter-lab dependencies down
-  #julia -e '#!/.local/bin/julia
-  #using Pkg
-  #Pkg.add("IJulia")
-  #Pkg.build("IJulia")'
-  :
-}
+julia_defaultLauncher_exec="gnome-terminal -e julia"
 
 k_name="Function k"
 k_description="Kill processes by PID and name of process"
@@ -1736,40 +1683,18 @@ keep_tags=("search" "internet_shortcuts")
 keep_systemcategories=("Documentation")
 keep_arguments=("keep" "google_keep")
 keep_commentary="Add and remove notes online"
-keep_bashfunctions=("keep.sh")
+keep_bashfunctions=("silentFunction")
 keep_launcherkeynames=("default")
 keep_default_exec="xdg-open https://keep.google.com"
 
-keyboardfix_name="Fix Fn key Keychron K8 ISO UK"
-keyboardfix_description="Fixes the Fn key in combination with the Function keys F1, F2, etc. which happens to not work in some keyboards"
-keyboardfix_version="System dependent"
-keyboardfix_tags=("KeychronK8")
-keyboardfix_systemcategories=("Utility")
-keyboardfix_arguments=("keyboard_fix" "fix_keyboard")
-keyboardfix_commentary="To properly using the Fn key"
-keyboardfix_filekeys=("keyboardconf")
-keyboardfix_keyboardconf_path="/etc/modprobe.d/hid_apple.conf"
-keyboardfix_keyboardconf_content="keyboard.conf"
-keyboardfix_manualcontentavailable="0;0;1"
-keyboardfix_flagsoverride="0;;;;;"  # Root mode
-install_keyboardfix_post()
-{
-  update-initramfs -u -k all
-}
-uninstall_keyboardfix_pre()
-{
-  :
-}
-
-
-L_name="Function L"
-L_description="Function that lists files in a directory, but listing the directory sizes"
-L_version="1.0"
-L_tags=("bashfunctions" "terminal" "info")
-L_systemcategories=("System" "Utility")
-L_arguments=("L")
-L_commentary="A terminal shortcut"
-L_bashfunctions=("L.sh")
+LFunction_name="Function L"
+LFunction_description="Function that lists files in a directory, but listing the directory sizes"
+LFunction_version="1.0"
+LFunction_tags=("bashfunctions" "terminal" "info")
+LFunction_systemcategories=("System" "Utility")
+LFunction_arguments=("L")
+LFunction_commentary="A terminal shortcut"
+LFunction_bashfunctions=("L.sh")
 
 l_name="Function l"
 l_description="alias for \`ls\`"
@@ -1797,6 +1722,9 @@ latex_defaultLauncher_notify="false"
 latex_packagedependencies=("perl-tk" )
 latex_packagenames=("texlive-latex-extra" "texmaker" "perl-tk")
 latex_associatedfiletypes="text/x-tex"
+latex_filekeys=("template")
+latex_template_path="${XDG_TEMPLATES_DIR}"
+latex_template_content="latex_document.tex"
 
 lmms_name="LMMS"
 lmms_description="Music production suite"
@@ -1805,10 +1733,9 @@ lmms_tags=("musicProduction" )
 lmms_systemcategories=("Audio" "Qt" "AudioVideo" "Midi")
 lmms_arguments=("lmms")
 lmms_commentary="Music sequencer and synthesizer"
-lmms_bashfunctions=("lmms.sh")
+lmms_bashfunctions=("silentFunction")
 lmms_associatedfiletypes=("application/x-lmms-project")
 lmms_packagenames=("lmms")
-# TODO lmms_launchernames=("lmms")
 lmms_launcherkeynames=("defaultLauncher")
 lmms_defaultLauncher_exec="lmms %f"
 
@@ -1864,7 +1791,7 @@ matlab_launcherkeynames=("defaultLauncher")
 matlab_defaultLauncher_exec="matlab -desktop"
 matlab_defaultLauncher_name="MATLAB R2021a"
 matlab_manualcontentavailable="0;1;0"
-matlab_bashfunctions=("matlab.sh")
+matlab_bashfunctions=("silentFunction")
 install_matlab_mid()
 {
   "${TEMP_FOLDER}/matlab/install"  # Execute installer
@@ -1910,7 +1837,7 @@ meld_systemcategories=("GTK" "Development")
 meld_commentary="Meld visual diff viewer and merge tool for developers"
 meld_arguments=("meld")
 meld_packagedependencies=("libgtksourceview-4-dev" "libgtksourceview-3.0-1")
-meld_bashfunctions=("meld.sh")
+meld_bashfunctions=("silentFunction")
 meld_associatedfiletypes=("application/x-meld-comparison")
 meld_binariesinstalledpaths=("bin/meld;meld")
 meld_downloadKeys=("bundle")
@@ -2087,7 +2014,7 @@ netflix_tags=("film" "television" "internet_shortcuts")
 netflix_systemcategories=("Player")
 netflix_arguments=("netflix" "google_netflix")
 netflix_commentary="View films and TV series online"
-netflix_bashfunctions=("netflix.sh")
+netflix_bashfunctions=("silentFunction")
 netflix_launcherkeynames=("default")
 netflix_default_exec="xdg-open https://www.netflix.com"
 netflix_description="Netflix opening in Browser"
@@ -2118,6 +2045,10 @@ nodejs_arguments=("node" "node_js")
 nodejs_downloadKeys=("bundle")
 nodejs_bundle_URL="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
 nodejs_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
+nodejs_launcherkeynames=("languageLauncher")
+nodejs_languageLauncher_terminal="true"
+nodejs_languageLauncher_exec="gnome-terminal -e nodejs"
+
 
 npm_name="npm"
 npm_description="Nodejs package manager"
@@ -2178,7 +2109,7 @@ octave_version="1.0"
 octave_tags=("gnu")
 octave_systemcategories=("Languages" "IDE")
 octave_arguments=("octave" "gnu_octave" "octave_cli")
-octave_bashfunctions=("octave.sh")
+octave_bashfunctions=("silentFunction")
 octave_packagenames=("octave")
 #TODO octave_launchernames=("org.octave.Octave")
 octave_launcherkeynames=("defaultLauncher")
@@ -2268,7 +2199,7 @@ outlook_tags=("search" "internet_shortcuts")
 outlook_systemcategories=("Email" "Office")
 outlook_arguments=("outlook" "microsoft_outlook")
 outlook_commentary="Email client from Microsoft"
-outlook_bashfunctions=("outlook.sh")
+outlook_bashfunctions=("silentFunction")
 outlook_launcherkeynames=("default")
 outlook_default_exec="xdg-open https://outlook.live.com"
 
@@ -2278,7 +2209,7 @@ overleaf_tags=("LaTeX" "text_editor" "internet_shortcuts")
 overleaf_systemcategories=("ProjectManagement" "Documentation" "TextEditor" "Office")
 overleaf_arguments=("overleaf")
 overleaf_commentary="Email client from Microsoft"
-overleaf_bashfunctions=("overleaf.sh")
+overleaf_bashfunctions=("silentFunction")
 overleaf_launcherkeynames=("default")
 overleaf_default_exec="xdg-open https://www.overleaf.com"
 overleaf_description="overleaf opening in Browser"
@@ -2319,39 +2250,6 @@ pdfgrep_systemcategories=("Utility")
 pdfgrep_arguments=("pdfgrep")
 pdfgrep_packagenames=("pdfgrep")
 
-pgadmin_name="pgAdmin 4"
-pgadmin_description="PostgreSQL Tools"
-pgadmin_version="System dependent"
-pgadmin_tags=("pdf" "searchPDF" "pgadmin")
-pgadmin_systemcategories=("Network")
-pgadmin_arguments=("pgadmin" "pgadmin4")
-pgadmin_commentary="CLI utility that makes it possible to search for text in a PDF file without opening the file"
-pgadmin_binariesinstalledpaths=("lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py;pgadmin")
-pgadmin_confoverride_path="lib/${PYTHON_VERSION}/site-packages/pgadmin4/config_local.py"
-pgadmin_confoverride_content="config_local.py"
-pgadmin_executionscript_path="pgadmin_exec.sh"
-pgadmin_executionscript_content="pgadmin_exec.sh"
-pgadmin_filekeys=("confoverride" "executionscript")
-pgadmin_launcherkeynames=("defaultLauncher")
-pgadmin_defaultLauncher_windowclass="pgadmin"
-pgadmin_defaultLauncher_exec="bash ${CURRENT_INSTALLATION_FOLDER}/pgadmin_exec.sh"
-pgadmin_manualcontentavailable="0;1;0"
-pgadmin_pipinstallations=("pgadmin4")
-pgadmin_packagedependencies=("libgmp3-dev" "libpq-dev" "libapache2-mod-wsgi-py3")
-install_pgadmin_mid() {
-  # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
-  # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
-  # information on how to call the script using the correct python interpreter, which is the one in the virtual
-  # environment an not the python system interpreter.
-
-  # Prepend shebang line to python3 interpreter of the venv
-  echo "#!${BIN_FOLDER}/pgadmin/bin/python3" | cat - "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py" > "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py.tmp" && mv "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py.tmp" "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py"
-  chmod +x "${BIN_FOLDER}/pgadmin/lib/${PYTHON_VERSION}/site-packages/pgadmin4/pgAdmin4.py"
-}
-uninstall_pgadmin_mid() {
-  :
-}
-
 php_name="php"
 php_description="Programming language"
 php_version="System dependent"
@@ -2368,7 +2266,7 @@ phppgadmin_systemcategories=("Languages")
 phppgadmin_arguments=("phppgadmin")
 phppgadmin_commentary="It runs an instance of the program at localhost/phppgadmin"
 phppgadmin_packagenames=("phppgadmin")
-phppgadmin_bashfunctions=("phppgadmin.sh")
+phppgadmin_bashfunctions=("silentFunction")
 phppgadmin_launcherkeynames=("default")
 phppgadmin_default_windowclass="phppggadmin"
 phppgadmin_default_exec="nohup xdg-open http://localhost/phppgadmin"
@@ -2380,7 +2278,7 @@ pluma_tags=("editor" "text" "editor" "MATE" "tabs" "highlighting" "code" "multip
 pluma_systemcategories=("TextEditor" "Utility" "GTK")
 pluma_arguments=("pluma")
 pluma_commentary="Fork of gedit 2.0 that supports many plugins and new features"
-pluma_bashfunctions=("pluma.sh")
+pluma_bashfunctions=("silentFunction")
 pluma_associatedfiletypes=("text/plain")
 pluma_packagenames=("pluma")
 pluma_launcherkeynames=("defaultLauncher")
@@ -2403,6 +2301,7 @@ postman_binariesinstalledpaths=("Postman;postman")
 postman_downloadKeys=("bundle")
 postman_bundle_URL="https://dl.pstmn.io/download/latest/linux64"
 postman_launcherkeynames=("defaultLauncher")
+postman_binariesinstalledpaths=("silentFunction")
 
 presentation_name="Google Presentation"
 presentation_version="Google dependent"
@@ -2410,7 +2309,7 @@ presentation_tags=("presentation" "google" "internet_shortcuts")
 presentation_systemcategories=("ProjectManagement" "Documentation" "TextEditor")
 presentation_arguments=("presentation" "google_presentation")
 presentation_commentary="Create presentations online"
-presentation_bashfunctions=("presentation.sh")
+presentation_bashfunctions=("silentFunction")
 presentation_launcherkeynames=("default")
 presentation_default_exec="xdg-open https://docs.google.com/presentation/"
 presentation_description="Google Presentation opening in Browser"
@@ -2442,6 +2341,17 @@ pull_arguments=("pull")
 pull_commentary="A terminal function for git"
 pull_bashfunctions=("pull.sh")
 
+pulseaudio_name="Pulseaudio"
+pulseaudio_description="PulseAudio is a cross-platform, network-capable sound server."
+pulseaudio_version="1.0"
+pulseaudio_tags=("audioServer" "audio")
+pulseaudio_systemcategories=("System" "Audio")
+pulseaudio_arguments=("pulse_audio")
+pulseaudio_commentary="Sound Server"
+pulseaudio_bashfunctions=("pulseaudio.sh")
+pulseaudio_packagedependencies=("libpulse0" "pkgconfig" "intltool" "libtool" "libsndfile1-dev" "libjson-c-dev" "build-essential" "dbus-x11" "pulseaudio-module-jack" "")
+pulseaudio_packagenames=("pulseaudio")
+
 push_name="Function push"
 push_description="Decorates call to git push by setting upstream branch if needed"
 push_version="1.0"
@@ -2459,7 +2369,7 @@ pycharm_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "D
 pycharm_arguments=("pycharm" "pycharm_community")
 pycharm_icon="pycharm.png"
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
-pycharm_bashfunctions=("pycharm.sh")
+pycharm_bashfunctions=("silentFunction")
 pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
 pycharm_downloadKeys=("bundle")
 pycharm_bundle_URL="https://download.jetbrains.com/python/pycharm-community-2021.3.tar.gz"
@@ -2479,7 +2389,7 @@ pycharmpro_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience"
 pycharmpro_arguments=("pycharm_pro")
 pycharmpro_icon="pycharmpro.png"
 pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
-pycharmpro_bashfunctions=("pycharmpro.sh")
+pycharmpro_bashfunctions=("silentFunction")
 pycharmpro_binariesinstalledpaths=("bin/pycharm.sh;pycharmpro")
 pycharmpro_downloadKeys=("bundle")
 pycharmpro_bundle_URL="https://download.jetbrains.com/python/pycharm-professional-2021.3.tar.gz"
@@ -2525,6 +2435,12 @@ python3_systemcategories=("Languages")
 python3_arguments=("python_3" "python" "v")
 python3_bashfunctions=("v.sh")
 python3_packagenames=("python-dev" "python3-dev" "python3-pip" "python3-venv" "python3-wheel" "python3.8-venv")  # "python3-pyqt5" "python3-pyqt4" "python-qt4"
+python3_filekeys=("template")
+python3_template_path="${XDG_TEMPLATES_DIR}"
+python3_template_content="python3_script.py"
+python3_launcherkeynames=("languageLauncher")
+python3_languageLauncher_terminal="true"
+python3_languageLauncher_exec="gnome-terminal -e python3"
 
 R_name="R"
 R_description="Programming language"
@@ -2547,6 +2463,9 @@ R_defaultLauncher_terminal="true"
 R_defaultLauncher_notify="false"
 R_packagenames=("r-base")
 R_packagedependencies=("libzmq3-dev" "python3-zmq")
+R_launcherkeynames=("languageLauncher")
+R_languageLauncher_terminal="true"
+R_languageLauncher_exec="gnome-terminal -e R"
 
 reddit_name="Reddit"
 reddit_version="Google dependent"
@@ -2554,7 +2473,7 @@ reddit_tags=("forum" "internet_shortcuts")
 reddit_systemcategories=("InstantMessaging" "Chat")
 reddit_arguments=("reddit")
 reddit_commentary="Reddit forum"
-reddit_bashfunctions=("reddit.sh")
+reddit_bashfunctions=("silentFunction")
 reddit_launcherkeynames=("default")
 reddit_default_exec="xdg-open https://www.reddit.com"
 reddit_description="Google reddit opening in Browser"
@@ -2575,7 +2494,7 @@ rosegarden_version="System dependent"
 rosegarden_tags=("musicProduction")
 rosegarden_systemcategories=("Music" "Audio")
 rosegarden_arguments=("rosegarden")
-rosegarden_bashfunctions=("rosegarden.sh")
+rosegarden_bashfunctions=("silentFunction")
 rosegarden_packagenames=("rosegarden")
 rosegarden_launcherkeynames=("defaultLauncher")
 rosegarden_defaultLauncher_exec="rosegarden"
@@ -2587,7 +2506,7 @@ rstudio_tags=("rstudio")
 rstudio_systemcategories=("Network")
 rstudio_arguments=("r_studio")
 rstudio_associatedfiletypes=("text/plain")
-rstudio_bashfunctions=("rstudio.sh")
+rstudio_bashfunctions=("silentFunction")
 rstudio_binariesinstalledpaths=("bin/rstudio;rstudio")
 rstudio_downloadKeys=("bundle" "packageDependency")
 rstudio_packageDependency_URL="http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u4_amd64.deb"
@@ -2617,6 +2536,8 @@ rust_systemcategories=("Languages")
 rust_arguments=("rust_c")
 rust_packagenames=("rustc")
 rust_packagedependencies=("cmake" "build-essential")
+rust_launcherkeynames=("languageLauncher")
+rust_languageLauncher_terminal="true"
 
 s_name="Function s"
 s_description="Function to execute any program silently and in the background"
@@ -2634,6 +2555,9 @@ scala_tags=("scala")
 scala_systemcategories=("Languages")
 scala_arguments=("scala")
 scala_packagenames=("scala")
+scala_launcherkeynames=("languageLauncher")
+scala_languageLauncher_terminal="true"
+scala_languageLauncher_exec="gnome-terminal -e scala"
 
 scilab_name="Scilab"
 scilab_description="Scientific software package for numerical computations"
@@ -2787,7 +2711,7 @@ soundcloud_tags=("music" "internet_shortcuts")
 soundcloud_systemcategories=("Music" "Player")
 soundcloud_arguments=("soudcloud")
 soundcloud_commentary="soundcloud listen music online"
-soundcloud_bashfunctions=("soundcloud.sh")
+soundcloud_bashfunctions=("silentFunction")
 soundcloud_launcherkeynames=("default")
 soundcloud_default_exec="xdg-open https://www.soundcloud.com"
 
@@ -2822,7 +2746,7 @@ spreadsheets_tags=("google" "spreadsheets" "internet_shortcuts")
 spreadsheets_systemcategories=("Documentation" "Spreadsheet" "Office")
 spreadsheets_arguments=("spreadsheets" "google_spreadsheets")
 spreadsheets_commentary="spreadsheets editor online"
-spreadsheets_bashfunctions=("spreadsheets.sh")
+spreadsheets_bashfunctions=("silentFunction")
 spreadsheets_launcherkeynames=("default")
 spreadsheets_default_exec="xdg-open https://docs.google.com/spreadsheets"
 
@@ -2895,7 +2819,7 @@ studio_tags=("ide" "graphical" "programming" "android" "studio" "dev")
 studio_systemcategories=("Development" "Java" "WebDevelopment" "IDE")
 studio_arguments=("studio" "android_studio")
 studio_commentary="The choice when developing Android apps"
-studio_bashfunctions=("studio.sh")
+studio_bashfunctions=("silentFunction")
 studio_binariesinstalledpaths=("bin/studio.sh;studio")
 studio_downloadKeys=("bundleCompressed")
 studio_bundleCompressed_URL="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2021.2.1.14/android-studio-2021.2.1.14-linux.tar.gz"
@@ -2912,7 +2836,7 @@ sublime_arguments=("sublime" "sublime_text" "subl")
 sublime_commentary="Text Editor, programming..."
 sublime_keybindings=("sublime;<Primary><Alt><Super>e;Sublime Text")
 sublime_associatedfiletypes=("text/x-sh" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-python" "text/x-python3")
-sublime_bashfunctions=("sublime.sh")
+sublime_bashfunctions=("silentFunction")
 sublime_binariesinstalledpaths=("sublime_text;sublime")
 sublime_downloadKeys=("bundle")
 sublime_bundle_URL="https://download.sublimetext.com/sublime_text_build_4126_x64.tar.xz"
@@ -2951,7 +2875,7 @@ sysmontask_tags=("controlPanel")
 sysmontask_systemcategories=("Settings")
 sysmontask_arguments=("sysmontask")
 sysmontask_flagsoverride="0;;;;;"  # To install the cloned software it has to be run as root
-sysmontask_bashfunctions=("sysmontask.sh")
+sysmontask_bashfunctions=("silentFunction")
 # TODO sysmontask_launchernames=("SysMonTask")
 sysmontask_manualcontentavailable="0;1;0"
 sysmontask_repositoryurl="https://github.com/KrispyCamel4u/SysMonTask.git"
@@ -3034,7 +2958,7 @@ telegram_systemcategories=("Network" "Chat")
 telegram_arguments=("telegram")
 telegram_commentary="Open source messaging platform"
 telegram_binariesinstalledpaths=("Telegram;telegram")
-telegram_bashfunctions=("telegram.sh")
+telegram_bashfunctions=("silentFunction")
 telegram_downloadKeys=("bundle")
 telegram_bundle_URL="https://telegram.org/dl/desktop/linux"
 telegram_launcherkeynames=("default")
@@ -3114,7 +3038,7 @@ thunderbird_arguments=("thunderbird")
 thunderbird_commentary="Email, personal information manager, news, RSS and chat client"
 thunderbird_packagenames=("thunderbird")
 thunderbird_associatedfiletypes=("x-scheme-handler/mailto" "application/x-xpinstall" "x-scheme-handler/webcal" "x-scheme-handler/mid" "message/rfc822")
-thunderbird_bashfunctions=("thunderbird.sh")
+thunderbird_bashfunctions=("silentFunction")
 thunderbird_launcherkeynames=("defaultLauncher")
 thunderbird_defaultLauncher_exec="thunderbird %u"
 thunderbird_defaultLauncher_XMultipleArgs="false"
@@ -3204,7 +3128,7 @@ traductor_tags=("google" "traductor" "internet_shortcuts")
 traductor_systemcategories=("Translation")
 traductor_arguments=("traductor" "google_traductor")
 traductor_commentary="Traduce to any language"
-traductor_bashfunctions=("traductor.sh")
+traductor_bashfunctions=("silentFunction")
 traductor_launcherkeynames=("default")
 traductor_default_exec="xdg-open https://translate.google.com"
 
@@ -3225,7 +3149,7 @@ trello_tags=("administration" "internet_shortcuts")
 trello_systemcategories=("ProjectManagement")
 trello_arguments=("trello")
 trello_commentary="Project administration"
-trello_bashfunctions=("trello.sh")
+trello_bashfunctions=("silentFunction")
 trello_launcherkeynames=("default")
 trello_default_exec="xdg-open https://trello.com"
 
@@ -3236,7 +3160,7 @@ tumblr_tags=("internet_shortcuts")
 tumblr_systemcategories=("Feed")
 tumblr_arguments=("tumblr")
 tumblr_commentary="Blogs multimedia"
-tumblr_bashfunctions=("tumblr.sh")
+tumblr_bashfunctions=("silentFunction")
 tumblr_launcherkeynames=("default")
 tumblr_default_exec="xdg-open https://www.tumblr.com/"
 
@@ -3258,7 +3182,7 @@ twitch_tags=("streaming" "internet_shortcuts")
 twitch_systemcategories=("VideoConference")
 twitch_arguments=("twitch")
 twitch_commentary="Online streaming platform"
-twitch_bashfunctions=("twitch.sh")
+twitch_bashfunctions=("silentFunction")
 twitch_launcherkeynames=("default")
 twitch_default_exec="xdg-open https://twitch.tv"
 
@@ -3269,7 +3193,7 @@ twitter_tags=("internet_shortcuts")
 twitter_systemcategories=("InstantMessaging" "Chat" "Feed")
 twitter_arguments=("twitter")
 twitter_commentary="Microblogging online social platform"
-twitter_bashfunctions=("twitter.sh")
+twitter_bashfunctions=("silentFunction")
 twitter_launcherkeynames=("default")
 twitter_default_exec="xdg-open https://twitter.com"
 
@@ -3310,7 +3234,7 @@ virtualbox_version="System dependent"
 virtualbox_tags=("oracle")
 virtualbox_systemcategories=("System" "")
 virtualbox_arguments=("virtual_box")
-virtualbox_bashfunctions=("virtualbox.sh")
+virtualbox_bashfunctions=("silentFunction")
 virtualbox_launchernames=("virtualbox")
 virtualbox_packagedependencies=("make" "gcc" "perl" "python" "build-essential" "dkms" "libsdl1.2debian" "virtualbox-guest-utils" "libqt5printsupport5" "libqt5x11extras5" "libcurl4" "virtualbox-guest-dkms" "linux-headers-$(uname -r)" "libqt5opengl5" "linux-headers-generic" "linux-source" "linux-generic" "linux-signed-generic")
 virtualbox_packagenames=("virtualbox-6.1")
@@ -3327,6 +3251,7 @@ vlc_tags=("streaming" "Player" "Capture" "DVD" "Audio" "Video" "Server" "Broadca
 vlc_systemcategories=("Audio" "Music" "Player" "AudioVideo" "Recorder")
 vlc_arguments=("vlc")
 vlc_commentary="Read, capture, broadcast your multimedia streams"
+vlc_bashfunctions=("silentFunction")
 vlc_packagenames=("vlc")
 vlc_associatedfiletypes=("application/ogg" "application/x-ogg" "audio/ogg" "audio/vorbis" "audio/x-vorbis" "audio/x-vorbis+ogg" "video/ogg" "video/x-ogm" "video/x-ogm+ogg" "video/x-theora+ogg" "video/x-theora" "audio/x-speex" "audio/opus" "application/x-flac" "audio/flac" "audio/x-flac" "audio/x-ms-asf" "audio/x-ms-asx" "audio/x-ms-wax" "audio/x-ms-wma" "video/x-ms-asf" "video/x-ms-asf-plugin" "video/x-ms-asx" "video/x-ms-wm" "video/x-ms-wmv" "video/x-ms-wmx" "video/x-ms-wvx" "video/x-msvideo" "audio/x-pn-windows-acm" "video/divx" "video/msvideo" "video/vnd.divx" "video/avi" "video/x-avi" "application/vnd.rn-realmedia" "application/vnd.rn-realmedia-vbr" "audio/vnd.rn-realaudio" "audio/x-pn-realaudio" "audio/x-pn-realaudio-plugin" "audio/x-real-audio" "audio/x-realaudio" "video/vnd.rn-realvideo" "audio/mpeg" "audio/mpg" "audio/mp1" "audio/mp2" "audio/mp3" "audio/x-mp1" "audio/x-mp2" "audio/x-mp3" "audio/x-mpeg" "audio/x-mpg" "video/mp2t" "video/mpeg" "video/mpeg-system" "video/x-mpeg" "video/x-mpeg2" "video/x-mpeg-system" "application/mpeg4-iod" "application/mpeg4-muxcodetable" "application/x-extension-m4a" "application/x-extension-mp4" "audio/aac" "audio/m4a" "audio/mp4" "audio/x-m4a" "audio/x-aac" "video/mp4" "video/mp4v-es" "video/x-m4v" "application/x-quicktime-media-link" "application/x-quicktimeplayer" "video/quicktime" "application/x-matroska" "audio/x-matroska" "video/x-matroska" "video/webm" "audio/webm" "audio/3gpp" "audio/3gpp2" "audio/AMR" "audio/AMR-WB" "video/3gp" "video/3gpp" "video/3gpp2" "x-scheme-handler/mms" "x-scheme-handler/mmsh" "x-scheme-handler/rtsp" "x-scheme-handler/rtp" "x-scheme-handler/rtmp" "x-scheme-handler/icy" "x-scheme-handler/icyx" "application/x-cd-image" "x-content/video-vcd" "x-content/video-svcd" "x-content/video-dvd" "x-content/audio-cdda" "x-content/audio-player" "application/ram" "application/xspf+xml" "audio/mpegurl" "audio/x-mpegurl" "audio/scpls" "audio/x-scpls" "text/google-video-pointer" "text/x-google-video-pointer" "video/vnd.mpegurl" "application/vnd.apple.mpegurl" "application/vnd.ms-asf" "application/vnd.ms-wpl" "application/sdp" "audio/dv" "video/dv" "audio/x-aiff" "audio/x-pn-aiff" "video/x-anim" "video/x-nsv" "video/fli" "video/flv" "video/x-flc" "video/x-fli" "video/x-flv" "audio/wav" "audio/x-pn-au" "audio/x-pn-wav" "audio/x-wav" "audio/x-adpcm" "audio/ac3" "audio/eac3" "audio/vnd.dts" "audio/vnd.dts.hd" "audio/vnd.dolby.heaac.1" "audio/vnd.dolby.heaac.2" "audio/vnd.dolby.mlp" "audio/basic" "audio/midi" "audio/x-ape" "audio/x-gsm" "audio/x-musepack" "audio/x-tta" "audio/x-wavpack" "audio/x-shorten" "application/x-shockwave-flash" "application/x-flash-video" "misc/ultravox" "image/vnd.rn-realpix" "audio/x-it" "audio/x-mod" "audio/x-s3m" "audio/x-xm" "application/mxf")
 vlc_launcherkeynames=("defaultLauncher")
@@ -3353,7 +3278,7 @@ whatsapp_tags=("internet_shortcuts")
 whatsapp_systemcategories=("InstantMessaging" "Chat")
 whatsapp_arguments=("whatsapp" "whatsapp_web")
 whatsapp_commentary="Whatsapp Web for messaging"
-whatsapp_bashfunctions=("whatsapp.sh")
+whatsapp_bashfunctions=("silentFunction")
 whatsapp_launcherkeynames=("default")
 whatsapp_default_exec="xdg-open https://web.whatsapp.com"
 
@@ -3364,7 +3289,7 @@ wikipedia_tags=("internet_shortcuts")
 wikipedia_systemcategories=("Documentation")
 wikipedia_arguments=("wikipedia")
 wikipedia_commentary="Free encyclopedia"
-wikipedia_bashfunctions=("wikipedia.sh")
+wikipedia_bashfunctions=("silentFunction")
 wikipedia_launcherkeynames=("default")
 wikipedia_default_exec="xdg-open https://www.wikipedia.org"
 
@@ -3398,7 +3323,7 @@ youtube_tags=("internet_shortcuts")
 youtube_systemcategories=("VideoConference" "Video")
 youtube_arguments=("youtube")
 youtube_commentary="Watch videos online"
-youtube_bashfunctions=("youtube.sh")
+youtube_bashfunctions=("silentFunction")
 youtube_launcherkeynames=("default")
 youtube_default_exec="xdg-open https://www.youtube.com"
 

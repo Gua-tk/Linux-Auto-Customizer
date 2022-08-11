@@ -1,0 +1,1 @@
+To properly using the Fn key
