@@ -1,0 +1,52 @@
+{
+  "name": "Customizer install features",
+  "description": "Install features",
+  "script_path": "customizer-install",
+  "parameters":
+  [
+    {
+      "type": "list",
+      "description": "Determines the level of verbosity of the customizer",
+      "name": "Verbosity level",
+      "values":
+      [
+        "--verbose", "--quiet", "--Quiet"
+      ],
+      "default": "--quiet"
+    },
+    {
+      "type": "list",
+      "description": "Overwrites the feature if already installed",
+      "name": "Overwrite features",
+      "values":
+      [
+        "--overwrite-if-present", "--skip-if-installed"
+      ],
+      "default": "--skip-if-installed"
+    },
+    {
+      "type": "list",
+      "description": "Tolerate errors and continue with execution or abort on error",
+      "name": "Error tolerance",
+      "values":
+      [
+        "--exit-on-error", "--ignore-errors"
+      ],
+      "default": "--exit-on-error"
+    },
+    {
+      "no_value": true,
+      "description": ""
+    },
+    {
+      "name": "feature",
+      "type": "list",
+      "values":
+      {
+        "script": "customizer-install --commands | tr ' ' '\n'",
+        "shell": true
+      },
+      "required": true
+    }
+  ]
+}

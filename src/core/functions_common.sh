@@ -478,7 +478,7 @@ argument_processing()
       -c|--clean)
         FLAG_AUTOCLEAN=0
       ;;
-      -C|-Clean)
+      -C|--Clean)
         FLAG_AUTOCLEAN=2
       ;;
 
@@ -928,6 +928,8 @@ generic_installation() {
   local -r manualcontentavailable="${CURRENT_INSTALLATION_KEYNAME}_manualcontentavailable"
   generic_package_manager_override "${featurename}"
 
+  # Remove the installation folder to avoid collisions
+  rm -Rf "${CURRENT_INSTALLATION_FOLDER}"
   if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_pre"
   fi

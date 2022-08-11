@@ -317,8 +317,19 @@ decompress() {
         if echo "${internal_folder_name}" | grep -Eqo "/$"; then
           internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
         else
-          # Set the internal folder name empty if it is not detected
-          internal_folder_name=""
+          # The name using a zip could not have been captured. In some cases such as the ones that you are downloading
+          # a zip file from github you will find that a digest line is included, so when using 'head -4' in the code
+          # it does not capture the internal folder name. In those cases we skip the digest line just by using head -5
+          # instead
+          internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -5 | tail -1 | tr -s " " | cut -d " " -f5)"
+
+          # The captured line ends with / so it is a valid directory
+          if echo "${internal_folder_name}" | grep -Eqo "/$"; then
+            internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
+          else
+            # Set the internal folder name empty because could not have been detected
+            internal_folder_name=""
+          fi
         fi
       ;;
       "application/x-bzip-compressed-tar" | "application/x-bzip2")

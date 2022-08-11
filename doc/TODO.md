@@ -20,8 +20,9 @@
 - [ ] *After @AleixMT maintained features are trimmed and apt to standards, all the rest of features
       that do not comply with new standards will be deprecated with its further deletion from future
       versions*
+- [ ] Implement informative arguments --features --modifiers --wrappers --help
 - [ ] Unify relevant characteristics of features: shortcuts (shortcuts to customizer internal paths), customizer GUI 
--     and customizer installation
+      and customizer installation
 
 ### @Axlfc
 - [~] Rename caps named features that con bad interpreted in MacOS and Windows (L, B, F, E...)

@@ -1,5 +1,5 @@
 # Activate customizer hooks to enforce repository rules
-# Use hooks in the repo if git is installed
+# Check if git is installed
 if which git &>/dev/null; then
   # Subshell with no re-interpretation of output
   (

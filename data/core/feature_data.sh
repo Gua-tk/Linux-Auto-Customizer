@@ -787,6 +787,55 @@ uninstall_customizer_post()
   remove_file /usr/bin/customizer-uninstall
 }
 
+
+# http://localhost:5000
+customizerGUI_name="Linux Auto Customizer Graphical Interface"
+customizerGUI_description="Graphical interface for the customizer"
+customizerGUI_version="1.17.1"
+customizerGUI_tags=("development" "GNU" "environment")
+customizerGUI_systemcategories=("Development" "Utility" "System" "Programming" "PackageManager" "Settings")
+customizerGUI_commentary="Access customizer with a Web Interface"
+customizerGUI_arguments=("customizer_gui")
+customizerGUI_dependencies=("python3" "python3-dev" "python3-venv")
+# https://github.com/bugy/script-server/wiki/Installing-on-virtualenv-(linux)
+customizerGUI_downloadKeys=("bundleSource")
+customizerGUI_bundleSource_URL="https://github.com/bugy/script-server/releases/download/1.17.1/script-server.zip"
+customizerGUI_pipinstallations=("-r ${BIN_FOLDER}/customizerGUI/requirements.txt")  # TODO: when extract files allow CURRENT_INSTALLATION_FOLDER to be available
+customizerGUI_binariesinstalledpaths=("launcher.py;customizerGUI")
+customizerGUI_manualcontentavailable="0;0;1"
+customizerGUI_filekeys=("multinstall" "multiuninstall" "debug")
+customizerGUI_multinstall_path="${BIN_FOLDER}/customizerGUI/conf/runners/multinstall.json"
+customizerGUI_multinstall_content="multinstall.json"
+customizerGUI_multiuninstall_path="${BIN_FOLDER}/customizerGUI/conf/runners/multiuninstall.json"
+customizerGUI_multiuninstall_content="multiuninstall.json"
+customizerGUI_debug_path="${BIN_FOLDER}/customizerGUI/conf/runners/debug.json"
+customizerGUI_debug_content="debug.json"
+customizerGUI_launcherkeynames=("defaultLauncher")  # TODO: pgadmin launcher style, with xdg-open to https://localhost:5000
+customizerGUI_bashfunctions=("
+customizerGUI()
+{
+  nohup customizerGUI &>/dev/null & 
+  xdg-open https://localhost:5000
+}
+
+  ")
+
+install_customizerGUI_post()
+{
+  # Create a valid binary in the path. In this case if we want the same schema as other programs we need to set a
+  # shebang that points to the virtual environment that we just created, so the python script of pgadmin has all the
+  # information on how to call the script using the correct python interpreter, which is the one in the virtual
+  # environment an not the python system interpreter.
+
+  # Prepend shebang line to python3 interpreter of the venv
+  echo "#!${BIN_FOLDER}/customizerGUI/bin/python3" | cat - "${BIN_FOLDER}/customizerGUI/launcher.py" > "${BIN_FOLDER}/customizerGUI/launcher.py.tmp" && mv "${BIN_FOLDER}/customizerGUI/launcher.py.tmp" "${BIN_FOLDER}/customizerGUI/launcher.py"
+  chmod +x "${BIN_FOLDER}/customizerGUI/launcher.py"
+}
+uninstall_customizerGUI_post()
+{
+  :
+}
+
 d_name="Function d"
 d_description="Function for dif or git diff"
 d_version="1.0"
