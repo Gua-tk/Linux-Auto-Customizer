@@ -5,6 +5,7 @@ add_arguments=("add" "add_function")
 pgadmin_arguments=("pgadmin" "pgadmin4")
 jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
 keyboardFix_arguments=("keyboard_fix" "fix_keyboard")
+customizerGUI_arguments=("customizer_gui" "gui")
 
 
 vommit_arguments=("dummy_commit")
