@@ -2287,7 +2287,7 @@ postman_binariesinstalledpaths=("Postman;postman")
 postman_downloadKeys=("bundle")
 postman_bundle_URL="https://dl.pstmn.io/download/latest/linux64"
 postman_launcherkeynames=("defaultLauncher")
-postman_binariesinstalledpaths=("silentFunction")
+postman_bashfunctions=("silentFunction")
 
 presentation_name="Google Presentation"
 presentation_version="Google dependent"
