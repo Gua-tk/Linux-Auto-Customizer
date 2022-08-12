@@ -11,7 +11,8 @@ notflix_dependencies() {
   fi
 }
 # TODO: BUG Add the year of the film to the search of the subtitle to avoid collisions with remakes,
-# TODO: in some cases it seems to download an .html page instead the .srt, in other cases it downloads a random .srt
+# TODO: in some cases it seems to download an .html page instead the .srt, in other cases it downloads a random .srt.
+# TODO: P. example 'The Godfather' loads 'The Godfather II' .srt...
 notflix() {
   if ! which peerflix; then
     notflix_dependencies
