@@ -44,7 +44,7 @@ notflix() {
   echo "LAUNCHING PEERFLIX"
 
   if [[ -f ${tmp_srt} ]]; then
-    # TODO: The code seems to ignore this condition when peerflix has downloaded the .srt file
+    # TODO: The code seems to ignore this condition when peerflix has downloaded the .srt file (Test with 'Life of Brian')
     # When .srt file has been downloaded by peerflix
     peerflix -l "${magnet}" -t ${tmp_srt} --vlc --fullscreen
   else
