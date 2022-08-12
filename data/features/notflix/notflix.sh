@@ -39,36 +39,53 @@ notflix() {
   fourteenthWordMovieName="$(echo $movie | cut -d "/" -f3 | cut -d "-" -f14)"
   fifteenthWordMovieName="$(echo $movie | cut -d "/" -f3 | cut -d "-" -f15)"
   sixteenthWordMovieName="$(echo $movie | cut -d "/" -f3 | cut -d "-" -f16)"
-
-  local -r tmp_srt="/tmp/torrent-stream/"*"/"*"/"*"${firstWordMovieName}"*"${secondWordMovieName}"*"${thirdWordMovieName}"*"${fourthWordMovieName}"*"${fifthWordMovieName}"*"${sixthWordMovieName}"*"${seventhWordMovieName}"*"${eigthWordMovieName}"*"${ninethWordMovieName}"*"${tenthWordMovieName}"*"${eleventhWordMovieName}"*"${twelvethWordMovieName}"*"${thirteenthWordMovieName}"*"${fourteenthWordMovieName}"*"${fifteenthWordMovieName}"*"${sixteenthWordMovieName}"*".srt"
+tmp_srt="/tmp/torrent-stream/"*"/"*"/"*".srt"
   echo "LAUNCHING PEERFLIX"
-
   if [[ -f ${tmp_srt} ]]; then
     # TODO: The code seems to ignore this condition when peerflix has downloaded the .srt file (Test with 'Life of Brian')
     # When .srt file has been downloaded by peerflix
-    peerflix -l "${magnet}" -t ${tmp_srt} --vlc --fullscreen
+    local -r tmp_srt="/tmp/torrent-stream/"*"/"*"/"*"${firstWordMovieName}"*"${secondWordMovieName}"*"${thirdWordMovieName}"*"${fourthWordMovieName}"*"${fifthWordMovieName}"*"${sixthWordMovieName}"*"${seventhWordMovieName}"*"${eigthWordMovieName}"*"${ninethWordMovieName}"*"${tenthWordMovieName}"*"${eleventhWordMovieName}"*"${twelvethWordMovieName}"*"${thirteenthWordMovieName}"*"${fourteenthWordMovieName}"*"${fifteenthWordMovieName}"*"${sixteenthWordMovieName}"*".srt"
+
+    echo "LOADING torrent-stream .srt subtitles file"
+    peerflix -l "${magnet}" -t ${tmp_srt} --vlc
   else
+      # rm -rf ~/Documents/subtitles
     # Downloading .srt file from opensubtitles manually
-      echo ".srt file not downloaded via peerflix, performing manual downloaof .srt file from opensubtitles.org"
-      movieSubtitlesSearchPage=$(curl -s "https://www.opensubtitles.org/es/search2/sublanguageid-spa,spl/moviename-${query}" | grep -Eo '"(http|https)://www.opensubtitles.org/es/[a-zA-Z0-9#~.*,/!?=+&_%:-]*"' | head -1 | tr -d '"')
-      movieSubtitlesLink=$(curl -s "${movieSubtitlesSearchPage}" | grep -Eo "https?://www.opensubtitles.org/es/\S+?\"" | head -1 | tr -d '"')
-      movieLink=$(curl -s "${movieSubtitlesLink}" | grep -Eo 'href="https://www.opensubtitles.org/es/[a-zA-Z0-9#~.*,/!?=+&_%:-]*' | head -1 | cut -d '=' -f2 | tr -d '"')
-      movieURL="$(curl -s "${movieLink}" | grep -Eo '/es/search/sublanguageid-spa,spl/idmovie-[0-9]*' | head -1)"
+    # Some movies might not find the .srt in opensubtitles.org...
+      echo ".srt file not downloaded via peerflix, performing manual download .srt file from opensubtitles.org"
+      movieSubtitlesSearchPage=$(curl -s "https://www.opensubtitles.org/es/search/sublanguageid-spa,spl/moviename-${query}" | grep -Eo '(http|https)://www.opensubtitles.org/es/[a-zA-Z0-9#~.*,/!?=+&_%:-]*' | head -1 | tr -d '"')
+      movieLink=$(curl -s "${movieSubtitlesSearchPage}" | grep -Eo 'href="https://www.opensubtitles.org/es/[a-zA-Z0-9#~.*,/!?=+&_%:-]*' | head -1 | cut -d '=' -f2 | tr -d '"')
+      movieURL="$(curl -s "${movieLink}" | grep -Eo '/es/subtitles/[0-9]*/[a-zA-Z0-9#~.*,/!?=+&_%:-]*' | head -1)"
       movieURL="https://www.opensubtitles.org${movieURL}"
-      subtitleURL="$(curl -s "${movieURL}" | grep -Eo '[a-zA-Z0-9#~.*,/!?=+&_%:-]*-es' | head -1)"
+      subtitleURL="$(curl -s "${movieURL}" | grep -Eo '/es/subtitles/[a-zA-Z0-9#~.*,/!?=+&_%:-]*-es' | head -1)"
       subtitleURL="https://www.opensubtitles.org${subtitleURL}"
       subtitleDownloadURL="$(curl -s "${subtitleURL}" | grep -Eo '/es/subtitleserve/sub/[0-9]*' | head -1)"
       subtitleDownloadURL="https://www.opensubtitles.org${subtitleDownloadURL}"
       subtitleNum="$(echo $subtitleDownloadURL | rev | cut -d '/' -f1 | rev)"
-      # Download the .srt file to ~/Documents/subtitles
-      mkdir -p ~/Documents/subtitles
-      wget -P ~/Documents/subtitles "${subtitleDownloadURL}"
-      unzip ~/Documents/subtitles/${subtitleNum} -d ~/Documents/subtitles
-      rm ~/Documents/subtitles/${subtitleNum}
-      rm ~/Documents/subtitles/*.nfo
-      local -r subtitlePath="$HOME/Documents/subtitles/"*".srt"
+      subtitleName="$(echo $movie | cut -d '/' -f3)"
+      mkdir -p /tmp/torrent-stream/notflix-subtitles
+      mkdir -p /tmp/torrent-stream/notflix-subtitles/movie
+      wget -P /tmp/torrent-stream/notflix-subtitles/movie "${subtitleDownloadURL}"
+      unzip /tmp/torrent-stream/notflix-subtitles/movie/${subtitleNum} -d /tmp/torrent-stream/notflix-subtitles/movie
+      rm /tmp/torrent-stream/notflix-subtitles/movie/${subtitleNum}
+      rm /tmp/torrent-stream/notflix-subtitles/movie/*.nfo
+
+      # Here we operate if we have more than one .srt file in the downloaded zip
+      if [[ $(ls /tmp/torrent-stream/notflix-subtitles/movie//tmp/torrent-stream/notflix-subtitles/movie | wc -1) -gt 1 ]]; then
+        # We have to add jumpline between the possibles (cd1, cd2, cd2) .srt values and glue them onto one .srt
+        subtitles="$'\\n'"
+        for subtitlefile in $(ls /tmp/torrent-stream/notflix-subtitles/movie); do
+          subtitles=$subtitles$(cat /tmp/torrent-stream/notflix-subtitles/movie//tmp/torrent-stream/notflix-subtitles/movie/$subtitlefile)$'\\n'
+        done
+
+        # TODO: echo "append subtitles"
+        # TODO: echo "remove cd1, cd2, cd2 files and keep the /tmp/torrent-stream/notflix-subtitles/movie/${subtitleName}.srt"
+      fi
+      # CHANGE NAME OF SUBTITLES FILE TO THE MOVIE FILE NAME # "$(echo $movie | cut -d '/' -f3)"
+      local -r subtitlePath="/tmp/torrent-stream/notflix-subtitles/movie/"*".srt"
       peerflix -l "${magnet}" -t ${subtitlePath} --vlc --fullscreen
   fi
   echo "EXIT PEERFLIX"
-  rm -rf ~/Documents/subtitles
+  #rm -rf /tmp/torrent-stream/*
 }
+
