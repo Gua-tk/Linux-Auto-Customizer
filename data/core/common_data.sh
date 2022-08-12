@@ -573,6 +573,7 @@ declare feature_keynames=(
   "nmap"
   "nodejs"
   "notepadqq"
+  "notflix"
   "obsStudio"
   "octave"
   "okular"
