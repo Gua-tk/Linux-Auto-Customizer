@@ -2029,25 +2029,29 @@ nmap_arguments=("nmap")
 nodejs_name="NodeJS"
 nodejs_description="JavaScript language for the developers."
 nodejs_version=""
-nodejs_tags=("javascript" "language")
-nodejs_systemcategories=("Languages")
-nodejs_arguments=("node" "node_js")
+nodejs_tags=("javascript" "language" "packageManager" "npm")
+nodejs_systemcategories=("Languages" "Development")
+nodejs_arguments=("node" "node_js" "npm")
 nodejs_downloadKeys=("bundle")
 nodejs_bundle_URL="https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz"
 nodejs_binariesinstalledpaths=("bin/node;node" "bin/npm;npm" "bin/npx;npx")
 nodejs_launcherkeynames=("languageLauncher")
 nodejs_languageLauncher_terminal="true"
 nodejs_languageLauncher_exec="gnome-terminal -e nodejs"
-
-
-npm_name="npm"
-npm_description="Nodejs package manager"
-npm_version="System dependent"
-npm_tags=("javascript" "nodeJS" "packageManager")
-npm_systemcategories=("Development")
-npm_arguments=("npm")
-npm_packagenames=("npm")
-npm_launchernames=("npm")
+nodejs_manualcontentavailable="0;0;1"
+install_nodejs_post()
+{
+  if ! isRoot; then
+    output_proxy_executioner "Updating npm to latest version" "INFO"
+    npm install npm@latest -g
+  else
+    output_proxy_executioner "Can't update npm because you are root, re-run 'npm install npm@latest -g' if you want to update npm" "WARNING"
+  fi
+}
+uninstall_nodejs_post()
+{
+  :
+}
 
 notepadqq_name="Notepadqq"
 notepadqq_description="Source Code Editor"
