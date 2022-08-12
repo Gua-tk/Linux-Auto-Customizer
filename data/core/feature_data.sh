@@ -2076,14 +2076,6 @@ notepadqq_default_Document_name="Open a New Document"
 notepadqq_default_Document_exec="notepadqq"
 notepadqq_default_Document_onlyShowIn="Unity;"
 
-notflix_name="Function notflix"
-notflix_description="Stream title movies via console magnet tracking"
-notflix_version="1.0"
-notflix_tags=()
-notflix_systemcategories=("AudioVideo" "ConsoleOnly")
-notflix_arguments=("notflix")
-notflix_packagedependencies=("curl" "vlc")
-notflix_bashfunctions=("notflix.sh")
 
 obsStudio_name="Open Broadcaster Software Studio"
 obsStudio_description="Streaming and recording software"
