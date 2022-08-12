@@ -13,6 +13,7 @@ notflix_dependencies() {
 # TODO: BUG Add the year of the film to the search of the subtitle to avoid collisions with remakes,
 # TODO: in some cases it seems to download an .html page instead the .srt, in other cases it downloads a random .srt.
 # TODO: P. example 'The Godfather' loads 'The Godfather II' .srt...
+# TODO: peerflix has to be run twice when .srt file is found within its search and again to load the .srt
 notflix() {
   if ! which peerflix; then
     notflix_dependencies
@@ -39,7 +40,7 @@ notflix() {
   fourteenthWordMovieName="$(echo $movie | cut -d "/" -f3 | cut -d "-" -f14)"
   fifteenthWordMovieName="$(echo $movie | cut -d "/" -f3 | cut -d "-" -f15)"
   sixteenthWordMovieName="$(echo $movie | cut -d "/" -f3 | cut -d "-" -f16)"
-tmp_srt="/tmp/torrent-stream/"*"/"*"/"*".srt"
+  tmp_srt="/tmp/torrent-stream/"*"/"*"/"*".srt"
   echo "LAUNCHING PEERFLIX"
   if [[ -f ${tmp_srt} ]]; then
     # TODO: The code seems to ignore this condition when peerflix has downloaded the .srt file (Test with 'Life of Brian')
@@ -49,7 +50,7 @@ tmp_srt="/tmp/torrent-stream/"*"/"*"/"*".srt"
     echo "LOADING torrent-stream .srt subtitles file"
     peerflix -l "${magnet}" -t ${tmp_srt} --vlc
   else
-      # rm -rf ~/Documents/subtitles
+      rm -rf /tmp/torrent-stream/*
     # Downloading .srt file from opensubtitles manually
     # Some movies might not find the .srt in opensubtitles.org...
       echo ".srt file not downloaded via peerflix, performing manual download .srt file from opensubtitles.org"
@@ -81,7 +82,7 @@ tmp_srt="/tmp/torrent-stream/"*"/"*"/"*".srt"
         # TODO: echo "append subtitles"
         # TODO: echo "remove cd1, cd2, cd2 files and keep the /tmp/torrent-stream/notflix-subtitles/movie/${subtitleName}.srt"
       fi
-      # CHANGE NAME OF SUBTITLES FILE TO THE MOVIE FILE NAME # "$(echo $movie | cut -d '/' -f3)"
+      # CHANGE NAME OF SUBTITLES FILE TO THE MOVIE FILE NAME # "$(echo $movie | cut -d '/' -f3)" so peerflix. It always need to have one .srt in the /tmp/torrent-stream/notflix-subtitles/movie/ to open.
       local -r subtitlePath="/tmp/torrent-stream/notflix-subtitles/movie/"*".srt"
       peerflix -l "${magnet}" -t ${subtitlePath} --vlc --fullscreen
   fi
