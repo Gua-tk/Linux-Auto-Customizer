@@ -1509,7 +1509,7 @@ data_and_file_structures_initialization() {
   apply_permissions "${DATA_FOLDER}/customizer_options.sh"
 
   if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
-    create_file "" "${PROGRAM_KEYBINDINGS_PATH}"
+    create_file "${PROGRAM_KEYBINDINGS_PATH}"
   fi
 
   create_folder "${BIN_FOLDER}"
