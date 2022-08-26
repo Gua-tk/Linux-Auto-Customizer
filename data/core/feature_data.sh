@@ -776,6 +776,16 @@ customizer_commentary="Collection of fast and custom all types of installations 
 customizer_manualcontentavailable="0;0;1"
 customizer_flagsoverride="0;;;;;"  # Install always as root
 customizer_bashfunctions=("customizer.sh")
+install_customizer_post()
+{
+  ln -sf "${CUSTOMIZER_PROJECT_FOLDER}/src/core/uninstall.sh" "${ALL_USERS_PATH_POINTED_FOLDER}/customizer-uninstall"
+  ln -sf "${CUSTOMIZER_PROJECT_FOLDER}/src/core/install.sh" "${ALL_USERS_PATH_POINTED_FOLDER}/customizer-install"
+}
+uninstall_customizer_post()
+{
+  remove_file /usr/bin/customizer-uninstall
+  remove_file /usr/bin/customizer-install
+}
 
 d_name="Function d"
 d_description="Function for dif or git diff"
