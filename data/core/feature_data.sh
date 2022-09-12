@@ -1642,18 +1642,6 @@ j_arguments=("j")
 j_commentary="A terminal shortcut"
 j_bashfunctions=("j.sh")
 
-java_name="Java Development Kit 8"
-java_description="Implementation of version 8 of the Java (programming language) SE Platform"
-java_version="openlogic-openjdk-8u262-b10-linux-x64"
-java_tags=("programming" "development")
-java_systemcategories=("Development" "Languages")
-java_arguments=("java" "java_development_kit" "java_development" "java_development_kit_8" "jdk" "jdk_8")
-java_commentary="To execute java applications"
-java_bashfunctions=("java.sh")
-java_binariesinstalledpaths=("bin/java;java" "bin/keytool;keytool")
-java_downloadKeys=("bundle")
-java_bundle_URL="https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u262-b10/openlogic-openjdk-8u262-b10-linux-x64.tar.gz"
-
 julia_name="Julia and IJulia"
 julia_description="High-level, high-performance dynamic language for technical computing"
 julia_version="julia-1.0.5-linux-x86_64"

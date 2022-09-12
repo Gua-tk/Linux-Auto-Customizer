@@ -6,6 +6,7 @@ pgadmin_arguments=("pgadmin" "pgadmin4")
 jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
 keyboardFix_arguments=("keyboard_fix" "fix_keyboard")
 customizerGUI_arguments=("customizer_gui" "gui")
+java_arguments=("java" "java_development_kit" "java_development" "java_development_kit_8" "jdk" "jdk_8")
 
 
 vommit_arguments=("dummy_commit")

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 a_name="Function a"
 a_description="A terminal shortcut"
 a_version="1.0"
