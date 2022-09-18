@@ -5,6 +5,7 @@ add_arguments=("add" "add_function")
 anydesk_arguments=("any_desk")
 ant_arguments=("ant" "apache_ant")
 
+AutoFirma_arguments=("auto_firma")
 
 pgadmin_arguments=("pgadmin" "pgadmin4")
 jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
