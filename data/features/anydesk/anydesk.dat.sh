@@ -3,7 +3,7 @@ anydesk_description="PC Remote controller"
 anydesk_version="6.1.1"
 anydesk_tags=("remote" "control" "cloud")
 anydesk_systemcategories=("Accessibility" "Network" "RemoteAccess" "FileTransfer" "P2P")
-anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
+
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")
 anydesk_bashfunctions=("silentFunction")
 anydesk_binariesinstalledpaths=("anydesk;anydesk")

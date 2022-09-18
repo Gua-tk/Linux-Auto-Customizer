@@ -7,6 +7,9 @@ ant_arguments=("ant" "apache_ant")
 
 AutoFirma_arguments=("auto_firma")
 
+b_arguments=("b" "b_function")
+
+
 pgadmin_arguments=("pgadmin" "pgadmin4")
 jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
 keyboardFix_arguments=("keyboard_fix" "fix_keyboard")

@@ -3,6 +3,7 @@ AutoFirma_description="Electronic signature application"
 AutoFirma_version="1.0"
 AutoFirma_tags=("digitalsign")
 AutoFirma_systemcategories=("GNOME" "Application" "Office")
+
 AutoFirma_launcherkeynames=("default")
 AutoFirma_default_exec="/usr/bin/AutoFirma %u"
 AutoFirma_default_windowclass="autofirma"

@@ -317,7 +317,6 @@ audacity_associatedfiletypes=("application/x-audacity-project" "audio/aac" "audi
 audacity_bashfunctions=("silentFunction")
 audacity_packagenames=("audacity" "audacity-data")
 
-
 axel_name="axel"
 axel_description="Download manager"
 axel_version="1.6"
@@ -335,15 +334,6 @@ BFunction_systemcategories=("System" "Utility")
 BFunction_arguments=("B" "B_function")
 BFunction_commentary="B reload environment"
 BFunction_bashfunctions=("B.sh")
-
-b_name="Function b"
-b_description="Alias for bash"
-b_version="1.0"
-b_tags=("bashfunctions" "bash")
-b_systemcategories=("System" "Utility")
-b_arguments=("b" "b_function")
-b_commentary="b reload bash environment"
-b_bashfunctions=("b.sh")
 
 bashcolors_name="Function colors"
 bashcolors_description="Function and variables to use color in terminal"
