@@ -2,6 +2,10 @@
 
 a_arguments=("a_function")
 add_arguments=("add" "add_function")
+anydesk_arguments=("any_desk")
+ant_arguments=("ant" "apache_ant")
+
+
 pgadmin_arguments=("pgadmin" "pgadmin4")
 jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
 keyboardFix_arguments=("keyboard_fix" "fix_keyboard")

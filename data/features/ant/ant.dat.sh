@@ -3,7 +3,6 @@ ant_description="Automation tool for software build"
 ant_version="1.10.11"
 ant_tags=("automation" "development" "deployment")
 ant_systemcategories=("Development" "Building" "Utility")
-ant_arguments=("ant" "apache_ant")
 ant_bashfunctions=("ant.sh")
 ant_binariesinstalledpaths=("bin/ant;ant")
 ant_downloadKeys=("bundle")

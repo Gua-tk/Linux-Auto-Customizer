@@ -272,32 +272,7 @@ alert_commentary="Useful to remember events"
 alert_packagedependencies=("libnotify-bin")
 alert_bashfunctions=("alert.sh")
 
-ant_name="Ant"
-ant_description="Automation tool for software build"
-ant_version="1.10.11"
-ant_tags=("automation" "development" "deployment")
-ant_systemcategories=("Development" "Building" "Utility")
-ant_arguments=("ant" "apache_ant")
-ant_commentary="Tool to automatize repetitive tasks, usually during the compilation, building and deployment phase of the software development"
-ant_bashfunctions=("ant.sh")
-ant_binariesinstalledpaths=("bin/ant;ant")
-ant_downloadKeys=("bundle")
-ant_bundle_URL="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
-ant_flagsoverride="1;;;;;"
 
-anydesk_name="Anydesk"
-anydesk_description="PC Remote controller"
-anydesk_version="6.1.1"
-anydesk_tags=("remote" "control" "cloud")
-anydesk_systemcategories=("Accessibility" "Network" "RemoteAccess" "FileTransfer" "P2P")
-anydesk_arguments=("any_desk")
-anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
-anydesk_packagedependencies=("libminizip1" "libgtkglext1")
-anydesk_bashfunctions=("silentFunction")
-anydesk_binariesinstalledpaths=("anydesk;anydesk")
-anydesk_downloadKeys=("bundle")
-anydesk_bundle_URL="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
-anydesk_launcherkeynames=("default")
 
 apache2_name="Apache httpd server project"
 apache2_description="Web server"
