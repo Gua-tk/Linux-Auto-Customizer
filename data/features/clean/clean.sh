@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# TODO: make the clean rfunction parametric by using the variables to specify action over the package manager
 clean()
 {
   if [ ${EUID} -eq 0 ]; then
