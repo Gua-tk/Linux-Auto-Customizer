@@ -358,15 +358,6 @@ blender_launcherkeynames=("defaultLauncher")
 blender_defaultLauncher_exec="blender %f"
 blender_defaultLauncher_mimetypes=("application/x-blender")
 
-branch_name="Function branch"
-branch_description="Alias for git branch"
-branch_version="1.0"
-branch_tags=("bashfunctions" "bash" "gitbashfunctions")
-branch_systemcategories=("System" "Utility")
-branch_arguments=("branch")
-branch_commentary="branch creates a new branch of the git repository"
-branch_bashfunctions=("branch.sh")
-
 # TODO: Tested
 brasero_name="Brasero"
 brasero_description="Software for image burning"

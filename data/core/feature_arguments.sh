@@ -9,6 +9,7 @@ AutoFirma_arguments=("auto_firma")
 
 b_arguments=("b" "b_function")
 
+branch_arguments=("branch")
 
 pgadmin_arguments=("pgadmin" "pgadmin4")
 jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
