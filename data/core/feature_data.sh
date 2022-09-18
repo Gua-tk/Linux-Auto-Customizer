@@ -272,15 +272,6 @@ alert_commentary="Useful to remember events"
 alert_packagedependencies=("libnotify-bin")
 alert_bashfunctions=("alert.sh")
 
-ansible_description="Application deployment engine"
-ansible_name="Ansible"
-ansible_version="5.0.0"
-ansible_tags=("automation" "development" "deployment")
-ansible_systemcategories=("Development" "ProjectManagement" "ComputerScience" "Monitor")
-ansible_arguments=("ansible")
-ansible_commentary="IT automation engine that automates cloud provisioning, configuration management, application deployment"
-ansible_packagenames=("ansible")
-
 ant_name="Ant"
 ant_description="Automation tool for software build"
 ant_version="1.10.11"
