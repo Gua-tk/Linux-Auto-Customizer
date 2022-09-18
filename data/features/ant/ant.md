@@ -1,0 +1,1 @@
+Tool to automatize repetitive tasks, usually during the compilation, building and deployment phase of the software development
