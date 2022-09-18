@@ -10,6 +10,9 @@ AutoFirma_arguments=("auto_firma")
 b_arguments=("b" "b_function")
 
 branch_arguments=("branch")
+changebg_arguments=("change_bg" "wallpaper" "wallpapers" "backgrounds" "desktop_back_grounds" "change_back_grounds")
+checkout_arguments=("checkout")
+
 
 pgadmin_arguments=("pgadmin" "pgadmin4")
 jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")

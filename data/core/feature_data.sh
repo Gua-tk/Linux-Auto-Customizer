@@ -410,35 +410,6 @@ carbonLang_bashinitializations=("carbonLang.sh")
 carbonLang_repositoryurl="https://github.com/carbon-language/carbon-lang"
 carbonLang_flagsoverride="0;;;;;"  # Install always as root
 
-# TODO: tested
-changebg_name="Change Background"
-changebg_description="Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes"
-changebg_version="1.0"
-changebg_tags=("utility" "terminal")
-changebg_systemcategories=("System" "Utility" "Settings")
-changebg_arguments=("change_bg" "wallpaper" "wallpapers" "backgrounds" "desktop_back_grounds" "change_back_grounds")
-changebg_commentary="Just like in Windows"
-changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES_DIR}/wallpapers" "*.jpeg;${XDG_PICTURES_DIR}/wallpapers" )
-changebg_binariesinstalledpaths=("cronscript.sh;changebg")
-changebg_cronscript_content="cronscript.sh"
-changebg_cronscript_path="cronscript.sh"
-changebg_cronjob_content="cronjob"
-changebg_cronjob_path="cronjob"
-changebg_filekeys=("cronscript" "cronjob")
-changebg_manualcontentavailable="0;0;1"
-changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
-install_changebg_post() {
-  if [ -n "${SUDO_USER}" ]; then
-    (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/changebg/cronjob") | crontab -u "${SUDO_USER}" -
-  else
-    (crontab -l ; cat "${BIN_FOLDER}/changebg/cronjob") | crontab -
-  fi
-}
-uninstall_changebg_post() {
-  :
-  #crontab "${USR_BIN_FOLDER}/changebg/cronjob"
-}
-
 cheat_name="Cheat"
 cheat_description="Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages"
 cheat_version="Cheat creator dependent"
@@ -451,15 +422,6 @@ cheat_binariesinstalledpaths=("cht.sh;cheat")
 cheat_downloadKeys=("script")
 cheat_script_URL="https://cht.sh/:cht.sh"
 cheat_script_downloadPath="cht.sh"
-
-checkout_name="Function checkout"
-checkout_description="Alias for git checkout"
-checkout_version="1.0"
-checkout_tags=("aliases" "gitbashfunctions")
-checkout_systemcategories=("System" "Utility")
-checkout_arguments=("checkout")
-checkout_commentary="A terminal shortcut for git"
-checkout_bashfunctions=("checkout.sh")
 
 chrome_name="Google Chrome"
 chrome_description="Web Browser"
