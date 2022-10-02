@@ -939,9 +939,10 @@ generic_installation() {
   "generic_${FLAG_MODE}_dependencies"
   "generic_${FLAG_MODE}_packageManager"
 
+  "generic_${FLAG_MODE}_cloneRepositories"
+
   "generic_${FLAG_MODE}_downloads"
 
-  "generic_${FLAG_MODE}_cloneRepositories"
   "generic_${FLAG_MODE}_pythonVirtualEnvironment"
   if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
     "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_mid"
