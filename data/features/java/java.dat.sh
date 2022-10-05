@@ -5,6 +5,6 @@ java_version="Oracle JDK 8.LatestRelease - Linux x64"
 java_tags=("programming" "development")
 java_systemcategories=("Development" "Languages")
 java_bashfunctions=("java.sh")
-java_binariesinstalledpaths=("bin/java;java" "bin/keytool;keytool")
+java_binariesinstalledpaths=("bin/java;java" "bin/keytool;keytool" "bin/javadoc;javadoc" "bin/jar;jar" "bin/jcmd;jcmd" "bin/jdb;jdb" "bin/jconsole;jconsole" )
 java_downloadKeys=("bundle")
 java_bundle_URL="https://download.oracle.com/java/18/latest/jdk-18_linux-x64_bin.tar.gz"
