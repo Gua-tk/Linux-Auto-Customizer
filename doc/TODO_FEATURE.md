@@ -195,7 +195,9 @@
  - [ ] ips
  - [ ] j
  - [ ] julia
- - [~] jupyterLab
+ - [ ] 
+ - 
+ - jupyterLab
  - [ ] keep
  - [ ] lmms
  - [ ] lolcat
