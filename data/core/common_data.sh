@@ -96,7 +96,7 @@ case "${OS_NAME}" in
   ElementaryOS)
     initialize_package_manager_apt-get
   ;;
-  Fedora)
+  "Fedora Linux")
     initialize_package_manager_yum
   ;;
   Parrot)
