@@ -11,6 +11,10 @@ chatGPT_pipinstallations=("openai" "python-dotenv" "transformers" "colorama" "gi
 # chat_bashfunctions=("silentFunction")
 chatGPT_launcherkeynames=("default")
 chatGPT_default_terminal="true"
-# TODO: protect the exec command with if condition to check if .env file exists with the API key as functioning in chatGPT.sh
-chatGPT_default_exec="gnome-terminal -- bash -c '${BIN_FOLDER}/chatGPT/bin/python3 ${BIN_FOLDER}/chatGPT/Content/Python/chatBot/conversate.py; exec bash'"
+
+chatGPT_default_exec="bash ${BIN_FOLDER}/chatGPT/chatgpt_exec.sh"
+chatGPT_manualcontentavailable="0;1;0"
 chatGPT_bashfunctions=("chatGPT.sh")
+chatGPT_filekeys=("executionscript")
+chatGPT_executionscript_path="chatgpt_exec.sh"
+chatGPT_executionscript_content="chatgpt_exec.sh"
