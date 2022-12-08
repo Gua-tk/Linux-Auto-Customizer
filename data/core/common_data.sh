@@ -447,6 +447,7 @@ declare feature_keynames=(
   "calibre"
   "carbonLang"
   "changebg"
+  "chatGPT"
   "cheat"
   "checkout"
   "cheese"
