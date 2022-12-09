@@ -1745,14 +1745,14 @@ mines_packagenames=("gnome-mines")
 
 mvn_name="Apache Maven"
 mvn_description="Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM)"
-mvn_version="3.6.3"
+mvn_version="3.8.6"
 mvn_tags=("echempad" "development")
 mvn_systemcategories=("ConsoleOnly" "Java" "PackageManager")
 mvn_arguments=("mvn")
 mvn_commentary="Useful with Java projects"
 mvn_binariesinstalledpaths=("bin/mvn;mvn")
 mvn_downloadKeys=("bundleCompressed")
-mvn_bundleCompressed_URL="https://ftp.cixug.es/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
+mvn_bundleCompressed_URL="https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz"
 mvn_bashfunctions=("mvn.sh")
 
 nano_name="nano"
