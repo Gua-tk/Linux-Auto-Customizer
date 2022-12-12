@@ -10,6 +10,7 @@ b_arguments=("b" "b_function")
 branch_arguments=("branch")
 caffeine_arguments=("caffeine" "coffee" "cafe")
 changebg_arguments=("change_bg" "wallpaper" "wallpapers" "backgrounds" "desktop_back_grounds" "change_back_grounds")
+chatGPT_arguments=("chat_gpt")
 checkout_arguments=("checkout")
 clion_arguments=("clion")
 
