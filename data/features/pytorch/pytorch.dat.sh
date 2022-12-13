@@ -6,4 +6,4 @@ pytorch_tags=("pytorch")
 pytorch_systemcategories=("Network")
 
 pytorch_pipinstallations=("torch --extra-index-url https://download.pytorch.org/whl/cpu" "torchvision --extra-index-url https://download.pytorch.org/whl/cpu" "torchaudio --extra-index-url https://download.pytorch.org/whl/cpu")
-pytorch_binariesinstalledpaths=("bin/python3;python_torch")
+pytorch_binariesinstalledpaths=("bin/python3;python-torch" "bin/python3;pytorch")
