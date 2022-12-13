@@ -599,6 +599,7 @@ declare feature_keynames=(
   "pycharmpro"
   "pypy3"
   "python3"
+  "pytorch"
   "R"
   "reddit"
   "remmina"

@@ -7,4 +7,4 @@ java_systemcategories=("Development" "Languages")
 java_bashfunctions=("java.sh")
 java_binariesinstalledpaths=("bin/java;java" "bin/keytool;keytool" "bin/javadoc;javadoc" "bin/jar;jar" "bin/jcmd;jcmd" "bin/jdb;jdb" "bin/jconsole;jconsole" )
 java_downloadKeys=("bundle")
-java_bundle_URL="https://javadl.oracle.com/webapps/download/AutoDL?BundleId=246799_424b9da4b48848379167015dcc250d8d"
+java_bundle_URL="https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u352-b08/openlogic-openjdk-8u352-b08-linux-x64.tar.gz"

@@ -22,6 +22,7 @@ jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
 
 
 pgadmin_arguments=("pgadmin" "pgadmin4")
+pytorch_arguments=("pytorch" "pytorch_venv")
 
 vommit_arguments=("dummy_commit")
 wireshark_arguments=("wire_shark")

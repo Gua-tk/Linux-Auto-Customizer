@@ -1431,7 +1431,7 @@ generic_install_downloads() {
 generic_install_pythonVirtualEnvironment() {
   local -r pipinstallations="${CURRENT_INSTALLATION_KEYNAME}_pipinstallations[@]"
   local -r pythoncommands="${CURRENT_INSTALLATION_KEYNAME}_pythoncommands[@]"
-  if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
+  if [ -z "$(echo "${!pipinstallations}")" ] && [ -z "$(echo "${!pythoncommands}")" ]; then
     return
   fi
 
@@ -1442,6 +1442,7 @@ generic_install_pythonVirtualEnvironment() {
   for pipinstallation in "${!pipinstallations}"; do
     "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install ${pipinstallation}
   done
+
   for pythoncommand in "${!pythoncommands}"; do
     "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m ${pythoncommand}
   done
