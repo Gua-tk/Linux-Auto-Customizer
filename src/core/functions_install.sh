@@ -1439,13 +1439,10 @@ generic_install_pythonVirtualEnvironment() {
   "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m pip install -U pip
   "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install wheel
 
-  echo pipinstallas
   for pipinstallation in "${!pipinstallations}"; do
-    echo "\"${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip\" install ${pipinstallation}"
     "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install ${pipinstallation}
   done
 
-  echo pythoninstallas
   for pythoncommand in "${!pythoncommands}"; do
     "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m ${pythoncommand}
   done
