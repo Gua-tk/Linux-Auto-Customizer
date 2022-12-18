@@ -6,7 +6,7 @@ chatGPT_systemcategories=("Accessibility" "Network")
 chatGPT_repositoryurl="https://github.com/Axlfc/UE5-Python"
 
 chatGPT_packagedependencies=("python3.10" "git" "build-essential" "portaudio19-dev" "python3-venv")
-chatGPT_pipinstallations=("openai" "python-dotenv" "colorama" "git+https://github.com/openai/whisper.git" "jiwer" "gitpython" "gdown" "pathlib" "setuptools" "pyaudio" "soundfile" "pathlib" "numpy" "librosa" "SpeechRecognition" "langdetect" "googletrans==4.0.0-rc1")
+chatGPT_pipinstallations=("openai" "python-dotenv" "colorama" "git+https://github.com/openai/whisper.git" "jiwer" "gitpython" "gdown" "pathlib" "setuptools" "pyaudio" "soundfile" "pathlib" "numpy" "librosa" "SpeechRecognition" "langdetect" "googletrans==4.0.0-rc1" "python-magic")
 
 # chat_bashfunctions=("silentFunction")
 chatGPT_launcherkeynames=("default")
