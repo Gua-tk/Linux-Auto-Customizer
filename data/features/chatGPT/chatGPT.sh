@@ -9,15 +9,17 @@ chatGPT()
     echo "Edit or create the .env file and write inside the file:"
     echo "OPENAI_API_KEY=your_open_ai_api_key_code"
   else
-    last_dir="$(pwd)"
     if [ ! "$1" ]; then
+      (
       cd "€{BIN_FOLDER}/chatGPT/Content/Python/chatBot"
       "€{BIN_FOLDER}/chatGPT/bin/python3" "€{BIN_FOLDER}/chatGPT/Content/Python/chatBot/conversate.py"
+      )
     else
+      (
       cd "€{BIN_FOLDER}/chatGPT/Content/Python/chatBot"
       "€{BIN_FOLDER}/chatGPT/bin/python3" "€{BIN_FOLDER}/chatGPT/Content/Python/chatBot/conversate.py" "$1"
+      )
     fi
-    cd "${last_dir}"
   fi
 }
 
@@ -29,15 +31,17 @@ talkGPT()
     echo "Edit or create the .env file and write inside the file:"
     echo "OPENAI_API_KEY=your_open_ai_api_key_code"
   else
-    last_dir="$(pwd)"
     if [ ! "$1" ]; then
+      (
       cd "€{BIN_FOLDER}/chatGPT/Content/Python/chatBot"
       "€{BIN_FOLDER}/chatGPT/bin/python3" "€{BIN_FOLDER}/chatGPT/Content/Python/chatBot/talk.py"
+      )
     else
+      (
       cd "€{BIN_FOLDER}/chatGPT/Content/Python/chatBot"
       "€{BIN_FOLDER}/chatGPT/bin/python3" "€{BIN_FOLDER}/chatGPT/Content/Python/chatBot/talk.py" "$1"
+      )
     fi
-    cd "${last_dir}"
   fi
 }
 
