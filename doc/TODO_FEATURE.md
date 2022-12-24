@@ -165,8 +165,8 @@
  - [x] facebook
  - [x] fastcommands
  - [x] ffmpeg
- - [ ] firefox
- - [ ] forms
+ - [x] firefox
+ - [x] forms
  - [ ] freecad
  - [ ] geany
  - [ ] ghostwriter

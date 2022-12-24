@@ -681,16 +681,7 @@ flutter_uninstall_post()
   :
 }
 
-forms_name="Google Forms"
-forms_description="Google Forms opening in Browser"
-forms_version="Google dependent"
-forms_tags=("google" "internet_shortcuts")
-forms_systemcategories=("Documentation")
-forms_arguments=("forms" "google_forms")
-forms_commentary="make polls and surveys to retrieve statistical data"
-forms_bashfunctions=("silentFunction")
-forms_launcherkeynames=("default")
-forms_default_exec="xdg-open https://docs.google.com/forms/"
+
 
 freecad_name="FreeCAD"
 freecad_description="CAD Application"
