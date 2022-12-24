@@ -272,7 +272,7 @@ load_feature_properties()
         fi
       fi
     else
-      output_proxy_executioner "Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh does not exist" "WARNING"
+      output_proxy_executioner "Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh does not exist" "ERROR"
     fi
 }
 
