@@ -459,16 +459,7 @@ customizer_commentary="Collection of fast and custom all types of installations 
 customizer_manualcontentavailable="0;0;1"
 customizer_flagsoverride="0;;;;;"  # Install always as root
 customizer_bashfunctions=("customizer.sh")
-install_customizer_post()
-{
-  ln -sf "${CUSTOMIZER_PROJECT_FOLDER}/src/core/uninstall.sh" "${ALL_USERS_PATH_POINTED_FOLDER}/customizer-uninstall"
-  ln -sf "${CUSTOMIZER_PROJECT_FOLDER}/src/core/install.sh" "${ALL_USERS_PATH_POINTED_FOLDER}/customizer-install"
-}
-uninstall_customizer_post()
-{
-  remove_file /usr/bin/customizer-uninstall
-  remove_file /usr/bin/customizer-install
-}
+
 
 # TODO: tested
 dart_name="Dart"
@@ -672,14 +663,7 @@ flutter_downloadKeys=("bundleCompressed")
 flutter_bundleCompressed_URL="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.5-stable.tar.xz"
 flutter_binariesinstalledpaths=("bin/dart;dart" "bin/flutter;flutter" "bin/dart.bat;dart.bat" "bin/flutter.bat;flutter.bat")
 flutter_manualcontentavailable="0;0;1"
-flutter_install_post()
-{
-   flutter config --enable-linux-desktop
-}
-flutter_uninstall_post()
-{
-  :
-}
+
 
 
 
@@ -780,15 +764,7 @@ gitcm_bundle_URL="https://github.com/GitCredentialManager/git-credential-manager
 gitcm_bundle_doNotInherit="yes"
 gitcm_bundle_downloadPath="${BIN_FOLDER}/gitcm/"
 gitcm_manualcontentavailable="0;0;1"
-install_gitcm_post()
-{
-  gitcm configure
-  git config --global credential.credentialStore plaintext
-}
-uninstall_gitcm_post()
-{
-  :
-}
+
 
 github_name="Github"
 github_description="Github opening in Browser"
@@ -1299,15 +1275,6 @@ matlab_defaultLauncher_exec="matlab -desktop"
 matlab_defaultLauncher_name="MATLAB R2021a"
 matlab_manualcontentavailable="0;1;0"
 matlab_bashfunctions=("silentFunction")
-install_matlab_mid()
-{
-  "${TEMP_FOLDER}/matlab/install"  # Execute installer
-  rm -Rf "${TEMP_FOLDER}/matlab"
-}
-uninstall_matlab_mid()
-{
-  :
-}
 
 mdadm_name="mdadm"
 mdadm_description="Manage RAID systems"
@@ -1412,34 +1379,7 @@ nano_filekeys=("conf")
 nano_conf_path="${HOME_FOLDER}/.nanorc"
 nano_conf_content=("nanorc")
 nano_manualcontentavailable="0;0;1"
-install_nano_post()
-{
-  # Set nano as the default git editor
-  if which git &>/dev/null; then
-    git config --global core.editor "nano"
-  fi
 
-  # Set editor to nano using the entry displayed in update-alternatives --list editor
-  if isRoot; then
-    nano_default_path="$(update-alternatives --list editor | grep -Eo "^.*nano.*$" | head -1)"
-    if [ -n "${nano_default_path}" ]; then
-      update-alternatives --set editor "${nano_default_path}"
-    fi
-  fi
-}
-uninstall_nano_post()
-{
-  # Restore editor to the default one (usually vim)
-  if isRoot; then
-    update-alternatives --auto editor
-  fi
-
-  # Restore default editor to git if we have it installed
-  if which git &>/dev/null; then
-    git config --global core.editor "editor"
-  fi
-
-}
 
 nautilus_name="Nautilus"
 nautilus_description="Desktop manager"
@@ -1556,19 +1496,7 @@ nodejs_launcherkeynames=("languageLauncher")
 nodejs_languageLauncher_terminal="true"
 nodejs_languageLauncher_exec="gnome-terminal -e nodejs"
 nodejs_manualcontentavailable="0;0;1"
-install_nodejs_post()
-{
-  if ! isRoot; then
-    output_proxy_executioner "Updating npm to latest version" "INFO"
-    npm install npm@latest -g
-  else
-    output_proxy_executioner "Can't update npm because you are root, re-run 'npm install npm@latest -g' if you want to update npm" "WARNING"
-  fi
-}
-uninstall_nodejs_post()
-{
-  :
-}
+
 
 notepadqq_name="Notepadqq"
 notepadqq_description="Source Code Editor"
@@ -1666,34 +1594,7 @@ opensshServer_arguments=("openssh_server")
 opensshServer_packagenames=("openssh-server")
 opensshServer_bashfunctions=("openssh_server.sh")
 opensshServer_manualcontentavailable="0;0;1"
-opensshServer_conf=(
-"Port 3297  # Change default port for ssh server to listen"
-"LogLevel VERBOSE  # Verbose on logs"
-"LoginGraceTime 60  # Time allowed for a successful connection"
-"PermitRootLogin no  # Do not allow root user to log in"
-"PasswordAuthentication no  # Deactivate password logins"
-"ChallengeResponseAuthentication no  # Uses a backend for extra challenges in authentication"
-"AllowTcpForwarding no  # Can be used to exploit vulnerabilities"
-"X11Forwarding no  # Can be used to tunnel graphical sessions but can be used as vulnerability"
-"MaxStartups 2:100:3  # Allowed 2 unauthenticated connections to the server, 100 % chance of dropping with more than 2 connections, 3 simultaneous sessions allowed"
-"AllowUsers  # Allow these users to access the ssh server"
-"ClientAliveInterval 300  # Time that the server will wait before sending a null paint to keep the connection alive"
-"ClientAliveCountMax 0  # Maximum number of keep-alive sent to client before dropping"
-"PubkeyAuthentication yes  # Used to accept login by public keys infrastructure"
-"RSAAuthentication yes  # Allow authentication with RSA key generation algorithm"
-)
-install_opensshServer_post()
-{
-  for conf_element in "${opensshServer_conf[@]}"; do
-    append_text "${conf_element}" "${SSH_GLOBAL_CONF_PATH}"
-  done
-}
-uninstall_opensshServer_post()
-{
-  for conf_element in "${opensshServer_conf[@]}"; do
-    remove_line "${conf_element}" "${SSH_GLOBAL_CONF_PATH}"
-  done
-}
+
 
 outlook_name="Outlook"
 outlook_description="outlook opening in Browser"
@@ -1914,21 +1815,7 @@ pypy3_downloadKeys=("bundle")
 pypy3_bundle_URL="https://downloads.python.org/pypy/pypy3.6-v7.3.1-linux64.tar.bz2"
 pypy3_manualcontentavailable="0;1;0"
 pypy3_packagedependencies=("pkg-config" "libfreetype6-dev" "libpng-dev" "libffi-dev")
-# Installs pypy3 dependencies, pypy3 and basic subsystems (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
-install_pypy3_mid() {
-  # Install subsystems using pip
-  "${BIN_FOLDER}/pypy3/bin/pypy3" -m ensurepip
 
-  # Forces download of pip and of subsystems
-  "${BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir -q install --upgrade pip
-  "${BIN_FOLDER}/pypy3/bin/pip3.6" --no-cache-dir install cython numpy
-  # Currently not supported
-  # ${BIN_FOLDER}/${pypy3_version}/bin/pip3.6 --no-cache-dir install matplotlib
-}
-# Installs pypy3 dependencies, pypy3 and basic subsystems (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
-uninstall_pypy3_mid() {
-  :
-}
 
 python3_name="Python3"
 python3_description="Interpreted, high-level and general-purpose programming language"
@@ -1951,14 +1838,6 @@ R_version="System dependent"
 R_tags=("R")
 R_systemcategories=("Languages" "Graphics" "Science" "Math")
 R_arguments=("R" "r_base")
-R_jupyterLab_function=("
-install.packages('IRkernel')
-install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),
-                  repos = c('http://irkernel.github.io/',
-                  getOption('repos')),
-                  type = 'source')
-IRkernel::installspec()
-")
 # R_launchernames=("R")
 R_launcherkeynames=("defaultLauncher")
 R_defaultLauncher_exec="R"
@@ -2106,12 +1985,6 @@ sherlock_commentary=""
 sherlock_bashfunctions=("sherlock.sh")
 sherlock_repositoryurl="https://github.com/sherlock-project/sherlock.git"
 sherlock_manualcontentavailable="0;0;1"
-install_sherlock_post() {
-  python3 -m pip install -r "${BIN_FOLDER}/sherlock/requirements.txt"
-}
-uninstall_sherlock_post() {
-  :
-}
 
 shortcuts_name="Path shortcuts"
 shortcuts_description="Installs custom variables pointing to interesting folders regarding customizer"
@@ -2382,15 +2255,7 @@ sysmontask_bashfunctions=("silentFunction")
 # TODO sysmontask_launchernames=("SysMonTask")
 sysmontask_manualcontentavailable="0;1;0"
 sysmontask_repositoryurl="https://github.com/KrispyCamel4u/SysMonTask.git"
-install_sysmontask_mid() {
-  (
-    cd "${BIN_FOLDER}/sysmontask" || exit
-    python3 setup.py install
-  )
-}
-uninstall_sysmontask_mid() {
-  :
-}
+
 
 systemFonts_name="Change default fonts"
 systemFonts_description="Sets pre-defined fonts to desktop environment."
@@ -2584,23 +2449,6 @@ tmux_tmuxconf_path="${HOME_FOLDER}/.tmux.conf"
 tmux_cronjob_content="cronjob"
 tmux_cronjob_path="cronjob"
 tmux_manualcontentavailable="0;0;1"
-install_tmux_post() {
-  if [ -n "${SUDO_USER}" ]; then
-    (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/tmux/cronjob") | crontab -u "${SUDO_USER}" -
-  else
-    (crontab -l ; cat "${BIN_FOLDER}/tmux/cronjob") | crontab -
-  fi
-}
-uninstall_tmux_post() {
-  cp "${CUSTOMIZER_PROJECT_FOLDER}/src/features/tmux/cronjob" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/tmux/cronjob.tmp"
-  translate_variables "${CUSTOMIZER_PROJECT_FOLDER}/src/features/tmux/cronjob.tmp"
-  if [ -n "${SUDO_USER}" ]; then
-    crontab -u "${SUDO_USER}" -l | sed "s;$(cat "${CUSTOMIZER_PROJECT_FOLDER}/src/features/tmux/cronjob.tmp");;g" | crontab -u "${SUDO_USER}" -
-  else
-    crontab -l | sed "s;$(cat "${CUSTOMIZER_PROJECT_FOLDER}/src/features/tmux/cronjob.tmp");;g" | crontab -
-  fi
-  rm -f "${CUSTOMIZER_PROJECT_FOLDER}/src/features/tmux/cronjob.tmp"
-}
 
 tomcat_name="Apache Tomcat Server"
 tomcat_description="Servlet container"
@@ -2804,12 +2652,7 @@ wikit_systemcategories=("Education")
 wikit_arguments=("wikit")
 wikit_manualcontentavailable=";1;"
 wikit_flagsoverride="1;;;;;"  # Install always as user
-install_wikit_mid() {
-  npm install wikit -g
-}
-uninstall_wikit_mid() {
-  npm remove wikit -g
-}
+
 
 xclip_name="xclip"
 xclip_description="Utility for pasting."
