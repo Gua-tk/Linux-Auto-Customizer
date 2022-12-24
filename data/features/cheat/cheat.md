@@ -1,0 +1,1 @@
+Literally cheats for programming in any language
