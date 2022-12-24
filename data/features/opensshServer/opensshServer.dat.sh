@@ -27,3 +27,11 @@ opensshServer_conf=(
 "PubkeyAuthentication yes  # Used to accept login by public keys infrastructure"
 "RSAAuthentication yes  # Allow authentication with RSA key generation algorithm"
 )
+opensshServer_name="openssh-server"
+opensshServer_description="SSH server"
+opensshServer_version="System dependent"
+opensshServer_tags=("ssh" "server")
+opensshServer_systemcategories=("Network" "Settings" "ConsoleOnly")
+opensshServer_packagenames=("openssh-server")
+opensshServer_bashfunctions=("openssh_server.sh")
+opensshServer_manualcontentavailable="0;0;1"

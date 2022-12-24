@@ -7,6 +7,9 @@ cat "${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_data.sh" | while read line; 
   fi
 
   feature_name="$(echo "${line}" | cut -d "_" -f1)"
+   if echo "${line}" | grep -Eq "^.*_name="; then
+    echo >> "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${feature_name}/${feature_name}.dat.sh"
+  fi
 
   if echo "${line}" | grep -Eq "^.*_arguments="; then
      mkdir -p "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${feature_name}"
@@ -16,7 +19,7 @@ cat "${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_data.sh" | while read line; 
 
   if echo "${line}" | grep -Eq "^.*_commentary="; then
     mkdir -p "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${feature_name}"
-    comm="$(echo "${line}" | cut -d "=" -f2-)"
+    comm="$(echo "${line}" | cut -d "=" -f2- | cut -d '"' -f2- | rev | cut -d '"' -f2- | rev )"
     echo "${comm}" >> "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${feature_name}/${feature_name}.md"
     continue
   fi
