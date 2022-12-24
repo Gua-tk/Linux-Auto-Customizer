@@ -553,16 +553,6 @@ docker_downloadKeys=("bundle")
 docker_bundle_URL="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
 
-drive_name="Google Drive"
-drive_description="Google Drive opening in Browser"
-drive_tags=("google" "internet_shortcuts")
-drive_version="Google dependent"
-drive_systemcategories=("ProjectManagement" "Documentation")
-drive_arguments=("drive" "google_drive")
-drive_commentary="File hosting service from Google"
-drive_bashfunctions=("silentFunction")
-drive_launcherkeynames=("default")
-drive_default_exec="xdg-open https://drive.google.com/"
 
 dropbox_name="Dropbox"
 dropbox_description="File Synchronizer"
@@ -579,43 +569,6 @@ dropbox_package_manager_override="apt-get"
 dropbox_launcherkeynames=("defaultLauncher")
 dropbox_defaultLauncher_exec="dropbox start -i"
 dropbox_defaultLauncher_notify="false"
-
-# TODO @AleixMT wontfix, trim and test. if not working will be deleted
-drupal_name="Drupal"
-drupal_description="Web CMS"
-drupal_version="9.2.10"
-drupal_tags=("CMS" "web" "development")
-drupal_systemcategories=("CMS" "WebDevelopment" "Web")
-drupal_arguments=("drupal")
-drupal_commentary="Web server app for web magament"
-drupal_packagedependencies=("php-dom" "php-gd")
-drupal_downloadKeys=("bundle")
-drupal_bundle_URL="https://ftp.drupal.org/files/projects/drupal-9.2.10.tar.gz"
-drupal_bundle_downloadPath="/var/www/html"
-drupal_bashfunctions=("silentFunction")
-drupal_launcherkeynames="default"
-drupal_default_exec="xdg-open http://localhost/drupal"
-drupal_manualcontentavailable="0;0;1"
-install_drupal_post()
-{
-  create_folder /var/www/html/drupal/sites/default/files/translations 777
-}
-uninstall_drupal_post()
-{
-  remove_folder /var/www/html/drupal/
-}
-
-duckduckgo_name="Duckduckgo"
-duckduckgo_description="Duckduckgo opening in Browser"
-duckduckgo_version="Google dependent"
-duckduckgo_tags=("search" "internet_shortcuts")
-duckduckgo_systemcategories=("WebBrowser")
-duckduckgo_arguments=("duckduckgo")
-duckduckgo_commentary="take notes or edit rich text documents"
-duckduckgo_bashfunctions=("silentFunction")
-duckduckgo_launcherkeynames=("default")
-duckduckgo_default_exec="xdg-open https://duckduckgo.com/"
-duckduckgo_description="Opens DuckDuckGo in Chrome"
 
 e_name="Function e"
 e_description="Multi function to edit a file or project in folder"
@@ -649,29 +602,7 @@ eclipse_bundle_URL="http://www.eclipse.org/downloads/download.php?file=/eclipse/
 eclipse_launcherkeynames=("default")
 eclipse_default_windowclass="Eclipse"
 
-emojis_name="Function emojis"
-emojis_description="Function to find strings in files in the directory in the 1st argument"
-emojis_version="1.0"
-emojis_tags=("bashfunctions" "emojis" "info")
-emojis_systemcategories=("System" "Utility")
-emojis_arguments=("emojis" "emoji")
-emojis_commentary="Print emojis name in terminal when passing an emoji and prints emoji name when an emoji is passed to it. "
-emojis_packagedependencies=("fonts-symbola")
-emojis_bashfunctions=("emojis.sh")
 
-evolution_name="Evolution Calendar"
-evolution_description="User calendar agend, planning"
-evolution_version="1.0"
-evolution_tags=("bashfunctions" "bash")
-evolution_systemcategories=("System" "Utility")
-evolution_arguments=("evolution")
-evolution_commentary="edit files or projects"
-evolution_packagenames=("evolution")
-evolution_bashfunctions=("silentFunction")
-evolution_launcherkeynames=("defaultLauncher")
-evolution_defaultLauncher_exec="evolution -c calendar"
-evolution_defaultLauncher_ubuntuGetText="gnome-shell"
-evolution_defaultLauncher_nodisplay="true"
 
 FFunction_name="Function F"
 FFunction_description="Function to find strings in files in the directory in the 1st argument"
@@ -691,37 +622,8 @@ f_arguments=("f")
 f_commentary="A terminal shortcut"
 f_bashfunctions=("f.sh")
 
-firc_name="F-irc"
-firc_description="CLI IRC client"
-firc_version="1.0"
-firc_tags=("irc" "chat" "terminal" "social" "instantmessaging")
-firc_systemcategories=("ConsoleOnly" "Communication" "InstantMessaging" "IRCClient")
-firc_arguments=("f_irc")
-firc_commentary="Dedicated servers to chat in terminal"
-firc_packagenames=("f-irc")
-firc_launcherkeynames=("terminalLauncher")
-firc_terminalLauncher_exec="f-irc"
-firc_terminalLauncher_terminal="true"
 
-facebook_name="Facebook"
-facebook_description="Facebook opening in Browser"
-facebook_version="Google dependent"
-facebook_tags=("social" "internet_shortcuts")
-facebook_systemcategories=("InstantMessaging" "Chat" "Feed")
-facebook_arguments=("facebook")
-facebook_commentary="Social media"
-facebook_bashfunctions=("silentFunction")
-facebook_launcherkeynames=("default")
-facebook_default_exec="xdg-open https://facebook.com/"
 
-fastcommands_name="Fast commands"
-fastcommands_description="Collection of multi-purpose commands"
-fastcommands_version="1.0"
-fastcommands_tags=("fast" "terminal" "bashfunctions")
-fastcommands_systemcategories=("System" "Utility")
-fastcommands_arguments=("fast_commands")
-fastcommands_commentary="The useful arguments you always forget from commands you love."
-fastcommands_bashfunctions=("fastcommands.sh")
 
 fdupes_name="fdupes"
 fdupes_description="Searches for duplicated files within given directories"
@@ -741,14 +643,7 @@ fetch_arguments=("fetch")
 fetch_commentary="A terminal shortcut for git."
 fetch_bashfunctions=("fetch.sh")
 
-ffmpeg_name="ffmpeg"
-ffmpeg_description="Super fast video / audio encoder"
-ffmpeg_version="System dependent"
-ffmpeg_systemcategories=("Utility")
-ffmpeg_commentary="Terminal media encoder"
-ffmpeg_tags=("media" "video" "encoder")
-ffmpeg_arguments=("ffmpeg" "youtube_dl_dependencies")
-ffmpeg_packagenames=("ffmpeg")
+
 
 filezilla_name="FileZilla"
 filezilla_description="FTP Client & Server"
@@ -762,24 +657,7 @@ filezilla_packagenames=("filezilla")
 filezilla_launcherkeynames=("default")
 filezilla_default_windowclass="FileZilla"
 
-firefox_name="Firefox Web Browser"
-firefox_description="Web browser"
-firefox_version="System dependent"
-firefox_tags=("browser")
-firefox_systemcategories=("Network" "WebBrowser" "GNOME" "GTK")
-firefox_arguments=("firefox")
-firefox_commentary="Browse the World Wide Web"
-firefox_bashfunctions=("silentFunction")
-firefox_associatedfiletypes=("text/html" "text/xml" "application/xhtml+xml" "application/xml" "application/rss+xml" "application/rdf+xml" "image/gif" "image/jpeg" "image/png" "x-scheme-handler/http" "x-scheme-handler/https" "x-scheme-handler/ftp" "x-scheme-handler/chrome" "video/webm" "application/x-xpinstall")
-firefox_packagenames=("firefox")
-firefox_launcherkeynames=("default")
-firefox_default_exec="firefox %u"
-firefox_default_XMultipleArgs="false"
-firefox_default_actions=("newwindow" "newprivatewindow")
-firefox_default_newwindow_name="Open a New Window"
-firefox_default_newwindow_exec="firefox -new-window"
-firefox_default_newprivatewindow_name="Open a New Private Window"
-firefox_default_newprivatewindow_exec="firefox -private-window"
+
 
 # TODO: tested
 flutter_name="Flutter"

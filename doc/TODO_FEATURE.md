@@ -156,15 +156,15 @@
  - [x] d
  - [x] dbeaver
  - [x] documents
- - [ ] drive
- - [ ] drupal
- - [ ] duckduckgo
- - [ ] emojis
- - [ ] evolution
- - [ ] firc
- - [ ] facebook
- - [ ] fastcommands
- - [ ] ffmpeg
+ - [x] drive
+ - [x] drupal
+ - [x] duckduckgo
+ - [x] emojis
+ - [x] evolution
+ - [x] firc
+ - [x] facebook
+ - [x] fastcommands
+ - [x] ffmpeg
  - [ ] firefox
  - [ ] forms
  - [ ] freecad
