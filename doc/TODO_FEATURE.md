@@ -138,16 +138,16 @@
  
 #### @Axlfc
  - [x] a
- - [ ] aircrackng
- - [ ] aisleriot
- - [ ] apache2
- - [ ] ardour
- - [ ] aspell
- - [ ] audacity 
- - [ ] axel
- - [ ] blender
- - [ ] carbonLang
- - [ ] cheat
+ - [x] aircrackng
+ - [x] aisleriot
+ - [x] apache2
+ - [x] ardour
+ - [x] aspell
+ - [x] audacity 
+ - [x] axel
+ - [x] blender
+ - [x] carbonLang
+ - [x] cheat
  - [ ] chess
  - [ ] clementine
  - [ ] cmatrix

@@ -240,91 +240,6 @@
 
 ####################### UNHOLY LINE OF TESTING. UPWARDS IS TESTED, BELOW IS NOT ##############################
 
-aircrackng_name="Aircrack-ng"
-aircrackng_description="Complete suite of security tools to assess WiFi network security"
-aircrackng_version="1.6"
-aircrackng_tags=("attack" "network" "security")
-aircrackng_systemcategories=("System" "Utility" "Security" "Network" "Development")
-aircrackng_arguments=("aircrack_ng" "aircrackng")
-aircrackng_commentary="Very complete"
-aircrackng_packagenames=("aircrack-ng")
-
-aisleriot_name="AisleRiot Solitaire"
-aisleriot_description="Solitaire Classic Card Game"
-aisleriot_version="3.22.9"
-aisleriot_tags=("cards" "game" "cardsgame")
-aisleriot_systemcategories=("Game" "CardGame")
-aisleriot_arguments=("aisleriot" "solitaire" "gnome_solitaire")
-aisleriot_commentary="Implementation of the classical game solitaire"
-aisleriot_bashfunctions=("silentFunction")
-aisleriot_launcherkeynames=("default")
-aisleriot_default_exec="sol"
-aisleriot_windowclass="aisleriot"
-aisleriot_packagenames=("aisleriot")
-
-alert_name="Function alert"
-alert_description="Alias to show a notification at the end of a commands"
-alert_version="1.0"
-alert_tags=("bashfunctions" "notify" "notification" "info")
-alert_systemcategories=("Utility" "System" "Calendar")
-alert_arguments=("alert" "alert_alias" "alias_alert")
-alert_commentary="Useful to remember events"
-alert_packagedependencies=("libnotify-bin")
-alert_bashfunctions=("alert.sh")
-
-apache2_name="Apache httpd server project"
-apache2_description="Web server"
-apache2_version="2.4.52"
-apache2_tags=("development" "deployment")
-apache2_systemcategories=("Development" "WebDevelopment" )
-apache2_arguments=("apache2")
-apache2_commentary="open-source HTTP server for modern operating systems including UNIX and Windows"
-apache2_packagenames=("apache2" "apache2-utils")
-
-ardour_name="Ardour5"
-ardour_description="Ardour Digital Audio Workstation 5"
-ardour_version="System dependent"
-ardour_tags=("music" "audio" "production" "audio" "sound" "jackd" "DAW" "multitrack" "ladspa" "lv2" "midi")
-ardour_systemcategories=("Audio" "Music" "AudioVideo")
-ardour_commentary="Record, mix and master multi-track audio"
-ardour_arguments=("ardour")
-# ardour_icon="ardour.svg"
-ardour_launcherkeynames=("default")
-ardour_default_exec="ardour5"
-ardour_bashfunctions=("silentFunction")
-ardour_packagenames=("ardour")
-ardour_launchernames=("ardour")
-
-aspell_name="GNU Aspell"
-aspell_description="Spell checker"
-aspell_version="0.60.8"
-aspell_tags=("development" "deployment" "Education" "Office" "Utility" "Documentation" "FileTools" "Humanities" "WordProcessor" "Dictionary" "Translation")
-aspell_systemcategories=("Translation" "System" "Settings" "Dictionary" "Languages")
-aspell_arguments=("aspell")
-aspell_commentary="Free and open source spell checker in Linux. Can be used to check spelling from provided files or stdin"
-aspell_packagenames=("aspell-es"f "aspell-ca")
-
-audacity_name="Audacity"
-audacity_description="Sound Editor"
-audacity_version="2.3.3"
-audacity_tags=("music" "audio" "producing" "audio" "sound" "alsa" "jack" "editor")
-audacity_systemcategories=("Audio" "Music" "AudioVideo" "AudioVideoEditing")
-audacity_arguments=("audacity")
-audacity_commentary="Record and edit audio files"
-audacity_launcherkeynames=("default")
-audacity_default_exec="audacity %F"
-audacity_associatedfiletypes=("application/x-audacity-project" "audio/aac" "audio/ac3" "audio/mp4" "audio/x-ms-wma" "video/mpeg" "audio/flac" "audio/x-flac" "audio/mpeg" "audio/basic" "audio/x-aiff" "audio/x-wav" "application/ogg" "audio/x-vorbis+ogg")
-audacity_bashfunctions=("silentFunction")
-audacity_packagenames=("audacity" "audacity-data")
-
-axel_name="axel"
-axel_description="Download manager"
-axel_version="1.6"
-axel_tags=("downloader" "network")
-axel_systemcategories=("FileTransfer" "Utility")
-axel_arguments=("axel")
-axel_commentary="Like wget but fancier and faster"
-axel_packagenames=("axel")
 
 BFunction_name="Function B"
 BFunction_description="Function that source ~/.profile and ~/.bashrc"
@@ -344,19 +259,6 @@ bashcolors_arguments=("bash_colors" "colors" "colours")
 bashcolors_commentary="Bring color to the terminal text"
 bashcolors_bashfunctions=("bashcolors.sh")
 
-blender_name="Blender"
-blender_description="2D and 3D image modeling and animation, fx, video edit..."
-blender_version="1.0"
-blender_tags=("animation" "3D" "FX" "3d" "cg modeling" "animation" "painting" "sculpting" "texturing" "video editing" "video tracking" "rendering" "render engine" "cycles" "game engine" "python")
-blender_systemcategories=("2DGraphics" "3DGraphics" "Graphics" "Video" "Art" "ImageProcessing")
-blender_arguments=("blender" "blender_3d")
-blender_commentary="3D modeling, animation, rendering and post-production"
-blender_downloadKeys=("bundle")
-blender_bundle_URL="https://ftp.nluug.nl/pub/graphics/blender/release/Blender2.93/blender-2.93.3-linux-x64.tar.xz"
-blender_binariesinstalledpaths=("blender;blender")
-blender_launcherkeynames=("defaultLauncher")
-blender_defaultLauncher_exec="blender %f"
-blender_defaultLauncher_mimetypes=("application/x-blender")
 
 # TODO: Tested
 brasero_name="Brasero"
@@ -394,34 +296,6 @@ calibre_defaultLauncher_exec="calibre %F"
 calibre_defaultLauncher_usesNotifications="true"
 calibre_packagenames=("calibre")
 
-carbonLang_name="Carbon Language"
-carbonLang_description="Successor of C++"
-carbonLang_version="System dependent"
-carbonLang_tags=("languages")
-carbonLang_systemcategories=("Languages")
-carbonLang_arguments=("carbon_lang" "carbon_language" "carbon")
-carbonLang_bashfunctions=("carbonLang_function.sh")
-carbonLang_gpgSignatures=("https://bazel.build/bazel-release.pub.gpg")
-carbonLang_sources=("deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8")
-carbonLang_commentary="Carbon is an experimental, general-purpose programming language"
-carbonLang_dependencies=("apt-transport-https" "gnupg" "clang" "lldb" "lld" "openjdk-8-jdk" "llvm" "build-essential" "libc++-dev")
-carbonLang_packagenames=("bazel")
-carbonLang_bashinitializations=("carbonLang.sh")
-carbonLang_repositoryurl="https://github.com/carbon-language/carbon-lang"
-carbonLang_flagsoverride="0;;;;;"  # Install always as root
-
-cheat_name="Cheat"
-cheat_description="Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages"
-cheat_version="Cheat creator dependent"
-cheat_tags=("terminal" "utility" "info" "develop" "scripts")
-cheat_systemcategories=("Terminal" "Utility" "ConsoleOnly")
-cheat_arguments=("cheat" "cht.sh")
-cheat_commentary="Literally cheats for programming in any language"
-cheat_packagedependencies=("curl")
-cheat_binariesinstalledpaths=("cht.sh;cheat")
-cheat_downloadKeys=("script")
-cheat_script_URL="https://cht.sh/:cht.sh"
-cheat_script_downloadPath="cht.sh"
 
 chrome_name="Google Chrome"
 chrome_description="Web Browser"
