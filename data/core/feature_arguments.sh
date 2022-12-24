@@ -17,23 +17,26 @@ b_arguments=("b" "b_function")
 blender_arguments=("blender" "blender_3d")
 branch_arguments=("branch")
 caffeine_arguments=("caffeine" "coffee" "cafe")
+dbeaver_arguments=("dbeaver")
+documents_arguments=("documents" "google_document" "google_documents" "document")
 carbonLang_arguments=("carbon_lang" "carbon_language" "carbon")
 changebg_arguments=("change_bg" "wallpaper" "wallpapers" "backgrounds" "desktop_back_grounds" "change_back_grounds")
 cheat_arguments=("cheat" "cht.sh")
+chess_arguments=("gnome_chess" "chess")
 checkout_arguments=("checkout")
 clion_arguments=("clion")
-
+clementine_arguments=("clementine")
 customizerGUI_arguments=("customizer_gui" "gui")
 keyboardFix_arguments=("keyboard_fix" "fix_keyboard")
-
+cmatrix_arguments=("cmatrix")
 java_arguments=("java" "java_development_kit" "java_development" "java_development_kit_8" "jdk" "jdk_8")
 
 jupyterLab_arguments=("jupyter_lab" "jupyter" "lab" "webpage")
-
-
+d_arguments=("d")
+codium_arguments=("codium" "vs_codium")
 pgadmin_arguments=("pgadmin" "pgadmin4")
 pytorch_arguments=("pytorch" "pytorch_venv")
-
+converters_arguments=("converters")
 vommit_arguments=("dummy_commit")
 wireshark_arguments=("wire_shark")
 x_arguments=("extract" "extract_function")

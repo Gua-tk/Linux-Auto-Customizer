@@ -148,14 +148,14 @@
  - [x] blender
  - [x] carbonLang
  - [x] cheat
- - [ ] chess
- - [ ] clementine
- - [ ] cmatrix
- - [ ] codium
- - [ ] converters
- - [ ] d
- - [ ] dbeaver
- - [ ] documents
+ - [x] chess
+ - [x] clementine
+ - [x] cmatrix
+ - [x] codium
+ - [x] converters
+ - [x] d
+ - [x] dbeaver
+ - [x] documents
  - [ ] drive
  - [ ] drupal
  - [ ] duckduckgo

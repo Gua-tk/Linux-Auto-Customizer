@@ -341,33 +341,7 @@ clean_arguments=("clean")
 clean_commentary="Remove usesles packages from cache and empty your trash bin"
 clean_bashfunctions=("clean.sh")
 
-# TODO tested
-clementine_name="Clementine"
-clementine_description="Clementine Music Player"
-clementine_version="System dependent"
-clementine_tags=("music")
-clementine_systemcategories=("Music" "Audio" "Qt" "Player" "AudioVideo")
-clementine_arguments=("clementine")
-clementine_commentary="Plays music and last.fm streams"
-clementine_bashfunctions=("silentFunction")
-clementine_associatedfiletypes=("application/ogg" "application/x-ogg" "application/x-ogm-audio" "audio/aac" "audio/mp4" "audio/mpeg" "audio/mpegurl" "audio/ogg" "audio/vnd.rn-realaudio" "audio/vorbis" "audio/x-flac" "audio/x-mp3" "audio/x-mpeg" "audio/x-mpegurl" "audio/x-ms-wma" "audio/x-musepack" "audio/x-oggflac" "audio/x-pn-realaudio" "audio/x-scpls" "audio/x-speex" "audio/x-vorbis" "audio/x-vorbis+ogg" "audio/x-wav" "video/x-ms-asf" "x-content/audio-player" "x-scheme-handler/zune" "x-scheme-handler/itpc" "x-scheme-handler/itms" "x-scheme-handler/feed")
-clementine_launcherkeynames=("defaultLauncher")
-clementine_defaultLauncher_exec="clementine %U"
-clementine_defaultLauncher_notify="false"
-clementine_defaultLauncher_actions=("Play" "Pause" "Stop" "StopAfterCurrent" "Previous" "Next")
-clementine_defaultLauncher_Play_name="Play"
-clementine_defaultLauncher_Play_exec="clementine --play"
-clementine_defaultLauncher_Pause_name="Pause"
-clementine_defaultLauncher_Pause_exec="clementine --pause"
-clementine_defaultLauncher_Stop_name="Stop"
-clementine_defaultLauncher_Stop_exec="clementine --stop"
-clementine_defaultLauncher_StopAfterCurrent_name="StopAfterCurrent"
-clementine_defaultLauncher_StopAfterCurrent_exec="clementine --stop-after-current"
-clementine_defaultLauncher_Previous_name="Previous"
-clementine_defaultLauncher_Previous_exec="clementine --previous"
-clementine_defaultLauncher_Next_name="Next"
-clementine_defaultLauncher_Next_exec="clementine --next"
-clementine_packagenames=("clementine")
+
 
 clone_name="Function clone"
 clone_description="Function for \`git clone \$1\`"
@@ -402,18 +376,6 @@ cmake_binariesinstalledpaths=("bin/ccmake;ccmake" "bin/cmake;cmake" "bin/cmake-g
 cmake_downloadKeys=("bundle")
 cmake_bundle_URL="https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-linux-x86_64.tar.gz"
 
-cmatrix_name="Cmatrix"
-cmatrix_description="Enter The Matrix"
-cmatrix_version="System dependent"
-cmatrix_tags=("terminal" "matrix")
-cmatrix_systemcategories=("ConsoleOnly")
-cmatrix_commentary="Cool terminal screensaver"
-cmatrix_arguments=("cmatrix")
-cmatrix_launcherkeynames=("default")
-cmatrix_default_terminal="true"
-cmatrix_bashfunctions=("cmatrix.sh")
-cmatrix_packagenames=("cmatrix")
-
 code_name="Visual Studio Code"
 code_description="General purpose IDE"
 code_version="Microsoft dependent"
@@ -443,21 +405,6 @@ codeblocks_defaultLauncher_exec="codeblocks %F"
 codeblocks_defaultLauncher_XMultipleArgs="false"
 codeblocks_packagenames=("codeblocks")
 
-codium_name="VSCodium"
-codium_description="Community-driven distribution of Microsoft’s editor VSCode."
-codium_version="Microsoft dependent"
-codium_tags=("development" "microsoft" "code")
-codium_systemcategories=("Development" "IDE")
-codium_arguments=("codium" "vs_codium")
-codium_commentary="The IDE of Microsoft"
-codium_bashfunctions=("silentFunction")
-codium_binariesinstalledpaths=("bin/codium;codium")
-codium_downloadKeys=("bundle")
-codium_bundle_doNotInherit="yes"
-codium_bundle_downloadPath="${BIN_FOLDER}/codium/"
-codium_bundle_URL="https://github.com/VSCodium/vscodium/releases/download/1.62.2/VSCodium-linux-x64-1.62.2.tar.gz"
-codium_launcherkeynames=("default")
-
 commit_name="Function commit"
 commit_description="Function that makes git commit -am"
 commit_version="1.0"
@@ -475,17 +422,6 @@ config_systemcategories=("System" "Utility")
 config_arguments=("git_config" "config_function")
 config_commentary="Configure your git username and email"
 config_bashfunctions=("config.sh")
-
-converters_name="Functions converters"
-converters_description="Convert any number to any numeric system"
-converters_version="1.0"
-converters_tags=("bashfunctions" "convert" "info")
-converters_systemcategories=("System" "Utility")
-converters_arguments=("converters")
-converters_commentary="bintodec, decobin, hextodec..."
-converters_bashfunctions=("converters.sh")
-converters_binariesinstalledpaths=("converters/to.py;to" "converters/dectoutf.py;dectoutf" "converters/utftodec.py;utftodec")
-converters_repositoryurl="https://github.com/Axlfc/converters"
 
 copyq_name="CopyQ"
 copyq_description="Clipboard Manager"
@@ -533,15 +469,6 @@ uninstall_customizer_post()
   remove_file /usr/bin/customizer-uninstall
   remove_file /usr/bin/customizer-install
 }
-
-d_name="Function d"
-d_description="Function for dif or git diff"
-d_version="1.0"
-d_tags=("bash" "gitbashfunctions" "info")
-d_systemcategories=("System" "Utility")
-d_arguments=("d")
-d_commentary="See changes of files"
-d_bashfunctions=("d.sh")
 
 # TODO: tested
 dart_name="Dart"
@@ -625,17 +552,6 @@ docker_commentary="Application isolation"
 docker_downloadKeys=("bundle")
 docker_bundle_URL="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz"
 docker_binariesinstalledpaths=("docker;docker" "containerd;containerd" "containerd-shim;containerd-shim" "containerd-shim-runc-v2;containerd-shim-runc-v2" "ctr;ctr" "dockerd;dockerd" "docker-init;docker-init" "docker-proxy;docker-proxy" "runc;runc")
-
-documents_name="Google Documents"
-documents_description="Google Documents opening in Browser"
-documents_version="Google dependent"
-documents_tags=("google" "internet_shortcuts")
-documents_systemcategories=("Office" "Documentation" "WebBrowser" "WordProcessor" "FlowChart")
-documents_arguments=("documents" "google_document" "google_documents" "document")
-documents_commentary="take notes or edit rich text documents"
-documents_bashfunctions=("silentFunction")
-documents_launcherkeynames=("default")
-documents_default_exec="xdg-open https://docs.google.com/document/"
 
 drive_name="Google Drive"
 drive_description="Google Drive opening in Browser"
@@ -1100,19 +1016,6 @@ calculator_commentary="2+2=?"
 calculator_arguments=("gnome_calculator" "calculator" "calc")
 calculator_launchernames=("org.gnome.Calculator")
 calculator_packagenames=("gnome-calculator")
-
-chess_name="GNOME Chess"
-chess_description="Plays a full game of chess against a human being or other computer program"
-chess_version="System dependent"
-chess_tags=("chess" "game" "gnome" "strategy")
-chess_systemcategories=("BoardGame" "LogicGame" "GNOME" "GTK" "Game" "BoardGame")
-chess_commentary="Click and play"
-chess_arguments=("gnome_chess" "chess")
-chess_packagenames=("gnome-chess")
-chess_launcherkeynames=("defaultLauncher")
-chess_defaultLauncher_exec="gnome-chess"
-chess_defaultLauncher_ubuntuGetText="gnome-chess"
-chess_associatedfiletypes=("application/x-chess-pgn")
 
 go_name="go language"
 go_description="google programming language"
