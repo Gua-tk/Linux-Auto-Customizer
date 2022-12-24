@@ -138,35 +138,35 @@
  
 #### @Axlfc
  - [x] a
- - [ ] aircrackng
- - [ ] aisleriot
- - [ ] apache2
- - [ ] ardour
- - [ ] aspell
- - [ ] audacity 
- - [ ] axel
- - [ ] blender
- - [ ] carbonLang
- - [ ] cheat
- - [ ] chess
- - [ ] clementine
- - [ ] cmatrix
- - [ ] codium
- - [ ] converters
- - [ ] d
- - [ ] dbeaver
- - [ ] documents
- - [ ] drive
- - [ ] drupal
- - [ ] duckduckgo
- - [ ] emojis
- - [ ] evolution
- - [ ] firc
- - [ ] facebook
- - [ ] fastcommands
- - [ ] ffmpeg
- - [ ] firefox
- - [ ] forms
+ - [x] aircrackng
+ - [x] aisleriot
+ - [x] apache2
+ - [x] ardour
+ - [x] aspell
+ - [x] audacity 
+ - [x] axel
+ - [x] blender
+ - [x] carbonLang
+ - [x] cheat
+ - [x] chess
+ - [x] clementine
+ - [x] cmatrix
+ - [x] codium
+ - [x] converters
+ - [x] d
+ - [x] dbeaver
+ - [x] documents
+ - [x] drive
+ - [x] drupal
+ - [x] duckduckgo
+ - [x] emojis
+ - [x] evolution
+ - [x] firc
+ - [x] facebook
+ - [x] fastcommands
+ - [x] ffmpeg
+ - [x] firefox
+ - [x] forms
  - [ ] freecad
  - [ ] geany
  - [ ] ghostwriter
@@ -195,7 +195,9 @@
  - [ ] ips
  - [ ] j
  - [ ] julia
- - [~] jupyterLab
+ - [ ] 
+ - 
+ - jupyterLab
  - [ ] keep
  - [ ] lmms
  - [ ] lolcat

@@ -670,10 +670,6 @@ declare feature_keynames=(
 # Array to store the keynames of the features that have been added for installation
 added_feature_keynames=()
 
-# TODO: DEPRECATED. Data_feature is still sourced and can be used to declare installations but will be removed in next
-#  releases
-source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_data.sh"
-
 
 ########################################################################################################################
 ############################################## FEATURE ARGUMENTS #######################################################
