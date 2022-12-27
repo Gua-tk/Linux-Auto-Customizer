@@ -1,12 +1,13 @@
 install_customizer_post()
 {
-  ln -sf "${CUSTOMIZER_PROJECT_FOLDER}/src/core/uninstall.sh" "${ALL_USERS_PATH_POINTED_FOLDER}/customizer-uninstall"
-  ln -sf "${CUSTOMIZER_PROJECT_FOLDER}/src/core/install.sh" "${ALL_USERS_PATH_POINTED_FOLDER}/customizer-install"
+  (
+    cd "${CUSTOMIZER_PROJECT_FOLDER}" || return
+    git-lfs pull
+  )
 }
 uninstall_customizer_post()
 {
-  remove_file /usr/bin/customizer-uninstall
-  remove_file /usr/bin/customizer-install
+  :
 }
 customizer_name="Linux Auto Customizer"
 customizer_description="Custom local installation manager"
@@ -17,3 +18,4 @@ customizer_manualcontentavailable="0;0;1"
 customizer_flagsoverride="0;;;;;"  # Install always as root
 customizer_bashfunctions=("customizer.sh")
 customizer_packagedependencies=("python3" "python-venv" "wget" "git" "git-lfs")
+customizer_binariesinstalledpaths=("${CUSTOMIZER_PROJECT_FOLDER}/src/core/uninstall.sh;customizer-uninstall" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/install.sh;customizer-install")
