@@ -992,7 +992,7 @@ generic_install_pathlinks() {
     local binary_name=
     binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
     # Absolute path
-    if echo "${binary_name}" | grep -Eqo "^/"; then
+    if echo "${binary_path}" | grep -Eqo "^/"; then
       create_links_in_path "${binary_path}" "${binary_name}"
     else
       create_links_in_path "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${binary_path}" "${binary_name}"
