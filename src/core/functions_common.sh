@@ -276,6 +276,42 @@ load_feature_properties()
     fi
 }
 
+
+# - Description: Unloads properties loaded from the ${FEATURE_KEYNAME}.dat.sh and functions from the
+#   ${FEATURE_KEYNAME}.func.sh
+# - Permissions: Can be executed indifferently as root or user.
+# - Argument 1: Keyname of the properties to unload.
+unload_feature_properties()
+{
+    # Unload functions
+    unset -f "$1_install_pre"
+    unset -f "$1_install_mid"
+    unset -f "$1_install_post"
+    unset -f "$1_uninstall_pre"
+    unset -f "$1_uninstall_mid"
+    unset -f "$1_uninstall_post"
+
+    # Unload properties from the .dat.sh
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh" ]; then
+      # Select non-commentary lines
+      while read -r line; do
+        local variable
+        variable="$(echo "${line}" | grep -v "^[[:blank:]]*#" | cut -d "=" -f1)"
+        if [ -z "${variable}" ]; then
+          continue
+        fi
+        unset "${variable}"
+      done < "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh"
+    else
+      output_proxy_executioner "Properties of $1 feature have not been found, so they can not be unloaded. The file
+${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh does not exist. " "ERROR"
+    fi
+
+    # Finally unset ${FEATURENAME}_flagsruntime, which is a dynamically declared variable
+    unset "$1_flagsruntime"
+}
+
+
 # - Description: Performs a post-install clean by using cleaning option of package manager
 # - Permission: Can be called as root or user.
 post_install_clean()
@@ -918,6 +954,9 @@ execute_installation()
     load_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
 
     output_proxy_executioner "generic_installation ${keyname}" "COMMAND"
+
+    unload_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
+
     output_proxy_executioner "${keyname} ${FLAG_MODE}ed." "INFO"
 
     # Return flag errors to bash defaults (ignore errors)
