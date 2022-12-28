@@ -237,11 +237,14 @@ append_text()
 # - Arguments: Reads the tags property of each feature and maps that feature to a wrapper with the name of each tag.
 generate_wrappers()
 {
+  echo hjhasdfhj
   declare -Ag wrapper_dict
   for feature_name in "${feature_keynames[@]}"; do
+    echo "feature name: $feature_name"
     load_feature_properties "${feature_name}"
+    echo yes
     tags_pointer="${feature_name}_tags[@]"
-    for tag in "${!tags_pointer}"; do
+    for tag in ${!tags_pointer}; do
       if [[ -v wrapper_dict["${tag}"] ]]; then
         wrapper_dict[$tag]+=" ${feature_name}"
       else
@@ -250,29 +253,31 @@ generate_wrappers()
     done
   done
 
+echo hola
   for key in $(echo "${!wrapper_dict[@]}" | tr ' ' $'\n' | sort -h); do
     echo "Tag: ${key} --- Feature: ${wrapper_dict[$key]}"
   done
+
+  echo dw
 }
 
-# - Description: Generate the list that contains the list of included programs for each wrapper.
+# - Description: Load properties from a feature received in the first argument as a keyname
 # - Permissions: Can be executed indifferently as root or user.
-# - Argument 1: Keyname of the properties to import
 load_feature_properties()
 {
     # Load metadata of the feature if its .dat file exists
-    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh" ]; then
-      source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh"
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh" ]; then
+      source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh"
 
       # If we find the property manual_content_available declared, we should import the function file too
-      local -r manualContentPointer="${CURRENT_INSTALLATION_KEYNAME}_manualcontentavailable"
+      local -r manualContentPointer="$1_manualcontentavailable"
       if [ -n "${!manualContentPointer}" ]; then
-        if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.func.sh" ]; then
-          source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.func.sh"
+        if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.func.sh" ]; then
+          source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.func.sh"
         fi
       fi
     else
-      output_proxy_executioner "Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh does not exist" "ERROR"
+      output_proxy_executioner "Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh does not exist" "ERROR"
     fi
 }
 
@@ -439,6 +444,9 @@ generic_package_manager_override() {
 # - Argument 1, 2, 3... : Arguments for the whole program.
 argument_processing()
 {
+  generate_wrappers  # //debug
+  exit  # //debug
+
   while [ $# -gt 0 ]; do
     key="$1"
 
