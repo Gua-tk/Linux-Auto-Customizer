@@ -1,6 +1,6 @@
 
 templates_name="Templates"
-templates_description="Different collection of templates for starting code projects: Python3 script (`.py`), Bash script (`.sh`), LaTeX document (`.tex`), C script (`.c`), C header script (`.h`), makefile example (`makefile`) and empty text file (`.txt`)"
+templates_description="Different collection of templates for starting code projects: Python3 script (.py), Bash script (.sh), LaTeX document (.tex), C script (.c), C header script (.h), makefile example (makefile) and empty text file (.txt)"
 templates_version="1.0"
 templates_tags=("bashfunctions" "terminal")
 templates_systemcategories=("System" "Utility")
