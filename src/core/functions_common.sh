@@ -550,7 +550,8 @@ argument_processing()
         exit 0
       ;;
 
-      --readme|readme|features|FEATURES|FEATURES.sh|features.sh)  # Print list of possible arguments and finish the program
+      --readme|readme|features|FEATURES|FEATURES.sh|features.sh)
+        # Print list of possible arguments and finish the program
         autogen_readme
         exit 0
       ;;
@@ -578,42 +579,55 @@ argument_processing()
         add_programs_with_x_permissions 2
       ;;
 
-      *)  # Individual argument
+      --flush=favorites)
         if [ "${FLAG_MODE}" == "uninstall" ]; then
-          case "${key}" in
-            --flush=favorites)
-              remove_all_favorites
-              shift
-              continue
-            ;;
-            --flush=keybindings)
-              remove_all_keybindings
-              shift
-              continue
-            ;;
-            --flush=functions)
-              remove_all_functions
-              shift
-              continue
-            ;;
-            --flush=initializations)
-              remove_all_initializations
-              shift
-              continue
-            ;;
-            --flush=structures)
-              remove_structures
-              shift
-              continue
-            ;;
-            --flush=cache)
-              rm -Rf "${CACHE_FOLDER}"
-              shift
-              continue
-            ;;
-          esac
+          remove_all_favorites
+        fi
+      ;;
+
+      --flush=keybindings)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_keybindings
+        fi
+      ;;
+
+      --flush=functions)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_functions
+        fi
+      ;;
+
+      --flush=initializations)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_initializations
+        fi
+      ;;
+
+      --flush=structures)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_structures
+        fi
+      ;;
+
+      --flush=cache)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          rm -Rf "${CACHE_FOLDER}"
+        fi
+      ;;
+
+      *)
+        # Individual argument
+        # A feature key name was not detected in the current argument ${key}. Try a wrapper.
+        # But first check that the argument has characters and also check that those characters are valid characters
+        # for a variable in bash (regexp [a-zA-Z_][a-zA-Z_0-9]*, which is equal to any string using alphanumeric
+        # characters beginning with ant alphabetic characters and containing underscores at any position)
+        if [ -z "${key}" ] || ! echo "${key}" | grep -Eo "^[aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_][aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_0-9]*$"; then
+          output_proxy_executioner "The current argument \"${key}\" is empty or not valid" "WARNING"
+          shift
+          continue
         fi
 
+        # Indirect expand wrapper variable
         local wrapper_key=
         wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
         local set_of_features="wrapper_${wrapper_key}[*]"
@@ -629,7 +643,8 @@ argument_processing()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [ ${#added_feature_keynames[@]} -eq 0 ]; then
-    output_proxy_executioner "No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "WARNING"
+    output_proxy_executioner "No arguments provided to install feature. Use -h or --help to display information about \
+usage. Aborting..." "ERROR"
     return
   fi
 }
