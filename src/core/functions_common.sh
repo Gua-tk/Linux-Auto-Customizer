@@ -294,6 +294,42 @@ load_feature_properties()
     fi
 }
 
+
+# - Description: Unloads properties loaded from the ${FEATURE_KEYNAME}.dat.sh and functions from the
+#   ${FEATURE_KEYNAME}.func.sh
+# - Permissions: Can be executed indifferently as root or user.
+# - Argument 1: Keyname of the properties to unload.
+unload_feature_properties()
+{
+    # Unload functions
+    unset -f "$1_install_pre"
+    unset -f "$1_install_mid"
+    unset -f "$1_install_post"
+    unset -f "$1_uninstall_pre"
+    unset -f "$1_uninstall_mid"
+    unset -f "$1_uninstall_post"
+
+    # Unload properties from the .dat.sh
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh" ]; then
+      # Select non-commentary lines
+      while read -r line; do
+        local variable
+        variable="$(echo "${line}" | grep -v "^[[:blank:]]*#" | cut -d "=" -f1)"
+        if [ -z "${variable}" ]; then
+          continue
+        fi
+        unset "${variable}"
+      done < "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh"
+    else
+      output_proxy_executioner "Properties of $1 feature have not been found, so they can not be unloaded. The file
+${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh does not exist. " "ERROR"
+    fi
+
+    # Finally unset ${FEATURENAME}_flagsruntime, which is a dynamically declared variable
+    unset "$1_flagsruntime"
+}
+
+
 # - Description: Performs a post-install clean by using cleaning option of package manager
 # - Permission: Can be called as root or user.
 post_install_clean()
@@ -568,7 +604,8 @@ argument_processing()
         exit 0
       ;;
 
-      --readme|readme|features|FEATURES|FEATURES.sh|features.sh)  # Print list of possible arguments and finish the program
+      --readme|readme|features|FEATURES|FEATURES.sh|features.sh)
+        # Print list of possible arguments and finish the program
         autogen_readme
         exit 0
       ;;
@@ -602,45 +639,57 @@ argument_processing()
         add_programs_with_x_permissions 2
       ;;
 
-      *)  # Individual argument
+      --flush=favorites)
         if [ "${FLAG_MODE}" == "uninstall" ]; then
-          case "${key}" in
-            --flush=favorites)
-              remove_all_favorites
-              shift
-              continue
-            ;;
-            --flush=keybindings)
-              remove_all_keybindings
-              shift
-              continue
-            ;;
-            --flush=functions)
-              remove_all_functions
-              shift
-              continue
-            ;;
-            --flush=initializations)
-              remove_all_initializations
-              shift
-              continue
-            ;;
-            --flush=structures)
-              remove_structures
-              shift
-              continue
-            ;;
-            --flush=cache)
-              rm -Rf "${CACHE_FOLDER}"
-              shift
-              continue
-            ;;
-          esac
+          remove_all_favorites
+        fi
+      ;;
+
+      --flush=keybindings)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_keybindings
+        fi
+      ;;
+
+      --flush=functions)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_functions
+        fi
+      ;;
+
+      --flush=initializations)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_initializations
+        fi
+      ;;
+
+      --flush=structures)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_structures
+        fi
+      ;;
+
+      --flush=cache)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          rm -Rf "${CACHE_FOLDER}"
+        fi
+      ;;
+
+      *)
+        # Individual argument
+        # A feature key name was not detected in the current argument ${key}. Try a wrapper.
+        # But first check that the argument has characters and also check that those characters are valid characters
+        # for a variable in bash (regexp [a-zA-Z_][a-zA-Z_0-9]*, which is equal to any string using alphanumeric
+        # characters beginning with ant alphabetic characters and containing underscores at any position)
+        if [ -z "${key}" ] || ! echo "${key}" | grep -Eo "^[aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_][aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_0-9]*$"; then
+          output_proxy_executioner "The current argument \"${key}\" is empty or not valid" "WARNING"
+          shift
+          continue
         fi
 
+        # Indirect expand wrapper variable
         generate_wrappers  # Fill WRAPPERS_KEYNAMES dictionary
-
-        local wrapper_key=
+        local wrapper_key
         wrapper_key="$(echo "${key}" | tr "-" "_")"
         local set_of_features="${WRAPPERS_KEYNAMES[${wrapper_key}]}"
         if [ -z "${set_of_features}" ]; then
@@ -658,7 +707,8 @@ argument_processing()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [ ${#added_feature_keynames[@]} -eq 0 ]; then
-    output_proxy_executioner "No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "WARNING"
+    output_proxy_executioner "No arguments provided to install feature. Use -h or --help to display information about \
+usage. Aborting..." "ERROR"
     return
   fi
 }
@@ -932,6 +982,9 @@ execute_installation()
     load_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
 
     output_proxy_executioner "generic_installation ${keyname}" "COMMAND"
+
+    unload_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
+
     output_proxy_executioner "${keyname} ${FLAG_MODE}ed." "INFO"
 
     # Return flag errors to bash defaults (ignore errors)
