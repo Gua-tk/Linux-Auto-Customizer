@@ -99,6 +99,23 @@ add_to_favorites() {
   done
 }
 
+# - Description: Receives an absolute path to a file to be used in cronjob. This cronjob will be added to the cronjob of the current
+#   user if it has no privileges or it will be added to crontab of the `SUDO_USER`.
+# - Permissions: This function can be called indistinctly as root using sudo or unprivileged user.
+# - Argument 1: Absolute path to the file that will be added to cronjob
+add_cronjob() {
+  if [ ! -f "$1" ]; then
+    output_proxy_executioner "The cronjob file does not exist" "WARNING"
+    return
+  fi
+
+  if isRoot; then
+    (crontab -u "${SUDO_USER}" -l ; translate_variables "$1") | crontab -u "${SUDO_USER}" -
+  else
+    (crontab -l ; translate_variables "$1") | crontab -
+  fi
+}
+
 
 # - Description: Change ownership of folders recursively.
 # - Permission: Can be run as root.
@@ -943,6 +960,21 @@ generic_install_favorites() {
       add_to_favorites "${CURRENT_INSTALLATION_KEYNAME}"
     fi
   fi
+}
+
+
+# - Description: Expands the array from the property cronjob of the `CURRENT_INSTALLATION_KEYNAME`
+#   Each element can be an absolute path or a relative path to `CURRENT_INSTALLATION_DATA_FOLDER`.
+# - Permissions: Can be executed as root or user.
+generic_install_cronjobs() {
+  local -r cronjobs_pointer="${CURRENT_INSTALLATION_KEYNAME}_cronjobs[@]"
+  for cronjob in ${!cronjobs_pointer}; do
+    if echo "${cronjob}" | grep -qE "^/"; then
+      add_cronjob "${cronjob}"
+    else
+      add_cronjob "${CURRENT_INSTALLATION_DATA_FOLDER}/${cronjob}"
+    fi
+  done
 }
 
 
