@@ -1,13 +1,3 @@
-install_matlab_mid()
-{
-  "${TEMP_FOLDER}/matlab/install"  # Execute installer
-  rm -Rf "${TEMP_FOLDER}/matlab"
-}
-uninstall_matlab_mid()
-{
-  :
-}
-
 matlab_name="Matlab R2021a"
 matlab_description="IDE + programming language specialized in matrix operations"
 matlab_version="R2021a"

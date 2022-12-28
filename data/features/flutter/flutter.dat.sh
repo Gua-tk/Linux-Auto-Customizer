@@ -1,11 +1,3 @@
-flutter_install_post()
-{
-   flutter config --enable-linux-desktop
-}
-flutter_uninstall_post()
-{
-  :
-}
 flutter_name="Flutter"
 flutter_description="Tool to create responsive GUIs"
 flutter_version="2.10.5-stable"

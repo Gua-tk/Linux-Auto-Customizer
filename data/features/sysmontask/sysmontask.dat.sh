@@ -1,12 +1,3 @@
-install_sysmontask_mid() {
-  (
-    cd "${BIN_FOLDER}/sysmontask" || exit
-    python3 setup.py install
-  )
-}
-uninstall_sysmontask_mid() {
-  :
-}
 sysmontask_name="Sysmontask"
 sysmontask_description="Control panel for linux"
 sysmontask_version="System dependent"

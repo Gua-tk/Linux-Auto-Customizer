@@ -1,14 +1,3 @@
-install_customizer_post()
-{
-  (
-    cd "${CUSTOMIZER_PROJECT_FOLDER}" || return
-    git-lfs pull
-  )
-}
-uninstall_customizer_post()
-{
-  :
-}
 customizer_name="Linux Auto Customizer"
 customizer_description="Custom local installation manager"
 customizer_version="developer dependent"
