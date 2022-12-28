@@ -1,9 +1,3 @@
-install_wikit_mid() {
-  npm install wikit -g
-}
-uninstall_wikit_mid() {
-  npm remove wikit -g
-}
 wikit_name="Wikit"
 wikit_description="Wikipedia search inside terminal"
 wikit_version="System dependent"

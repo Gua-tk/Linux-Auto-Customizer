@@ -1,12 +1,3 @@
-install_gitcm_post()
-{
-  gitcm configure
-  git config --global credential.credentialStore plaintext
-}
-uninstall_gitcm_post()
-{
-  :
-}
 gitcm_name="Git Credentials Manager"
 gitcm_description="Plug-in for git to automatically use personal tokens"
 gitcm_version="gcmcore-linux_amd64.2.0.696"
