@@ -968,6 +968,10 @@ generic_install_favorites() {
 # - Permissions: Can be executed as root or user.
 generic_install_cronjobs() {
   local -r cronjobs_pointer="${CURRENT_INSTALLATION_KEYNAME}_cronjobs[@]"
+  if [ -z "${!cronjobs_pointer}" ] ; then
+    return
+  fi
+
   for cronjob in ${!cronjobs_pointer}; do
     if echo "${cronjob}" | grep -qE "^/"; then
       add_cronjob "${cronjob}"
