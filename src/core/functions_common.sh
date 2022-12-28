@@ -237,29 +237,42 @@ append_text()
 # - Arguments: Reads the tags property of each feature and maps that feature to a wrapper with the name of each tag.
 generate_wrappers()
 {
-  echo hjhasdfhj
-  declare -Ag wrapper_dict
+  declare -Ag WRAPPERS_KEYNAMES
   for feature_name in "${feature_keynames[@]}"; do
-    echo "feature name: $feature_name"
     load_feature_properties "${feature_name}"
-    echo yes
+
+    # Use tags to fill wrappers dictionary
     tags_pointer="${feature_name}_tags[@]"
     for tag in ${!tags_pointer}; do
-      if [[ -v wrapper_dict["${tag}"] ]]; then
-        wrapper_dict[$tag]+=" ${feature_name}"
+      if [[ -v WRAPPERS_KEYNAMES["${tag}"] ]]; then
+        WRAPPERS_KEYNAMES[$tag]+=" ${feature_name}"
       else
-        wrapper_dict[$tag]="${feature_name}"
+        WRAPPERS_KEYNAMES[$tag]="${feature_name}"
+      fi
+    done
+
+    # Use system categories to fill wrappers dictionary
+    categories_pointer="${feature_name}_systemcategories[@]"
+    for category in ${!categories_pointer}; do
+      if [[ -v WRAPPERS_KEYNAMES["${category}"] ]]; then
+        WRAPPERS_KEYNAMES[${category}]+=" ${feature_name}"
+      else
+        WRAPPERS_KEYNAMES[${category}]="${feature_name}"
       fi
     done
   done
-
-echo hola
-  for key in $(echo "${!wrapper_dict[@]}" | tr ' ' $'\n' | sort -h); do
-    echo "Tag: ${key} --- Feature: ${wrapper_dict[$key]}"
-  done
-
-  echo dw
 }
+
+
+# - Description: Prints the list that contains the list of included programs for each wrapper.
+# - Permissions: Can be executed indifferently as root or user.
+display_wrappers()
+{
+  for key in $(echo "${!WRAPPERS_KEYNAMES[@]}" | tr ' ' $'\n' | sort -h); do
+    echo "Tag: ${key} --- Feature: ${WRAPPERS_KEYNAMES[$key]}"
+  done
+}
+
 
 # - Description: Load properties from a feature received in the first argument as a keyname
 # - Permissions: Can be executed indifferently as root or user.
@@ -444,9 +457,6 @@ generic_package_manager_override() {
 # - Argument 1, 2, 3... : Arguments for the whole program.
 argument_processing()
 {
-  generate_wrappers  # //debug
-  exit  # //debug
-
   while [ $# -gt 0 ]; do
     key="$1"
 
@@ -572,6 +582,12 @@ argument_processing()
         exit 0
       ;;
 
+      --show-wrappers)
+        generate_wrappers
+        display_wrappers
+        exit 0
+      ;;
+
       --debug)
         customizer_prompt
       ;;
@@ -622,13 +638,18 @@ argument_processing()
           esac
         fi
 
+        generate_wrappers  # Fill WRAPPERS_KEYNAMES dictionary
+
         local wrapper_key=
-        wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
-        local set_of_features="wrapper_${wrapper_key}[*]"
-        if [ -z "${!set_of_features}" ]; then
+        wrapper_key="$(echo "${key}" | tr "-" "_")"
+        local set_of_features="${WRAPPERS_KEYNAMES[${wrapper_key}]}"
+        if [ -z "${set_of_features}" ]; then
+          # If there are no wrappers corresponding with this key, the last possibility is that the key is actually a
+          # feature keyname, which we try to add to installation.
           add_program "${key}"
         else
-          add_programs ${!set_of_features}
+          # There is a wrapper corresponding with this key, so we add each program that is in the wrapper.
+          add_programs ${set_of_features}
         fi
       ;;
     esac

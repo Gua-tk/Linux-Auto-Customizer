@@ -698,7 +698,8 @@ declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C
 # multi-feature wrapper.                                                                                               #
 # Is preferable that the wrapper has the same installation privileges in all of its features.                          #
 ########################################################################################################################
-declare -r WRAPPERS_KEYNAMES=("programmingcore" "programmingide" "programmingpro" "texteditorcore" "mediacore" "systemcore" "internetcore" "artcore" "gamesinstall" "internetshortcuts" "standardinstall" "bashfunctions" "desktopfunctions" "terminalfunctions" "network" "networks" "fontsuser" "fontsroot" "custom1" "gitbashfunctions" "iochemroot" "iochemuser")
+# TODO: static wrapper deprecated for dynamic wrappers. Now we must move the static wrappers that we want to keep into tags
+# declare -r WRAPPERS_KEYNAMES=("programmingcore" "programmingide" "programmingpro" "texteditorcore" "mediacore" "systemcore" "internetcore" "artcore" "gamesinstall" "internetshortcuts" "standardinstall" "bashfunctions" "desktopfunctions" "terminalfunctions" "network" "networks" "fontsuser" "fontsroot" "custom1" "gitbashfunctions" "iochemroot" "iochemuser")
 # Thematic wrappers
 declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel")
 declare -r wrapper_programmingide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")

@@ -8,4 +8,6 @@ duckduckgo_arguments=("duckduckgo")
 duckduckgo_bashfunctions=("silentFunction")
 duckduckgo_launcherkeynames=("default")
 duckduckgo_default_exec="xdg-open https://duckduckgo.com/"
-duckduckgo_description="Opens DuckDuckGo in Chrome
+duckduckgo_description="Opens DuckDuckGo in Chrome"
+
+
