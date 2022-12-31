@@ -681,12 +681,11 @@ argument_processing()
         # But first check that the argument has characters and also check that those characters are valid characters
         # for a variable in bash (regexp [a-zA-Z_][a-zA-Z_0-9]*, which is equal to any string using alphanumeric
         # characters beginning with ant alphabetic characters and containing underscores at any position)
-        if [ -z "${key}" ] || ! echo "${key}" | grep -Eo "^[aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_][aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_0-9]*$"; then
+        if [ -z "${key}" ] || ! echo "${key}" | grep -Eqo "^[aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_][aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_0-9]*$"; then
           output_proxy_executioner "The current argument \"${key}\" is empty or not valid" "WARNING"
           shift
           continue
         fi
-
         # Indirect expand wrapper variable
         generate_wrappers  # Fill WRAPPERS_KEYNAMES dictionary
         local wrapper_key
