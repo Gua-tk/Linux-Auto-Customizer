@@ -872,7 +872,7 @@ shell.Run comm,0"
 generic_install_dynamic_launcher() {
 
   local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
 
   # If it does not have launcher keynames, end function and do nothing
   if [ ! -n "$(echo "${!launcherkeynames}")" ]; then
@@ -901,7 +901,7 @@ generic_install_dynamic_launcher() {
       current_launcher="$(get_dynamic_launcher "${launcherkeyname}")"
       create_manual_launcher "${current_launcher}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
     fi
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 
   if [ "${is_autostart_attended}" -eq 1 ]; then
@@ -918,11 +918,11 @@ generic_install_dynamic_launcher() {
 # - Permissions: Does not need any permission
 generic_install_WSL2_dynamic_launcher() {
   local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
 
   for launcherkeyname in "${!launcherkeynames}"; do
     create_WSL2_dynamic_launcher "${launcherkeyname}" "${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
@@ -1033,10 +1033,10 @@ generic_install_gpgSignatures() {
   fi
 
   local -r gpgSignatures="${CURRENT_INSTALLATION_KEYNAME}_gpgSignatures[@]"
-  local collision=""
+  local collision=$(get_next_collisioner)
   for sign in ${!gpgSignatures}; do
     add_gpgSignature "${sign}" "${collision}"
-    collision="${collision}_"
+    collision=$(get_next_collisioner "${collision}")
   done
   ${PACKAGE_MANAGER_UPDATE}
 }
@@ -1057,10 +1057,10 @@ generic_install_sources() {
   fi
 
   local -r sources="${CURRENT_INSTALLATION_KEYNAME}_sources[@]"
-  local collision=""
+  local collision=$(get_next_collisioner)
   for sign in "${!sources}"; do
     add_source "${sign}" "${collision}"
-    collision="${collision}_"
+    collision=$(get_next_collisioner "${collision}")
   done
   ${PACKAGE_MANAGER_UPDATE}
 }
@@ -1069,7 +1069,7 @@ generic_install_sources() {
 # - Permissions: Can be executed as root or user.
 generic_install_initializations() {
   local -r bashinitializations="${CURRENT_INSTALLATION_KEYNAME}_bashinitializations[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for bashinit in "${!bashinitializations}"; do
     if [[ "${bashinit}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
@@ -1080,7 +1080,7 @@ generic_install_initializations() {
     else
       add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashinit}"
     fi
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
@@ -1089,7 +1089,7 @@ generic_install_initializations() {
 # - Permissions: Can be executed as root or user.
 generic_install_functions() {
   local -r bashfunctions="${CURRENT_INSTALLATION_KEYNAME}_bashfunctions[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for bashfunction in "${!bashfunctions}"; do
     if [[ "${bashfunction}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
@@ -1142,7 +1142,7 @@ ${silent_exec}()
     else
       add_bash_function "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashfunction}"
     fi
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
@@ -1389,10 +1389,10 @@ generic_install_download()
 #   needs to be run as root.
 generic_install_downloads() {
   local -r downloads="${CURRENT_INSTALLATION_KEYNAME}_downloadKeys[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for each_download in ${!downloads}; do
     generic_install_download "${each_download}" "${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
