@@ -483,6 +483,27 @@ generic_package_manager_override() {
 }
 
 
+# - Description: Get another unique string using the first argument as current element. The first argument is to be
+#   expected as an integer, an empty string or nothing:
+#   - if is an integer: return next integer
+#   - if is empty string: return string "2"
+#   - if nothing: return empty string
+# - Permission: Can be called as root or user.
+# - Argument 1: Current anticollisioner number
+get_next_collisioner()
+{
+  if [ $# -eq 1 ]; then
+    echo ""
+  elif [ -z $1 ]; then
+    echo "2"
+  elif echo "$1" | grep -Eqo "[0-9]+"; then
+    echo "$((1 + $1))"
+  else
+    output_proxy_executioner "Unexpected input in get_next_collisioner(): $1" "ERROR"
+  fi
+}
+
+
 ########################################################################################################################
 ############################################### COMMON MAIN FUNCTIONS ##################################################
 ########################################################################################################################
