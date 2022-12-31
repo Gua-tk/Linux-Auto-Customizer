@@ -759,8 +759,8 @@ declare -r help_common="\e[0m
 #### install.sh manual usage:
 [sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|
                        [-e|--exit-on-error]]
-
-                       [[-f|--favorites|--set-favorites]|[-o|--overwrite|--overwrite-if-present]|
+                       [[--favorites|--set-favorites]|
+                       [-o|--overwrite|--overwrite-if-present]|
                        [-s|--skip|--skip-if-installed]]
 
                        [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]
@@ -774,12 +774,34 @@ declare -r help_common="\e[0m
 
                        SELECTED_FEATURES_TO_INSTALL
 
+###### Customizer arguments:
+
+#### -f | --force:
+
+#### -i | --ignore | --ignore-errors:
+
+#### -e | --exit-on-error:
+
+#### -- favorites | --set-favorites:
+
+#### -o | --overwrite | --overwrite-if-present || -s|--skip | --skip-if-installed:
+
+####-v |--verbose || -Q | --Quiet | -q --quiet:
+
+####-d | --dirty | --no-autoclean || -c | --clean | -C | -Clean:
+
+####-U | --Upgrade -u|--upgrade:
+
+####-k|-K|--keep-system-outdated:
+
+####-n | --not | -! | -y | --yes:
+
 
 #### install.sh description:
 
   - install.sh performs the automatic configuration of a Linux
     environment by installing applications, adding bash functions, customizing
-    terminal variables, declaring new useful global variables and aliases...
+    terminal variables, declaring global variables
 
   - Each feature have specific privilege requirements: Some will need sudo when
     running install.sh and others won't
