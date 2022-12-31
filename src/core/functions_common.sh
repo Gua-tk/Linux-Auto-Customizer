@@ -397,23 +397,12 @@ autogen_readme()
   local html_suffix="\" width=\"200\" height=\"200\" />"
   local icon_path=""
   for keyname in "${feature_keynames[@]}"; do
+    load_feature_properties "${keyname}"
     local arguments_pointer="${keyname}_arguments[@]"
     local name_pointer="${keyname}_name"
 
-    local icon_pointer="${keyname}_icon"
-    if [ -z "${!icon_pointer}" ]; then
-      if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.svg" ]; then
-        icon_path="/data/static/${keyname}/${keyname}.svg"
-      elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.png" ]; then
-        icon_path="/data/static/${keyname}/${keyname}.png"
-      else
-        icon_path="/.github/logo.png"
-      fi
-    else
-      icon_path="/data/static/${keyname}/${!icon_pointer}"
-    fi
+    local icon_path="$(readme_deduce_icon "${keyname}")"
     icon_value="${html_prefix}${github_url}${icon_path}${html_suffix}"
-
 
     local description_pointer="${keyname}_description"
 
@@ -430,9 +419,9 @@ autogen_readme()
     for filekey in "${!filekeys_pointers}"; do
       filekey_name="${keyname}_${filekey}_content"
 
-      feature_function_names="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${keyname}/${!filekey_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*\\(\\)" | uniq)"
+      feature_function_names="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${keyname}/${!filekey_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*\\(\\)" | uniq)"
 
-      for feature_function_name in "${feature_function_names}" ; do
+      for feature_function_name in "${feature_function_names}"; do
         # Append name without parenthesis
         usage_value+="$(echo "${feature_function_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*"), "
       done
@@ -445,11 +434,12 @@ autogen_readme()
     done
 
     features_table_lines+=$'\n'"| ${icon_value} | ${!name_pointer} | ${!arguments_pointer} | ${!description_pointer} | ${usage_value} |"
+    unload_feature_properties "${keyname}"
   done
 
 
   features_table_lines+=$'\n'"Customizer currently has available $(echo "${feature_keynames[@]}" | wc -w) features."
-  echo "${features_table_lines}" > "${CUSTOMIZER_PROJECT_FOLDER}/FEATURES.md"
+  echo "${features_table_lines}" > "${CUSTOMIZER_PROJECT_FOLDER}/doc/FEATURES.md"
 }
 
 

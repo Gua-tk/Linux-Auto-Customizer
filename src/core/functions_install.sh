@@ -519,6 +519,22 @@ dynamic_launcher_deduce_exec()
 }
 
 
+# - Description: Returns the relative path from the repository folder to the icon of the feature provided in argument 1
+# - Permission: Can be called as root or user
+# - Arguments:
+#   * Argument 1: Feature keyName
+readme_deduce_icon()
+{
+  if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.svg" ]; then
+    echo "/data/features/$1/$1.svg"
+  elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.png" ]; then
+    echo "/data/features/$1/$1.png"
+  else
+    echo "/.github/logo.png"
+  fi
+}
+
+
 # - Description: Returns the icon field (path to icon) from the received launcher keyname of the
 #   CURRENT_INSTALLATION_KEYNAME loaded in the CURRENT_INSTALLATION_FOLDER folder.
 # - Permission: Does need to create the icon in the CURRENT_INSTALLATION_FOLDER
