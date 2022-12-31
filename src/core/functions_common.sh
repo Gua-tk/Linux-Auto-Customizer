@@ -492,7 +492,7 @@ generic_package_manager_override() {
 # - Argument 1: Current anticollisioner number
 get_next_collisioner()
 {
-  if [ $# -eq 1 ]; then
+  if [ $# -eq 0 ]; then
     echo ""
   elif [ -z $1 ]; then
     echo "2"
