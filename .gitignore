@@ -12,6 +12,9 @@
 
 # Linux swap files
 .swp
+*.swp
+*.swo
+*~
 
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
@@ -65,3 +68,7 @@ nohup.out
 wget-log
 *.ipynb
 
+# Used by customizer in WSL2 to store the user name
+whoami
+
+Linux-Auto-Customizer

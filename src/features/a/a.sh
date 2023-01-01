@@ -1,1 +1,0 @@
-alias a="echo '---------------Alias----------------';compgen -a"

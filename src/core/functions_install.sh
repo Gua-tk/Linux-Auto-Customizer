@@ -30,7 +30,7 @@ add_bash_function() {
   # Write code to bash functions folder with the name of the feature we want to install
   create_file "${FUNCTIONS_FOLDER}/$2" "$1" "$3"
   # If we are root apply permission to the file
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     apply_permissions "${FUNCTIONS_FOLDER}/$2"
   fi
 
@@ -53,7 +53,7 @@ add_bash_initialization() {
   # Write code to bash initializations folder with the name of the feature we want to install
   create_file "${INITIALIZATIONS_FOLDER}/$2" "$1" "$3"
   # If we are root apply permission to the file
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     apply_permissions "${INITIALIZATIONS_FOLDER}/$2"
   fi
 
@@ -85,54 +85,18 @@ add_keybinding() {
 # - Permissions: This function can be called indistinctly as root or user.
 # - Argument 1: Name of the .desktop launcher without .desktop extension located in file in PERSONAL_LAUNCHERS_DIR or
 #   ALL_USERS_LAUNCHERS_DIR.
+# TODO refactor using get_dynamic launcher and serving the flag favorite the same way that we serve the flag autostart
 add_to_favorites() {
   for argument in "$@"; do
     if ! grep -Eqo "${argument}" "${PROGRAM_FAVORITES_PATH}"; then
       if [ -f "${ALL_USERS_LAUNCHERS_DIR}/${argument}.desktop" ] || [ -f "${PERSONAL_LAUNCHERS_DIR}/${argument}.desktop" ]; then
         echo "${argument}.desktop" >> "${PROGRAM_FAVORITES_PATH}"
       else
-        output_proxy_executioner "echo WARNING: The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "The program ${argument} cannot be found in the usual place for desktop launchers favorites. Skipping" "WARNING"
         return
       fi
     fi
   done
-}
-
-
-# - Description: Sets a program to autostart on every boot by giving its launcher name without .desktop extension as an
-#   argument. These .desktop files are searched in ALL_USERS_LAUNCHERS_DIR and PERSONAL_LAUNCHERS_DIR.
-# - Permissions: This function can be called as root or as user.
-# - Argument 1: Name of the .desktop launcher of program without the '.desktop' extension.
-autostart_program() {
-  # If absolute path
-  if echo "$1" | grep -Eqo "^/"; then
-    # If it is a file, make it autostart
-    if [ -f "$1" ]; then
-      cp "$1" "${AUTOSTART_FOLDER}"
-      if [ ${EUID} -eq 0 ]; then
-        apply_permissions "$1"
-      fi
-    else
-      output_proxy_executioner "echo WARNING: The file $1 does not exist, skipping..." "${FLAG_QUIETNESS}"
-      return
-    fi
-  else # Else relative path from ALL_USERS_LAUNCHERS_DIR or PERSONAL_LAUNCHERS_DIR
-  echo "${AUTOSTART_FOLDER}"
-    if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]; then
-      cp "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
-      if [ ${EUID} -eq 0 ]; then
-        apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
-      fi
-    elif [ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]; then
-      cp "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
-      if [ ${EUID} -eq 0 ]; then
-        apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
-      fi
-    else
-      output_proxy_executioner "echo WARNING: The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." "${FLAG_QUIETNESS}"
-      return
-    fi
-  fi
 }
 
 
@@ -154,46 +118,14 @@ custom_permission()
 apply_permissions_recursively()
 {
   if [ -d "$1" ]; then
-    if [ ${EUID} == 0 ]; then  # directory
+    if isRoot; then  # directory
       chgrp -R "${SUDO_USER}" "$1"
       chown -R "${SUDO_USER}" "$1"
     fi
     chmod 755 -R "$1"
   else
-    output_proxy_executioner "echo WARNING: This functions only accepts a directory as an argument, Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "This functions only accepts a directory as an argument, Skipping..." "WARNING"
   fi
-}
-
-
-# - Description: Apply standard permissions and set owner and group to the user who called root.
-# - Permissions: This functions can be called as root or user.
-# - Arguments:
-#   * Argument 1: Path to the file or directory whose permissions are changed.
-#   * Argument 2 (optional): Custom mask of permissions
-apply_permissions()
-{
-  if [ -z "$2" ]; then
-    permission_mask="755"
-  else
-    permission_mask="$2"
-  fi
-
-  if [ -f "$1" ]; then
-    if [ ${EUID} == 0 ]; then  # file
-      chgrp "${SUDO_USER}" "$1"
-      chown "${SUDO_USER}" "$1"
-    fi
-    chmod "${permission_mask}" "$1"
-  elif [ -d "$1" ]; then
-    if [ ${EUID} == 0 ]; then  # directory
-      chgrp "${SUDO_USER}" "$1"
-      chown "${SUDO_USER}" "$1"
-    fi
-    chmod "${permission_mask}" "$1"
-  else
-    output_proxy_executioner "echo WARNING: The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." "${FLAG_QUIETNESS}"
-  fi
-  unset permission_mask
 }
 
 
@@ -217,7 +149,7 @@ create_file()
       apply_permissions "$1"
       translate_variables "$1"
     else
-      output_proxy_executioner "echo WARNING: The specified path to a customizer internal file $3 does not exist. It will be skipped" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The specified path to a customizer internal file $3 does not exist. It will be skipped" "WARNING"
     fi
   else
     if [ -n "${filename}" ]; then
@@ -225,7 +157,7 @@ create_file()
       echo -n "$2" > "$1"
       apply_permissions "$1"
     else
-      output_proxy_executioner "echo WARNING: The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The name ${filename} is not a valid filename for a file in create_file. The file will not be created." "WARNING"
     fi
   fi
 }
@@ -257,20 +189,20 @@ copy_launcher() {
     cp "${PERSONAL_LAUNCHERS_DIR}/$1" "${XDG_DESKTOP_DIR}/$1"
     apply_permissions "${XDG_DESKTOP_DIR}/$1"
   else
-    output_proxy_executioner "echo WARNING: Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "Can't find $1 launcher in ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}." "WARNING"
   fi
 }
 
 
 # - Description: This function accepts an undefined number of pairs of arguments. The first of the pair is a path to a
 #   binary that will be linked to our path. The second one is the name that it will have as a terminal command.
-#   This function processes the last optional arguments of the function download_and_decompress, but can be
+#   This function processes the last optional arguments of the function decompress, but can be
 #   used as a manual way to add binaries to the PATH, in order to add new commands to your environment.
 # - Argument 1: Absolute path to the binary you want to be in the PATH.
 # - Argument 2: Name of the command that will be added to your environment to execute the previous binary.
 # - Argument 3 and 4, 5 and 6, 7 and 8... : Same as argument 1 and 2.
 create_links_in_path() {
-  if [ ${EUID} == 0 ]; then  # user
+  if isRoot; then  # user
     local -r directory="${ALL_USERS_PATH_POINTED_FOLDER}"
   else
     local -r directory="${PATH_POINTED_FOLDER}"
@@ -290,7 +222,7 @@ create_links_in_path() {
 # Argument 1: The string of the text representing the content of the desktop launcher that we want to create.
 # Argument 2: The name of the launcher. This argument can be any name with no consequences.
 create_manual_launcher() {
-  if [ ${EUID} == 0 ]; then  # root
+  if isRoot; then  # root
     create_file "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "$1"
     cp -p "${ALL_USERS_LAUNCHERS_DIR}/$2.desktop" "${XDG_DESKTOP_DIR}"
   else
@@ -349,11 +281,22 @@ decompress() {
         if echo "${internal_folder_name}" | grep -Eqo "/$"; then
           internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
         else
-          # Set the internal folder name empty if it is not detected
-          internal_folder_name=""
+          # The name using a zip could not have been captured. In some cases such as the ones that you are downloading
+          # a zip file from github you will find that a digest line is included, so when using 'head -4' in the code
+          # it does not capture the internal folder name. In those cases we skip the digest line just by using head -5
+          # instead
+          internal_folder_name="$(unzip -l "${dir_name}/${file_name}" | head -5 | tail -1 | tr -s " " | cut -d " " -f5)"
+
+          # The captured line ends with / so it is a valid directory
+          if echo "${internal_folder_name}" | grep -Eqo "/$"; then
+            internal_folder_name="$(echo "${internal_folder_name}" | cut -d "/" -f1)"
+          else
+            # Set the internal folder name empty because could not have been detected
+            internal_folder_name=""
+          fi
         fi
       ;;
-      "application/x-bzip-compressed-tar")
+      "application/x-bzip-compressed-tar" | "application/x-bzip2")
         local -r internal_folder_name=$( (tar -tjf - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
       ;;
       "application/gzip")
@@ -363,8 +306,7 @@ decompress() {
         local -r internal_folder_name=$( (tar -tJf - | head -1 | cut -d "/" -f1) < "${dir_name}/${file_name}")
       ;;
       *)
-        output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
-        exit 1
+        output_proxy_executioner "${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "ERROR"
       ;;
     esac
 
@@ -391,7 +333,7 @@ decompress() {
           unzip -o "${file_name}"
         )
       ;;
-      "application/x-bzip-compressed-tar")
+      "application/x-bzip-compressed-tar" | "application/x-bzip2")
       # Decompress in a subshell to avoid changing the working directory in the current shell
         (
           cd "${dir_name}" || exit
@@ -411,13 +353,11 @@ decompress() {
         ) < "${dir_name}/${file_name}"
       ;;
       *)
-        output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
-        exit 1
+        output_proxy_executioner "${mime_type} is not a recognised mime type for the compressed file in ${dir_name}/${file_name}" "ERROR"
       ;;
     esac
   else
-    output_proxy_executioner "echo ERROR: The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist" "${FLAG_QUIETNESS}"
-    exit 1
+    output_proxy_executioner "The function decompress did not receive a valid path to the compressed file. The path ${dir_name}/${file_name} does not exist" "ERROR"
   fi
   # Delete file. Now that it has been decompressed is just trash
   rm -f "${dir_name}/${file_name}"
@@ -467,8 +407,7 @@ download() {
         dir_name="$(echo "$2" | rev | cut -d "/" -f2- | rev)"
         file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
         if [ ! -d "${dir_name}" ]; then
-          output_proxy_executioner "echo ERROR: the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
-          exit
+          output_proxy_executioner "the directory passed is absolute but it is not a directory and its first subdirectory does not exist" "ERROR"
         fi
       fi
     else
@@ -483,8 +422,7 @@ download() {
           dir_name="${BIN_FOLDER}/$(echo "$2" | rev | cut -d "/" -f2- | rev)"
           file_name="$(echo "$2" | rev | cut -d "/" -f1 | rev)"
           if [ ! -d "${dir_name}" ]; then
-            output_proxy_executioner "echo ERROR: the directory passed is relative but it is not a directory and its first subdirectory does not exist" "${FLAG_QUIETNESS}"
-            exit
+            output_proxy_executioner "the directory passed is relative but it is not a directory and its first subdirectory does not exist" "ERROR"
           fi
         fi
       else
@@ -498,7 +436,7 @@ download() {
   # Check if it is cached
   if [ -f "${CACHE_FOLDER}/${file_name}" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
     cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
-    if [ "${EUID}" -eq 0 ]; then
+    if isRoot; then
         apply_permissions "${dir_name}/${file_name}"
     fi
   else  # Not cached or we do not use cache: we have to download
@@ -510,19 +448,19 @@ download() {
       # Move to cache folder to construct cache
       mv "${TEMP_FOLDER}/${file_name}" "${CACHE_FOLDER}/${file_name}"
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${CACHE_FOLDER}/${file_name}"
       fi
       # Copy file to the desired place of download
       cp "${CACHE_FOLDER}/${file_name}" "${dir_name}/${file_name}"
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${dir_name}/${file_name}"
       fi
     else
       # Move directly to the desired place of download
       mv "${TEMP_FOLDER}/${file_name}" "${dir_name}/${file_name}"
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
+      if isRoot; then
         apply_permissions "${dir_name}/${file_name}"
       fi
     fi
@@ -555,29 +493,388 @@ register_file_associations() {
       fi
     fi
   else
-    output_proxy_executioner "echo WARNING: ${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "${MIME_ASSOCIATION_PATH} is not present, so $2 cannot be associated to $1. Skipping..." "WARNING"
   fi
 }
 
 
-# - Description: Receives the file path of a file text which contents will be evaluated by this function to look for
-#   variables with the € format (€{variable}) and translate its symbol by the actual value in running memory.
-# - Permissions: Needs writing permission to the received file because it will be overwritten in place.
+# - Description: Returns the exec field from the received launcher keyname of the CURRENT_INSTALLATION_KEYNAME
+# - Permission: Does not need special permissions
 # - Arguments:
-#   * Argument 1: Absolute path to the file which will be parsed and its € variables translated.
-translate_variables()
+#   * Argument 1: launcher keyname
+dynamic_launcher_deduce_exec()
 {
-  if [ ! -f "$1" ]; then
-    output_proxy_executioner "echo WARNING: The file $1 is not present or is not accesible"
-    return
+  # Exec binariesinstalledpaths
+  local -r override_exec="${CURRENT_INSTALLATION_KEYNAME}_$1_exec"
+  local -r metadata_exec_temp="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[0]"
+  local -r metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
+
+  local chosen_exec=
+  if [ ! -z "${!override_exec}" ]; then
+    chosen_exec="${!override_exec}"
+  else
+    chosen_exec="${metadata_exec}"
   fi
-  detected_variables=($(grep -Eo "€{([A-Z]|[a-z]|_)*}" < "$1" | uniq))
-  for variable in "${detected_variables[@]}"; do
-    # Obtain only the variable name
-    real_variable_name="$(echo "${variable}" | cut -d "{" -f2 | cut -d "}" -f1)"
-    # Change variable for its real value
-    sed "s@${variable}@${!real_variable_name}@g" -i "$1"
-  done
+  echo "${chosen_exec}"
+}
+
+
+# - Description: Returns the relative path from the repository folder to the icon of the feature provided in argument 1
+# - Permission: Can be called as root or user
+# - Arguments:
+#   * Argument 1: Feature keyName
+readme_deduce_icon()
+{
+  if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.svg" ]; then
+    echo "/data/features/$1/$1.svg"
+  elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.png" ]; then
+    echo "/data/features/$1/$1.png"
+  else
+    echo "/.github/logo.png"
+  fi
+}
+
+
+# - Description: Returns the icon field (path to icon) from the received launcher keyname of the
+#   CURRENT_INSTALLATION_KEYNAME loaded in the CURRENT_INSTALLATION_FOLDER folder.
+# - Permission: Does need to create the icon in the CURRENT_INSTALLATION_FOLDER
+# - Arguments:
+#   * Argument 1: launcher keyname
+dynamic_launcher_deduce_icon()
+{
+  override_icon="${CURRENT_INSTALLATION_KEYNAME}_$1_icon"
+  metadata_icon="${CURRENT_INSTALLATION_KEYNAME}_icon"
+  create_folder "${CURRENT_INSTALLATION_FOLDER}"
+  if [ ! -z "${!override_icon}" ]; then
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!override_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
+    echo "${CURRENT_INSTALLATION_FOLDER}/${!override_icon}"
+  elif [ ! -z "${!metadata_icon}" ]; then
+    create_folder "${CURRENT_INSTALLATION_FOLDER}"
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!metadata_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+    apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
+    echo "${CURRENT_INSTALLATION_FOLDER}/${!metadata_icon}"
+  else
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" ]; then
+      create_folder "${CURRENT_INSTALLATION_FOLDER}"
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.png" "${CURRENT_INSTALLATION_FOLDER}"
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
+      echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.png"
+    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" ]; then
+      create_folder "${CURRENT_INSTALLATION_FOLDER}"
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.svg" "${CURRENT_INSTALLATION_FOLDER}"
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
+      echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.svg"
+    elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" ]; then
+      create_folder "${CURRENT_INSTALLATION_FOLDER}"
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.xpm" "${CURRENT_INSTALLATION_FOLDER}"
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
+      echo "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}.xpm"
+    else
+      create_folder "${CURRENT_INSTALLATION_FOLDER}"
+      cp "${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png" "${CURRENT_INSTALLATION_FOLDER}"
+      apply_permissions "${CURRENT_INSTALLATION_FOLDER}/logo.png"
+      echo "${CURRENT_INSTALLATION_FOLDER}/logo.png"
+    fi
+  fi
+}
+
+
+# - Description: Override .desktop Desktop launchers feature properties
+# - Permissions:
+# Argument 1: Launcher keyname
+get_dynamic_launcher() {
+  # feature name
+  override_name="${CURRENT_INSTALLATION_KEYNAME}_$1_name"
+  metadata_name="${CURRENT_INSTALLATION_KEYNAME}_name"
+  text="[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+NoDisplay=false"
+
+  if [ ! -z "${!override_name}" ]; then
+    text+=$'\n'"Name=${!override_name}"
+  else
+    text+=$'\n'"Name=${!metadata_name}"
+  fi
+
+  # Version
+  override_version="${CURRENT_INSTALLATION_KEYNAME}_$1_version"
+  metadata_version="${CURRENT_INSTALLATION_KEYNAME}_version"
+  if [ ! -z "${!override_version}" ]; then
+    text+=$'\n'"Version=${!override_version}"
+  else
+    text+=$'\n'"Version=${!metadata_version}"
+  fi
+
+  override_genericname_pointer="${CURRENT_INSTALLATION_KEYNAME}_$1_description"
+  metadata_genericname_pointer="${CURRENT_INSTALLATION_KEYNAME}_description"
+  if [ ! -z "${!override_genericname_pointer}" ]; then
+    text+=$'\n'"GenericName=${!override_genericname_pointer}"
+  else
+    text+=$'\n'"GenericName=${!metadata_genericname_pointer}"
+  fi
+
+  # Commentary
+  override_commentary="${CURRENT_INSTALLATION_KEYNAME}_$1_commentary"
+  metadata_commentary="${CURRENT_INSTALLATION_KEYNAME}_commentary"
+  if [ ! -z "${!override_commentary}" ]; then
+    text+=$'\n'"Comment=${!override_commentary}"
+  else
+    text+=$'\n'"Comment=${!metadata_commentary}"
+  fi
+
+  # Tags
+  override_tags="${CURRENT_INSTALLATION_KEYNAME}_$1_tags[@]"
+  metadata_tags="${CURRENT_INSTALLATION_KEYNAME}_tags[@]"
+  if [ ! -z "${!override_tags}" ]; then
+    text+=$'\n'"Keywords="
+    for tag_override in "${!override_tags}"; do
+      text+="${tag_override};"
+    done
+  else
+    text+=$'\n'"Keywords="
+    for tag_metadata in "${!metadata_tags}"; do
+      text+="${tag_metadata};"
+    done
+  fi
+  # Icon
+  local icon_temp=
+  icon_temp="$(dynamic_launcher_deduce_icon "$1")"
+  text+=$'\n'"Icon=${icon_temp}"
+
+  # Categories from systemcategories
+  override_systemcategories="${CURRENT_INSTALLATION_KEYNAME}_$1_systemcategories[@]"
+  metadata_systemcategories="${CURRENT_INSTALLATION_KEYNAME}_systemcategories[@]"
+  if [ ! -z "${!override_systemcategories}" ]; then
+    text+=$'\n'"Categories="
+    for category_override in "${!override_systemcategories}"; do
+      text+="${category_override};"
+    done
+  else
+    text+=$'\n'"Categories="
+    for category_metadata in "${!metadata_systemcategories}"; do
+      text+="${category_metadata};"
+    done
+  fi
+
+  # Exec and Tryexec from binariesinstalledpaths
+  local exec_temp=
+  exec_temp="$(dynamic_launcher_deduce_exec "$1")"
+  text+=$'\n'"Exec=${exec_temp}"
+  if echo "${exec_temp}" | grep -qE " " ; then
+    text+=$'\n'"TryExec=$(echo "${exec_temp}" | cut -d " " -f1)"
+  else
+    text+=$'\n'"TryExec=${exec_temp}"
+  fi
+
+  # Terminal by default is set to false, true if overridden
+  local -r override_terminal="${CURRENT_INSTALLATION_KEYNAME}_$1_terminal"
+  if [ ! -z "${!override_terminal}" ]; then
+    text+=$'\n'"Terminal=${!override_terminal}"
+  else
+    text+=$'\n'"Terminal=false"
+  fi
+
+  # Override mimetypes over associatedfiletypes
+  override_mime="${CURRENT_INSTALLATION_KEYNAME}_$1_mimetypes[@]"
+  metadata_mime="${CURRENT_INSTALLATION_KEYNAME}_associatedfiletypes[@]"
+  if [ ! -z "${!override_mime}" ]; then
+    text+=$'\n'"MimeType="
+    for mime_override in "${!override_mime}"; do
+      text+="${mime_override};"
+    done
+  else
+    text+=$'\n'"MimeType="
+    for mime_metadata in "${!metadata_mime}"; do
+      text+="${mime_metadata};"
+    done
+  fi
+
+  # Override start up notify over the default true
+  local -r override_notify="${CURRENT_INSTALLATION_KEYNAME}_$1_notify"
+  if [ ! -z "${!override_notify}" ]; then
+    text+=$'\n'"StartupNotify=${!override_notify}"
+  else
+    text+=$'\n'"StartupNotify=true"
+  fi
+
+  # Override Windows Manager Class over the default with the feature keyname
+  local -r override_windowclass="${CURRENT_INSTALLATION_KEYNAME}_$1_windowclass"
+  if [ ! -z "${!override_windowclass}" ]; then
+    text+=$'\n'"StartupWMClass=${!override_windowclass}"
+  else
+    text+=$'\n'"StartupWMClass=${CURRENT_INSTALLATION_KEYNAME}"
+  fi
+
+  # https://askubuntu.com/questions/1370616/whats-the-point-of-a-desktop-file-with-nodisplay-true
+  # Override nodisplay option over the default true
+  local -r override_nodisplay="${CURRENT_INSTALLATION_KEYNAME}_$1_nodisplay"
+  if [ ! -z "${!override_nodisplay}" ]; then
+    text+=$'\n'"NoDisplay=${!override_nodisplay}"
+  else
+    text+=$'\n'"NoDisplay=false"
+  fi
+
+  # https://unix.stackexchange.com/questions/491299/understanding-autostartcondition-key-in-desktop-files
+  # Override autostart condition over the default nothing
+  local -r override_autostartcondition="${CURRENT_INSTALLATION_KEYNAME}_$1_autostartcondition"
+  if [ ! -z "${!override_autostartcondition}" ]; then
+    text+=$'\n'"AutostartCondition=${!override_autostartcondition}"
+  fi
+
+  # //RF Maybe deprecated?
+  # Override the X-GNOME-AutoRestart over the default nothing
+  local -r override_autorestart="${CURRENT_INSTALLATION_KEYNAME}_$1_autorestart"
+  if [ ! -z "${!override_autorestart}" ]; then
+    text+=$'\n'"X-GNOME-AutoRestart=${!override_autorestart}"
+  fi
+
+  # //RF Maybe deprecated?
+  # Override the X-GNOME-AutoRestart over the default nothing
+  local -r override_autorestartdelay="${CURRENT_INSTALLATION_KEYNAME}_$1_autorestartdelay"
+  if [ ! -z "${!override_autorestartdelay}" ]; then
+    text+=$'\n'"X-GNOME-Autostart-Delay=${!override_autorestartdelay}"
+  fi
+
+  # //RF Maybe deprecated?
+  # Override the X-GNOME-AutoRestart over the default nothing
+  local -r overrideUbuntuGetText="${CURRENT_INSTALLATION_KEYNAME}_$1_ubuntuGetText"
+  if [ ! -z "${!overrideUbuntuGetText}" ]; then
+    text+=$'\n'"X-Ubuntu-Gettext-Domain=${!overrideUbuntuGetText}"
+  fi
+
+  # //RF Maybe deprecated?
+  # Override the OnlyShowIn over the default nothing
+  local -r overrideOnlyShowIn="${CURRENT_INSTALLATION_KEYNAME}_$1_OnlyShowIn[@]"
+  if [ ! -z "$(echo "${!overrideOnlyShowIn}")" ]; then
+    text+=$'\n'"OnlyShowIn="
+    for mime_override in "${!overrideOnlyShowIn}"; do
+      text+="${mime_override};"
+    done
+  fi
+
+  # XMultipleArgs  X-MultipleArgs=false
+  local -r overrideXMultipleArgs="${CURRENT_INSTALLATION_KEYNAME}_$1_XMultipleArgs"
+  if [ ! -z "${!overrideXMultipleArgs}" ]; then
+    text+=$'\n'"X-MultipleArgs=${!overrideXMultipleArgs}"
+  fi
+
+  # usesNotifications X-GNOME-UsesNotifications
+  local -r overrideusesNotifications="${CURRENT_INSTALLATION_KEYNAME}_$1_usesNotifications"
+  if [ ! -z "${!overrideusesNotifications}" ]; then
+    text+=$'\n'"X-GNOME-UsesNotifications=${!overrideusesNotifications}"
+  fi
+
+  # dBusActivatable DBusActivatable
+  local -r overridedBusActivatable="${CURRENT_INSTALLATION_KEYNAME}_$1_dBusActivatable"
+  if [ ! -z "${!overridedBusActivatable}" ]; then
+    text+=$'\n'"DBusActivatable=${!overridedBusActivatable}"
+  fi
+
+  # path Path
+  local -r overridepath="${CURRENT_INSTALLATION_KEYNAME}_$1_path"
+  if [ ! -z "${!overridepath}" ]; then
+    text+=$'\n'"Path=${!overridepath}"
+  fi
+
+  # protocols X-KDE-Protocols
+  local -r overrideprotocols="${CURRENT_INSTALLATION_KEYNAME}_$1_protocols"
+  if [ ! -z "${!overrideprotocols}" ]; then
+    text+=$'\n'"X-KDE-Protocols=${!overrideprotocols}"
+  fi
+
+  # Add actions for this particular launcher
+  override_actionkeynames="${CURRENT_INSTALLATION_KEYNAME}_$1_actionkeynames[@]"
+  if [ ! -z "$(echo "${!override_actionkeynames}" )" ]; then
+    text+=$'\n'"Actions="
+    for actionkeyname_override in "${!override_actionkeynames}"; do
+      text+="${actionkeyname_override};"
+    done
+
+    for actionkeyname_override in $(echo "${!override_actionkeynames}"); do
+      local actionkeyname_name="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_name"
+      local actionkeyname_exec="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_exec"
+      local actionkeyname_icon="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_icon"
+      local actionkeyname_onlyShowIn="${CURRENT_INSTALLATION_KEYNAME}_$1_${actionkeyname_override}_onlyShowIn"
+      text+=$'\n'$'\n'"[Desktop Action ${actionkeyname_override}]"
+      text+=$'\n'"Name=${!actionkeyname_name}"
+      text+=$'\n'"Exec=${!actionkeyname_exec}"
+      text+=$'\n'"OnlyShowIn=${!actionkeyname_onlyShowIn}"
+
+      local action_icon=""
+      local feature_icon_pointer="${CURRENT_INSTALLATION_KEYNAME}_icon"
+      if [ -z "${!actionkeyname_icon}" ]; then
+        if [ -z "${!feature_icon_pointer}" ]; then
+          cp "${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png" "${CURRENT_INSTALLATION_FOLDER}"
+          action_icon="${CURRENT_INSTALLATION_FOLDER}/logo.png"
+        else
+          cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!feature_icon_pointer}" "${CURRENT_INSTALLATION_FOLDER}"
+          action_icon="${CURRENT_INSTALLATION_FOLDER}/${!feature_icon_pointer}"
+        fi
+      else
+        cp "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!actionkeyname_icon}" "${CURRENT_INSTALLATION_FOLDER}"
+        action_icon="${CURRENT_INSTALLATION_FOLDER}/${!actionkeyname_icon}"
+      fi
+      text+=$'\n'"Icon=${action_icon}"
+    done
+  fi
+  text+=$'\n'
+  echo "${text}"
+}
+
+
+# - Description: Creates a Windows desktop launcher (an .ink file) using the provided launcherkeyname and the
+#   ${CURRENT_INSTALLATION_KEYNAME}
+# - Permissions: Can be executed as root or user. Needs to be able to write into ${HOME_FOLDER_WSL2}/Desktop, which in
+#   this environment is pointed by ${XDG_DESKTOP_DIR}
+# - Arguments:
+#    * Argument 1: Launcher key name from which we will obtain information of this launcher
+#    * Argument 2: suffix anticollision. To not overwrite files by having the same name if the current installation has
+#      more than one desktop launcher.
+create_WSL2_dynamic_launcher() {
+  # Deduce exec field of the launcher
+  local exec_command="$(dynamic_launcher_deduce_exec "$1")"
+  if echo "${exec_command}" | tr -s " " | cut -d " " -f2 | grep -qE "^%"; then
+    exec_command="$(echo "${exec_command}" | tr -s " " |  cut -d " " -f1)"
+  fi
+
+  # Deduce icon field of the launcher
+  local -r icon_path="$(dynamic_launcher_deduce_icon "$1")"
+
+  # Ensure convert dependency is present
+  if ! which convert &>/dev/null; then
+    if ! isRoot; then
+      echo "ERROR: Icon could not be created due to convert is not installed, install it or run again with sudo"
+      return
+    else
+      "${PACKAGE_MANAGER_INSTALL}" imagemagick
+    fi
+  fi
+  # Convert icon from customizer project to .ico
+  mkdir -p "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}"
+  convert -background none -define icon:auto-resize="256,128,96,64,48,32,24,16" "${icon_path}" "${HOME_FOLDER_WSL2}/.customizer/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}$2.ico"
+
+  # Content of the vbs script that will be executed from Windows cscript.exe to create a shortcut to our command to
+  # execute the binary. This .vbs script is the one that creates the final .ink file using the binary to execute, the
+  # icon path, the working directory (the current installation folder) and the position of the .ink, which will be the
+  # Windows Desktop folder.
+  cmdscript_content="
+Set oWS = WScript.CreateObject(\"WScript.Shell\")
+sLinkFile = \"C:\\Users\\${WSL2_USER}\\Desktop\\${CURRENT_INSTALLATION_KEYNAME}$2.lnk\"
+Set oLink = oWS.CreateShortcut(sLinkFile)
+oLink.TargetPath = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")\"
+oLink.IconLocation = \"C:\\Users\\${WSL2_USER}\\.customizer\\${CURRENT_INSTALLATION_KEYNAME}\\${CURRENT_INSTALLATION_KEYNAME}$2.ico\"
+oLink.WorkingDirectory = \"\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}")\"
+oLink.Save
+"
+  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${cmdscript_content}"
+  /mnt/c/windows/system32/cscript.exe /nologo "\\\\wsl.localhost\\${WSL2_SUBSYSTEM}$(convert_to_windows_path "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs")"
+    # Content of the file that will be executing the WSL2 linux executable from Windows, create it in the
+  local -r vbscript_content="set shell = CreateObject(\"WScript.Shell\")
+comm = \"wsl bash -c 'source ${FUNCTIONS_PATH}; nohup ${exec_command} &>/dev/null'\"
+shell.Run comm,0"
+  create_file "${CURRENT_INSTALLATION_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.vbs" "${vbscript_content}"
 }
 
 
@@ -586,26 +883,71 @@ translate_variables()
 ########################################################################################################################
 
 
-# - Description: Expands launcher contents and add them to the desktop and dashboard.
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_launchercontents
-#   and the name of the first argument in the common_data.sh table
-generic_install_manual_launchers() {
-  local -r launchercontents="$1_launchercontents[@]"
-  local name_suffix_anticollision=""
-  for launchercontent in "${!launchercontents}"; do
-    create_manual_launcher "${launchercontent}" "$1${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+# - Description: Create a dynamic launcher for each keyname
+# - Permissions: Does not need any permission.
+generic_install_dynamic_launcher() {
+
+  local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
+  local name_suffix_anticollision=$(get_next_collisioner)
+
+  # If it does not have launcher keynames, end function and do nothing
+  if [ ! -n "$(echo "${!launcherkeynames}")" ]; then
+    return
+  fi
+
+  # If the FLAG_AUTOSTART is active, we set it as not attended, which means that we need to ensure an autostart launcher
+  # via any method
+  local is_autostart_attended=
+  if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
+    is_autostart_attended=0
+  else
+    is_autostart_attended=1
+  fi
+
+  # Iterate through all the available launchers of the feature
+  for launcherkeyname in "${!launcherkeynames}"; do
+    autostart_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_autostart"  # Get pointer to autostart property
+    if [ "${!autostart_pointer}" == "yes" ]; then
+      # Create an autostart launcher
+      current_launcher="$(get_dynamic_launcher "${launcherkeyname}")"
+      create_file "${AUTOSTART_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop" "${current_launcher}"
+      is_autostart_attended=1  # Mark the autostart flag as attended, since we just created a launcher autostart
+    else
+      # Create a normal launcher in the desktop
+      current_launcher="$(get_dynamic_launcher "${launcherkeyname}")"
+      create_manual_launcher "${current_launcher}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
+    fi
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
+  done
+
+  if [ "${is_autostart_attended}" -eq 1 ]; then
+    return
+  fi
+
+  # Implicitly this feature has no autostart launcher, choosing the first one arbitrarily
+  local -r first_launcher_keyname="$(echo "${!launcherkeynames}" | cut -d ' ' -f1)"
+  create_file "${AUTOSTART_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop" "$(get_dynamic_launcher "${first_launcher_keyname}")"
+}
+
+
+# - Description: Creates a WSL2 dynamic desktop launcher for each keyname
+# - Permissions: Does not need any permission
+generic_install_WSL2_dynamic_launcher() {
+  local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
+  local name_suffix_anticollision=$(get_next_collisioner)
+
+  for launcherkeyname in "${!launcherkeynames}"; do
+    create_WSL2_dynamic_launcher "${launcherkeyname}" "${name_suffix_anticollision}"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
 
 # - Description: Expands launcher names and add them to the favorites subsystem if FLAG_FAVORITES is set to 1.
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_launchernames
-#   and the name of the first argument in the common_data.sh table.
+# TODO refactor
 generic_install_favorites() {
-  local -r launchernames="$1_launchernames[@]"
+  local -r launchernames="${CURRENT_INSTALLATION_KEYNAME}_launchernames[@]"
 
   # To add to favorites if the flag is set
   if [ "${FLAG_FAVORITES}" == "1" ]; then
@@ -614,7 +956,7 @@ generic_install_favorites() {
         add_to_favorites "${launchername}"
       done
     else
-      add_to_favorites "$1"
+      add_to_favorites "${CURRENT_INSTALLATION_KEYNAME}"
     fi
   fi
 }
@@ -622,16 +964,14 @@ generic_install_favorites() {
 
 # - Description: Expands file associations and register the desktop launchers as default application's mimetypes
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_associatedfiletypes
-#   and the name of the first argument in the common_data.sh table.
 generic_install_file_associations() {
-  local -r associated_file_types="$1_associatedfiletypes[@]"
+  local -r associated_file_types="${CURRENT_INSTALLATION_KEYNAME}_associatedfiletypes[@]"
   for associated_file_type in ${!associated_file_types}; do
     if echo "${associated_file_type}" | grep -Fo ";"; then
       local associated_desktop=
       associated_desktop="$(echo "${associated_file_type}" | cut -d ";" -f2)"
     else
-      local associated_desktop="$1"
+      local associated_desktop="${CURRENT_INSTALLATION_KEYNAME}"
     fi
     register_file_associations "${associated_file_type}" "${associated_desktop}.desktop"
   done
@@ -640,10 +980,8 @@ generic_install_file_associations() {
 
 # - Description: Expands keybinds for functions and programs and append to keybind sub-system
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_keybinds
-#   and the name of the first argument in the common_data.sh table
 generic_install_keybindings() {
-  local -r keybinds="$1_keybindings[@]"
+  local -r keybinds="${CURRENT_INSTALLATION_KEYNAME}_keybindings[@]"
   for keybind in "${!keybinds}"; do
     local command=
     command="$(echo "${keybind}" | cut -d ";" -f1)"
@@ -656,49 +994,6 @@ generic_install_keybindings() {
 }
 
 
-# - Description: Expands downloads and saves it to BIN_FOLDER/FEATUREKEYNAME/NAME_OF_DOWNLOADED_FILE_i
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_downloads
-#   and the name of the first argument in the common_data.sh table
-generic_install_downloads() {
-  local -r downloads="$1_downloads[@]"
-  for each_download in ${!downloads}; do
-    create_folder "${BIN_FOLDER}/$1"
-    local -r url="$(echo "${each_download}" | cut -d ";" -f1)"
-    local -r name="$(echo "${each_download}" | cut -d ";" -f2)"
-    download "${url}" "${BIN_FOLDER}/$1/${name}"
-  done
-}
-
-
-# - Description: Expands autostarting program option if set to 'yes' it'll expand launcher names to autostart
-# - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_autostart
-#   and associating it to all the launchers in $1_launchernames
-generic_install_autostart() {
-  local -r launchernames="$1_launchernames[@]"
-  local -r autostartlaunchers_pointer="$1_autostartlaunchers[@]"
-  if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
-    # If we have autostart launchers use them
-    if [ -n "${!autostartlaunchers_pointer-}" ]; then
-      local name_suffix_anticollision=""
-      for autostartlauncher in "${!autostartlaunchers_pointer}"; do
-        create_file "${AUTOSTART_FOLDER}/$1${name_suffix_anticollision}.desktop" "${autostartlauncher}"
-        name_suffix_anticollision="${name_suffix_anticollision}_"
-      done
-    # If not use the launchers that are already in the system
-    elif [ -n "${!launchernames-}" ]; then
-      for launchername in ${!launchernames}; do
-        autostart_program "${launchername}"
-      done
-    # Fallback to keyname to try if there is a desktop launcher in the system
-    else
-      autostart_program "$1"
-    fi
-  fi
-}
-
-
 # - Description: Expands $1_binariesinstalledpaths which contain the relative path
 #   from the installation folder or the absolute path separated by ';' with the name
 #   of the link created in PATH.
@@ -706,17 +1001,17 @@ generic_install_autostart() {
 # - Argument 1: Name of the feature to install, matching the variable $1_binariesinstalledpaths
 generic_install_pathlinks() {
   # Path to the binaries to be added, with a ; with the desired name in the path
-  local -r binariesinstalledpaths="$1_binariesinstalledpaths[@]"
+  local -r binariesinstalledpaths="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[@]"
   for binary_install_path_and_name in ${!binariesinstalledpaths}; do
     local binary_path=
     binary_path="$(echo "${binary_install_path_and_name}" | cut -d ";" -f1)"
     local binary_name=
     binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
     # Absolute path
-    if echo "${binary_name}" | grep -Eqo "^/"; then
+    if echo "${binary_path}" | grep -Eqo "^/"; then
       create_links_in_path "${binary_path}" "${binary_name}"
     else
-      create_links_in_path "${BIN_FOLDER}/$1/${binary_path}" "${binary_name}"
+      create_links_in_path "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${binary_path}" "${binary_name}"
     fi
   done
 }
@@ -735,66 +1030,158 @@ generic_install_copy_launcher() {
   done
 }
 
+# Description: Add a gpg signature to GPG_TRUSTED_FOLDER from an URL
+# Permissions: Can only be executed as root.
+# Argument 1: URL of the gpg signature file
+# Argument 2: suffix_anticollision
+add_gpgSignature() {
+  download "$1" "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.gpg"
+  gpg --dearmor < "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.gpg" > "${GPG_TRUSTED_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.gpg"
+  remove_file "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.gpg"
+}
+
+# Description: Iterates into urls of gpg keys to add them to GPG_TRUSTED_FOLDER
+# Permissions: Can only be executed as root
+generic_install_gpgSignatures() {
+  # TODO: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg)
+  if ! isRoot; then
+    return
+  fi
+
+  local -r gpgSignatures="${CURRENT_INSTALLATION_KEYNAME}_gpgSignatures[@]"
+  local collision=$(get_next_collisioner)
+  for sign in ${!gpgSignatures}; do
+    add_gpgSignature "${sign}" "${collision}"
+    collision=$(get_next_collisioner "${collision}")
+  done
+  ${PACKAGE_MANAGER_UPDATE}
+}
+
+# Description: Add apt source to APT_SOURCES_LIST_FOLDER/{aptSourceName}.list from an URL
+# Permissions: Can only be executed as root.
+# Argument 1: URL of the apt source
+# Argument 2: suffix_anticollision
+add_source() {
+  echo "$1" > "${APT_SOURCES_LIST_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}$2.list"
+}
+
+# Description: Iterates into urls of apt keys to add them to APT_SOURCES_LIST_FOLDER/{aptSourceName}.list
+# Permissions: Can only be executed as root
+generic_install_sources() {
+  if ! isRoot; then
+    return
+  fi
+
+  local -r sources="${CURRENT_INSTALLATION_KEYNAME}_sources[@]"
+  local collision=$(get_next_collisioner)
+  for sign in "${!sources}"; do
+    add_source "${sign}" "${collision}"
+    collision=$(get_next_collisioner "${collision}")
+  done
+  ${PACKAGE_MANAGER_UPDATE}
+}
 
 # - Description: Expands function system initialization relative to ${HOME_FOLDER}/.profile
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_bashinitializations
-#   and the name of the first argument in the common_data.sh table
 generic_install_initializations() {
-  local -r bashinitializations="$1_bashinitializations[@]"
-  local name_suffix_anticollision=""
+  local -r bashinitializations="${CURRENT_INSTALLATION_KEYNAME}_bashinitializations[@]"
+  local name_suffix_anticollision=$(get_next_collisioner)
   for bashinit in "${!bashinitializations}"; do
     if [[ "${bashinit}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
       add_bash_initialization "${bashinit}" "$1${name_suffix_anticollision}.sh"
+    elif ! echo "${bashinit}" | grep -Eq "/"; then
+      # Only one line we guess it is a partial path
+      add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${bashinit}"
     else
-      add_bash_initialization "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashinit}"
+      add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashinit}"
     fi
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
 
 # - Description: Expands function contents and add them to .bashrc indirectly using bash_functions
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_bashfunctions
-#   and the name of the first argument in the common_data.sh table
 generic_install_functions() {
-  local -r bashfunctions="$1_bashfunctions[@]"
-  local name_suffix_anticollision=""
+  local -r bashfunctions="${CURRENT_INSTALLATION_KEYNAME}_bashfunctions[@]"
+  local name_suffix_anticollision=$(get_next_collisioner)
   for bashfunction in "${!bashfunctions}"; do
     if [[ "${bashfunction}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
-      add_bash_function "${bashfunction}" "$1${name_suffix_anticollision}.sh"
-    else
+      add_bash_function "${bashfunction}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
+    elif [ "${bashfunction}" == "silentFunction" ]; then
+      local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
+      local selectedKeyname=
+      for launcherkeyname in "${!launcherkeynames}"; do
+        autostart_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_autostart"
+        terminal_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_terminal"
+        if [ "${!autostart_pointer}" != "yes" ] && [ "${!terminal_pointer}" != "true" ]; then
+          selectedKeyname="${launcherkeyname}"
+          break
+        fi
+      done
+      if [ -z "${selectedKeyname}" ]; then
+        continue
+      fi
+
+      local silent_exec="$(dynamic_launcher_deduce_exec "${selectedKeyname}")"
+      local -r silent_exec_first_word="$(echo "${silent_exec}" | cut -d " " -f1)"
+      if [ "${silent_exec_first_word}" == "bash" ] || [ "${silent_exec_first_word}" == "nohup" ]; then
+        silent_exec="$(echo "${silent_exec}" | cut -d " " -f2)"
+        if echo "${silent_exec}" | grep -Eq "/"; then
+          silent_exec="$(echo "${silent_exec}" | rev | cut -d "/" -f1 | rev | cut -d "." -f1)"
+        fi
+      elif ! echo "${silent_exec}" | grep -Eq "/"; then
+        silent_exec="$(echo "${silent_exec}" | cut -d " " -f1)"
+      else
+        local -r binariesPointer="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[0]"
+        if [ ! -z "$(echo "${!binariesPointer}")" ]; then
+          silent_exec="$(echo "${!binariesPointer}" | cut -d ";" -f2)"
+        else
+          # We do not have any info so we expect the keyname to be the binary
+          silent_exec="${CURRENT_INSTALLATION_KEYNAME}"
+        fi
+      fi
+
+      local -r silent_function="#!/usr/bin/env bash
+${silent_exec}()
+{
+  nohup ${silent_exec} \$@ &> /dev/null &
+}
+"
+      add_bash_function "${silent_function}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
+
+    elif ! echo "${bashfunction}" | grep -Eq "/"; then
       # Only one line we guess it is a partial path
-      add_bash_function "" "$1${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
+      add_bash_function "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${bashfunction}"
+    else
+      add_bash_function "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashfunction}"
     fi
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
 
-# - Description: Expands $1_filekeys to obtain the keys which are a name of a variable
+# - Description: Expands ${CURRENT_INSTALLATION_KEYNAME}_filekeys to obtain the keys which are a name of a variable
 #   that has to be expanded to obtain the data of the file.
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_filekeys
 generic_install_files() {
-  local -r filekeys="$1_filekeys[@]"
+  local -r filekeys="${CURRENT_INSTALLATION_KEYNAME}_filekeys[@]"
   for filekey in "${!filekeys}"; do
-    local content="$1_${filekey}_content"
-    local path="$1_${filekey}_path"
+    local content="${CURRENT_INSTALLATION_KEYNAME}_${filekey}_content"
+    local path="${CURRENT_INSTALLATION_KEYNAME}_${filekey}_path"
     if echo "${!path}" | grep -Eqo "^/"; then
       local destiny_path="${!path}"
     else
-      local destiny_path="${BIN_FOLDER}/$1/${!path}"
+      local destiny_path="${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${!path}"
     fi
     if [[ "${!content}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
       create_file "${destiny_path}" "${!content}"
     else
       # Only one line we guess it is a path
-      create_file "${destiny_path}" "" "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${CURRENT_INSTALLATION_KEYNAME}/${!content}"
+      create_file "${destiny_path}" "" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!content}"
     fi
   done
 }
@@ -802,9 +1189,8 @@ generic_install_files() {
 
 # - Description: Expands function system initialization relative to moving files
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the variable $1_movefiles
 generic_install_movefiles() {
-  local -r movefiles="$1_movefiles[@]"
+  local -r movefiles="${CURRENT_INSTALLATION_KEYNAME}_movefiles[@]"
   local origin_files=""
   local destiny_directory=""
   for movedata in "${!movefiles}"; do
@@ -812,15 +1198,15 @@ generic_install_movefiles() {
     destiny_directory="$(echo "${movedata}" | cut -d ";" -f2)"
     create_folder "${destiny_directory}"
     if echo "${origin_files}" | grep -q '\*' ; then
-      for filename in "${BIN_FOLDER}/$1/"${origin_files}; do
+      for filename in "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/"${origin_files}; do
         mv -f "${filename}" "${destiny_directory}"
-        if [ ${EUID} -eq 0 ]; then
+        if isRoot; then
           apply_permissions "${filename}"
         fi
       done
     else
-      mv "${BIN_FOLDER}/$1/${origin_files}" "${destiny_directory}"
-      if [ ${EUID} -eq 0 ]; then
+      mv "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${origin_files}" "${destiny_directory}"
+      if isRoot; then
         apply_permissions "${destiny_directory}/${origin_files}"
       fi
     fi 
@@ -830,16 +1216,20 @@ generic_install_movefiles() {
 
 # - Description: Expands dependency installation
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the array $1_packagedependencies
 generic_install_dependencies() {
+  if [ "${FLAG_IGNORE_DEPENDENCIES}" -eq 1 ]; then
+    return
+  fi
+
   # Other dependencies to install with the package manager before the main package of software if present
-  local -r packagedependencies="$1_packagedependencies[*]"
-  if [ "${EUID}" -ne 0 ]; then
+  local -r packagedependencies="${CURRENT_INSTALLATION_KEYNAME}_packagedependencies[*]"
+  if ! isRoot; then
     if [ -n "${!packagedependencies}" ]; then
-      output_proxy_executioner "echo WARNING: $1 has this dependencies: ${!packagedependencies} but are not going to be installed because you are not root. To install them, rerun installation with sudo." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "${CURRENT_INSTALLATION_KEYNAME} has this dependencies to install with the package manager: ${!packagedependencies} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
       return
     fi
   fi
+
   # Install dependency packages
   for packagedependency in ${!packagedependencies}; do
     ${PACKAGE_MANAGER_FIXBROKEN}
@@ -850,136 +1240,203 @@ generic_install_dependencies() {
 
 # - Description: Clones a repository in the desired place and caches it if the bit is active.
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Keyname of the feature to install
-# - Argument 2: URL to clone
+# - Argument 1: URL to clone
 generic_install_clone() {
    # Check if it is cached
-  if [ -d "${CACHE_FOLDER}/$1_repository" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
-    rm -Rf "${BIN_FOLDER:?}/$1"
-    cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
-    if [ "${EUID}" -eq 0 ]; then
-      apply_permissions_recursively "${BIN_FOLDER}/$1"
+  if [ -d "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" ] && [ "${FLAG_CACHE}" -eq 1 ]; then
+    rm -Rf "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
+    cp -r "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
+    if isRoot; then
+      apply_permissions_recursively "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
     fi
   else  # Not cached or we do not use cache: we have to download
 
-    rm -Rf "${TEMP_FOLDER}/$1_repository"
-    create_folder "${TEMP_FOLDER}/$1_repository"
+    rm -Rf "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
+    create_folder "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
 
     echo -en '\033[1;33m'
-    git clone "$2" "${TEMP_FOLDER}/$1_repository"
+    git clone "$1" "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
     echo -en '\033[0m'
 
     if [ "${FLAG_CACHE}" -eq 1 ]; then
       # Move to cache folder to construct cache
-      rm -Rf "${CACHE_FOLDER}/$1_repository"
-      cp -r "${TEMP_FOLDER}/$1_repository" "${CACHE_FOLDER}"
-      rm -Rf "${TEMP_FOLDER}/$1_repository"
+      rm -Rf "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
+      cp -r "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" "${CACHE_FOLDER}"
+      rm -Rf "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
-        apply_permissions_recursively "${CACHE_FOLDER}/$1_repository"
+      if isRoot; then
+        apply_permissions_recursively "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
       fi
 
       # Avoid collisions
-      rm -Rf "${BIN_FOLDER:?}/$1"
+      rm -Rf "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
       # Copy file to the desired place of download
-      cp -r "${CACHE_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
-      if [ "${EUID}" -eq 0 ]; then
-        apply_permissions_recursively "${BIN_FOLDER}/$1"
+      cp -r "${CACHE_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
+      if isRoot; then
+        apply_permissions_recursively "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
       fi
     else
       # Move directly to the desired place of download
-      rm -Rf "${BIN_FOLDER:?}/$1"
-      cp -r "${TEMP_FOLDER}/$1_repository" "${BIN_FOLDER}/$1"
+      rm -Rf "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
+      cp -r "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository" "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
       # Do not construct cache
-      rm -Rf "${TEMP_FOLDER}/$1_repository"
+      rm -Rf "${TEMP_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}_repository"
 
       # If we are root change permissions
-      if [ "${EUID}" -eq 0 ]; then
-        apply_permissions_recursively "${BIN_FOLDER}/$1"
+      if isRoot; then
+        apply_permissions_recursively "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
       fi
     fi
   fi
 }
 
 
-# - Description: Downloads a .deb package temporarily into BIN_FOLDER from the provided link and installs it using
-#   dpkg -i.
-# - Permissions: This functions needs to be executed as root: dpkg -i is an instruction that precises privileges.
-# - Argument 1: Link to the package file to download.
-# - Argument 2 (Optional): Tho show the name of the program downloading and thus change the name of the downloaded
-#   package.
-download_and_install_package() {
-  if [ -z "$2" ]; then
-    local file_name="${RANDOM}_package_file"
-  else
-    local file_name="$2"
+# - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER which corresponds to the the preferred package
+#   manager depending on the operating system.
+# - Permissions: Expected to be run by root user.
+generic_install_packageManager() {
+  # Name of the package names to be installed with the package manager if present
+  local -r packagenames="${CURRENT_INSTALLATION_KEYNAME}_packagenames[@]"
+  if ! isRoot; then
+    if [ ! -z "${!packagenames}" ]; then
+      output_proxy_executioner "${CURRENT_INSTALLATION_KEYNAME} needs to install the following packages using the package manager: ${!packagenames} but they are not going to be installed because you are not root. To install them, rerun installation with sudo." "WARNING"
+      return
+    fi
   fi
-  download "$1" "${BIN_FOLDER}/${file_name}"
-
-  local mime_type=
-  mime_type="$(mimetype "${BIN_FOLDER}/${file_name}" | cut -d ":" -f2 | tr -d " ")"
-  case "${mime_type}" in
-    "application/zip"|"application/x-bzip-compressed-tar"|"application/gzip"|"application/x-xz")
-      decompress "${BIN_FOLDER}/${file_name}" "${file_name}_decompressed"  # Decompressing
-      ${PACKAGE_MANAGER_FIXBROKEN}
-      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${BIN_FOLDER}/$1"  # Notice the S at the end of this variable...
-      ${PACKAGE_MANAGER_FIXBROKEN}
-      # Remove decompressed folder that contains the installable packages
-      rm -Rf "${BIN_FOLDER:?}/${file_name}_decompressed"
-    ;;
-    "application/vnd.debian.binary-package")
-      ${PACKAGE_MANAGER_FIXBROKEN}
-      ${PACKAGE_MANAGER_INSTALLPACKAGE} "${BIN_FOLDER}/${file_name}"  # ...is not the same as this variable.
-      ${PACKAGE_MANAGER_FIXBROKEN}
-    ;;
-    *)
-      output_proxy_executioner "echo ERROR: ${mime_type} is not a recognised mime type for the package file in ${dir_name}/${file_name}" "${FLAG_QUIETNESS}"
-      exit 1
-    ;;
-  esac
+  for packagename in ${!packagenames}; do
+    ${PACKAGE_MANAGER_FIXBROKEN}
+    ${PACKAGE_MANAGER_INSTALL} "${packagename}"
+    ${PACKAGE_MANAGER_FIXBROKEN}
+  done
 }
-
 
 ########################################################################################################################
 ################################## GENERIC INSTALL FUNCTIONS - INSTALLATION TYPES ######################################
 ########################################################################################################################
 
-# - Description: Installs packages using the default low-level package installation transparently. In the case of
-#   apt-get it will be dpkg, and in the case of yum it will be rpm.
-# - Permissions: Expected to be run by root.
-# - Argument 1: String that matches a set of variables in data_features.
-packageinstall_installation_type() {
-  local -r packageurls="$1_packageurls[@]"
-  local name_suffix_anticollision=""
-  for packageurl in "${!packageurls}"; do
-    download_and_install_package "${packageurl}" "$1_package_file${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
-  done
+# Argument 1: download key
+# Argument 2: anticollisioner
+generic_install_download()
+{
+  local -r pointer_url="${CURRENT_INSTALLATION_KEYNAME}_$1_URL"
+  local -r pointer_type="${CURRENT_INSTALLATION_KEYNAME}_$1_type"
+  local -r pointer_downloadPath="${CURRENT_INSTALLATION_KEYNAME}_$1_downloadPath"
 
+
+  local defaultName="${CURRENT_INSTALLATION_KEYNAME}_$1_file"
+  local defaultpath="${BIN_FOLDER}"
+  if [ -n "${!pointer_downloadPath}" ]; then
+    if echo "${!pointer_downloadPath}" | grep -Eq "/\$"; then
+      # Is a folder ending with /
+      defaultpath="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f1- | rev)"
+    elif echo "${!pointer_downloadPath}" | grep -Eq "^/"; then
+      defaultpath="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f2- | rev)"
+      defaultName="$(echo "${!pointer_downloadPath}" | rev | cut -d "/" -f1 | rev)"
+    elif ! echo "${!pointer_downloadPath}" | grep -Eq "/"; then
+      defaultName="${!pointer_downloadPath}"
+      defaultpath="${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
+    fi
+  fi
+
+  create_folder "${defaultpath}"
+  download "${!pointer_url}" "${defaultpath}/${defaultName}"
+
+  if [ -n "${!pointer_type}" ]; then
+    case "${!pointer_type}" in
+      "compressed")
+        # Setting the mime_type as an arbitrary compressed file so it enters in the correct case
+        local mime_type="application/zip"
+      ;;
+      "package")
+        local true_mime="$(file --mime-type "${defaultpath}/${defaultName}" | cut -d ":" -f2 | tr -d " ")"
+        if [ "${true_mime}" == "application/zip" ] || [ "${true_mime}" == "application/x-bzip-compressed-tar" ] || [ "${true_mime}" == "application/x-bzip2" ] || [ "${true_mime}" == "application/gzip" ] || [ "${true_mime}" == "application/x-xz" ]; then
+          local mime_type="packageInCompressed"
+        else
+          local mime_type="application/vnd.debian.binary-package"
+        fi
+      ;;
+      *)
+        # Fill with some value different of a mimetype so it goes to a regular file
+        local mime_type="somethingElse"
+      ;;
+    esac
+  else
+    mime_type="$(file --mime-type "${defaultpath}/${defaultName}" | cut -d ":" -f2 | tr -d " ")"
+  fi
+
+  case "${mime_type}" in
+    "application/zip" | "application/x-bzip-compressed-tar" | "application/x-bzip2" | "application/gzip" | "application/x-xz")
+      local pointer_doNotInherit="${CURRENT_INSTALLATION_KEYNAME}_$1_doNotInherit"
+      if [ -n "${!pointer_doNotInherit}" ]; then
+        decompress "${defaultpath}/${defaultName}"
+        apply_permissions_recursively "${defaultpath}"
+      else
+        decompress "${defaultpath}/${defaultName}" "${CURRENT_INSTALLATION_KEYNAME}$2"
+        apply_permissions_recursively "${defaultpath}/${CURRENT_INSTALLATION_KEYNAME}$2"
+      fi
+    ;;
+    "application/vnd.debian.binary-package")
+      ${PACKAGE_MANAGER_FIXBROKEN}
+      ${PACKAGE_MANAGER_INSTALLPACKAGE} "${defaultpath}/${defaultName}"  # Notice that this variable is not the same as the next
+      ${PACKAGE_MANAGER_FIXBROKEN}
+    ;;
+    "packageInCompressed")
+      decompress "${defaultpath}/${defaultName}" "${defaultName}_decompressed"
+      ${PACKAGE_MANAGER_FIXBROKEN}
+      ${PACKAGE_MANAGER_INSTALLPACKAGES} "${defaultpath}/${defaultName}_decompressed"  # Notice the S at the end of this variable...
+      ${PACKAGE_MANAGER_FIXBROKEN}
+      # Remove decompressed folder that contains the installable packages
+      rm -Rf "${defaultpath}/${defaultName}_decompressed"
+    ;;
+    *)
+      # Move only if we are not overriding the download path. We do it like this because if not we can not decompress
+      if [ -z "${!pointer_downloadPath}" ]; then
+        rm -Rf "${CURRENT_INSTALLATION_FOLDER}"
+        create_folder "${CURRENT_INSTALLATION_FOLDER}"
+        mv "${defaultpath}/${defaultName}" "${CURRENT_INSTALLATION_FOLDER}"
+      fi
+    ;;
+  esac
 }
+
+
+# - Description: Downloads
+# - Permissions: Can be executed as root or user, but if a downloaded file requires package installation the function
+#   needs to be run as root.
+generic_install_downloads() {
+  local -r downloads="${CURRENT_INSTALLATION_KEYNAME}_downloadKeys[@]"
+  local name_suffix_anticollision=$(get_next_collisioner)
+  for each_download in ${!downloads}; do
+    generic_install_download "${each_download}" "${name_suffix_anticollision}"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
+  done
+}
+
 
 # - Description: Installs packages using python environment.
 # - Permissions: It is expected to be called as user.
-# - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
-#   installation data.
-pythonvenv_installation_type() {
-  rm -Rf "${BIN_FOLDER:?}/$1"
-  python3 -m venv "${BIN_FOLDER}/$1"
-  "${BIN_FOLDER}/$1/bin/python3" -m pip install -U pip
-  "${BIN_FOLDER}/$1/bin/pip" install wheel
+generic_install_pythonVirtualEnvironment() {
+  local -r pipinstallations="${CURRENT_INSTALLATION_KEYNAME}_pipinstallations[@]"
+  local -r pythoncommands="${CURRENT_INSTALLATION_KEYNAME}_pythoncommands[@]"
+  if [ -z "$(echo "${!pipinstallations}")" ] && [ -z "$(echo "${!pythoncommands}")" ]; then
+    return
+  fi
 
-  local -r pipinstallations="$1_pipinstallations[@]"
-  local -r pythoncommands="$1_pythoncommands[@]"
-  for pipinstallation in ${!pipinstallations}; do
-    "${BIN_FOLDER}/$1/bin/pip" install "${pipinstallation}"
+  python3 -m venv "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}"
+  "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m pip install -U pip
+  "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install wheel
+
+  for pipinstallation in "${!pipinstallations}"; do
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install "${pipinstallation}"
   done
+
   for pythoncommand in "${!pythoncommands}"; do
-    "${BIN_FOLDER}/$1/bin/python3" -m "${pythoncommand}"
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m "${pythoncommand}"
   done
 
   # If we are root change permissions
-  if [ "${EUID}" -eq 0 ]; then
-    apply_permissions_recursively "${BIN_FOLDER:?}/$1"
+  if isRoot; then
+    apply_permissions_recursively "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
   fi
 }
 
@@ -988,58 +1445,22 @@ pythonvenv_installation_type() {
 # - Permissions: It is expected to be called as user.
 # - Argument 1: Name of the program that we want to install, which will be the variable that we expand to look for its
 #   installation data.
-repositoryclone_installation_type() {
-  local -r repositoryurl="$1_repositoryurl"
-  generic_install_clone "$1" "${!repositoryurl}"
-}
-
-
-
-# - Description: Installs packages using $DEFAULT_PACKAGE_MANAGER
-# - Permissions: Expected to be run by normal user.
-# - Argument 1: String that matches a variable in data_features.
-packagemanager_installation_type() {
-  # Name of the package names to be installed with the package manager if present
-  local -r packagenames="$1_packagenames[@]"
-
-  for packagename in ${!packagenames}; do
-    ${PACKAGE_MANAGER_INSTALL} "${packagename}"
-    ${PACKAGE_MANAGER_FIXBROKEN}
-  done
-}
-
-
-# - Description: Download a file into BIN_FOLDER, decompress it assuming that there is a directory inside it.
-# - Permissions: Expected to be run by normal user.
-# - Argument 1: String that matches a set of variables in data_features.
-userinherit_installation_type() {
-  # Declare name of variables for indirect expansion
-
-  # Files to be downloaded that have to be decompressed
-  local -r compressedfileurl="$1_compressedfileurl"
-  # All decompression type options for each compressed file defined
-  local -r compressedfiletype="$1_compressedfiletype"
-  # Obtain override download location if present
-  local -r compressedfilepathoverride="$1_compressedfilepathoverride"
-  # Pointer for expanding inheritance
-  local -r donotinherit_pointer="$1_donotinherit"
-  local defaultpath="${BIN_FOLDER}"
-
-  if [ -n "${!compressedfilepathoverride}" ]; then
-    create_folder "${!compressedfilepathoverride}"
-    defaultpath="${!compressedfilepathoverride}"
-  fi
-
-  create_folder "${defaultpath}"
-  download "${!compressedfileurl}" "${defaultpath}/$1_compressed_file"
-  if [ "${!donotinherit_pointer}" == "yes" ]; then
-    decompress "${defaultpath}/$1_compressed_file"
-    apply_permissions_recursively "${defaultpath}"
-  else
-    decompress "${defaultpath}/$1_compressed_file" "$1"
-    apply_permissions_recursively "${defaultpath}/$1"
+# TODO: do for many repositories
+generic_install_cloneRepositories() {
+  local -r repositoryurl="${CURRENT_INSTALLATION_KEYNAME}_repositoryurl"
+  if [ -n "${!repositoryurl}" ]; then
+    generic_install_clone "${!repositoryurl}"
   fi
 }
+
+
+
+
+
+
+
+
+
 
 
 ########################################################################################################################
@@ -1049,13 +1470,36 @@ userinherit_installation_type() {
 # - Description: Initialize common subsystems and common subfeatures
 # - Permissions: Same behaviour being root or normal user.
 data_and_file_structures_initialization() {
-  output_proxy_executioner "echo INFO: Initializing data and file structures." "${FLAG_QUIETNESS}"
+  output_proxy_executioner "Initializing data and file structures." "INFO"
+
+  if isRoot; then
+    if [ "${OS_NAME}" == "TermuxUbuntu" ]; then
+      if ! users | grep -q "Android"; then
+        adduser --gecos "" --disabled-password "Android"
+        usermod -aG sudo "Android"
+        echo "Android  ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/Android
+        yes | passwd "Android"
+      fi
+    fi
+  fi
 
   # Customizer inner folders
   create_folder "${CUSTOMIZER_FOLDER}"
   create_folder "${CACHE_FOLDER}"
   create_folder "${TEMP_FOLDER}"
   create_folder "${DATA_FOLDER}"
+
+  # Ensure that customizer_option.sh exists in DATA_FOLDER, but do not overwrite it if exists. Then source its content
+  # for user custom options, flags and features
+  if [ ! -f "${DATA_FOLDER}/customizer_options.sh" ]; then
+    cp "${CUSTOMIZER_PROJECT_FOLDER}/data/core/customizer_options.sh" "${DATA_FOLDER}/customizer_options.sh"
+  fi
+  apply_permissions "${DATA_FOLDER}/customizer_options.sh"
+
+  if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
+    create_file "${PROGRAM_KEYBINDINGS_PATH}"
+  fi
+
   create_folder "${BIN_FOLDER}"
   create_folder "${FUNCTIONS_FOLDER}"
   create_folder "${INITIALIZATIONS_FOLDER}"
@@ -1067,6 +1511,20 @@ data_and_file_structures_initialization() {
   create_folder "${XDG_DESKTOP_DIR}"
   create_folder "${XDG_PICTURES_DIR}"
   create_folder "${XDG_TEMPLATES_DIR}"
+
+  # Initialize whoami file
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    if ! isRoot; then
+      username_wsl2="$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' 2> /dev/null | sed -e 's/\r//g')"
+      if [ -z "${username_wsl2}" ]; then
+        echo "ERROR: The user of Windows could not have been captured"
+        exit 1
+      else
+        create_file "${CUSTOMIZER_PROJECT_FOLDER}/whoami" "${username_wsl2}"
+      fi
+      unset username_wsl2
+    fi
+  fi
 
   # Initialize bash functions
   if [ ! -f "${FUNCTIONS_PATH}" ]; then
@@ -1085,25 +1543,17 @@ data_and_file_structures_initialization() {
   # Updates initializations
   # Avoid running bash functions non-interactively
   # Adds to the path the folder where we will put our soft links
-  add_bash_function "${bash_functions_init}" "init.sh"
-  # Create and / or update built-in favourites subsystem
-  if [ ! -f "${PROGRAM_FAVORITES_PATH}" ]; then
-    create_file "${PROGRAM_FAVORITES_PATH}"
-  fi
-  add_bash_initialization "${favorites_function}" "favorites.sh"
+  add_bash_function "" "init.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/init.sh"
 
-  # Create and / or update built-in keybinding subsystem
-  if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
-    create_file "${PROGRAM_KEYBINDINGS_PATH}"
-  fi
-  add_bash_initialization "${keybinding_function}" "keybinding.sh"
+  add_bash_initialization "" "favorites.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/favorites.sh"
+
+  add_bash_initialization "" "keybindings.sh" "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/keybindings.sh"
 
   # We source from the bashrc of the current user or all the users depending on out permissions with priority
   # in being sourced from BASHRC_ALL_USERS_PATH
   if ! grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_ALL_USERS_PATH}" &>/dev/null; then
-    if [ "${EUID}" == 0 ]; then
+    if isRoot; then
       echo "source \"${FUNCTIONS_PATH}\"" >> "${BASHRC_ALL_USERS_PATH}"
-      grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
       if grep -Fo "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}" &>/dev/null; then
         remove_line "source \"${FUNCTIONS_PATH}\"" "${BASHRC_PATH}"
       fi
@@ -1123,16 +1573,16 @@ data_and_file_structures_initialization() {
 # - Description: Update the system using $DEFAULT_PACKAGE_MANAGER -y update or $DEFAULT_PACKAGE_MANAGER -y upgrade depending a
 # - Permissions: Can be called as root or user but user will not do anything.
 pre_install_update() {
-  if [ "${EUID}" == 0 ]; then
+  if isRoot; then
     if [ "${FLAG_UPGRADE}" -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_UPDATE}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: System updated." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to update system via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPDATE}" "COMMAND"
+      output_proxy_executioner "System updated." "INFO"
     fi
     if [ "${FLAG_UPGRADE}" == 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to upgrade system via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_UPGRADE}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: System upgraded." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to upgrade system via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_UPGRADE}" "COMMAND"
+      output_proxy_executioner "System upgraded." "INFO"
     fi
   fi
 }
@@ -1140,13 +1590,13 @@ pre_install_update() {
 # - Description: Performs update of system fonts and bash environment.
 # - Permissions: Same behaviour being root or normal user.
 update_environment() {
-  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Reloading bash features" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Finished execution" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "echo INFO: Rebuilding path cache" "INFO"
+  output_proxy_executioner "hash -r" "COMMAND"
+  output_proxy_executioner "echo INFO: Rebuilding font cache" "INFO"
+  output_proxy_executioner "fc-cache -f" "COMMAND"
+  output_proxy_executioner "echo INFO: Reloading bash features" "INFO"
+  output_proxy_executioner "source ${FUNCTIONS_PATH}" "COMMAND"
+  output_proxy_executioner "echo INFO: Finished execution" "INFO"
 }
 
 
@@ -1158,140 +1608,3 @@ else
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_common.sh not found. Aborting..."
   exit 1
 fi
-
-
-########################################################################################################################
-######################################### INSTALL SUBSYSTEMS FUNCTIONS #################################################
-########################################################################################################################
-
-# - Description: This functions is the basic piece of the favorites subsystem, but is not a function that it is
-# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
-# is invoked. This function and its necessary files such as $PROGRAM_FAVORITES_PATH are always present during the
-# execution of install.
-# This function basically processes and applies the results of the call to add_to_favorites function.
-# - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
-# add_to_favorites instead, can be called as root or user, so root and user executions can be added
-
-favorites_function="
-# Check if gsettings command is available
-if ! command -v gsettings &> /dev/null
-then
-  return
-fi
-
-if [ -f \"${PROGRAM_FAVORITES_PATH}\" ]; then
-  while IFS= read -r line; do
-    favorite_apps=\"\$(gsettings get org.gnome.shell favorite-apps)\"
-    if [ -z \"\$(echo \$favorite_apps | grep -Fo \"\$line\")\" ]; then
-      if [ -z \"\$(echo \$favorite_apps | grep -Fo \"[]\")\" ]; then
-        # List with at least an element
-        gsettings set org.gnome.shell favorite-apps \"\$(echo \"\$favorite_apps\" | sed s/.\$//), '\$line']\"
-      else
-        # List empty
-        gsettings set org.gnome.shell favorite-apps \"['\$line']\"
-      fi
-    fi
-  done < \"${PROGRAM_FAVORITES_PATH}\"
-fi
-"
-
-# https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal
-# - Description: This function is the basic piece of the keybinding subsystem, but is not a function that it is
-# executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBINDINGS_PATH every time a terminal
-# is invoked. This function and its necessary files such as $PROGRAM_KEYBINDINGS_PATH are always present during the
-# execution of install. Also, for simplicity, we consider that each keybinding
-# This function basically processes and applies the results of the call to add_custom_keybinding function.
-# - Permissions: This function is executed always as user since it is integrated in the user .bashrc. The function
-# add_custom_keybinding instead, can be called as root or user, so root and user executions can be added
-
-# Name, Command, Binding...
-# 1st argument Name of the feature
-# 2nd argument Command of the feature
-# 3rd argument Bind Key Combination of the feature ex(<Primary><Alt><Super>a)
-# 4th argument Number of the feature array position slot of the added custom command (custom0, custom1, custom2...)
-keybinding_function="
-# Check if gsettings command is available
-if ! command -v gsettings &> /dev/null
-then
-  return
-fi
-
-if ! gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings &> /dev/null; then
-  return
-fi
-
-
-# Check if there are keybindings available
-if [ -f \"${PROGRAM_KEYBINDINGS_PATH}\" ]; then
-  # regenerate list of active keybindings
-  declare -a active_keybinds=\"\$(echo \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)\" | sed 's/@as //g' | tr -d \",\" | tr \"[\" \"(\" | tr \"]\" \")\" | tr \"'\" \"\\\"\")\"
-
-  # Every iteration is a line. IFS (internal field separator) set to empty
-  while IFS= read -r line; do
-    if [ -z \"\$line\" ]; then
-      continue
-    fi
-    field_command=\"\$(echo \"\${line}\" | cut -d \";\" -f1)\"
-    field_binding=\"\$(echo \"\${line}\" | cut -d \";\" -f2)\"
-    field_name=\"\$(echo \"\${line}\" | cut -d \";\" -f3)\"
-
-    i=0
-    isInstalled=0
-    # while custom keybinding i is occupied... try to update custom keybinding i if the keybinding to add and the one in position i have same name
-    while [ -n \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | cut -d \"'\" -f2)\" ]; do
-      # Overwrite keybinding if there is a collision in the name with previous defined keybindings
-      if [ \"\${field_name}\" == \"\$(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name | tr -d \"'\")\" ]; then
-        # Overwrite
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\${field_command}'\"
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\${field_binding}'\"
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\${field_name}'\"
-        # Make sure that the keybinding data that we just uploaded is active
-        isActive=0
-        for active_keybind in \${active_keybinds[@]}; do
-          if [ \"\${active_keybind}\" == \"/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/\" ]; then
-            # The updated keybinding is active, mark as active to avoid further processing and escape the inner loop
-            isActive=1
-            break
-          fi
-        done
-        # If is not active, active it by adding to the activated keybindings array
-        if [ \${isActive} == 0 ]; then
-          active_keybinds+=(/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/)
-        fi
-        # The keybind data was already in the table, no need for occupying a new custom keybind. Mark as installed to avoid post processing and escape de loop
-        isInstalled=1
-        break
-      fi
-      i=\$((i+1))
-    done
-    if [ \${isInstalled} == 0 ]; then
-      # No collision: This is a new keybind. Append new keybinding data in a non occupied custom keybinding in position i, which at this point is empty
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ command \"'\${field_command}'\"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ binding \"'\${field_binding}'\"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/ name \"'\${field_name}'\"
-      # Make sure that the keybinding data that we just uploaded is active
-      isActive=0
-      for active_keybind in \${active_keybinds[@]}; do
-        if [ \"\${active_keybind}\" == \"/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/\" ]; then
-          isActive=1
-          break
-        fi
-      done
-      # If is not active, active it by adding to the activated keybindings array
-      if [ \${isActive} == 0 ]; then
-        active_keybinds+=(/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom\${i}/)
-      fi
-    fi
-  done < \"${PROGRAM_KEYBINDINGS_PATH}\"
-  # Build string for gsettings set for the active custom keybindings from the array of active keybinds that we have been building
-  active_keybinds_str=\"[\"
-  for active_keybind in \${active_keybinds[@]}; do
-    active_keybinds_str+=\"'\${active_keybind}', \"
-  done
-  # remove last comma and add the ] to close the array
-  active_keybinds_str=\"\$(echo \"\${active_keybinds_str}\" | sed 's/, $//g')]\"
-
-  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings \"\${active_keybinds_str}\"
-  #echo \"gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings \"\${active_keybinds_str}\" \"
-fi
-"

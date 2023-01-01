@@ -1,0 +1,130 @@
+{
+  "name": "Customizer install features",
+  "description": "Install features",
+  "script_path": "customizer-install",
+  "parameters":
+  [
+    {
+      "type": "list",
+      "description": "Determines the level of verbosity of the customizer",
+      "name": "Verbosity level",
+      "values":
+      [
+        "--verbose", "--quiet", "--Quiet"
+      ],
+      "default": "--quiet"
+    },
+    {
+      "type": "list",
+      "description": "Overwrites the feature if already installed",
+      "name": "Overwrite features",
+      "values":
+      [
+        "--overwrite-if-present", "--skip-if-installed"
+      ],
+      "default": "--skip-if-installed"
+    },
+    {
+      "type": "list",
+      "description": "Tolerate errors and continue with execution or abort on error",
+      "name": "Error tolerance",
+      "values":
+      [
+        "--exit-on-error", "--ignore-errors"
+      ],
+      "default": "--exit-on-error"
+    },
+    {
+      "type": "list",
+      "description": "Clean orphaned packages after installations using the package manager",
+      "name": "Clean",
+      "values":
+      [
+        "--clean", "--Clean"
+      ],
+      "default": "--Clean"
+    },
+    {
+      "type": "list",
+      "description": "Level of update of the system before installing the features",
+      "name": "Update",
+      "values":
+      [
+        "--keep-system-outdated", "--update", "--Upgrade"
+      ],
+      "default": "--update"
+    },
+    {
+      "type": "list",
+      "description": "Add program to favorites to gnome favorites",
+      "name": "Favorites",
+      "values":
+      [
+        "--set-favorites", "--no-favorites"
+      ],
+      "default": "--no-favorites"
+    },
+    {
+      "type": "list",
+      "description": "Autostart program to the start",
+      "name": "Autostart",
+      "values":
+      [
+        "--autostart", "--regular"
+      ],
+      "default": "--regular"
+    },
+    {
+      "type": "list",
+      "description": "Check appropiate permissions for the installation",
+      "name": "Privileges check",
+      "values":
+      [
+        "--skip-privilege-check", "--privilege-check"
+      ],
+      "default": "--privilege-check"
+    },
+    {
+      "type": "list",
+      "description": "Saves installation downloads for subsequent installations",
+      "name": "Caching",
+      "values":
+      [
+        "--not-cached", "--cached"
+      ],
+      "default": "--cached"
+    },
+    {
+      "type": "list",
+      "description": "Allow changing temporarily the selected package manager by the customizer in individual features",
+      "name": "Allow overrides",
+      "values":
+      [
+        "--allow-overrides", "-x"
+      ],
+      "default": "-x"
+    },
+    {
+      "type": "list",
+      "description": "Installation of dependencies for each feature",
+      "name": "Dependencies",
+      "values":
+      [
+        "--dependencies", "--ignore-dependencies"
+      ],
+      "default": "--dependencies"
+    },
+    {
+      "name": "feature",
+      "type": "multiselect",
+      "separator": " ",
+      "multiselect_argument_type": "argument_per_value",
+      "values":
+      {
+        "script": "customizer-install --commands | tr ' ' '\n'",
+        "shell": true
+      },
+      "required": true
+    }
+  ]
+}

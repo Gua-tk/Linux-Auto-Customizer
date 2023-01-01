@@ -1,0 +1,1 @@
+Check pc hardware info

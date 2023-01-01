@@ -1,0 +1,13 @@
+#!/bin/sh
+# https://stackoverflow.com/questions/30733415/how-to-determine-if-git-merge-is-in-process
+# We avoid commits only if we are not in merge state.
+if git merge HEAD >/dev/null 2>&1; then
+  branch="$(git rev-parse --abbrev-ref HEAD)"
+  if [ "${branch}" = "master" ]; then
+    echo "Are you an idiot? committing directly to master branch is FORBIDDEN"
+    exit 1
+  elif [ "${branch}" = "develop" ]; then
+    echo "Are you an idiot? committing directly to develop branch is FORBIDDEN"
+    exit 1
+  fi
+fi

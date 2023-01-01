@@ -20,10 +20,10 @@
 ############################################### COMMON API FUNCTIONS ###################################################
 ########################################################################################################################
 
-# - Description: Execute the command received in the first argument and redirect the standard and error output depending
-#   on the quietness level defined in the second argument. If the command in the first argument is an echo, adds the
-#   date to the echo and tries to detect what type of message contains this echo: INFO, WARNING or ERROR. Each message
-#   type has an associated colour which will be printed by this function.
+# - Description: Executes the command received in argument 1 or prints it with a certain format depending on
+#   argument 2, which can be: INFO, WARNING, ERROR, COMMAND.
+#   Depending on argument 2 and the global var FLAG_IGNORE_ERRORS we may exit the program. Also, redirect the standard
+#   and error output depending on the verbosity level defined in the global var FLAG_QUIETNESS.
 # - Permissions: Can be called as root or as normal user presumably with the same behaviour.
 # - Argument 1: Bash command to execute.
 # - Argument 2: Quietness level [0, 1, 2]:
@@ -31,41 +31,40 @@
 #   * 1: Quiet: Display echoes but silences output from other commands
 #   * 2: Full quiet: No output any executed commands
 output_proxy_executioner() {
-  # If the command to execute is an echo, capture echo type and apply format to it depending on the message type
-  local -r command_name=$(echo "$1" | head -1 | cut -d " " -f1)
-  if [ "${command_name}" == "echo" ]; then
-    local echo_processed_command=""
-    local echo_command_arguments=
-    echo_command_arguments="$(echo "$1" | sed '1 s@^echo @@')"
-    local -r echo_message_type="$(echo "${echo_command_arguments}" | head -1 | cut -d ":" -f1)"
-    if [ "${echo_message_type}" == "WARNING" ]; then
-      echo_processed_command+="\e[33m"  # Activate yellow color
-    elif [ "${echo_message_type}" == "INFO" ]; then
-      echo_processed_command+="\e[36m"  # Activate cyan color
-    elif [ "${echo_message_type}" == "ERROR" ]; then
-      echo_processed_command+="\e[91m"  # Activate red color
-    fi
-    # If we need to process an echo and we are not in full quietness mode print the prefix with date for each echo
-    echo_processed_command+="$(date +%Y-%m-%d_%T) -- "
-    echo_processed_command+="${echo_command_arguments}"
-    echo_processed_command+="\e[0m"  # deactivate colour after the echo
-  fi
+  if [ "$2" == "INFO" ] || [ "$2" == "WARNING" ] || [ "$2" == "ERROR" ]; then
+    if [ "${FLAG_QUIETNESS}" -ne 2 ]; then
+      processedMessage=""
+      abortProgram=0
+      if [ "$2" == "INFO" ]; then
+        processedMessage+="\e[36m"  # Activate cyan color
+      elif [ "$2" == "WARNING" ]; then
+        processedMessage+="\e[33m"  # Activate yellow color
+        if [ ${FLAG_IGNORE_ERRORS} -eq 0 ]; then
+          abortProgram=1
+        fi
+      elif [ "$2" == "ERROR" ]; then
+        processedMessage+="\e[91m"  # Activate red color
+        if [ ${FLAG_IGNORE_ERRORS} -lt 2 ]; then
+          abortProgram=1
+        fi
+      fi
+      processedMessage+="$(date +%Y-%m-%d_%T) -- ${2}: $1"
+      processedMessage+="\e[0m"  # deactivate color after the echo
+      echo -e "${processedMessage}"
 
-  # Execute command with verbosity depending on quietness level and if the command_name is an echo or not
-  if [ "$2" -eq 0 ]; then
-    if [ "${command_name}" == "echo" ]; then
-      echo -e "$echo_processed_command"
-    else
-      $1
+      if [ ${abortProgram} -eq 1 ]; then
+        output_proxy_executioner "The default behaviour for the previous message specified by the current error tolerance defines that the customizer now must exit, use -i or -w to ignore errors or to ignore warnings if you want to change this behaviour." "INFO"
+        exit 1
+      fi
     fi
-  elif [ "$2" -eq 1 ]; then
-    if [ "${command_name}" == "echo" ]; then
-      echo -e "$echo_processed_command"
+  elif [ "$2" == "COMMAND" ]; then
+    if [ "${FLAG_QUIETNESS}" -eq 0 ]; then
+      $1
     else
       $1 &>/dev/null
     fi
-  elif [ "$2" -eq 2 ]; then
-    $1 &>/dev/null
+  else
+    output_proxy_executioner "The function output_proxy_executioner does not recognize $2 as a valid argument" "ERROR"
   fi
 }
 
@@ -76,6 +75,93 @@ bell_sound()
   echo -en "\07"
   echo -en "\07"
   echo -en "\07"
+}
+
+# - Description: Removes file from system
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Absolute path of the file to be removed
+remove_file() {
+  rm -f "$1"
+}
+
+
+# - Description: Remove folder from system
+# - Permissions: This function can be called as root or as user.
+# - Argument 1: Absolute path of folder to be removed
+remove_folder() {
+  rm -Rf "$1"
+}
+
+isRoot()
+{
+  if [ "${EUID}" == 0 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+# - Description: Receives the file path of a file text which contents will be evaluated by this function to look for
+#   variables with the € format (€{variable}) and translate its symbol by the actual value in running memory.
+# - Permissions: Needs writing permission to the received file because it will be overwritten in place.
+# - Arguments:
+#   * Argument 1: Absolute path to the file which will be parsed and its € variables translated.
+translate_variables()
+{
+  if [ ! -f "$1" ]; then
+    output_proxy_executioner "The file $1 is not present or is not accessible" "WARNING"
+    return
+  fi
+  detected_variables=($(grep -Eo "€{([A-Z]|[a-z]|_)*}" < "$1" | uniq))
+  for variable in "${detected_variables[@]}"; do
+    # Obtain only the variable name
+    real_variable_name="$(echo "${variable}" | cut -d "{" -f2 | cut -d "}" -f1)"
+    # Change variable for its real value
+    sed "s@${variable}@${!real_variable_name}@g" -i "$1"
+  done
+}
+
+
+# - Description: Apply standard permissions and set owner and group to the user who called root.
+# - Permissions: This functions can be called as root or user.
+# - Arguments:
+#   * Argument 1: Path to the file or directory whose permissions are changed.
+#   * Argument 2 (optional): Custom mask of permissions
+apply_permissions()
+{
+  if [ -z "$2" ]; then
+    permission_mask="755"
+  else
+    permission_mask="$2"
+  fi
+
+  if [ -f "$1" ]; then
+    if isRoot; then  # file
+      chgrp "${SUDO_USER}" "$1"
+      chown "${SUDO_USER}" "$1"
+    fi
+    chmod "${permission_mask}" "$1"
+  elif [ -d "$1" ]; then
+    if isRoot; then  # directory
+      chgrp "${SUDO_USER}" "$1"
+      chown "${SUDO_USER}" "$1"
+    fi
+    chmod "${permission_mask}" "$1"
+  else
+    output_proxy_executioner "The file or directory $1 does not exist and its permissions could not have been changed. Skipping..." "WARNING"
+  fi
+  unset permission_mask
+}
+
+
+# - Description: Receives a Linux based path (using / as separator) and returns it converted to Windows path using
+#   stdout.
+# - Permission: Does not need any special permission.
+# - Arguments
+#   * Argument 1: Linux-based path that will be converted to Windows-based path.
+convert_to_windows_path()
+{
+  echo "$1" | tr "/" "\\\\"
 }
 
 
@@ -123,28 +209,141 @@ set_field()
 # - Permissions: can be executed indifferently as root or user.
 # - Argument 1: Text to be removed.
 # - Argument 2: Path to the file which contains the text to be removed.
-remove_line() {
+remove_line()
+{
   if [ -f "$2" ]; then
-    sed "s@^${1}\$@@g" -i "$2"
+    sed "s@^$1\$@@g" -i "$2"
   else
-    output_proxy_executioner "echo WARNING: file $2 is not present, so the text $1 cannot be removed from the file. Skipping..." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "file $2 is not present, so the text $1 cannot be removed from the file. Skipping..." "WARNING"
   fi
 }
+
+
+# - Description: Function to append text to a file if the text is not already present.
+# - Permissions: Can be executed indifferently as root or user, but we need read/write access to the file.
+# - Argument 1: Text to be added.
+# - Argument 2: Path to the file where we will append the text.
+append_text()
+{
+  # If there is not a literal match: (grep -E ^LITERAL_MATCH\$) append to the file.
+  if ! grep -Eqo "^$1\$" "$2"; then
+    echo -e "$1" >> "$2"
+  fi
+}
+
+
+# - Description: Generate the list that contains the list of included programs for each wrapper.
+# - Permissions: Can be executed indifferently as root or user.
+# - Arguments: Reads the tags property of each feature and maps that feature to a wrapper with the name of each tag.
+generate_wrappers()
+{
+  declare -Ag WRAPPERS_KEYNAMES
+  for feature_name in "${feature_keynames[@]}"; do
+    load_feature_properties "${feature_name}"
+
+    # Use tags to fill wrappers dictionary
+    tags_pointer="${feature_name}_tags[@]"
+    for tag in ${!tags_pointer}; do
+      if [[ -v WRAPPERS_KEYNAMES["${tag}"] ]]; then
+        WRAPPERS_KEYNAMES[$tag]+=" ${feature_name}"
+      else
+        WRAPPERS_KEYNAMES[$tag]="${feature_name}"
+      fi
+    done
+
+    # Use system categories to fill wrappers dictionary
+    categories_pointer="${feature_name}_systemcategories[@]"
+    for category in ${!categories_pointer}; do
+      if [[ -v WRAPPERS_KEYNAMES["${category}"] ]]; then
+        WRAPPERS_KEYNAMES[${category}]+=" ${feature_name}"
+      else
+        WRAPPERS_KEYNAMES[${category}]="${feature_name}"
+      fi
+    done
+  done
+}
+
+
+# - Description: Prints the list that contains the list of included programs for each wrapper.
+# - Permissions: Can be executed indifferently as root or user.
+display_wrappers()
+{
+  for key in $(echo "${!WRAPPERS_KEYNAMES[@]}" | tr ' ' $'\n' | sort -h); do
+    echo "Tag: ${key} --- Feature: ${WRAPPERS_KEYNAMES[$key]}"
+  done
+}
+
+
+# - Description: Load properties from a feature received in the first argument as a keyname
+# - Permissions: Can be executed indifferently as root or user.
+load_feature_properties()
+{
+    # Load metadata of the feature if its .dat file exists
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh" ]; then
+      source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh"
+
+      # If we find the property manual_content_available declared, we should import the function file too
+      local -r manualContentPointer="$1_manualcontentavailable"
+      if [ -n "${!manualContentPointer}" ]; then
+        if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.func.sh" ]; then
+          source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.func.sh"
+        fi
+      fi
+    else
+      output_proxy_executioner "Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh does not exist" "ERROR"
+    fi
+}
+
+
+# - Description: Unloads properties loaded from the ${FEATURE_KEYNAME}.dat.sh and functions from the
+#   ${FEATURE_KEYNAME}.func.sh
+# - Permissions: Can be executed indifferently as root or user.
+# - Argument 1: Keyname of the properties to unload.
+unload_feature_properties()
+{
+    # Unload functions
+    unset -f "$1_install_pre"
+    unset -f "$1_install_mid"
+    unset -f "$1_install_post"
+    unset -f "$1_uninstall_pre"
+    unset -f "$1_uninstall_mid"
+    unset -f "$1_uninstall_post"
+
+    # Unload properties from the .dat.sh
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh" ]; then
+      # Select non-commentary lines
+      while read -r line; do
+        local variable
+        variable="$(echo "${line}" | grep -v "^[[:blank:]]*#" | cut -d "=" -f1)"
+        if [ -z "${variable}" ]; then
+          continue
+        fi
+        unset "${variable}"
+      done < "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh"
+    else
+      output_proxy_executioner "Properties of $1 feature have not been found, so they can not be unloaded. The file
+${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh does not exist. " "ERROR"
+    fi
+
+    # Finally unset ${FEATURENAME}_flagsruntime, which is a dynamically declared variable
+    unset "$1_flagsruntime"
+}
+
 
 # - Description: Performs a post-install clean by using cleaning option of package manager
 # - Permission: Can be called as root or user.
 post_install_clean()
 {
-  if [ "${EUID}" -eq 0 ]; then
+  if isRoot; then
     if [ "${FLAG_AUTOCLEAN}" -gt 0 ]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_AUTOCLEAN}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_AUTOCLEAN}" "COMMAND"
+      output_proxy_executioner "Finished." "INFO"
     fi
     if [ "${FLAG_AUTOCLEAN}" -eq 2 ]; then
-      output_proxy_executioner "echo INFO: Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "${FLAG_QUIETNESS}"
-      output_proxy_executioner "${PACKAGE_MANAGER_AUTOREMOVE}" "${FLAG_QUIETNESS}"
-      output_proxy_executioner "echo INFO: Finished." "${FLAG_QUIETNESS}"
+      output_proxy_executioner "Attempting to clean orphaned dependencies and useless packages via ${DEFAULT_PACKAGE_MANAGER}." "INFO"
+      output_proxy_executioner "${PACKAGE_MANAGER_AUTOREMOVE}" "COMMAND"
+      output_proxy_executioner "Finished." "INFO"
     fi
   fi
 }
@@ -154,12 +353,22 @@ post_install_clean()
 # - Permission: Can be called as root or as user.
 update_environment()
 {
-  output_proxy_executioner "echo INFO: Rebuilding path cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "hash -r" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Rebuilding font cache" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "fc-cache -f" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "echo INFO: Reload .bashrc shell environment" "${FLAG_QUIETNESS}"
-  output_proxy_executioner "source ${FUNCTIONS_PATH}" "${FLAG_QUIETNESS}"
+  output_proxy_executioner "Rebuilding path cache" "INFO"
+  output_proxy_executioner "hash -r" "COMMAND"
+  output_proxy_executioner "Rebuilding font cache" "INFO"
+  output_proxy_executioner "fc-cache -f" "COMMAND"
+  output_proxy_executioner "Reload .bashrc shell environment" "INFO"
+  output_proxy_executioner "source ${FUNCTIONS_PATH}" "COMMAND"
+}
+
+
+# - Description: Ensures that the customizer_options.sh is present and sources it into the customizer environment.
+# - Permission: Can be called as root or user.
+import_custom_options()
+{
+  if [ -f "${DATA_FOLDER}/customizer_options.sh" ]; then
+    source "${DATA_FOLDER}/customizer_options.sh"
+  fi
 }
 
 
@@ -168,60 +377,8 @@ update_environment()
 # - Permissions: Can be called as root or user with the same behaviour.
 autogen_help()
 {
-  local packagemanager_lines=
-  local user_lines=
-  local root_lines=
-  local root_num=0
-  local user_num=0
-
-  for program in "${feature_keynames[@]}"; do
-    local readme_line_pointer="${program}_readmeline"
-    local installationtype_pointer="${program}_installationtype"
-    local arguments_pointer="${program}_arguments[@]"
-
-    local readme_line=
-    readme_line="${!readme_line_pointer}"
-    local installation_type=
-    installation_type="${!installationtype_pointer}"
-    local program_argument=
-    program_argument="${program}"
-
-    local program_features=
-    program_features="$(echo "${readme_line}" | cut -d "|" -f4)"
-    local program_commands=
-    program_commands="$(echo "${program_features}" | grep -Eo "\`.[a-zA-Z0-9]+\`" | tr "$\n" " " | tr "\`" " " | tr -s " " | sed "s/\.[a-z]*//g" | sed 's/^ *//g')"
-    local help_line="${program_argument};${program_commands}"
-    case ${installation_type} in
-      packagemanager|packageinstall)
-        root_lines+=("${help_line}")
-        root_num=$(( root_num + 1 ))
-      ;;
-      repositoryclone|userinherit|environmental|pythonvenv)
-        user_lines+=("${help_line}")
-        user_num=$(( user_num + 1 ))
-      ;;
-    esac
-  done
-  local program_headers="ARGUMENT;COMMANDS"
-
-  local -r newline=$'\n'
-  local user_lines_final=
-  for line in "${user_lines[@]}"; do
-    user_lines_final="${user_lines_final}${line}${newline}"
-  done
-  user_lines_final="$(echo "${user_lines_final}" | sort)"
-  column -ts ";" <<< "${program_headers}${newline}${user_lines_final}"
-
-  echo "${newline}"
-
-  local root_lines_final=
-  for line in "${root_lines[@]}"; do
-    root_lines_final="${root_lines_final}${line}${newline}"
-  done
-  root_lines_final="$(echo "${root_lines_final}" | sort)"
-  column -ts ";" <<< "${program_headers}${newline}${root_lines_final}"
-
-  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total"
+  # TODO: create autogen_help with new metadata
+  echo
 }
 
 
@@ -232,68 +389,57 @@ autogen_help()
 #   permissions to a privileges or non-privileged user.
 autogen_readme()
 {
-  local packagemanager_lines=
-  local user_lines=()
-  local root_lines=()
-  local root_num=0
-  local user_num=0
-  true > "FEATURES.md"
-  for program in "${feature_keynames[@]}"; do
-    local readme_line_pointer="${program}_readmeline"
-    local installationtype_pointer="${program}_installationtype"
-    local arguments_pointer="${program}_arguments[@]"
+  local features_table_lines="
+| Icon | Name | Arguments | Description | Execution |
+|-------------|----------------------|------------------------------------------------------|------------|-------------|"
+  local github_url="https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master"
+  local html_prefix="<img src=\""
+  local html_suffix="\" width=\"200\" height=\"200\" />"
+  local icon_path=""
+  for keyname in "${feature_keynames[@]}"; do
+    load_feature_properties "${keyname}"
+    local arguments_pointer="${keyname}_arguments[@]"
+    local name_pointer="${keyname}_name"
 
-    local readme_line=
-    readme_line="${!readme_line_pointer}"
-    local installation_type=
-    installation_type="${!installationtype_pointer}"
-    local program_arguments=
-    program_arguments="${!arguments_pointer}"
-    local program_name=
-    program_name="${program}"
+    local icon_path="$(readme_deduce_icon "${keyname}")"
+    icon_value="${html_prefix}${github_url}${icon_path}${html_suffix}"
 
-    # Add arguments to readme
-    local prefix=
-    prefix="$(echo "${readme_line}" | cut -d "|" -f-5)"
-    local suffix=
-    suffix="$(echo "${readme_line}" | cut -d "|" -f5-)"
-    local readme_line="${prefix} ${program_arguments} ${suffix}"
-    case ${installation_type} in
-      packagemanager|packageinstall)
-        root_lines+=("${readme_line}")
-        root_num=$(( root_num + 1 ))
-      ;;
-      repositoryclone|userinherit|environmental|pythonvenv)
-        user_lines+=("${readme_line}")
-        user_num=$(( user_num + 1 ))
-      ;;
-    esac
-  done
-  local -r newline=$'\n'
-  {
-    echo "#### User programs";
-    echo "| Name | Description | Execution | Arguments | Testing |";
-    echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
-  } >> "FEATURES.md"
-  local user_lines_final=
-  for line in "${user_lines[@]}"; do
-    user_lines_final="${user_lines_final}${line}${newline}"
-  done
-  {
-  echo "${user_lines_final}" | sed -r '/^\s*$/d' | sort;
-  echo "${newline}${newline}"
-  echo "#### Root Programs";
-  echo "| Name | Description | Execution | Arguments | Testing |";
-  echo "|-------------|----------------------|------------------------------------------------------|------------|-------------|";
-  } >> "FEATURES.md"
-  local root_lines_final=
-  for line in "${root_lines[@]}"; do
-    root_lines_final="${root_lines_final}${line}${newline}"
-  done
-  echo "${root_lines_final[@]}" | sed -r '/^\s*$/d' | sort >> "FEATURES.md"
+    local description_pointer="${keyname}_description"
 
-  # Prepend line
-  echo "Customizer currently has available $user_num user features and $root_num root features, $(( user_num + root_num)) in total${newline}" | cat - FEATURES.md > FEATURES.md.bak && mv FEATURES.md.bak FEATURES.md
+    local usage_value="- Binaries in Path: "
+    local binaries_pointers="${keyname}_binariesinstalledpaths[@]"
+    for binary in "${!binaries_pointers}"; do
+      usage_value+="$(echo "${binary}" | cut -d ';' -f2), "
+    done
+
+    filekey_path=""
+    usage_value+="- Functions in shell environment: "
+    local filekeys_pointers="${keyname}_filekeys[@]"
+    local feature_function_names=""
+    for filekey in "${!filekeys_pointers}"; do
+      filekey_name="${keyname}_${filekey}_content"
+
+      feature_function_names="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${keyname}/${!filekey_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*\\(\\)" | uniq)"
+
+      for feature_function_name in "${feature_function_names}"; do
+        # Append name without parenthesis
+        usage_value+="$(echo "${feature_function_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*"), "
+      done
+    done
+
+    local usage_value+="- Keyboard shortcuts: "
+    local shortcuts_pointers="${keyname}_binariesinstalledpaths[@]"
+    for shortcut_keyboard in "${!shortcuts_pointers}"; do
+      usage_value+="$(echo "${shortcut_keyboard}" | cut -d ';' -f2), "
+    done
+
+    features_table_lines+=$'\n'"| ${icon_value} | ${!name_pointer} | ${!arguments_pointer} | ${!description_pointer} | ${usage_value} |"
+    unload_feature_properties "${keyname}"
+  done
+
+
+  features_table_lines+=$'\n'"Customizer currently has available $(echo "${feature_keynames[@]}" | wc -w) features."
+  echo "${features_table_lines}" > "${CUSTOMIZER_PROJECT_FOLDER}/doc/FEATURES.md"
 }
 
 
@@ -318,11 +464,32 @@ generic_package_manager_override() {
           return
         fi
       done
-      output_proxy_executioner "echo ERROR: ${!package_manager_override} is not a recognised package manager, so its
+      output_proxy_executioner "${!package_manager_override} is not a recognised package manager, so its
   configuration will not be loaded. Variable $1_package_manager_override needs to be one of the following elements:
-  ${RECOGNISED_PACKAGE_MANAGERS[*]}" "${FLAG_QUIETNESS}"
+  ${RECOGNISED_PACKAGE_MANAGERS[*]}" "ERROR"
       exit 1
     fi
+  fi
+}
+
+
+# - Description: Get another unique string using the first argument as current element. The first argument is to be
+#   expected as an integer, an empty string or nothing:
+#   - if is an integer: return next integer
+#   - if is empty string: return string "2"
+#   - if nothing: return empty string
+# - Permission: Can be called as root or user.
+# - Argument 1: Current anticollisioner number
+get_next_collisioner()
+{
+  if [ $# -eq 0 ]; then
+    echo ""
+  elif [ -z "$1" ]; then
+    echo "2"
+  elif echo "$1" | grep -Eqo "[0-9]+"; then
+    echo "$((1 + $1))"
+  else
+    output_proxy_executioner "Unexpected input in get_next_collisioner(): $1" "ERROR"
   fi
 }
 
@@ -354,7 +521,7 @@ argument_processing()
 
       -s|--skip|--skip-if-installed)
         if [ "${FLAG_MODE}" == "uninstall" ]; then
-          output_proxy_executioner "echo ERROR: You have set to not overwrite features in uninstall mode, this will uninstall only the features that are not installed." "${FLAG_QUIETNESS}"
+          output_proxy_executioner "You have set to not overwrite features in uninstall mode, this will uninstall only the features that are not installed." "WARNING"
         fi
         FLAG_OVERWRITE=0
       ;;
@@ -362,20 +529,21 @@ argument_processing()
         FLAG_OVERWRITE=1
       ;;
 
-      -e|--exit|--exit-on-error)
+      -w|--warning|--exit-on-warning)
         FLAG_IGNORE_ERRORS=0
       ;;
-      -i|--ignore|--ignore-errors)
+      -e|--exit|--exit-on-error)
         FLAG_IGNORE_ERRORS=1
       ;;
+      -i|--ignore|--ignore-errors)
+        FLAG_IGNORE_ERRORS=2
+      ;;
 
-      -d|--dirty|--no-autoclean)
+      # TODO flag autoclean reduce to two states
+      -c|--clean)
         FLAG_AUTOCLEAN=0
       ;;
-      -c|--clean)
-        FLAG_AUTOCLEAN=1
-      ;;
-      -C|-Clean)
+      -C|--Clean)
         FLAG_AUTOCLEAN=2
       ;;
 
@@ -431,6 +599,13 @@ argument_processing()
         FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES=0
       ;;
 
+      # TODO propagate state to each installation, so it follow s the customizer convention of state machine
+      -d|--dependencies)
+        FLAG_IGNORE_DEPENDENCIES=0
+      ;;
+      -D|--ignore-dependencies)
+        FLAG_IGNORE_DEPENDENCIES=1
+      ;;
 
       --commands)  # Print list of possible arguments and finish the program
         local all_arguments+=("${feature_keynames[@]}")
@@ -440,17 +615,24 @@ argument_processing()
         exit 0
       ;;
 
-      --readme|readme|features|FEATURES|FEATURES.sh|features.sh)  # Print list of possible arguments and finish the program
+      --readme|readme|features|FEATURES|FEATURES.sh|features.sh)
+        # Print list of possible arguments and finish the program
         autogen_readme
         exit 0
       ;;
 
       -h)
-        output_proxy_executioner "echo ${help_common}${help_simple}" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "echo ${help_common}${help_simple}" "COMMAND"
         exit 0
       ;;
       -H|--help)
-        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" "${FLAG_QUIETNESS}"
+        output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" "COMMAND"
+        exit 0
+      ;;
+
+      --show-wrappers)
+        generate_wrappers
+        display_wrappers
         exit 0
       ;;
 
@@ -468,51 +650,65 @@ argument_processing()
         add_programs_with_x_permissions 2
       ;;
 
-      *)  # Individual argument
+      --flush=favorites)
         if [ "${FLAG_MODE}" == "uninstall" ]; then
-          case "${key}" in
-            --flush=favorites)
-              remove_all_favorites
-              shift
-              continue
-            ;;
-            --flush=keybindings)
-              remove_all_keybindings
-              shift
-              continue
-            ;;
-            --flush=functions)
-              remove_all_functions
-              shift
-              continue
-            ;;
-            --flush=initializations)
-              remove_all_initializations
-              shift
-              continue
-            ;;
-            --flush=structures)
-              remove_structures
-              shift
-              continue
-            ;;
-            --flush=cache)
-              rm -f "${CACHE_FOLDER}/"*
-              shift
-              continue
-            ;;
-          esac
+          remove_all_favorites
         fi
+      ;;
 
-        local wrapper_key=
-        wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
-        local set_of_features="wrapper_${wrapper_key}[@]"
-        # Useless echo? usually yes shellcheck, but not when you are indirect expanding an array
-        # shellcheck disable=SC2116
-        if [ -z "$(echo "${!set_of_features}")" ]; then
+      --flush=keybindings)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_keybindings
+        fi
+      ;;
+
+      --flush=functions)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_functions
+        fi
+      ;;
+
+      --flush=initializations)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_initializations
+        fi
+      ;;
+
+      --flush=structures)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_structures
+        fi
+      ;;
+
+      --flush=cache)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          rm -Rf "${CACHE_FOLDER}"
+        fi
+      ;;
+
+      *)
+        # Individual argument
+        # A feature key name was not detected in the current argument ${key}. Try a wrapper.
+        # But first check that the argument has characters and also check that those characters are valid characters
+        # for a variable in bash (regexp [a-zA-Z_][a-zA-Z_0-9]*, which is equal to any string using alphanumeric
+        # characters beginning with ant alphabetic characters and containing underscores at any position)
+        if [ -z "${key}" ] || ! echo "${key}" | grep -Eqo "^[aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_][aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_0-9]*$"; then
+          output_proxy_executioner "The current argument \"${key}\" is empty or not valid" "WARNING"
+          shift
+          continue
+        fi
+        # Indirect expand wrapper variable
+        generate_wrappers  # Fill WRAPPERS_KEYNAMES dictionary
+        local wrapper_key
+        wrapper_key="$(echo "${key}" | tr "-" "_")"
+        local set_of_features="${WRAPPERS_KEYNAMES[${wrapper_key}]}"
+        if [ -z "${set_of_features}" ]; then
+          # If there are no wrappers corresponding with this key, the last possibility is that the key is actually a
+          # feature keyname, which we try to add to installation.
           add_program "${key}"
         else
-          add_programs "${!set_of_features}"
+          # There is a wrapper corresponding with this key, so we add each program that is in the wrapper.
+          add_programs "${set_of_features}"
         fi
       ;;
     esac
@@ -521,53 +717,23 @@ argument_processing()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [ ${#added_feature_keynames[@]} -eq 0 ]; then
-    if [ ${FLAG_IGNORE_ERRORS} -eq 0 ]; then
-      output_proxy_executioner "echo ERROR: No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "${FLAG_QUIETNESS}"
-      exit 1
-    else
-      output_proxy_executioner "echo WARNING: No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "${FLAG_QUIETNESS}"
-    fi
+    output_proxy_executioner "No arguments provided to install feature. Use -h or --help to display information about \
+usage. Aborting..." "ERROR"
+    return
   fi
 }
 
 
 add_programs_with_x_permissions()
 {
-  for keyname in "${feature_keynames[@]}"; do
-    local installationtype_pointer="${keyname}_installationtype"
-    if [ "$1" -eq 0 ]; then
-      case ${!installationtype_pointer} in
-        packagemanager)
-          add_program "${keyname}"
-        ;;
-        packageinstall)
-          add_program "${keyname}"
-        ;;
-      esac
-    elif [ "$1" -eq 1 ] ; then
-      case ${!installationtype_pointer} in
-        # Download and decompress a file that contains a folder
-        userinherit)
-          add_program "${keyname}"
-        ;;
-        # Clone a repository
-        repositoryclone)
-          add_program "${keyname}"
-        ;;
-        # Create a virtual environment to install the feature
-        pythonvenv)
-          add_program "${keyname}"
-        ;;
-        # Only uses the common part of the generic installation
-        environmental)
-          add_program "${keyname}"
-        ;;
-      esac
-    elif [ "$1" -eq 2 ]; then
-      add_program "${keyname}"
+  for i in "${feature_keynames[@]}"; do
+    if [ "$1" -ne 2 ]; then
+      flag_privileges="$(deduce_privileges "${matched_keyname}")"
+      if [ "$1" -eq "${flag_privileges}" ]; then
+        add_program "$i"
+      fi
     else
-      output_proxy_executioner "echo ERROR: $1 is not a possible permission level." "${FLAG_QUIETNESS}"
-      exit 1
+      add_program "$i"
     fi
   done
 }
@@ -584,6 +750,51 @@ add_programs()
     add_program "$1"
     shift
   done
+}
+
+deduce_privileges()
+{
+  local -r flags_override_pointer="$1_flagsoverride"
+  local flags_override_stringbuild=""
+  if [ -n "${!flags_override_pointer}" ]; then  # If flagsoverride property is defined for this feature
+    flags_override_stringbuild="${!flags_override_pointer}"
+  else  # flagsoverride not defined, load template
+    flags_override_stringbuild="${flagsoverride_template}"
+  fi
+
+  # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
+  local flag_privileges=
+  flag_privileges="$(get_field "${flags_override_stringbuild}" ";" "1")"
+  if [ -z "${flag_privileges}" ]; then
+    # If override not present, check if we need to use a package manager or install a package to deduce if we need
+    # special permissions
+    local -r packageNames="$1_packagenames"
+    local -r downloadKeys="$1_downloadKeys[*]"
+    # If there are needed dependencies, do not consider them when determining the permissions needed for the features
+    # local -r dependencies="$1_packagedependencies[*]"
+    if [ -n "${!packageNames}" ]; then
+      flag_privileges=0
+    # elif [ -n "${!dependencies}" ]; then
+    #   flag_privileges=0
+    elif [ -n "${!downloadKeys}" ]; then
+      # We do not enforce require permissions unless we see a package download type
+      local special_permission=0
+      for downloadKey in ${!downloadKeys}; do
+        local download_type="$1_${downloadKey}_type"
+        if [ "${download_type}" == "package" ]; then
+          special_permission=1
+        fi
+      done
+      if [ "${special_permission}" -eq 1 ]; then
+        flag_privileges=0
+      else
+        flag_privileges=2
+      fi
+    else
+      flag_privileges=2
+    fi
+  fi
+  echo "${flag_privileges}"
 }
 
 
@@ -607,6 +818,25 @@ add_program()
     fi
   done
 
+  # Try fuzzy match but with restrictions: We do not fuze caps
+  if [ -z "${matched_keyname}" ]; then
+    # We did not achieve fast match. Loop through elements in all arguments property of all features looking for match
+    processed_argument="$(echo "${processed_argument}")"  # Literal match
+    for keyname in "${feature_keynames[@]}"; do
+      local arguments_pointer="${keyname}_arguments[@]"
+      for argument in "${!arguments_pointer}"; do  # Expand arguments of each feature using feature_keyname
+        if [ "${argument}" == "${processed_argument}" ] || [ "$(echo "${argument}" | tr -d "_")" == "$(echo "${processed_argument}" | tr -d "_")" ]; then  # Flexible match
+          matched_keyname="${keyname}"  # Save the match
+          break  # Break the inner loop
+        fi
+      done
+      if [ -n "${matched_keyname}" ]; then  # If we have already matched something  break external loop and continue
+        break
+      fi
+    done
+  fi
+
+  # Try fuzzy match
   if [ -z "${matched_keyname}" ]; then
     # We did not achieve fast match. Loop through elements in all arguments property of all features looking for match
     processed_argument="$(echo "${processed_argument}" | tr '[:upper:]' '[:lower:]')"  # Convert to lowercase
@@ -624,15 +854,11 @@ add_program()
     done
   fi
 
+
   # If we do not have a match after checking all args, this arg is not valid
   if [ -z "${matched_keyname}" ]; then
-    if [ "${FLAG_IGNORE_ERRORS}" -eq 0 ]; then
-      output_proxy_executioner "echo ERROR: $1 is not a recognized command. Installation will abort." "${FLAG_QUIETNESS}"
-      exit 1
-    else
-      output_proxy_executioner "echo WARNING: $1 is not a recognized command. Skipping this argument..." "${FLAG_QUIETNESS}"
-      return
-    fi
+    output_proxy_executioner "$1 is not a recognized command, skipping to next argument" "WARNING"
+    return
   fi
 
   # Here matched_keyname matches a valid feature. Process its flagsoverride and add or remove from added_feature_keynames
@@ -642,16 +868,10 @@ add_program()
       # Check if there is an override and if it is different from the current package manager
       local -r package_manager_override="${matched_keyname}_package_manager_override"
       if [ -n "${!package_manager_override}" ] && [ "${!package_manager_override}" != "${DEFAULT_PACKAGE_MANAGER}" ]; then
-        if [ ${FLAG_IGNORE_ERRORS} -eq 1 ]; then
-          output_proxy_executioner "echo WARNING: A change in the default package managers to perform installations is required to install ${matched_keyname}, use -O to allow overrides. Skipping this feature..." "${FLAG_QUIETNESS}"
-          return
-        else
-          output_proxy_executioner "echo ERROR: A change in the default package managers to perform installations is required to install ${matched_keyname}, use -O to allow overrides." "${FLAG_QUIETNESS}"
-          exit 1
-        fi
+        output_proxy_executioner "A change in the default package managers to perform installations is required to install ${matched_keyname}, use -O to allow overrides. Skipping this feature..." "WARNING"
+        return
       fi
     fi
-
 
     # Addition mode, we need to add keyname to added_feature_keynames and build flags
     local -r flags_override_pointer="${matched_keyname}_flagsoverride"
@@ -664,52 +884,14 @@ add_program()
 
     # The first flag indicates override permissions. Process FLAG_SKIP_PRIVILEGES_CHECK in here
     local flag_privileges=
-    flag_privileges="$(get_field "${flags_override_stringbuild}" ";" "1")"
-    if [ -z "${flag_privileges}" ]; then
-      # If override not present, check installation type
-      local -r installationtype_pointer="${matched_keyname}_installationtype"
-
-      case ${!installationtype_pointer} in
-        # Using default package manager such as $DEFAULT_PACKAGE_MANAGER
-        packagemanager)
-          flag_privileges=0
-        ;;
-        # Downloading a package and installing it using a package manager such as dpkg
-        packageinstall)
-          flag_privileges=0
-        ;;
-        # Download and decompress a file that contains a folder
-        userinherit)
-          flag_privileges=2
-        ;;
-        # Clone a repository
-        repositoryclone)
-          flag_privileges=1
-        ;;
-        # Create a virtual environment to install the feature
-        pythonvenv)
-          flag_privileges=2
-        ;;
-        # Only uses the common part of the generic installation
-        environmental)
-          flag_privileges=2
-        ;;
-        # If not recognized put 2, so we do not care
-        *)
-          flag_privileges=2
-        ;;
-      esac
-
-    fi
+    flag_privileges="$(deduce_privileges "${matched_keyname}")"
     # Process FLAG_SKIP_PRIVILEGES_CHECK. If 1 skip privilege check
     if [ "${FLAG_SKIP_PRIVILEGES_CHECK}" -eq 0 ] && [ "${flag_privileges}" -ne 2 ]; then
-      if [ "${EUID}" -eq 0 ] && [ "${flag_privileges}" -eq 1 ]; then
-        output_proxy_executioner "echo ERROR: $1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." "${FLAG_QUIETNESS}"
-        exit 1
+      if isRoot && [ "${flag_privileges}" -eq 1 ]; then
+        output_proxy_executioner "$1 enforces user permissions to be executed. Rerun without root privileges or use -P to avoid this behaviour. Skipping this program..." "ERROR"
       fi
-      if [ "${EUID}" -ne 0 ] && [ "${flag_privileges}" -eq 0 ]; then
-        output_proxy_executioner "echo ERROR: $1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." "${FLAG_QUIETNESS}"
-        exit 1
+      if ! isRoot && [ "${flag_privileges}" -eq 0 ]; then
+        output_proxy_executioner "$1 enforces root permissions to be executed. Rerun with root privileges or use -P to avoid this behaviour. Skipping this program..." "ERROR"
       fi
     fi
     # No need to pass to the execute installation the permissions of each feature, they are already processed here
@@ -726,7 +908,7 @@ add_program()
     if [ "${flag_overwrite}" -eq 0 ]; then
       # Change of _ to - again to allow the matches of commands that have - in its name
       if grep -qE "^${matched_keyname}\$" < "${INSTALLED_FEATURES}"; then
-        output_proxy_executioner "echo WARNING: ${matched_keyname} is installed. Continuing installation without selecting this feature... Use -o to skip this behaviour and select this feature." "${FLAG_QUIETNESS}"
+        output_proxy_executioner "${matched_keyname} is installed. Continuing installation without selecting this feature... Use -o to skip this behaviour and select this feature." "WARNING"
         return 1
       fi
     fi
@@ -773,13 +955,12 @@ add_program()
     # Deletion mode
 
     # Delete from the result array
-    local i=0
-    for keyname in "${added_feature_keynames[@]}"; do
-      if [ "${keyname}" == "${matched_keyname}" ]; then
-        unset added_feature_keynames[${i}]
+    for i in "${!added_feature_keynames[@]}"; do
+      if [ "${added_feature_keynames[i]}" == "${matched_keyname}" ]; then
+        unset "added_feature_keynames[${i}]"
       fi
-      i=$(( i+1 ))
     done
+    added_feature_keynames=("${added_feature_keynames[@]}")
   fi
 }
 
@@ -806,9 +987,15 @@ execute_installation()
     CURRENT_INSTALLATION_FOLDER="${BIN_FOLDER}/${keyname}"
     CURRENT_INSTALLATION_KEYNAME="${keyname}"
 
-    output_proxy_executioner "echo INFO: Attemptying to ${FLAG_MODE} ${keyname}." "${FLAG_QUIETNESS}"
-    output_proxy_executioner "generic_installation ${keyname}" "${FLAG_QUIETNESS}"
-    output_proxy_executioner "echo INFO: ${keyname} ${FLAG_MODE}ed." "${FLAG_QUIETNESS}"
+    output_proxy_executioner "Attemptying to ${FLAG_MODE} ${keyname}." "INFO"
+
+    load_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
+
+    output_proxy_executioner "generic_installation ${keyname}" "COMMAND"
+
+    unload_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
+
+    output_proxy_executioner "${keyname} ${FLAG_MODE}ed." "INFO"
 
     # Return flag errors to bash defaults (ignore errors)
     set +e
@@ -820,98 +1007,79 @@ execute_installation()
 ################################################## GENERIC INSTALL #####################################################
 ########################################################################################################################
 
-# - Description: Installs a user program in a generic way relying on variables declared in data_features.sh and the name
+# - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
 #   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
 #   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
 #   Depending on the properties set, some subfunctions will be activated to install related features.
 #   Also performs the manual execution of paths of the feature and calls generic functions to install the common
 #   part of the features such as desktop launchers, sourced .bashrc functions...
 # - Permissions: Can be executed as root or user.
-# - Argument 1: Name of the feature to install, matching the necessary variables such as $1_installationtype and the
-#   name of the first argument in the common_data.sh table
 generic_installation() {
   # Substitute dashes for underscores. Dashes are not allowed in variable names
-  local -r featurename="${1//-/_}"
-  local -r installationtype=${featurename}_installationtype
-  local -r manualcontentavailable="$1_manualcontentavailable"
-  if [ -n "${!installationtype}" ]; then
-    generic_package_manager_override "${featurename}"
+  local -r featurename="${CURRENT_INSTALLATION_KEYNAME//-/_}"
+  local -r manualcontentavailable="${CURRENT_INSTALLATION_KEYNAME}_manualcontentavailable"
+  generic_package_manager_override "${featurename}"
 
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
-      "${FLAG_MODE}_$1_pre"
-    fi
+  # Remove the installation folder to avoid collisions
+  rm -Rf "${CURRENT_INSTALLATION_FOLDER}"
+  if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f1)" == "1" ]; then
+    "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_pre"
+  fi
 
-    "generic_${FLAG_MODE}_dependencies" "${featurename}"
+  "generic_${FLAG_MODE}_gpgSignatures"
+  "generic_${FLAG_MODE}_sources"
+  "generic_${FLAG_MODE}_dependencies"
+  "generic_${FLAG_MODE}_packageManager"
 
-    case ${!installationtype} in
-      # Using package manager such as $DEFAULT_PACKAGE_MANAGER
-      packagemanager)
-        "packagemanager_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Downloading a package and installing it using a package manager such as dpkg
-      packageinstall)
-        "packageinstall_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Download and decompress a file that contains a folder
-      userinherit)
-        "userinherit_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Clone a repository
-      repositoryclone)
-        "repositoryclone_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Create a virtual environment to install the feature
-      pythonvenv)
-        "pythonvenv_${FLAG_MODE}ation_type" "${featurename}"
-      ;;
-      # Only uses the common part of the generic installation
-      environmental)
-        : # no-op
-      ;;
-      *)
-        output_proxy_executioner "echo ERROR: ${!installationtype} is not a recognized installation type" "${FLAG_QUIETNESS}"
-        exit 1
-      ;;
-    esac
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
-      "${FLAG_MODE}_$1_mid"
-    fi
+  "generic_${FLAG_MODE}_cloneRepositories"
 
-    "generic_${FLAG_MODE}_downloads" "${featurename}"
-    "generic_${FLAG_MODE}_files" "${featurename}"
-    "generic_${FLAG_MODE}_movefiles" "${featurename}"
-    "generic_${FLAG_MODE}_manual_launchers" "${featurename}"
-    "generic_${FLAG_MODE}_copy_launcher" "${featurename}"
-    "generic_${FLAG_MODE}_functions" "${featurename}"
-    "generic_${FLAG_MODE}_initializations" "${featurename}"
-    "generic_${FLAG_MODE}_autostart" "${featurename}"
-    "generic_${FLAG_MODE}_favorites" "${featurename}"
-    "generic_${FLAG_MODE}_file_associations" "${featurename}"
-    "generic_${FLAG_MODE}_keybindings" "${featurename}"
-    "generic_${FLAG_MODE}_pathlinks" "${featurename}"
-    if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
-      "${FLAG_MODE}_$1_post"
-    fi
-    if [ "${FLAG_MODE}" == "install" ]; then
-      if ! grep -qE "^$1\$" < "${INSTALLED_FEATURES}"; then
-        echo "$1" >> "${INSTALLED_FEATURES}"
-      fi
-    elif [ "${FLAG_MODE}" == "uninstall" ]; then
-      remove_line "$1" "${INSTALLED_FEATURES}"
-    fi
+  "generic_${FLAG_MODE}_downloads"
 
-    if [ "${POP_PACKAGE_MANAGER}" == 1 ]; then
-      "initialize_package_manager_${STACKED_PACKAGE_MANAGER}"
-      POP_PACKAGE_MANAGER=0
+  "generic_${FLAG_MODE}_pythonVirtualEnvironment"
+  if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f2)" == "1" ]; then
+    "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_mid"
+  fi
+
+  "generic_${FLAG_MODE}_files"
+  "generic_${FLAG_MODE}_movefiles"
+  "generic_${FLAG_MODE}_dynamic_launcher"
+  if [ "${OS_NAME}" == "WSL2" ]; then
+    "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
+  fi
+
+  "generic_${FLAG_MODE}_functions"
+  "generic_${FLAG_MODE}_initializations"
+
+  # TODO refactor using get dynamic launcher and serving the fklag install in a similar manner of how we servce the autostart flag
+  "generic_${FLAG_MODE}_favorites" "${featurename}"
+  # TODO refactor to remove _. Ensure that MIME_ASSOCIATION_PATH is present. Property asscoiatedfiletypes need an associated
+  # TODO desktop launcher to add the file asscoaitions, arbitrarily choose the first or extend this behaviour in get dynamic launcher
+  "generic_${FLAG_MODE}_file_associations"
+  "generic_${FLAG_MODE}_keybindings"
+  "generic_${FLAG_MODE}_pathlinks"
+  if [ "$(echo "${!manualcontentavailable}" | cut -d ";" -f3)" == "1" ]; then
+    "${FLAG_MODE}_${CURRENT_INSTALLATION_KEYNAME}_post"
+  fi
+  if [ "${FLAG_MODE}" == "install" ]; then
+    if ! grep -qE "^${CURRENT_INSTALLATION_KEYNAME}\$" < "${INSTALLED_FEATURES}"; then
+      echo "${CURRENT_INSTALLATION_KEYNAME}" >> "${INSTALLED_FEATURES}"
     fi
+  elif [ "${FLAG_MODE}" == "uninstall" ]; then
+    remove_line "${CURRENT_INSTALLATION_KEYNAME}" "${INSTALLED_FEATURES}"
+  fi
+
+  if [ "${POP_PACKAGE_MANAGER}" == 1 ]; then
+    "initialize_package_manager_${STACKED_PACKAGE_MANAGER}"
+    POP_PACKAGE_MANAGER=0
   fi
 }
 
 
-if [ -f "${DIR}/data_features.sh" ]; then
-  source "${DIR}/data_features.sh"
+if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/core/common_data.sh" ]; then
+  source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/common_data.sh"
 else
   # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
-  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: data_features.sh not found. Aborting..."
+  # yet
+  echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: common_data.sh not found. Aborting..."
   exit 1
 fi

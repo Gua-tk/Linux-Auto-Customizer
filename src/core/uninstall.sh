@@ -23,6 +23,8 @@ main()
   ################################################
   FLAG_MODE=uninstall  # Uninstall mode
   FLAG_OVERWRITE=1  # Set in uninstall always to true or it skips the program if it is installed
+
+  import_custom_options
   argument_processing "$@"
 
   ####################
@@ -38,7 +40,10 @@ main()
 }
 
 DIR=$(dirname "$(realpath "$0")")
-CUSTOMIZER_PROJECT_FOLDER="$(cd "${DIR}/../.." &>/dev/null && pwd)"
+export CUSTOMIZER_PROJECT_FOLDER="$(cd "${DIR}/../.." &>/dev/null && pwd)"
+
+# Activate customizer hooks to enforce repository rules
+bash "${CUSTOMIZER_PROJECT_FOLDER}/src/core/subsystems/activate_hooks.sh"
 
 if [ -f "${DIR}/functions_uninstall.sh" ]; then
   source "${DIR}/functions_uninstall.sh"

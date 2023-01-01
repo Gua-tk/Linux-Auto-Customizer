@@ -1,1 +1,0 @@
-alias j="jobs -l"

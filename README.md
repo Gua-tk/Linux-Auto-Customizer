@@ -4,13 +4,14 @@
 [![GitHub commits since tagged version](https://img.shields.io/github/commits-since/AleixMT/Linux-Auto-Customizer/v0.1.0?style=plastic&logo=github)](https://github.com/AleixMT/Linux-Auto-Customizer/issues)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/AleixMT/Linux-Auto-Customizer?style=plastic&logo=linux)](https://github.com/AleixMT/Linux-Auto-Customizer/graphs/commit-activity)
 [![GitHub last commit](https://img.shields.io/github/last-commit/AleixMT/Linux-Auto-Customizer?&style=plastic&color=blue)](https://github.com/AleixMT/Linux-Auto-Customizer/commits/master)
+[![Buy Me A Coffee](https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/customizer)
 [![GitHub Repo stars](https://img.shields.io/github/stars/AleixMT/Linux-Auto-Customizer?style=social)](https://github.com/AleixMT/Linux-Auto-Customizer)
 
 
 `bash` scripts to automatize the installation and uninstallation of a batch of precoded features in a Linux environment.
 
 <p align="center">
-<img src="https://i.imgur.com/N7Hp7H1.png" width="250" height="290"/>
+<img src="https://media.githubusercontent.com/media/AleixMT/Linux-Auto-Customizer/master/.github/logo.png" width="250" height="290"/>
 </p>
 
 # Customizer
@@ -19,11 +20,12 @@ Customizer is a software to automatize installations and customizations in a Lin
 installed. Enjoy! 🤖
 
 
-## ⌨️ Description 
-These `bash` scripts can automatize the installation and uninstallation of a batch of preset 
+## ⌨️ Description
+
+These `bash` scripts can automate the installation and uninstallation of a batch of preset 
 features in most Linux environments. These features include GNU software, programming languages, 
 IDEs, text editors, media players, games, Internet applications, file templates, wallpapers, 
-environment aliases, environment functions, terminal personalization... 
+environment aliases, environment functions and terminal personalization.
 
 All installations are cleaner, faster and fancier than a manual installation, 
 and of course all installations are **completely unattended**.
@@ -39,7 +41,7 @@ for a command.
 ## 🛠️ Configuration 
 To install this software you must begin cloning this repository to you computer. You can either
 download a `.zip`
-file containing the repository from github clicking [here](https://github.com/AleixMT/Linux-Auto-Customizer/archive/master.zip).
+file containing the repository from GitHub clicking [here](https://github.com/AleixMT/Linux-Auto-Customizer/archive/master.zip).
 Decompress the file and open a terminal in that directory.
 
 You can also clone the repository using directly terminal. To do the last option, you must have installed 
@@ -62,60 +64,60 @@ path. This will be the expected situation in the following explanations.
 
 You can also install the customizer by using:
 ```
-sudo bash install.sh customizer
+sudo bash src/core/install.sh customizer
 ```
 This will give you the global command `customizer-install` that you can use anywhere in your system to access the 
-features in `install.sh`. This command has autocompletion features.
+features in `install.sh` script. This command has autocompletion features.
 
 
 ## 🚀 Usage 
-The scripts `install.sh` and `uninstall.sh` have the same identical arguments, but behave in 
+The commands `customizer-install` and `customizer-uninstall` have the same identical arguments, but behave in 
 the opposite way: 
-`install.sh` will install the features selected by the arguments while `uninstall.sh` will
+`customizer-install` will install the features selected by the arguments while `customizer-uninstall` will
 uninstall them, using the same identical arguments. They also share their vast majority of behavioural arguments, 
 used to modify the way in which one or more features are installed.
 
-See [`FEATURES.md`](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/FEATURES.md) to see a full list of all
+See [`FEATURES.md`](https://github.com/AleixMT/Linux-Auto-Customizer/blob/master/doc/FEATURES.md) to see a full list of all
 the already pre-coded features in customizer ready to install / uninstall. You can also issue the command to show the 
 full help, which contains a table with all the available arguments and its corresponding features.
 ``` 
-bash install.sh -H
+customizer-install -H
 ```
 
 
 #### ⚙️ Feature arguments 
 You can install or uninstall features easily by passing the feature keynames by argument:
 ```
-bash install.sh discord
-bash uninstall.sh discord
+customizer-install discord
+customizer-uninstall discord
 ```
 You can install or uninstall multiple features at once:
 ```
-bash install.sh pycharm intellij wallpapers
-bash uninstall.sh pycharm intellij wallpapers
+customizer-install pycharm intellij wallpapers
+customizer-uninstall pycharm intellij wallpapers
 ```
 You will need to use `sudo` to install or uninstall some features, since elevated privileges are required:
 ```
-sudo bash install.sh skype steam parallel lolcat dia
-sudo bash uninstall.sh skype steam parallel lolcat dia
+sudo customizer-install skype steam parallel lolcat dia
+sudo customizer-uninstall skype steam parallel lolcat dia
 ```
 Features that do not require elevated privileges can also be installed or uninstalled with elevated privileges:
 ``` 
-bash install.sh pycharmpro intellijultimate
-bash uninstall.sh pycharmpro intellijultimate
+customizer-install pycharmpro intellijultimate
+customizer-uninstall pycharmpro intellijultimate
 ```
 
 
 #### ⚙️ Wrapper arguments (for selecting multiple features)
 There are some special arguments called wrappers that select the installation / uninstallation of a set of features:
 ```
-bash install.sh gitbashfunctions bashfunctions
-bash uninstall.sh gitbashfunctions bashfunctions
+customizer-install gitbashfunctions bashfunctions
+customizer-uninstall gitbashfunctions bashfunctions
 ```
 This is equivalent to:
 ``` 
-bash install.sh pull push dummycommit commit checkout clone branch status add hard fetch a b c e f h j k L l o q s u x
-bash uninstall.sh pull push dummycommit commit checkout clone branch status add hard fetch a b c e f h j k L l o q s u x
+customizer-install pull push dummycommit commit checkout clone branch status add hard fetch a b c e f h j k L l o q s u x
+customizer-uninstall pull push dummycommit commit checkout clone branch status add hard fetch a b c e f h j k L l o q s u x
 ```
 
 
@@ -126,46 +128,46 @@ tolerance, checking if the installation is already present.
 ###### Verbosity
 Installs Telegram showing all the output from the internal commands:
 ```
-bash install.sh -v telegram
+customizer-install-v telegram
 ```
 Installs firefox and gpaint without showing any output.
 ```
-sudo bash install.sh -q firefox gpaint
+sudo customizer-install -q firefox gpaint
 ```
 Each behaviour is maintained until the end of the execution or until it is changed by another behavioural argument.
 In this case the program cheese and the program dia are installed without showing any output, but spotify is on full 
 verbose mode. 
 ```
-sudo bash install.sh -q cheese dia -v spotify
+sudo customizer-install -q cheese dia -v spotify
 ```
 
 #### 🔧 Full installation / uninstallation 
 To install ALL the features available for the root user in the script you must type in a terminal:
 ```
-sudo bash install.sh --root
+sudo customizer-install --root
 ```
 To install ALL the features available for the normal user in the script you must type in a terminal:
 ```
-bash install.sh --user
+bash customizer-install --user
 ```
 📄 Summarizing: to install ALL the features available in the script you must type in a terminal:
 ```
-sudo bash install.sh --root && bash install.sh --user  
+sudo customizer-install --root && bash install.sh --user  
 ```
 This command will install all root features first while asking for elevated privileges,
 and then it will install all the local user features. 
 
 To uninstall ALL the features available for the root user in the script you must type in a terminal:
 ```
-sudo bash uninstall.sh --root
+sudo customizer-uninstall --root
 ```
 To uninstall ALL the features available for the normal user in the script you must type in a terminal:
 ```
-bash uninstall.sh --user
+customizer-uninstall --user
 ```
 📄 Summarizing: to uninstall ALL the features available in the script you must type in a terminal:
 ```
-sudo bash uninstall.sh --root && bash uninstall.sh --user  
+sudo customizer-uninstall --root && customizer-uninstall --user  
 ```
 This command will uninstall all root features first while asking for elevated privileges,
 and then it will uninstall all the local user features. 

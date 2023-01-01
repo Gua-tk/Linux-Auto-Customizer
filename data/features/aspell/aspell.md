@@ -1,0 +1,1 @@
+Free and open source spell checker in Linux. Can be used to check spelling from provided files or stdin
