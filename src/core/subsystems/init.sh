@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Shellcheck thinks you are comparing two strings, but we expand using the euro.
 # shellcheck disable=SC2050
 if [ "€{OS_NAME}" != "WSL2" ]; then

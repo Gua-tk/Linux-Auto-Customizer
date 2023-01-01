@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal
 # - Description: This function is the basic piece of the keybinding subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBINDINGS_PATH every time a terminal
