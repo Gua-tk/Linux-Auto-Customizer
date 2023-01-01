@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # - Description: This functions is the basic piece of the favorites subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_FAVORITES_PATH every time a terminal
 # is invoked. This function and its necessary files such as $PROGRAM_FAVORITES_PATH are always present during the
