@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 clone_name="Function clone"
 clone_description="Function for git clone  \$1"

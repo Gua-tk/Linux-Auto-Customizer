@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 pgadmin_name="pgAdmin 4"
 pgadmin_description="PostgreSQL Tools"
 pgadmin_version="Python dependent"

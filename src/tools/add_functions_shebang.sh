@@ -17,16 +17,11 @@ main()
 {
   CUSTOMIZER_PROJECT_FOLDER="$(cd "$(dirname "$(realpath "$0")")/../.." &>/dev/null && pwd)"
 
-  DIR="${CUSTOMIZER_PROJECT_FOLDER}/src/core"
-  source "${DIR}/data_features.sh"
+  source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/common_data.sh"
   SHE_BANG='#!/usr/bin/env bash'
 
   for key_name in ${feature_keynames[@]}; do
-
-    if [ ! -d "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${key_name}" ]; then
-      continue
-    fi
-    for file_path in "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${key_name}/"*; do
+    for file_path in "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${key_name}/"*; do
 
       if [ ! "$(echo "${file_path}" | rev | cut -d '.' -f1 | rev )" == "sh" ]; then
         continue

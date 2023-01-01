@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ffmpeg_name="ffmpeg"
 ffmpeg_description="Super fast video / audio encoder"
 ffmpeg_version="System dependent"

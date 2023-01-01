@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 opensshServer_conf=(
 "Port 3297  # Change default port for ssh server to listen"
 "LogLevel VERBOSE  # Verbose on logs"

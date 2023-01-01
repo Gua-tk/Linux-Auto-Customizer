@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 nmap_name="nmap"
 nmap_description="Scan and network security used for port scanning."

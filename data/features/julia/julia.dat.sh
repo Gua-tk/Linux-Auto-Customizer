@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 julia_name="Julia and IJulia"
 julia_description="High-level, high-performance dynamic language for technical computing"

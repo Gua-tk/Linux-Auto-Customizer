@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 LFunction_name="Function L"
 LFunction_description="Function that lists files in a directory, but listing the directory sizes"

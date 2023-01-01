@@ -898,7 +898,7 @@ generic_install_dynamic_launcher() {
   # If the FLAG_AUTOSTART is active, we set it as not attended, which means that we need to ensure an autostart launcher
   # via any method
   local is_autostart_attended=
-  if [ ${FLAG_AUTOSTART} -eq 1 ]; then
+  if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
     is_autostart_attended=0
   else
     is_autostart_attended=1
@@ -1427,11 +1427,11 @@ generic_install_pythonVirtualEnvironment() {
   "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install wheel
 
   for pipinstallation in "${!pipinstallations}"; do
-    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install ${pipinstallation}
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install "${pipinstallation}"
   done
 
   for pythoncommand in "${!pythoncommands}"; do
-    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m ${pythoncommand}
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m "${pythoncommand}"
   done
 
   # If we are root change permissions

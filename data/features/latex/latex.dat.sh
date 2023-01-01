@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 latex_name="LaTeX"
 latex_description="LaTeX Editor"

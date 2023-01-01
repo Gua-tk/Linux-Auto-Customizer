@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gcc_name="gcc"
 gcc_description="C compiler for GNU systems"

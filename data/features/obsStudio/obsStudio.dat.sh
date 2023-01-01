@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 obsStudio_name="Open Broadcaster Software Studio"
 obsStudio_description="Streaming and recording software"

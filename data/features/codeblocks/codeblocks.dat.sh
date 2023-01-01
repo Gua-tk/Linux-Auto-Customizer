@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 codeblocks_name="Code::Blocks IDE"
 codeblocks_description="Integrated development environment"

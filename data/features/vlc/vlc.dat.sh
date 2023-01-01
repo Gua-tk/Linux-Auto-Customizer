@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 vlc_name="VLC media player"
 vlc_description="Media player"

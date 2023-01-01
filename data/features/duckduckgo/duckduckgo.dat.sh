@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 duckduckgo_name="Duckduckgo"
 duckduckgo_description="Duckduckgo opening in Browser"
 duckduckgo_version="Google dependent"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 pycharm_name="PyCharm Community"
 pycharm_description="Integrated development environment used in computer programming"

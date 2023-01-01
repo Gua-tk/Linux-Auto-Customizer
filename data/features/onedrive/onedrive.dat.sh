@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 onedrive_name="OneDrive client"
 onedrive_description="A free Microsoft OneDrive Client"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_sysmontask_mid() {
   (
     cd "${BIN_FOLDER}/sysmontask" || exit

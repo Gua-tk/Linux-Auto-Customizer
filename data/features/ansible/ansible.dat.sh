@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ansible_description="Application deployment engine"
 ansible_name="Ansible"
 ansible_version="5.0.0"

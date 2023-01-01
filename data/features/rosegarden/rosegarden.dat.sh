@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 rosegarden_name="Rosegarden"
 rosegarden_description="Software for music production"

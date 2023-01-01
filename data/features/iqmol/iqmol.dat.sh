@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 iqmol_name="IQmol"
 iqmol_description="Molecule visualizer"

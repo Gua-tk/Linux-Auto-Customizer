@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 lolcat_name="Function lolcat"
 lolcat_description="Same as the command cat but outputting the text in rainbow color and concatenate string"

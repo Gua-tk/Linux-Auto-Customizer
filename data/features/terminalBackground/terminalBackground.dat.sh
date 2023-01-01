@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 terminalBackground_name="Terminal Background"
 terminalBackground_description="Change color palette and apply other custom settings of gnome-terminal"

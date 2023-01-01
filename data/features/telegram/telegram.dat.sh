@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 telegram_name="Telegram"
 telegram_description="Cloud-based instant messaging software and application servic"

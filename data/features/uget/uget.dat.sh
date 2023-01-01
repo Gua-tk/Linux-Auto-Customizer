@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 uget_name="uGet"
 uget_description="Download Manager"

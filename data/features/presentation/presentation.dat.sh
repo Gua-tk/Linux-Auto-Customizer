@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 presentation_name="Google Presentation"
 presentation_version="Google dependent"

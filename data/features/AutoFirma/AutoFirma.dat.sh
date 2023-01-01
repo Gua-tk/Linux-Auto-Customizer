@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 AutoFirma_name="AutoFirma"
 AutoFirma_description="Electronic signature application"
 AutoFirma_version="1.0"

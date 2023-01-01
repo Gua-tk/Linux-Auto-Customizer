@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 transmission_name="Transmission"
 transmission_description="A set of lightweight Torrent client (in GUI, CLI and daemon form)"

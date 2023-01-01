@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 twitch_name="Twitch"
 twitch_description="Twitch.tv opening in Browser"

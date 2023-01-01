@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ghostwriter_name="ghostwriter"
 ghostwriter_description="Markdown Editor"

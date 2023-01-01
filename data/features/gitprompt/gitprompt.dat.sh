@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gitprompt_name="gitprompt"
 gitprompt_description="Special prompt in git repositories"

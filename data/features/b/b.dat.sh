@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 b_name="Function b"
 b_description="Alias for bash"
 b_version="1.0"

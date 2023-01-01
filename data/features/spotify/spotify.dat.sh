@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 spotify_name="Spotify"
 spotify_description="Music streaming service"

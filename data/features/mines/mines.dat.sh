@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 mines_name="GNOME Mines"
 mines_description="Implementation for GNU systems of the famous game mines"

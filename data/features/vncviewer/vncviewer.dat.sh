@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 vncviewer_name="VNC Viewer"
 vncviewer_description="VNC client"

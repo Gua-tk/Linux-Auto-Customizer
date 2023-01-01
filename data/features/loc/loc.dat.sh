@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 loc_name="Function loc"
 loc_description="Counts lines of code"

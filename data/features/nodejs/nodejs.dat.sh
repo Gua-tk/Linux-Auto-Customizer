@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 nodejs_name="NodeJS"
 nodejs_description="JavaScript language for the developers."
 nodejs_version=""

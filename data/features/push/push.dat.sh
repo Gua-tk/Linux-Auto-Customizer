@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 push_name="Function push"
 push_description="Decorates call to git push by setting upstream branch if needed"

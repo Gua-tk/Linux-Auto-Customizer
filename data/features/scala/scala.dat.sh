@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 scala_name="Scala"
 scala_description="Programming language"

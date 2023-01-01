@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 git_name="git"
 git_description="Version manager"

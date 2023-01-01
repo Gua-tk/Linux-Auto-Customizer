@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 tomcat_name="Apache Tomcat Server"
 tomcat_description="Servlet container"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 R_name="R"
 R_description="Programming language"

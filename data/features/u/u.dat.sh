@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 u_name="Function u"
 u_description="Opens given link in default web browser"

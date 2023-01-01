@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 dbeaver_name="dbeaver-ce"
 dbeaver_description="Universal Database Manager"
 dbeaver_version="1.0"

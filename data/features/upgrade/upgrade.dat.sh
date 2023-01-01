@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 upgrade_name="Function Upgrade"
 upgrade_description="update your system packages"

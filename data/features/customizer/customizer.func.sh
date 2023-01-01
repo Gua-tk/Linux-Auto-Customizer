@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_customizer_post()
 {
   (

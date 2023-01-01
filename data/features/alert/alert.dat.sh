@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 alert_name="Function alert"
 alert_description="Alias to show a notification at the end of a commands"
 alert_version="1.0"

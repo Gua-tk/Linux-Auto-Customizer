@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gitk_name="GitHub Desktop"
 gitk_description="Git Application"

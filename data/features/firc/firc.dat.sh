@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 firc_name="F-irc"
 firc_description="CLI IRC client"
 firc_version="1.0"

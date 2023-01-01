@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 tor_name="Tor Browser"
 tor_description="Browser focused on security and privacy. Can browse through the onion protocol"

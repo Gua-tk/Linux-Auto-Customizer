@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 rsync_name="Grsync"
 rsync_description="Software for file/folders synchronization"

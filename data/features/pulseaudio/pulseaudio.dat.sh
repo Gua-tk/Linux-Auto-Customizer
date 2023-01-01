@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 pulseaudio_name="Pulseaudio"
 pulseaudio_description="PulseAudio is a cross-platform, network-capable sound server."

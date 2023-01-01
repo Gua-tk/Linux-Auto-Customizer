@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 facebook_name="Facebook"
 facebook_description="Facebook opening in Browser"
 facebook_version="Google dependent"

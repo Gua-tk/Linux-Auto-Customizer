@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 sudoku_name="GNOME Sudoku"
 sudoku_description="Implementation for GNU systems of the famous popular mathematical game sudoku"

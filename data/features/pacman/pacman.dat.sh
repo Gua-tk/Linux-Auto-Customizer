@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 pacman_name="Pacman"
 pacman_description="Arcade Game"º

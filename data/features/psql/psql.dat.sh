@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 psql_name="PostGreSQL"
 psql_description="Databases and Database Managers"

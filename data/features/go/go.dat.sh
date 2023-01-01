@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 go_name="go language"
 go_description="google programming language"

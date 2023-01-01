@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 studio_name="Android Studio"
 studio_description="IDE for Android, Google's operating system"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 clementine_name="Clementine"
 clementine_description="Clementine Music Player"
 clementine_version="System dependent"

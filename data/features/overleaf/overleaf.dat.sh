@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 overleaf_name="Overleaf"
 overleaf_version="Google dependent"

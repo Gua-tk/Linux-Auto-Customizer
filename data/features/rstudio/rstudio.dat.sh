@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 rstudio_name="RStudio"
 rstudio_description="Default application for .R files "

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 k_name="Function k"
 k_description="Kill processes by PID and name of process"

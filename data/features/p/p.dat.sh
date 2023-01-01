@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 p_name="Function p"
 p_description="Check processes names and PID's from given port"

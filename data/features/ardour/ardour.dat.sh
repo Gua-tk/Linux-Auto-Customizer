@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ardour_name="Ardour5"
 ardour_description="Ardour Digital Audio Workstation 5"
 ardour_version="System dependent"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 scilab_name="Scilab"
 scilab_description="Scientific software package for numerical computations"

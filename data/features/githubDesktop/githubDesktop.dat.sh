@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 githubDesktop_name="GitHub Desktop"
 githubDesktop_description="GitHub Application"

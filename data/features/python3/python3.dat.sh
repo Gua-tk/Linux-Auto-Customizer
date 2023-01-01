@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 python3_name="Python3"
 python3_description="Interpreted, high-level and general-purpose programming language"

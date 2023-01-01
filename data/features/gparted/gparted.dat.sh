@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gparted_name="GParted"
 gparted_description="Partition Editor"

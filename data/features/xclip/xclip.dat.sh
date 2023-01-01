@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 xclip_name="xclip"
 xclip_description="Utility for pasting."

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 php_name="php"
 php_description="Programming language"

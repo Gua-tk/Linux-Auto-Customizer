@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 EFunction_name="Function E"
 EFunction_description="Multi Function to edit a set of hardcoded key files using an argument"

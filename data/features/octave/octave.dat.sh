@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 octave_name="GNU Octave"
 octave_description="Programming language and IDE"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 sublime_name="Sublime Text"
 sublime_description="Source code editor with an emphasis on source code editing"

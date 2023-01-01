@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 nano_name="nano"
 nano_description=""
 nano_version="System dependent"

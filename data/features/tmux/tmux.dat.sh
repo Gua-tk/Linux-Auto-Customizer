@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 tmux_name="Terminal multiplexor"
 tmux_description="Terminal multiplexor"
 tmux_version="System dependent"

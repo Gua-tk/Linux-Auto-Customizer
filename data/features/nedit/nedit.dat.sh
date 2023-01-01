@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 nedit_name="NEdit Nirvana Text Editor"
 nedit_description="Text Editor"

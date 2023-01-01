@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 BFunction_name="Function B"
 BFunction_description="Function that source ~/.profile and ~/.bashrc"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gpaint_name="GNU Paint"
 gpaint_description="Raster graphics editor similar to Microsoft Paint"

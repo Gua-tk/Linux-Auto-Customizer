@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 install_jupyterLab_pre() {
   local -r dependencies=("npm" "R" "julia")

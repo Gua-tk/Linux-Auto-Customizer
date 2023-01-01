@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 pypy3_name="pypy3"
 pypy3_description="Faster interpreter for the Python3 programming language"
 pypy3_version="System dependent"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 config_name="Function config"
 config_description="Function that does a git config accepting two parameters username and email"

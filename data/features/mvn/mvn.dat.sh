@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 mvn_name="Apache Maven"
 mvn_description="Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM)"

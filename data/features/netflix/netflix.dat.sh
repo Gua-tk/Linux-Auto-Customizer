@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 netflix_name="Netflix"
 netflix_version="Google dependent"

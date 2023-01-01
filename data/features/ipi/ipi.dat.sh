@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ipi_name="Function ipi"
 ipi_description="Returns the private IP"

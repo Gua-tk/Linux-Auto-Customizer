@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gitPristine_name="git pristine alias"
 gitPristine_description="Alias to obtain a pristine last version of a git repository"

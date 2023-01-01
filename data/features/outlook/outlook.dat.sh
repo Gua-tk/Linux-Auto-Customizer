@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 outlook_name="Outlook"
 outlook_description="outlook opening in Browser"

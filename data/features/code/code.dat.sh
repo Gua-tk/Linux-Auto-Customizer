@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 code_name="Visual Studio Code"
 code_description="General purpose IDE"

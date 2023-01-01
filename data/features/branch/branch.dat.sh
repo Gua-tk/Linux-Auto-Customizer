@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 branch_name="Function branch"
 branch_description="Alias for git branch"
 branch_version="1.0"

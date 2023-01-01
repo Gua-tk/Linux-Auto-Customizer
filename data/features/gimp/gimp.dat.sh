@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gimp_name="GNU Image Manipulation Program"
 gimp_description="Image Editor"

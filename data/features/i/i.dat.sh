@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 i_name="Function i"
 i_description="Shows folder structures"

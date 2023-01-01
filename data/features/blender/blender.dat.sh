@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 blender_name="Blender"
 blender_description="2D and 3D image modeling and animation, fx, video edit..."
 blender_version="1.0"

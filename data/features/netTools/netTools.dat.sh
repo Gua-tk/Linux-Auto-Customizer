@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 netTools_name="net-tools"
 netTools_description="Set of network tools"

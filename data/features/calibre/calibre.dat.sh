@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 calibre_name="Calibre"
 calibre_description="E-book library management"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 cheat_name="Cheat"
 cheat_description="Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages"
 cheat_version="Cheat creator dependent"

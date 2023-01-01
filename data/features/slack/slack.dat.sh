@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 slack_name="Slack"
 slack_description="Slack Client for Linux"

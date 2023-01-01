@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 screenshots_name="Screenshots"
 screenshots_description="Takes a screenshot and saves it to custom ~/Images/screenshots folder and save it to the clipboard for pasting"

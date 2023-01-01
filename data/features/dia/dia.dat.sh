@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 dia_name="Dia"
 dia_description="Diagram Editor"

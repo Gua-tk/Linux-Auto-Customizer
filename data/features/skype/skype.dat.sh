@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 skype_name="Skype"
 skype_description="Skype Internet Telephony"

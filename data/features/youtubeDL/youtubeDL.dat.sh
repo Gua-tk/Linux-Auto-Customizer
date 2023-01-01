@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 youtubeDL_name="youtube-dl"
 youtubeDL_description="HTML video scratcher for YouTube"
 youtubeDL_version="youtube-dl dependent"

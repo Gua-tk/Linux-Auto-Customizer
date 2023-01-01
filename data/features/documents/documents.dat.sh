@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 documents_name="Google Documents"
 documents_description="Google Documents opening in Browser"
 documents_version="Google dependent"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 bashcolors_name="Function colors"
 bashcolors_description="Function and variables to use color in terminal"

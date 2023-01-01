@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 github_name="Github"
 github_description="Github opening in Browser"

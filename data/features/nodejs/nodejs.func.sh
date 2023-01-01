@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_nodejs_post()
 {
   if ! isRoot; then

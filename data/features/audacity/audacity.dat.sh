@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 audacity_name="Audacity"
 audacity_description="Sound Editor"
 audacity_version="2.3.3"

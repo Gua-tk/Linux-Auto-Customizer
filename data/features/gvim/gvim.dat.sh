@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gvim_name="GVim"
 gvim_description="Text Editor"

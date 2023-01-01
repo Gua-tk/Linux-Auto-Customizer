@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 j_name="Function j"
 j_description="Alias for jobs -l"

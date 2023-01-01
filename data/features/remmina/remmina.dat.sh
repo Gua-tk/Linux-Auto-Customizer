@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 remmina_name="Remmina"
 remmina_description="Remote Desktop Contol"
