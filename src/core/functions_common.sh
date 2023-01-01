@@ -484,7 +484,7 @@ get_next_collisioner()
 {
   if [ $# -eq 0 ]; then
     echo ""
-  elif [ -z $1 ]; then
+  elif [ -z "$1" ]; then
     echo "2"
   elif echo "$1" | grep -Eqo "[0-9]+"; then
     echo "$((1 + $1))"
@@ -708,7 +708,7 @@ argument_processing()
           add_program "${key}"
         else
           # There is a wrapper corresponding with this key, so we add each program that is in the wrapper.
-          add_programs ${set_of_features}
+          add_programs "${set_of_features}"
         fi
       ;;
     esac
@@ -794,7 +794,7 @@ deduce_privileges()
       flag_privileges=2
     fi
   fi
-  echo $flag_privileges
+  echo "${flag_privileges}"
 }
 
 

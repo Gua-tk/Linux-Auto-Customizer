@@ -92,6 +92,10 @@ if [ -f "€{PROGRAM_KEYBINDINGS_PATH}" ]; then
     active_keybinds_str+="'${active_keybind}', "
   done
   # remove last comma and add the ] to close the array
+
+  # Here he have a shellcheck failure, but it is non correctable
+  # The proposed solution to shellcheck prompts errors: active_keybinds_str="${active_keybinds_str//", $"/""}]"
+  # shellcheck disable=SC2001
   active_keybinds_str="$(echo "${active_keybinds_str}" | sed 's/, $//g')]"
 
   gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "${active_keybinds_str}"
