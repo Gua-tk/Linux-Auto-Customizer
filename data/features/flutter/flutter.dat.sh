@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 flutter_name="Flutter"
 flutter_description="Tool to create responsive GUIs"
 flutter_version="2.10.5-stable"

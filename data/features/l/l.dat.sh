@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 l_name="Function l"
 l_description="alias for ls"

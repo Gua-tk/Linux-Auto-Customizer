@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 inkscape_name="Inkscape"
 inkscape_description="Vector Graphics Editor"

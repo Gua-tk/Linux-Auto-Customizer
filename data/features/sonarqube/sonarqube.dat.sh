@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 sonarqube_name="Sonarqube"
 sonarqube_description="Platform to evaluate source code"

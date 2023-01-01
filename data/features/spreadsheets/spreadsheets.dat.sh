@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 spreadsheets_name="Google Spreadsheets"
 spreadsheets_description="Google Spreadsheets opening in Browser"

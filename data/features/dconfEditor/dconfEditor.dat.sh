@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 dconfEditor_name="dconf-editor"
 dconfEditor_description="Editor settings"

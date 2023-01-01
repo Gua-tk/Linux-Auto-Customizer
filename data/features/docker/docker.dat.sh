@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 docker_name="Docker"
 docker_description="Containerization service"

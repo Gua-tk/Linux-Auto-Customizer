@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 soundcloud_name="Soudcloud"
 soundcloud_description="Soudcloud opening in Browser"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 anydesk_name="Anydesk"
 anydesk_description="PC Remote controller"
 anydesk_version="6.1.1"

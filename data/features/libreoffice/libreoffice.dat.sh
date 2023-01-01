@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 libreoffice_name="LibreOffice"
 libreoffice_description="Office suite for open-source systems"

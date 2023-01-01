@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 megasync_name="MegaSync"
 megasync_description="Synchronises folders between your computer and your MEGA Cloud Drive"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 reddit_name="Reddit"
 reddit_version="Google dependent"

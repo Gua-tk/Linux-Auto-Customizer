@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 evolution_name="Evolution Calendar"
 evolution_description="User calendar agend, planning"
 evolution_version="1.0"

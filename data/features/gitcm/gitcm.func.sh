@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_gitcm_post()
 {
   gitcm configure

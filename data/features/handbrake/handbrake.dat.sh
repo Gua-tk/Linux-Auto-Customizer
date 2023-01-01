@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 handbrake_name="Handbrake"
 handbrake_description="Text Editor"

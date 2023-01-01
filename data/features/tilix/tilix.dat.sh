@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 tilix_name="Tilix"
 tilix_description="Advanced GTK3 tiling terminal emulator"

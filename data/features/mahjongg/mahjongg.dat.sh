@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 mahjongg_name="GNOME Mahjongg"
 mahjongg_description="Implementation for GNU systems of the famous popular chinese game Mahjongg"

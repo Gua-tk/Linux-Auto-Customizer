@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 firefox_name="Firefox Web Browser"
 firefox_description="Web browser"
 firefox_version="System dependent"

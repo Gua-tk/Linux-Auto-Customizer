@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 chrome_name="Google Chrome"
 chrome_description="Web Browser"

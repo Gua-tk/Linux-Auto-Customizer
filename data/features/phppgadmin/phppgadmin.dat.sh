@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 phppgadmin_name="phpPgAdmin"
 phppgadmin_description="GUI for SQL Database Management"

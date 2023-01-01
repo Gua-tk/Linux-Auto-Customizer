@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ipe_name="Function ipe"
 ipe_description="Returns the public IP"

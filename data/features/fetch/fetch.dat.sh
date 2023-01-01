@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 fetch_name="Function fetch"
 fetch_description="Alias for git fetch --prune"

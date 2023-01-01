@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 hardinfo_name="Hardinfo"
 hardinfo_description=""

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 rust_name="Rust"
 rust_description="Programming Language"

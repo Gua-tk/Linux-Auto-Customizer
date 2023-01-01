@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 shotwell_name="Shotwell"
 shotwell_description="Photo Manager"

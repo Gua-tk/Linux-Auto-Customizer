@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 terminator_name="Terminator"
 terminator_description="Multiple terminals in one window"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 eclipse_name="Eclipse IDE"
 eclipse_description="IDE for Java"

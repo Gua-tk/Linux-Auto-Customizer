@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 sonicPi_name="Sonic Pi"
 sonicPi_description="programming language that ouputs sounds as compilation product"

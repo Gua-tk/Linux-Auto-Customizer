@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 filezilla_name="FileZilla"
 filezilla_description="FTP Client & Server"

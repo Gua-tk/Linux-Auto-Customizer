@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ips_name="Function ips"
 ips_description="Returns the IP information"

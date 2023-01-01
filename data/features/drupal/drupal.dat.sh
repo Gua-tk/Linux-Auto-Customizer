@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 drupal_name="Drupal"
 drupal_description="Web CMS"
 drupal_version="9.2.10"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gitlab_name="Gitlab"
 gitlab_description="Gitlab opening in Browser"

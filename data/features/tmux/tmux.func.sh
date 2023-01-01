@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_tmux_post() {
   if [ -n "${SUDO_USER}" ]; then
     (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/tmux/cronjob") | crontab -u "${SUDO_USER}" -

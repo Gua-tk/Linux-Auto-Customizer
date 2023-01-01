@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 clion_name="CLion"
 clion_description="Cross-platform C/C++ IDE"
 clion_version="2021.3"

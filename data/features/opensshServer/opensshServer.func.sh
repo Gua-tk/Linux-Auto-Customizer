@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_opensshServer_post()
 {
   for conf_element in "${opensshServer_conf[@]}"; do

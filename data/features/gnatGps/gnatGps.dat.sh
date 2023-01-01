@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gnatGps_name="GNAT Programming Studio"
 gnatGps_description="Programming Studio for Ada and C"

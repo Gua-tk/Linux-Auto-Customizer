@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_matlab_mid()
 {
   "${TEMP_FOLDER}/matlab/install"  # Execute installer

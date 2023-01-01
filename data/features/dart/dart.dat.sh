@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 dart_name="Dart"
 dart_description="General purpose programming language, specialized on front-end"

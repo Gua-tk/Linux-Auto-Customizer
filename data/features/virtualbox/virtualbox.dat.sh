@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 virtualbox_name="VirtualBox"
 virtualbox_description="Hosted hypervisor for x86 virtualization"

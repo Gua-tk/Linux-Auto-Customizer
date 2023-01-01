@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 matlab_name="Matlab R2021a"
 matlab_description="IDE + programming language specialized in matrix operations"
 matlab_version="R2021a"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 clean_name="Function clean"
 clean_description="Remove files and contents from the trash bin and performs sudo apt-get -y autoclean and sudo apt-get -y autoremove."

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 customizer_name="Linux Auto Customizer"
 customizer_description="Custom local installation manager"
 customizer_version="developer dependent"

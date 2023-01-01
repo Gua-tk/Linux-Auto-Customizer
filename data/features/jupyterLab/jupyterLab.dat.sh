@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 jupyterLab_name="Jupyter Lab"
 jupyterLab_description="High-level, high-performance dynamic language for technical computing"
 jupyterLab_version="jupyter dependent"

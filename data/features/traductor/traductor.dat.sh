@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 traductor_name="Google Traductor"
 traductor_description="Google Traductor opening in Browser"

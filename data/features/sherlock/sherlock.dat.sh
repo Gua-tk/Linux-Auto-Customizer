@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 sherlock_name="Sherlock"
 sherlock_description="Tool to obtain linked social media accounts using user name"
 sherlock_version="1.0"

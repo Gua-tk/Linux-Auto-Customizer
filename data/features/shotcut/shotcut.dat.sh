@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 shotcut_name="Shotcut"
 shotcut_description="Cross-platform video editing"

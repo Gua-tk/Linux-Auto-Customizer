@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 mendeley_name="Mendeley Desktop"
 mendeley_description="Research Paper Manager"

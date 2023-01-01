@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 teams_name="Microsoft Teams - Preview"
 teams_description="Microsoft Teams for Linux is your chat-centered workspace in Office 365."

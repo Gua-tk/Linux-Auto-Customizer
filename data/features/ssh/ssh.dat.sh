@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ssh_name="SSH"
 ssh_description="Secure Shell"

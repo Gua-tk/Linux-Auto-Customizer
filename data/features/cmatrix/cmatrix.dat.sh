@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 cmatrix_name="Cmatrix"
 cmatrix_description="Enter The Matrix"
 cmatrix_version="System dependent"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 converters_name="Functions converters"
 converters_description="Convert any number to any numeric system"
 converters_version="1.0"

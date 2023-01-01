@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 cheese_name="Cheese"
 cheese_description="Webcam Booth"

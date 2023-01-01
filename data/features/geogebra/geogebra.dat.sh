@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 geogebra_name="GeoGebra"
 geogebra_description="Geometry visualization plotter and calculator with GUI"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 s_name="Function s"
 s_description="Function to execute any program silently and in the background"

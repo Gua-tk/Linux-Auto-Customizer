@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 thunderbird_name="Thunderbird Mail"
 thunderbird_description="Send and receive mail with Thunderbird"

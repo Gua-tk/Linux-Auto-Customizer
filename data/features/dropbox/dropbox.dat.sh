@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 dropbox_name="Dropbox"
 dropbox_description="File Synchronizer"

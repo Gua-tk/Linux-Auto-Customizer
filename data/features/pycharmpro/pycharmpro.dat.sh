@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 pycharmpro_name="PyCharm Professional"
 pycharmpro_description="Integrated development environment used in computer programming"

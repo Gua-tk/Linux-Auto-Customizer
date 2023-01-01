@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 google_name="Google"
 google_description="google opening in Browser"

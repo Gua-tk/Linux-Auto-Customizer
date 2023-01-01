@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 commit_name="Function commit"
 commit_description="Function that makes git commit -am"

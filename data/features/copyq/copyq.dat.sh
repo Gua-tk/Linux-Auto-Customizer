@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 copyq_name="CopyQ"
 copyq_description="Clipboard Manager"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 h_name="Function h"
 h_description="Search in your history for previous commands entered, stands by history | grep "$@""

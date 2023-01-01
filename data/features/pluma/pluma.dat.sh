@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 pluma_name="Pluma"
 pluma_description="Text Editor"

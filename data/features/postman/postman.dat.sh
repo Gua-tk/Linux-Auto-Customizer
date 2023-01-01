@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 postman_name="Postman"
 postman_description="Application to maintain and organize collections of REST API calls"

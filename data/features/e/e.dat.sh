@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 e_name="Function e"
 e_description="Multi function to edit a file or project in folder"

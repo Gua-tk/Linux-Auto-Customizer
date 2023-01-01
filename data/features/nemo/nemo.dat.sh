@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 nemo_name="Nemo Desktop"
 nemo_description="Access and organize files"

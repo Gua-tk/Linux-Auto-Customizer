@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 instagram_name="Instagram"
 instagram_description="Instagram opening in Browser"

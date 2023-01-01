@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gmail_name="Gmail"
 gmail_description="Gmail opening in Browser"

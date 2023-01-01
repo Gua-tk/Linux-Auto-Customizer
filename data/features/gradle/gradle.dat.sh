@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 gradle_name="Gradle"
 gradle_description="Automatize building applications"

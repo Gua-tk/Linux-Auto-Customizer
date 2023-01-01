@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 fdupes_name="fdupes"
 fdupes_description="Searches for duplicated files within given directories"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 axel_name="axel"
 axel_description="Download manager"
 axel_version="1.6"

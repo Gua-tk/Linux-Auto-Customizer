@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 gitcm_name="Git Credentials Manager"
 gitcm_description="Plug-in for git to automatically use personal tokens"
 gitcm_version="gcmcore-linux_amd64.2.0.696"

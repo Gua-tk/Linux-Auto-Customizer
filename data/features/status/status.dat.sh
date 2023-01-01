@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 status_name="Function status"
 status_description="Alias of git status"

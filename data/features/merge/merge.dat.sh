@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 merge_name="Function merge"
 merge_description="Function for git merge"

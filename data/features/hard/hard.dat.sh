@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 hard_name="Function hard"
 hard_description="Alias for git reset HEAD --hard"

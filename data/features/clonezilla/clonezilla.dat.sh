@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 clonezilla_name="Clonezilla"
 clonezilla_description="Disk image utility"

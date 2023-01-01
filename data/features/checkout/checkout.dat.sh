@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 checkout_name="Function checkout"
 checkout_description="Alias for git checkout"
 checkout_version="1.0"

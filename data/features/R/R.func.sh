@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 R_jupyterLab_function=("
 install.packages('IRkernel')
 install.packages(c('rzmq', 'repr', 'uuid','IRdisplay'),

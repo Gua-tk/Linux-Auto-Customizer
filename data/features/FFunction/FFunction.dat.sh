@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 FFunction_name="Function F"
 FFunction_description="Function to find strings in files in the directory in the 1st argument"

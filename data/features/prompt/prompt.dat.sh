@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 prompt_name="Function prompt"
 prompt_description="Installs a new colourful prompt on terminal window"

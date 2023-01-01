@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 googlecalendar_name="Google Calendar"
 googlecalendar_description="Google Calendar opening in Browser"

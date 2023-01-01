@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 guake_name="Guake Terminal"
 guake_description="Use the command line in a Quake-like terminal"

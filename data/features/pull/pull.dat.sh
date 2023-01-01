@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 pull_name="Function pull"
 pull_description="Decorates call to git pull forcing to not fast-forward"

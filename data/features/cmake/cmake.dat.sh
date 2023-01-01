@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 cmake_name="Cmake"
 cmake_description="Compile C and c make"

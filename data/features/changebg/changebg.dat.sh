@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 changebg_name="Change Background"
 changebg_description="Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes"
 changebg_version="1.0"

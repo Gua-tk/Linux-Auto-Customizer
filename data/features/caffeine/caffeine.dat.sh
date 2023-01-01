@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 caffeine_name="Caffeine"
 caffeine_description="Customization application"
 caffeine_version="System dependent"

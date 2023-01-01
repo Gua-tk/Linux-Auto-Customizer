@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 wireshark_name="Wireshark"
 wireshark_description="Network Analyzer"
 wireshark_version="System dependent"

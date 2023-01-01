@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 wikipedia_name="Wikipedia"
 wikipedia_description="Wikipedia opening in Browser"

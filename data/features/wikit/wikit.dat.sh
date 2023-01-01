@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 wikit_name="Wikit"
 wikit_description="Wikipedia search inside terminal"
 wikit_version="System dependent"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 fastcommands_name="Fast commands"
 fastcommands_description="Collection of multi-purpose commands"
 fastcommands_version="1.0"

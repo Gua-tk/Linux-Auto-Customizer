@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 steam_name="Steam"
 steam_description="Application for managing and playing games on Steam"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ideac_name="IntelliJ IDEA Community Edition"
 ideac_description="Java IDE"

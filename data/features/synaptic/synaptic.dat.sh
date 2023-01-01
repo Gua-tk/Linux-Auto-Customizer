@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 synaptic_name="Synaptic Package Manager"
 synaptic_description="Package Manager"

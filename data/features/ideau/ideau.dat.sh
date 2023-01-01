@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ideau_name="IntelliJ IDEA Ultimate Edition"
 ideau_description="Java IDE"

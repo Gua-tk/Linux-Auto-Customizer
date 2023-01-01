@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 historyoptimization_name="Function history optimization"
 historyoptimization_description="Shared history in terminal session and other tweaks for the terminal history"

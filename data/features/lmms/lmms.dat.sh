@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 lmms_name="LMMS"
 lmms_description="Music production suite"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 tumblr_name="Tumblr"
 tumblr_description="Tumblr opening in Browser"

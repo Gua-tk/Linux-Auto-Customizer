@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 aspell_name="GNU Aspell"
 aspell_description="Spell checker"
 aspell_version="0.60.8"

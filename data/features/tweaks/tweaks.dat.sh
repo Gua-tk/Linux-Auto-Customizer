@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 tweaks_name="GNOME Tweaks"
 tweaks_description="GUI for system customization"

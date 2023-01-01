@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 meld_name="Meld"
 meld_description="Diff viewer to compare and merge your files"

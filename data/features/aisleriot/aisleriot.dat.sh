@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 aisleriot_name="AisleRiot Solitaire"
 aisleriot_description="Solitaire Classic Card Game"
 aisleriot_version="3.22.9"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 keep_name="Google Keep"
 keep_description="keep opening in Browser"

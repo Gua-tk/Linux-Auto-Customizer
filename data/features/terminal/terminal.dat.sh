@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 terminal_name="GNOME Terminal"
 terminal_description="Terminal of the system"

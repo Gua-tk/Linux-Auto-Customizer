@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 systemFonts_name="Change default fonts"
 systemFonts_description="Sets pre-defined fonts to desktop environment."

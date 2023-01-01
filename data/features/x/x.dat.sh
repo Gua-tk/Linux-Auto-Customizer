@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 x_name="Function x"
 x_description="A terminal function"
 x_version="1.0"

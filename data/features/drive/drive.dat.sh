@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 drive_name="Google Drive"
 drive_description="Google Drive opening in Browser"
 drive_tags=("google" "internet_shortcuts")

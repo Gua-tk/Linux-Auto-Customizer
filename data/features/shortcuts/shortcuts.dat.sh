@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 shortcuts_name="Path shortcuts"
 shortcuts_description="Installs custom variables pointing to interesting folders regarding customizer"

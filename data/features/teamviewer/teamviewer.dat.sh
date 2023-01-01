@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 teamviewer_name="Team Viewer"
 teamviewer_description="Video remote pc control"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 ncat_name="ncat"
 ncat_description="Reverse shell"

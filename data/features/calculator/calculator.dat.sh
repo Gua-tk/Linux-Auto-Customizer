@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 calculator_name="GNOME calculator"
 calculator_description="GUI calculator"
