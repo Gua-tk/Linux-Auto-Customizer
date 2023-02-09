@@ -1109,8 +1109,9 @@ generic_install_functions() {
   for bashfunction in "${!bashfunctions}"; do
     if [[ "${bashfunction}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
+      # TODO deprecate, bashFunctions do not have content anymore...
       add_bash_function "${bashfunction}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
-    elif [ "${bashfunction}" == "silentFunction" ]; then
+    elif [ "${bashfunction}" == "silentFunction" ] || [ "${bashfunction}" == "silentFunctionInWd" ]; then
       local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
       local selectedKeyname=
       for launcherkeyname in "${!launcherkeynames}"; do
@@ -1144,12 +1145,30 @@ generic_install_functions() {
         fi
       fi
 
-      local -r silent_function="#!/usr/bin/env bash
+      if [ "${bashfunction}" == "silentFunction" ]; then
+        local -r silent_function="#!/usr/bin/env bash
 ${silent_exec}()
 {
   nohup ${silent_exec} \$@ &> /dev/null &
 }
 "
+      elif [ "${bashfunction}" == "silentFunctionInWd" ]; then
+                local -r silent_function="#!/usr/bin/env bash
+${silent_exec}()
+{
+  if [ \$# -eq 0 ]; then
+      args=\".\";
+  else
+      args=\"\$@\";
+  fi;
+  nohup ${silent_exec} \$@ &> /dev/null &
+}
+"
+      else
+        output_proxy_executioner "ERROR" "The value of the silent_exec is ${silent_exec}, which has not been recognised"
+        continue
+      fi
+
       add_bash_function "${silent_function}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
 
     elif ! echo "${bashfunction}" | grep -Eq "/"; then
