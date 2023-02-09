@@ -13,4 +13,4 @@ R_packagenames=("r-base")
 R_packagedependencies=("libzmq3-dev" "python3-zmq")
 R_launcherkeynames=("languageLauncher")
 R_languageLauncher_terminal="true"
-R_languageLauncher_exec="gnome-terminal -e R"
+R_languageLauncher_exec="gnome-terminal -- R"

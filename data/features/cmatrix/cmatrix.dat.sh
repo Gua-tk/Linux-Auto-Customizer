@@ -9,3 +9,4 @@ cmatrix_launcherkeynames=("default")
 cmatrix_default_terminal="true"
 cmatrix_bashfunctions=("cmatrix.sh")
 cmatrix_packagenames=("cmatrix")
+cmatrix_default_exec="gnome-terminal -- matrix"
