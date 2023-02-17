@@ -12,6 +12,7 @@ jobs:
       - name: checkoutLFS
         uses: actions/checkout@v2
       - run: git lfs fetch --all
+      - run: git fetch --unshallow
       - run: mkdir -p ~/.ssh
       - run: touch ~/.ssh/config
       - run: echo 'Host *' | tee -a ~/.ssh/config
