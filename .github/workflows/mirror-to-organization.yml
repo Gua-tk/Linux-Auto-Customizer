@@ -8,10 +8,10 @@ jobs:
     steps:                                              # <-- must use actions/checkout before mirroring!
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
           lfs: 'true'
       - name: checkoutLFS
         uses: actions/checkout@v2
+      - run: git fetch --unshallow old
       - run: git lfs fetch --all
       - run: mkdir -p ~/.ssh
       - run: touch ~/.ssh/config
