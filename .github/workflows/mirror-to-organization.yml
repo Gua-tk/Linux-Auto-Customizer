@@ -13,6 +13,7 @@ jobs:
       - name: checkoutLFS
         uses: actions/checkout@v2
       - run: git lfs pull
+      - run: mkdir -p ~/.ssh
       - run: touch ~/.ssh/config
       - run: echo "Host *" | tee -a ~/.ssh/config
       - run: echo 'ServerAliveInterval 30' | tee -a ~/.ssh/config
