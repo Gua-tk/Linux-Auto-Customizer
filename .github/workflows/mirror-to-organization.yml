@@ -13,11 +13,11 @@ jobs:
       - name: checkoutLFS
         uses: actions/checkout@v2
       - run: git lfs pull
-      - run: mkdir -p ~/.ssh
-      - run: touch ~/.ssh/config
-      - run: echo "Host *" | tee -a ~/.ssh/config
-      - run: echo 'ServerAliveInterval 30' | tee -a ~/.ssh/config
-      - run: echo 'ServerAliveCountMax 1200' | tee -a ~/.ssh/config
+      - run: mkdir -p /etc/ssh
+      - run: touch /etc/ssh/config
+      - run: echo "Host *" | tee -a /etc/ssh/config
+      - run: echo 'ServerAliveInterval 30' | tee -a /etc/ssh/config
+      - run: echo 'ServerAliveCountMax 1200' | tee -a /etc/ssh/config
       - uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url:
