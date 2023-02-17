@@ -10,7 +10,7 @@ jobs:
         with:
           lfs: 'true'
       - name: checkoutLFS
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2                       # <-- Do checkout of LFS elements
       - run: git pull origin master
       - run: git lfs fetch --all
       - run: git lfs pull
