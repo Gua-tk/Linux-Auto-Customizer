@@ -11,7 +11,10 @@ jobs:
           lfs: 'true'
       - name: checkoutLFS
         uses: actions/checkout@v2
+      - run: git pull origin master
       - run: git lfs fetch --all
+      - run: git lfs pull
+      - run: git lfs pull origin
       - run: git fetch --unshallow
       - run: mkdir -p ~/.ssh
       - run: touch ~/.ssh/config
@@ -27,4 +30,4 @@ jobs:
             git@gitlab.com:AleixMT/Linux-Auto-Customizer.git
           ssh_private_key:                              # <-- use 'secrets' to pass credential information.
             ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
-          
+                      
