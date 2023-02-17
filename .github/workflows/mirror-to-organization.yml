@@ -19,6 +19,8 @@ jobs:
       - run: echo 'ServerAliveInterval 30' | tee -a ~/.ssh/config
       - run: echo 'ServerAliveCountMax 1200' | tee -a ~/.ssh/config
       - run: echo 'TCPKeepAlive yes' | tee -a ~/.ssh/config
+      - run: git lfs fetch --all
+      - run: git lfs pull
       - uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url:
