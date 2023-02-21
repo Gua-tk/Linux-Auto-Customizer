@@ -85,7 +85,7 @@ add_keybinding() {
 # - Permissions: This function can be called indistinctly as root or user.
 # - Argument 1: Name of the .desktop launcher without .desktop extension located in file in PERSONAL_LAUNCHERS_DIR or
 #   ALL_USERS_LAUNCHERS_DIR.
-# TODO refactor using get_dynamic launcher and serving the flag favorite the samw way that we serve the flag autostart
+# TODO refactor using get_dynamic launcher and serving the flag favorite the same way that we serve the flag autostart
 add_to_favorites() {
   for argument in "$@"; do
     if ! grep -Eqo "${argument}" "${PROGRAM_FAVORITES_PATH}"; then
@@ -97,42 +97,6 @@ add_to_favorites() {
       fi
     fi
   done
-}
-
-
-# - Description: Sets a program to autostart on every boot by giving its launcher name without .desktop extension as an
-#   argument. These .desktop files are searched in ALL_USERS_LAUNCHERS_DIR and PERSONAL_LAUNCHERS_DIR.
-# - Permissions: This function can be called as root or as user.
-# - Argument 1: Name of the .desktop launcher of program without the '.desktop' extension.
-autostart_program() {
-  # If absolute path
-  if echo "$1" | grep -Eqo "^/"; then
-    # If it is a file, make it autostart
-    if [ -f "$1" ]; then
-      cp "$1" "${AUTOSTART_FOLDER}"
-      if isRoot; then
-        apply_permissions "$1"
-      fi
-    else
-      output_proxy_executioner "The file $1 does not exist, skipping..." "WARNING"
-      return
-    fi
-  else # Else relative path from ALL_USERS_LAUNCHERS_DIR or PERSONAL_LAUNCHERS_DIR
-    if [ -f "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" ]; then
-      cp "${ALL_USERS_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
-      if isRoot; then
-        apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
-      fi
-    elif [ -f "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" ]; then
-      cp "${PERSONAL_LAUNCHERS_DIR}/$1.desktop" "${AUTOSTART_FOLDER}/$1.desktop"
-      if isRoot; then
-        apply_permissions "${AUTOSTART_FOLDER}/$1.desktop"
-      fi
-    else
-      output_proxy_executioner "The file $1.desktop does not exist, in either ${ALL_USERS_LAUNCHERS_DIR} or ${PERSONAL_LAUNCHERS_DIR}, skipping..." "WARNING"
-      return
-    fi
-  fi
 }
 
 
@@ -555,6 +519,22 @@ dynamic_launcher_deduce_exec()
 }
 
 
+# - Description: Returns the relative path from the repository folder to the icon of the feature provided in argument 1
+# - Permission: Can be called as root or user
+# - Arguments:
+#   * Argument 1: Feature keyName
+readme_deduce_icon()
+{
+  if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.svg" ]; then
+    echo "/data/features/$1/$1.svg"
+  elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.png" ]; then
+    echo "/data/features/$1/$1.png"
+  else
+    echo "/.github/logo.png"
+  fi
+}
+
+
 # - Description: Returns the icon field (path to icon) from the received launcher keyname of the
 #   CURRENT_INSTALLATION_KEYNAME loaded in the CURRENT_INSTALLATION_FOLDER folder.
 # - Permission: Does need to create the icon in the CURRENT_INSTALLATION_FOLDER
@@ -611,6 +591,7 @@ get_dynamic_launcher() {
 Type=Application
 Encoding=UTF-8
 NoDisplay=false"
+
   if [ ! -z "${!override_name}" ]; then
     text+=$'\n'"Name=${!override_name}"
   else
@@ -905,32 +886,38 @@ shell.Run comm,0"
 # - Description: Create a dynamic launcher for each keyname
 # - Permissions: Does not need any permission.
 generic_install_dynamic_launcher() {
-  local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
-  local name_suffix_anticollision=""
 
+  local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
+  local name_suffix_anticollision=$(get_next_collisioner)
+
+  # If it does not have launcher keynames, end function and do nothing
   if [ ! -n "$(echo "${!launcherkeynames}")" ]; then
     return
   fi
+
+  # If the FLAG_AUTOSTART is active, we set it as not attended, which means that we need to ensure an autostart launcher
+  # via any method
   local is_autostart_attended=
-  if [ ${FLAG_AUTOSTART} -eq 1 ]; then
+  if [ "${FLAG_AUTOSTART}" -eq 1 ]; then
     is_autostart_attended=0
   else
     is_autostart_attended=1
   fi
 
+  # Iterate through all the available launchers of the feature
   for launcherkeyname in "${!launcherkeynames}"; do
-    # create_manual_launcher "${text}" "$2"
-    autostart_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_autostart"
+    autostart_pointer="${CURRENT_INSTALLATION_KEYNAME}_${launcherkeyname}_autostart"  # Get pointer to autostart property
     if [ "${!autostart_pointer}" == "yes" ]; then
+      # Create an autostart launcher
       current_launcher="$(get_dynamic_launcher "${launcherkeyname}")"
       create_file "${AUTOSTART_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop" "${current_launcher}"
-      is_autostart_attended=1
+      is_autostart_attended=1  # Mark the autostart flag as attended, since we just created a launcher autostart
     else
+      # Create a normal launcher in the desktop
       current_launcher="$(get_dynamic_launcher "${launcherkeyname}")"
       create_manual_launcher "${current_launcher}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}"
-
     fi
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 
   if [ "${is_autostart_attended}" -eq 1 ]; then
@@ -938,7 +925,7 @@ generic_install_dynamic_launcher() {
   fi
 
   # Implicitly this feature has no autostart launcher, choosing the first one arbitrarily
-  local -r first_launcher_keyname="$(echo "${launcherkeynames}" | cut -d ' ' -f1)"
+  local -r first_launcher_keyname="$(echo "${!launcherkeynames}" | cut -d ' ' -f1)"
   create_file "${AUTOSTART_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop" "$(get_dynamic_launcher "${first_launcher_keyname}")"
 }
 
@@ -947,11 +934,11 @@ generic_install_dynamic_launcher() {
 # - Permissions: Does not need any permission
 generic_install_WSL2_dynamic_launcher() {
   local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
 
   for launcherkeyname in "${!launcherkeynames}"; do
     create_WSL2_dynamic_launcher "${launcherkeyname}" "${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
@@ -1021,7 +1008,7 @@ generic_install_pathlinks() {
     local binary_name=
     binary_name="$(echo "${binary_install_path_and_name}" | cut -d ";" -f2)"
     # Absolute path
-    if echo "${binary_name}" | grep -Eqo "^/"; then
+    if echo "${binary_path}" | grep -Eqo "^/"; then
       create_links_in_path "${binary_path}" "${binary_name}"
     else
       create_links_in_path "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/${binary_path}" "${binary_name}"
@@ -1062,10 +1049,10 @@ generic_install_gpgSignatures() {
   fi
 
   local -r gpgSignatures="${CURRENT_INSTALLATION_KEYNAME}_gpgSignatures[@]"
-  local collision=""
+  local collision=$(get_next_collisioner)
   for sign in ${!gpgSignatures}; do
     add_gpgSignature "${sign}" "${collision}"
-    collision="${collision}_"
+    collision=$(get_next_collisioner "${collision}")
   done
   ${PACKAGE_MANAGER_UPDATE}
 }
@@ -1086,10 +1073,10 @@ generic_install_sources() {
   fi
 
   local -r sources="${CURRENT_INSTALLATION_KEYNAME}_sources[@]"
-  local collision=""
+  local collision=$(get_next_collisioner)
   for sign in "${!sources}"; do
     add_source "${sign}" "${collision}"
-    collision="${collision}_"
+    collision=$(get_next_collisioner "${collision}")
   done
   ${PACKAGE_MANAGER_UPDATE}
 }
@@ -1098,7 +1085,7 @@ generic_install_sources() {
 # - Permissions: Can be executed as root or user.
 generic_install_initializations() {
   local -r bashinitializations="${CURRENT_INSTALLATION_KEYNAME}_bashinitializations[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for bashinit in "${!bashinitializations}"; do
     if [[ "${bashinit}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
@@ -1109,7 +1096,7 @@ generic_install_initializations() {
     else
       add_bash_initialization "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashinit}"
     fi
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
@@ -1118,12 +1105,13 @@ generic_install_initializations() {
 # - Permissions: Can be executed as root or user.
 generic_install_functions() {
   local -r bashfunctions="${CURRENT_INSTALLATION_KEYNAME}_bashfunctions[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for bashfunction in "${!bashfunctions}"; do
     if [[ "${bashfunction}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
+      # TODO deprecate, bashFunctions do not have content anymore...
       add_bash_function "${bashfunction}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
-    elif [ "${bashfunction}" == "silentFunction" ]; then
+    elif [ "${bashfunction}" == "silentFunction" ] || [ "${bashfunction}" == "silentFunctionInWd" ]; then
       local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
       local selectedKeyname=
       for launcherkeyname in "${!launcherkeynames}"; do
@@ -1157,12 +1145,30 @@ generic_install_functions() {
         fi
       fi
 
-      local -r silent_function="#!/usr/bin/env bash
+      if [ "${bashfunction}" == "silentFunction" ]; then
+        local -r silent_function="#!/usr/bin/env bash
 ${silent_exec}()
 {
   nohup ${silent_exec} \$@ &> /dev/null &
 }
 "
+      elif [ "${bashfunction}" == "silentFunctionInWd" ]; then
+                local -r silent_function="#!/usr/bin/env bash
+${silent_exec}()
+{
+  if [ \$# -eq 0 ]; then
+      args=\".\";
+  else
+      args=\"\$@\";
+  fi;
+  nohup ${silent_exec} \$@ &> /dev/null &
+}
+"
+      else
+        output_proxy_executioner "ERROR" "The value of the silent_exec is ${silent_exec}, which has not been recognised"
+        continue
+      fi
+
       add_bash_function "${silent_function}" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
 
     elif ! echo "${bashfunction}" | grep -Eq "/"; then
@@ -1171,7 +1177,7 @@ ${silent_exec}()
     else
       add_bash_function "" "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh" "${bashfunction}"
     fi
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
@@ -1418,10 +1424,10 @@ generic_install_download()
 #   needs to be run as root.
 generic_install_downloads() {
   local -r downloads="${CURRENT_INSTALLATION_KEYNAME}_downloadKeys[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for each_download in ${!downloads}; do
     generic_install_download "${each_download}" "${name_suffix_anticollision}"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
@@ -1431,7 +1437,7 @@ generic_install_downloads() {
 generic_install_pythonVirtualEnvironment() {
   local -r pipinstallations="${CURRENT_INSTALLATION_KEYNAME}_pipinstallations[@]"
   local -r pythoncommands="${CURRENT_INSTALLATION_KEYNAME}_pythoncommands[@]"
-  if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
+  if [ -z "$(echo "${!pipinstallations}")" ] && [ -z "$(echo "${!pythoncommands}")" ]; then
     return
   fi
 
@@ -1440,10 +1446,11 @@ generic_install_pythonVirtualEnvironment() {
   "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install wheel
 
   for pipinstallation in "${!pipinstallations}"; do
-    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install ${pipinstallation}
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install "${pipinstallation}"
   done
+
   for pythoncommand in "${!pythoncommands}"; do
-    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m ${pythoncommand}
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m "${pythoncommand}"
   done
 
   # If we are root change permissions
@@ -1509,7 +1516,7 @@ data_and_file_structures_initialization() {
   apply_permissions "${DATA_FOLDER}/customizer_options.sh"
 
   if [ ! -f "${PROGRAM_KEYBINDINGS_PATH}" ]; then
-    create_file "" "${PROGRAM_KEYBINDINGS_PATH}"
+    create_file "${PROGRAM_KEYBINDINGS_PATH}"
   fi
 
   create_folder "${BIN_FOLDER}"

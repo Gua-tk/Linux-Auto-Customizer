@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal
 # - Description: This function is the basic piece of the keybinding subsystem, but is not a function that it is
 # executed directly, instead, is put in the bashrc and reads the file $PROGRAM_KEYBINDINGS_PATH every time a terminal
@@ -92,6 +93,10 @@ if [ -f "€{PROGRAM_KEYBINDINGS_PATH}" ]; then
     active_keybinds_str+="'${active_keybind}', "
   done
   # remove last comma and add the ] to close the array
+
+  # Here he have a shellcheck failure, but it is non correctable
+  # The proposed solution to shellcheck prompts errors: active_keybinds_str="${active_keybinds_str//", $"/""}]"
+  # shellcheck disable=SC2001
   active_keybinds_str="$(echo "${active_keybinds_str}" | sed 's/, $//g')]"
 
   gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "${active_keybinds_str}"

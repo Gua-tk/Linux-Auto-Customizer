@@ -1,9 +1,9 @@
+#!/usr/bin/env bash
 caffeine_name="Caffeine"
 caffeine_description="Customization application"
 caffeine_version="System dependent"
 caffeine_tags=("Screensaver" "Power" "Saving" "Blank")
 caffeine_systemcategories=("System" "Utility" "Settings" "TrayIcon")
-caffeine_arguments=("caffeine" "coffee" "cafe")
 
 caffeine_launcherkeynames=("defaultLauncher" "caffeineIndicator")
 caffeine_defaultLauncher_StartupNotify="false"

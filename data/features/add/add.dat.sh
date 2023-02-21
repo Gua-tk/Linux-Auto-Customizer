@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 add_name="Function add"
 add_description="A git terminal shortcut"
 add_version="1.0"

@@ -96,7 +96,7 @@ case "${OS_NAME}" in
   ElementaryOS)
     initialize_package_manager_apt-get
   ;;
-  Fedora)
+  "Fedora Linux")
     initialize_package_manager_yum
   ;;
   Parrot)
@@ -332,6 +332,9 @@ declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
 declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
 declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
+
+# Paths of the installation repository
+declare -r DATA_FEATURES_FOLDER="${CUSTOMIZER_PROJECT_FOLDER}/data/features"
 
 if isRoot; then
   declare -r AUTOSTART_FOLDER="/etc/xdg/autostart"
@@ -600,6 +603,7 @@ declare feature_keynames=(
   "pycharmpro"
   "pypy3"
   "python3"
+  "pytorch"
   "R"
   "reddit"
   "remmina"
@@ -670,10 +674,6 @@ declare feature_keynames=(
 # Array to store the keynames of the features that have been added for installation
 added_feature_keynames=()
 
-# TODO: DEPRECATED. Data_feature is still sourced and can be used to declare installations but will be removed in next
-#  releases
-source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_data.sh"
-
 
 ########################################################################################################################
 ############################################## FEATURE ARGUMENTS #######################################################
@@ -702,12 +702,13 @@ declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C
 # multi-feature wrapper.                                                                                               #
 # Is preferable that the wrapper has the same installation privileges in all of its features.                          #
 ########################################################################################################################
-declare -r WRAPPERS_KEYNAMES=("programmingcore" "programmingide" "programmingpro" "texteditorcore" "mediacore" "systemcore" "internetcore" "artcore" "gamesinstall" "internetshortcuts" "standardinstall" "bashfunctions" "desktopfunctions" "terminalfunctions" "network" "networks" "fontsuser" "fontsroot" "custom1" "gitbashfunctions" "iochemroot" "iochemuser")
+# TODO: static wrapper deprecated for dynamic wrappers. Now we must move the static wrappers that we want to keep into tags
+# declare -r WRAPPERS_KEYNAMES=("programmingcore" "programmingide" "programmingpro" "texteditorcore" "mediacore" "systemcore" "internetcore" "artcore" "gamesinstall" "internetshortcuts" "standardinstall" "bashfunctions" "desktopfunctions" "terminalfunctions" "network" "networks" "fontsuser" "fontsroot" "custom1" "gitbashfunctions" "iochemroot" "iochemuser")
 # Thematic wrappers
 declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel")
 declare -r wrapper_programmingide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
 declare -r wrapper_programmingpro=("intellij_ultimate" "pycharm_professional" "clion")
-declare -r wrapper_texteditorcore=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
+declare -r wrapper_texteditorcore=("openoffice" "latex" "geany" "notepadqq" "gvim")
 declare -r wrapper_mediacore=("vlc" "gpaint" "okular" "clementine")
 declare -r wrapper_systemcore=("virtualbox" "gparted" "clonezilla")
 declare -r wrapper_internetcore=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
@@ -759,8 +760,8 @@ declare -r help_common="\e[0m
 #### install.sh manual usage:
 [sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|
                        [-e|--exit-on-error]]
-
-                       [[-f|--favorites|--set-favorites]|[-o|--overwrite|--overwrite-if-present]|
+                       [[--favorites|--set-favorites]|
+                       [-o|--overwrite|--overwrite-if-present]|
                        [-s|--skip|--skip-if-installed]]
 
                        [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]
@@ -774,12 +775,34 @@ declare -r help_common="\e[0m
 
                        SELECTED_FEATURES_TO_INSTALL
 
+###### Customizer arguments:
+
+#### -f | --force:
+
+#### -i | --ignore | --ignore-errors:
+
+#### -e | --exit-on-error:
+
+#### -- favorites | --set-favorites:
+
+#### -o | --overwrite | --overwrite-if-present || -s|--skip | --skip-if-installed:
+
+####-v |--verbose || -Q | --Quiet | -q --quiet:
+
+####-d | --dirty | --no-autoclean || -c | --clean | -C | -Clean:
+
+####-U | --Upgrade -u|--upgrade:
+
+####-k|-K|--keep-system-outdated:
+
+####-n | --not | -! | -y | --yes:
+
 
 #### install.sh description:
 
   - install.sh performs the automatic configuration of a Linux
     environment by installing applications, adding bash functions, customizing
-    terminal variables, declaring new useful global variables and aliases...
+    terminal variables, declaring global variables
 
   - Each feature have specific privilege requirements: Some will need sudo when
     running install.sh and others won't

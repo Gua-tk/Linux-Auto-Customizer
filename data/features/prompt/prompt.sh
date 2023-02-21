@@ -36,9 +36,14 @@ if [ "$color_prompt" = yes ]; then
   else
     color_dollar="\[\e[2;32m\]"
   fi
-
+    # is root
+    if [ "${EUID}" == 0 ]; then
+      prompt_last_char="#"
+    else
+      prompt_last_char="\$"
+    fi
     PS1="\[\e[1;33m\]$(date "+%a %d %b %Y") \[\e[0;35m\]\u\[\e[0;0m\]@\[\e[0;36m\]\H \[\e[0;33m\]\w
-\[\e[0;37m\]\t ${color_dollar}\$ \[\e[0;0m\]"
+\[\e[0;37m\]\t ${color_dollar}${prompt_last_char} \[\e[0;0m\]"
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # The following options are the default options of the customizer. Uncomment and change the declaration of the variables
 # to change the default behaviour of the customizer
 

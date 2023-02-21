@@ -29,6 +29,12 @@ set_key_safely org.gnome.desktop.background show-desktop-icons false
 set_key_safely org.nemo.desktop show-desktop-icons true
 
 # Other tweaks
+
+# Show thumbnails of files until 128 GB which is 137.438.953.472 B
+# Maximum value in the IU: 32 GB which is shown as 34.359.738.368 B
+# Default value in dconf editor 1 MB
+# Value that comes with the installation 1 GB
+set_key_safely org.nemo.preferences thumbnail-limit 137438953472
 # Do not ask for password after locking
 set_key_safely org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
 # Allow forcing the volume

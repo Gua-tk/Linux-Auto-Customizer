@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Activate customizer hooks to enforce repository rules
 # Check if git is installed
 if which git &>/dev/null; then

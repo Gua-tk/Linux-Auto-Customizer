@@ -1,0 +1,1 @@
+Plays music and last.fm streams
