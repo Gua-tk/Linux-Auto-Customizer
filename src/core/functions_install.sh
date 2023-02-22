@@ -498,23 +498,42 @@ register_file_associations() {
 }
 
 
-# - Description: Returns the exec field from the received launcher keyname of the CURRENT_INSTALLATION_KEYNAME
-# - Permission: Does not need special permissions
+# - Description: Returns a suitable executable name deduced from the different properties that a feature can have. If
+#   the executable name is not declared explicitly for the supplied desktop launcher, it gets an executable name from
+#   the first position of the binariesInstalledPaths array of the feature. If that property is not declared, it gets an
+#   executable name from the first position of the packageNames array. If none of the previous is declared, it returns
+#   the CURRENT_INSTALLATION_KEYNAME.
+# - Permission: Does not need any permissions.
 # - Arguments:
-#   * Argument 1: launcher keyname
+#   * Argument 1: Launcher keyname from which we will be deducing the exec field.
+# - Returns: Suitable executable name for the CURRENT_INSTALLATION_KEYNAME and the supplied desktop launcher keyname.
 dynamic_launcher_deduce_exec()
 {
-  # Exec binariesinstalledpaths
-  local -r override_exec="${CURRENT_INSTALLATION_KEYNAME}_$1_exec"
-  local -r metadata_exec_temp="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[0]"
-  local -r metadata_exec="$(echo "${!metadata_exec_temp}" | cut -d ';' -f2 )"
+  # Explicit exec declared for the supplied desktop launcher name and the CURRENT_INSTALLATION_KEYNAME
+  local -r override_exec_pointer="${CURRENT_INSTALLATION_KEYNAME}_$1_exec"
+  local -r metadata_exec_temp_pointer="${CURRENT_INSTALLATION_KEYNAME}_binariesinstalledpaths[0]"
+  # Get the first binary name that we installed with current installation
+  local -r metadata_exec="$(echo "${!metadata_exec_temp_pointer}" | cut -d ';' -f2 )"
+  # Get the first package name that we installed with current installation
+  local -r first_package_name_pointer="${CURRENT_INSTALLATION_KEYNAME}_packagenames[0]"
 
   local chosen_exec=
-  if [ ! -z "${!override_exec}" ]; then
-    chosen_exec="${!override_exec}"
-  else
+
+  # First check for an explicitly declared execution command
+  if [ ! -z "${!override_exec_pointer}" ]; then
+    chosen_exec="${!override_exec_pointer}"
+  # If not, deduce from the first binary name
+  elif [ ! -z "${metadata_exec}" ]; then
     chosen_exec="${metadata_exec}"
+  # If not, deduce from the first package name
+  elif [ ! -z "${!first_package_name_pointer}" ]; then
+    chosen_exec="${!first_package_name_pointer}"
+  # If not, simply return the CURRENT_INSTALLATION_KEYNAME
+  else
+    chosen_exec="${CURRENT_INSTALLATION_KEYNAME}"
   fi
+
+  # bash return
   echo "${chosen_exec}"
 }
 
