@@ -77,6 +77,10 @@ set_key_safely org.gnome.gedit.preferences.editor tabs-size 4
 set_key_safely org.gnome.gedit.preferences.ui bottom-panel-visible true
 set_key_safely org.gnome.gedit.preferences.ui side-panel-visible true
 set_key_safely org.gnome.gedit.plugins.spell highlight-misspelled true
+set_key_safely org.gnome.gedit.preferences.editor insert-spaces true
+set_key_safely org.gnome.gedit.preferences.editor highlight-current-line false
+set_key_safely org.gnome.gedit.preferences.editor wrap-mode none  # Do not wrap lines
+
 
 # keyboard configurations 0 for spanish 1 for us keyboard
 set_key_safely org.gnome.desktop.input-sources sources "[('xkb', 'es'), ('xkb', 'us')]"
