@@ -27,7 +27,7 @@ main()
   shift
 
   for featureName in "$@"; do
-    printf "Applying tag to feature %s" "${featureName}"
+    printf '\n\nApplying tag to feature %s' "${featureName}"
 
     if [ ! -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}/${featureName}.dat.sh" ]; then
       echo "ERROR ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}/${featureName}.dat.sh file not detected, skipping ${featureName}"
