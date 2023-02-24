@@ -17,7 +17,8 @@ main()
 {
   CUSTOMIZER_PROJECT_FOLDER="$(cd "$(dirname "$(realpath "$0")")/../.." &>/dev/null && pwd)"
 
-  if [ $# -gt 1 ]; then
+echo $#
+  if [ ! $# -gt 1 ]; then
     echo "You need to supply at least 2 argument. First the tag and the other following the feature keyname to apply the tag"
     exit 1
   fi
