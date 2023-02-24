@@ -37,11 +37,7 @@ main()
     echo "before sed tag content ${tagsContent}, new tag content ${newTagContent} pathing: ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}/${featureName}.dat.sh"
     sed -i "s/${tagsContent}/${newTagContent}/g" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}/${featureName}.dat.sh"
   done
-
 }
-
-
-
 
 set -e
 main "$@"
