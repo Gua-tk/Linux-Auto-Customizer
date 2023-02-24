@@ -27,6 +27,9 @@ main()
   shift
 
   for featureName in "$@"; do
+    if [ ! -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}.dat.sh" ]; then
+      echo "ERROR ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}.dat.sh file not detected, skipping ${featureName}"
+    fi
     local tagsContent="$(grep -Eo "${featureName}_tags=(.*)" < "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}.dat.sh")"
     local tagsSplit="$(echo "${tagsContent}" | cut -d ")" -f1)"
     local newTagContent="$(echo "${tagsSplit} \"${tagName}\")")"
