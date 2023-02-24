@@ -33,6 +33,8 @@ main()
     local tagsContent="$(grep -Eo "${featureName}_tags=(.*)" < "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}/${featureName}.dat.sh")"
     local tagsSplit="$(echo "${tagsContent}" | cut -d ")" -f1)"
     local newTagContent="$(echo "${tagsSplit} \"${tagName}\")")"
+
+    echo "before sed tag content ${tagsContent}, new tag content ${newTagContent} pathing: ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}/${featureName}.dat.sh"
     sed -i "s/${tagsContent}/${newTagContent}/g" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${featureName}/${featureName}.dat.sh"
   done
 
