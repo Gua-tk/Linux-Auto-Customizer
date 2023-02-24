@@ -2,7 +2,7 @@
 
 ########################################################################################################################
 # -Name: add_functions_shebang.sh
-# -Defile_pathion: Add shebangs in bash functions to avoid codacy error 'Add a shebang or a 'shell' directive.'
+# -Description: Add shebangs in bash functions to avoid codacy error 'Add a shebang or a 'shell' directive.'
 # -Creation Date: 02/02/2022
 # -Last Modified: 02/02/2002
 # -Author: Axel
