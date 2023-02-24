@@ -2,7 +2,7 @@
 customizer_name="Linux Auto Customizer"
 customizer_description="Custom local installation manager"
 customizer_version="developer dependent"
-customizer_tags=("development" "GNU" "environment")
+customizer_tags=("development" "GNU" "environment" "customDesktop")
 customizer_systemcategories=("Development" "Utility" "System" "PackageManager" "Settings")
 customizer_manualcontentavailable="0;0;1"
 customizer_flagsoverride="0;;;;;"  # Install always as root

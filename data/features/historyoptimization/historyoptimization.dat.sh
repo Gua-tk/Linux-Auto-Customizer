@@ -3,6 +3,6 @@
 historyoptimization_name="Function history optimization"
 historyoptimization_description="Shared history in terminal session and other tweaks for the terminal history"
 historyoptimization_version="1.0"
-historyoptimization_tags=("bashfunctions" "terminal")
+historyoptimization_tags=("bashfunctions" "terminal" "customDesktop")
 historyoptimization_systemcategories=("System" "Utility")
 historyoptimization_bashfunctions=("history_optimization.sh")

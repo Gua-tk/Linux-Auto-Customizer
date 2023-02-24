@@ -3,7 +3,7 @@
 python3_name="Python3"
 python3_description="Interpreted, high-level and general-purpose programming language"
 python3_version="System dependent"
-python3_tags=("language")
+python3_tags=("language" "customDesktop")
 python3_systemcategories=("Languages")
 
 python3_bashfunctions=("v.sh")

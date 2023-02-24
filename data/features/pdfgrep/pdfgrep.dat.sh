@@ -3,6 +3,6 @@
 pdfgrep_name="pdfgrep"
 pdfgrep_description="CLI utility that makes it possible to search for text in a PDF file without opening the file"
 pdfgrep_version="System dependent"
-pdfgrep_tags=("pdf" "searchPDF")
+pdfgrep_tags=("pdf" "searchPDF" "customDesktop")
 pdfgrep_systemcategories=("Utility")
 pdfgrep_packagenames=("pdfgrep")

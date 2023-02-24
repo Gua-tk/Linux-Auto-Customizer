@@ -3,7 +3,7 @@
 rstudio_name="RStudio"
 rstudio_description="Default application for .R files "
 rstudio_version="System dependent"
-rstudio_tags=("rstudio")
+rstudio_tags=("rstudio" "customDesktop")
 rstudio_systemcategories=("Network")
 rstudio_associatedfiletypes=("text/plain")
 rstudio_bashfunctions=("silentFunction")

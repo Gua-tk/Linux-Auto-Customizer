@@ -2,7 +2,7 @@
 tmux_name="Terminal multiplexor"
 tmux_description="Terminal multiplexor"
 tmux_version="System dependent"
-tmux_tags=("terminal" "sessions")
+tmux_tags=("terminal" "sessions" "customDesktop")
 tmux_systemcategories=("System" "Utility")
 tmux_launcherkeynames=("defaultLauncher")
 tmux_defaultLauncher_exec="tmux"

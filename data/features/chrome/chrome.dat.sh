@@ -3,7 +3,7 @@
 chrome_name="Google Chrome"
 chrome_description="Web Browser"
 chrome_version="Google dependent"
-chrome_tags=("browser" "network")
+chrome_tags=("browser" "network" "customDesktop")
 chrome_systemcategories=("Network" "WebBrowser")
 chrome_bashfunctions=("silentFunction")
 chrome_flagsoverride=";;;;1;"

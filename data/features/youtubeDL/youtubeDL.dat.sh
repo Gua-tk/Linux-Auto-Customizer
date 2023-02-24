@@ -2,7 +2,7 @@
 youtubeDL_name="youtube-dl"
 youtubeDL_description="HTML video scratcher for YouTube"
 youtubeDL_version="youtube-dl dependent"
-youtubeDL_tags=("video" "download")
+youtubeDL_tags=("video" "download" "customDesktop")
 youtubeDL_systemcategories=("AudioVideo")
 youtubeDL_packagedependencies=("ffmpeg" "python")
 youtubeDL_bashfunctions=("youtube_dl.sh")

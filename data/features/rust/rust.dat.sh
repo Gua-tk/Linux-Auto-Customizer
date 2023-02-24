@@ -3,7 +3,7 @@
 rust_name="Rust"
 rust_description="Programming Language"
 rust_version="System dependent"
-rust_tags=("rust")
+rust_tags=("rust" "customDesktop")
 rust_systemcategories=("Languages")
 rust_packagenames=("rustc")
 rust_packagedependencies=("cmake" "build-essential")

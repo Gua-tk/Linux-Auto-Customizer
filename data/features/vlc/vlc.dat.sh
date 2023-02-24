@@ -3,7 +3,7 @@
 vlc_name="VLC media player"
 vlc_description="Media player"
 vlc_version="System dependent"
-vlc_tags=("streaming" "Player" "Capture" "DVD" "Audio" "Video" "Server" "Broadcast")
+vlc_tags=("streaming" "Player" "Capture" "DVD" "Audio" "Video" "Server" "Broadcast" "customDesktop")
 vlc_systemcategories=("Audio" "Music" "Player" "AudioVideo" "Recorder")
 vlc_bashfunctions=("silentFunction")
 vlc_packagenames=("vlc")

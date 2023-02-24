@@ -3,7 +3,7 @@
 geogebra_name="GeoGebra"
 geogebra_description="Geometry visualization plotter and calculator with GUI"
 geogebra_version="4.2.2"
-geogebra_tags=("GeoGebra" "geogebra")
+geogebra_tags=("GeoGebra" "geogebra" "customDesktop")
 geogebra_systemcategories=("Viewer" "Geometry" "DataVisualization" "Math" "Calculator")
 geogebra_binariesinstalledpaths=("GeoGebra;geogebra")
 geogebra_downloadKeys=("bundle")
