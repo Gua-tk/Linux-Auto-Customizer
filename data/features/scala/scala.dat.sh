@@ -2,7 +2,7 @@
 scala_name="Scala"
 scala_description="Programming language"
 scala_version="System dependent"
-scala_tags=("scala")
+scala_tags=("scala" "customDesktop")
 scala_systemcategories=("Languages")
 
 scala_packagenames=("scala")

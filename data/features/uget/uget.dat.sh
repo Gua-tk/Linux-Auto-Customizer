@@ -3,7 +3,7 @@
 uget_name="uGet"
 uget_description="Download Manager"
 uget_version="System dependent"
-uget_tags=("downloadManager" "filetransfer" "download files" "download manager")
+uget_tags=("downloadManager" "filetransfer" "download files" "download manager" "customDesktop")
 uget_systemcategories=("FileTransfer" "Network")
 uget_launchernames=("uget-gtk")
 uget_packagedependencies=("aria2")

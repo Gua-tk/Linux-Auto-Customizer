@@ -3,7 +3,7 @@
 dia_name="Dia"
 dia_description="Diagram Editor"
 dia_version="1.0"
-dia_tags=("graph" "relational")
+dia_tags=("graph" "relational" "customDesktop")
 dia_systemcategories=("FlowChart" "Graphics" "Development" "GNOME")
 dia_packagenames=("dia-common")
 dia_launchernames=("dia")

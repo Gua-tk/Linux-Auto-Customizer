@@ -3,7 +3,7 @@
 screenshots_name="Screenshots"
 screenshots_description="Takes a screenshot and saves it to custom ~/Images/screenshots folder and save it to the clipboard for pasting"
 screenshots_version="System dependent"
-screenshots_tags=("screenshot" "screenshotKeybindings")
+screenshots_tags=("screenshot" "screenshotKeybindings" "customDesktop")
 screenshots_systemcategories=("Utility")
 screenshots_filekeys=("screenshotwindow" "screenshotarea" "screenshotfull")
 screenshots_keybindings=("scr-area;<Primary><Alt><Super>a;Screenshot Area" "scr-full;<Primary><Alt><Super>s;Screenshot Full" "scr-window;<Primary><Alt><Super>w;Screenshot Window")

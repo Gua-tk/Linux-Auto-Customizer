@@ -2,7 +2,7 @@
 anydesk_name="Anydesk"
 anydesk_description="PC Remote controller"
 anydesk_version="6.1.1"
-anydesk_tags=("remote" "control" "cloud")
+anydesk_tags=("remote" "control" "cloud" "customDesktop")
 anydesk_systemcategories=("Accessibility" "Network" "RemoteAccess" "FileTransfer" "P2P")
 
 anydesk_packagedependencies=("libminizip1" "libgtkglext1")

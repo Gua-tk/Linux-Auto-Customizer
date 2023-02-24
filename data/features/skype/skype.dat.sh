@@ -3,7 +3,7 @@
 skype_name="Skype"
 skype_description="Skype Internet Telephony"
 skype_version="System dependent"
-skype_tags=("calls")
+skype_tags=("calls" "customDesktop")
 skype_systemcategories=("InstantMessaging" "Chat" "Network" "Application")
 skype_packagenames=("skype")
 skype_launcherkeynames=("defaultLauncher")

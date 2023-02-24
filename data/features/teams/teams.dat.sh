@@ -3,7 +3,7 @@
 teams_name="Microsoft Teams - Preview"
 teams_description="Microsoft Teams for Linux is your chat-centered workspace in Office 365."
 teams_version="System dependent"
-teams_tags=("meetings")
+teams_tags=("meetings" "customDesktop")
 teams_systemcategories=("Office" "Network" "ProjectManagement" "Chat")
 teams_associatedfiletypes=("x-scheme-handler/msteams")
 teams_launchernames=("teams")

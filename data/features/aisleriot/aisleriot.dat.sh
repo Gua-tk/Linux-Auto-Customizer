@@ -2,7 +2,7 @@
 aisleriot_name="AisleRiot Solitaire"
 aisleriot_description="Solitaire Classic Card Game"
 aisleriot_version="3.22.9"
-aisleriot_tags=("cards" "game" "cardsgame")
+aisleriot_tags=("cards" "game" "cardsgame" "customDesktop")
 aisleriot_systemcategories=("Game" "CardGame")
 
 aisleriot_bashfunctions=("silentFunction")

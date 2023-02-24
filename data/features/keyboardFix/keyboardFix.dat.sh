@@ -2,7 +2,7 @@
 keyboardFix_name="Fix Fn key Keychron K8 ISO UK"
 keyboardFix_description="Fixes the Fn key in combination with the Function keys F1, F2, etc. which happens to not work in some keyboards"
 keyboardFix_version="System dependent"
-keyboardFix_tags=("KeychronK8")
+keyboardFix_tags=("KeychronK8" "customDesktop")
 keyboardFix_systemcategories=("Utility")
 
 keyboardFix_filekeys=("keyboardconf")

@@ -3,7 +3,7 @@
 tor_name="Tor Browser"
 tor_description="Browser focused on security and privacy. Can browse through the onion protocol"
 tor_version="System dependent"
-tor_tags=("security" "web" "browser")
+tor_tags=("security" "web" "browser" "customDesktop")
 tor_systemcategories=("Network" "WebBrowser")
 tor_packagenames=("torbrowser-launcher")
 tor_launcherkeynames=("defaultLauncher")

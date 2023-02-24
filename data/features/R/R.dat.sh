@@ -3,7 +3,7 @@
 R_name="R"
 R_description="Programming language"
 R_version="System dependent"
-R_tags=("R")
+R_tags=("R" "customDesktop")
 R_systemcategories=("Languages" "Graphics" "Science" "Math")
 R_launcherkeynames=("defaultLauncher")
 R_defaultLauncher_exec="R"

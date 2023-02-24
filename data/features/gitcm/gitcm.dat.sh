@@ -2,7 +2,7 @@
 gitcm_name="Git Credentials Manager"
 gitcm_description="Plug-in for git to automatically use personal tokens"
 gitcm_version="gcmcore-linux_amd64.2.0.696"
-gitcm_tags=("GeoGebra" "geogebra")
+gitcm_tags=("GeoGebra" "geogebra" "customDesktop")
 gitcm_systemcategories=("Viewer" "Geometry" "DataVisualization" "Math" "Calculator")
 gitcm_binariesinstalledpaths=("git-credential-manager-core;gitcm")
 gitcm_downloadKeys=("bundle")

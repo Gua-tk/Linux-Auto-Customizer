@@ -3,7 +3,7 @@
 onedrive_name="OneDrive client"
 onedrive_description="A free Microsoft OneDrive Client"
 onedrive_version="2.4.13-1build1_amd64"
-onedrive_tags=("iochem")
+onedrive_tags=("iochem" "customDesktop")
 onedrive_systemcategories=("System" "Utility")
 onedrive_downloadKeys=("debPackage")
 onedrive_debPackage_installedPackages=("onedrive")
