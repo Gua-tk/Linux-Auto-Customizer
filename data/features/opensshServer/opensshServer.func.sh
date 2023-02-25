@@ -15,6 +15,7 @@ opensshServer_conf=(
 "ClientAliveCountMax 0  # Maximum number of keep-alive sent to client before dropping"
 "PubkeyAuthentication yes  # Used to accept login by public keys infrastructure"
 "RSAAuthentication yes  # Allow authentication with RSA key generation algorithm"
+"usePAM yes  # To force the reload and display of the MOTD, works only on some OSs"
 )
 
 install_opensshServer_post()
