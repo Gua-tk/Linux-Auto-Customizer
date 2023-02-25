@@ -14,5 +14,5 @@ opensshServer_filekeys=("banner" "motdScript")
 opensshServer_banner_path="banner.ans"
 opensshServer_banner_content="banner.ans"
 
-opensshServer_motdScript_path="/etc/update-motd.d/96_custom_message"
-opensshServer_motdScript_content="96_custom_message.sh"
+opensshServer_motdScript_path="/etc/update-motd.d/96-custom-message"
+opensshServer_motdScript_content="96-custom-message.sh"
