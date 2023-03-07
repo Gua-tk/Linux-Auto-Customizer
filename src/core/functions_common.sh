@@ -708,7 +708,9 @@ argument_processing()
           add_program "${key}"
         else
           # There is a wrapper corresponding with this key, so we add each program that is in the wrapper.
-          add_programs "${set_of_features}"
+          for feature_keyname in ${set_of_features}; do
+            add_programs "${feature_keyname}"
+          done
         fi
       ;;
     esac
