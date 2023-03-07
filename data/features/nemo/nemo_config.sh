@@ -58,6 +58,8 @@ set_key_safely org.gnome.Terminal.Legacy.Settings mnemonics-enabled true
 set_key_safely org.gnome.shell.extensions.dash-to-dock dock-position "'BOTTOM'"
 # Change the image in the lockscreen
 set_key_safely org.gnome.login-screen fallback-logo "'€{CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png'"
+# Change the image in the user profile
+set_key_safely org.gnome.login-screen logo "'€{CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png'"
 # Show icon of the home folder
 set_key_safely org.nemo.desktop home-icon-visible true
 # Show different captions for the icon view in the file explorer
