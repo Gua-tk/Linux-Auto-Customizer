@@ -12,7 +12,8 @@ opensshServer_manualcontentavailable="0;0;1"
 
 opensshServer_filekeys=("logoImage" "banner" "motdScript" "profileScript")
 
-# Banner is ANSI text that when displayed in a capable terminal shows the customizer logo in ASCII art
+# Banner is ANSI text that when displayed in a capable terminal shows the an alien and a warning message. It is
+# displayed before ssh login
 opensshServer_banner_path="banner.ans"
 opensshServer_banner_content="banner.ans"
 
