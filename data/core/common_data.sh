@@ -192,6 +192,8 @@ declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum" "pkg")
 #     Bashrc for all users path variable system-wide.                                                                  #
 #   - PROFILE_PATH: ${HOME_FOLDER}/.profile                                                                            #
 #     Path pointing to our internal file for initializations.                                                          #
+#   - PROFILE_ALL_USERS_PATH: /etc/profile                                                                             #
+#     Path pointing to the profile of all users.
 #   - PATH_POINTED_FOLDER: /home/username/.local/bin                                                                   #
 #     Path pointing to a directory that is included in the PATH variable of the current user.                          #
 #   - ALL_USERS_PATH_POINTED_FOLDER: /usr/bin                                                                          #
@@ -331,6 +333,7 @@ declare -r ALL_USERS_LAUNCHERS_DIR="/usr/share/applications"
 declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
 declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
 declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
+declare -r PROFILE_ALL_USERS_PATH="/etc/profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
 
 # Paths of the installation repository

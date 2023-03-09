@@ -15,6 +15,9 @@ opensshServer_conf=(
 "ClientAliveCountMax 0  # Maximum number of keep-alive sent to client before dropping"
 "PubkeyAuthentication yes  # Used to accept login by public keys infrastructure"
 "RSAAuthentication yes  # Allow authentication with RSA key generation algorithm"
+"usePAM yes  # To force the reload and display of the MOTD, works only on some OSs"
+"PrintMotd yes  # To force the print of the motd message"
+"Banner \"${CURRENT_INSTALLATION_FOLDER}/banner.ans\"  # Commented out banner because cannot display ANSI text"
 )
 
 install_opensshServer_post()
@@ -23,6 +26,7 @@ install_opensshServer_post()
     append_text "${conf_element}" "${SSH_GLOBAL_CONF_PATH}"
   done
 }
+
 uninstall_opensshServer_post()
 {
   for conf_element in "${opensshServer_conf[@]}"; do
@@ -30,4 +34,3 @@ uninstall_opensshServer_post()
   done
 }
 
-unset opensshServer_conf

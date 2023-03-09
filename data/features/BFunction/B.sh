@@ -2,6 +2,7 @@
 
 B() {
   clear
+  source "€{PROFILE_ALL_USERS_PATH}"
   source "€{BASHRC_PATH}"
   source "€{PROFILE_PATH}"
   while [ -n "$1" ]; do
