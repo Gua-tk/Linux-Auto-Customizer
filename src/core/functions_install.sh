@@ -1217,8 +1217,11 @@ generic_install_files() {
     if [[ "${!content}" = *$'\n'* ]]; then
       # More than one line, we can guess its a content
       create_file "${destiny_path}" "${!content}"
+    elif echo "${!content}" | grep -Eqo "^/"; then
+      # Begins with /, so it is an absolute path to file
+      create_file "${destiny_path}" "" "${!content}"
     else
-      # Only one line we guess it is a path
+      # Only one line we assume relative from the feature folder
       create_file "${destiny_path}" "" "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${!content}"
     fi
   done

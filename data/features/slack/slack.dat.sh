@@ -5,6 +5,7 @@ slack_description="Slack Client for Linux"
 slack_version="System dependent"
 slack_tags=("team" "customDesktop")
 slack_systemcategories=("GNOME" "GTK" "Network" "InstantMessaging")
+
 slack_packagenames=("slack-desktop")
 slack_downloadKeys=("bundle")
 slack_bundle_URL="https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb"

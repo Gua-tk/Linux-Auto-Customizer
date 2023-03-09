@@ -16,6 +16,8 @@ opensshServer_conf=(
 "PubkeyAuthentication yes  # Used to accept login by public keys infrastructure"
 "RSAAuthentication yes  # Allow authentication with RSA key generation algorithm"
 "usePAM yes  # To force the reload and display of the MOTD, works only on some OSs"
+"PrintMotd yes  # To force the print of the motd message"
+"#Banner \"${CURRENT_INSTALLATION_FOLDER}/banner.ans\"  # Commented out banner because cannot display ANSI text"
 )
 
 install_opensshServer_post()
