@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 twitter_name="Twitter"
 twitter_description="twitter.tv opening in Browser"

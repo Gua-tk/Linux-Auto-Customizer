@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 trello_name="Trello"
 trello_description="Google trello opening in Browser"

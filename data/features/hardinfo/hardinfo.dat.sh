@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 hardinfo_name="Hardinfo"
 hardinfo_description=""
 hardinfo_version="System dependent"
-hardinfo_tags=("info" "hardware")
+hardinfo_tags=("info" "hardware" "customDesktop")
 hardinfo_systemcategories=("System" "Utility" "HardwareSettings")
 hardinfo_bashfunctions=("silentFunction")
 hardinfo_packagenames=("hardinfo")

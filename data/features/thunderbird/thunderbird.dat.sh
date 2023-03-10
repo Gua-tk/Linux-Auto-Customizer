@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 thunderbird_name="Thunderbird Mail"
 thunderbird_description="Send and receive mail with Thunderbird"
 thunderbird_version="System dependent"
-thunderbird_tags=("mail" "email" "Email" "E-mail" "Newsgroup" "Feed" "RSS")
+thunderbird_tags=("mail" "email" "Email" "E-mail" "Newsgroup" "Feed" "RSS" "customDesktop")
 thunderbird_systemcategories=("Application" "Network" "Email")
 thunderbird_packagenames=("thunderbird")
 thunderbird_associatedfiletypes=("x-scheme-handler/mailto" "application/x-xpinstall" "x-scheme-handler/webcal" "x-scheme-handler/mid" "message/rfc822")

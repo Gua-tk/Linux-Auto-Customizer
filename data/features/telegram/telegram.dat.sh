@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 telegram_name="Telegram"
 telegram_description="Cloud-based instant messaging software and application servic"
 telegram_version="System dependent"
-telegram_tags=("chat" "network" "social")
+telegram_tags=("chat" "network" "social" "customDesktop")
 telegram_systemcategories=("Network" "Chat")
 telegram_binariesinstalledpaths=("Telegram;telegram")
 telegram_bashfunctions=("silentFunction")

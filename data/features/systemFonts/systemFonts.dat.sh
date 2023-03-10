@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 systemFonts_name="Change default fonts"
 systemFonts_description="Sets pre-defined fonts to desktop environment."
 systemFonts_version="System dependent"
-systemFonts_tags=("changeFonts")
+systemFonts_tags=("changeFonts" "customDesktop")
 systemFonts_systemcategories=("Utility" "System")
 systemFonts_bashinitializations=("fonts_initializations.sh")
 systemFonts_packagenames=("fonts-hack" "fonts-firacode" "fonts-hermit" "fonts-roboto" "msttcorefonts" )

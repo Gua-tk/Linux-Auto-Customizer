@@ -177,7 +177,7 @@
 #  - FEATUREKEYNAME_packagedependencies: Array of name of packages to be installed using apt-get before main installation.    #
 #    Used in: packageinstall, packagemanager.                                                                          #
 #  - FEATUREKEYNAME_movefiles: Allows file moving from installation folder to other ones in the system, matching *     #
-#  - FEATUREKEYNAME_package_manager_override: Allows to load7bd571be2a4a93fa2d266d6d8b6cd5852379748d another package manager and its calls for a certain       #
+#  - FEATUREKEYNAME_package_manager_override: Allows to load another package manager and its calls for a certain       #
 #    feature, reloading it back after its installation.                                                                #
 #  - FEATUREKEYNAME_launcherkeynames: Keynames to expand features properties of the desktop launcher when overriding.
 #    A desktop launcher will be created for each keyname defined in this property                                      #

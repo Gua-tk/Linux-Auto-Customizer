@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 virtualbox_name="VirtualBox"
 virtualbox_description="Hosted hypervisor for x86 virtualization"
 virtualbox_version="System dependent"
-virtualbox_tags=("oracle")
+virtualbox_tags=("oracle" "customDesktop")
 virtualbox_systemcategories=("System" "")
 virtualbox_bashfunctions=("silentFunction")
 virtualbox_launchernames=("virtualbox")

@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 vncviewer_name="VNC Viewer"
 vncviewer_description="VNC client"
 vncviewer_version="6.21.1109"
-vncviewer_tags=("remote" "control" "network")
+vncviewer_tags=("remote" "control" "network" "customDesktop")
 vncviewer_systemcategories=("Utility" "Network" "Viewer" "Monitor" "RemoteAccess" "Accessibility")
 vncviewer_launcherkeynames=("default")
 vncviewer_default_exec="vncviewer"

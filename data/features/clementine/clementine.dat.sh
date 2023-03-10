@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 clementine_name="Clementine"
 clementine_description="Clementine Music Player"
 clementine_version="System dependent"
-clementine_tags=("music")
+clementine_tags=("music" "customDesktop")
 clementine_systemcategories=("Music" "Audio" "Qt" "Player" "AudioVideo")
 
 clementine_bashfunctions=("silentFunction")

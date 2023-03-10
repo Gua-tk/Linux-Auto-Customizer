@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 sysmontask_name="Sysmontask"
 sysmontask_description="Control panel for linux"
 sysmontask_version="System dependent"

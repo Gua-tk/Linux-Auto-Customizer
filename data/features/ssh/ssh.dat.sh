@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 ssh_name="SSH"
 ssh_description="Secure Shell"
 ssh_version="System dependent"
-ssh_tags=("ssh" "client" "remote" "shell")
+ssh_tags=("client" "remote" "shell" "customDesktop")
 ssh_systemcategories=("Network" "RemoteAccess" "ConsoleOnly" "Shell")
 ssh_packagenames=("ssh-client")
 ssh_bashfunctions=("ssh.sh")

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_nano_post()
 {
   # Set nano as the default git editor

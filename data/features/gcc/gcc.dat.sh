@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 gcc_name="gcc"
 gcc_description="C compiler for GNU systems"
 gcc_version="System dependent"
-gcc_tags=("GNU" "C")
+gcc_tags=("GNU" "C" "customDesktop")
 gcc_systemcategories=("System" "Utility")
 gcc_bashfunctions=("gcc.sh")
 gcc_filekeys=("template" "templateHeader")

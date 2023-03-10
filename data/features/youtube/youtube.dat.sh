@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 youtube_name="Youtube"
 youtube_description="Youtube opening in Browser"

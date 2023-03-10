@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_caffeine_pre()
 {
   apt-get purge -y caffeine

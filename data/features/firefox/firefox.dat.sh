@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 firefox_name="Firefox Web Browser"
 firefox_description="Web browser"
 firefox_version="System dependent"
-firefox_tags=("browser")
+firefox_tags=("browser" "customDesktop")
 firefox_systemcategories=("Network" "WebBrowser" "GNOME" "GTK")
 
 firefox_bashfunctions=("silentFunction")

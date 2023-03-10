@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 github_name="Github"
 github_description="Github opening in Browser"
 github_version="Google dependent"
-github_tags=("internet_shortcuts")
+github_tags=("internet_shortcuts" "customDesktop")
 github_systemcategories=("RevisionControl")
 github_bashfunctions=("silentFunction")
 github_launcherkeynames=("default")

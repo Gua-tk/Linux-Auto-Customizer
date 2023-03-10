@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 chess_name="GNOME Chess"
 chess_description="Plays a full game of chess against a human being or other computer program"
 chess_version="System dependent"
-chess_tags=("chess" "game" "gnome" "strategy")
+chess_tags=("chess" "game" "gnome" "strategy" "customDesktop")
 chess_systemcategories=("BoardGame" "LogicGame" "GNOME" "GTK" "Game" "BoardGame")
 
 chess_packagenames=("gnome-chess")

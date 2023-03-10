@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 notepadqq_name="Notepadqq"
 notepadqq_description="Source Code Editor"

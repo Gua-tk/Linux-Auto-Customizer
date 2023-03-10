@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 mdadm_name="mdadm"
 mdadm_description="Manage RAID systems"

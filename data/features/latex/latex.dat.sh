@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 latex_name="LaTeX"
 latex_description="LaTeX Editor"
 latex_version="1.0"
-latex_tags=("language" "document" "editor" "latex")
+latex_tags=("language" "document" "editor" "latex" "customDesktop")
 latex_systemcategories=("Office" "Publishing" "Qt" "X-SuSE-Core-Office" "X-Mandriva-Office-Publishing" "X-Misc")
 latex_launcherkeynames=("defaultLauncher" "documentationLauncher")
 latex_documentationLauncher_exec="texdoctk"

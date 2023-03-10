@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 apache2_name="Apache httpd server project"
 apache2_description="Web server"
 apache2_version="2.4.52"

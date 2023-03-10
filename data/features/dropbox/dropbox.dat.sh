@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 dropbox_name="Dropbox"
 dropbox_description="File Synchronizer"
 dropbox_version="2020.03.04_amd64"
-dropbox_tags=("file_hostig" "cloud" "file" "synchronization" "sharing" "collaboration" "cloud" "storage" "backup")
+dropbox_tags=("file_hostig" "cloud" "file" "synchronization" "sharing" "collaboration" "cloud" "storage" "backup" "customDesktop")
 dropbox_systemcategories=("Network" "FileTransfer")
 dropbox_packagenames=("dropbox")
 dropbox_packagedependencies=("python3-gpg")

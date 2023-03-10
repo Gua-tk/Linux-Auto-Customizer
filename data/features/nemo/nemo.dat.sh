@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 nemo_name="Nemo Desktop"
 nemo_description="Access and organize files"
 nemo_version="System dependent"
-nemo_tags=("folders" "filesystem" "explorer")
+nemo_tags=("folders" "filesystem" "explorer" "customDesktop")
 nemo_systemcategories=("GTK" "Utility" "Core")
 nemo_bashfunctions=("nemo.sh")
 nemo_bashinitializations=("nemo_config.sh")

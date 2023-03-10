@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 geany_name="Geany"
 geany_description="Integrated Development Environment"

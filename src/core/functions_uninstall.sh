@@ -191,10 +191,10 @@ remove_structures() {
 # - Argument 1: Name of the manual launcher name to uninstall, matching the variable $1_launchercontents
 generic_uninstall_manual_launchers() {
   local -r launchercontents="$1_launchercontents[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for launchercontent in "${!launchercontents}"; do
     remove_manual_launcher "$1${name_suffix_anticollision}.desktop"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
@@ -202,10 +202,10 @@ generic_uninstall_manual_launchers() {
 # - Permissions:
 generic_uninstall_dynamic_launcher() {
   local -r launcherkeynames="${CURRENT_INSTALLATION_KEYNAME}_launcherkeynames[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for launcherkey in "${!launcherkeynames}"; do
     remove_manual_launcher "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.desktop"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 
@@ -214,10 +214,10 @@ generic_uninstall_dynamic_launcher() {
 # - Argument 1: Name of the feature to uninstall, matching the variable $1_bashfunctions
 generic_uninstall_functions() {
   local -r bashfunctions="${CURRENT_INSTALLATION_KEYNAME}_bashfunctions[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for bashfunction in "${!bashfunctions}"; do
     remove_bash_function "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${collision}")
   done
 }
 
@@ -351,10 +351,11 @@ generic_uninstall_sources() {
 # - Permissions: Can be executed as root or user.
 generic_uninstall_initializations() {
   local -r bashinitializations="${CURRENT_INSTALLATION_KEYNAME}_bashinitializations[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for bashinit in "${!bashinitializations}"; do
     remove_bash_initialization "${CURRENT_INSTALLATION_KEYNAME}${name_suffix_anticollision}.sh"
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
+
   done
 }
 
@@ -437,7 +438,7 @@ generic_uninstall_packageManager() {
 # - Permissions: Expected to be run by normal user.
 generic_uninstall_downloads() {
   local -r downloads="${CURRENT_INSTALLATION_KEYNAME}_downloadKeys[@]"
-  local name_suffix_anticollision=""
+  local name_suffix_anticollision=$(get_next_collisioner)
   for each_download in ${!downloads}; do
     local pointer_type="${CURRENT_INSTALLATION_KEYNAME}_${each_download}_type"
     local pointer_downloadPath="${CURRENT_INSTALLATION_KEYNAME}_${each_download}_downloadPath"
@@ -503,7 +504,7 @@ generic_uninstall_downloads() {
       ;;
     esac
 
-    name_suffix_anticollision="${name_suffix_anticollision}_"
+    name_suffix_anticollision=$(get_next_collisioner "${name_suffix_anticollision}")
   done
 }
 

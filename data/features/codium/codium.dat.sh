@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 codium_name="VSCodium"
 codium_description=""
 codium_version="Microsoft dependent"

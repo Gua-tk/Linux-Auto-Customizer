@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 wireshark_name="Wireshark"
 wireshark_description="Network Analyzer"
 wireshark_version="System dependent"
-wireshark_tags=("security" "network" "audit")
+wireshark_tags=("security" "network" "audit" "customDesktop")
 wireshark_systemcategories=("Network" "Monitor" "Qt")
 
 wireshark_launcherkeynames=("default")

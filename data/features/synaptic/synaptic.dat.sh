@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 synaptic_name="Synaptic Package Manager"
 synaptic_description="Package Manager"
 synaptic_version="System dependent"
-synaptic_tags=("packageManager")
+synaptic_tags=("packageManager" "customDesktop")
 synaptic_systemcategories=("PackageManager" "GTK" "System" "Settings")
 synaptic_packagenames=("synaptic")
 synaptic_launcherkeynames=("default")

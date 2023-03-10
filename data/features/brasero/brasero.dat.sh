@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 brasero_name="Brasero"
 brasero_description="Software for image burning"

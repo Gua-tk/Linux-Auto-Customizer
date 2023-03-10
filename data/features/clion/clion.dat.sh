@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 clion_name="CLion"
 clion_description="Cross-platform C/C++ IDE"
 clion_version="2021.3"
-clion_tags=("IDE" "programming" "studio" "dev")
+clion_tags=("IDE" "programming" "studio" "dev" "customDesktop")
 clion_systemcategories=("IDE" "Development")
 
 clion_associatedfiletypes=("text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc")

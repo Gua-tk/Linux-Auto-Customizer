@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 install_keyboardFix_post()
 {
   update-initramfs -u -k all

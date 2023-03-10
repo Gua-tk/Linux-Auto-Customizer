@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 nautilus_name="Nautilus"
 nautilus_description="Desktop manager"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 freecad_name="FreeCAD"
 freecad_description="CAD Application"

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 whatsapp_name="Whatsapp Web"
 whatsapp_description="Whatsapp Web opening in Browser"

@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 iqmol_name="IQmol"
 iqmol_description="Molecule visualizer"
 iqmol_version="System dependent"
-iqmol_tags=("moleculeVisualizer" "molecules" "chemistry" "3d")
+iqmol_tags=("moleculeVisualizer" "molecules" "chemistry" "3d" "customDesktop")
 iqmol_systemcategories=("Science" "Visualization")
 iqmol_bashfunctions=("silentFunction")
 iqmol_launcherkeynames=("defaultLauncher")

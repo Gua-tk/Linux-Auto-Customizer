@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 forms_name="Google Forms"
 forms_description="Google Forms opening in Browser"
 forms_version="Google dependent"

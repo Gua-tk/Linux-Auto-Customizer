@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 
 overleaf_name="Overleaf"
 overleaf_version="Google dependent"
-overleaf_tags=("LaTeX" "text_editor" "internet_shortcuts")
+overleaf_tags=("LaTeX" "text_editor" "internet_shortcuts" "customDesktop")
 overleaf_systemcategories=("ProjectManagement" "Documentation" "TextEditor" "Office")
 overleaf_bashfunctions=("silentFunction")
 overleaf_launcherkeynames=("default")

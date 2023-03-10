@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 spotify_name="Spotify"
 spotify_description="Music streaming service"
 spotify_version="1.1.72"
-spotify_tags=("music" "stream")
+spotify_tags=("music" "stream" "customDesktop")
 spotify_systemcategories=("Music" "Audio")
 spotify_bashfunctions=("silentFunction")
 spotify_downloadKeys=("bundle")

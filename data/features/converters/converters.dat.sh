@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 converters_name="Functions converters"
 converters_description="Convert any number to any numeric system"
 converters_version="1.0"
-converters_tags=("bashfunctions" "convert" "info")
+converters_tags=("bashfunctions" "convert" "info" "customDesktop")
 converters_systemcategories=("System" "Utility")
 
 converters_bashfunctions=("converters.sh")

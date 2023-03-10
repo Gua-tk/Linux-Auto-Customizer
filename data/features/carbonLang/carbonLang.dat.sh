@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 carbonLang_name="Carbon Language"
 carbonLang_description="Successor of C++"
 carbonLang_version="System dependent"

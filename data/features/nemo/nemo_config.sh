@@ -57,7 +57,9 @@ set_key_safely org.gnome.Terminal.Legacy.Settings mnemonics-enabled true
 # Put dock in the bottom of the screen
 set_key_safely org.gnome.shell.extensions.dash-to-dock dock-position "'BOTTOM'"
 # Change the image in the lockscreen
-# gsettings set org.gnome.login-screen fallback-logo "'CUSTOMIZER LOGO'"
+set_key_safely org.gnome.login-screen fallback-logo "'€{CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png'"
+# Change the image in the user profile
+set_key_safely org.gnome.login-screen logo "'€{CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png'"
 # Show icon of the home folder
 set_key_safely org.nemo.desktop home-icon-visible true
 # Show different captions for the icon view in the file explorer
@@ -77,6 +79,10 @@ set_key_safely org.gnome.gedit.preferences.editor tabs-size 4
 set_key_safely org.gnome.gedit.preferences.ui bottom-panel-visible true
 set_key_safely org.gnome.gedit.preferences.ui side-panel-visible true
 set_key_safely org.gnome.gedit.plugins.spell highlight-misspelled true
+set_key_safely org.gnome.gedit.preferences.editor insert-spaces true
+set_key_safely org.gnome.gedit.preferences.editor highlight-current-line false
+set_key_safely org.gnome.gedit.preferences.editor wrap-mode none  # Do not wrap lines
+
 
 # keyboard configurations 0 for spanish 1 for us keyboard
 set_key_safely org.gnome.desktop.input-sources sources "[('xkb', 'es'), ('xkb', 'us')]"

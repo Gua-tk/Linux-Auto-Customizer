@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 audacity_name="Audacity"
 audacity_description="Sound Editor"
 audacity_version="2.3.3"
-audacity_tags=("music" "audio" "producing" "audio" "sound" "alsa" "jack" "editor")
+audacity_tags=("music" "audio" "producing" "audio" "sound" "alsa" "jack" "editor" "customDesktop")
 audacity_systemcategories=("Audio" "Music" "AudioVideo" "AudioVideoEditing")
 
 audacity_launcherkeynames=("default")

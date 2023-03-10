@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Installs pypy3 dependencies, pypy3 and basic subsystems (cython, numpy, matplotlib, biopython) using pip3 from pypy3.
 install_pypy3_mid() {
   # Install subsystems using pip

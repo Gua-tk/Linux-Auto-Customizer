@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 
 steam_name="Steam"
 steam_description="Application for managing and playing games on Steam"
 steam_version="System dependent"
-steam_tags=("games")
+steam_tags=("games" "customDesktop")
 steam_systemcategories=("Game" "FileTransfer" "Network")
 steam_launcherkeynames=("defaultLauncher")
 steam_defaultLauncher_exec="steam %U"

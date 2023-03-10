@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 ant_name="Ant"
 ant_description="Automation tool for software build"
 ant_version="1.10.12"
-ant_tags=("automation" "development" "deployment")
+ant_tags=("automation" "development" "deployment" "customDesktop")
 ant_systemcategories=("Development" "Building" "Utility")
 
 ant_bashfunctions=("ant.sh")
