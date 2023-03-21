@@ -1468,11 +1468,11 @@ generic_install_pythonVirtualEnvironment() {
   "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install wheel
 
   for pipinstallation in "${!pipinstallations}"; do
-    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install "${pipinstallation}"
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install ${pipinstallation}
   done
 
   for pythoncommand in "${!pythoncommands}"; do
-    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m "${pythoncommand}"
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m ${pythoncommand}
   done
 
   # If we are root change permissions
