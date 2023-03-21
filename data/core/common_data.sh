@@ -458,41 +458,6 @@ declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C
 
 
 ########################################################################################################################
-################################################ WRAPPER KEYNAMES ######################################################
-########################################################################################################################
-# Variables that contain sets of installation keynames that can be used as a multi-feature installation. These         #
-# variables are expanded and its content is supplied to add_program function in order to install all the features      #
-# contained in the wrapper. The text after the "wrapper_" prefix can be used as the argument to install the            #
-# multi-feature wrapper.                                                                                               #
-# Is preferable that the wrapper has the same installation privileges in all of its features.                          #
-########################################################################################################################
-# TODO: static wrapper deprecated for dynamic wrappers. Now we must move the static wrappers that we want to keep into tags
-# declare -r WRAPPERS_KEYNAMES=("programmingcore" "programmingide" "programmingpro" "texteditorcore" "mediacore" "systemcore" "internetcore" "artcore" "gamesinstall" "internetshortcuts" "standardinstall" "bashfunctions" "desktopfunctions" "terminalfunctions" "network" "networks" "fontsuser" "fontsroot" "custom1" "gitbashfunctions" "iochemroot" "iochemuser")
-# Thematic wrappers
-declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel")
-declare -r wrapper_programmingide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
-declare -r wrapper_programmingpro=("intellij_ultimate" "pycharm_professional" "clion")
-declare -r wrapper_texteditorcore=("openoffice" "latex" "geany" "notepadqq" "gvim")
-declare -r wrapper_mediacore=("vlc" "gpaint" "okular" "clementine")
-declare -r wrapper_systemcore=("virtualbox" "gparted" "clonezilla")
-declare -r wrapper_internetcore=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
-declare -r wrapper_artcore=("audacity" "shotcut" "gimp" "obs" "inkscape")
-declare -r wrapper_gamesinstall=("steam" "cmatrix")
-declare -r wrapper_internetshortcuts=("documents" "drive" "duckduckgo" "facebook" "forms" "github" "gitlab" "gmail" "google" "googlecalendar" "instagram" "keep" "netflix" "onedrive" "outlook" "overleaf" "presentation" "reddit" "soundcloud" "spreadsheets" "translator" "trello" "tumblr" "twitch" "twitter" "whatsapp" "wikipedia" "youtube" "youtubemusic")
-declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley" "GNU_parallel" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
-declare -r wrapper_bashfunctions=("a" "b" "B" "c" "E" "e" "F" "f" "h" "i" "j" "k" "L" "l" "p" "s" "u" "x" "z")
-declare -r wrapper_desktopfunctions=("changebg" "screenshots" "systemFonts" "templates")
-declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters" "bashcolors" "fastcommands" "emojis")
-declare -r wrapper_network=("ipe" "ipi" "ips")
-declare -r wrapper_networks=("net-tools")
-
-# Custom wrappers
-declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "curl" "git" "ffmpeg" "java" "python3")
-declare -r wrapper_gitbashfunctions=("pull" "push" "vommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch" "config")
-declare -r wrapper_iochemroot=("gcc" "virtualbox" "uget" "pdfgrep" "obs" "nemo" "gpaint" "guake" "parallel" "calculator" "autofirma" "dia" "psql" "chrome" "caffeine" "copyq" "thunderbird" "vlc" "python" "git" "gitk" "teams" "customizer")
-declare -r wrapper_iochemuser=("anydesk" "telegram" "eclipse" "fastcommands" "cheat" "apache" "java" "ant" "mvn" "terminal-background" "bashcolors" "pycharm" "sublime" "gitcm" "wallpapers" "java" "ideac" "ideau" "pgadmin" "a" "add" "alert" "b" "B" "c" "changebg" "checkout" "clean" "clone" "commit" "d" "vommit" "e" "E" "emojis" "f" "F" "fetch" "h" "hard" "i" "ipe" "ipi" "j" "k" "l" "L" "loc" "merge" "o" "port" "pull" "push" "q" "s" "u" "x" "z" "status" "gitprompt" "history_optimization" "meld" "mendeley" "onedrive" "postman" "prompt" "gitprompt" "screenshots" "sherlock" "shortcuts" "sonarqube" "templates" "youtube-music" "youtube-dl" "zoom" "whatsapp")
-
-########################################################################################################################
 ############################################ COMMON DATA VARIABLES #####################################################
 ########################################################################################################################
 # Variables that contain features data for both parts of the program (install.sh / uninstall.sh) but are not strictly    #
