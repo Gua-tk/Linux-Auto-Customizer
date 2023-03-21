@@ -619,7 +619,6 @@ declare feature_keynames=(
   "scilab"
   "screenshots"
   "sherlock"
-  "shortcuts"
   "shotcut"
   "shotwell"
   "skype"
