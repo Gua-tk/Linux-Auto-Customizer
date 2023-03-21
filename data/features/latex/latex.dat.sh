@@ -4,7 +4,7 @@ latex_name="LaTeX"
 latex_description="LaTeX Editor"
 latex_version="1.0"
 latex_tags=("editor" "language" "customDesktop")
-latex_systemcategories=("Office" "Publishing" "Qt" "X-SuSE-Core-Office" "X-Mandriva-Office-Publishing" "X-Misc")
+latex_systemcategories=("Office" "Publishing" "Qt" "X-Mandriva-Office-Publishing" "X-Misc" "X-SuSE-Core-Office")
 latex_launcherkeynames=("defaultLauncher" "documentationLauncher")
 latex_documentationLauncher_exec="texdoctk"
 

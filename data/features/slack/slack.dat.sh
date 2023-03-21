@@ -4,7 +4,7 @@ slack_name="Slack"
 slack_description="Slack Client for Linux"
 slack_version="4.29.149-amd64"
 slack_tags=("customDesktop")
-slack_systemcategories=("GNOME" "GTK" "Network" "InstantMessaging")
+slack_systemcategories=("GNOME" "GTK" "InstantMessaging" "Network")
 
 slack_packagenames=("slack-desktop")
 slack_downloadKeys=("bundle")

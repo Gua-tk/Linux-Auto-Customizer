@@ -4,7 +4,7 @@ pycharm_name="PyCharm Community"
 pycharm_description="Integrated development environment used in computer programming"
 pycharm_version="2021.3"
 pycharm_tags=("editor" "IDE" "programming" "text" "customDesktop")
-pycharm_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
+pycharm_systemcategories=("ComputerScience" "Debugger" "Development" "IDE" "WebDevelopment")
 pycharm_icon="pycharm.png"
 
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")

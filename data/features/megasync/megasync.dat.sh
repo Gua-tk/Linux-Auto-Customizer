@@ -13,3 +13,4 @@ megasync_packageDesktop_installedPackages="nemo-megasync"
 megasync_package_manager_override="apt-get"
 megasync_launcherkeynames=("default")
 megasync_default_exec="megasync"
+megasync_systemcategories=("")

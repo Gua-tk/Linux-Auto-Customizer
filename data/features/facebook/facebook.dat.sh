@@ -3,7 +3,7 @@ facebook_name="Facebook"
 facebook_description="Facebook opening in Browser"
 facebook_version="Google dependent"
 facebook_tags=("internet_shortcuts" "social")
-facebook_systemcategories=("InstantMessaging" "Chat" "Feed")
+facebook_systemcategories=("Chat" "Feed" "InstantMessaging")
 
 facebook_bashfunctions=("silentFunction")
 facebook_launcherkeynames=("default")

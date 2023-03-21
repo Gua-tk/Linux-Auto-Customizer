@@ -3,7 +3,7 @@ ardour_name="Ardour5"
 ardour_description="Ardour Digital Audio Workstation 5"
 ardour_version="System dependent"
 ardour_tags=("sound")
-ardour_systemcategories=("Audio" "Music" "AudioVideo")
+ardour_systemcategories=("Audio" "AudioVideo" "Music")
 
 # ardour_icon="ardour.svg"
 ardour_launcherkeynames=("default")
