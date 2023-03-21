@@ -3,6 +3,6 @@
 ipe_name="Function ipe"
 ipe_description="Returns the public IP"
 ipe_version="1.0"
-ipe_tags=("bashfunctions" "terminal" "network" "info" "customDesktop")
+ipe_tags=("info" "terminal" "customDesktop" "bashFunctions")
 ipe_systemcategories=("System" "Utility")
 ipe_bashfunctions=("ipe.sh")

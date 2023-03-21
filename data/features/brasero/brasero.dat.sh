@@ -3,7 +3,7 @@
 brasero_name="Brasero"
 brasero_description="Software for image burning"
 brasero_version="1.0"
-brasero_tags=("bashfunctions" "bash" "gitbashfunctions")
+brasero_tags=("")
 brasero_systemcategories=("System" "Utility" "DiscBurning")
 brasero_bashfunctions=("silentFunction")
 brasero_launcherkeynames=("defaultLauncher")

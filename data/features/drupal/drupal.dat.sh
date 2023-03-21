@@ -2,7 +2,7 @@
 drupal_name="Drupal"
 drupal_description="Web CMS"
 drupal_version="9.2.10"
-drupal_tags=("CMS" "web" "development")
+drupal_tags=("web")
 drupal_systemcategories=("CMS" "WebDevelopment" "Web")
 
 drupal_packagedependencies=("php-dom" "php-gd")

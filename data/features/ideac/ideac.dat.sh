@@ -3,7 +3,7 @@
 ideac_name="IntelliJ IDEA Community Edition"
 ideac_description="Java IDE"
 ideac_version="2021.3"
-ideac_tags=("IDE" "development" "text editor" "dev" "programming" "java" "customDesktop")
+ideac_tags=("editor" "IDE" "programming" "text" "customDesktop")
 ideac_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
 ideac_associatedfiletypes=("text/x-java")
 ideac_bashfunctions=("silentFunctionInWd")

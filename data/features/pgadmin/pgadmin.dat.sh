@@ -2,7 +2,7 @@
 pgadmin_name="pgAdmin 4"
 pgadmin_description="PostgreSQL Tools"
 pgadmin_version="Python dependent"
-pgadmin_tags=("pgadmin")
+pgadmin_tags=("")
 pgadmin_systemcategories=("Network")
 pgadmin_commentary="CLI utility that makes it possible to search for text in a PDF file without opening the file"
 

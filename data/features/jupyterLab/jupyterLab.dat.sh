@@ -2,7 +2,7 @@
 jupyterLab_name="Jupyter Lab"
 jupyterLab_description="High-level, high-performance dynamic language for technical computing"
 jupyterLab_version="jupyter dependent"
-jupyterLab_tags=("jupyter" "customDesktop")
+jupyterLab_tags=("customDesktop")
 jupyterLab_systemcategories=("IDE" "Development")
 
 jupyterLab_bashfunctions=("silentFunction")

@@ -2,7 +2,7 @@
 nodejs_name="NodeJS"
 nodejs_description="JavaScript language for the developers."
 nodejs_version="v16.19.0-linux-x64"
-nodejs_tags=("javascript" "language" "packageManager" "npm" "customDesktop")
+nodejs_tags=("language" "customDesktop")
 nodejs_systemcategories=("Languages" "Development")
 nodejs_downloadKeys=("bundle")
 nodejs_bundle_URL="https://nodejs.org/download/release/v16.19.0/node-v16.19.0-linux-x64.tar.gz"

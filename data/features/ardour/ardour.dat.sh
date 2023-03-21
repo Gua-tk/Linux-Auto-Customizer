@@ -2,7 +2,7 @@
 ardour_name="Ardour5"
 ardour_description="Ardour Digital Audio Workstation 5"
 ardour_version="System dependent"
-ardour_tags=("music" "audio" "production" "audio" "sound" "jackd" "DAW" "multitrack" "ladspa" "lv2" "midi")
+ardour_tags=("sound")
 ardour_systemcategories=("Audio" "Music" "AudioVideo")
 
 # ardour_icon="ardour.svg"

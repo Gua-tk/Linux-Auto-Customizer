@@ -3,7 +3,7 @@
 mendeley_name="Mendeley Desktop"
 mendeley_description="Research Paper Manager"
 mendeley_version="1.0"
-mendeley_tags=("research" "reference" "customDesktop")
+mendeley_tags=("customDesktop")
 mendeley_systemcategories=("Education" "Utility" "Literature" "Qt")
 mendeley_associatedfiletypes=("x-scheme-handler/mendeley" "application/pdf" "text/x-bibtex")
 mendeley_downloadKeys=("bundle")

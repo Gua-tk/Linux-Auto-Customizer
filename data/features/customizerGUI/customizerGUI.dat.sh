@@ -5,7 +5,7 @@
 customizerGUI_name="Linux Auto Customizer Graphical Interface"
 customizerGUI_description="Graphical interface for the customizer"
 customizerGUI_version="1.17.1"
-customizerGUI_tags=("development" "GNU" "environment" "customDesktop")
+customizerGUI_tags=("environment" "customDesktop")
 customizerGUI_systemcategories=("Development" "Utility" "System" "Programming" "PackageManager" "Settings")
 customizerGUI_commentary="Access customizer with a Web Interface"
 customizerGUI_dependencies=("python3" "python3-dev" "python3-venv")

@@ -2,7 +2,7 @@
 duckduckgo_name="Duckduckgo"
 duckduckgo_description="Duckduckgo opening in Browser"
 duckduckgo_version="Google dependent"
-duckduckgo_tags=("search" "internet_shortcuts")
+duckduckgo_tags=("internet_shortcuts" "search")
 duckduckgo_systemcategories=("WebBrowser")
 duckduckgo_arguments=("duckduckgo")
 
