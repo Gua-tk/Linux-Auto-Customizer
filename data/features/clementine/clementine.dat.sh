@@ -3,7 +3,7 @@ clementine_name="Clementine"
 clementine_description="Clementine Music Player"
 clementine_version="System dependent"
 clementine_tags=("customDesktop")
-clementine_systemcategories=("Music" "Audio" "Qt" "Player" "AudioVideo")
+clementine_systemcategories=("Audio" "AudioVideo" "Music" "Player" "Qt")
 
 clementine_bashfunctions=("silentFunction")
 clementine_associatedfiletypes=("application/ogg" "application/x-ogg" "application/x-ogm-audio" "audio/aac" "audio/mp4" "audio/mpeg" "audio/mpegurl" "audio/ogg" "audio/vnd.rn-realaudio" "audio/vorbis" "audio/x-flac" "audio/x-mp3" "audio/x-mpeg" "audio/x-mpegurl" "audio/x-ms-wma" "audio/x-musepack" "audio/x-oggflac" "audio/x-pn-realaudio" "audio/x-scpls" "audio/x-speex" "audio/x-vorbis" "audio/x-vorbis+ogg" "audio/x-wav" "video/x-ms-asf" "x-content/audio-player" "x-scheme-handler/zune" "x-scheme-handler/itpc" "x-scheme-handler/itms" "x-scheme-handler/feed")

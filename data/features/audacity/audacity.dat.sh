@@ -3,7 +3,7 @@ audacity_name="Audacity"
 audacity_description="Sound Editor"
 audacity_version="2.3.3"
 audacity_tags=("editor" "musicProduction" "sound" "customDesktop")
-audacity_systemcategories=("Audio" "Music" "AudioVideo" "AudioVideoEditing")
+audacity_systemcategories=("Audio" "AudioVideo" "AudioVideoEditing" "Music")
 
 audacity_launcherkeynames=("default")
 audacity_default_exec="audacity %F"

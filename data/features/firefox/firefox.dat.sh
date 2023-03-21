@@ -3,7 +3,7 @@ firefox_name="Firefox Web Browser"
 firefox_description="Web browser"
 firefox_version="System dependent"
 firefox_tags=("browser" "customDesktop")
-firefox_systemcategories=("Network" "WebBrowser" "GNOME" "GTK")
+firefox_systemcategories=("GNOME" "GTK" "Network" "WebBrowser")
 
 firefox_bashfunctions=("silentFunction")
 firefox_associatedfiletypes=("text/html" "text/xml" "application/xhtml+xml" "application/xml" "application/rss+xml" "application/rdf+xml" "image/gif" "image/jpeg" "image/png" "x-scheme-handler/http" "x-scheme-handler/https" "x-scheme-handler/ftp" "x-scheme-handler/chrome" "video/webm" "application/x-xpinstall")
