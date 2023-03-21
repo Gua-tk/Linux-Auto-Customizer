@@ -3,7 +3,7 @@
 copyq_name="CopyQ"
 copyq_description="Clipboard Manager"
 copyq_version="1.0"
-copyq_tags=("history" "clipboard" "customDesktop")
+copyq_tags=("customDesktop")
 copyq_systemcategories=("Qt" "KDE" "Utility")
 copyq_packagenames=("copyq")
 copyq_flagsoverride=";;;;;1"  # Always autostart

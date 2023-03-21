@@ -3,7 +3,7 @@
 githubDesktop_name="GitHub Desktop"
 githubDesktop_description="GitHub Application"
 githubDesktop_version="System dependent"
-githubDesktop_tags=("git" "customDesktop")
+githubDesktop_tags=("customDesktop")
 githubDesktop_systemcategories=("RevisionControl")
 githubDesktop_launchernames=("github-desktop")
 githubDesktop_packagenames=("github")

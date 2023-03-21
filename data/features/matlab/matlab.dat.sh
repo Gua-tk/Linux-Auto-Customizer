@@ -2,7 +2,7 @@
 matlab_name="Matlab R2021a"
 matlab_description="IDE + programming language specialized in matrix operations"
 matlab_version="R2021a"
-matlab_tags=("matlab")
+matlab_tags=("")
 matlab_systemcategories=("Science")
 matlab_downloadKeys=("bundle")
 matlab_bundle_URL="https://es.mathworks.com/downloads/web_downloads"

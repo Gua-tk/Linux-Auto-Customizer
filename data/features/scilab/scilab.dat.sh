@@ -3,7 +3,7 @@
 scilab_name="Scilab"
 scilab_description="Scientific software package for numerical computations"
 scilab_version="System dependent"
-scilab_tags=("science" "Simulation" "Numerical" "Math" "customDesktop")
+scilab_tags=("customDesktop")
 scilab_systemcategories=("Science" "Math")
 scilab_bashfunctions=("scilab.sh")
 scilab_binariesinstalledpaths=("bin/scilab;scilab" "bin/scilab-cli;scilab-cli" "bin/scinotes;scinotes")

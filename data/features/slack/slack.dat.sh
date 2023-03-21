@@ -3,7 +3,7 @@
 slack_name="Slack"
 slack_description="Slack Client for Linux"
 slack_version="4.29.149-amd64"
-slack_tags=("team" "customDesktop")
+slack_tags=("customDesktop")
 slack_systemcategories=("GNOME" "GTK" "Network" "InstantMessaging")
 
 slack_packagenames=("slack-desktop")

@@ -2,7 +2,7 @@
 evolution_name="Evolution Calendar"
 evolution_description="User calendar agend, planning"
 evolution_version="1.0"
-evolution_tags=("bashfunctions" "bash")
+evolution_tags=("")
 evolution_systemcategories=("System" "Utility")
 
 evolution_packagenames=("evolution")

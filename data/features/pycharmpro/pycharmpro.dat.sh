@@ -3,7 +3,7 @@
 pycharmpro_name="PyCharm Professional"
 pycharmpro_description="Integrated development environment used in computer programming"
 pycharmpro_version="2021.3"
-pycharmpro_tags=("IDE" "development" "text editor" "dev" "programming" "python" "customDesktop")
+pycharmpro_tags=("editor" "IDE" "programming" "text" "customDesktop")
 pycharmpro_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
 pycharmpro_icon="pycharmpro.png"
 pycharmpro_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")

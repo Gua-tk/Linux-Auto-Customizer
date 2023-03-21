@@ -2,7 +2,7 @@
 cmatrix_name="Cmatrix"
 cmatrix_description="Enter The Matrix"
 cmatrix_version="System dependent"
-cmatrix_tags=("terminal" "matrix" "customDesktop")
+cmatrix_tags=("terminal" "customDesktop")
 cmatrix_systemcategories=("ConsoleOnly")
 
 cmatrix_launcherkeynames=("default")

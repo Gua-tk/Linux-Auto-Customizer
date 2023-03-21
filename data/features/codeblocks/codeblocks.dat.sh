@@ -3,7 +3,7 @@
 codeblocks_name="Code::Blocks IDE"
 codeblocks_description="Integrated development environment"
 codeblocks_version="System dependent"
-codeblocks_tags=("development" "customDesktop")
+codeblocks_tags=("customDesktop")
 codeblocks_systemcategories=("Development" "IDE" "GTK")
 codeblocks_bashfunctions=("silentFunction")
 codeblocks_associatedfiletypes=("application/x-codeblocks" "application/x-codeblocks-workspace")
