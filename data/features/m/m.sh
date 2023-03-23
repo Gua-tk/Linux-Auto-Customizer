@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Description: Function to grep the output of a man call
+# Description: Function to search arguments in the manual of a command
 # Argument 1: String representing a system binary (example: ls)
 # Argument 2 (optional): String representing argument option of the binary (example: -A)
 m() {
