@@ -14,7 +14,7 @@ m() {
     return 1
   fi
 
-  if [[ $# -eq 1 ]]; then
+  if [ $# -eq 1 ]; then
     # Matches any line that starts with one or more spaces followed by a dash (-), one letter (lowercase or uppercase),
     # a comma, a space, two hyphens (--), and one or more letters (lowercase or uppercase) or dashes (-).
     # This pattern is used to match the short and long options that are documented in the manual page.
