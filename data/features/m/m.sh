@@ -23,7 +23,7 @@ m() {
   else
     for arg in "${@:2}"; do
       # search for lines that start with the second argument ($2) preceded by one or more spaces (^ +) and followed by
-      # a word boundary (\b). The -A5 option tells grep to also output one line of context after each match.
+      # a word boundary (\b). The -A5 option tells grep to also output five lines of context after each match.
       # Remove the leading whitespace from the lines that were matched in the previous step.
       man "${1}" | grep -E "^ +${arg}\\b" -A5 | sed 's/^\s\+//'
     done
