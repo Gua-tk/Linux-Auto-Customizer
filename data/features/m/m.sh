@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-# Description:
+# Description: Function to grep the output of a man call
 # Argument 1: String representing a system binary (example: ls)
-# Argument 2 (optional): String representing argument option of the binary
+# Argument 2 (optional): String representing argument option of the binary (example: -A)
 m() {
   if ! command -v man &>/dev/null; then
     echo "Error: 'man' command not found."
     return 1
   fi
 
-  if [ $# -lt 1 ]; then
+  if [ $# -eq 0 ]; then # No arguments given
     echo "Error: Invalid arguments."
     return 1
   fi
@@ -25,7 +25,7 @@ m() {
       # search for lines that start with the second argument ($2) preceded by one or more spaces (^ +) and followed by
       # a word boundary (\b). The -A5 option tells grep to also output five lines of context after each match.
       # Remove the leading whitespace from the lines that were matched in the previous step.
-      man "${1}" | grep -E "^ +${arg}\\b" -A5 | sed 's/^\s\+//'
+      man "${1}" | grep -E "^ +${arg}\\b" -B 5 -A 5
     done
   fi
 }
