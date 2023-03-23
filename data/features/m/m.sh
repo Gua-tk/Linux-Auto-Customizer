@@ -25,7 +25,7 @@ m() {
       # search for lines that start with the second argument ($2) preceded by one or more spaces (^ +) and followed by
       # a word boundary (\b). The -A5 option tells grep to also output five lines of context after each match.
       # Remove the leading whitespace from the lines that were matched in the previous step.
-      man "$1" | grep -E "^ +${arg}\\b" -B 5 -A 5 --color='auto'
+      man "$1" | grep -hnI -E "^ +${arg}\\b" -B 5 -A 5 --color='auto'
     done
   fi
 }
