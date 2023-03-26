@@ -16,16 +16,12 @@ m() {
   fi
 
   if [ $# -eq 1 ]; then
-    # Matches any line that starts with one or more spaces followed by a dash (-), one letter (lowercase or uppercase),
-    # a comma, a space, two hyphens (--), and one or more letters (lowercase or uppercase) or dashes (-).
-    # This pattern is used to match the short and long options that are documented in the manual page.
     man "$1"
   else
     for arg in "${@:2}"; do
-      # search for lines that start with the second argument ($2) preceded by one or more spaces (^ +) and followed by
-      # a word boundary (\b). The -A5 option tells grep to also output five lines of context after each match.
-      # Remove the leading whitespace from the lines that were matched in the previous step.
-      man "$1" | grep -hnI -E "^ +${arg}\\b" -B 5 -A 5 --color='auto'
+      # search for lines that start with the second argument ($2) preceded by one or more spaces (^ +)
+      # The -A5 option tells grep to also output five lines of context after each match.
+      man "$1" | grep -hnI -E "^ +${arg}" -B 5 -A 5 --color='auto'
     done
   fi
 }
