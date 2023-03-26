@@ -21,7 +21,7 @@ m() {
     for arg in "${@:2}"; do
       # search for lines that start with the second argument ($2) preceded by one or more spaces (^ +)
       # The -A5 option tells grep to also output five lines of context after each match.
-      man "$1" | grep -hnI -E "^ +${arg}" -B 5 -A 5 --color='auto'
+      man "$1" | grep -hnI -E "+${arg}" -B 5 -A 5 --color='auto'
     done
   fi
 }
