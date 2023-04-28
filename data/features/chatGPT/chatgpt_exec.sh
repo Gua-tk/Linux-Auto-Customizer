@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [ ! -f "€{BIN_FOLDER}/chatGPT/Content/Python/chatBot/.env" ]; then
+if [ ! -f "€{BIN_FOLDER}/chatGPT/.env" ]; then
   echo "You need to enter a valid API key in the file €{BIN_FOLDER}/chatGPT/.env"
   echo "Go to https://beta.openai.com/account/api-keys to get yours."
   echo "Edit or create the .env file and write inside the file:"
