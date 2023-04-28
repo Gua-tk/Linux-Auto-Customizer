@@ -23,6 +23,6 @@ m() {
   for arg in "${@:2}"; do
     # Search the manual page for the command specified by the first argument ($1)
     # using the 'man' command, and pipe the output to 'grep' for searching the arguments of the command.
-    man "$1" | grep -hnI -E "+${arg}" -B 5 -A 5 --color='auto'
+    man "$1" | grep -hnI -E "${arg}" -B 5 -A 5 --color='auto'
   done
 }
