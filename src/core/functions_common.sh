@@ -729,14 +729,17 @@ usage. Aborting..." "ERROR"
 add_programs_with_x_permissions()
 {
   for i in "${feature_keynames[@]}"; do
+    load_feature_properties "${i}"
     if [ "$1" -ne 2 ]; then
-      flag_privileges="$(deduce_privileges "${matched_keyname}")"
+      flag_privileges="$(deduce_privileges "$i")"
+      echo $flag_privileges
       if [ "$1" -eq "${flag_privileges}" ]; then
         add_program "$i"
       fi
     else
       add_program "$i"
     fi
+    unload_feature_properties "${i}"
   done
 }
 
@@ -772,9 +775,11 @@ deduce_privileges()
     # special permissions
     local -r packageNames="$1_packagenames"
     local -r downloadKeys="$1_downloadKeys[*]"
+
     # If there are needed dependencies, do not consider them when determining the permissions needed for the features
-    # local -r dependencies="$1_packagedependencies[*]"
-    if [ -n "${!packageNames}" ]; then
+    # local -r dependencies="$1_packagedependencies[*]
+
+    if [ -n "$(echo "${!packageNames}")" ]; then
       flag_privileges=0
     # elif [ -n "${!dependencies}" ]; then
     #   flag_privileges=0
