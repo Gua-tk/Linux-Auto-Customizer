@@ -374,7 +374,7 @@ generic_uninstall_dependencies() {
 generic_uninstall_pythonVirtualEnvironment() {
   local -r pipinstallations="${CURRENT_INSTALLATION_KEYNAME}_pipinstallations[@]"
   local -r pythoncommands="${CURRENT_INSTALLATION_KEYNAME}_pythoncommands[@]"
-  if [ -z "${!pipinstallations}" ] && [ -z "${!pythoncommands}" ]; then
+  if [ -z "$(echo "${!pipinstallations}")" ] && [ -z "$(echo "${!pythoncommands}")" ]; then
     return
   fi
   remove_folder "${BIN_FOLDER:?}/${CURRENT_INSTALLATION_KEYNAME}"
