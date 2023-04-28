@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+codeblocks_name="Code::Blocks IDE"
+codeblocks_description="Integrated development environment"
+codeblocks_version="System dependent"
+codeblocks_tags=("customDesktop")
+codeblocks_systemcategories=("Development" "GTK" "IDE")
+codeblocks_bashfunctions=("silentFunction")
+codeblocks_associatedfiletypes=("application/x-codeblocks" "application/x-codeblocks-workspace")
+codeblocks_launcherkeynames=("defaultLauncher")
+codeblocks_defaultLauncher_exec="codeblocks %F"
+codeblocks_defaultLauncher_XMultipleArgs="false"
+codeblocks_packagenames=("codeblocks")

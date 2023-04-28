@@ -272,6 +272,42 @@ alert_commentary="Useful to remember events"
 alert_packagedependencies=("libnotify-bin")
 alert_bashfunctions=("alert.sh")
 
+ansible_description="Application deployment engine"
+ansible_name="Ansible"
+ansible_version="5.0.0"
+ansible_tags=("automation" "development" "deployment")
+ansible_systemcategories=("Development" "ProjectManagement" "ComputerScience" "Monitor")
+ansible_arguments=("ansible")
+ansible_commentary="IT automation engine that automates cloud provisioning, configuration management, application deployment"
+ansible_packagenames=("ansible")
+
+ant_name="Ant"
+ant_description="Automation tool for software build"
+ant_version="1.10.11"
+ant_tags=("automation" "development" "deployment")
+ant_systemcategories=("Development" "Building" "Utility")
+ant_arguments=("ant" "apache_ant")
+ant_commentary="Tool to automatize repetitive tasks, usually during the compilation, building and deployment phase of the software development"
+ant_bashfunctions=("ant.sh")
+ant_binariesinstalledpaths=("bin/ant;ant")
+ant_downloadKeys=("bundle")
+ant_bundle_URL="https://ftp.cixug.es/apache//ant/binaries/apache-ant-1.10.11-bin.tar.gz"
+ant_flagsoverride="1;;;;;"
+
+anydesk_name="Anydesk"
+anydesk_description="PC Remote controller"
+anydesk_version="6.1.1"
+anydesk_tags=("remote" "control" "cloud")
+anydesk_systemcategories=("Accessibility" "Network" "RemoteAccess" "FileTransfer" "P2P")
+anydesk_arguments=("any_desk")
+anydesk_commentary="Remote control pc, sync with the cloud, remote file transfer, wake remote computers..."
+anydesk_packagedependencies=("libminizip1" "libgtkglext1")
+anydesk_bashfunctions=("silentFunction")
+anydesk_binariesinstalledpaths=("anydesk;anydesk")
+anydesk_downloadKeys=("bundle")
+anydesk_bundle_URL="https://download.anydesk.com/linux/anydesk-6.1.1-amd64.tar.gz"
+anydesk_launcherkeynames=("default")
+
 apache2_name="Apache httpd server project"
 apache2_description="Web server"
 apache2_version="2.4.52"
@@ -317,6 +353,25 @@ audacity_associatedfiletypes=("application/x-audacity-project" "audio/aac" "audi
 audacity_bashfunctions=("silentFunction")
 audacity_packagenames=("audacity" "audacity-data")
 
+# TODO: Tested
+AutoFirma_name="AutoFirma"
+AutoFirma_description="Electronic signature application"
+AutoFirma_version="1.0"
+AutoFirma_tags=("digitalsign")
+AutoFirma_systemcategories=("GNOME" "Application" "Office")
+AutoFirma_arguments=("auto_firma")
+AutoFirma_commentary="Cliente @firma"
+AutoFirma_launcherkeynames=("default")
+AutoFirma_default_exec="/usr/bin/AutoFirma %u"
+AutoFirma_default_windowclass="autofirma"
+AutoFirma_associatedfiletypes=("x-scheme-handler/afirma")
+AutoFirma_bashfunctions=("silentFunction")
+AutoFirma_downloadKeys=("bundle")
+AutoFirma_bundle_URL="https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip"
+AutoFirma_bundle_type="package"
+AutoFirma_bundle_installedPackages=("AutoFirma")
+AutoFirma_packagedependencies=("libnss3-tools")
+
 axel_name="axel"
 axel_description="Download manager"
 axel_version="1.6"
@@ -334,6 +389,15 @@ BFunction_systemcategories=("System" "Utility")
 BFunction_arguments=("B" "B_function")
 BFunction_commentary="B reload environment"
 BFunction_bashfunctions=("B.sh")
+
+b_name="Function b"
+b_description="Alias for bash"
+b_version="1.0"
+b_tags=("bashfunctions" "bash")
+b_systemcategories=("System" "Utility")
+b_arguments=("b" "b_function")
+b_commentary="b reload bash environment"
+b_bashfunctions=("b.sh")
 
 bashcolors_name="Function colors"
 bashcolors_description="Function and variables to use color in terminal"
@@ -357,6 +421,15 @@ blender_binariesinstalledpaths=("blender;blender")
 blender_launcherkeynames=("defaultLauncher")
 blender_defaultLauncher_exec="blender %f"
 blender_defaultLauncher_mimetypes=("application/x-blender")
+
+branch_name="Function branch"
+branch_description="Alias for git branch"
+branch_version="1.0"
+branch_tags=("bashfunctions" "bash" "gitbashfunctions")
+branch_systemcategories=("System" "Utility")
+branch_arguments=("branch")
+branch_commentary="branch creates a new branch of the git repository"
+branch_bashfunctions=("branch.sh")
 
 # TODO: Tested
 brasero_name="Brasero"
@@ -410,6 +483,35 @@ carbonLang_bashinitializations=("carbonLang.sh")
 carbonLang_repositoryurl="https://github.com/carbon-language/carbon-lang"
 carbonLang_flagsoverride="0;;;;;"  # Install always as root
 
+# TODO: tested
+changebg_name="Change Background"
+changebg_description="Function that changes the wallpaper using one random image from user images folder. It also downloads wallpapers and installs a cronjob to change the wallpaper every 5 minutes"
+changebg_version="1.0"
+changebg_tags=("utility" "terminal")
+changebg_systemcategories=("System" "Utility" "Settings")
+changebg_arguments=("change_bg" "wallpaper" "wallpapers" "backgrounds" "desktop_back_grounds" "change_back_grounds")
+changebg_commentary="Just like in Windows"
+changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES_DIR}/wallpapers" "*.jpeg;${XDG_PICTURES_DIR}/wallpapers" )
+changebg_binariesinstalledpaths=("cronscript.sh;changebg")
+changebg_cronscript_content="cronscript.sh"
+changebg_cronscript_path="cronscript.sh"
+changebg_cronjob_content="cronjob"
+changebg_cronjob_path="cronjob"
+changebg_filekeys=("cronscript" "cronjob")
+changebg_manualcontentavailable="0;0;1"
+changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
+install_changebg_post() {
+  if [ -n "${SUDO_USER}" ]; then
+    (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/changebg/cronjob") | crontab -u "${SUDO_USER}" -
+  else
+    (crontab -l ; cat "${BIN_FOLDER}/changebg/cronjob") | crontab -
+  fi
+}
+uninstall_changebg_post() {
+  :
+  #crontab "${USR_BIN_FOLDER}/changebg/cronjob"
+}
+
 cheat_name="Cheat"
 cheat_description="Provides access to community-driven cheat sheets and snippets for Linux/UNIX commands and many programming languages"
 cheat_version="Cheat creator dependent"
@@ -422,6 +524,15 @@ cheat_binariesinstalledpaths=("cht.sh;cheat")
 cheat_downloadKeys=("script")
 cheat_script_URL="https://cht.sh/:cht.sh"
 cheat_script_downloadPath="cht.sh"
+
+checkout_name="Function checkout"
+checkout_description="Alias for git checkout"
+checkout_version="1.0"
+checkout_tags=("aliases" "gitbashfunctions")
+checkout_systemcategories=("System" "Utility")
+checkout_arguments=("checkout")
+checkout_commentary="A terminal shortcut for git"
+checkout_bashfunctions=("checkout.sh")
 
 chrome_name="Google Chrome"
 chrome_description="Web Browser"
@@ -494,6 +605,22 @@ clementine_defaultLauncher_Previous_exec="clementine --previous"
 clementine_defaultLauncher_Next_name="Next"
 clementine_defaultLauncher_Next_exec="clementine --next"
 clementine_packagenames=("clementine")
+
+clion_name="CLion"
+clion_description="Cross-platform C/C++ IDE"
+clion_version="2021.3"
+clion_tags=("IDE" "programming" "studio" "dev")
+clion_systemcategories=("IDE" "Development")
+clion_arguments=("clion")
+clion_commentary="Very capable C++ IDE"
+clion_associatedfiletypes=("text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc")
+clion_bashfunctions=("silentFunction")
+clion_binariesinstalledpaths=("bin/clion.sh;clion")
+clion_downloadKeys=("bundle")
+clion_bundle_URL="https://download.jetbrains.com/cpp/CLion-2021.3.tar.gz"
+clion_launcherkeynames=("default")
+clion_default_windowclass="jetbrains-clion"
+clion_default_exec="clion %F"
 
 clone_name="Function clone"
 clone_description="Function for \`git clone \$1\`"
@@ -649,16 +776,6 @@ customizer_commentary="Collection of fast and custom all types of installations 
 customizer_manualcontentavailable="0;0;1"
 customizer_flagsoverride="0;;;;;"  # Install always as root
 customizer_bashfunctions=("customizer.sh")
-install_customizer_post()
-{
-  ln -sf "${CUSTOMIZER_PROJECT_FOLDER}/src/core/uninstall.sh" "${ALL_USERS_PATH_POINTED_FOLDER}/customizer-uninstall"
-  ln -sf "${CUSTOMIZER_PROJECT_FOLDER}/src/core/install.sh" "${ALL_USERS_PATH_POINTED_FOLDER}/customizer-install"
-}
-uninstall_customizer_post()
-{
-  remove_file /usr/bin/customizer-uninstall
-  remove_file /usr/bin/customizer-install
-}
 
 d_name="Function d"
 d_description="Function for dif or git diff"
@@ -1515,6 +1632,18 @@ j_arguments=("j")
 j_commentary="A terminal shortcut"
 j_bashfunctions=("j.sh")
 
+java_name="Java Development Kit 8"
+java_description="Implementation of version 8 of the Java (programming language) SE Platform"
+java_version="openlogic-openjdk-8u262-b10-linux-x64"
+java_tags=("programming" "development")
+java_systemcategories=("Development" "Languages")
+java_arguments=("java" "java_development_kit" "java_development" "java_development_kit_8" "jdk" "jdk_8")
+java_commentary="To execute java applications"
+java_bashfunctions=("java.sh")
+java_binariesinstalledpaths=("bin/java;java" "bin/keytool;keytool")
+java_downloadKeys=("bundle")
+java_bundle_URL="https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u262-b10/openlogic-openjdk-8u262-b10-linux-x64.tar.gz"
+
 julia_name="Julia and IJulia"
 julia_description="High-level, high-performance dynamic language for technical computing"
 julia_version="julia-1.0.5-linux-x86_64"
@@ -1947,6 +2076,14 @@ notepadqq_default_Document_name="Open a New Document"
 notepadqq_default_Document_exec="notepadqq"
 notepadqq_default_Document_onlyShowIn="Unity;"
 
+notflix_name="Function notflix"
+notflix_description="Stream title movies via console magnet tracking"
+notflix_version="1.0"
+notflix_tags=()
+notflix_systemcategories=("AudioVideo" "ConsoleOnly")
+notflix_arguments=("notflix")
+notflix_packagedependencies=("curl" "vlc")
+notflix_bashfunctions=("notflix.sh")
 
 obsStudio_name="Open Broadcaster Software Studio"
 obsStudio_description="Streaming and recording software"
@@ -2158,7 +2295,7 @@ postman_binariesinstalledpaths=("Postman;postman")
 postman_downloadKeys=("bundle")
 postman_bundle_URL="https://dl.pstmn.io/download/latest/linux64"
 postman_launcherkeynames=("defaultLauncher")
-postman_bashfunctions=("silentFunction")
+postman_binariesinstalledpaths=("silentFunction")
 
 presentation_name="Google Presentation"
 presentation_version="Google dependent"

@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 AutoFirma_name="AutoFirma"
 AutoFirma_description="Electronic signature application"
 AutoFirma_version="1.0"
-AutoFirma_tags=("digitalsign")
-AutoFirma_systemcategories=("GNOME" "Application" "Office")
+AutoFirma_tags=("customDesktop")
+AutoFirma_systemcategories=("Application" "GNOME" "Office")
 
 AutoFirma_launcherkeynames=("default")
 AutoFirma_default_exec="/usr/bin/AutoFirma %u"

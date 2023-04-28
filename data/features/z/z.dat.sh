@@ -3,7 +3,7 @@
 z_name="Function z"
 z_description="A terminal function"
 z_version="1.0"
-z_tags=("utility" "terminal" "bashFunction")
-z_systemcategories=("Utility" "System")
+z_tags=("terminal" "utility" "customDesktop" "bashFunctions")
+z_systemcategories=("System" "Utility")
 
 z_bashfunctions=("z.sh")

@@ -192,6 +192,8 @@ declare -r RECOGNISED_PACKAGE_MANAGERS=("apt" "yum" "pkg")
 #     Bashrc for all users path variable system-wide.                                                                  #
 #   - PROFILE_PATH: ${HOME_FOLDER}/.profile                                                                            #
 #     Path pointing to our internal file for initializations.                                                          #
+#   - PROFILE_ALL_USERS_PATH: /etc/profile                                                                             #
+#     Path pointing to the profile of all users.
 #   - PATH_POINTED_FOLDER: /home/username/.local/bin                                                                   #
 #     Path pointing to a directory that is included in the PATH variable of the current user.                          #
 #   - ALL_USERS_PATH_POINTED_FOLDER: /usr/bin                                                                          #
@@ -331,7 +333,12 @@ declare -r ALL_USERS_LAUNCHERS_DIR="/usr/share/applications"
 declare -r BASHRC_PATH="${HOME_FOLDER}/.bashrc"
 declare -r BASHRC_ALL_USERS_PATH="/etc/bash.bashrc"
 declare -r PROFILE_PATH="${HOME_FOLDER}/.profile"
+declare -r PROFILE_ALL_USERS_PATH="/etc/profile"
 declare -r MIME_ASSOCIATION_PATH="${HOME_FOLDER}/.config/mimeapps.list"
+
+# Paths of the installation repository
+declare -r DATA_FEATURES_FOLDER="${CUSTOMIZER_PROJECT_FOLDER}/data/features"
+declare -r FEATURE_KEYNAMES_PATH="${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_keynames.txt"
 
 if isRoot; then
   declare -r AUTOSTART_FOLDER="/etc/xdg/autostart"
@@ -421,258 +428,17 @@ FLAG_CACHE=1
 # for each installation.                                                                                               #
 ########################################################################################################################
 
-declare feature_keynames=(
-  "a"
-  "add"
-  "aircrackng"
-  "aisleriot"
-  "alert"
-  "ansible"
-  "ant"
-  "anydesk"
-  "apache2"
-  "ardour"
-  "aspell"
-  "audacity"
-  "AutoFirma"
-  "axel"
-  "BFunction"
-  "b"
-  "bashcolors"
-  "blender"
-  "branch"
-  "brasero"
-  "c"
-  "caffeine"
-  "calibre"
-  "carbonLang"
-  "changebg"
-  "chatGPT"
-  "cheat"
-  "checkout"
-  "cheese"
-  "chess"
-  "clean"
-  "clementine"
-  "clion"
-  "clone"
-  "clonezilla"
-  "cmake"
-  "cmatrix"
-  "code"
-  "codeblocks"
-  "codium"
-  "commit"
-  "config"
-  "converters"
-  "copyq"
-  "curl"
-  "customizer"
-  "customizerGUI"
-  "d"
-  "dart"
-  "dbeaver"
-  "dconfEditor"
-  "dia"
-  "discord"
-  "docker"
-  "documents"
-  "drive"
-  "dropbox"
-  "drupal"
-  "duckduckgo"
-  "EFunction"
-  "e"
-  "eclipse"
-  "emojis"
-  "evolution"
-  "FFunction"
-  "f"
-  "firc"
-  "facebook"
-  "fastcommands"
-  "fdupes"
-  "fetch"
-  "ffmpeg"
-  "filezilla"
-  "firefox"
-  "flutter"
-  "forms"
-  "freecad"
-  "gcc"
-  "geany"
-  "geogebra"
-  "ghostwriter"
-  "gimp"
-  "git"
-  "gitcm"
-  "github"
-  "githubDesktop"
-  "gitk"
-  "gitlab"
-  "gitPristine"
-  "gitprompt"
-  "gmail"
-  "gnatGps"
-  "calculator"
-  "mahjongg"
-  "mines"
-  "sudoku"
-  "terminal"
-  "tweaks"
-  "go"
-  "google"
-  "googlecalendar"
-  "chrome"
-  "gpaint"
-  "gparted"
-  "gradle"
-  "guake"
-  "gvim"
-  "h"
-  "handbrake"
-  "hard"
-  "hardinfo"
-  "historyoptimization"
-  "i"
-  "ideac"
-  "ideau"
-  "inkscape"
-  "instagram"
-  "ipe"
-  "ipi"
-  "ips"
-  "iqmol"
-  "j"
-  "java"
-  "julia"
-  "jupyterLab"
-  "k"
-  "keep"
-  "keyboardFix"
-  "LFunction"
-  "l"
-  "latex"
-  "libreoffice"
-  "lmms"
-  "loc"
-  "lolcat"
-  "matlab"
-  "mdadm"
-  "megasync"
-  "meld"
-  "mendeley"
-  "merge"
-  "mvn"
-  "nano"
-  "nautilus"
-  "ncat"
-  "nedit"
-  "nemo"
-  "netflix"
-  "netTools"
-  "nmap"
-  "nodejs"
-  "notepadqq"
-  "obsStudio"
-  "octave"
-  "okular"
-  "onedrive"
-  "opensshServer"
-  "outlook"
-  "overleaf"
-  "p"
-  "pacman"
-  "parallel"
-  "pdfgrep"
-  "pgadmin"
-  "php"
-  "phppgadmin"
-  "pluma"
-  "postman"
-  "presentation"
-  "prompt"
-  "psql"
-  "pull"
-  "pulseaudio"
-  "push"
-  "pycharm"
-  "pycharmpro"
-  "pypy3"
-  "python3"
-  "R"
-  "reddit"
-  "remmina"
-  "rosegarden"
-  "rstudio"
-  "rsync"
-  "rust"
-  "s"
-  "scala"
-  "scilab"
-  "screenshots"
-  "sherlock"
-  "shortcuts"
-  "shotcut"
-  "shotwell"
-  "skype"
-  "slack"
-  "sonarqube"
-  "sonicPi"
-  "soundcloud"
-  "spotify"
-  "spreadsheets"
-  "ssh"
-  "status"
-  "steam"
-  "studio"
-  "sublime"
-  "synaptic"
-  "sysmontask"
-  "systemFonts"
-  "teamviewer"
-  "teams"
-  "telegram"
-  "templates"
-  "terminalBackground"
-  "terminator"
-  "thunderbird"
-  "tilix"
-  "tmux"
-  "tomcat"
-  "tor"
-  "traductor"
-  "transmission"
-  "trello"
-  "tumblr"
-  "twitch"
-  "twitter"
-  "u"
-  "uget"
-  "upgrade"
-  "virtualbox"
-  "vlc"
-  "vncviewer"
-  "vommit"
-  "whatsapp"
-  "wikipedia"
-  "wikit"
-  "wireshark"
-  "x"
-  "xclip"
-  "youtube"
-  "youtubeDL"
-  "youtubeMusic"
-  "z"
-  "zoom"
-)
+
+# Fill the feature_keynames list using the data file ./data/core/feature_keynames.txt
+# Notice that there should be a blank line before end of file or the last element will not be appended to the list
+declare feature_keynames=()
+while read -r line; do
+  feature_keynames+=("${line}")
+done < "${FEATURE_KEYNAMES_PATH}"
+
 
 # Array to store the keynames of the features that have been added for installation
 added_feature_keynames=()
-
-# TODO: DEPRECATED. Data_feature is still sourced and can be used to declare installations but will be removed in next
-#  releases
-source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_data.sh"
 
 
 ########################################################################################################################
@@ -692,40 +458,6 @@ source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_arguments.sh"
 ########################################################################################################################
 declare -r auxiliary_arguments=("-v" "-q" "-Q" "-s" "-o" "-e" "-i" "-d" "-c" "-C" "-k" "-u" "-U" "-f" "-z" "-a" "-r" "-n" "-y" "-p" "-P" "-h" "-H" "--debug" "--commands" "--custom1" "--iochem" "--user" "--root" "--ALL")
 
-
-########################################################################################################################
-################################################ WRAPPER KEYNAMES ######################################################
-########################################################################################################################
-# Variables that contain sets of installation keynames that can be used as a multi-feature installation. These         #
-# variables are expanded and its content is supplied to add_program function in order to install all the features      #
-# contained in the wrapper. The text after the "wrapper_" prefix can be used as the argument to install the            #
-# multi-feature wrapper.                                                                                               #
-# Is preferable that the wrapper has the same installation privileges in all of its features.                          #
-########################################################################################################################
-declare -r WRAPPERS_KEYNAMES=("programmingcore" "programmingide" "programmingpro" "texteditorcore" "mediacore" "systemcore" "internetcore" "artcore" "gamesinstall" "internetshortcuts" "standardinstall" "bashfunctions" "desktopfunctions" "terminalfunctions" "network" "networks" "fontsuser" "fontsroot" "custom1" "gitbashfunctions" "iochemroot" "iochemuser")
-# Thematic wrappers
-declare -r wrapper_programmingcore=("python3" "gcc" "jdk11" "git" "GNU_parallel")
-declare -r wrapper_programmingide=("android_studio" "sublime_text" "pycharm" "intellij_community" "visualstudiocode" "pypy3" "clion")
-declare -r wrapper_programmingpro=("intellij_ultimate" "pycharm_professional" "clion")
-declare -r wrapper_texteditorcore=("atom" "openoffice" "latex" "geany" "notepadqq" "gvim")
-declare -r wrapper_mediacore=("vlc" "gpaint" "okular" "clementine")
-declare -r wrapper_systemcore=("virtualbox" "gparted" "clonezilla")
-declare -r wrapper_internetcore=("transmission" "thunderbird" "f-irc" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox" "cheat")
-declare -r wrapper_artcore=("audacity" "shotcut" "gimp" "obs" "inkscape")
-declare -r wrapper_gamesinstall=("steam" "cmatrix")
-declare -r wrapper_internetshortcuts=("documents" "drive" "duckduckgo" "facebook" "forms" "github" "gitlab" "gmail" "google" "googlecalendar" "instagram" "keep" "netflix" "onedrive" "outlook" "overleaf" "presentation" "reddit" "soundcloud" "spreadsheets" "translator" "trello" "tumblr" "twitch" "twitter" "whatsapp" "wikipedia" "youtube" "youtubemusic")
-declare -r wrapper_standardinstall=("templates" "virtualbox" "converters" "thunderbird" "clonezilla" "gparted" "gpaint" "transmission" "vlc" "python3" "gcc" "jdk11" "pdfgrep" "nemo" "git" "openoffice" "mendeley" "GNU_parallel" "android_studio" "sublime_text" "pycharm" "intellij_community" "pypy3" "clion" "latex" "telegram" "dropbox" "discord" "megasync" "google_chrome" "firefox")
-declare -r wrapper_bashfunctions=("a" "b" "B" "c" "E" "e" "F" "f" "h" "i" "j" "k" "L" "l" "p" "s" "u" "x" "z")
-declare -r wrapper_desktopfunctions=("changebg" "screenshots" "systemFonts" "templates")
-declare -r wrapper_terminalfunctions=("prompt" "gitprompt" "terminal_background" "history_optimization" "shortcuts" "converters" "bashcolors" "fastcommands" "emojis")
-declare -r wrapper_network=("ipe" "ipi" "ips")
-declare -r wrapper_networks=("net-tools")
-
-# Custom wrappers
-declare -r wrapper_custom1=("templates" "converters" "s" "l" "cheat" "history_optimization" "shortcut" "port" "prompt" "changebg" "sublime" "pycharm" "ideac" "clion" "discord" "telegram" "mendeley" "google-chrome" "transmission" "pdfgrep" "vlc" "okular" "thunderbird" "latex" "gparted" "gpaint" "pdfgrep" "nemo" "openoffice" "parallel" "copyq" "caffeine" "gnome-chess" "openoffice" "gcc" "curl" "git" "ffmpeg" "java" "python3")
-declare -r wrapper_gitbashfunctions=("pull" "push" "vommit" "commit" "checkout" "clone" "branch" "status" "add" "hard" "fetch" "config")
-declare -r wrapper_iochemroot=("gcc" "virtualbox" "uget" "pdfgrep" "obs" "nemo" "gpaint" "guake" "parallel" "calculator" "autofirma" "dia" "psql" "chrome" "caffeine" "copyq" "thunderbird" "vlc" "python" "git" "gitk" "teams" "customizer")
-declare -r wrapper_iochemuser=("anydesk" "telegram" "eclipse" "fastcommands" "cheat" "apache" "java" "ant" "mvn" "terminal-background" "bashcolors" "pycharm" "sublime" "gitcm" "wallpapers" "java" "ideac" "ideau" "pgadmin" "a" "add" "alert" "b" "B" "c" "changebg" "checkout" "clean" "clone" "commit" "d" "vommit" "e" "E" "emojis" "f" "F" "fetch" "h" "hard" "i" "ipe" "ipi" "j" "k" "l" "L" "loc" "merge" "o" "port" "pull" "push" "q" "s" "u" "x" "z" "status" "gitprompt" "history_optimization" "meld" "mendeley" "onedrive" "postman" "prompt" "gitprompt" "screenshots" "sherlock" "shortcuts" "sonarqube" "templates" "youtube-music" "youtube-dl" "zoom" "whatsapp")
 
 ########################################################################################################################
 ############################################ COMMON DATA VARIABLES #####################################################
@@ -759,8 +491,8 @@ declare -r help_common="\e[0m
 #### install.sh manual usage:
 [sudo] bash install.sh [[-f|--force]|[-i|--ignore|--ignore-errors]|
                        [-e|--exit-on-error]]
-
-                       [[-f|--favorites|--set-favorites]|[-o|--overwrite|--overwrite-if-present]|
+                       [[--favorites|--set-favorites]|
+                       [-o|--overwrite|--overwrite-if-present]|
                        [-s|--skip|--skip-if-installed]]
 
                        [[-v|--verbose]|[-Q|--Quiet]|[-q|--quiet]]
@@ -774,12 +506,34 @@ declare -r help_common="\e[0m
 
                        SELECTED_FEATURES_TO_INSTALL
 
+###### Customizer arguments:
+
+#### -f | --force:
+
+#### -i | --ignore | --ignore-errors:
+
+#### -e | --exit-on-error:
+
+#### -- favorites | --set-favorites:
+
+#### -o | --overwrite | --overwrite-if-present || -s|--skip | --skip-if-installed:
+
+####-v |--verbose || -Q | --Quiet | -q --quiet:
+
+####-d | --dirty | --no-autoclean || -c | --clean | -C | -Clean:
+
+####-U | --Upgrade -u|--upgrade:
+
+####-k|-K|--keep-system-outdated:
+
+####-n | --not | -! | -y | --yes:
+
 
 #### install.sh description:
 
   - install.sh performs the automatic configuration of a Linux
     environment by installing applications, adding bash functions, customizing
-    terminal variables, declaring new useful global variables and aliases...
+    terminal variables, declaring global variables
 
   - Each feature have specific privilege requirements: Some will need sudo when
     running install.sh and others won't

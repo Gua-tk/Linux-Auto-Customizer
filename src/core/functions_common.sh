@@ -237,44 +237,98 @@ append_text()
 # - Arguments: Reads the tags property of each feature and maps that feature to a wrapper with the name of each tag.
 generate_wrappers()
 {
-  declare -Ag wrapper_dict
+  declare -Ag WRAPPERS_KEYNAMES
   for feature_name in "${feature_keynames[@]}"; do
     load_feature_properties "${feature_name}"
+
+    # Use tags to fill wrappers dictionary
     tags_pointer="${feature_name}_tags[@]"
-    for tag in "${!tags_pointer}"; do
-      if [[ -v wrapper_dict["${tag}"] ]]; then
-        wrapper_dict[$tag]+=" ${feature_name}"
+    for tag in ${!tags_pointer}; do
+      if [[ -v WRAPPERS_KEYNAMES["${tag}"] ]]; then
+        WRAPPERS_KEYNAMES[$tag]+=" ${feature_name}"
       else
-        wrapper_dict[$tag]="${feature_name}"
+        WRAPPERS_KEYNAMES[$tag]="${feature_name}"
+      fi
+    done
+
+    # Use system categories to fill wrappers dictionary
+    categories_pointer="${feature_name}_systemcategories[@]"
+    for category in ${!categories_pointer}; do
+      if [[ -v WRAPPERS_KEYNAMES["${category}"] ]]; then
+        WRAPPERS_KEYNAMES[${category}]+=" ${feature_name}"
+      else
+        WRAPPERS_KEYNAMES[${category}]="${feature_name}"
       fi
     done
   done
+}
 
-  for key in $(echo "${!wrapper_dict[@]}" | tr ' ' $'\n' | sort -h); do
-    echo "Tag: ${key} --- Feature: ${wrapper_dict[$key]}"
+
+# - Description: Prints the list that contains the list of included programs for each wrapper.
+# - Permissions: Can be executed indifferently as root or user.
+display_wrappers()
+{
+  for key in $(echo "${!WRAPPERS_KEYNAMES[@]}" | tr ' ' $'\n' | sort -h); do
+    echo "Tag: ${key} --- Feature: ${WRAPPERS_KEYNAMES[$key]}"
   done
 }
 
-# - Description: Generate the list that contains the list of included programs for each wrapper.
+
+# - Description: Load properties from a feature received in the first argument as a keyname
 # - Permissions: Can be executed indifferently as root or user.
-# - Argument 1: Keyname of the properties to import
 load_feature_properties()
 {
     # Load metadata of the feature if its .dat file exists
-    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh" ]; then
-      source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh"
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh" ]; then
+      source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh"
 
       # If we find the property manual_content_available declared, we should import the function file too
-      local -r manualContentPointer="${CURRENT_INSTALLATION_KEYNAME}_manualcontentavailable"
+      local -r manualContentPointer="$1_manualcontentavailable"
       if [ -n "${!manualContentPointer}" ]; then
-        if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.func.sh" ]; then
-          source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.func.sh"
+        if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.func.sh" ]; then
+          source "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.func.sh"
         fi
       fi
     else
-      output_proxy_executioner "Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.dat.sh does not exist" "WARNING"
+      output_proxy_executioner "Properties of $1 feature have not been loaded. The file ${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh does not exist" "ERROR"
     fi
 }
+
+
+# - Description: Unloads properties loaded from the ${FEATURE_KEYNAME}.dat.sh and functions from the
+#   ${FEATURE_KEYNAME}.func.sh
+# - Permissions: Can be executed indifferently as root or user.
+# - Argument 1: Keyname of the properties to unload.
+unload_feature_properties()
+{
+    # Unload functions
+    unset -f "$1_install_pre"
+    unset -f "$1_install_mid"
+    unset -f "$1_install_post"
+    unset -f "$1_uninstall_pre"
+    unset -f "$1_uninstall_mid"
+    unset -f "$1_uninstall_post"
+
+    # Unload properties from the .dat.sh
+    if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh" ]; then
+      # Select non-commentary lines
+      while read -r line; do
+        local variable
+        variable="$(echo "${line}" | grep -v "^[[:blank:]]*#" | cut -d "=" -f1)"
+        if [ -z "${variable}" ]; then
+          continue
+        fi
+        unset "${variable}"
+      done < "${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh"
+    else
+      output_proxy_executioner "Properties of $1 feature have not been found, so they can not be unloaded. The file
+${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh does not exist. " "ERROR"
+    fi
+
+    # Finally unset ${FEATURENAME}_flagsruntime, which is a dynamically declared variable
+    unset "$1_flagsruntime"
+}
+
 
 # - Description: Performs a post-install clean by using cleaning option of package manager
 # - Permission: Can be called as root or user.
@@ -343,23 +397,12 @@ autogen_readme()
   local html_suffix="\" width=\"200\" height=\"200\" />"
   local icon_path=""
   for keyname in "${feature_keynames[@]}"; do
+    load_feature_properties "${keyname}"
     local arguments_pointer="${keyname}_arguments[@]"
     local name_pointer="${keyname}_name"
 
-    local icon_pointer="${keyname}_icon"
-    if [ -z "${!icon_pointer}" ]; then
-      if [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.svg" ]; then
-        icon_path="/data/static/${keyname}/${keyname}.svg"
-      elif [ -f "${CUSTOMIZER_PROJECT_FOLDER}/data/static/${keyname}/${keyname}.png" ]; then
-        icon_path="/data/static/${keyname}/${keyname}.png"
-      else
-        icon_path="/.github/logo.png"
-      fi
-    else
-      icon_path="/data/static/${keyname}/${!icon_pointer}"
-    fi
+    local icon_path="$(readme_deduce_icon "${keyname}")"
     icon_value="${html_prefix}${github_url}${icon_path}${html_suffix}"
-
 
     local description_pointer="${keyname}_description"
 
@@ -376,9 +419,9 @@ autogen_readme()
     for filekey in "${!filekeys_pointers}"; do
       filekey_name="${keyname}_${filekey}_content"
 
-      feature_function_names="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${keyname}/${!filekey_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*\\(\\)" | uniq)"
+      feature_function_names="$(cat "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${keyname}/${!filekey_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*\\(\\)" | uniq)"
 
-      for feature_function_name in "${feature_function_names}" ; do
+      for feature_function_name in "${feature_function_names}"; do
         # Append name without parenthesis
         usage_value+="$(echo "${feature_function_name}" | grep -Eo "^([a-z]|[A-Z])+([a-z]|[A-Z]|_)*"), "
       done
@@ -391,11 +434,12 @@ autogen_readme()
     done
 
     features_table_lines+=$'\n'"| ${icon_value} | ${!name_pointer} | ${!arguments_pointer} | ${!description_pointer} | ${usage_value} |"
+    unload_feature_properties "${keyname}"
   done
 
 
   features_table_lines+=$'\n'"Customizer currently has available $(echo "${feature_keynames[@]}" | wc -w) features."
-  echo "${features_table_lines}" > "${CUSTOMIZER_PROJECT_FOLDER}/FEATURES.md"
+  echo "${features_table_lines}" > "${CUSTOMIZER_PROJECT_FOLDER}/doc/FEATURES.md"
 }
 
 
@@ -425,6 +469,27 @@ generic_package_manager_override() {
   ${RECOGNISED_PACKAGE_MANAGERS[*]}" "ERROR"
       exit 1
     fi
+  fi
+}
+
+
+# - Description: Get another unique string using the first argument as current element. The first argument is to be
+#   expected as an integer, an empty string or nothing:
+#   - if is an integer: return next integer
+#   - if is empty string: return string "2"
+#   - if nothing: return empty string
+# - Permission: Can be called as root or user.
+# - Argument 1: Current anticollisioner number
+get_next_collisioner()
+{
+  if [ $# -eq 0 ]; then
+    echo ""
+  elif [ -z "$1" ]; then
+    echo "2"
+  elif echo "$1" | grep -Eqo "[0-9]+"; then
+    echo "$((1 + $1))"
+  else
+    output_proxy_executioner "Unexpected input in get_next_collisioner(): $1" "ERROR"
   fi
 }
 
@@ -550,7 +615,8 @@ argument_processing()
         exit 0
       ;;
 
-      --readme|readme|features|FEATURES|FEATURES.sh|features.sh)  # Print list of possible arguments and finish the program
+      --readme|readme|features|FEATURES|FEATURES.sh|features.sh)
+        # Print list of possible arguments and finish the program
         autogen_readme
         exit 0
       ;;
@@ -561,6 +627,12 @@ argument_processing()
       ;;
       -H|--help)
         output_proxy_executioner "echo ${help_common}${help_arguments}${help_individual_arguments_header}$(autogen_help)${help_wrappers}" "COMMAND"
+        exit 0
+      ;;
+
+      --show-wrappers)
+        generate_wrappers
+        display_wrappers
         exit 0
       ;;
 
@@ -578,49 +650,67 @@ argument_processing()
         add_programs_with_x_permissions 2
       ;;
 
-      *)  # Individual argument
+      --flush=favorites)
         if [ "${FLAG_MODE}" == "uninstall" ]; then
-          case "${key}" in
-            --flush=favorites)
-              remove_all_favorites
-              shift
-              continue
-            ;;
-            --flush=keybindings)
-              remove_all_keybindings
-              shift
-              continue
-            ;;
-            --flush=functions)
-              remove_all_functions
-              shift
-              continue
-            ;;
-            --flush=initializations)
-              remove_all_initializations
-              shift
-              continue
-            ;;
-            --flush=structures)
-              remove_structures
-              shift
-              continue
-            ;;
-            --flush=cache)
-              rm -Rf "${CACHE_FOLDER}"
-              shift
-              continue
-            ;;
-          esac
+          remove_all_favorites
         fi
+      ;;
 
-        local wrapper_key=
-        wrapper_key="$(echo "${key}" | tr "-" "_" | tr -d "_")"
-        local set_of_features="wrapper_${wrapper_key}[*]"
-        if [ -z "${!set_of_features}" ]; then
+      --flush=keybindings)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_keybindings
+        fi
+      ;;
+
+      --flush=functions)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_functions
+        fi
+      ;;
+
+      --flush=initializations)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_initializations
+        fi
+      ;;
+
+      --flush=structures)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_structures
+        fi
+      ;;
+
+      --flush=cache)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          rm -Rf "${CACHE_FOLDER}"
+        fi
+      ;;
+
+      *)
+        # Individual argument
+        # A feature key name was not detected in the current argument ${key}. Try a wrapper.
+        # But first check that the argument has characters and also check that those characters are valid characters
+        # for a variable in bash (regexp [a-zA-Z_][a-zA-Z_0-9]*, which is equal to any string using alphanumeric
+        # characters beginning with ant alphabetic characters and containing underscores at any position)
+        if [ -z "${key}" ] || ! echo "${key}" | grep -Eqo "^[aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_][aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ_0-9]*$"; then
+          output_proxy_executioner "The current argument \"${key}\" is empty or not valid" "WARNING"
+          shift
+          continue
+        fi
+        # Indirect expand wrapper variable
+        generate_wrappers  # Fill WRAPPERS_KEYNAMES dictionary
+        local wrapper_key
+        wrapper_key="$(echo "${key}" | tr "-" "_")"
+        local set_of_features="${WRAPPERS_KEYNAMES[${wrapper_key}]}"
+        if [ -z "${set_of_features}" ]; then
+          # If there are no wrappers corresponding with this key, the last possibility is that the key is actually a
+          # feature keyname, which we try to add to installation.
           add_program "${key}"
         else
-          add_programs ${!set_of_features}
+          # There is a wrapper corresponding with this key, so we add each program that is in the wrapper.
+          for feature_keyname in ${set_of_features}; do
+            add_programs "${feature_keyname}"
+          done
         fi
       ;;
     esac
@@ -629,7 +719,8 @@ argument_processing()
 
   # If we don't receive arguments we try to install everything that we can given our permissions
   if [ ${#added_feature_keynames[@]} -eq 0 ]; then
-    output_proxy_executioner "No arguments provided to install feature. Use -h or --help to display information about usage. Aborting..." "WARNING"
+    output_proxy_executioner "No arguments provided to install feature. Use -h or --help to display information about \
+usage. Aborting..." "ERROR"
     return
   fi
 }
@@ -705,7 +796,7 @@ deduce_privileges()
       flag_privileges=2
     fi
   fi
-  echo $flag_privileges
+  echo "${flag_privileges}"
 }
 
 
@@ -903,6 +994,9 @@ execute_installation()
     load_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
 
     output_proxy_executioner "generic_installation ${keyname}" "COMMAND"
+
+    unload_feature_properties "${CURRENT_INSTALLATION_KEYNAME}"
+
     output_proxy_executioner "${keyname} ${FLAG_MODE}ed." "INFO"
 
     # Return flag errors to bash defaults (ignore errors)

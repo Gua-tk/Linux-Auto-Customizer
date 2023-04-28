@@ -6,6 +6,7 @@ alias services="sudo systemctl --type=service"
 alias cls="clear"
 alias services="sudo systemctl --type=service"
 alias q="exit"
+alias sus="systemctl suspend"
 
 del-key()
 {

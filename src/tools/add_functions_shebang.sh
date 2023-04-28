@@ -2,7 +2,7 @@
 
 ########################################################################################################################
 # -Name: add_functions_shebang.sh
-# -Defile_pathion: Add shebangs in bash functions to avoid codacy error 'Add a shebang or a 'shell' directive.'
+# -Description: Add shebangs in bash functions to avoid codacy error 'Add a shebang or a 'shell' directive.'
 # -Creation Date: 02/02/2022
 # -Last Modified: 02/02/2002
 # -Author: Axel
@@ -17,16 +17,11 @@ main()
 {
   CUSTOMIZER_PROJECT_FOLDER="$(cd "$(dirname "$(realpath "$0")")/../.." &>/dev/null && pwd)"
 
-  DIR="${CUSTOMIZER_PROJECT_FOLDER}/src/core"
-  source "${DIR}/data_features.sh"
+  source "${CUSTOMIZER_PROJECT_FOLDER}/data/core/common_data.sh"
   SHE_BANG='#!/usr/bin/env bash'
 
   for key_name in ${feature_keynames[@]}; do
-
-    if [ ! -d "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${key_name}" ]; then
-      continue
-    fi
-    for file_path in "${CUSTOMIZER_PROJECT_FOLDER}/src/features/${key_name}/"*; do
+    for file_path in "${CUSTOMIZER_PROJECT_FOLDER}/data/features/${key_name}/"*; do
 
       if [ ! "$(echo "${file_path}" | rev | cut -d '.' -f1 | rev )" == "sh" ]; then
         continue

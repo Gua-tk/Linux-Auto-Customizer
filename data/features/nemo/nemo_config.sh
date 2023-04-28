@@ -29,6 +29,12 @@ set_key_safely org.gnome.desktop.background show-desktop-icons false
 set_key_safely org.nemo.desktop show-desktop-icons true
 
 # Other tweaks
+
+# Show thumbnails of files until 128 GB which is 137.438.953.472 B
+# Maximum value in the IU: 32 GB which is shown as 34.359.738.368 B
+# Default value in dconf editor 1 MB
+# Value that comes with the installation 1 GB
+set_key_safely org.nemo.preferences thumbnail-limit 137438953472
 # Do not ask for password after locking
 set_key_safely org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
 # Allow forcing the volume
@@ -51,7 +57,9 @@ set_key_safely org.gnome.Terminal.Legacy.Settings mnemonics-enabled true
 # Put dock in the bottom of the screen
 set_key_safely org.gnome.shell.extensions.dash-to-dock dock-position "'BOTTOM'"
 # Change the image in the lockscreen
-# gsettings set org.gnome.login-screen fallback-logo "'CUSTOMIZER LOGO'"
+set_key_safely org.gnome.login-screen fallback-logo "'€{CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png'"
+# Change the image in the user profile
+set_key_safely org.gnome.login-screen logo "'€{CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png'"
 # Show icon of the home folder
 set_key_safely org.nemo.desktop home-icon-visible true
 # Show different captions for the icon view in the file explorer
@@ -71,6 +79,10 @@ set_key_safely org.gnome.gedit.preferences.editor tabs-size 4
 set_key_safely org.gnome.gedit.preferences.ui bottom-panel-visible true
 set_key_safely org.gnome.gedit.preferences.ui side-panel-visible true
 set_key_safely org.gnome.gedit.plugins.spell highlight-misspelled true
+set_key_safely org.gnome.gedit.preferences.editor insert-spaces true
+set_key_safely org.gnome.gedit.preferences.editor highlight-current-line false
+set_key_safely org.gnome.gedit.preferences.editor wrap-mode none  # Do not wrap lines
+
 
 # keyboard configurations 0 for spanish 1 for us keyboard
 set_key_safely org.gnome.desktop.input-sources sources "[('xkb', 'es'), ('xkb', 'us')]"

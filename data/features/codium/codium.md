@@ -1,0 +1,1 @@
+Community-driven distribution of Microsoft’s editor VSCode.
