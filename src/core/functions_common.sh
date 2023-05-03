@@ -325,8 +325,8 @@ unload_feature_properties()
 ${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh does not exist. " "ERROR"
     fi
 
-    # Finally unset ${FEATURENAME}_flagsruntime, which is a dynamically declared variable
-    unset "$1_flagsruntime"
+    # Do not unset ${FEATURENAME}_flagsruntime, it is managed using add_program and delete_program
+    # unset "$1_flagsruntime"
 }
 
 
@@ -732,7 +732,6 @@ add_programs_with_x_permissions()
     load_feature_properties "${i}"
     if [ "$1" -ne 2 ]; then
       flag_privileges="$(deduce_privileges "$i")"
-      echo $flag_privileges
       if [ "$1" -eq "${flag_privileges}" ]; then
         add_program "$i"
       fi
@@ -986,6 +985,7 @@ execute_installation()
     FLAG_QUIETNESS="$(get_field "${!flags_pointer}" ";" "4")"  # Global, so it can be accessed during installations
     FLAG_FAVORITES="$(get_field "${!flags_pointer}" ";" "5")"  # Global, accessed in generic_install
     FLAG_AUTOSTART="$(get_field "${!flags_pointer}" ";" "6")"  # Global, accessed in generic_install
+
     # Process flag_ignore_errors
     if [ "${flag_ignore_errors}" -eq 0 ]; then
       set -e
