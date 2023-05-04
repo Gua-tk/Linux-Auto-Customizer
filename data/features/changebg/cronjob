@@ -1,1 +1,1 @@
-*/5 * * * * €{BIN_FOLDER}/changebg/.cronscript.sh
+*/5 * * * * /home/aleixmt/.customizer/bin/changebg/cronscript.sh

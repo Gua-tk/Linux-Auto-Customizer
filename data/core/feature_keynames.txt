@@ -133,6 +133,7 @@ libreoffice
 lmms
 loc
 lolcat
+m
 matlab
 mdadm
 megasync

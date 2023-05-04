@@ -9,8 +9,7 @@ changebg_movefiles=("*.jpg;${XDG_PICTURES_DIR}/wallpapers" "*.png;${XDG_PICTURES
 changebg_binariesinstalledpaths=("cronscript.sh;changebg")
 changebg_cronscript_content="cronscript.sh"
 changebg_cronscript_path="cronscript.sh"
-changebg_cronjob_content="cronjob"
-changebg_cronjob_path="cronjob"
-changebg_filekeys=("cronscript" "cronjob")
-changebg_manualcontentavailable="0;0;1"
+changebg_filekeys=("cronscript")
 changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
+changebg_cronjobs=("cronjob")
+

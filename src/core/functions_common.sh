@@ -325,8 +325,8 @@ unload_feature_properties()
 ${CUSTOMIZER_PROJECT_FOLDER}/data/features/$1/$1.dat.sh does not exist. " "ERROR"
     fi
 
-    # Finally unset ${FEATURENAME}_flagsruntime, which is a dynamically declared variable
-    unset "$1_flagsruntime"
+    # Do not unset ${FEATURENAME}_flagsruntime, it is managed using add_program and delete_program
+    # unset "$1_flagsruntime"
 }
 
 
@@ -729,14 +729,16 @@ usage. Aborting..." "ERROR"
 add_programs_with_x_permissions()
 {
   for i in "${feature_keynames[@]}"; do
+    load_feature_properties "${i}"
     if [ "$1" -ne 2 ]; then
-      flag_privileges="$(deduce_privileges "${matched_keyname}")"
+      flag_privileges="$(deduce_privileges "$i")"
       if [ "$1" -eq "${flag_privileges}" ]; then
         add_program "$i"
       fi
     else
       add_program "$i"
     fi
+    unload_feature_properties "${i}"
   done
 }
 
@@ -772,9 +774,11 @@ deduce_privileges()
     # special permissions
     local -r packageNames="$1_packagenames"
     local -r downloadKeys="$1_downloadKeys[*]"
+
     # If there are needed dependencies, do not consider them when determining the permissions needed for the features
-    # local -r dependencies="$1_packagedependencies[*]"
-    if [ -n "${!packageNames}" ]; then
+    # local -r dependencies="$1_packagedependencies[*]
+
+    if [ -n "$(echo "${!packageNames}")" ]; then
       flag_privileges=0
     # elif [ -n "${!dependencies}" ]; then
     #   flag_privileges=0
@@ -981,6 +985,7 @@ execute_installation()
     FLAG_QUIETNESS="$(get_field "${!flags_pointer}" ";" "4")"  # Global, so it can be accessed during installations
     FLAG_FAVORITES="$(get_field "${!flags_pointer}" ";" "5")"  # Global, accessed in generic_install
     FLAG_AUTOSTART="$(get_field "${!flags_pointer}" ";" "6")"  # Global, accessed in generic_install
+
     # Process flag_ignore_errors
     if [ "${flag_ignore_errors}" -eq 0 ]; then
       set -e
@@ -988,6 +993,7 @@ execute_installation()
 
     CURRENT_INSTALLATION_FOLDER="${BIN_FOLDER}/${keyname}"
     CURRENT_INSTALLATION_KEYNAME="${keyname}"
+    CURRENT_INSTALLATION_DATA_FOLDER="${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}"
 
     output_proxy_executioner "Attemptying to ${FLAG_MODE} ${keyname}." "INFO"
 
@@ -1044,6 +1050,7 @@ generic_installation() {
 
   "generic_${FLAG_MODE}_files"
   "generic_${FLAG_MODE}_movefiles"
+  "generic_${FLAG_MODE}_cronjobs"
   "generic_${FLAG_MODE}_dynamic_launcher"
   if [ "${OS_NAME}" == "WSL2" ]; then
     "generic_${FLAG_MODE}_WSL2_dynamic_launcher"

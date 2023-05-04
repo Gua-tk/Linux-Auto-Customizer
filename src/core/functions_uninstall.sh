@@ -58,6 +58,23 @@ remove_favorite() {
 }
 
 
+# - Description: Receives an absolute path to a file to be removed from cronjob. This cronjob will be removed of the
+#   cronjob of the current user if it has no privileges or it will be removed from crontab of the `SUDO_USER`.
+# - Permissions: This function can be called indistinctly as root using sudo or unprivileged user.
+# - Argument 1: Absolute path to the file that will be added to cronjob
+remove_cronjob() {
+  if [ ! -f "$1" ]; then
+    output_proxy_executioner "The cronjob file does not exist" "WARNING"
+    return
+  fi
+
+  if isRoot; then
+    crontab -u "${SUDO_USER}" -l | sed "s;$(translate_variables "$1");;g" | crontab -u "${SUDO_USER}" -
+  else
+    crontab -l | sed "s;$(translate_variables "$1");;g" | crontab -
+  fi
+}
+
 # - Description: Removes launcher that is making a program autostart. This is accomplished by removing the desktop
 #   launcher from $AUTOSTART_FOLDER, which is used by the operating system to read its autostart programs.
 # - Permissions: This function can be called as root or as user.
@@ -273,6 +290,22 @@ generic_uninstall_pathlinks() {
     fi
   done
 }
+
+
+# - Description: Expands the array from the property cronjob of the `CURRENT_INSTALLATION_KEYNAME`
+#   Each element can be an absolute path or a relative path to `CURRENT_INSTALLATION_DATA_FOLDER`.
+# - Permissions: Can be executed as root or user.
+generic_uninstall_cronjobs() {
+  local -r cronjobs_pointer="${CURRENT_INSTALLATION_KEYNAME}_cronjobs[@]"
+  for cronjob in ${!cronjobs_pointer}; do
+    if echo "${cronjob}" | grep -qE "^/"; then
+      remove_cronjob "${cronjob}"
+    else
+      remove_cronjob "${CURRENT_INSTALLATION_DATA_FOLDER}/${cronjob}"
+    fi
+  done
+}
+
 
 # - Description: Expands ${CURRENT_INSTALLATION_KEYNAME}_filekeys to obtain the keys which are a name of a variable
 #   that has to be expanded to obtain the data of the file.
