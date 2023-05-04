@@ -110,9 +110,24 @@ add_cronjob() {
   fi
 
   if isRoot; then
-    (crontab -u "${SUDO_USER}" -l ; translate_variables "$1") | crontab -u "${SUDO_USER}" -
+    if ! crontab -l &>/dev/null; then  # If there is crontab
+      (echo -n | crontab -)
+    fi
+    if crontab -l | grep -qw "$(cat "$1" | rev | cut -d " " -f1 | rev)"; then  # If match, we are going to add the same, so skip
+      return
+    fi
+
+    (crontab -u "${SUDO_USER}" -l ; cat "$1") | crontab -u "${SUDO_USER}" -
   else
-    (crontab -l ; translate_variables "$1") | crontab -
+    if ! crontab -l &>/dev/null; then  # If there is crontab
+      # Create the crontab
+      echo -n | crontab -
+    fi
+    if crontab -l | grep -qw "$(cat "$1" | rev | cut -d " " -f1 | rev)"; then  # If match at least with the path, we are going to add the same, so skip
+      return
+    fi
+
+    (crontab -l ; cat "$1") | crontab -
   fi
 }
 
@@ -1504,11 +1519,11 @@ generic_install_pythonVirtualEnvironment() {
   "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install wheel
 
   for pipinstallation in "${!pipinstallations}"; do
-    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install "${pipinstallation}"
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/pip" install ${pipinstallation}
   done
 
   for pythoncommand in "${!pythoncommands}"; do
-    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m "${pythoncommand}"
+    "${BIN_FOLDER}/${CURRENT_INSTALLATION_KEYNAME}/bin/python3" -m ${pythoncommand}
   done
 
   # If we are root change permissions
