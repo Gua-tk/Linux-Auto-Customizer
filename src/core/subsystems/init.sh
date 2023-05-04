@@ -13,3 +13,6 @@ fi
 if ! echo "${PATH}" | grep -Eq "€{PATH_POINTED_FOLDER}"; then
   export PATH="${PATH}:€{PATH_POINTED_FOLDER}"
 fi
+
+# Reset the variable PROMPT_COMMAND so we do not keep trash from previous installation, ensuring a clean install
+export PROMPT_COMMAND=""
