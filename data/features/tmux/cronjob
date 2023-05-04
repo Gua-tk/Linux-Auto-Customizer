@@ -1,1 +1,1 @@
-@reboot tmux -f "€{HOME_FOLDER}/.tmux.conf"  # && notify-send "tmux conf loaded"
+@reboot tmux -f "/home/axelfc/.tmux.conf"  # && notify-send "tmux conf loaded"

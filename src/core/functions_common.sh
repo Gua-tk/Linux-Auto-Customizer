@@ -993,6 +993,7 @@ execute_installation()
 
     CURRENT_INSTALLATION_FOLDER="${BIN_FOLDER}/${keyname}"
     CURRENT_INSTALLATION_KEYNAME="${keyname}"
+    CURRENT_INSTALLATION_DATA_FOLDER="${CUSTOMIZER_PROJECT_FOLDER}/data/features/${CURRENT_INSTALLATION_KEYNAME}"
 
     output_proxy_executioner "Attemptying to ${FLAG_MODE} ${keyname}." "INFO"
 
@@ -1049,6 +1050,7 @@ generic_installation() {
 
   "generic_${FLAG_MODE}_files"
   "generic_${FLAG_MODE}_movefiles"
+  "generic_${FLAG_MODE}_cronjobs"
   "generic_${FLAG_MODE}_dynamic_launcher"
   if [ "${OS_NAME}" == "WSL2" ]; then
     "generic_${FLAG_MODE}_WSL2_dynamic_launcher"
