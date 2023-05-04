@@ -5,7 +5,7 @@ install_jupyterLab_pre() {
   for dependency in "${dependencies[@]}"; do
 
     if ! which "${dependency}" &>/dev/null; then
-      output_proxy_executioner "echo ERROR: ${dependency} is not installed. You can installing using bash install.sh --npm --R --julia" "${FLAG_QUIETNESS}"
+      output_proxy_executioner "The dependency ${dependency} is not installed. You can installing using bash install.sh npm R julia" "WARNING"
       exit 1
     fi
   done
