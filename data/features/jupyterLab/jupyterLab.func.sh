@@ -6,7 +6,6 @@ install_jupyterLab_pre() {
 
     if ! which "${dependency}" &>/dev/null; then
       output_proxy_executioner "The dependency ${dependency} is not installed. You can installing using bash install.sh npm R julia" "ERROR"
-      exit 1
     fi
   done
 }
