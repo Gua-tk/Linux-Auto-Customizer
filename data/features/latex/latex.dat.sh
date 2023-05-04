@@ -10,12 +10,12 @@ latex_documentationLauncher_exec="texdoctk"
 
 latex_documentationLauncher_name="TeXdoctk"
 latex_documentationLauncher_categories=("Settings")
-latex_documentationLauncher_icon="latex_doc"
+latex_documentationLauncher_icon="latex_doc.png"
 latex_defaultLauncher_exec="texmaker %F"
 latex_defaultLauncher_notify="false"
 latex_packagedependencies=("perl-tk" )
 latex_packagenames=("texlive-latex-extra" "texmaker" "perl-tk")
 latex_associatedfiletypes="text/x-tex"
 latex_filekeys=("template")
-latex_template_path="${XDG_TEMPLATES_DIR}"
+latex_template_path="${XDG_TEMPLATES_DIR}/latex_template.tex"
 latex_template_content="latex_document.tex"
