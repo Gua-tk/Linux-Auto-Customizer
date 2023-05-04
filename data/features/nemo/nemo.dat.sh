@@ -3,8 +3,8 @@
 nemo_name="Nemo Desktop"
 nemo_description="Access and organize files"
 nemo_version="System dependent"
-nemo_tags=("folders" "filesystem" "explorer" "customDesktop")
-nemo_systemcategories=("GTK" "Utility" "Core")
+nemo_tags=("customDesktop")
+nemo_systemcategories=("Core" "GTK" "Utility")
 nemo_bashfunctions=("nemo.sh")
 nemo_bashinitializations=("nemo_config.sh")
 nemo_packagenames=("nemo")

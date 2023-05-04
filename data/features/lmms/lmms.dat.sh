@@ -3,8 +3,8 @@
 lmms_name="LMMS"
 lmms_description="Music production suite"
 lmms_version="System dependent"
-lmms_tags=("musicProduction" )
-lmms_systemcategories=("Audio" "Qt" "AudioVideo" "Midi")
+lmms_tags=("musicProduction")
+lmms_systemcategories=("Audio" "AudioVideo" "Midi" "Qt")
 lmms_bashfunctions=("silentFunction")
 lmms_associatedfiletypes=("application/x-lmms-project")
 lmms_packagenames=("lmms")

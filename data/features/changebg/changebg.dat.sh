@@ -12,3 +12,4 @@ changebg_cronscript_path="cronscript.sh"
 changebg_filekeys=("cronscript")
 changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
 changebg_cronjobs=("cronjob")
+

@@ -2,8 +2,8 @@
 jupyterLab_name="Jupyter Lab"
 jupyterLab_description="High-level, high-performance dynamic language for technical computing"
 jupyterLab_version="jupyter dependent"
-jupyterLab_tags=("jupyter" "customDesktop")
-jupyterLab_systemcategories=("IDE" "Development")
+jupyterLab_tags=("customDesktop")
+jupyterLab_systemcategories=("Development" "IDE")
 
 jupyterLab_bashfunctions=("silentFunction")
 jupyterLab_binariesinstalledpaths=("bin/jupyter-lab;jupyter-lab" "bin/jupyter;jupyter" "bin/ipython;ipython" "bin/ipython3;ipython3")

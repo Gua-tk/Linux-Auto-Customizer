@@ -3,8 +3,8 @@
 ideau_name="IntelliJ IDEA Ultimate Edition"
 ideau_description="Java IDE"
 ideau_version="2021.3"
-ideau_tags=("IDE" "development" "text editor" "dev" "programming" "java" "customDesktop")
-ideau_systemcategories=("Debugger" "IDE" "WebDevelopment" "ComputerScience" "Development")
+ideau_tags=("editor" "IDE" "programming" "text" "customDesktop")
+ideau_systemcategories=("ComputerScience" "Debugger" "Development" "IDE" "WebDevelopment")
 ideau_associatedfiletypes=("text/x-java")
 ideau_bashfunctions=("silentFunctionInWd")
 ideau_binariesinstalledpaths=("bin/idea.sh;ideau")

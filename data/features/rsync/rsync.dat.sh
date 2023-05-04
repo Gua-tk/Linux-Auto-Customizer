@@ -3,8 +3,8 @@
 rsync_name="Grsync"
 rsync_description="Software for file/folders synchronization"
 rsync_version="System dependent"
-rsync_tags=("rsync" "sync" "customDesktop")
-rsync_systemcategories=("Filesystem" "Utility")
+rsync_tags=("customDesktop")
+rsync_systemcategories=("FileSystem" "Utility")
 rsync_packagedependencies=("libcanberra-gtk-module" "libcanberra-gtk3-module" "libcanberra-gtk-module:i386")
 rsync_packagenames=("rsync" "grsync")
 rsync_bashfunctions=("rsync.sh")

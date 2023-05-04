@@ -3,8 +3,8 @@
 systemFonts_name="Change default fonts"
 systemFonts_description="Sets pre-defined fonts to desktop environment."
 systemFonts_version="System dependent"
-systemFonts_tags=("changeFonts" "customDesktop")
-systemFonts_systemcategories=("Utility" "System")
+systemFonts_tags=("customDesktop")
+systemFonts_systemcategories=("System" "Utility")
 systemFonts_bashinitializations=("fonts_initializations.sh")
 systemFonts_packagenames=("fonts-hack" "fonts-firacode" "fonts-hermit" "fonts-roboto" "msttcorefonts" )
 systemFonts_downloadKeys=("alegreyaSans" "lato" "noto" "oswald" "oxygen")

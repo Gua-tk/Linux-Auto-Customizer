@@ -2,7 +2,7 @@
 carbonLang_name="Carbon Language"
 carbonLang_description="Successor of C++"
 carbonLang_version="System dependent"
-carbonLang_tags=("languages")
+carbonLang_tags=("")
 carbonLang_systemcategories=("Languages")
 
 carbonLang_bashfunctions=("carbonLang_function.sh")

@@ -2,7 +2,7 @@
 pytorch_name="Pytorch"
 pytorch_description="Pytorch is a machine learning library for python"
 pytorch_version="Python dependent"
-pytorch_tags=("pytorch" "customDesktop")
+pytorch_tags=("customDesktop")
 pytorch_systemcategories=("Network")
 
 pytorch_pipinstallations=("torch --extra-index-url https://download.pytorch.org/whl/cpu" "torchvision --extra-index-url https://download.pytorch.org/whl/cpu" "torchaudio --extra-index-url https://download.pytorch.org/whl/cpu")

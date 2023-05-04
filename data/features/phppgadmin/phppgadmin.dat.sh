@@ -3,7 +3,7 @@
 phppgadmin_name="phpPgAdmin"
 phppgadmin_description="GUI for SQL Database Management"
 phppgadmin_version="System dependent"
-phppgadmin_tags=("lamp" "xampp")
+phppgadmin_tags=("")
 phppgadmin_systemcategories=("Languages")
 phppgadmin_packagenames=("phppgadmin")
 phppgadmin_bashfunctions=("silentFunction")

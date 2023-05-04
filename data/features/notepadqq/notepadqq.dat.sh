@@ -3,8 +3,8 @@
 notepadqq_name="Notepadqq"
 notepadqq_description="Source Code Editor"
 notepadqq_version="System dependent"
-notepadqq_tags=("editor" "Text" "Editor" "Plaintext" "Write")
-notepadqq_systemcategories=("TextEditor" "Development" "Utility")
+notepadqq_tags=("editor" "text")
+notepadqq_systemcategories=("Development" "TextEditor" "Utility")
 notepadqq_packagenames=("notepadqq")
 notepadqq_associatedfiletypes=("text/plain" "text/html" "text/x-php" "text/x-c" "text/x-shellscript")
 notepadqq_launchernames=("notepadqq")

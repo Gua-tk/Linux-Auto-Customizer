@@ -1,0 +1,1 @@
+search help from a binary in the manual

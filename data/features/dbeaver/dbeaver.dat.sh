@@ -2,8 +2,8 @@
 dbeaver_name="dbeaver-ce"
 dbeaver_description="Universal Database Manager"
 dbeaver_version="1.0"
-dbeaver_tags=("bashfunctions" "bash" "gitbashfunctions" "Database" "SQL" "IDE" "JDBC" "ODBC" "MySQL" "PostgreSQL" "Oracle" "DB2" "MariaDB")
-dbeaver_systemcategories=("IDE" "Development")
+dbeaver_tags=("IDE")
+dbeaver_systemcategories=("Development" "IDE")
 
 
 dbeaver_associatedfiletypes=("application/sql")
@@ -17,8 +17,8 @@ dbeaver_defaultLauncher_windowclass="DBeaver"
 dbeaver_name="dbeaver-ce"
 dbeaver_description="Universal Database Manager"
 dbeaver_version="1.0"
-dbeaver_tags=("bashfunctions" "bash" "gitbashfunctions" "Database" "SQL" "IDE" "JDBC" "ODBC" "MySQL" "PostgreSQL" "Oracle" "DB2" "MariaDB")
-dbeaver_systemcategories=("IDE" "Development")
+dbeaver_tags=("IDE")
+dbeaver_systemcategories=("Development" "IDE")
 dbeaver_associatedfiletypes=("application/sql")
 dbeaver_downloadKeys=("bundle")
 dbeaver_bundle_URL="https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb"

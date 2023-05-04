@@ -3,8 +3,8 @@
 synaptic_name="Synaptic Package Manager"
 synaptic_description="Package Manager"
 synaptic_version="System dependent"
-synaptic_tags=("packageManager" "customDesktop")
-synaptic_systemcategories=("PackageManager" "GTK" "System" "Settings")
+synaptic_tags=("customDesktop")
+synaptic_systemcategories=("GTK" "PackageManager" "Settings" "System")
 synaptic_packagenames=("synaptic")
 synaptic_launcherkeynames=("default")
 synaptic_default_windowclass="synaptic"

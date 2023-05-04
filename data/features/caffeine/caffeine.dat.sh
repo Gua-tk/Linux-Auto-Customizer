@@ -2,8 +2,8 @@
 caffeine_name="Caffeine"
 caffeine_description="Customization application"
 caffeine_version="System dependent"
-caffeine_tags=("Screensaver" "Power" "Saving" "Blank" "customDesktop")
-caffeine_systemcategories=("System" "Utility" "Settings" "TrayIcon")
+caffeine_tags=("customDesktop")
+caffeine_systemcategories=("Settings" "System" "TrayIcon" "Utility")
 
 caffeine_launcherkeynames=("defaultLauncher" "caffeineIndicator")
 caffeine_defaultLauncher_StartupNotify="false"

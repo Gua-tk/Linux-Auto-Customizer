@@ -3,8 +3,8 @@
 eclipse_name="Eclipse IDE"
 eclipse_description="IDE for Java"
 eclipse_version="4.2.2-linux-gtk-x86_64"
-eclipse_tags=("IDE" "programming" "development" "customDesktop")
-eclipse_systemcategories=("Development" "IDE" "WebDevelopment" "Web")
+eclipse_tags=("IDE" "programming" "customDesktop")
+eclipse_systemcategories=("Development" "IDE" "Web" "WebDevelopment")
 eclipse_bashfunctions=("silentFunction")
 eclipse_binariesinstalledpaths=("eclipse;eclipse")
 eclipse_downloadKeys=("bundle")

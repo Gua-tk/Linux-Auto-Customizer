@@ -3,7 +3,7 @@ nano_name="nano"
 nano_description=""
 nano_version="System dependent"
 nano_tags=("editor" "customDesktop")
-nano_systemcategories=("TextEditor" "Utility" "ConsoleOnly")
+nano_systemcategories=("ConsoleOnly" "TextEditor" "Utility")
 
 nano_packagenames=("nano")
 nano_filekeys=("conf")

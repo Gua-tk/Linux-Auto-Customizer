@@ -3,7 +3,7 @@
 cheese_name="Cheese"
 cheese_description="Webcam Booth"
 cheese_version="System dependent"
-cheese_tags=("photo" "video" "webcam" "customDesktop")
+cheese_tags=("video" "customDesktop")
 cheese_systemcategories=("Video")
 cheese_bashfunctions=("silentFunction")
 cheese_launchernames=("org.gnome.Cheese")

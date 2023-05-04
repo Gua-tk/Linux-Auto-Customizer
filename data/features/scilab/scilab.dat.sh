@@ -3,8 +3,8 @@
 scilab_name="Scilab"
 scilab_description="Scientific software package for numerical computations"
 scilab_version="System dependent"
-scilab_tags=("science" "Simulation" "Numerical" "Math" "customDesktop")
-scilab_systemcategories=("Science" "Math")
+scilab_tags=("customDesktop")
+scilab_systemcategories=("Math" "Science")
 scilab_bashfunctions=("scilab.sh")
 scilab_binariesinstalledpaths=("bin/scilab;scilab" "bin/scilab-cli;scilab-cli" "bin/scinotes;scinotes")
 scilab_associatedfiletypes=("application/x-scilab-sci" "application/x-scilab-sce" "application/x-scilab-tst" "application/x-scilab-dem" "application/x-scilab-sod" "application/x-scilab-xcos" "application/x-scilab-zcos" "application/x-scilab-bin" "application/x-scilab-cosf" "application/x-scilab-cos")
