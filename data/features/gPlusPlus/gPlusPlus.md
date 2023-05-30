@@ -1,1 +1,0 @@
-traditional GNU C++ aliases

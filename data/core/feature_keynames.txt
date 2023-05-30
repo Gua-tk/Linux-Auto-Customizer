@@ -41,6 +41,7 @@ commit
 config
 converters
 copyq
+cpp
 curl
 customizer
 customizerGUI
@@ -75,7 +76,6 @@ flutter
 forms
 freecad
 gcc
-gdb
 geany
 geogebra
 ghostwriter
@@ -90,7 +90,6 @@ gitPristine
 gitprompt
 gmail
 gnatGps
-gPlusPlus
 calculator
 mahjongg
 mines
