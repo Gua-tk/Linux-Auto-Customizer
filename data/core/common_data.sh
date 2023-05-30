@@ -420,10 +420,10 @@ FLAG_CACHE=1
 ########################################################################################################################
 ################################################ FEATURE KEYNAMES ######################################################
 ########################################################################################################################
-# Array of keynames that match all available features in feature_data.sh. The keynames are always in lower case and   #
+# Array of keynames that match all available features in CAPABILITIES.md. The keynames are always in lower case and   #
 # have _ in the keyname position where a space or - could be written. This is used to match different argument formats #
 # like mixed cases or using - or _ against each keyname, allowing a greater number of arguments that the ones here     #
-# defined plus the ones defined in FEATUREKEYNAME_arguments, in feature_data.sh. These keynames are used to expand    #
+# defined plus the ones defined in FEATUREKEYNAME_arguments, in CAPABILITIES.md. These keynames are used to expand    #
 # indirectly the different properties for each feature, which are used to know which properties have to be installed   #
 # for each installation.                                                                                               #
 ########################################################################################################################

@@ -1015,7 +1015,7 @@ execute_installation()
 ################################################## GENERIC INSTALL #####################################################
 ########################################################################################################################
 
-# - Description: Installs a user program in a generic way relying on variables declared in feature_data.sh and the name
+# - Description: Installs a user program in a generic way relying on variables declared in CAPABILITIES.md and the name
 #   of a feature. The corresponding data has to be declared following the pattern %FEATURENAME_%PROPERTIES. This is
 #   because indirect expansion is used to obtain the data to install each feature of a certain program to install.
 #   Depending on the properties set, some subfunctions will be activated to install related features.
