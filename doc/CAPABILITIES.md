@@ -1,10 +1,14 @@
 ### Capabilities
 Capabilities are **a set of abstract functionalities that can be used in any feature installed by _The Customizer_**. A 
-capability is activated for a feature if one or more variables following a certain naming convention are declared. 
+capability is activated for a feature if one or more variables following a certain naming convention are declared in 
+"the scope" of that feature. A feature with `FEATURE-KEY-NAME` has its scoped variables declared in 
+`${CUSTOMIZER_PROJECT_FOLDER}/data/features/FEATURE-KEY-NAME.dat.sh`. A feature with `FEATURE-KEY-NAME` has its scoped 
+functions declared in 
+`${CUSTOMIZER_PROJECT_FOLDER}/data/features/FEATURE-KEY-NAME.func.sh`.
 Variables declared in a feature are called *properties*. Properties can:
 * Activate and configure a capability for a certain feature.
 * Declare data to be used in other active capabilities for a certain feature. 
-* Be mandatory in all features, be mandatory if another certain capability is declared or be totally optional. 
+* Be mandatory in all features, be mandatory if another certain property is declared or be totally optional. 
 
 Capabilities include the following functionalities:
 * Create, move and write to file.
@@ -60,13 +64,13 @@ feature where we want to activate it. The contents of those properties will conf
 properties that are defined for a feature determine its behaviour. To obtain the contents of those variables, we use 
 `bash` indirect expansion.
 
-Features are identified by a unique string called `FEATURE_KEY_NAME`. The `FEATURE_KEY_NAME` does not contain special 
+Features are identified by a unique string called `FEATURE-KEY-NAME`. The `FEATURE-KEY-NAME` does not contain special 
 characters and is expected to be a name that is representative for the feature. 
 
-To know in which feature we need to activate a certain capability, we prepend the `FEATURE_KEY_NAME` of the feature to 
+To know in which feature we need to activate a certain capability, we prepend the `FEATURE-KEY-NAME` of the feature to 
 the name of the variable that activates a certain capability.
 
-For example, if we want to create a feature that installs `zsh` with the `FEATURE_KEY_NAME` being `zshell` and we want 
+For example, if we want to create a feature that installs `zsh` with the `FEATURE-KEY-NAME` being `zshell` and we want 
 this feature to install the package `zsh` using the capability of installing packages that is controlled by the variable 
 naming `packagenames`, we should declare:
 ```shell
@@ -74,117 +78,120 @@ zshell_packagenames=("zsh")
 ```
 
 This means that when we issue the installation of this feature with `customizer-install zshell` it will install the 
-package zsh with the default package manager.  
+package `zsh` with the default package manager.  
 
-Each `FEATURE_KEY_NAME` has to be added in the array `feature_keynames` of `common_data.sh` to be recognized as an 
-available feature. 
+Each `FEATURE-KEY-NAME` has to be added to the file `${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_keynames.txt` to be 
+recognized as an available feature. 
 
+### Mandatory properties
 The following properties are mandatory and used to declare metadata of each feature that can be used to autocomplete the
-data requirements of some capabilities.
-- FEATUREKEYNAME_arguments: Array containing the arguments recognized to select the current feature. The arguments  #
-  are the "name" of the feature, which for third-party software is the known name of the software itself and for    #
-  functionalities is usually a description of what the function does in one or two words. Also, for historical and  #
-  practical reasons we keep the first argument as the main command that the feature installs, which coincides with  #
-  the FEATUREKEYNAME of the feature itself.                                                                         #
-  The arguments have to be in lower case and in the case of a possible separation by any symbol, use underscore (_).#
-  This will cause multiple argument matching in install.sh and uninstall.sh by ignoring case and interpreting       #
-  underscores as a possible separation with multiple underscores or multiple hyphens.                               #
-  For example, the feature with FEATUREKEYNAME "code" is the software Visual Studio Code which has the arguments    #
-  "code", "visual_studio_code" and "visual_studio". This matches the string itself plus their variants with         #
-  different casing or different separation, such as matching "Visual_Studio", "VISUAL-studio", "Code", "--code",    #
-  "--viSual_Studio", etc.                                                                                           #
-  The list of FEATUREKEYNAMEs is also used as first source of arguments, since it should contain the names of the   #
-  commands that are going to be installed, which is something that we can suppose unique.                           #
-- FEATUREKEYNAME_name: Stores the feature's name. Maps to property 'Name=' of the desktop launcher if not
-  overridden.                                                                  #
-- FEATUREKEYNAME_version: Feature version. For downloaded programs is the version of the downloaded bundle or binary
+data requirements of some capabilities:
+- `FEATURE-KEY-NAME_arguments`: Array containing the arguments recognized to select the current feature. The arguments  
+  are the "names" of the feature, which for third-party software is can be the known name of the software itself and for    
+  functionalities is usually a description of what the function does in one or two words. Also, for historical and  
+  practical reasons we keep the first argument as the main command that the feature installs, which coincides with  
+  the `FEATURE-KEY-NAME` of the feature itself.                                                                         
+  The arguments have to be in lower case and in the case of a possible separation by any symbol, use underscore (_).
+  This will cause multiple argument matching in install.sh and uninstall.sh by ignoring case and interpreting       
+  underscores as a possible separation with multiple underscores or multiple hyphens.                               
+  For example, the feature with `FEATURE-KEY-NAME` "code" is the software Visual Studio Code which has the arguments    
+  "code", "visual_studio_code" and "visual_studio". This matches the string itself plus their variants with         
+  different casing or different separation, such as matching "Visual_Studio", "VISUAL-studio", "Code", "--code",    
+  "--viSual_Studio", etc.                                                                                           
+  The list of `FEATURE-KEY-NAME`s is also used as first source of arguments, since it should contain the names of the   
+  commands that are going to be installed, which is something that specify as unique.                           
+- `FEATURE-KEY-NAME_name`: Stores the feature's name. Maps to property `Name=` of the desktop launcher if not
+  overridden.                                                                  
+- `FEATURE-KEY-NAME_version`: Feature version. For downloaded programs is the version of the downloaded bundle or binary
   and for package manager installations or external feature is "System dependent" or "enterprise dependent"; for
-  example Google documents is "Google dependent". Maps to property 'Version=' of the desktop launcher if not
-  overridden.                                                                           #
-- FEATUREKEYNAME_description: Feature objective description. Defines what is that you are installing. Maps to
-  property 'GenericName=' of the desktop launcher if not overridden.                                                           #
-- FEATUREKEYNAME_commentary: Commentary for the feature. It can be anything relevant to comment about the feature or
-  its usage, but not its description (we have a metadata for that). Property 'Comment=' of the desktop launcher.
-- FEATUREKEYNAME_tags: Contains keywords related with the feature. This keywords will be used to add the feature to
-  the wrapper with the same name as the tag that it is in. Maps to the property 'Keywords=' of the desktop launcher
+  example Google documents is "Google dependent". Maps to property `Version=` of the desktop launcher if not
+  overridden.                                                                           
+- `FEATURE-KEY-NAME_description`: Feature objective description. Defines what is that you are installing. Maps to
+  property `GenericName=` of the desktop launcher if not overridden.                                                           #
+- `FEATUREKEYNAME_tags`: Contains keywords related with the feature. These keywords will be used to add the feature to
+  the wrapper with the same name as the tag that it is in. Maps to the property `Keywords=` of the desktop launcher
   if not overridden.
-- FEATUREKEYNAME_icon: A name of the filename including its extension in
-  ${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME} that contains an image to represent the
-  feature. Maps to property 'Icon=' of the desktop launcher if not overridden. If an icon is not defined, the icon
-  will be deduced to
-  ${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.${file_extension}
-  where ${file_extension} is svg or png. If this icon is not found, the icon will be the logo of the customizer, in
-  ${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png .
-- FEATUREKEYNAME_systemcategories: Property 'Categories=' of the desktop launcher. It is used by Gnome to put the
-  launchers in the respective containers in the dashboard. This keywords will be used to add the feature to the
-  wrapper with the same name as the tag that it is in. Maps to the property 'SystemCategories=' of the desktop
+- `FEATURE-KEY-NAME_systemcategories`: Property `Categories=` of the desktop launcher. It is used by Gnome to put the
+  launchers in the respective containers in the dashboard. These keywords will be used to add the feature to the
+  wrapper with the same name as the tag that it is in. Maps to the property `SystemCategories=` of the desktop
   launcher if not overridden.
-    * Main categories (all desktop launchers must have one of these categories)
-    AudioVideo Audio Video Development Education Game Graphics Network Office Science Settings System Utility
-    * Additional categories (provide additional info, can be added as many as needed)
-  Building Debugger IDE GUIDesigner Profiling RevisionControl Translation Calendar ContactManagement Database
-  Dictionary Chart Email Finance FlowChart PDA ProjectManagement Presentation Spreadsheet WordProcessor 2DGraphics
-  VectorGraphics RasterGraphics 3DGraphics Scanning OCR Photography Publishing Viewer TextTools DesktopSettings
-  HardwareSettings Printing PackageManager Dialup InstantMessaging Chat IRCClient Feed FileTransfer HamRadio News
-  P2P RemoteAccess Telephony TelephonyTools VideoConference WebBrowser WebDevelopment Midi Mixer Sequencer Tuner TV
-  AudioVideoEditing Player Recorder DiscBurning ActionGame AdventureGame ArcadeGame BoardGame BlocksGame CardGame
-  KidsGame LogicGame RolePlaying Shooter Simulation SportsGame StrategyGame Art Construction Music Languages
-  ArtificialIntelligence Astronomy Biology Chemistry ComputerScience DataVisualization Economy Electricity Geography
-  Geology Geoscience History Humanities ImageProcessing Literature Maps Math NumericalAnalysis MedicalSoftware
-  Physics Robotics Spirituality Sports ParallelComputing Amusement Archiving Compression Electronics Emulator
-  Engineering FileTools FileManager TerminalEmulator Filesystem Monitor Security Accessibility Calculator Clock
-  TextEditor Documentation Adult Core KDE GNOME XFCE GTK Qt Motif Java ConsoleOnly Screensaver TrayIcon Applet Shell
+    * **Main categories** (all desktop launchers must have one of these categories): AudioVideo Audio Video Development 
+      Education Game Graphics Network Office Science Settings System Utility
+    * **Additional categories** (provide additional info, can be added as many as needed): Building Debugger IDE GUIDesigner 
+      Profiling RevisionControl Translation Calendar ContactManagement Database
+      Dictionary Chart Email Finance FlowChart PDA ProjectManagement Presentation Spreadsheet WordProcessor 2DGraphics
+      VectorGraphics RasterGraphics 3DGraphics Scanning OCR Photography Publishing Viewer TextTools DesktopSettings
+      HardwareSettings Printing PackageManager Dialup InstantMessaging Chat IRCClient Feed FileTransfer HamRadio News
+      P2P RemoteAccess Telephony TelephonyTools VideoConference WebBrowser WebDevelopment Midi Mixer Sequencer Tuner TV
+      AudioVideoEditing Player Recorder DiscBurning ActionGame AdventureGame ArcadeGame BoardGame BlocksGame CardGame
+      KidsGame LogicGame RolePlaying Shooter Simulation SportsGame StrategyGame Art Construction Music Languages
+      ArtificialIntelligence Astronomy Biology Chemistry ComputerScience DataVisualization Economy Electricity Geography
+      Geology Geoscience History Humanities ImageProcessing Literature Maps Math NumericalAnalysis MedicalSoftware
+      Physics Robotics Spirituality Sports ParallelComputing Amusement Archiving Compression Electronics Emulator
+      Engineering FileTools FileManager TerminalEmulator Filesystem Monitor Security Accessibility Calculator Clock
+      TextEditor Documentation Adult Core KDE GNOME XFCE GTK Qt Motif Java ConsoleOnly Screensaver TrayIcon Applet Shell
 
-    * Launcher categories in the dash (sorted when nemo is installed):
-#    These are the classes in which the desktop launchers are classified. To know if a desktop launchers belongs to a
-#    certain class the "Categories" field of a desktop launcher is used. This field contains a list of categories that
-#    categorize the desktop launcher. These are used to group the desktop launchers in the dash.
-#    The categories relate to the class in the following way:
-#    Class name        |        Categories
-#    accessories       |        Utility
-#    chrome-apps       |        chrome-apps
-#    games             |        Game
-#    graphics          |        Graphics
-#    internet          |        Network, WebBrowser, Email
-#    office            |        Office
-#    programming       |        Development
-#    science           |        Science
-#    sound & video     |        AudioVideo, Audio, Video
-#    system-tools      |        System, Settings
-#    universal-access  |        Accessibility
-#    wine              |        Wine, X-Wine, Wine-Programs-Accessories
-#
-#    * The order for the mandatory properties is:
-#    FEATUREKEYNAME_name
-#    FEATUREKEYNAME_description
-#    FEATUREKEYNAME_version
-#    FEATUREKEYNAME_tags
-#    FEATUREKEYNAME_systemcategories
-#    FEATUREKEYNAME_commentary
-#    FEATUREKEYNAME_arguments
-#
-########################################################################################################################
+    * **Launcher categories in the dash** (sorted when nemo is installed): These are the classes in which the desktop 
+      launchers are classified. To know if a desktop launchers belongs to a
+      certain class the "Categories" field of a desktop launcher is used. This field contains a list of categories that
+      categorize the desktop launcher. These are used to group the desktop launchers in the dash. The categories relate 
+      to the class in the following way:
+      - Class name | Categories 
+      - accessories       |        Utility 
+      - chrome-apps       |        chrome-apps 
+      - games             |        Game 
+      - graphics          |        Graphics 
+      - internet          |        Network, WebBrowser, Email 
+      - office            |        Office 
+      - programming       |        Development 
+      - science           |        Science 
+      - sound & video     |        AudioVideo, Audio, Video 
+      - system-tools      |        System, Settings 
+      - universal-access  |        Accessibility 
+      - wine              |        Wine, X-Wine, Wine-Programs-Accessories
+    
+The order for the mandatory properties is:
+```shell
+FEATURE-KEY-NAME_name
+FEATURE-KEY-NAME_description
+FEATURE-KEY-NAME_version
+FEATURE-KEY-NAME_tags
+FEATURE-KEY-NAME_systemcategories
+FEATURE-KEY-NAME_commentary
+FEATURE-KEY-NAME_arguments
+```
 
-#  - FEATUREKEYNAME_icon: A path to an image to represent the feature pointing customizer icon in the repository
-#    features data. Property 'Icon=' of the desktop launcher. Fallback to customizer global icons.
-### Optional properties                                                                                                #
-#  - FEATUREKEYNAME_launchernames: TODO depreacate
-#    Array of names of launchers to be copied from the launchers folder of the system.   #
-#    Used as fallback for autostart and associatedfiletypes.                                                           #
-#  - FEATUREKEYNAME_binariesinstalledpaths: Array of relative paths from the downloaded folder of the features to      #
-#    binaries that will be added to the PATH. Its name in the PATH is added by using a ";" to separate it from the     #
-#    relative path: "binaries/common/handbrake.sh;handbrake". It will be used to inherit when there is no override.    #
-#  - FEATUREKEYNAME_bashfunctions: Array of contents of functions to be executed on the start of every terminal        #
-#    session, in our case .bashrc.                                                                                     #
-#  - FEATUREKEYNAME_associatedfiletypes: Array of mime types to be associated with the feature. Its launchers in       #
-#    launchercontents or the defined launchernames will be used as desktop launchers to associate the mime type.       #
-#    Optionally it can have a custom desktop launcher added after a ; of an associated file type to use a custom       #
-#    .desktop launcher: "text/x-chdr;sublime"                                                                          #
-#  - FEATUREKEYNAME_keybindings: Array of keybindings to be associated with the feature. Each keybinding has 3 fields  #
-#    separated. from each other using ";": Command;key_combination;keybinding_description.                             #
-#  - FEATUREKEYNAME_downloads: Array of links to a valid download file separated by ";" from the desired name or full  #
-#    pathfor that file.                                                                                                #
-#    It will downloaded in ${BIN_FOLDER}/APPNAME/DESIREDFILENAME                                                       #
+### Optional properties
+These properties can be declared optionally and are the building blocks for any feature installation / uninstallation.
+The properties are the following:
+- `FEATURE-KEY-NAME_icon`: A path relative to
+  `${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}` that contains an image to represent the
+  feature. Maps to property `Icon=` of the desktop launcher if not overridden. If an icon is not defined, the icon
+  will be implicitly declared as
+  `${CUSTOMIZER_PROJECT_FOLDER}/data/static/${CURRENT_INSTALLATION_KEYNAME}/${CURRENT_INSTALLATION_KEYNAME}.${file_extension}`
+  where `${file_extension}` is `svg` if the file is present or `png` if the svg is not present but the png is. If the 
+  svg and png are not present in the aforementioned path, the icon will be the logo of the customizer 
+  `${CUSTOMIZER_PROJECT_FOLDER}/.github/logo.png`. 
+- `FEATURE-KEY-NAME_binariesinstalledpaths`: Array of tuples of two positions separated by `;` containing the alias to 
+  be used and the relative path from the downloaded folder of the features 
+  `${CURRENT_INSTALLATION_FOLDER}` to binaries that will be added to the `PATH`. For example, to add the alias 
+  `handbrake` to the feature `handbrake` knowing that its installation creates a binary in the path 
+  `${CURRENT_INSTALLATION_FOLDER}/binaries/common/handbrake.sh` you will declare 
+  `handbrake_binariesinstalledpaths=("binaries/common/handbrake.sh;handbrake")`. The first position will be used to 
+  inherit the `Exec=` field of the desktop launcher if not overridden
+- `FEATURE-KEY-NAME_bashfunctions`: Array of contents of `bash` files to be `source`d on the start of every terminal       
+  session. These files are relative to the data folder of the feature in 
+  `${CUSTOMIZER_PROJECT_FOLDER}/data/features/FEATURE-KEY-NAME`. It indirectly writes `source`s of the specified files
+  in the `.bashrc` of the user using the customizer.
+- `FEATURE-KEY-NAME_associatedfiletypes`: Array of mime types to be associated with the feature.
+  Optionally it can have a custom desktop launcher added after a `;` of an associated file type to use a custom 
+  `.desktop` launcher: `text/x-chdr;sublime`.                                                                          
+- `FEATURE-KEY-NAME_keybindings`: Array of keybindings to be associated with the feature. Each keybinding has 3 fields
+  separated from each other using `;`: `Command;key_combination;keybinding_description` where `Command` is any `bash` 
+  command, `key_combination` is a combination .                            
+- `FEATURE-KEY-NAME_downloads`: Array of links to a valid download file separated by ";" from the desired name or full  
+  pathfor that file.                                                                                               
+  It will be downloaded in `${BIN_FOLDER}/APPNAME/DESIREDFILENAME`                                                    
 #  - FEATUREKEYNAME_downloadKeys: Array of keys that references a new download.
 #    Each download can be configured with additional properties:
 #    * FEATUREKEYNAME_DOWNLOADKEY_type: Optional property that can be "compressed", "package" or "regular". If not
@@ -276,8 +283,7 @@ data requirements of some capabilities.
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_icon: Customizer logo if no icon at feature level
 #        provided. If not, overridden by the value of this variable
 #      - FEATUREKEYNAME_LAUNCHERKEYNAME_ACTIONKEYNAME_onlyShowIn: Sets desktop managers OnlyShowIn property in desktop #
-#         action           #
-### Installation type dependent properties                                                                             #
+#         action           
 #  - FEATUREKEYNAME_packagenames: Array of names of packages to be installed using apt-get as dependencies of the      #
 #    feature. Used in: packageinstall, packagemanager.                                                                 #                                                                                          #
 #  - FEATUREKEYNAME_repositoryurl: Repository to be cloned. Used in: repositoryclone.                                  #
