@@ -1231,7 +1231,7 @@ ${silent_exec}()
   else
       args=\"\$@\";
   fi;
-  nohup ${silent_exec} \$@ &> /dev/null &
+  nohup ${silent_exec} \"\${args}\" &> /dev/null &
 }
 "
       else
