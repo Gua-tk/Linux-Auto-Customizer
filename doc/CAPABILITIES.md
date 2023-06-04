@@ -1,4 +1,4 @@
-### Capabilities
+# Capabilities
 Capabilities are **a set of abstract functionalities that can be used in any feature installed by _The Customizer_**. A 
 capability is activated for a feature if one or more variables following a certain naming convention are declared in 
 "the scope" of that feature. A feature with `FEATURE-KEY-NAME` has its scoped variables declared in 
@@ -8,35 +8,21 @@ functions declared in
 Variables declared in a feature are called *properties*. Properties can:
 * Activate and configure a capability for a certain feature.
 * Declare data to be used in other active capabilities for a certain feature. 
-* Be mandatory in all features, be mandatory if another certain property is declared or be totally optional. 
+* Be mandatory in all features, be mandatory if another certain property is declared or be totally optional.
 
-Capabilities include the following functionalities:
-* Create, move and write to file.
-* Autoimport `bash` scripts on terminal creation.
-* Autoimport `bash` scripts on boot.
-* Install packages using the default package manager.
-* Install packages from file.
-* Override default package manager.
-* Create `python` virtual environments.
-* Install dependencies with `pip` in a `python` virtual environment.
-* Run code in a `python` virtual environment.
-* Create a desktop launcher.
-* Create aliases in path, so they can be used without specifying the full path.
-* Append `cron` jobs to the current `crontab`.
-* Add keyboard shortcuts. 
-* Download files.
-* Decompress files.
-* Associate file extensions to desktop launchers.
-* Add package repositories. 
-* Add package repository signatures.
-* Autostart application on boot.
-* Clone repositories.
-* Add desktop launcher to favorites bar.
-* Run manual `bash` code in three different points of an installation with access to _The Customizer_ private functions 
-  and variables.
+To activate a certain capability, a property that follows a certain naming scheme has to be declared in the scope of the 
+feature where we want to activate it. The contents of those properties will configure the activated capability. The 
+properties that are defined for a feature determine its behaviour. 
 
-Currently, capabilities are executed in a predefined order. In future versions it will be changed so capabilities are 
-executed in an order defined by the feature. The order is the following:
+Features are identified by a unique string called `FEATURE-KEY-NAME`. The `FEATURE-KEY-NAME` does not contain special 
+characters and is expected to be a string that is representative for the feature. 
+
+To know in which feature we need to activate a certain capability, we prepend the `FEATURE-KEY-NAME` of the feature to 
+the name of the variable that activates a certain capability.
+
+## Capabilities order of execution
+Currently, capabilities are executed in a predefined order. The order in which the functionality of the capabilities is
+executed is the following:
 1. Override default package manager.
 2. Run manual `bash` code (pre-installation).
 3. Add package repository signatures.
@@ -59,17 +45,7 @@ executed in an order defined by the feature. The order is the following:
 19. Create aliases in path, so they can be used without specifying the full path.
 20. Run manual `bash` code (post-installation).
 
-To activate a certain capability, a property that follows a certain naming scheme has to be declared in the scope of the 
-feature where we want to activate it. The contents of those properties will configure the activated capability. The 
-properties that are defined for a feature determine its behaviour. To obtain the contents of those variables, we use 
-`bash` indirect expansion.
-
-Features are identified by a unique string called `FEATURE-KEY-NAME`. The `FEATURE-KEY-NAME` does not contain special 
-characters and is expected to be a name that is representative for the feature. 
-
-To know in which feature we need to activate a certain capability, we prepend the `FEATURE-KEY-NAME` of the feature to 
-the name of the variable that activates a certain capability.
-
+### Capability example
 For example, if we want to create a feature that installs `zsh` with the `FEATURE-KEY-NAME` being `zshell` and we want 
 this feature to install the package `zsh` using the capability of installing packages that is controlled by the variable 
 naming `packagenames`, we should declare:
@@ -82,6 +58,13 @@ package `zsh` with the default package manager.
 
 Each `FEATURE-KEY-NAME` has to be added to the file `${CUSTOMIZER_PROJECT_FOLDER}/data/core/feature_keynames.txt` to be 
 recognized as an available feature. 
+
+
+# Properties
+As explained, properties are `bash` variables that follow a certain naming convention. Some properties are used to 
+activate a certain behaviour for a feature.
+
+Some properties are mandatory and need to be declared with every feature and 
 
 ### Mandatory properties
 The following properties are mandatory and used to declare metadata of each feature that can be used to autocomplete the
