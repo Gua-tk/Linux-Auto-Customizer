@@ -121,7 +121,6 @@ iqmol
 j
 java
 julia
-jupyterLab
 k
 keep
 keyboardFix
