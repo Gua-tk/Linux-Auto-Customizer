@@ -2,6 +2,8 @@ Installs jekyll as a ruby gem that can be used for the offline display of sites 
 
 Based on this https://jekyllrb.com/docs/installation/ubuntu/
 
-The dependencies have to be installed as root but jekyll gem has to be installed as user.To do so first run the jekyll
-feature with the --dependencies option. sudo customizer-install --dependencies -v -o jekyll and 
-customizer-install -v -o jekyll
+This installation must be installed as user.
+
+You must install ruby first to provide the `gem` binary. You can provide this binary however you like, but we recommend
+using the ruby installation from the customizer.
+
