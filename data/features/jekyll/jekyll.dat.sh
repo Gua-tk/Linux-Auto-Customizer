@@ -6,6 +6,6 @@ jekyll_tags=("web" "customDesktop")
 jekyll_systemcategories=("WebBrowser" "Utility")
 
 jekyll_bashfunctions=("a.sh")
-jekyll_packagenames=("ruby-full" "build-essential" "zlib1g-dev")
+jekyll_packagedependencies=("ruby-full" "build-essential" "zlib1g-dev")
 jekyll_bashfunctions=("jekyll.sh")
 jekyll_manualcontentavailable="0;0;1"
