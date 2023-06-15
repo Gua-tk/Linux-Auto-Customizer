@@ -120,6 +120,7 @@ ips
 iqmol
 j
 java
+jekyll
 julia
 k
 keep
@@ -183,6 +184,7 @@ remmina
 rosegarden
 rstudio
 rsync
+ruby
 rust
 s
 scala
