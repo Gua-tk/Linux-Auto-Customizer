@@ -120,6 +120,7 @@ ips
 iqmol
 j
 java
+jdk17
 jekyll
 julia
 k
