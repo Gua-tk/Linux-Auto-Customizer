@@ -3,31 +3,40 @@
 bclean()
 {
   if [ "$1" == "--interactive" ] || [ "$1" == "-i" ]; then
-    # Delete gone
+    true > /tmp/merged-branches
+
+    # Append gone
     git fetch -p && \
     for branch in $(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '$2 == "[gone]" {sub("refs/heads/", "", $1); print $1}'); do
        echo "${branch}" >> /tmp/merged-branches
     done
 
-    # Delete without remote
+    # Append without remote
     IFS=$'\n'
     git fetch -p && \
     for line in $(git for-each-ref --format '%(refname) %(upstream)' refs/heads); do
       # If the second field is empty, it has no upstream
       if [ -z "$(echo "${line}" | cut -d " " -f2)" ]; then
-        # Detect name and delete it
-        echo "${line}" | cut -d " " -f1 | rev | cut -d "/" -f1 | rev >> /tmp/merged-branches
+        # Detect name and append it
+        branch="$(echo "${line}" | cut -d " " -f1 | rev | cut -d "/" -f1 | rev)"
+        if ! grep -q "${branch}" < /tmp/merged-branches; then
+          echo "${branch}" >> /tmp/merged-branches
+        fi
       fi
     done
 
-    # delete merged
+    # Append merged
     current="$(git branch --show-current)"
-    git branch --merged \
-    | sed '/^\** *develop$/d' \
-    | sed '/^\** *master$/d' \
-    | sed "/^\** *${current}/d" >>/tmp/merged-branches \
-    && grep -q '[^[:space:]]' < "/tmp/merged-branches" \
-    && xargs git branch -d </tmp/merged-branches
+    for line in $(git branch --merged | sed '/^\** *develop$/d' | sed '/^\** *master$/d' | sed "/^\** *${current}/d" ); do
+      if ! grep -q "${branch}" < /tmp/merged-branches; then
+        echo "${branch}" >> /tmp/merged-branches
+      fi
+    done
+
+    if grep -q '[^[:space:]]' < "/tmp/merged-branches"; then
+      nano "/tmp/merged-branches"
+      xargs git branch -D < /tmp/merged-branches
+    fi
     unset current
 
   else
