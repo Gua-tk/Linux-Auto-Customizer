@@ -11,7 +11,7 @@ bclean()
     && grep -q '[^[:space:]]' < "/tmp/merged-branches" \
     && nano /tmp/merged-branches \
     && grep -q '[^[:space:]]' < "/tmp/merged-branches" \
-    && xargs git branch -d </tmp/merged-branchesS
+    && xargs git branch -d </tmp/merged-branches
     unset current
   else
     git fetch -p \
