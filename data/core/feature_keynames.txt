@@ -121,6 +121,7 @@ iqmol
 j
 java
 jdk11
+jdk17
 jekyll
 julia
 k
