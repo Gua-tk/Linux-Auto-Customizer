@@ -8,6 +8,7 @@ bclean()
     | sed '/^\** *develop$/d' \
     | sed '/^\** *master$/d' \
     | sed "/^\** *${current}/d" >/tmp/merged-branches \
+    && grep -q '[^[:space:]]' < "/tmp/merged-branches" \
     && nano /tmp/merged-branches \
     && grep -q '[^[:space:]]' < "/tmp/merged-branches" \
     && xargs git branch -d </tmp/merged-branchesS
