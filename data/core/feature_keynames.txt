@@ -15,6 +15,7 @@ axel
 BFunction
 b
 bashcolors
+bclean
 blender
 branch
 brasero
