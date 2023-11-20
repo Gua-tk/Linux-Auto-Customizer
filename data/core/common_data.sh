@@ -61,6 +61,20 @@ initialize_package_manager_pkg() {
   PACKAGE_MANAGER_AUTOCLEAN="pkg -y autoclean"
 }
 
+initialize_package_manager_pacman() {
+  DEFAULT_PACKAGE_MANAGER="pacman"
+  PACKAGE_MANAGER_INSTALL="pacman -S"
+  PACKAGE_MANAGER_FIXBROKEN="pacman -Sy"
+  PACKAGE_MANAGER_UNINSTALL="pacman -Ry"
+  PACKAGE_MANAGER_UPDATE="pacman -Sy"
+  PACKAGE_MANAGER_UPGRADE="pacman -Syu"
+  PACKAGE_MANAGER_INSTALLPACKAGE=":"
+  PACKAGE_MANAGER_INSTALLPACKAGES=":"
+  PACKAGE_MANAGER_UNINSTALLPACKAGE=":"
+  PACKAGE_MANAGER_AUTOREMOVE="pacman -Qdtq | pacman -Rs -"
+  PACKAGE_MANAGER_AUTOCLEAN="pacman -Scy"
+}
+
 # Search the current OS in order to determine the default package manager and its main
 if [ -f "/etc/os-release" ]; then
   subsys_Windows="$(echo "$(uname -r)" | rev | cut -d "-" -f1 | rev)"
@@ -127,6 +141,9 @@ case "${OS_NAME}" in
   ;;
   "Trisquel GNU/Linux")
     initialize_package_manager_apt-get
+  ;;
+  "BlackArch Linux")
+    initialize_package_manager_pacman
   ;;
   Android)
     initialize_package_manager_pkg
