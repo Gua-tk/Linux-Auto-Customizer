@@ -3,6 +3,6 @@
 terminalBackground_name="Terminal Background"
 terminalBackground_description="Change color palette and apply other custom settings of gnome-terminal"
 terminalBackground_version="1.0"
-terminalBackground_tags=("terminal" "customDesktop")
+terminalBackground_tags=("customization" "palette")
 terminalBackground_systemcategories=("Terminal")
 terminalBackground_bashinitializations=("terminal_background.sh")

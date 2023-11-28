@@ -3,8 +3,8 @@
 guake_name="Guake Terminal"
 guake_description="Use the command line in a Quake-like terminal"
 guake_version="System dependent"
-guake_tags=("terminal" "utility" "customDesktop")
-guake_systemcategories=("GNOME" "GTK" "System" "TerminalEmulator" "Utility")
+guake_tags=("utility")
+guake_systemcategories=("System" "Utility" "TerminalEmulator" "GNOME" "GTK")
 guake_bashfunctions=("silentFunction")
 guake_packagenames=("guake")
 guake_launcherkeynames=("default")
