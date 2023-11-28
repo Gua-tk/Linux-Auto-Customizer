@@ -123,7 +123,7 @@ translate_variables()
 
 
 # - Description: Apply standard permissions and set owner and group to the user who called root.
-# - Permissions: This functions can be called as root or user.
+# - Permissions: This functions has to be called as root.
 # - Arguments:
 #   * Argument 1: Path to the file or directory whose permissions are changed.
 #   * Argument 2 (optional): Custom mask of permissions
