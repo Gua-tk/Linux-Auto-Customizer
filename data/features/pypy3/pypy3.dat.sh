@@ -2,7 +2,7 @@
 pypy3_name="pypy3"
 pypy3_description="Faster interpreter for the Python3 programming language"
 pypy3_version="System dependent"
-pypy3_tags=("python3")
+pypy3_tags=("shell")
 pypy3_systemcategories=("Development")
 pypy3_binariesinstalledpaths=("bin/pypy3;pypy3" "bin/pip3.6;pypy3-pip")
 pypy3_downloadKeys=("bundle")

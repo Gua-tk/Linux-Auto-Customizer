@@ -3,7 +3,7 @@
 studio_name="Android Studio"
 studio_description="IDE for Android, Google's operating system"
 studio_version="Google dependent"
-studio_tags=("ide" "graphical" "programming" "android" "studio" "dev")
+studio_tags=("ide" "graphical" "programming" "android" "dev")
 studio_systemcategories=("Development" "Java" "WebDevelopment" "IDE")
 studio_bashfunctions=("silentFunction")
 studio_binariesinstalledpaths=("bin/studio.sh;studio")

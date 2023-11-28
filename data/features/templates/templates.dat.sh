@@ -3,7 +3,7 @@
 templates_name="Templates"
 templates_description="Different collection of templates for starting code projects: Python3 script (.py), Bash script (.sh), LaTeX document (.tex), C script (.c), C header script (.h), makefile example (makefile) and empty text file (.txt)"
 templates_version="1.0"
-templates_tags=("bashfunctions" "terminal")
+templates_tags=("bashfunctions")
 templates_systemcategories=("System" "Utility")
 templates_filekeys=("makefile" "bash" "empty")
 templates_makefile_path="${XDG_TEMPLATES_DIR}/makefile"
