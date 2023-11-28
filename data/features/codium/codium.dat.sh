@@ -2,7 +2,7 @@
 codium_name="VSCodium"
 codium_description=""
 codium_version="Microsoft dependent"
-codium_tags=("")
+codium_tags=("development" "microsoft")
 codium_systemcategories=("Development" "IDE")
 
 codium_bashfunctions=("silentFunction")

@@ -3,8 +3,8 @@
 meld_name="Meld"
 meld_description="Diff viewer to compare and merge your files"
 meld_version="2021.3"
-meld_tags=("programming" "customDesktop")
-meld_systemcategories=("Development" "GTK")
+meld_tags=("diff" "dev" "development" "programming")
+meld_systemcategories=("GTK" "Development")
 meld_packagedependencies=("libgtksourceview-4-dev" "libgtksourceview-3.0-1")
 meld_bashfunctions=("silentFunction")
 meld_associatedfiletypes=("application/x-meld-comparison")

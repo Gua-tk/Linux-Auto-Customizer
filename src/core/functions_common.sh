@@ -813,6 +813,8 @@ deduce_privileges()
 #   match looping through all the arguments, obtained by indirect expansion using every feature keyname)
 add_program()
 {
+  echo receiving arg1: $1
+
   local matched_keyname=""
   # fast match against keynames
   local processed_argument=
