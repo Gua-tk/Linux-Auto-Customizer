@@ -154,7 +154,7 @@ apply_permissions_recursively()
       chgrp -R "${SUDO_USER}" "$1"
       chown -R "${SUDO_USER}" "$1"
     fi
-    chmod 755 -R "$1"
+    chmod 775 -R "$1"
   else
     output_proxy_executioner "This functions only accepts a directory as an argument, Skipping..." "WARNING"
   fi
