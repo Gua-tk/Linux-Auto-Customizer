@@ -73,7 +73,7 @@ set_key_safely org.nemo.sidebar-panels.tree show-only-directories false
 # Set the delat for the blank screen to 0
 set_key_safely set org.gnome.desktop.session idle-delay 0
 # Disable screen lock
-gsettings set org.gnome.desktop.screensaver lock-enabled false
+set_key_safely set org.gnome.desktop.screensaver lock-enabled false
 
 # Gedit options
 set_key_safely org.gnome.gedit.preferences.editor auto-save true
