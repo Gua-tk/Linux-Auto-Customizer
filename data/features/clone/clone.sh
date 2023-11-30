@@ -2,14 +2,17 @@
 
 clone()
 {
+  my_host="github.com"
   if [ $# -eq 0 ]; then
     echo "ERROR: You need to provide at least one argument"
     return
   else
     if [ -n "$(echo "$1" | grep -Eo "^http.?://.+$")" ]; then
       git clone "$1"
-    else
+    elif [ -n "$(echo "$1" | grep -Eo ".+/.+/.+$")" ]; then
       git clone "https://$1"
+    else
+      git clone "https://${my_host}/$1"
     fi
   fi
 }
