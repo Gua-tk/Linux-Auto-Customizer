@@ -205,6 +205,7 @@ soundcloud
 spotify
 spreadsheets
 ssh
+staruml
 status
 steam
 studio
