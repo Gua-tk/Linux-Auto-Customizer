@@ -8,7 +8,6 @@ staruml_systemcategories=("Development" "Network")
 
 staruml_downloadKeys=("bundle")
 staruml_bundle_URL="https://staruml.io/api/download/releases-v6/StarUML_6.0.1_amd64.deb"
-staruml_package_manager_override="apt-get"
 staruml_launcherkeynames=("defaultLauncher")
 staruml_defaultLauncher_exec="staruml"
 staruml_defaultLauncher_notify="false"
