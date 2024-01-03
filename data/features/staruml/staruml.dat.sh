@@ -11,4 +11,4 @@ staruml_bundle_URL="https://staruml.io/api/download/releases-v6/StarUML_6.0.1_am
 staruml_launcherkeynames=("defaultLauncher")
 staruml_defaultLauncher_exec="staruml"
 staruml_defaultLauncher_notify="false"
-staruml_bashfunctions=("silentFunctionInWd")
+staruml_bashfunctions=("silentFunction")
