@@ -7,5 +7,5 @@ mvn_tags=("customDesktop")
 mvn_systemcategories=("ConsoleOnly" "Java" "PackageManager")
 mvn_binariesinstalledpaths=("bin/mvn;mvn")
 mvn_downloadKeys=("bundleCompressed")
-mvn_bundleCompressed_URL="https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz"
+mvn_bundleCompressed_URL="https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz"
 mvn_bashfunctions=("mvn.sh")
