@@ -10,6 +10,6 @@ changebg_binariesinstalledpaths=("cronscript.sh;changebg")
 changebg_cronscript_content="cronscript.sh"
 changebg_cronscript_path="cronscript.sh"
 changebg_filekeys=("cronscript")
-changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
+changebg_repositoryurl="https://github.com/Gua-tk/Wallpapers"
 changebg_cronjobs=("cronjob")
 

@@ -499,7 +499,7 @@ changebg_cronjob_content="cronjob"
 changebg_cronjob_path="cronjob"
 changebg_filekeys=("cronscript" "cronjob")
 changebg_manualcontentavailable="0;0;1"
-changebg_repositoryurl="https://github.com/AleixMT/wallpapers"
+changebg_repositoryurl="https://github.com/Gua-tk/Wallpapers"
 install_changebg_post() {
   if [ -n "${SUDO_USER}" ]; then
     (crontab -u "${SUDO_USER}" -l ; cat "${BIN_FOLDER}/changebg/cronjob") | crontab -u "${SUDO_USER}" -
