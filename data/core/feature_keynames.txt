@@ -129,6 +129,7 @@ julia
 k
 keep
 keyboardFix
+kse
 LFunction
 l
 latex
