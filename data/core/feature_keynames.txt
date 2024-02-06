@@ -129,6 +129,7 @@ julia
 k
 keep
 keyboardFix
+keyexplorer
 LFunction
 l
 latex
