@@ -504,11 +504,15 @@ get_next_collisioner()
 # - Argument 1, 2, 3... : Arguments for the whole program.
 argument_processing()
 {
+  # Used to anotate the state regarding the combination of arguments
+  local mode=regular
+
   while [ $# -gt 0 ]; do
     key="$1"
 
     case "${key}" in
       ### BEHAVIOURAL ARGUMENTS ###
+      # Verbosity
       -v|--verbose)
         FLAG_QUIETNESS=0
       ;;
@@ -519,6 +523,7 @@ argument_processing()
         FLAG_QUIETNESS=2
       ;;
 
+      # Overwrite or not if installed
       -s|--skip|--skip-if-installed)
         if [ "${FLAG_MODE}" == "uninstall" ]; then
           output_proxy_executioner "You have set to not overwrite features in uninstall mode, this will uninstall only the features that are not installed." "WARNING"
@@ -529,6 +534,7 @@ argument_processing()
         FLAG_OVERWRITE=1
       ;;
 
+      # Error tolerance
       -w|--warning|--exit-on-warning)
         FLAG_IGNORE_ERRORS=0
       ;;
@@ -539,6 +545,7 @@ argument_processing()
         FLAG_IGNORE_ERRORS=2
       ;;
 
+      # Clean after installation
       # TODO flag autoclean reduce to two states
       -c|--clean)
         FLAG_AUTOCLEAN=0
@@ -547,6 +554,7 @@ argument_processing()
         FLAG_AUTOCLEAN=2
       ;;
 
+      # Update policy
       -k|--keep-system-outdated)
         FLAG_UPGRADE=0
       ;;
@@ -557,6 +565,7 @@ argument_processing()
         FLAG_UPGRADE=2
       ;;
 
+      # Put the installations in favourites task bar
       -f|--favorites|--set-favorites)
         FLAG_FAVORITES=1
       ;;
@@ -564,6 +573,7 @@ argument_processing()
         FLAG_FAVORITES=0
       ;;
 
+      # Put the installations in startup
       -a|--autostart)
         FLAG_AUTOSTART=1
       ;;
@@ -571,6 +581,7 @@ argument_processing()
         FLAG_AUTOSTART=0
       ;;
 
+      # Discard installations (used to discard individual installations from flag)
       -n|--not)
         FLAG_INSTALL=0
       ;;
@@ -578,6 +589,7 @@ argument_processing()
         FLAG_INSTALL=1
       ;;
 
+      # Do not check for match in required privileges for installation
       -p|--privilege-check)
         FLAG_SKIP_PRIVILEGES_CHECK=0
       ;;
@@ -585,6 +597,7 @@ argument_processing()
         FLAG_SKIP_PRIVILEGES_CHECK=1
       ;;
 
+      # Use the cache (either for saving installations in and to retrieve installations from)
       -t|--not-cached)
         FLAG_CACHE=0
       ;;
@@ -592,6 +605,7 @@ argument_processing()
         FLAG_CACHE=1
       ;;
 
+      # Allow the override of the package manager configuration
       -O|--Overrides|--allow-overrides)
         FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES=1
       ;;
@@ -599,6 +613,7 @@ argument_processing()
         FLAG_PACKAGE_MANAGER_ALLOW_OVERRIDES=0
       ;;
 
+      # Install the dependencies of the installation
       # TODO propagate state to each installation, so it follow s the customizer convention of state machine
       -d|--dependencies)
         FLAG_IGNORE_DEPENDENCIES=0
@@ -607,12 +622,129 @@ argument_processing()
         FLAG_IGNORE_DEPENDENCIES=1
       ;;
 
-      --commands)  # Print list of possible arguments and finish the program
+
+      ### INTROSPECTION AND INFORMATION ###
+      # Activates introspection mode to take into account order of arguments
+      inspect)
+        mode=inspect
+      ;;
+
+      features)
+        if [ "${mode}" != "inspect" ]; then
+          output_proxy_executioner "\"features\" options can only be used if you specify inspect mode first. Try
+          with customizer-install inspect features" "ERROR"
+        fi
+        local all_arguments+=("${feature_keynames[@]}")
+        echo "${all_arguments[@]}"
+        exit 0
+      ;;
+
+      commands)
+        if [ "${mode}" != "inspect" ]; then
+          output_proxy_executioner "\"commands\" options can only be used if you specify inspect mode first. Try
+          with customizer-install inspect commands" "ERROR"
+        fi
         local all_arguments+=("${feature_keynames[@]}")
         all_arguments+=("${auxiliary_arguments[@]}")
         all_arguments+=("${WRAPPERS_KEYNAMES[@]}")
         echo "${all_arguments[@]}"
         exit 0
+      ;;
+
+      flags)
+        if [ "${mode}" != "inspect" ]; then
+          output_proxy_executioner "\"flags\" options can only be used if you specify inspect mode first. Try
+          with customizer-install inspect flags" "ERROR"
+        fi
+        local all_arguments+=("${auxiliary_arguments[@]}")
+        echo "${all_arguments[@]}"
+        exit 0
+      ;;
+
+      wrappers)
+        if [ "${mode}" != "inspect" ]; then
+          output_proxy_executioner "\"commands\" options can only be used if you specify inspect mode first. Try
+          with customizer-install inspect commands" "ERROR"
+        fi
+        generate_wrappers
+        display_wrappers
+        exit 0
+      ;;
+
+      installations)
+        if [ "${mode}" != "inspect" ]; then
+          output_proxy_executioner "\"installations\" options can only be used if you specify inspect mode first. Try
+          with customizer-install inspect installations" "ERROR"
+        fi
+        cat "${INSTALLED_FEATURES}"
+        exit 0
+      ;;
+
+      initializations)
+        if [ "${mode}" != "inspect" ]; then
+          output_proxy_executioner "\"initializations\" options can only be used if you specify inspect mode first. Try
+          with customizer-install inspect initializations" "ERROR"
+        fi
+        cat "${INITIALIZATIONS_PATH}"
+        exit 0
+      ;;
+
+      functions)
+        if [ "${mode}" != "inspect" ]; then
+          output_proxy_executioner "\"functions\" options can only be used if you specify inspect mode first. Try
+          with customizer-install inspect functions" "ERROR"
+        fi
+        cat "${FUNCTIONS_PATH}"
+        exit 0
+      ;;
+
+      favorites|favourites)
+        if [ "${mode}" != "inspect" ]; then
+          output_proxy_executioner "\"functions\" options can only be used if you specify inspect mode first. Try
+          with customizer-install inspect functions" "ERROR"
+        fi
+        cat "${PROGRAM_FAVORITES_PATH}"
+        exit 0
+      ;;
+
+      keybindings)
+        if [ "${mode}" != "inspect" ]; then
+          output_proxy_executioner "\"keybindings\" options can only be used if you specify inspect mode first. Try
+          with customizer-install inspect keybindings" "ERROR"
+        fi
+        cat "${PROGRAM_KEYBINDINGS_PATH}"
+        exit 0
+      ;;
+    
+      --flush=favorites)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_favorites
+        fi
+      ;;
+      --flush=keybindings)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_keybindings
+        fi
+      ;;
+      --flush=functions)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_functions
+        fi
+      ;;
+      --flush=initializations)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_all_initializations
+        fi
+      ;;
+      --flush=structures)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          remove_structures
+        fi
+      ;;
+      --flush=cache)
+        if [ "${FLAG_MODE}" == "uninstall" ]; then
+          rm -Rf "${CACHE_FOLDER}"
+        fi
       ;;
 
       --readme|readme|features|FEATURES|FEATURES.sh|features.sh)
@@ -630,12 +762,6 @@ argument_processing()
         exit 0
       ;;
 
-      --show-wrappers)
-        generate_wrappers
-        display_wrappers
-        exit 0
-      ;;
-
       --debug)
         customizer_prompt
       ;;
@@ -648,42 +774,6 @@ argument_processing()
       ;;
       --ALL|--all|--All)
         add_programs_with_x_permissions 2
-      ;;
-
-      --flush=favorites)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_all_favorites
-        fi
-      ;;
-
-      --flush=keybindings)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_all_keybindings
-        fi
-      ;;
-
-      --flush=functions)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_all_functions
-        fi
-      ;;
-
-      --flush=initializations)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_all_initializations
-        fi
-      ;;
-
-      --flush=structures)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_structures
-        fi
-      ;;
-
-      --flush=cache)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          rm -Rf "${CACHE_FOLDER}"
-        fi
       ;;
 
       *)
