@@ -1,1 +1,0 @@
-Shows information about the installed keys
