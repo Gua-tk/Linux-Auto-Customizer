@@ -76,6 +76,10 @@ set_key_safely org.gnome.desktop.privacy hide-identity true
 set_key_safely org.gnome.calculator show-thousands true
 # Also show files in the side panel of the file explorer
 set_key_safely org.nemo.sidebar-panels.tree show-only-directories false
+# Set the delat for the blank screen to 0
+set_key_safely set org.gnome.desktop.session idle-delay 0
+# Disable screen lock
+set_key_safely set org.gnome.desktop.screensaver lock-enabled false
 
 # Gedit options
 set_key_safely org.gnome.gedit.preferences.editor auto-save true
@@ -88,7 +92,6 @@ set_key_safely org.gnome.gedit.plugins.spell highlight-misspelled true
 set_key_safely org.gnome.gedit.preferences.editor insert-spaces true
 set_key_safely org.gnome.gedit.preferences.editor highlight-current-line false
 set_key_safely org.gnome.gedit.preferences.editor wrap-mode none  # Do not wrap lines
-
 
 # keyboard configurations 0 for spanish 1 for us keyboard
 set_key_safely org.gnome.desktop.input-sources sources "[('xkb', 'es'), ('xkb', 'us')]"
