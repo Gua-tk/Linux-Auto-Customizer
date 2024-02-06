@@ -37,6 +37,12 @@ set_key_safely org.nemo.desktop show-desktop-icons true
 set_key_safely org.nemo.preferences thumbnail-limit 137438953472
 # Do not ask for password after locking
 set_key_safely org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
+# Disable screen blackout
+set_key_safely org.gnome.desktop.session idle-delay 0
+# Disable screen lock
+set_key_safely org.gnome.desktop.screensaver lock-enabled false
+# Disable screen lock
+set_key_safely org.gnome.desktop.lockdown disable-lock-screen 'true'
 # Allow forcing the volume
 set_key_safely org.gnome.desktop.sound allow-volume-above-100-percent true
 # Set the time zone automatically
