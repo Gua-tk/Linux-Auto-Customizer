@@ -127,6 +127,7 @@ jdk17
 jekyll
 julia
 k
+k6
 keep
 keyboardFix
 kse
