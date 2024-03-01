@@ -98,6 +98,7 @@ sudoku
 terminal
 tweaks
 go
+goland
 google
 googlecalendar
 chrome
