@@ -18,98 +18,77 @@
 ########################################################################################################################
 
 
-# - Description: Processes the arguments received from the outside and activates or deactivates flags and calls
-#   add_program to append a keyname to the list of features to install.
+# State variables for argument processing
+mode_privilege=deduce  # deduce, sudo or user
+mode_operation=install  # install or uninstall
+mode_call=optimize  # optimize, maximize or minimize.Optimize minimizes  number of calls (respects order),
+
+# - Description: Processes the arguments received from the outside and builds the necessary string for the
+#   subsequent calls to the backend.
+# - Permission: Can be called as root or user.
+# - Argument 1, 2, 3... : Arguments for the whole program.
+argument_processing_middle()
+{
+  :
+}
+
+
+# - Description: Processes the arguments received from the outside and performs immediate actions for the first
+#   argument. The rest of the arguments are processed afterwards by another function, which will be passed to the
+#   backend on the last steps.
 # - Permission: Can be called as root or user.
 # - Argument 1, 2, 3... : Arguments for the whole program.
 argument_processing()
 {
-  while [ $# -gt 0 ]; do
-    key="$1"
+  case "$1" in
+    features)
+      local all_arguments+=("${feature_keynames[@]}")
+      echo "${all_arguments[@]}"
+      exit 0
+    ;;
+    commands)
+      local all_arguments+=("${feature_keynames[@]}")
+      all_arguments+=("${auxiliary_arguments[@]}")
+      all_arguments+=("${WRAPPERS_KEYNAMES[@]}")
+      echo "${all_arguments[@]}"
+      exit 0
+    ;;
+    flags)
+      local all_arguments+=("${auxiliary_arguments[@]}")
+      echo "${all_arguments[@]}"
+      exit 0
+    ;;
+    wrappers)
+      generate_wrappers
+      display_wrappers
+      exit 0
+    ;;
+    installations)
+      cat "${INSTALLED_FEATURES}"
+      exit 0
+    ;;
+    initializations)
+      cat "${INITIALIZATIONS_PATH}"
+      exit 0
+    ;;
+    functions)
+      cat "${FUNCTIONS_PATH}"
+      exit 0
+    ;;
+    favorites|favourites)
+      cat "${PROGRAM_FAVORITES_PATH}"
+      exit 0
+    ;;
+    keybindings)
+      cat "${PROGRAM_KEYBINDINGS_PATH}"
+      exit 0
+    ;;
 
-    case "${key}" in
-      ### INTROSPECTION AND INFORMATION ###
-      features)
-        local all_arguments+=("${feature_keynames[@]}")
-        echo "${all_arguments[@]}"
-        exit 0
-      ;;
-      commands)
-        local all_arguments+=("${feature_keynames[@]}")
-        all_arguments+=("${auxiliary_arguments[@]}")
-        all_arguments+=("${WRAPPERS_KEYNAMES[@]}")
-        echo "${all_arguments[@]}"
-        exit 0
-      ;;
-      flags)
-        local all_arguments+=("${auxiliary_arguments[@]}")
-        echo "${all_arguments[@]}"
-        exit 0
-      ;;
-      wrappers)
-        generate_wrappers
-        display_wrappers
-        exit 0
-      ;;
-      installations)
-        cat "${INSTALLED_FEATURES}"
-        exit 0
-      ;;
-      initializations)
-        cat "${INITIALIZATIONS_PATH}"
-        exit 0
-      ;;
-      functions)
-        cat "${FUNCTIONS_PATH}"
-        exit 0
-      ;;
-      favorites|favourites)
-        cat "${PROGRAM_FAVORITES_PATH}"
-        exit 0
-      ;;
-      keybindings)
-        cat "${PROGRAM_KEYBINDINGS_PATH}"
-        exit 0
-      ;;
-
-
-      --flush=favorites)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_all_favorites
-        fi
-      ;;
-      --flush=keybindings)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_all_keybindings
-        fi
-      ;;
-      --flush=functions)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_all_functions
-        fi
-      ;;
-      --flush=initializations)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_all_initializations
-        fi
-      ;;
-      --flush=structures)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          remove_structures
-        fi
-      ;;
-      --flush=cache)
-        if [ "${FLAG_MODE}" == "uninstall" ]; then
-          rm -Rf "${CACHE_FOLDER}"
-        fi
-      ;;
-
-      *)
-
-      ;;
-    esac
-    shift
-  done
+    # Not a beginning argument. Go to process the rest of arguments
+    *)
+      argument_processing_middle
+    ;;
+  esac
 }
 
 
@@ -124,10 +103,8 @@ main() {
 DIR=$(dirname "$(realpath "$0")")
 export CUSTOMIZER_PROJECT_FOLDER="$(cd "${DIR}/../.." &>/dev/null && pwd)"
 if [ -f "${DIR}/functions_common.sh" ]; then
-  # shellcheck source=./functions_common.sh
   source "${DIR}/functions_common.sh"
 else
-  # output without output_proxy_executioner because it does not exist at this point, since we did not source common_data
   echo -e "\e[91m$(date +%Y-%m-%d_%T) -- ERROR: functions_common.sh not found. Aborting..."
   exit 1
 fi
