@@ -1,0 +1,1 @@
+Self-managed wallet for crypto
