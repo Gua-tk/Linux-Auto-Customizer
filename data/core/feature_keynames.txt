@@ -80,6 +80,7 @@ gcc
 geany
 geogebra
 gh
+ghrunner
 ghostwriter
 gimp
 git
