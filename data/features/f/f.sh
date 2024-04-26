@@ -41,9 +41,7 @@ f()
         shift
         custom_command="$1"
       ;;
-
       *)  # Error
-        echo num: $#
         if [ $# -eq 1 ]; then  # If only one argument this is the last argument and means that is the search dir
           find_dir="$1"
         else
