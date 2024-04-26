@@ -4,8 +4,6 @@ f()
 {
   default_ignored_dirs=("node_modules" ".git")
   find_ignored_dirs_shell_command=""
-  # Since we expect f to be called as a binary in the PATH, we can expect the working directory to be the same that
-  # we are using f against
   skip_defaults="false"
   ignore_all_levels="true"
   find_dir=""
@@ -20,7 +18,7 @@ f()
       "--ignore-all" | "-i")
         ignore_all_levels="true"
       ;;
-      "--literal" | "-l")
+      "--literal" | "-l")  # TODO: Unluckily, I didn't make it work...
         ignore_all_levels="false"
       ;;
       "--dir" | "-d" | "--dir-exclude")
@@ -30,7 +28,7 @@ f()
         fi
         shift
         if [ "${ignore_all_levels}" = "true" ]; then
-          find_ignored_dirs_shell_command+=" -o -path ./'*'/$1/'*'"
+          find_ignored_dirs_shell_command+=" -o -path */$1/*"
         else
           find_ignored_dirs_shell_command+=" -o -path ./$1/'*'"
         fi
@@ -45,6 +43,7 @@ f()
       ;;
 
       *)  # Error
+        echo num: $#
         if [ $# -eq 1 ]; then  # If only one argument this is the last argument and means that is the search dir
           find_dir="$1"
         else
@@ -56,21 +55,21 @@ f()
     shift
   done
 
-  # Remove the space and the -o from the beginning of the ignored dirs
-  find_ignored_dirs_shell_command="${find_ignored_dirs_shell_command:3}"
-
   # Add the default ignored paths depending on the state of the flag
   if [ "${skip_defaults}" = "false" ]; then
     for dir in "${default_ignored_dirs[@]}"; do
       if [ "${ignore_all_levels}" = "true" ]; then
-        find_ignored_dirs_shell_command+=" -o -path ./'*'/${dir}/'*'"
+        find_ignored_dirs_shell_command+=" -o -path */${dir}/*"
       else
         find_ignored_dirs_shell_command+=" -o -path ./${dir}/'*'"
       fi
     done
   fi
 
+  # Set current directory if query directory not present
   if [ -z "${find_dir}" ]; then
+    # Since we expect f to be called as a binary in the PATH, we can expect the working directory to be the same that
+    # we are using f against
     find_dir="."
   else
     if [ ! -d "${find_dir}" ]; then
@@ -79,5 +78,5 @@ f()
     fi
   fi
 
-  find "${find_dir}" -type f -not \( ${find_ignored_dirs_shell_command} \) 2>/dev/null
+  find "${find_dir}" -type f -not \( -type d ${find_ignored_dirs_shell_command} \) 2> /dev/null
 }
