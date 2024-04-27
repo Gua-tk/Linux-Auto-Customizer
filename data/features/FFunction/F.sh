@@ -3,6 +3,8 @@
 F() {
   previous_lines=5
   following_lines=5
+  grep_query_string=""
+  read_from_stdin=""
 
   # Process arguments
   while [ -n "$1" ]; do
@@ -23,17 +25,29 @@ F() {
         shift
         following_lines=$1
       ;;
+      "-")
+        read_from_stdin="true"
+      ;;
       *)  # Error
-        echo "ERROR: \"$1\" not recognized argument. Aborting..."
-        exit 1
+        if [ $# -eq 1 ]; then  # If only one argument this is the last argument and means that is the search dir
+          grep_query_string="$1"
+        else
+          echo "ERROR: \"$1\" not recognized argument. Aborting..."
+          exit 1
+        fi
       ;;
     esac
     shift
   done
 
-  # Process stdin
-  while IFS= read -r line; do
-    echo -e "\e[0;33m${line}\e[0m"
-    grep -hnI -B ${following_lines} -A ${previous_lines} --color='auto' "$1" < "${line}" 2>/dev/null
-  done
+  if [ "${read_from_stdin}" = "true" ]; then
+    # Process stdin
+    while IFS= read -r line; do
+      grep -hnI -B ${following_lines} -A ${previous_lines} --color='auto' "${grep_query_string}" < "${line}" 2>/dev/null
+    done
+  else
+    while IFS= read -r line; do
+      grep -hnI -B ${following_lines} -A ${previous_lines} --color='auto' "${grep_query_string}" < "${line}" 2>/dev/null
+    done
+  fi
 }
