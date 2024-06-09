@@ -417,7 +417,7 @@ You can make donations to the team through:
 [codacy-url]: https://app.codacy.com/gh/AleixMT/Linux-Auto-Customizer/dashboard
 [language-shield]: https://img.shields.io/github/languages/top/AleixMT/Linux-Auto-Customizer?style=for-the-badge&color=blue&logo=gnu
 [language-url]: https://www.gnu.org/software/bash
-[loc-shield]: https://img.shields.io/tokei/lines/github/AleixMT/Linux-Auto-Customizer?style=for-the-badge&logo=gitlab
+[loc-shield]: https://img.shields.io/endpoint?url=https://ghloc.vercel.app/api/Gua-tk/Linux-Auto-Customizer/badge?style=flat&logoColor=white&label=Lines%20of%20Code
 [loc-url]: https://gitlab.com/AleixMT/Linux-Auto-Customizer
 [commit-shield]: https://img.shields.io/github/commits-since/AleixMT/Linux-Auto-Customizer/v0.1.0?style=for-the-badge&logo=github
 [commit-url]: https://github.com/AleixMT/Linux-Auto-Customizer/issues
