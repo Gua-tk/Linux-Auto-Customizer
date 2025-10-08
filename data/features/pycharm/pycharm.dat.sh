@@ -9,7 +9,7 @@ pycharm_icon="pycharm.png"
 
 pycharm_associatedfiletypes=("text/sh" "text/x-python" "text/x-python3")
 pycharm_bashfunctions=("silentFunctionInWd")
-pycharm_binariesinstalledpaths=("bin/pycharm.sh;pycharm")
+pycharm_binariesinstalledpaths=("bin/pycharm;pycharm")
 pycharm_downloadKeys=("bundle")
 pycharm_bundle_URL="https://download.jetbrains.com/python/pycharm-2025.2.3.tar.gz"
 pycharm_keybindings=("pycharm;<Primary><Alt><Super>p;Pycharm")
